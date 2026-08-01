@@ -1218,6 +1218,42 @@ QUALITY_RUBRIC = [
 ]
 
 
+SYNTHESIS_GUIDES = [
+    {
+        "slug": "central-problem",
+        "title": "Central Problem",
+        "claim": "Physics-informed machine learning asks how data, equations, simulations, and scientific checks can work together without pretending any one of them is enough.",
+        "explanation": "Data gives examples. Equations give rules. Simulations give trusted cases. Validation gives the right to use a model under a named condition. The field exists because scientific prediction often needs all four.",
+        "reader_takeaway": "Do not ask first which model is popular. Ask what scientific quantity is needed, what evidence exists, and what changed case would reject the answer.",
+        "links": ["learning-path.html", "decision-guide.html", "quality/first-principles.html"],
+    },
+    {
+        "slug": "main-moves",
+        "title": "Main Moves",
+        "claim": "The recurring moves are fitting from data, constraining with physics, learning maps between fields, replacing expensive solves, estimating trust, and searching for readable rules.",
+        "explanation": "PINNs use equations as checks. Neural operators learn field-to-field maps. Surrogates trade full cost for checked speed. Uncertainty asks when belief should weaken. Symbolic regression asks whether data can support a small law.",
+        "reader_takeaway": "Each method is a response to a different pressure. Confusing those pressures is how vague explanations start.",
+        "links": ["families.html", "comparisons.html", "diagrams.html"],
+    },
+    {
+        "slug": "proof-burden",
+        "title": "Proof Burden",
+        "claim": "A method name never proves a scientific claim; only a named test under a meaningful changed case can carry that burden.",
+        "explanation": "A transcript mention shows that a topic appears in the course. A training score shows that a model matched a written score. A scientific claim needs more: a domain, quantity, use range, and failure test.",
+        "reader_takeaway": "Every strong page should say what the transcript supports and what it does not prove.",
+        "links": ["evidence-ledger.html", "reader-checks.html", "quality/evidence-discipline.html"],
+    },
+    {
+        "slug": "field-map",
+        "title": "Field Map",
+        "claim": "The field is best read as a map of scientific jobs, not a list of model names.",
+        "explanation": "Sparse measurements point toward physics checks. Many solved fields point toward operator learning. Repeated expensive decisions point toward surrogates. New settings point toward uncertainty. Need for a readable law points toward model discovery.",
+        "reader_takeaway": "Start from the job, then choose the concept family that carries the right evidence.",
+        "links": ["decision-guide.html", "domains.html", "coverage.html"],
+    },
+]
+
+
 @dataclass
 class TranscriptRecord:
     video_id: str
@@ -1526,6 +1562,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
             "provenance_guide_count": len(PROVENANCE_GUIDES),
             "coverage_row_count": len(coverage_matrix),
             "quality_rubric_count": len(QUALITY_RUBRIC),
+            "synthesis_guide_count": len(SYNTHESIS_GUIDES),
         },
         "transcript_index": [record_to_dict(record) for record in records],
         "concept_atlas": concept_atlas,
@@ -1545,6 +1582,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
         "provenance_guides": PROVENANCE_GUIDES,
         "coverage_matrix": coverage_matrix,
         "quality_rubric": QUALITY_RUBRIC,
+        "synthesis_guides": SYNTHESIS_GUIDES,
     }
     for name, value in data.items():
         if name == "summary":
@@ -1714,6 +1752,7 @@ def html_page(title: str, body: str, root_prefix: str = "") -> str:
   <a href="{root_prefix}provenance.html">Provenance</a>
   <a href="{root_prefix}coverage.html">Coverage</a>
   <a href="{root_prefix}quality.html">Quality</a>
+  <a href="{root_prefix}synthesis.html">Synthesis</a>
   <a href="{root_prefix}theme-map.html">Themes</a>
   <a href="{root_prefix}evidence-ledger.html">Evidence</a>
 </nav>
@@ -1840,6 +1879,15 @@ def quality_card(item: dict[str, object], href_prefix: str = "") -> str:
 """
 
 
+def synthesis_card(item: dict[str, object], href_prefix: str = "") -> str:
+    return f"""
+<article class="card">
+  <h3><a href="{href_prefix}synthesis/{html.escape(str(item['slug']))}.html">{html.escape(str(item['title']))}</a></h3>
+  <p>{html.escape(str(item['claim']))}</p>
+</article>
+"""
+
+
 def topic_reader_check_html(slug: str) -> str:
     checks = [check for check in READER_CHECKS if check["topic_slug"] == slug]
     if not checks:
@@ -1863,7 +1911,8 @@ def write_site(data: dict[str, object]) -> None:
     decision_dir = SITE / "decision-guide"
     provenance_dir = SITE / "provenance"
     quality_dir = SITE / "quality"
-    for generated_dir in (family_dir, comparison_dir, example_dir, diagram_dir, learning_dir, glossary_dir, domain_dir, check_dir, decision_dir, provenance_dir, quality_dir):
+    synthesis_dir = SITE / "synthesis"
+    for generated_dir in (family_dir, comparison_dir, example_dir, diagram_dir, learning_dir, glossary_dir, domain_dir, check_dir, decision_dir, provenance_dir, quality_dir, synthesis_dir):
         if generated_dir.exists():
             shutil.rmtree(generated_dir)
     topic_dir.mkdir(exist_ok=True)
@@ -1879,6 +1928,7 @@ def write_site(data: dict[str, object]) -> None:
     decision_dir.mkdir(exist_ok=True)
     provenance_dir.mkdir(exist_ok=True)
     quality_dir.mkdir(exist_ok=True)
+    synthesis_dir.mkdir(exist_ok=True)
 
     summary = data["summary"]
     concept_atlas = data["concept_atlas"]
@@ -1898,6 +1948,7 @@ def write_site(data: dict[str, object]) -> None:
     provenance_guides = data["provenance_guides"]
     coverage_matrix = data["coverage_matrix"]
     quality_rubric = data["quality_rubric"]
+    synthesis_guides = data["synthesis_guides"]
 
     index_body = f"""
 <h1>Physics-Informed Machine Learning Concepts Research</h1>
@@ -1917,6 +1968,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Provenance", f"{summary['provenance_guide_count']} pages documenting source, extraction, build, and reproduction.", "provenance.html")}
 {card("Coverage Matrix", f"{summary['coverage_row_count']} concepts checked across evidence and guide layers.", "coverage.html")}
 {card("Quality Rubric", f"{summary['quality_rubric_count']} editorial standards for first-principles pages.", "quality.html")}
+{card("Synthesis", f"{summary['synthesis_guide_count']} pages tying the field into one argument.", "synthesis.html")}
 {card("Themes", f"{summary['theme_count']} recurring research pressures across the course family.", "theme-map.html")}
 {card("Evidence", "Each major claim links back to transcript or metadata evidence and states its limit.", "evidence-ledger.html")}
 </div>
@@ -2063,6 +2115,15 @@ def write_site(data: dict[str, object]) -> None:
         write_quality_page(quality_dir / f"{item['slug']}.html", item)
     (SITE / "quality.html").write_text(
         html_page("Physics-Informed ML Quality Rubric", f"<h1>Editorial Quality Rubric</h1><p>This rubric defines what a strong page must do: start from first principles, use plain language, name the domain, state failure boundaries, separate evidence from proof, and connect the concept to the rest of the field.</p><div class=\"grid\">{''.join(quality_cards)}</div>"),
+        encoding="utf-8",
+    )
+
+    synthesis_cards = []
+    for item in synthesis_guides:
+        synthesis_cards.append(synthesis_card(item))
+        write_synthesis_page(synthesis_dir / f"{item['slug']}.html", item)
+    (SITE / "synthesis.html").write_text(
+        html_page("Physics-Informed ML Synthesis", f"<h1>Field Synthesis</h1><p>This section ties the package into one argument: start from the scientific job, choose the mathematical move that carries the right evidence, and test the claim under a changed case.</p><div class=\"grid\">{''.join(synthesis_cards)}</div>"),
         encoding="utf-8",
     )
 
@@ -2489,6 +2550,22 @@ def write_quality_page(path: Path, item: dict[str, object]) -> None:
     path.write_text(html_page(str(item["title"]), body, root_prefix="../"), encoding="utf-8")
 
 
+def write_synthesis_page(path: Path, item: dict[str, object]) -> None:
+    links = "".join(f"<li><a href=\"../{html.escape(str(href))}\">{html.escape(str(href))}</a></li>" for href in item["links"])
+    body = f"""
+<h1>{html.escape(str(item['title']))}</h1>
+<h2>Claim</h2>
+<p>{html.escape(str(item['claim']))}</p>
+<h2>Explanation</h2>
+<p>{html.escape(str(item['explanation']))}</p>
+<h2>Reader Takeaway</h2>
+<p>{html.escape(str(item['reader_takeaway']))}</p>
+<h2>Follow The Links</h2>
+<ul>{links}</ul>
+"""
+    path.write_text(html_page(str(item["title"]), body, root_prefix="../"), encoding="utf-8")
+
+
 def write_family_page(path: Path, family: dict[str, object]) -> None:
     steps = "".join(f"<div class=\"route-step\">{idx}. {html.escape(step)}</div>" for idx, step in enumerate(family["plain_route"], start=1))
     body = f"""
@@ -2729,6 +2806,17 @@ def write_markdown_export(data: dict[str, object]) -> None:
                 "",
             ]
         )
+    lines.extend(["", "## Field Synthesis"])
+    for item in data["synthesis_guides"]:
+        lines.extend(
+            [
+                f"### {item['title']}",
+                f"- Claim: {item['claim']}",
+                f"- Explanation: {item['explanation']}",
+                f"- Reader takeaway: {item['reader_takeaway']}",
+                "",
+            ]
+        )
     (EXPORTS / "research-package.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
@@ -2790,6 +2878,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         SITE / "provenance.html",
         SITE / "coverage.html",
         SITE / "quality.html",
+        SITE / "synthesis.html",
         SITE / "theme-map.html",
         SITE / "evidence-ledger.html",
     ):
@@ -2902,6 +2991,16 @@ def validate(data: dict[str, object] | None = None) -> None:
         item_text = item_path.read_text(encoding="utf-8")
         if "Strong Page" not in item_text or "Weak Page" not in item_text:
             raise SystemExit(f"quality rubric page not rendered correctly: {item['title']}")
+    for item in SYNTHESIS_GUIDES:
+        item_path = SITE / "synthesis" / f"{item['slug']}.html"
+        if not item_path.exists():
+            raise SystemExit(f"missing synthesis page: {item['title']}")
+        item_text = item_path.read_text(encoding="utf-8")
+        if "Reader Takeaway" not in item_text or "Follow The Links" not in item_text:
+            raise SystemExit(f"synthesis page not rendered correctly: {item['title']}")
+        for href in item["links"]:
+            if not (SITE / str(href)).exists():
+                raise SystemExit(f"synthesis link missing: {item['title']} -> {href}")
     manifest_path = SITE / "page-manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     missing = [item for item in manifest if not (ROOT / item).exists()]

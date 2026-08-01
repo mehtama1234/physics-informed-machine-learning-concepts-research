@@ -26,6 +26,7 @@ The purpose is not to summarize lectures. The purpose is to explain physics-info
 - `site/provenance.html`: source, extraction, build, and reproduction guide
 - `site/coverage.html`: concept coverage matrix across evidence and guide layers
 - `site/quality.html`: editorial quality rubric for first-principles pages
+- `site/synthesis.html`: field-level synthesis tying the concepts together
 - `site/theme-map.html`: recurring theme map
 - `site/evidence-ledger.html`: transcript-backed evidence ledger
 - `site/topics/`: first-principles concept pages
@@ -82,6 +83,7 @@ http://127.0.0.1:8022/index.html
 - provenance and reproduction guide
 - coverage matrix
 - editorial quality rubric
+- field synthesis
 - deep dives for core topics
 - theme map
 - evidence ledger

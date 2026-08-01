@@ -21,6 +21,7 @@
 - provenance_guide_count: 5
 - coverage_row_count: 14
 - quality_rubric_count: 6
+- synthesis_guide_count: 4
 
 ## Concepts
 ### Deep Learning
@@ -637,4 +638,26 @@
 - Strong page: A reader can move from the concept to a route, comparison, diagram, or decision case.
 - Weak page: The page is isolated and does not show how the idea fits into the field.
 - Check: Look for concept links, families, comparisons, visual maps, and coverage matrix entries.
+
+
+## Field Synthesis
+### Central Problem
+- Claim: Physics-informed machine learning asks how data, equations, simulations, and scientific checks can work together without pretending any one of them is enough.
+- Explanation: Data gives examples. Equations give rules. Simulations give trusted cases. Validation gives the right to use a model under a named condition. The field exists because scientific prediction often needs all four.
+- Reader takeaway: Do not ask first which model is popular. Ask what scientific quantity is needed, what evidence exists, and what changed case would reject the answer.
+
+### Main Moves
+- Claim: The recurring moves are fitting from data, constraining with physics, learning maps between fields, replacing expensive solves, estimating trust, and searching for readable rules.
+- Explanation: PINNs use equations as checks. Neural operators learn field-to-field maps. Surrogates trade full cost for checked speed. Uncertainty asks when belief should weaken. Symbolic regression asks whether data can support a small law.
+- Reader takeaway: Each method is a response to a different pressure. Confusing those pressures is how vague explanations start.
+
+### Proof Burden
+- Claim: A method name never proves a scientific claim; only a named test under a meaningful changed case can carry that burden.
+- Explanation: A transcript mention shows that a topic appears in the course. A training score shows that a model matched a written score. A scientific claim needs more: a domain, quantity, use range, and failure test.
+- Reader takeaway: Every strong page should say what the transcript supports and what it does not prove.
+
+### Field Map
+- Claim: The field is best read as a map of scientific jobs, not a list of model names.
+- Explanation: Sparse measurements point toward physics checks. Many solved fields point toward operator learning. Repeated expensive decisions point toward surrogates. New settings point toward uncertainty. Need for a readable law points toward model discovery.
+- Reader takeaway: Start from the job, then choose the concept family that carries the right evidence.
 
