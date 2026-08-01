@@ -14,6 +14,7 @@
   <a href="../families.html">Families</a>
   <a href="../comparisons.html">Comparisons</a>
   <a href="../worked-examples.html">Examples</a>
+  <a href="../diagrams.html">Diagrams</a>
   <a href="../theme-map.html">Themes</a>
   <a href="../evidence-ledger.html">Evidence</a>
 </nav>
@@ -55,6 +56,16 @@
 <ul><li>The boundary condition is vague.</li><li>The learned answer ignores conservation.</li><li>The grid or resolution changes the conclusion.</li><li>Small visual error hides a large error in the quantity people care about.</li></ul>
 <h2>Connects To</h2>
 <ul><li><a href="../topics/physics-informed-neural-networks.html">Physics-Informed Neural Networks</a></li><li><a href="../topics/operator-learning.html">Operator Learning</a></li><li><a href="../topics/surrogate-modeling.html">Surrogate Modeling</a></li></ul>
+
+<h2>Visual Map</h2>
+<article class="card">
+  <h3><a href="../diagrams/pde-field-reasoning-flow.html">PDE Field Reasoning Flow</a></h3>
+  <p>Show why fields need boundaries, neighbors, and time rather than isolated numbers.</p>
+  
+<div class="flow"><div class="flow-node">1. field value</div><div class="flow-node">2. nearby values</div><div class="flow-node">3. boundary or starting information</div><div class="flow-node">4. local change rule</div><div class="flow-node">5. future field</div></div>
+<p class="diagram-note"><strong>Watch for:</strong> A learned shortcut that ignores boundaries can look smooth while answering the wrong physical question.</p>
+
+</article>
 
 <h2>Deeper Mathematical Why</h2>
 <p>The mathematical point is to decide what information is allowed to carry the scientific claim. If the carried information is too small, the model misses the behavior that matters. If it is too broad, the page may claim more than the evidence supports. The useful middle is a named object, a named scientific job, and a changed case that can reject the claim.</p>
