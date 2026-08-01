@@ -3850,6 +3850,120 @@ def topic_derivation(topic: dict[str, object]) -> dict[str, object]:
     )
 
 
+def topic_wrong_use(topic: dict[str, object]) -> dict[str, str]:
+    slug = str(topic["slug"])
+    wrong_uses = {
+        "physics-informed-neural-networks": {
+            "mistake": "Use a PINN because sensor data are sparse, even though the boundary values are uncertain and the equation is missing a heat source.",
+            "why_tempting": "The equation penalty gives the page a scientific look, and the fit can still pass through the measured points.",
+            "what_breaks": "The model may satisfy the wrong problem: a field with the wrong boundary or missing source can look smooth while answering a different physical question.",
+            "catch_test": "Change the boundary, add held-out sensors near the source region, and compare against a trusted solve.",
+        },
+        "partial-differential-equations": {
+            "mistake": "Treat a field problem as independent point predictions and ignore boundaries, neighbors, and conservation.",
+            "why_tempting": "Point predictions are easier to fit and can look accurate on randomly held-out samples.",
+            "what_breaks": "The result may violate the movement of heat, mass, force, or momentum that made the field a scientific object in the first place.",
+            "catch_test": "Change the boundary or grid and check conservation, stability, and error in the decision quantity.",
+        },
+        "operator-learning": {
+            "mistake": "Train on one family of solved fields and use the learned map on a new boundary, geometry, or equation family without testing that shift.",
+            "why_tempting": "The output field can look plausible, and the method is fast enough to invite broad reuse.",
+            "what_breaks": "The learned map may be a shortcut for the training family rather than a reusable scientific solver.",
+            "catch_test": "Hold out whole boundary types, coefficient ranges, resolutions, or equation families and compare the full field plus the scientific quantity.",
+        },
+        "deep-learning": {
+            "mistake": "Use a large predictor because it fits old examples, then trust it on a new material, sensor, or geometry.",
+            "why_tempting": "Low training or familiar-test error can hide that the new case asks a different scientific question.",
+            "what_breaks": "The model can carry accidental patterns from old data instead of the physical relation needed for the new case.",
+            "catch_test": "Build a test set that changes the material, geometry, scale, or measurement process and inspect the first failure.",
+        },
+        "scientific-machine-learning": {
+            "mistake": "Call a model scientific because it is used on scientific data, without naming the quantity, evidence, domain limit, or rejection test.",
+            "why_tempting": "The setting sounds scientific even when the model is judged only by a generic score.",
+            "what_breaks": "The claim floats away from the scientific job and cannot say what would make the answer unusable.",
+            "catch_test": "Rewrite the claim as quantity, evidence, hidden part, mathematical move, and changed-case test; reject it if any part is missing.",
+        },
+        "surrogate-modeling": {
+            "mistake": "Replace the trusted simulator everywhere because the surrogate is much faster.",
+            "why_tempting": "Speed immediately expands design sweeps, searches, and uncertainty runs.",
+            "what_breaks": "The shortcut can silently fail near edge cases, peaks, rare regimes, or decision boundaries where the full solver was most needed.",
+            "catch_test": "Run the trusted source again near the edge of intended use and compare the decision quantity, not only average error.",
+        },
+        "uncertainty-and-generalization": {
+            "mistake": "Report a confidence number without testing the changed condition the user actually cares about.",
+            "why_tempting": "A number looks like caution and can make a prediction feel complete.",
+            "what_breaks": "Confidence can remain high exactly where the model has the least evidence.",
+            "catch_test": "Name the real shift, measure error under that shift, and state the first condition where the model should not be used.",
+        },
+        "optimization-for-learning": {
+            "mistake": "Optimize the written loss and assume the scientific goal improved with it.",
+            "why_tempting": "The loss gives a clean progress number during training.",
+            "what_breaks": "The model improves what was scored while ignoring what the score forgot: boundaries, rare cases, units, conservation, or the decision quantity.",
+            "catch_test": "List what the loss does not penalize, then test those ignored requirements after training.",
+        },
+        "generative-modeling": {
+            "mistake": "Accept generated fields, molecules, or designs because they look like the training examples.",
+            "why_tempting": "Plausible samples make exploration feel successful before any physical check is done.",
+            "what_breaks": "A generated object can resemble the data while breaking conservation, constraints, rarity, or downstream usefulness.",
+            "catch_test": "Check constraints, physical validity, rare-event behavior, and the downstream decision before keeping generated samples.",
+        },
+        "graphs-and-geometric-learning": {
+            "mistake": "Use a graph model because the data have connections, without checking whether the chosen graph represents the interactions that matter.",
+            "why_tempting": "Nodes and edges make the representation look faithful to the scientific object.",
+            "what_breaks": "Wrong neighborhoods, missing long-range effects, or mesh changes can hide the physical relation the graph was meant to keep.",
+            "catch_test": "Change mesh resolution, rotate or move the object, add missing interactions, and compare the scientific quantity.",
+        },
+        "neural-differential-equations": {
+            "mistake": "Fit short observed trajectories and trust the learned rate for long-time prediction.",
+            "why_tempting": "The short path can match measurements while hiding small rate errors.",
+            "what_breaks": "Small errors in the learned change rule can accumulate until the system drifts into impossible behavior.",
+            "catch_test": "Run past the training window and check conservation, stability, long-time drift, and changed initial conditions.",
+        },
+        "symbolic-regression": {
+            "mistake": "Treat the shortest fitted formula as a discovered law.",
+            "why_tempting": "A compact equation is easy to read and can feel more truthful than a large fitted model.",
+            "what_breaks": "The formula may use the wrong variables, fit noise, or work only because the experiment never excited the missing cause.",
+            "catch_test": "Run a changed experiment, test missing variables, add noise checks, and reject formulas that fail outside the discovery data.",
+        },
+        "foundation-models-for-pdes": {
+            "mistake": "Assume a broad PDE model covers a new equation because it was trained on many tasks.",
+            "why_tempting": "Scale and breadth can sound like coverage.",
+            "what_breaks": "The model may not have learned the structure needed for a rare regime, boundary type, scale, or output quantity.",
+            "catch_test": "Hold out whole task families, not just random examples, and compare against trusted solves on the new family.",
+        },
+        "attention-for-scientific-fields": {
+            "mistake": "Assume attention found the physically important interactions because it connected distant field parts.",
+            "why_tempting": "The information-routing picture is intuitive and visually persuasive.",
+            "what_breaks": "The chosen attention pattern can miss long-range effects, boundary behavior, sharp structures, or conservation needs.",
+            "catch_test": "Vary the window or routing pattern, stress long-range interactions, and inspect the physical quantity near hard regions.",
+        },
+    }
+    return wrong_uses.get(
+        slug,
+        {
+            "mistake": "Use the concept because the label sounds relevant, without naming the scientific quantity and evidence.",
+            "why_tempting": "The method name can make the page feel complete before the problem is clear.",
+            "what_breaks": "The explanation cannot say what was kept, what was ignored, or what changed case would reject it.",
+            "catch_test": "Rewrite the claim as observed evidence, hidden quantity, mathematical move, domain reason, and changed-case test.",
+        },
+    )
+
+
+def topic_wrong_use_html(topic: dict[str, object]) -> str:
+    wrong = topic_wrong_use(topic)
+    return f"""
+<h2>Concrete Wrong-Use Example</h2>
+<table>
+  <tbody>
+    <tr><th>Mistake</th><td>{html.escape(wrong['mistake'])}</td></tr>
+    <tr><th>Why It Is Tempting</th><td>{html.escape(wrong['why_tempting'])}</td></tr>
+    <tr><th>What Breaks</th><td>{html.escape(wrong['what_breaks'])}</td></tr>
+    <tr><th>Test That Catches It</th><td>{html.escape(wrong['catch_test'])}</td></tr>
+  </tbody>
+</table>
+"""
+
+
 def write_topic_page(path: Path, topic: dict[str, object]) -> None:
     evidence = topic.get("evidence", [])
     evidence_items = []
@@ -3864,6 +3978,7 @@ def write_topic_page(path: Path, topic: dict[str, object]) -> None:
     derivation_link = topic_derivation_link_html(str(topic["slug"]))
     source_anchors = source_anchor_cards(str(topic["slug"]), root_prefix="../")
     first_principles_essay = topic_first_principles_essay_html(topic, derivation)
+    wrong_use = topic_wrong_use_html(topic)
     body = f"""
 <h1>{html.escape(str(topic['title']))}</h1>
 <h2>Common Problem This Solves</h2>
@@ -3888,6 +4003,7 @@ def write_topic_page(path: Path, topic: dict[str, object]) -> None:
 {sketches}
 {diagrams}
 {derivation_link}
+{wrong_use}
 <h2>Deeper Mathematical Why</h2>
 <p>The mathematical point is to decide what information is allowed to carry the scientific claim. If the carried information is too small, the model misses the behavior that matters. If it is too broad, the page may claim more than the evidence supports. The useful middle is a named object, a named scientific job, and a changed case that can reject the claim.</p>
 {reader_check}
@@ -5186,7 +5302,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         if not topic_path.exists():
             raise SystemExit(f"deep dive missing topic page: {slug}")
         topic_text = topic_path.read_text(encoding="utf-8")
-        if "First-Principles Essay" not in topic_text or "What A Strong Explanation Must Say" not in topic_text or "Core Idea In One Sentence" not in topic_text or "Mathematical Shape Without Jargon" not in topic_text:
+        if "First-Principles Essay" not in topic_text or "What A Strong Explanation Must Say" not in topic_text or "Concrete Wrong-Use Example" not in topic_text or "Test That Catches It" not in topic_text or "Core Idea In One Sentence" not in topic_text or "Mathematical Shape Without Jargon" not in topic_text:
             raise SystemExit(f"deep dive not rendered on topic page: {slug}")
     for path in (
         SITE / "index.html",

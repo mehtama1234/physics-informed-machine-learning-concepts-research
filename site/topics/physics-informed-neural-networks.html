@@ -135,6 +135,17 @@
 <h2>Full Derivation Walkthrough</h2>
 <p><a href="../derivations/physics-informed-neural-networks.html">Open the step-by-step derivation page</a>. It slows this concept down from observed evidence, to hidden quantity, to formula shape, to failure test.</p>
 
+
+<h2>Concrete Wrong-Use Example</h2>
+<table>
+  <tbody>
+    <tr><th>Mistake</th><td>Use a PINN because sensor data are sparse, even though the boundary values are uncertain and the equation is missing a heat source.</td></tr>
+    <tr><th>Why It Is Tempting</th><td>The equation penalty gives the page a scientific look, and the fit can still pass through the measured points.</td></tr>
+    <tr><th>What Breaks</th><td>The model may satisfy the wrong problem: a field with the wrong boundary or missing source can look smooth while answering a different physical question.</td></tr>
+    <tr><th>Test That Catches It</th><td>Change the boundary, add held-out sensors near the source region, and compare against a trusted solve.</td></tr>
+  </tbody>
+</table>
+
 <h2>Deeper Mathematical Why</h2>
 <p>The mathematical point is to decide what information is allowed to carry the scientific claim. If the carried information is too small, the model misses the behavior that matters. If it is too broad, the page may claim more than the evidence supports. The useful middle is a named object, a named scientific job, and a changed case that can reject the claim.</p>
 <h2>Reader Check</h2>

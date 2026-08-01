@@ -88,6 +88,17 @@
 </article>
 
 
+
+<h2>Concrete Wrong-Use Example</h2>
+<table>
+  <tbody>
+    <tr><th>Mistake</th><td>Use a large predictor because it fits old examples, then trust it on a new material, sensor, or geometry.</td></tr>
+    <tr><th>Why It Is Tempting</th><td>Low training or familiar-test error can hide that the new case asks a different scientific question.</td></tr>
+    <tr><th>What Breaks</th><td>The model can carry accidental patterns from old data instead of the physical relation needed for the new case.</td></tr>
+    <tr><th>Test That Catches It</th><td>Build a test set that changes the material, geometry, scale, or measurement process and inspect the first failure.</td></tr>
+  </tbody>
+</table>
+
 <h2>Deeper Mathematical Why</h2>
 <p>The mathematical point is to decide what information is allowed to carry the scientific claim. If the carried information is too small, the model misses the behavior that matters. If it is too broad, the page may claim more than the evidence supports. The useful middle is a named object, a named scientific job, and a changed case that can reject the claim.</p>
 
