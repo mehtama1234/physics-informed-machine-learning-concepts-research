@@ -1508,6 +1508,12 @@ REVIEW_ENTRYPOINTS = [
                 "question": "What does the transcript support, and what does it not prove?",
             },
             {
+                "label": "Evidence Packets",
+                "href": "evidence-packets.html",
+                "why": "Gathers transcript anchors, limits, and review links one concept at a time.",
+                "question": "Can a reviewer audit one concept without hunting through the whole site?",
+            },
+            {
                 "label": "Quality Rubric",
                 "href": "quality.html",
                 "why": "Defines the editorial standard for plain first-principles pages.",
@@ -1817,6 +1823,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
     coverage_matrix = build_coverage_matrix(concept_atlas)
     concept_ladder = build_concept_ladder(topic_treatments)
     core_derivations = build_core_derivations(topic_treatments)
+    concept_evidence_packets = build_concept_evidence_packets(topic_treatments)
 
     data = {
         "summary": {
@@ -1841,6 +1848,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
             "provenance_guide_count": len(PROVENANCE_GUIDES),
             "coverage_row_count": len(coverage_matrix),
             "concept_ladder_count": len(concept_ladder),
+            "concept_evidence_packet_count": len(concept_evidence_packets),
             "quality_rubric_count": len(QUALITY_RUBRIC),
             "synthesis_guide_count": len(SYNTHESIS_GUIDES),
             "review_handoff_count": 1,
@@ -1865,6 +1873,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
         "provenance_guides": PROVENANCE_GUIDES,
         "coverage_matrix": coverage_matrix,
         "concept_ladder": concept_ladder,
+        "concept_evidence_packets": concept_evidence_packets,
         "quality_rubric": QUALITY_RUBRIC,
         "synthesis_guides": SYNTHESIS_GUIDES,
         "review_handoff": REVIEW_HANDOFF,
@@ -1972,6 +1981,50 @@ def build_core_derivations(topic_treatments: list[dict[str, object]]) -> list[di
             }
         )
     return rows
+
+
+def build_concept_evidence_packets(topic_treatments: list[dict[str, object]]) -> list[dict[str, object]]:
+    example_links: dict[str, list[dict[str, str]]] = defaultdict(list)
+    for example in WORKED_EXAMPLES:
+        for slug in example["method_route"]:
+            example_links[str(slug)].append(
+                {
+                    "label": str(example["title"]),
+                    "href": f"worked-examples/{example['slug']}.html",
+                }
+            )
+    packets = []
+    for topic in topic_treatments:
+        slug = str(topic["slug"])
+        evidence = list(topic.get("evidence") or [])
+        links = [
+            {"label": "Topic Page", "href": f"topics/{slug}.html"},
+            {"label": "Concept Ladder", "href": "concept-ladder.html"},
+            {"label": "Coverage Matrix", "href": "coverage.html"},
+            {"label": "Evidence Ledger", "href": "evidence-ledger.html"},
+        ]
+        if slug in TOPIC_DEEP_DIVES:
+            links.append({"label": "Derivation", "href": f"derivations/{slug}.html"})
+        links.extend(example_links.get(slug, [])[:3])
+        packets.append(
+            {
+                "slug": slug,
+                "title": str(topic["title"]),
+                "common_problem": str(topic["common_problem"]),
+                "domain": str(topic["domain"]),
+                "why_it_matters": str(topic["why_it_matters"]),
+                "evidence_count": len(evidence),
+                "evidence": evidence,
+                "limits": [
+                    "Transcript evidence shows the concept appears in this course family.",
+                    "It does not prove the method works for every equation, material, geometry, data size, or future case.",
+                    "Trust requires a named scientific job, a changed-case test, and a failure boundary.",
+                ],
+                "review_links": links,
+                "packet_href": f"evidence-packets/{slug}.html",
+            }
+        )
+    return packets
 
 
 def write_style() -> None:
@@ -2095,6 +2148,7 @@ def html_page(title: str, body: str, root_prefix: str = "") -> str:
   <a href="{root_prefix}provenance.html">Provenance</a>
   <a href="{root_prefix}coverage.html">Coverage</a>
   <a href="{root_prefix}concept-ladder.html">Ladder</a>
+  <a href="{root_prefix}evidence-packets.html">Packets</a>
   <a href="{root_prefix}quality.html">Quality</a>
   <a href="{root_prefix}synthesis.html">Synthesis</a>
   <a href="{root_prefix}review-entrypoints.html">Review Map</a>
@@ -2266,9 +2320,10 @@ def write_site(data: dict[str, object]) -> None:
     check_dir = SITE / "reader-checks"
     decision_dir = SITE / "decision-guide"
     provenance_dir = SITE / "provenance"
+    packet_dir = SITE / "evidence-packets"
     quality_dir = SITE / "quality"
     synthesis_dir = SITE / "synthesis"
-    for generated_dir in (family_dir, comparison_dir, example_dir, diagram_dir, derivation_dir, learning_dir, glossary_dir, domain_dir, check_dir, decision_dir, provenance_dir, quality_dir, synthesis_dir):
+    for generated_dir in (family_dir, comparison_dir, example_dir, diagram_dir, derivation_dir, learning_dir, glossary_dir, domain_dir, check_dir, decision_dir, provenance_dir, packet_dir, quality_dir, synthesis_dir):
         if generated_dir.exists():
             shutil.rmtree(generated_dir)
     topic_dir.mkdir(exist_ok=True)
@@ -2284,6 +2339,7 @@ def write_site(data: dict[str, object]) -> None:
     check_dir.mkdir(exist_ok=True)
     decision_dir.mkdir(exist_ok=True)
     provenance_dir.mkdir(exist_ok=True)
+    packet_dir.mkdir(exist_ok=True)
     quality_dir.mkdir(exist_ok=True)
     synthesis_dir.mkdir(exist_ok=True)
 
@@ -2306,6 +2362,7 @@ def write_site(data: dict[str, object]) -> None:
     provenance_guides = data["provenance_guides"]
     coverage_matrix = data["coverage_matrix"]
     concept_ladder = data["concept_ladder"]
+    concept_evidence_packets = data["concept_evidence_packets"]
     quality_rubric = data["quality_rubric"]
     synthesis_guides = data["synthesis_guides"]
     review_handoff = data["review_handoff"]
@@ -2330,6 +2387,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Provenance", f"{summary['provenance_guide_count']} pages documenting source, extraction, build, and reproduction.", "provenance.html")}
 {card("Coverage Matrix", f"{summary['coverage_row_count']} concepts checked across evidence and guide layers.", "coverage.html")}
 {card("Concept Ladder", f"{summary['concept_ladder_count']} concepts laid out from observed evidence to failure test.", "concept-ladder.html")}
+{card("Evidence Packets", f"{summary['concept_evidence_packet_count']} concept packets tying source support to review pages.", "evidence-packets.html")}
 {card("Quality Rubric", f"{summary['quality_rubric_count']} editorial standards for first-principles pages.", "quality.html")}
 {card("Synthesis", f"{summary['synthesis_guide_count']} pages tying the field into one argument.", "synthesis.html")}
 {card("Review Map", f"{summary['review_entrypoint_count']} entry points for end-to-end review, use, and source checks.", "review-entrypoints.html")}
@@ -2483,6 +2541,14 @@ def write_site(data: dict[str, object]) -> None:
 
     write_coverage_page(SITE / "coverage.html", list(coverage_matrix))
     write_concept_ladder_page(SITE / "concept-ladder.html", list(concept_ladder))
+    packet_cards = []
+    for packet in concept_evidence_packets:
+        packet_cards.append(card(str(packet["title"]), str(packet["common_problem"]), str(packet["packet_href"])))
+        write_concept_evidence_packet_page(packet_dir / f"{packet['slug']}.html", packet)
+    (SITE / "evidence-packets.html").write_text(
+        html_page("Physics-Informed ML Evidence Packets", f"<h1>Concept Evidence Packets</h1><p>Each packet gathers one concept's transcript support, source limits, and review links. Use these pages to check what the course evidence supports before making wider claims.</p><div class=\"grid\">{''.join(packet_cards)}</div>"),
+        encoding="utf-8",
+    )
 
     quality_cards = []
     for item in quality_rubric:
@@ -2995,6 +3061,40 @@ def write_concept_ladder_page(path: Path, rows: list[dict[str, object]]) -> None
     path.write_text(html_page("Physics-Informed ML Concept Ladder", body), encoding="utf-8")
 
 
+def write_concept_evidence_packet_page(path: Path, packet: dict[str, object]) -> None:
+    evidence_items = []
+    for item in packet["evidence"]:
+        evidence_items.append(
+            f"""
+<li>
+  <a href="{html.escape(str(item['url']))}">{html.escape(str(item['title']))}</a><br>
+  <span class="meta">{html.escape(str(item.get('clean_txt') or 'transcript path missing'))}</span><br>
+  {html.escape(str(item.get('excerpt') or 'No excerpt available.'))}
+</li>
+"""
+        )
+    limit_items = "".join(f"<li>{html.escape(str(item))}</li>" for item in packet["limits"])
+    review_links = "".join(
+        f"<li><a href=\"../{html.escape(str(item['href']))}\">{html.escape(str(item['label']))}</a></li>"
+        for item in packet["review_links"]
+    )
+    body = f"""
+<h1>{html.escape(str(packet['title']))}</h1>
+<h2>Concept Job</h2>
+<p><strong>Problem:</strong> {html.escape(str(packet['common_problem']))}</p>
+<p><strong>Domain:</strong> {html.escape(str(packet['domain']))}</p>
+<p><strong>Why it matters:</strong> {html.escape(str(packet['why_it_matters']))}</p>
+<h2>Transcript Support</h2>
+<p>This packet has {html.escape(str(packet['evidence_count']))} selected transcript anchors for review.</p>
+<ul>{''.join(evidence_items)}</ul>
+<h2>What This Evidence Does Not Prove</h2>
+<ul>{limit_items}</ul>
+<h2>Review Links</h2>
+<ul>{review_links}</ul>
+"""
+    path.write_text(html_page(str(packet["title"]), body, root_prefix="../"), encoding="utf-8")
+
+
 def write_quality_page(path: Path, item: dict[str, object]) -> None:
     body = f"""
 <h1>{html.escape(str(item['title']))}</h1>
@@ -3353,6 +3453,18 @@ def write_markdown_export(data: dict[str, object]) -> None:
                 "",
             ]
         )
+    lines.extend(["", "## Concept Evidence Packets"])
+    for packet in data["concept_evidence_packets"]:
+        lines.extend(
+            [
+                f"### {packet['title']}",
+                f"- Problem: {packet['common_problem']}",
+                f"- Domain: {packet['domain']}",
+                f"- Evidence anchors: {packet['evidence_count']}",
+                f"- Packet: {packet['packet_href']}",
+                "",
+            ]
+        )
     lines.extend(["", "## Editorial Quality Rubric"])
     for item in data["quality_rubric"]:
         lines.extend(
@@ -3451,6 +3563,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         SITE / "provenance.html",
         SITE / "coverage.html",
         SITE / "concept-ladder.html",
+        SITE / "evidence-packets.html",
         SITE / "quality.html",
         SITE / "synthesis.html",
         SITE / "review-entrypoints.html",
@@ -3605,6 +3718,26 @@ def validate(data: dict[str, object] | None = None) -> None:
                 raise SystemExit(f"concept ladder missing {field}: {row.get('title')}")
         if not (SITE / str(row["topic_href"])).exists():
             raise SystemExit(f"concept ladder topic link missing: {row['topic_href']}")
+    packet_index_path = SITE / "evidence-packets.html"
+    packet_index_text = packet_index_path.read_text(encoding="utf-8")
+    if "Concept Evidence Packets" not in packet_index_text:
+        raise SystemExit("concept evidence packet index not rendered correctly")
+    packets = data.get("concept_evidence_packets") or []
+    if len(packets) != len(data["concept_atlas"]):
+        raise SystemExit("concept evidence packet count does not match concept atlas")
+    for packet in packets:
+        packet_path = SITE / str(packet["packet_href"])
+        if not packet_path.exists():
+            raise SystemExit(f"missing concept evidence packet: {packet['title']}")
+        packet_text = packet_path.read_text(encoding="utf-8")
+        for required in ("Transcript Support", "What This Evidence Does Not Prove", "Review Links"):
+            if required not in packet_text:
+                raise SystemExit(f"concept evidence packet missing {required}: {packet['title']}")
+        if int(packet.get("evidence_count") or 0) <= 0:
+            raise SystemExit(f"concept evidence packet has no evidence: {packet['title']}")
+        for item in packet["review_links"]:
+            if not (SITE / str(item["href"])).exists():
+                raise SystemExit(f"concept evidence packet review link missing: {packet['title']} -> {item['href']}")
     core_slugs = {"physics-informed-neural-networks", "operator-learning", "surrogate-modeling", "uncertainty-and-generalization", "symbolic-regression", "foundation-models-for-pdes"}
     by_slug = {row["slug"]: row for row in coverage_rows}
     for slug in core_slugs:

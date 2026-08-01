@@ -22,10 +22,11 @@
 - provenance_guide_count: 6
 - coverage_row_count: 14
 - concept_ladder_count: 14
+- concept_evidence_packet_count: 14
 - quality_rubric_count: 6
 - synthesis_guide_count: 4
 - review_handoff_count: 1
-- review_entrypoint_count: 20
+- review_entrypoint_count: 21
 
 ## Concepts
 ### Deep Learning
@@ -821,6 +822,92 @@
 - Failure test: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures
 
 
+## Concept Evidence Packets
+### Deep Learning
+- Problem: scientists often have examples of behavior but no short rule that predicts the next case
+- Domain: scientific prediction from large measured or simulated data sets
+- Evidence anchors: 6
+- Packet: evidence-packets/deep-learning.html
+
+### Physics-Informed Neural Networks
+- Problem: measurements may be sparse, but the answer must still respect a known physical equation
+- Domain: differential equations in science and engineering
+- Evidence anchors: 6
+- Packet: evidence-packets/physics-informed-neural-networks.html
+
+### Partial Differential Equations
+- Problem: a quantity changes over space and time, so one number is not enough to describe the situation
+- Domain: fluids, heat, waves, mechanics, chemistry, climate, and other changing fields
+- Evidence anchors: 6
+- Packet: evidence-packets/partial-differential-equations.html
+
+### Operator Learning
+- Problem: one simulation answer is not enough when engineers need the whole map from inputs to solution fields
+- Domain: fast prediction for families of scientific simulations
+- Evidence anchors: 6
+- Packet: evidence-packets/operator-learning.html
+
+### Scientific Machine Learning
+- Problem: scientific work needs predictions that respect measurements, equations, uncertainty, and domain limits at the same time
+- Domain: using data-driven models inside scientific workflows
+- Evidence anchors: 6
+- Packet: evidence-packets/scientific-machine-learning.html
+
+### Surrogate Modeling
+- Problem: a trusted simulator may be too slow to run for every design, control, or uncertainty question
+- Domain: expensive simulation and design loops
+- Evidence anchors: 6
+- Packet: evidence-packets/surrogate-modeling.html
+
+### Uncertainty And Generalization
+- Problem: a prediction is not enough unless the user knows when it should be believed
+- Domain: model use under new conditions
+- Evidence anchors: 6
+- Packet: evidence-packets/uncertainty-and-generalization.html
+
+### Optimization For Learning
+- Problem: learning needs a way to decide which model settings are better or worse
+- Domain: turning model fitting into a repeatable computation
+- Evidence anchors: 6
+- Packet: evidence-packets/optimization-for-learning.html
+
+### Generative Modeling
+- Problem: some tasks need many possible examples, not one predicted answer
+- Domain: creating plausible scientific samples, fields, or candidate designs
+- Evidence anchors: 6
+- Packet: evidence-packets/generative-modeling.html
+
+### Graphs And Geometric Learning
+- Problem: many scientific objects are not simple rows of numbers; their connections matter
+- Domain: systems made of interacting parts, meshes, molecules, or spatial relations
+- Evidence anchors: 6
+- Packet: evidence-packets/graphs-and-geometric-learning.html
+
+### Neural Differential Equations
+- Problem: scientists may know that a system changes continuously but not know the exact rule for that change
+- Domain: changing systems where time evolution is part of the model
+- Evidence anchors: 6
+- Packet: evidence-packets/neural-differential-equations.html
+
+### Symbolic Regression And Model Discovery
+- Problem: a scientist may need a readable equation, not only a model that predicts well
+- Domain: turning data into equations people can inspect
+- Evidence anchors: 6
+- Packet: evidence-packets/symbolic-regression.html
+
+### Foundation Models For PDEs
+- Problem: one trained model may be asked to handle many related equations, grids, parameters, or physical settings
+- Domain: broad families of PDE problems and scientific fields
+- Evidence anchors: 6
+- Packet: evidence-packets/foundation-models-for-pdes.html
+
+### Attention For Scientific Fields
+- Problem: a local patch of a field may depend on faraway information, but looking everywhere can be expensive
+- Domain: large scientific fields where distant parts may interact
+- Evidence anchors: 6
+- Packet: evidence-packets/attention-for-scientific-fields.html
+
+
 ## Editorial Quality Rubric
 ### First Principles
 - Standard: The page starts from the real problem, observed evidence, hidden quantity, and scientific job before naming a method.
@@ -927,6 +1014,7 @@
 - Purpose: Use these pages to audit completeness, source support, and wording quality.
 - Coverage Matrix: coverage.html | Which important concepts still need more support?
 - Evidence Ledger: evidence-ledger.html | What does the transcript support, and what does it not prove?
+- Evidence Packets: evidence-packets.html | Can a reviewer audit one concept without hunting through the whole site?
 - Quality Rubric: quality.html | Does each page avoid empty language and explain the real problem?
 - Provenance: provenance.html | Could another CLI rebuild this package from the same sources?
 - Cross-Channel Playbook: provenance/cross-channel-playbook.html | What exact source, concept, evidence, page, and validation steps should the next build follow?

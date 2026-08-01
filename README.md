@@ -28,6 +28,7 @@ The purpose is not to summarize lectures. The purpose is to explain physics-info
 - `site/provenance/cross-channel-playbook.html`: instructions for another CLI building a similar package
 - `site/coverage.html`: concept coverage matrix across evidence and guide layers
 - `site/concept-ladder.html`: first-principles concept ladder from evidence to failure test
+- `site/evidence-packets.html`: per-concept source support and review links
 - `site/quality.html`: editorial quality rubric for first-principles pages
 - `site/synthesis.html`: field-level synthesis tying the concepts together
 - `site/review-entrypoints.html`: end-to-end review route through the package
@@ -92,6 +93,7 @@ http://127.0.0.1:8022/index.html
 - cross-channel replication playbook
 - coverage matrix
 - concept ladder
+- concept evidence packets
 - editorial quality rubric
 - field synthesis
 - review entrypoint map
