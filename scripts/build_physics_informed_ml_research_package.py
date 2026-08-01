@@ -403,6 +403,86 @@ WORKED_EXAMPLES = [
         ],
         "why_it_teaches": "It separates prediction from explanation. A readable rule becomes valuable only when it survives a changed experiment.",
     },
+    {
+        "slug": "molecule-property-from-structure",
+        "title": "Molecule Property From Structure",
+        "domain": "chemistry and biology, where atoms, bonds, shape, and measured activity all matter",
+        "question": "Can a model predict a useful molecular property without flattening away the structure that causes it?",
+        "observed": "molecular graphs, atom types, bond patterns, shape information, and measured properties from experiments or trusted calculations",
+        "hidden": "which structural relations control the property for a new molecule",
+        "method_route": ["graphs-and-geometric-learning", "deep-learning", "uncertainty-and-generalization"],
+        "plain_steps": [
+            "Represent the molecule as connected parts, not as an unordered list.",
+            "Let information move along bonds and nearby spatial relations.",
+            "Predict the target property for a new molecule.",
+            "Reject the claim if a new scaffold, rare atom type, or changed assay breaks the prediction.",
+        ],
+        "why_it_teaches": "It shows why geometry and connections matter. The scientific object already has structure before the model sees it.",
+    },
+    {
+        "slug": "material-stress-from-sparse-tests",
+        "title": "Material Stress From Sparse Tests",
+        "domain": "materials and mechanics, where stress and strain depend on shape, load, defects, and boundary conditions",
+        "question": "How can a model estimate stress inside a material when only a few tests or simulations are available?",
+        "observed": "sample geometry, load conditions, a few measured displacements or strains, and known mechanical balance laws",
+        "hidden": "the internal stress field and the weak region where failure may begin",
+        "method_route": ["partial-differential-equations", "physics-informed-neural-networks", "surrogate-modeling"],
+        "plain_steps": [
+            "Name the material quantity that matters for the decision.",
+            "Use sparse measurements as anchors for the unknown field.",
+            "Use mechanical balance as a check between measured places.",
+            "Compare against held-out tests, changed loads, and trusted simulations near failure regions.",
+        ],
+        "why_it_teaches": "It connects physics constraints to a practical engineering risk: missing a local stress concentration can matter more than average error.",
+    },
+    {
+        "slug": "mesh-field-on-irregular-geometry",
+        "title": "Mesh Field On Irregular Geometry",
+        "domain": "scientific fields on meshes, surfaces, networks, and irregular engineering shapes",
+        "question": "How can a model predict a field when the points are connected in an uneven shape instead of a neat grid?",
+        "observed": "mesh points, connections, boundary labels, local features, and solution fields from prior solves",
+        "hidden": "how information should move across the irregular geometry for a new case",
+        "method_route": ["graphs-and-geometric-learning", "operator-learning", "attention-for-scientific-fields"],
+        "plain_steps": [
+            "Keep the mesh connections visible.",
+            "Pass information along nearby and important distant relations.",
+            "Predict the field on the same kind of geometric object.",
+            "Test changed meshes, boundaries, rotations, and refined regions before trusting the answer.",
+        ],
+        "why_it_teaches": "It shows why some scientific data cannot be treated like a flat table. The connections carry part of the physics.",
+    },
+    {
+        "slug": "foundation-pde-model-on-new-equation",
+        "title": "Foundation PDE Model On A New Equation",
+        "domain": "many PDE tasks where one broad model is asked to help with a new scientific equation",
+        "question": "When can a model trained on many PDE examples help with a new equation family?",
+        "observed": "many prior equation tasks, grids, parameters, boundary types, and solution fields",
+        "hidden": "which shared structure carries to the new equation and which parts do not",
+        "method_route": ["foundation-models-for-pdes", "operator-learning", "uncertainty-and-generalization"],
+        "plain_steps": [
+            "List what the broad model has seen before.",
+            "Name what is different about the new equation, boundary, scale, or field.",
+            "Use the model only as a candidate shortcut for the new task.",
+            "Compare against a trusted solve and look for the first changed condition where it fails.",
+        ],
+        "why_it_teaches": "It makes breadth concrete. A broad model is useful only when the new task shares the structure the model actually learned.",
+    },
+    {
+        "slug": "climate-risk-under-shifted-conditions",
+        "title": "Climate Risk Under Shifted Conditions",
+        "domain": "climate, weather, and environmental fields where future conditions may differ from old data",
+        "question": "How should a model report risk when the future case is not just another familiar example?",
+        "observed": "historical fields, simulation ensembles, forcing conditions, regional measurements, and known physical constraints",
+        "hidden": "how wrong the prediction may be under a changed climate, rare event, or new regional pattern",
+        "method_route": ["uncertainty-and-generalization", "surrogate-modeling", "partial-differential-equations"],
+        "plain_steps": [
+            "Name the risk quantity before choosing a model.",
+            "Separate familiar held-out cases from truly changed future conditions.",
+            "Report prediction with the tested use range.",
+            "Reject confident claims when rare events, regions, or forcing changes have not been checked.",
+        ],
+        "why_it_teaches": "It shows why uncertainty is not an add-on. The use range is part of the scientific answer.",
+    },
 ]
 
 
@@ -899,7 +979,7 @@ DOMAIN_GUIDES = [
         "concepts": ["partial-differential-equations", "surrogate-modeling", "graphs-and-geometric-learning", "uncertainty-and-generalization"],
         "methods": ["Keep geometry and connections visible.", "Compare against trusted simulations or measurements.", "Name the load, material range, and failure quantity."],
         "failure_test": "Change the geometry, mesh, defect, or load path and check the physical quantity used for decisions.",
-        "example": "families/scientific-surrogates-family.html",
+        "example": "worked-examples/material-stress-from-sparse-tests.html",
     },
     {
         "slug": "chemistry-and-biology",
@@ -910,7 +990,7 @@ DOMAIN_GUIDES = [
         "concepts": ["graphs-and-geometric-learning", "generative-modeling", "symbolic-regression", "uncertainty-and-generalization"],
         "methods": ["Represent connections when interactions matter.", "Use generation only with scientific checks.", "Look for readable rules only when the measured variables support them."],
         "failure_test": "Test on a changed molecule, condition, experiment, or biological setting that was not close to training.",
-        "example": "topics/graphs-and-geometric-learning.html",
+        "example": "worked-examples/molecule-property-from-structure.html",
     },
     {
         "slug": "many-pde-tasks",
@@ -921,7 +1001,7 @@ DOMAIN_GUIDES = [
         "concepts": ["foundation-models-for-pdes", "operator-learning", "attention-for-scientific-fields", "uncertainty-and-generalization"],
         "methods": ["Train across many tasks.", "Hold out whole task families.", "Compare against trusted solves on changed equations, boundaries, and scales."],
         "failure_test": "Withhold a full equation family, boundary type, or scale and check whether the model still earns the claim.",
-        "example": "topics/foundation-models-for-pdes.html",
+        "example": "worked-examples/foundation-pde-model-on-new-equation.html",
     },
 ]
 
@@ -1279,7 +1359,7 @@ REVIEW_HANDOFF = {
     ],
     "remaining_editorial_work": [
         "Hand-write richer derivations for the highest-value concepts after reviewing the generated structure.",
-        "Add more worked examples for chemistry, materials, graphs, attention, and foundation PDE models.",
+        "Add lecture-specific quotes and figures to the worked examples after reviewing the transcript excerpts.",
         "Add real figures or mathematical sketches where a static flow diagram is not enough.",
         "Review transcript excerpts for places where better quotes or lecture-specific anchors should be selected.",
     ],
@@ -3355,8 +3435,29 @@ def validate(data: dict[str, object] | None = None) -> None:
         if not (SITE / "comparisons" / f"{comparison['slug']}.html").exists():
             raise SystemExit(f"missing comparison page: {comparison['title']}")
     for example in WORKED_EXAMPLES:
-        if not (SITE / "worked-examples" / f"{example['slug']}.html").exists():
+        example_path = SITE / "worked-examples" / f"{example['slug']}.html"
+        if not example_path.exists():
             raise SystemExit(f"missing worked example page: {example['title']}")
+        example_text = example_path.read_text(encoding="utf-8")
+        if "Observed And Hidden" not in example_text or "Claim Boundary" not in example_text:
+            raise SystemExit(f"worked example not rendered correctly: {example['title']}")
+        for slug in example["method_route"]:
+            if not (SITE / "topics" / f"{slug}.html").exists():
+                raise SystemExit(f"worked example method route missing topic: {example['title']} -> {slug}")
+    required_examples = {
+        "heat-equation-from-few-measurements",
+        "fast-fluid-field-surrogate",
+        "discovering-a-small-law-from-motion",
+        "molecule-property-from-structure",
+        "material-stress-from-sparse-tests",
+        "mesh-field-on-irregular-geometry",
+        "foundation-pde-model-on-new-equation",
+        "climate-risk-under-shifted-conditions",
+    }
+    example_slugs = {str(example["slug"]) for example in WORKED_EXAMPLES}
+    missing_examples = sorted(required_examples - example_slugs)
+    if missing_examples:
+        raise SystemExit(f"missing required worked examples: {missing_examples}")
     for diagram in DIAGRAMS:
         diagram_path = SITE / "diagrams" / f"{diagram['slug']}.html"
         if not diagram_path.exists():

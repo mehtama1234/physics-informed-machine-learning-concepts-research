@@ -16,7 +16,7 @@ The purpose is not to summarize lectures. The purpose is to explain physics-info
 - `site/concept-atlas.html`: plain-language mathematical concept atlas
 - `site/families.html`: paper-family routes through related concepts
 - `site/comparisons.html`: plain-language comparisons between nearby methods
-- `site/worked-examples.html`: concrete scientific examples
+- `site/worked-examples.html`: 8 concrete scientific examples
 - `site/diagrams.html`: visual flows for the main mathematical ideas
 - `site/derivations.html`: core first-principles derivation walkthroughs
 - `site/learning-path.html`: step-by-step route through the field from first principles
@@ -79,7 +79,7 @@ http://127.0.0.1:8022/index.html
 - concept atlas
 - paper-family routes
 - comparison pages
-- worked examples
+- 8 worked examples
 - visual flow diagrams
 - core derivation walkthroughs
 - first-principles learning path

@@ -10,7 +10,7 @@
 - theme_count: 7
 - family_count: 4
 - comparison_count: 4
-- worked_example_count: 3
+- worked_example_count: 8
 - deep_dive_count: 8
 - core_derivation_count: 8
 - diagram_count: 6
@@ -179,6 +179,36 @@
 - Question: Can data reveal a short rule for how the system moves?
 - Observed: measurements of position, speed, concentration, or another changing quantity
 - Hidden: the rate rule that causes the next moment
+
+### Molecule Property From Structure
+- Domain: chemistry and biology, where atoms, bonds, shape, and measured activity all matter
+- Question: Can a model predict a useful molecular property without flattening away the structure that causes it?
+- Observed: molecular graphs, atom types, bond patterns, shape information, and measured properties from experiments or trusted calculations
+- Hidden: which structural relations control the property for a new molecule
+
+### Material Stress From Sparse Tests
+- Domain: materials and mechanics, where stress and strain depend on shape, load, defects, and boundary conditions
+- Question: How can a model estimate stress inside a material when only a few tests or simulations are available?
+- Observed: sample geometry, load conditions, a few measured displacements or strains, and known mechanical balance laws
+- Hidden: the internal stress field and the weak region where failure may begin
+
+### Mesh Field On Irregular Geometry
+- Domain: scientific fields on meshes, surfaces, networks, and irregular engineering shapes
+- Question: How can a model predict a field when the points are connected in an uneven shape instead of a neat grid?
+- Observed: mesh points, connections, boundary labels, local features, and solution fields from prior solves
+- Hidden: how information should move across the irregular geometry for a new case
+
+### Foundation PDE Model On A New Equation
+- Domain: many PDE tasks where one broad model is asked to help with a new scientific equation
+- Question: When can a model trained on many PDE examples help with a new equation family?
+- Observed: many prior equation tasks, grids, parameters, boundary types, and solution fields
+- Hidden: which shared structure carries to the new equation and which parts do not
+
+### Climate Risk Under Shifted Conditions
+- Domain: climate, weather, and environmental fields where future conditions may differ from old data
+- Question: How should a model report risk when the future case is not just another familiar example?
+- Observed: historical fields, simulation ensembles, forcing conditions, regional measurements, and known physical constraints
+- Hidden: how wrong the prediction may be under a changed climate, rare event, or new regional pattern
 
 
 ## Core Topic Deep Dives
@@ -858,7 +888,7 @@
 
 ### Remaining Editorial Work
 - Hand-write richer derivations for the highest-value concepts after reviewing the generated structure.
-- Add more worked examples for chemistry, materials, graphs, attention, and foundation PDE models.
+- Add lecture-specific quotes and figures to the worked examples after reviewing the transcript excerpts.
 - Add real figures or mathematical sketches where a static flow diagram is not enough.
 - Review transcript excerpts for places where better quotes or lecture-specific anchors should be selected.
 
