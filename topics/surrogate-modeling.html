@@ -76,6 +76,38 @@
   <li><strong>Say what it means:</strong> speed is useful only inside the query family where the stand-in was checked.</li>
 </ol>
 
+<h2>Plain Formula Term By Term</h2>
+<p>The formula is not decoration. Each part says what information is being carried from the observed evidence toward the hidden quantity, and what must be checked before the claim is trusted.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Formula Part</th>
+      <th>What It Carries</th>
+      <th>What To Check</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+  <td><code>query</code></td>
+  <td>This is the evidence or starting object: expensive solver inputs and outputs for a limited set of cases.</td>
+  <td>compare against the full solver on new cases near the edge of the intended use</td>
+</tr>
+
+<tr>
+  <td><code>fast stand-in</code></td>
+  <td>This part carries one piece of the formula shape: speed is useful only inside the query family where the stand-in was checked.</td>
+  <td>compare against the full solver on new cases near the edge of the intended use</td>
+</tr>
+
+<tr>
+  <td><code>approximate answer</code></td>
+  <td>This points at the hidden target: the solver answer for every new query someone wants to ask.</td>
+  <td>compare against the full solver on new cases near the edge of the intended use</td>
+</tr>
+</tbody>
+</table>
+
+
 <h2>Core Idea In One Sentence</h2>
 <p>A surrogate is a faster stand-in for a slower trusted process.</p>
 <h2>Where This Is Useful</h2>
