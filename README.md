@@ -41,11 +41,13 @@ The purpose is not to summarize lectures. The purpose is to explain physics-info
 - `analysis/`: generated JSON research maps
 - `exports/`: portable Markdown export
 - `scripts/build_physics_informed_ml_research_package.py`: downloader, builder, and validator
+- `scripts/validate_generated_site.py`: standalone generated-site link and content validator
 
 ## Commands
 
 ```bash
 python3 scripts/build_physics_informed_ml_research_package.py --build --validate
+python3 scripts/validate_generated_site.py
 ```
 
 To refresh YouTube captions and metadata:
