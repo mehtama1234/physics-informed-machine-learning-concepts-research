@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Physics-Informed ML Concept Dependency Map</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav class="topbar">
+  <a href="index.html">Physics-Informed ML</a>
+  <a href="transcripts.html">Transcripts</a>
+  <a href="concept-atlas.html">Concept Atlas</a>
+  <a href="families.html">Families</a>
+  <a href="comparisons.html">Comparisons</a>
+  <a href="worked-examples.html">Examples</a>
+  <a href="diagrams.html">Diagrams</a>
+  <a href="derivations.html">Derivations</a>
+  <a href="formula-guide.html">Formulas</a>
+  <a href="learning-path.html">Path</a>
+  <a href="glossary.html">Glossary</a>
+  <a href="domains.html">Domains</a>
+  <a href="reader-checks.html">Checks</a>
+  <a href="decision-guide.html">Decide</a>
+  <a href="provenance.html">Provenance</a>
+  <a href="coverage.html">Coverage</a>
+  <a href="dependencies.html">Dependencies</a>
+  <a href="concept-ladder.html">Ladder</a>
+  <a href="evidence-packets.html">Packets</a>
+  <a href="quality.html">Quality</a>
+  <a href="synthesis.html">Synthesis</a>
+  <a href="review-entrypoints.html">Review Map</a>
+  <a href="completion-audit.html">Audit</a>
+  <a href="handoff.html">Handoff</a>
+  <a href="theme-map.html">Themes</a>
+  <a href="evidence-ledger.html">Evidence</a>
+</nav>
+<main>
+
+<h1>Concept Dependency Map</h1>
+<p>This page shows which ideas should come before other ideas. Read it as a route for understanding, not as a ranking of importance.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Concept</th>
+      <th>Learn First</th>
+      <th>Why This Dependency Matters</th>
+      <th>Confusion It Prevents</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+  <td><a href="topics/physics-informed-neural-networks.html">Physics-Informed Neural Networks</a></td>
+  <td><ul><li><a href="topics/partial-differential-equations.html">Partial Differential Equations</a></li><li><a href="topics/deep-learning.html">Deep Learning</a></li><li><a href="topics/optimization-for-learning.html">Optimization For Learning</a></li></ul></td>
+  <td>A PINN combines a fitted neural network, a differential equation check, and a training score.</td>
+  <td>Without the dependencies, a reader may think a PINN is just a neural network with physics language attached.</td>
+</tr>
+
+<tr>
+  <td><a href="topics/operator-learning.html">Operator Learning</a></td>
+  <td><ul><li><a href="topics/partial-differential-equations.html">Partial Differential Equations</a></li><li><a href="topics/deep-learning.html">Deep Learning</a></li><li><a href="topics/surrogate-modeling.html">Surrogate Modeling</a></li></ul></td>
+  <td>Operator learning makes sense when the job is a fast map between full fields across many related solves.</td>
+  <td>Without fields and surrogates, a reader may mistake it for one more predictor on a table.</td>
+</tr>
+
+<tr>
+  <td><a href="topics/surrogate-modeling.html">Surrogate Modeling</a></td>
+  <td><ul><li><a href="topics/deep-learning.html">Deep Learning</a></li><li><a href="topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></li></ul></td>
+  <td>A surrogate is useful only when its repeated query family and tested use range are named.</td>
+  <td>Without uncertainty, speed can be mistaken for scientific trust.</td>
+</tr>
+
+<tr>
+  <td><a href="topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></td>
+  <td><ul><li><a href="topics/deep-learning.html">Deep Learning</a></li><li><a href="topics/scientific-machine-learning.html">Scientific Machine Learning</a></li></ul></td>
+  <td>Uncertainty and generalization ask whether fitted behavior survives a changed scientific case.</td>
+  <td>Without the scientific job, uncertainty can look like a decorative confidence number.</td>
+</tr>
+
+<tr>
+  <td><a href="topics/neural-differential-equations.html">Neural Differential Equations</a></td>
+  <td><ul><li><a href="topics/partial-differential-equations.html">Partial Differential Equations</a></li><li><a href="topics/deep-learning.html">Deep Learning</a></li><li><a href="topics/optimization-for-learning.html">Optimization For Learning</a></li></ul></td>
+  <td>The learned part is a rate or missing change rule placed inside a time-evolution calculation.</td>
+  <td>Without differential equations, a reader may miss why small rate errors can accumulate over time.</td>
+</tr>
+
+<tr>
+  <td><a href="topics/symbolic-regression.html">Symbolic Regression And Model Discovery</a></td>
+  <td><ul><li><a href="topics/optimization-for-learning.html">Optimization For Learning</a></li><li><a href="topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></li></ul></td>
+  <td>Symbolic regression searches for a readable rule, then needs changed-case tests to reject neat but wrong formulas.</td>
+  <td>Without changed-case testing, a compact equation can be mistaken for truth.</td>
+</tr>
+
+<tr>
+  <td><a href="topics/graphs-and-geometric-learning.html">Graphs And Geometric Learning</a></td>
+  <td><ul><li><a href="topics/deep-learning.html">Deep Learning</a></li><li><a href="topics/scientific-machine-learning.html">Scientific Machine Learning</a></li></ul></td>
+  <td>Geometric learning keeps connections, shapes, and symmetries visible inside learned prediction.</td>
+  <td>Without the scientific object, graph structure can look like a modeling fashion rather than required information.</td>
+</tr>
+
+<tr>
+  <td><a href="topics/attention-for-scientific-fields.html">Attention For Scientific Fields</a></td>
+  <td><ul><li><a href="topics/operator-learning.html">Operator Learning</a></li><li><a href="topics/graphs-and-geometric-learning.html">Graphs And Geometric Learning</a></li></ul></td>
+  <td>Attention is a way to move selected information across large fields or connected objects.</td>
+  <td>Without fields and connections, attention can be misread as proof that all important interactions were captured.</td>
+</tr>
+
+<tr>
+  <td><a href="topics/generative-modeling.html">Generative Modeling</a></td>
+  <td><ul><li><a href="topics/deep-learning.html">Deep Learning</a></li><li><a href="topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></li></ul></td>
+  <td>Generated scientific samples need checks for validity, rarity, and downstream use.</td>
+  <td>Without validation, plausible samples can be mistaken for physically useful samples.</td>
+</tr>
+
+<tr>
+  <td><a href="topics/foundation-models-for-pdes.html">Foundation Models For PDEs</a></td>
+  <td><ul><li><a href="topics/operator-learning.html">Operator Learning</a></li><li><a href="topics/partial-differential-equations.html">Partial Differential Equations</a></li><li><a href="topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></li></ul></td>
+  <td>Broad PDE models depend on field-to-field maps, equation families, and tests on held-out task families.</td>
+  <td>Without these dependencies, scale can be mistaken for coverage of a new scientific case.</td>
+</tr>
+</tbody>
+</table>
+<h2>How To Use This</h2>
+<p>If a concept feels vague, move to its Learn First column and read those pages before returning. Most confusion comes from skipping the object being predicted, the rule being checked, or the failure test.</p>
+
+</main>
+</body>
+</html>
