@@ -25,6 +25,7 @@ The purpose is not to summarize lectures. The purpose is to explain physics-info
 - `site/reader-checks.html`: self-check prompts for core ideas
 - `site/decision-guide.html`: method choice guide from scientific situations
 - `site/provenance.html`: source, extraction, build, and reproduction guide
+- `site/provenance/cross-channel-playbook.html`: instructions for another CLI building a similar package
 - `site/coverage.html`: concept coverage matrix across evidence and guide layers
 - `site/concept-ladder.html`: first-principles concept ladder from evidence to failure test
 - `site/quality.html`: editorial quality rubric for first-principles pages
@@ -88,6 +89,7 @@ http://127.0.0.1:8022/index.html
 - reader self-checks
 - decision guide
 - provenance and reproduction guide
+- cross-channel replication playbook
 - coverage matrix
 - concept ladder
 - editorial quality rubric

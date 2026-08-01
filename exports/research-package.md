@@ -19,13 +19,13 @@
 - domain_guide_count: 5
 - reader_check_count: 6
 - decision_guide_count: 6
-- provenance_guide_count: 5
+- provenance_guide_count: 6
 - coverage_row_count: 14
 - concept_ladder_count: 14
 - quality_rubric_count: 6
 - synthesis_guide_count: 4
 - review_handoff_count: 1
-- review_entrypoint_count: 19
+- review_entrypoint_count: 20
 
 ## Concepts
 ### Deep Learning
@@ -601,6 +601,11 @@
 - Local files: scripts/build_physics_informed_ml_research_package.py, README.md, Makefile
 - Checks: repo has a clear topic name, raw source material is preserved, generated pages are validated, commits are small enough to review
 
+### Cross-Channel Replication Playbook
+- Purpose: Give another CLI an end-to-end operating plan for building the same kind of package from a different channel or playlist family.
+- Local files: raw-material/playlists/, raw-material/metadata/, raw-material/transcripts/, analysis/, site/, exports/research-package.md
+- Checks: source URLs are named, raw and clean transcripts are preserved, concept pages explain problem/domain/importance/failure, review entrypoints and coverage pages exist, validation commands pass
+
 
 ## Coverage Matrix
 ### Deep Learning
@@ -924,3 +929,4 @@
 - Evidence Ledger: evidence-ledger.html | What does the transcript support, and what does it not prove?
 - Quality Rubric: quality.html | Does each page avoid empty language and explain the real problem?
 - Provenance: provenance.html | Could another CLI rebuild this package from the same sources?
+- Cross-Channel Playbook: provenance/cross-channel-playbook.html | What exact source, concept, evidence, page, and validation steps should the next build follow?

@@ -1243,6 +1243,22 @@ PROVENANCE_GUIDES = [
         "local_files": ["scripts/build_physics_informed_ml_research_package.py", "README.md", "Makefile"],
         "checks": ["repo has a clear topic name", "raw source material is preserved", "generated pages are validated", "commits are small enough to review"],
     },
+    {
+        "slug": "cross-channel-playbook",
+        "title": "Cross-Channel Replication Playbook",
+        "purpose": "Give another CLI an end-to-end operating plan for building the same kind of package from a different channel or playlist family.",
+        "steps": [
+            "Start with named source URLs, playlist titles, intended topic name, and a short description of the audience.",
+            "Download playlist manifests, metadata, raw captions, automatic captions, and cleaned transcript text before writing analysis.",
+            "Create a first concept seed list from titles, repeated transcript phrases, paper names, equations, methods, and domain words.",
+            "For each concept, write the common problem, domain, importance, kept information, ignored information, and failure boundary in plain language.",
+            "Group concepts into families, comparisons, worked examples, diagrams, learning path, glossary, domain guides, checks, decisions, coverage, derivations, and review entrypoints.",
+            "Separate transcript evidence from proof: cite where the channel discusses a concept, then state what the transcript does not prove.",
+            "Run build validation, link validation, wording checks, HTTP smoke checks, and a final clean git status before asking for review.",
+        ],
+        "local_files": ["raw-material/playlists/", "raw-material/metadata/", "raw-material/transcripts/", "analysis/", "site/", "exports/research-package.md"],
+        "checks": ["source URLs are named", "raw and clean transcripts are preserved", "concept pages explain problem/domain/importance/failure", "review entrypoints and coverage pages exist", "validation commands pass"],
+    },
 ]
 
 
@@ -1502,6 +1518,12 @@ REVIEW_ENTRYPOINTS = [
                 "href": "provenance.html",
                 "why": "Documents source playlists, caption extraction, local files, and reproduction commands.",
                 "question": "Could another CLI rebuild this package from the same sources?",
+            },
+            {
+                "label": "Cross-Channel Playbook",
+                "href": "provenance/cross-channel-playbook.html",
+                "why": "Gives another CLI the ordered steps for creating the same kind of package from a different channel.",
+                "question": "What exact source, concept, evidence, page, and validation steps should the next build follow?",
             },
         ],
     },

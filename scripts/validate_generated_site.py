@@ -107,6 +107,7 @@ def check_required_sections() -> list[str]:
         "site/review-entrypoints.html": ("Review Entrypoints", "End-To-End Test"),
         "site/concept-ladder.html": ("Concept Ladder", "Mathematical Move", "Failure Test"),
         "site/derivations.html": ("Core Derivations",),
+        "site/provenance/cross-channel-playbook.html": ("Cross-Channel Replication Playbook", "Process", "Checks"),
         "site/worked-examples/molecule-property-from-structure.html": ("End-To-End Flow", "Claim Boundary"),
         "site/worked-examples/foundation-pde-model-on-new-equation.html": ("End-To-End Flow", "Claim Boundary"),
     }
@@ -160,8 +161,8 @@ def validate() -> None:
         errors.append(f"expected 40 videos, found {summary.get('video_count')}")
     if summary.get("concept_count") != 14:
         errors.append(f"expected 14 concepts, found {summary.get('concept_count')}")
-    if len(manifest) != 155:
-        errors.append(f"expected 155 pages, found {len(manifest)}")
+    if len(manifest) != 156:
+        errors.append(f"expected 156 pages, found {len(manifest)}")
 
     errors.extend(check_internal_links(manifest))
     errors.extend(check_required_sections())
