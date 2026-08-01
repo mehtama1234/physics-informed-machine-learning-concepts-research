@@ -77,6 +77,33 @@
 <h2>Connects To</h2>
 <ul><li><a href="../topics/surrogate-modeling.html">Surrogate Modeling</a></li><li><a href="../topics/attention-for-scientific-fields.html">Attention For Scientific Fields</a></li><li><a href="../topics/foundation-models-for-pdes.html">Foundation Models For PDEs</a></li></ul>
 
+<h2>Mathematical Sketch</h2>
+<article class="sketch">
+  <h3>Operator Learning: Field To Field</h3>
+  <div class="sketch-grid">
+<div class="sketch-cell input">
+  <span>input field</span>
+</div>
+
+<div class="sketch-cell rule">
+  <span>learned map</span>
+</div>
+
+<div class="sketch-cell output">
+  <span>output field</span>
+</div>
+
+<div class="sketch-cell failure">
+  <span>new family</span>
+</div>
+</div>
+  <p><strong>Input:</strong> a whole input field from a named family</p>
+  <p><strong>Output:</strong> the whole output field for that input</p>
+  <p><strong>Kept Rule:</strong> the learned object is a reusable map between fields, not one solved example</p>
+  <p><strong>Failure Case:</strong> a new input field changes the family, boundary, geometry, or resolution beyond the tested range</p>
+  <p class="sketch-caption">Input: whole field. Output: whole field. Kept rule: reusable map between related cases. Failure case: new field outside the named family.</p>
+</article>
+
 <h2>Visual Map</h2>
 <article class="card">
   <h3><a href="../diagrams/operator-learning-flow.html">Operator Learning Flow</a></h3>

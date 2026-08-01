@@ -1,0 +1,124 @@
+[
+  {
+    "slug": "pinn-measurement-rule-sketch",
+    "title": "PINNs: Points Plus Rule Checks",
+    "topic_slugs": [
+      "physics-informed-neural-networks"
+    ],
+    "input": "few measured points, boundary values, and a known equation",
+    "output": "a fitted field for the whole domain",
+    "kept_rule": "the field should match data and leave little equation-breaking between data points",
+    "failure_case": "the field matches sensors but breaks the equation, boundary, or held-out measurements",
+    "caption": "Input: measured points and equation. Output: full field. Kept rule: data plus equation checks. Failure case: correct-looking fit that breaks physics in unmeasured regions.",
+    "cells": [
+      {
+        "label": "measured points",
+        "role": "input"
+      },
+      {
+        "label": "equation-check points",
+        "role": "rule"
+      },
+      {
+        "label": "fitted field",
+        "role": "output"
+      },
+      {
+        "label": "held-out region",
+        "role": "failure"
+      }
+    ]
+  },
+  {
+    "slug": "operator-field-map-sketch",
+    "title": "Operator Learning: Field To Field",
+    "topic_slugs": [
+      "operator-learning",
+      "foundation-models-for-pdes"
+    ],
+    "input": "a whole input field from a named family",
+    "output": "the whole output field for that input",
+    "kept_rule": "the learned object is a reusable map between fields, not one solved example",
+    "failure_case": "a new input field changes the family, boundary, geometry, or resolution beyond the tested range",
+    "caption": "Input: whole field. Output: whole field. Kept rule: reusable map between related cases. Failure case: new field outside the named family.",
+    "cells": [
+      {
+        "label": "input field",
+        "role": "input"
+      },
+      {
+        "label": "learned map",
+        "role": "rule"
+      },
+      {
+        "label": "output field",
+        "role": "output"
+      },
+      {
+        "label": "new family",
+        "role": "failure"
+      }
+    ]
+  },
+  {
+    "slug": "surrogate-decision-sketch",
+    "title": "Surrogate Modeling: Fast Stand-In With Boundaries",
+    "topic_slugs": [
+      "surrogate-modeling"
+    ],
+    "input": "queries that would normally require a trusted slow source",
+    "output": "fast approximate answers for repeated choices",
+    "kept_rule": "the stand-in remains checked against the trusted source inside a named use range",
+    "failure_case": "the stand-in is used near an edge case where the trusted source has not checked it",
+    "caption": "Input: repeated query. Output: fast answer. Kept rule: checked against trusted source. Failure case: fast answer outside the tested use range.",
+    "cells": [
+      {
+        "label": "repeated query",
+        "role": "input"
+      },
+      {
+        "label": "trusted source",
+        "role": "rule"
+      },
+      {
+        "label": "fast answer",
+        "role": "output"
+      },
+      {
+        "label": "edge case",
+        "role": "failure"
+      }
+    ]
+  },
+  {
+    "slug": "uncertainty-shift-sketch",
+    "title": "Uncertainty: New Case Near The Edge",
+    "topic_slugs": [
+      "uncertainty-and-generalization",
+      "foundation-models-for-pdes"
+    ],
+    "input": "training cases and a new case that may be different",
+    "output": "prediction with a tested use range",
+    "kept_rule": "belief should weaken when the new case leaves the evidence range",
+    "failure_case": "the model stays confident where training and validation no longer support confidence",
+    "caption": "Input: old cases plus new case. Output: prediction with use range. Kept rule: doubt grows near the edge. Failure case: confident answer outside evidence.",
+    "cells": [
+      {
+        "label": "old cases",
+        "role": "input"
+      },
+      {
+        "label": "use range",
+        "role": "rule"
+      },
+      {
+        "label": "prediction",
+        "role": "output"
+      },
+      {
+        "label": "shifted case",
+        "role": "failure"
+      }
+    ]
+  }
+]

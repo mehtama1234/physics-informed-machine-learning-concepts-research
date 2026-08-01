@@ -39,7 +39,111 @@
   <a href="evidence-ledger.html">Evidence</a>
 </nav>
 <main>
-<h1>Diagram Index</h1><p>These diagrams show the flow of evidence, rules, learned objects, and validation checks. They are deliberately simple so the core idea is visible before any notation appears.</p><div class="grid"><article class="card"><h3><a href="diagrams/data-only-learning-flow.html">Data-Only Learning Flow</a></h3><p>Show what a model sees when examples are the only source of correction.</p></article><article class="card"><h3><a href="diagrams/physics-informed-learning-flow.html">Physics-Informed Learning Flow</a></h3><p>Show how measured data and a known physical rule both push on the fitted field.</p></article><article class="card"><h3><a href="diagrams/pde-field-reasoning-flow.html">PDE Field Reasoning Flow</a></h3><p>Show why fields need boundaries, neighbors, and time rather than isolated numbers.</p></article><article class="card"><h3><a href="diagrams/operator-learning-flow.html">Operator Learning Flow</a></h3><p>Show the difference between learning one answer and learning a map from input fields to output fields.</p></article><article class="card"><h3><a href="diagrams/surrogate-validation-flow.html">Surrogate Validation Flow</a></h3><p>Show how a fast stand-in earns trust only by being checked against the slow source.</p></article><article class="card"><h3><a href="diagrams/model-discovery-flow.html">Model Discovery Flow</a></h3><p>Show how measurements can lead to a candidate rule rather than only a prediction.</p></article></div>
+<h1>Diagram Index</h1><p>These diagrams and sketches show the flow of evidence, rules, learned objects, and validation checks. They are deliberately simple so the core idea is visible before any notation appears.</p><div class="grid"><article class="card"><h3><a href="diagrams/data-only-learning-flow.html">Data-Only Learning Flow</a></h3><p>Show what a model sees when examples are the only source of correction.</p></article><article class="card"><h3><a href="diagrams/physics-informed-learning-flow.html">Physics-Informed Learning Flow</a></h3><p>Show how measured data and a known physical rule both push on the fitted field.</p></article><article class="card"><h3><a href="diagrams/pde-field-reasoning-flow.html">PDE Field Reasoning Flow</a></h3><p>Show why fields need boundaries, neighbors, and time rather than isolated numbers.</p></article><article class="card"><h3><a href="diagrams/operator-learning-flow.html">Operator Learning Flow</a></h3><p>Show the difference between learning one answer and learning a map from input fields to output fields.</p></article><article class="card"><h3><a href="diagrams/surrogate-validation-flow.html">Surrogate Validation Flow</a></h3><p>Show how a fast stand-in earns trust only by being checked against the slow source.</p></article><article class="card"><h3><a href="diagrams/model-discovery-flow.html">Model Discovery Flow</a></h3><p>Show how measurements can lead to a candidate rule rather than only a prediction.</p></article></div><h2>Mathematical Sketches</h2>
+<article class="sketch">
+  <h3>PINNs: Points Plus Rule Checks</h3>
+  <div class="sketch-grid">
+<div class="sketch-cell input">
+  <span>measured points</span>
+</div>
+
+<div class="sketch-cell rule">
+  <span>equation-check points</span>
+</div>
+
+<div class="sketch-cell output">
+  <span>fitted field</span>
+</div>
+
+<div class="sketch-cell failure">
+  <span>held-out region</span>
+</div>
+</div>
+  <p><strong>Input:</strong> few measured points, boundary values, and a known equation</p>
+  <p><strong>Output:</strong> a fitted field for the whole domain</p>
+  <p><strong>Kept Rule:</strong> the field should match data and leave little equation-breaking between data points</p>
+  <p><strong>Failure Case:</strong> the field matches sensors but breaks the equation, boundary, or held-out measurements</p>
+  <p class="sketch-caption">Input: measured points and equation. Output: full field. Kept rule: data plus equation checks. Failure case: correct-looking fit that breaks physics in unmeasured regions.</p>
+</article>
+
+<article class="sketch">
+  <h3>Operator Learning: Field To Field</h3>
+  <div class="sketch-grid">
+<div class="sketch-cell input">
+  <span>input field</span>
+</div>
+
+<div class="sketch-cell rule">
+  <span>learned map</span>
+</div>
+
+<div class="sketch-cell output">
+  <span>output field</span>
+</div>
+
+<div class="sketch-cell failure">
+  <span>new family</span>
+</div>
+</div>
+  <p><strong>Input:</strong> a whole input field from a named family</p>
+  <p><strong>Output:</strong> the whole output field for that input</p>
+  <p><strong>Kept Rule:</strong> the learned object is a reusable map between fields, not one solved example</p>
+  <p><strong>Failure Case:</strong> a new input field changes the family, boundary, geometry, or resolution beyond the tested range</p>
+  <p class="sketch-caption">Input: whole field. Output: whole field. Kept rule: reusable map between related cases. Failure case: new field outside the named family.</p>
+</article>
+
+<article class="sketch">
+  <h3>Surrogate Modeling: Fast Stand-In With Boundaries</h3>
+  <div class="sketch-grid">
+<div class="sketch-cell input">
+  <span>repeated query</span>
+</div>
+
+<div class="sketch-cell rule">
+  <span>trusted source</span>
+</div>
+
+<div class="sketch-cell output">
+  <span>fast answer</span>
+</div>
+
+<div class="sketch-cell failure">
+  <span>edge case</span>
+</div>
+</div>
+  <p><strong>Input:</strong> queries that would normally require a trusted slow source</p>
+  <p><strong>Output:</strong> fast approximate answers for repeated choices</p>
+  <p><strong>Kept Rule:</strong> the stand-in remains checked against the trusted source inside a named use range</p>
+  <p><strong>Failure Case:</strong> the stand-in is used near an edge case where the trusted source has not checked it</p>
+  <p class="sketch-caption">Input: repeated query. Output: fast answer. Kept rule: checked against trusted source. Failure case: fast answer outside the tested use range.</p>
+</article>
+
+<article class="sketch">
+  <h3>Uncertainty: New Case Near The Edge</h3>
+  <div class="sketch-grid">
+<div class="sketch-cell input">
+  <span>old cases</span>
+</div>
+
+<div class="sketch-cell rule">
+  <span>use range</span>
+</div>
+
+<div class="sketch-cell output">
+  <span>prediction</span>
+</div>
+
+<div class="sketch-cell failure">
+  <span>shifted case</span>
+</div>
+</div>
+  <p><strong>Input:</strong> training cases and a new case that may be different</p>
+  <p><strong>Output:</strong> prediction with a tested use range</p>
+  <p><strong>Kept Rule:</strong> belief should weaken when the new case leaves the evidence range</p>
+  <p><strong>Failure Case:</strong> the model stays confident where training and validation no longer support confidence</p>
+  <p class="sketch-caption">Input: old cases plus new case. Output: prediction with use range. Kept rule: doubt grows near the edge. Failure case: confident answer outside evidence.</p>
+</article>
+
 </main>
 </body>
 </html>

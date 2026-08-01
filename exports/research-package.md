@@ -16,6 +16,7 @@
 - formula_guide_count: 8
 - misconception_count: 8
 - diagram_count: 6
+- sketch_count: 4
 - learning_path_step_count: 7
 - glossary_term_count: 10
 - domain_guide_count: 5
@@ -507,6 +508,36 @@
 - Purpose: Show how measurements can lead to a candidate rule rather than only a prediction.
 - Flow: measured motion -> candidate variables -> searched rule or learned rate -> readable law -> new experiment check
 - Watch for: A short law can be wrong if important variables were never measured.
+
+
+## Mathematical Sketches
+### PINNs: Points Plus Rule Checks
+- Input: few measured points, boundary values, and a known equation
+- Output: a fitted field for the whole domain
+- Kept rule: the field should match data and leave little equation-breaking between data points
+- Failure case: the field matches sensors but breaks the equation, boundary, or held-out measurements
+- Caption: Input: measured points and equation. Output: full field. Kept rule: data plus equation checks. Failure case: correct-looking fit that breaks physics in unmeasured regions.
+
+### Operator Learning: Field To Field
+- Input: a whole input field from a named family
+- Output: the whole output field for that input
+- Kept rule: the learned object is a reusable map between fields, not one solved example
+- Failure case: a new input field changes the family, boundary, geometry, or resolution beyond the tested range
+- Caption: Input: whole field. Output: whole field. Kept rule: reusable map between related cases. Failure case: new field outside the named family.
+
+### Surrogate Modeling: Fast Stand-In With Boundaries
+- Input: queries that would normally require a trusted slow source
+- Output: fast approximate answers for repeated choices
+- Kept rule: the stand-in remains checked against the trusted source inside a named use range
+- Failure case: the stand-in is used near an edge case where the trusted source has not checked it
+- Caption: Input: repeated query. Output: fast answer. Kept rule: checked against trusted source. Failure case: fast answer outside the tested use range.
+
+### Uncertainty: New Case Near The Edge
+- Input: training cases and a new case that may be different
+- Output: prediction with a tested use range
+- Kept rule: belief should weaken when the new case leaves the evidence range
+- Failure case: the model stays confident where training and validation no longer support confidence
+- Caption: Input: old cases plus new case. Output: prediction with use range. Kept rule: doubt grows near the edge. Failure case: confident answer outside evidence.
 
 
 ## Learning Path

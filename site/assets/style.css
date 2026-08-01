@@ -64,6 +64,35 @@ p, li { max-width: 900px; }
   border-radius: 8px;
   padding: 12px 14px;
 }
+.sketch {
+  max-width: 1040px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px;
+  margin: 14px 0;
+}
+.sketch-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(130px, 1fr));
+  gap: 10px;
+  align-items: stretch;
+}
+.sketch-cell {
+  min-height: 100px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  display: grid;
+  align-content: center;
+  font-weight: 700;
+  text-align: center;
+}
+.sketch-cell.input { background: #eef4f6; border-top: 5px solid #0f6b78; }
+.sketch-cell.rule { background: #f4f0e8; border-top: 5px solid #9b5b28; }
+.sketch-cell.output { background: #eef3ed; border-top: 5px solid #557a46; }
+.sketch-cell.failure { background: #f6eded; border-top: 5px solid #a24a3c; }
+.sketch-caption { max-width: 980px; color: var(--muted); margin-bottom: 0; }
 .compare-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
 .card {
   background: var(--card);
@@ -80,4 +109,5 @@ code { background: #eef1f5; padding: 1px 4px; border-radius: 4px; }
   main { padding: 24px 18px 56px; }
   h1 { font-size: 1.8rem; }
   .topbar { position: static; padding: 12px 18px; }
+  .sketch-grid { grid-template-columns: 1fr; }
 }

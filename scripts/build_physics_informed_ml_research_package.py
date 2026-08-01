@@ -948,6 +948,74 @@ DIAGRAMS = [
 ]
 
 
+CONCEPT_SKETCHES = [
+    {
+        "slug": "pinn-measurement-rule-sketch",
+        "title": "PINNs: Points Plus Rule Checks",
+        "topic_slugs": ["physics-informed-neural-networks"],
+        "input": "few measured points, boundary values, and a known equation",
+        "output": "a fitted field for the whole domain",
+        "kept_rule": "the field should match data and leave little equation-breaking between data points",
+        "failure_case": "the field matches sensors but breaks the equation, boundary, or held-out measurements",
+        "caption": "Input: measured points and equation. Output: full field. Kept rule: data plus equation checks. Failure case: correct-looking fit that breaks physics in unmeasured regions.",
+        "cells": [
+            {"label": "measured points", "role": "input"},
+            {"label": "equation-check points", "role": "rule"},
+            {"label": "fitted field", "role": "output"},
+            {"label": "held-out region", "role": "failure"},
+        ],
+    },
+    {
+        "slug": "operator-field-map-sketch",
+        "title": "Operator Learning: Field To Field",
+        "topic_slugs": ["operator-learning", "foundation-models-for-pdes"],
+        "input": "a whole input field from a named family",
+        "output": "the whole output field for that input",
+        "kept_rule": "the learned object is a reusable map between fields, not one solved example",
+        "failure_case": "a new input field changes the family, boundary, geometry, or resolution beyond the tested range",
+        "caption": "Input: whole field. Output: whole field. Kept rule: reusable map between related cases. Failure case: new field outside the named family.",
+        "cells": [
+            {"label": "input field", "role": "input"},
+            {"label": "learned map", "role": "rule"},
+            {"label": "output field", "role": "output"},
+            {"label": "new family", "role": "failure"},
+        ],
+    },
+    {
+        "slug": "surrogate-decision-sketch",
+        "title": "Surrogate Modeling: Fast Stand-In With Boundaries",
+        "topic_slugs": ["surrogate-modeling"],
+        "input": "queries that would normally require a trusted slow source",
+        "output": "fast approximate answers for repeated choices",
+        "kept_rule": "the stand-in remains checked against the trusted source inside a named use range",
+        "failure_case": "the stand-in is used near an edge case where the trusted source has not checked it",
+        "caption": "Input: repeated query. Output: fast answer. Kept rule: checked against trusted source. Failure case: fast answer outside the tested use range.",
+        "cells": [
+            {"label": "repeated query", "role": "input"},
+            {"label": "trusted source", "role": "rule"},
+            {"label": "fast answer", "role": "output"},
+            {"label": "edge case", "role": "failure"},
+        ],
+    },
+    {
+        "slug": "uncertainty-shift-sketch",
+        "title": "Uncertainty: New Case Near The Edge",
+        "topic_slugs": ["uncertainty-and-generalization", "foundation-models-for-pdes"],
+        "input": "training cases and a new case that may be different",
+        "output": "prediction with a tested use range",
+        "kept_rule": "belief should weaken when the new case leaves the evidence range",
+        "failure_case": "the model stays confident where training and validation no longer support confidence",
+        "caption": "Input: old cases plus new case. Output: prediction with use range. Kept rule: doubt grows near the edge. Failure case: confident answer outside evidence.",
+        "cells": [
+            {"label": "old cases", "role": "input"},
+            {"label": "use range", "role": "rule"},
+            {"label": "prediction", "role": "output"},
+            {"label": "shifted case", "role": "failure"},
+        ],
+    },
+]
+
+
 LEARNING_PATH = [
     {
         "slug": "scientific-question-first",
@@ -2496,6 +2564,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
             "formula_guide_count": len(formula_guide),
             "misconception_count": len(misconception_map),
             "diagram_count": len(DIAGRAMS),
+            "sketch_count": len(CONCEPT_SKETCHES),
             "learning_path_step_count": len(LEARNING_PATH),
             "glossary_term_count": len(GLOSSARY),
             "domain_guide_count": len(DOMAIN_GUIDES),
@@ -2528,6 +2597,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
         "formula_guide": formula_guide,
         "misconception_map": misconception_map,
         "diagrams": DIAGRAMS,
+        "concept_sketches": CONCEPT_SKETCHES,
         "learning_path": LEARNING_PATH,
         "glossary": GLOSSARY,
         "domain_guides": DOMAIN_GUIDES,
@@ -2870,6 +2940,35 @@ p, li { max-width: 900px; }
   border-radius: 8px;
   padding: 12px 14px;
 }
+.sketch {
+  max-width: 1040px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px;
+  margin: 14px 0;
+}
+.sketch-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(130px, 1fr));
+  gap: 10px;
+  align-items: stretch;
+}
+.sketch-cell {
+  min-height: 100px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  display: grid;
+  align-content: center;
+  font-weight: 700;
+  text-align: center;
+}
+.sketch-cell.input { background: #eef4f6; border-top: 5px solid #0f6b78; }
+.sketch-cell.rule { background: #f4f0e8; border-top: 5px solid #9b5b28; }
+.sketch-cell.output { background: #eef3ed; border-top: 5px solid #557a46; }
+.sketch-cell.failure { background: #f6eded; border-top: 5px solid #a24a3c; }
+.sketch-caption { max-width: 980px; color: var(--muted); margin-bottom: 0; }
 .compare-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
 .card {
   background: var(--card);
@@ -2886,6 +2985,7 @@ code { background: #eef1f5; padding: 1px 4px; border-radius: 4px; }
   main { padding: 24px 18px 56px; }
   h1 { font-size: 1.8rem; }
   .topbar { position: static; padding: 12px 18px; }
+  .sketch-grid { grid-template-columns: 1fr; }
 }
 """.strip()
         + "\n",
@@ -2989,6 +3089,37 @@ def diagram_flow_html(diagram: dict[str, object]) -> str:
 <div class="flow">{nodes}</div>
 <p class="diagram-note"><strong>Watch for:</strong> {html.escape(str(diagram['watch_for']))}</p>
 """
+
+
+def sketch_html(sketch: dict[str, object]) -> str:
+    cells = []
+    for item in sketch["cells"]:
+        role = str(item["role"])
+        cells.append(
+            f"""
+<div class="sketch-cell {html.escape(role)}">
+  <span>{html.escape(str(item['label']))}</span>
+</div>
+"""
+        )
+    return f"""
+<article class="sketch">
+  <h3>{html.escape(str(sketch['title']))}</h3>
+  <div class="sketch-grid">{''.join(cells)}</div>
+  <p><strong>Input:</strong> {html.escape(str(sketch['input']))}</p>
+  <p><strong>Output:</strong> {html.escape(str(sketch['output']))}</p>
+  <p><strong>Kept Rule:</strong> {html.escape(str(sketch['kept_rule']))}</p>
+  <p><strong>Failure Case:</strong> {html.escape(str(sketch['failure_case']))}</p>
+  <p class="sketch-caption">{html.escape(str(sketch['caption']))}</p>
+</article>
+"""
+
+
+def topic_sketches_html(slug: str) -> str:
+    sketches = [sketch for sketch in CONCEPT_SKETCHES if slug in sketch["topic_slugs"]]
+    if not sketches:
+        return ""
+    return f"<h2>Mathematical Sketch</h2>{''.join(sketch_html(sketch) for sketch in sketches)}"
 
 
 def topic_diagrams_html(slug: str) -> str:
@@ -3131,6 +3262,7 @@ def write_site(data: dict[str, object]) -> None:
     comparison_pages = data["comparison_pages"]
     worked_examples = data["worked_examples"]
     diagrams = data["diagrams"]
+    concept_sketches = data["concept_sketches"]
     core_derivations = data["core_derivations"]
     formula_guide = data["formula_guide"]
     misconception_map = data["misconception_map"]
@@ -3161,7 +3293,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Paper Families", f"{summary['family_count']} routes through related concept families.", "families.html")}
 {card("Comparisons", f"{summary['comparison_count']} plain-language method comparisons.", "comparisons.html")}
 {card("Worked Examples", f"{summary['worked_example_count']} concrete scientific examples.", "worked-examples.html")}
-{card("Diagrams", f"{summary['diagram_count']} visual flows for the main mathematical ideas.", "diagrams.html")}
+{card("Diagrams", f"{summary['diagram_count']} visual flows and {summary['sketch_count']} mathematical sketches for the main ideas.", "diagrams.html")}
 {card("Derivations", f"{summary['core_derivation_count']} core walkthroughs from observed evidence to formula shape and failure test.", "derivations.html")}
 {card("Formula Guide", f"{summary['formula_guide_count']} plain formula shapes translated into everyday meaning.", "formula-guide.html")}
 {card("Misconceptions", f"{summary['misconception_count']} core wrong turns paired with plain corrections.", "misconceptions.html")}
@@ -3260,8 +3392,9 @@ def write_site(data: dict[str, object]) -> None:
         href = f"diagrams/{diagram['slug']}.html"
         diagram_cards.append(card(str(diagram["title"]), str(diagram["purpose"]), href))
         write_diagram_page(diagram_dir / f"{diagram['slug']}.html", diagram)
+    sketch_cards = "".join(sketch_html(sketch) for sketch in concept_sketches)
     (SITE / "diagrams.html").write_text(
-        html_page("Physics-Informed ML Diagrams", f"<h1>Diagram Index</h1><p>These diagrams show the flow of evidence, rules, learned objects, and validation checks. They are deliberately simple so the core idea is visible before any notation appears.</p><div class=\"grid\">{''.join(diagram_cards)}</div>"),
+        html_page("Physics-Informed ML Diagrams", f"<h1>Diagram Index</h1><p>These diagrams and sketches show the flow of evidence, rules, learned objects, and validation checks. They are deliberately simple so the core idea is visible before any notation appears.</p><div class=\"grid\">{''.join(diagram_cards)}</div><h2>Mathematical Sketches</h2>{sketch_cards}"),
         encoding="utf-8",
     )
 
@@ -3556,6 +3689,7 @@ def write_topic_page(path: Path, topic: dict[str, object]) -> None:
             evidence_items.append(f"<li><a href=\"{html.escape(str(row['url']))}\">{html.escape(str(row['title']))}</a>: {html.escape(str(row.get('excerpt') or 'metadata evidence'))}</li>")
     derivation = topic_derivation(topic)
     deep_dive = topic_deep_dive_html(str(topic["slug"]))
+    sketches = topic_sketches_html(str(topic["slug"]))
     diagrams = topic_diagrams_html(str(topic["slug"]))
     reader_check = topic_reader_check_html(str(topic["slug"]))
     derivation_link = topic_derivation_link_html(str(topic["slug"]))
@@ -3580,6 +3714,7 @@ def write_topic_page(path: Path, topic: dict[str, object]) -> None:
   <li><strong>Say what it means:</strong> {html.escape(str(derivation['meaning']))}.</li>
 </ol>
 {deep_dive}
+{sketches}
 {diagrams}
 {derivation_link}
 <h2>Deeper Mathematical Why</h2>
@@ -4431,6 +4566,19 @@ def write_markdown_export(data: dict[str, object]) -> None:
                 "",
             ]
         )
+    lines.extend(["", "## Mathematical Sketches"])
+    for sketch in data["concept_sketches"]:
+        lines.extend(
+            [
+                f"### {sketch['title']}",
+                f"- Input: {sketch['input']}",
+                f"- Output: {sketch['output']}",
+                f"- Kept rule: {sketch['kept_rule']}",
+                f"- Failure case: {sketch['failure_case']}",
+                f"- Caption: {sketch['caption']}",
+                "",
+            ]
+        )
     lines.extend(["", "## Learning Path"])
     for idx, step in enumerate(data["learning_path"], start=1):
         lines.extend(
@@ -4745,6 +4893,26 @@ def validate(data: dict[str, object] | None = None) -> None:
         diagram_text = diagram_path.read_text(encoding="utf-8")
         if "flow-node" not in diagram_text or "Watch for:" not in diagram_text:
             raise SystemExit(f"diagram not rendered correctly: {diagram['title']}")
+    sketch_index_text = (SITE / "diagrams.html").read_text(encoding="utf-8")
+    if "Mathematical Sketches" not in sketch_index_text or "Kept Rule" not in sketch_index_text or "Failure Case" not in sketch_index_text:
+        raise SystemExit("mathematical sketches not rendered on diagram index")
+    if len(data.get("concept_sketches") or []) != len(CONCEPT_SKETCHES):
+        raise SystemExit("concept sketch count mismatch")
+    sketch_required_slugs = {"physics-informed-neural-networks", "operator-learning", "surrogate-modeling", "uncertainty-and-generalization", "foundation-models-for-pdes"}
+    sketched_slugs = {str(slug) for sketch in CONCEPT_SKETCHES for slug in sketch["topic_slugs"]}
+    missing_sketches = sorted(sketch_required_slugs - sketched_slugs)
+    if missing_sketches:
+        raise SystemExit(f"core concepts missing sketches: {missing_sketches}")
+    for sketch in CONCEPT_SKETCHES:
+        for field in ("input", "output", "kept_rule", "failure_case", "caption"):
+            if not sketch.get(field):
+                raise SystemExit(f"concept sketch missing {field}: {sketch['title']}")
+        for slug in sketch["topic_slugs"]:
+            topic_path = SITE / "topics" / f"{slug}.html"
+            if topic_path.exists():
+                topic_text = topic_path.read_text(encoding="utf-8")
+                if str(sketch["title"]) not in topic_text or "Kept Rule" not in topic_text:
+                    raise SystemExit(f"concept sketch not rendered on topic: {slug} -> {sketch['title']}")
     derivation_index = SITE / "derivations.html"
     derivation_index_text = derivation_index.read_text(encoding="utf-8")
     if "Core Derivations" not in derivation_index_text:

@@ -17,7 +17,7 @@ The purpose is not to summarize lectures. The purpose is to explain physics-info
 - `site/families.html`: paper-family routes through related concepts
 - `site/comparisons.html`: plain-language comparisons between nearby methods
 - `site/worked-examples.html`: 8 concrete scientific examples
-- `site/diagrams.html`: visual flows for the main mathematical ideas
+- `site/diagrams.html`: visual flows and mathematical sketches for the main ideas
 - `site/derivations.html`: core first-principles derivation walkthroughs
 - `site/formula-guide.html`: plain-language guide to formula shapes
 - `site/misconceptions.html`: core misconception map with plain corrections
@@ -89,6 +89,7 @@ http://127.0.0.1:8022/index.html
 - comparison pages
 - 8 worked examples
 - visual flow diagrams
+- mathematical sketches for core concepts
 - core derivation walkthroughs
 - plain formula guide
 - misconception map
