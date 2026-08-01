@@ -18,6 +18,7 @@ The purpose is not to summarize lectures. The purpose is to explain physics-info
 - `site/comparisons.html`: plain-language comparisons between nearby methods
 - `site/worked-examples.html`: concrete scientific examples
 - `site/diagrams.html`: visual flows for the main mathematical ideas
+- `site/derivations.html`: core first-principles derivation walkthroughs
 - `site/learning-path.html`: step-by-step route through the field from first principles
 - `site/glossary.html`: plain-language glossary for core terms
 - `site/domains.html`: domain guides for real scientific settings
@@ -80,6 +81,7 @@ http://127.0.0.1:8022/index.html
 - comparison pages
 - worked examples
 - visual flow diagrams
+- core derivation walkthroughs
 - first-principles learning path
 - plain-language glossary
 - domain guides

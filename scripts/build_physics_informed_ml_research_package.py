@@ -1315,6 +1315,12 @@ REVIEW_ENTRYPOINTS = [
                 "why": "Lines up each concept by observed evidence, hidden quantity, mathematical move, and failure test.",
                 "question": "Can each concept be explained without starting from the method name?",
             },
+            {
+                "label": "Core Derivations",
+                "href": "derivations.html",
+                "why": "Slows the key mathematical ideas into plain step-by-step walkthroughs.",
+                "question": "Can the reader see how the formula shape follows from the scientific problem?",
+            },
         ],
     },
     {
@@ -1708,6 +1714,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
 
     coverage_matrix = build_coverage_matrix(concept_atlas)
     concept_ladder = build_concept_ladder(topic_treatments)
+    core_derivations = build_core_derivations(topic_treatments)
 
     data = {
         "summary": {
@@ -1722,6 +1729,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
             "comparison_count": len(COMPARISON_PAGES),
             "worked_example_count": len(WORKED_EXAMPLES),
             "deep_dive_count": len(TOPIC_DEEP_DIVES),
+            "core_derivation_count": len(core_derivations),
             "diagram_count": len(DIAGRAMS),
             "learning_path_step_count": len(LEARNING_PATH),
             "glossary_term_count": len(GLOSSARY),
@@ -1745,6 +1753,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
         "comparison_pages": COMPARISON_PAGES,
         "worked_examples": WORKED_EXAMPLES,
         "topic_deep_dives": TOPIC_DEEP_DIVES,
+        "core_derivations": core_derivations,
         "diagrams": DIAGRAMS,
         "learning_path": LEARNING_PATH,
         "glossary": GLOSSARY,
@@ -1828,6 +1837,36 @@ def build_concept_ladder(topic_treatments: list[dict[str, object]]) -> list[dict
                 "topic_href": f"topics/{topic['slug']}.html",
                 "evidence_title": str(first_evidence.get("title") or ""),
                 "evidence_url": str(first_evidence.get("url") or ""),
+            }
+        )
+    return rows
+
+
+def build_core_derivations(topic_treatments: list[dict[str, object]]) -> list[dict[str, object]]:
+    by_slug = {str(topic["slug"]): topic for topic in topic_treatments}
+    rows = []
+    for slug, deep in TOPIC_DEEP_DIVES.items():
+        topic = by_slug.get(slug)
+        if not topic:
+            continue
+        derivation = topic_derivation(topic)
+        rows.append(
+            {
+                "slug": slug,
+                "title": str(topic["title"]),
+                "one_sentence": str(deep["one_sentence"]),
+                "domain_story": str(deep["domain_story"]),
+                "common_problem": str(topic["common_problem"]),
+                "observed": str(derivation["observed"]),
+                "hidden": str(derivation["hidden"]),
+                "math_shape": list(deep["math_shape"]),
+                "plain_formula": str(deep["plain_formula"]),
+                "why_it_matters": str(deep["important_because"]),
+                "failure_test": str(derivation["test"]),
+                "red_flags": list(deep["red_flags"]),
+                "connects_to": list(deep["connects_to"]),
+                "topic_href": f"topics/{slug}.html",
+                "derivation_href": f"derivations/{slug}.html",
             }
         )
     return rows
@@ -1945,6 +1984,7 @@ def html_page(title: str, body: str, root_prefix: str = "") -> str:
   <a href="{root_prefix}comparisons.html">Comparisons</a>
   <a href="{root_prefix}worked-examples.html">Examples</a>
   <a href="{root_prefix}diagrams.html">Diagrams</a>
+  <a href="{root_prefix}derivations.html">Derivations</a>
   <a href="{root_prefix}learning-path.html">Path</a>
   <a href="{root_prefix}glossary.html">Glossary</a>
   <a href="{root_prefix}domains.html">Domains</a>
@@ -2099,6 +2139,15 @@ def topic_reader_check_html(slug: str) -> str:
     return "<h2>Reader Check</h2>" + "".join(reader_check_card(check, href_prefix="../") for check in checks)
 
 
+def topic_derivation_link_html(slug: str) -> str:
+    if slug not in TOPIC_DEEP_DIVES:
+        return ""
+    return f"""
+<h2>Full Derivation Walkthrough</h2>
+<p><a href="../derivations/{html.escape(slug)}.html">Open the step-by-step derivation page</a>. It slows this concept down from observed evidence, to hidden quantity, to formula shape, to failure test.</p>
+"""
+
+
 def write_site(data: dict[str, object]) -> None:
     SITE.mkdir(parents=True, exist_ok=True)
     write_style()
@@ -2108,6 +2157,7 @@ def write_site(data: dict[str, object]) -> None:
     comparison_dir = SITE / "comparisons"
     example_dir = SITE / "worked-examples"
     diagram_dir = SITE / "diagrams"
+    derivation_dir = SITE / "derivations"
     learning_dir = SITE / "learning-path"
     glossary_dir = SITE / "glossary"
     domain_dir = SITE / "domains"
@@ -2116,7 +2166,7 @@ def write_site(data: dict[str, object]) -> None:
     provenance_dir = SITE / "provenance"
     quality_dir = SITE / "quality"
     synthesis_dir = SITE / "synthesis"
-    for generated_dir in (family_dir, comparison_dir, example_dir, diagram_dir, learning_dir, glossary_dir, domain_dir, check_dir, decision_dir, provenance_dir, quality_dir, synthesis_dir):
+    for generated_dir in (family_dir, comparison_dir, example_dir, diagram_dir, derivation_dir, learning_dir, glossary_dir, domain_dir, check_dir, decision_dir, provenance_dir, quality_dir, synthesis_dir):
         if generated_dir.exists():
             shutil.rmtree(generated_dir)
     topic_dir.mkdir(exist_ok=True)
@@ -2125,6 +2175,7 @@ def write_site(data: dict[str, object]) -> None:
     comparison_dir.mkdir(exist_ok=True)
     example_dir.mkdir(exist_ok=True)
     diagram_dir.mkdir(exist_ok=True)
+    derivation_dir.mkdir(exist_ok=True)
     learning_dir.mkdir(exist_ok=True)
     glossary_dir.mkdir(exist_ok=True)
     domain_dir.mkdir(exist_ok=True)
@@ -2144,6 +2195,7 @@ def write_site(data: dict[str, object]) -> None:
     comparison_pages = data["comparison_pages"]
     worked_examples = data["worked_examples"]
     diagrams = data["diagrams"]
+    core_derivations = data["core_derivations"]
     learning_path = data["learning_path"]
     glossary = data["glossary"]
     domain_guides = data["domain_guides"]
@@ -2167,6 +2219,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Comparisons", f"{summary['comparison_count']} plain-language method comparisons.", "comparisons.html")}
 {card("Worked Examples", f"{summary['worked_example_count']} concrete scientific examples.", "worked-examples.html")}
 {card("Diagrams", f"{summary['diagram_count']} visual flows for the main mathematical ideas.", "diagrams.html")}
+{card("Derivations", f"{summary['core_derivation_count']} core walkthroughs from observed evidence to formula shape and failure test.", "derivations.html")}
 {card("Learning Path", f"{summary['learning_path_step_count']} steps from first question to field-level understanding.", "learning-path.html")}
 {card("Glossary", f"{summary['glossary_term_count']} field terms translated into everyday language.", "glossary.html")}
 {card("Domains", f"{summary['domain_guide_count']} domain guides that ground concepts in real scientific work.", "domains.html")}
@@ -2258,6 +2311,15 @@ def write_site(data: dict[str, object]) -> None:
         write_diagram_page(diagram_dir / f"{diagram['slug']}.html", diagram)
     (SITE / "diagrams.html").write_text(
         html_page("Physics-Informed ML Diagrams", f"<h1>Diagram Index</h1><p>These diagrams show the flow of evidence, rules, learned objects, and validation checks. They are deliberately simple so the core idea is visible before any notation appears.</p><div class=\"grid\">{''.join(diagram_cards)}</div>"),
+        encoding="utf-8",
+    )
+
+    derivation_cards = []
+    for derivation in core_derivations:
+        derivation_cards.append(card(str(derivation["title"]), str(derivation["one_sentence"]), str(derivation["derivation_href"])))
+        write_core_derivation_page(derivation_dir / f"{derivation['slug']}.html", derivation)
+    (SITE / "derivations.html").write_text(
+        html_page("Physics-Informed ML Core Derivations", f"<h1>Core Derivations</h1><p>These pages slow down the main mathematical ideas. Each one starts from what is observed, names what is hidden, builds the formula shape in plain steps, and ends with the test that can reject the claim.</p><div class=\"grid\">{''.join(derivation_cards)}</div>"),
         encoding="utf-8",
     )
 
@@ -2530,6 +2592,7 @@ def write_topic_page(path: Path, topic: dict[str, object]) -> None:
     deep_dive = topic_deep_dive_html(str(topic["slug"]))
     diagrams = topic_diagrams_html(str(topic["slug"]))
     reader_check = topic_reader_check_html(str(topic["slug"]))
+    derivation_link = topic_derivation_link_html(str(topic["slug"]))
     body = f"""
 <h1>{html.escape(str(topic['title']))}</h1>
 <h2>Common Problem This Solves</h2>
@@ -2551,6 +2614,7 @@ def write_topic_page(path: Path, topic: dict[str, object]) -> None:
 </ol>
 {deep_dive}
 {diagrams}
+{derivation_link}
 <h2>Deeper Mathematical Why</h2>
 <p>The mathematical point is to decide what information is allowed to carry the scientific claim. If the carried information is too small, the model misses the behavior that matters. If it is too broad, the page may claim more than the evidence supports. The useful middle is a named object, a named scientific job, and a changed case that can reject the claim.</p>
 {reader_check}
@@ -2580,6 +2644,42 @@ def write_diagram_page(path: Path, diagram: dict[str, object]) -> None:
 <p>Move left to right. Each box names the information being carried forward. The last box is not decoration; it is the check that decides whether the claim should be trusted.</p>
 """
     path.write_text(html_page(str(diagram["title"]), body, root_prefix="../"), encoding="utf-8")
+
+
+def write_core_derivation_page(path: Path, derivation: dict[str, object]) -> None:
+    steps = "".join(
+        f"<div class=\"route-step\">{idx}. {html.escape(str(step))}</div>"
+        for idx, step in enumerate(derivation["math_shape"], start=1)
+    )
+    red_flags = "".join(f"<li>{html.escape(str(item))}</li>" for item in derivation["red_flags"])
+    related = concept_links(list(derivation["connects_to"]), root_prefix="../")
+    body = f"""
+<h1>{html.escape(str(derivation['title']))}</h1>
+<p>{html.escape(str(derivation['one_sentence']))}</p>
+<h2>Domain Story</h2>
+<p>{html.escape(str(derivation['domain_story']))}</p>
+<h2>Problem</h2>
+<p>{html.escape(str(derivation['common_problem']))}</p>
+<h2>Start With What Is Observed</h2>
+<p>{html.escape(str(derivation['observed']))}</p>
+<h2>Name What Is Hidden</h2>
+<p>{html.escape(str(derivation['hidden']))}</p>
+<h2>Build The Mathematical Shape</h2>
+<div class="route">{steps}</div>
+<h2>Plain Formula</h2>
+<p>{html.escape(str(derivation['plain_formula']))}</p>
+<h2>Why This Matters</h2>
+<p>{html.escape(str(derivation['why_it_matters']))}</p>
+<h2>Failure Test</h2>
+<p>{html.escape(str(derivation['failure_test']))}</p>
+<h2>Red Flags</h2>
+<ul>{red_flags}</ul>
+<h2>Connects To</h2>
+{related}
+<h2>Topic Page</h2>
+<p><a href="../{html.escape(str(derivation['topic_href']))}">Return to the main topic page</a></p>
+"""
+    path.write_text(html_page(str(derivation["title"]), body, root_prefix="../"), encoding="utf-8")
 
 
 def write_learning_step_page(path: Path, step: dict[str, object]) -> None:
@@ -3019,6 +3119,20 @@ def write_markdown_export(data: dict[str, object]) -> None:
                 "",
             ]
         )
+    lines.extend(["", "## Core Derivations"])
+    for item in data["core_derivations"]:
+        lines.extend(
+            [
+                f"### {item['title']}",
+                f"- Problem: {item['common_problem']}",
+                f"- Observed: {item['observed']}",
+                f"- Hidden: {item['hidden']}",
+                f"- Plain formula: {item['plain_formula']}",
+                f"- Failure test: {item['failure_test']}",
+                f"- Page: {item['derivation_href']}",
+                "",
+            ]
+        )
     lines.extend(["", "## Diagrams"])
     for diagram in data["diagrams"]:
         lines.extend(
@@ -3216,6 +3330,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         SITE / "comparisons.html",
         SITE / "worked-examples.html",
         SITE / "diagrams.html",
+        SITE / "derivations.html",
         SITE / "learning-path.html",
         SITE / "glossary.html",
         SITE / "domains.html",
@@ -3249,6 +3364,26 @@ def validate(data: dict[str, object] | None = None) -> None:
         diagram_text = diagram_path.read_text(encoding="utf-8")
         if "flow-node" not in diagram_text or "Watch for:" not in diagram_text:
             raise SystemExit(f"diagram not rendered correctly: {diagram['title']}")
+    derivation_index = SITE / "derivations.html"
+    derivation_index_text = derivation_index.read_text(encoding="utf-8")
+    if "Core Derivations" not in derivation_index_text:
+        raise SystemExit("derivation index not rendered correctly")
+    derivation_rows = data.get("core_derivations") or []
+    if len(derivation_rows) != len(TOPIC_DEEP_DIVES):
+        raise SystemExit("core derivation count does not match deep dives")
+    for item in derivation_rows:
+        derivation_path = SITE / str(item["derivation_href"])
+        if not derivation_path.exists():
+            raise SystemExit(f"missing derivation page: {item['title']}")
+        derivation_text = derivation_path.read_text(encoding="utf-8")
+        for required in ("Start With What Is Observed", "Build The Mathematical Shape", "Failure Test", "Red Flags"):
+            if required not in derivation_text:
+                raise SystemExit(f"derivation page missing {required}: {item['title']}")
+        topic_path = SITE / str(item["topic_href"])
+        if not topic_path.exists():
+            raise SystemExit(f"derivation topic link missing: {item['topic_href']}")
+        if str(item["derivation_href"]) not in topic_path.read_text(encoding="utf-8"):
+            raise SystemExit(f"topic missing derivation link: {item['topic_href']}")
     for step in LEARNING_PATH:
         step_path = SITE / "learning-path" / f"{step['slug']}.html"
         if not step_path.exists():

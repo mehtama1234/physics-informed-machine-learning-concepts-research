@@ -12,6 +12,7 @@
 - comparison_count: 4
 - worked_example_count: 3
 - deep_dive_count: 8
+- core_derivation_count: 8
 - diagram_count: 6
 - learning_path_step_count: 7
 - glossary_term_count: 10
@@ -24,7 +25,7 @@
 - quality_rubric_count: 6
 - synthesis_guide_count: 4
 - review_handoff_count: 1
-- review_entrypoint_count: 18
+- review_entrypoint_count: 19
 
 ## Concepts
 ### Deep Learning
@@ -236,6 +237,72 @@
 - Do not use when: Do not confuse broad training with proof that a new scientific regime is covered.
 - Plain formula: many PDE tasks -> shared learned structure -> new task prediction
 - Why it matters: If it works, broad training could reduce repeated model-building for related scientific problems.
+
+
+## Core Derivations
+### Physics-Informed Neural Networks
+- Problem: measurements may be sparse, but the answer must still respect a known physical equation
+- Observed: some measured values, boundary values, starting values, and a known differential equation
+- Hidden: the full field value at every point in space and time
+- Plain formula: total error = data error + equation error + boundary error
+- Failure test: move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements
+- Page: derivations/physics-informed-neural-networks.html
+
+### Partial Differential Equations
+- Problem: a quantity changes over space and time, so one number is not enough to describe the situation
+- Observed: a field such as temperature, pressure, concentration, velocity, or displacement
+- Hidden: how every point in the field affects nearby points over time
+- Plain formula: change over time = movement through space + sources + boundary effects
+- Failure test: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error
+- Page: derivations/partial-differential-equations.html
+
+### Operator Learning
+- Problem: one simulation answer is not enough when engineers need the whole map from inputs to solution fields
+- Observed: many example inputs and their full solution fields
+- Hidden: the rule that maps a new input field to its new solution field
+- Plain formula: input field -> learned field-to-field map -> output field
+- Failure test: change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed
+- Page: derivations/operator-learning.html
+
+### Surrogate Modeling
+- Problem: a trusted simulator may be too slow to run for every design, control, or uncertainty question
+- Observed: expensive solver inputs and outputs for a limited set of cases
+- Hidden: the solver answer for every new query someone wants to ask
+- Plain formula: new query -> fast stand-in -> approximate answer with a stated use range
+- Failure test: compare against the full solver on new cases near the edge of the intended use
+- Page: derivations/surrogate-modeling.html
+
+### Uncertainty And Generalization
+- Problem: a prediction is not enough unless the user knows when it should be believed
+- Observed: training cases, validation cases, prediction errors, and known shifts between cases
+- Hidden: how wrong the model may be on a case unlike the ones it learned from
+- Plain formula: prediction + tested use range + failure evidence
+- Failure test: move one important condition outside the training range and measure the first failure
+- Page: derivations/uncertainty-and-generalization.html
+
+### Neural Differential Equations
+- Problem: scientists may know that a system changes continuously but not know the exact rule for that change
+- Observed: measurements of a system changing over time
+- Hidden: the rate rule that moves the present value into the future
+- Plain formula: current state -> learned change rate -> next state
+- Failure test: run longer than the training window and check whether small rate errors accumulate into drift
+- Page: derivations/neural-differential-equations.html
+
+### Symbolic Regression And Model Discovery
+- Problem: a scientist may need a readable equation, not only a model that predicts well
+- Observed: measured variables and candidate mathematical ingredients
+- Hidden: which short formula, if any, actually explains the measured change
+- Plain formula: candidate ingredients -> searched formulas -> tested small law
+- Failure test: remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts
+- Page: derivations/symbolic-regression.html
+
+### Foundation Models For PDEs
+- Problem: one trained model may be asked to handle many related equations, grids, parameters, or physical settings
+- Observed: many PDE problem instances across equations, grids, parameters, or physical settings
+- Hidden: which shared structure carries from one scientific task to another
+- Plain formula: many PDE tasks -> shared learned structure -> new task prediction
+- Failure test: hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver
+- Page: derivations/foundation-models-for-pdes.html
 
 
 ## Diagrams
@@ -803,6 +870,7 @@
 - Field Synthesis: synthesis.html | What problem holds the field together?
 - Learning Path: learning-path.html | What should a new reader read first, second, and third?
 - Concept Ladder: concept-ladder.html | Can each concept be explained without starting from the method name?
+- Core Derivations: derivations.html | Can the reader see how the formula shape follows from the scientific problem?
 
 ### Inspect Core Concepts
 - Purpose: Use these pages to judge whether the main mathematical ideas are explained from first principles.
