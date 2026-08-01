@@ -1394,6 +1394,12 @@ REVIEW_ENTRYPOINTS = [
                 "question": "What exists now, and what still needs hand-written depth?",
             },
             {
+                "label": "Completion Audit",
+                "href": "completion-audit.html",
+                "why": "Maps the requested package requirements to local evidence and external status.",
+                "question": "What is locally verified, and what is still outside the workspace?",
+            },
+            {
                 "label": "Field Synthesis",
                 "href": "synthesis.html",
                 "why": "Turns the course family into one plain-language map of scientific jobs.",
@@ -1532,6 +1538,59 @@ REVIEW_ENTRYPOINTS = [
                 "question": "What exact source, concept, evidence, page, and validation steps should the next build follow?",
             },
         ],
+    },
+]
+
+
+COMPLETION_REQUIREMENTS = [
+    {
+        "slug": "source-and-transcripts",
+        "requirement": "Preserve transcript-backed source material for the two playlist family.",
+        "local_evidence": "summary reports 2 playlists, 40 videos, and 40 available transcripts; provenance pages name playlists, caption extraction, and local files.",
+        "status": "locally verified",
+        "links": ["transcripts.html", "provenance/source-playlists.html", "provenance/transcript-extraction.html"],
+    },
+    {
+        "slug": "plain-first-principles-concepts",
+        "requirement": "Explain mathematical concepts from first principles without assuming prior jargon.",
+        "local_evidence": "topic pages, concept ladder, glossary, derivations, and quality rubric require problem, domain, observed evidence, hidden quantity, formula shape, and failure test.",
+        "status": "locally verified",
+        "links": ["concept-atlas.html", "concept-ladder.html", "derivations.html", "quality.html"],
+    },
+    {
+        "slug": "domains-and-examples",
+        "requirement": "Connect concepts to real domains and concrete scientific jobs.",
+        "local_evidence": "summary reports 5 domain guides and 8 worked examples; worked examples include end-to-end flow traces.",
+        "status": "locally verified",
+        "links": ["domains.html", "worked-examples.html"],
+    },
+    {
+        "slug": "evidence-discipline",
+        "requirement": "Separate transcript support from proof and show limits of every claim.",
+        "local_evidence": "evidence ledger and 14 concept evidence packets state transcript anchors, review links, and what evidence does not prove.",
+        "status": "locally verified",
+        "links": ["evidence-ledger.html", "evidence-packets.html", "coverage.html"],
+    },
+    {
+        "slug": "review-and-replication",
+        "requirement": "Give reviewers and another CLI an end-to-end route through the package.",
+        "local_evidence": "review map, handoff, provenance, and cross-channel playbook name review route, extraction steps, build outputs, and validation checks.",
+        "status": "locally verified",
+        "links": ["review-entrypoints.html", "handoff.html", "provenance/cross-channel-playbook.html"],
+    },
+    {
+        "slug": "local-validation",
+        "requirement": "Run local checks proving generated pages, links, counts, and wording gates are coherent.",
+        "local_evidence": "make check runs Python compile, build validation, and standalone generated-site validation; validator expects the manifest page count and required sections.",
+        "status": "locally verified",
+        "links": ["provenance/site-generation.html", "provenance/analysis-build.html"],
+    },
+    {
+        "slug": "remote-repository",
+        "requirement": "Create or verify the GitHub remote repository and push main.",
+        "local_evidence": "local origin is configured, but GitHub currently returns Repository not found for the configured URL.",
+        "status": "external blocker",
+        "links": ["handoff.html", "provenance/cli-reproduction.html"],
     },
 ]
 
@@ -1853,6 +1912,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
             "synthesis_guide_count": len(SYNTHESIS_GUIDES),
             "review_handoff_count": 1,
             "review_entrypoint_count": sum(len(group["items"]) for group in REVIEW_ENTRYPOINTS),
+            "completion_requirement_count": len(COMPLETION_REQUIREMENTS),
         },
         "transcript_index": [record_to_dict(record) for record in records],
         "concept_atlas": concept_atlas,
@@ -1878,6 +1938,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
         "synthesis_guides": SYNTHESIS_GUIDES,
         "review_handoff": REVIEW_HANDOFF,
         "review_entrypoints": REVIEW_ENTRYPOINTS,
+        "completion_requirements": COMPLETION_REQUIREMENTS,
     }
     for name, value in data.items():
         if name == "summary":
@@ -2152,6 +2213,7 @@ def html_page(title: str, body: str, root_prefix: str = "") -> str:
   <a href="{root_prefix}quality.html">Quality</a>
   <a href="{root_prefix}synthesis.html">Synthesis</a>
   <a href="{root_prefix}review-entrypoints.html">Review Map</a>
+  <a href="{root_prefix}completion-audit.html">Audit</a>
   <a href="{root_prefix}handoff.html">Handoff</a>
   <a href="{root_prefix}theme-map.html">Themes</a>
   <a href="{root_prefix}evidence-ledger.html">Evidence</a>
@@ -2367,6 +2429,7 @@ def write_site(data: dict[str, object]) -> None:
     synthesis_guides = data["synthesis_guides"]
     review_handoff = data["review_handoff"]
     review_entrypoints = data["review_entrypoints"]
+    completion_requirements = data["completion_requirements"]
 
     index_body = f"""
 <h1>Physics-Informed Machine Learning Concepts Research</h1>
@@ -2391,6 +2454,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Quality Rubric", f"{summary['quality_rubric_count']} editorial standards for first-principles pages.", "quality.html")}
 {card("Synthesis", f"{summary['synthesis_guide_count']} pages tying the field into one argument.", "synthesis.html")}
 {card("Review Map", f"{summary['review_entrypoint_count']} entry points for end-to-end review, use, and source checks.", "review-entrypoints.html")}
+{card("Completion Audit", f"{summary['completion_requirement_count']} requirements checked against local evidence and external status.", "completion-audit.html")}
 {card("Review Handoff", "Shortest route for reviewing the package and the remaining editorial work.", "handoff.html")}
 {card("Themes", f"{summary['theme_count']} recurring research pressures across the course family.", "theme-map.html")}
 {card("Evidence", "Each major claim links back to transcript or metadata evidence and states its limit.", "evidence-ledger.html")}
@@ -2570,6 +2634,7 @@ def write_site(data: dict[str, object]) -> None:
 
     write_handoff_page(SITE / "handoff.html", dict(review_handoff), summary)
     write_review_entrypoints_page(SITE / "review-entrypoints.html", list(review_entrypoints))
+    write_completion_audit_page(SITE / "completion-audit.html", list(completion_requirements), summary)
 
     theme_cards = []
     for theme in themes:
@@ -3187,6 +3252,48 @@ def write_review_entrypoints_page(path: Path, groups: list[dict[str, object]]) -
     path.write_text(html_page("Physics-Informed ML Review Entrypoints", body), encoding="utf-8")
 
 
+def write_completion_audit_page(path: Path, requirements: list[dict[str, object]], summary: dict[str, object]) -> None:
+    rows = []
+    for item in requirements:
+        links = "".join(f"<li><a href=\"{html.escape(str(link))}\">{html.escape(str(link))}</a></li>" for link in item["links"])
+        rows.append(
+            f"""
+<tr>
+  <td>{html.escape(str(item['requirement']))}</td>
+  <td>{html.escape(str(item['status']))}</td>
+  <td>{html.escape(str(item['local_evidence']))}<ul>{links}</ul></td>
+</tr>
+"""
+        )
+    body = f"""
+<h1>Completion Audit</h1>
+<p>This page maps the requested end-to-end package to concrete local evidence. It also separates the local build state from the external GitHub remote state.</p>
+<h2>Current Local Counts</h2>
+<ul>
+  <li>Videos: {html.escape(str(summary['video_count']))}</li>
+  <li>Available transcripts: {html.escape(str(summary['available_transcripts']))}</li>
+  <li>Concepts: {html.escape(str(summary['concept_count']))}</li>
+  <li>Generated concept evidence packets: {html.escape(str(summary['concept_evidence_packet_count']))}</li>
+  <li>Worked examples: {html.escape(str(summary['worked_example_count']))}</li>
+  <li>Total audit requirements: {html.escape(str(summary['completion_requirement_count']))}</li>
+</ul>
+<h2>Requirement Evidence</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Requirement</th>
+      <th>Status</th>
+      <th>Evidence</th>
+    </tr>
+  </thead>
+  <tbody>{''.join(rows)}</tbody>
+</table>
+<h2>How To Read This</h2>
+<p>Locally verified means the generated files and validation commands prove the item inside this workspace. External blocker means the local files are ready, but a condition outside the workspace still has to change.</p>
+"""
+    path.write_text(html_page("Physics-Informed ML Completion Audit", body), encoding="utf-8")
+
+
 def write_family_page(path: Path, family: dict[str, object]) -> None:
     steps = "".join(f"<div class=\"route-step\">{idx}. {html.escape(step)}</div>" for idx, step in enumerate(family["plain_route"], start=1))
     body = f"""
@@ -3501,6 +3608,16 @@ def write_markdown_export(data: dict[str, object]) -> None:
         lines.extend(["", f"### {group['group']}", f"- Purpose: {group['purpose']}"])
         for item in group["items"]:
             lines.append(f"- {item['label']}: {item['href']} | {item['question']}")
+    lines.extend(["", "## Completion Audit"])
+    for item in data["completion_requirements"]:
+        lines.extend(
+            [
+                f"### {item['requirement']}",
+                f"- Status: {item['status']}",
+                f"- Evidence: {item['local_evidence']}",
+                "",
+            ]
+        )
     (EXPORTS / "research-package.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
@@ -3567,6 +3684,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         SITE / "quality.html",
         SITE / "synthesis.html",
         SITE / "review-entrypoints.html",
+        SITE / "completion-audit.html",
         SITE / "handoff.html",
         SITE / "theme-map.html",
         SITE / "evidence-ledger.html",
@@ -3780,6 +3898,17 @@ def validate(data: dict[str, object] | None = None) -> None:
         for item in group["items"]:
             if not (SITE / item["href"]).exists():
                 raise SystemExit(f"review entrypoint link missing: {item['href']}")
+    audit_path = SITE / "completion-audit.html"
+    audit_text = audit_path.read_text(encoding="utf-8")
+    if "Completion Audit" not in audit_text or "Requirement Evidence" not in audit_text or "external blocker" not in audit_text:
+        raise SystemExit("completion audit page not rendered correctly")
+    requirements = data.get("completion_requirements") or []
+    if len(requirements) != len(COMPLETION_REQUIREMENTS):
+        raise SystemExit("completion requirement count mismatch")
+    for item in requirements:
+        for link in item["links"]:
+            if not (SITE / str(link)).exists():
+                raise SystemExit(f"completion audit link missing: {link}")
     manifest_path = SITE / "page-manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     missing = [item for item in manifest if not (ROOT / item).exists()]

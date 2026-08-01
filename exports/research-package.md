@@ -26,7 +26,8 @@
 - quality_rubric_count: 6
 - synthesis_guide_count: 4
 - review_handoff_count: 1
-- review_entrypoint_count: 21
+- review_entrypoint_count: 22
+- completion_requirement_count: 7
 
 ## Concepts
 ### Deep Learning
@@ -989,6 +990,7 @@
 ### Start The Review
 - Purpose: Use these pages to see the whole argument before inspecting details.
 - Review Handoff: handoff.html | What exists now, and what still needs hand-written depth?
+- Completion Audit: completion-audit.html | What is locally verified, and what is still outside the workspace?
 - Field Synthesis: synthesis.html | What problem holds the field together?
 - Learning Path: learning-path.html | What should a new reader read first, second, and third?
 - Concept Ladder: concept-ladder.html | Can each concept be explained without starting from the method name?
@@ -1018,3 +1020,33 @@
 - Quality Rubric: quality.html | Does each page avoid empty language and explain the real problem?
 - Provenance: provenance.html | Could another CLI rebuild this package from the same sources?
 - Cross-Channel Playbook: provenance/cross-channel-playbook.html | What exact source, concept, evidence, page, and validation steps should the next build follow?
+
+## Completion Audit
+### Preserve transcript-backed source material for the two playlist family.
+- Status: locally verified
+- Evidence: summary reports 2 playlists, 40 videos, and 40 available transcripts; provenance pages name playlists, caption extraction, and local files.
+
+### Explain mathematical concepts from first principles without assuming prior jargon.
+- Status: locally verified
+- Evidence: topic pages, concept ladder, glossary, derivations, and quality rubric require problem, domain, observed evidence, hidden quantity, formula shape, and failure test.
+
+### Connect concepts to real domains and concrete scientific jobs.
+- Status: locally verified
+- Evidence: summary reports 5 domain guides and 8 worked examples; worked examples include end-to-end flow traces.
+
+### Separate transcript support from proof and show limits of every claim.
+- Status: locally verified
+- Evidence: evidence ledger and 14 concept evidence packets state transcript anchors, review links, and what evidence does not prove.
+
+### Give reviewers and another CLI an end-to-end route through the package.
+- Status: locally verified
+- Evidence: review map, handoff, provenance, and cross-channel playbook name review route, extraction steps, build outputs, and validation checks.
+
+### Run local checks proving generated pages, links, counts, and wording gates are coherent.
+- Status: locally verified
+- Evidence: make check runs Python compile, build validation, and standalone generated-site validation; validator expects the manifest page count and required sections.
+
+### Create or verify the GitHub remote repository and push main.
+- Status: external blocker
+- Evidence: local origin is configured, but GitHub currently returns Repository not found for the configured URL.
+
