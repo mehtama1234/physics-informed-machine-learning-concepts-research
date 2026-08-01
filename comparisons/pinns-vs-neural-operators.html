@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PINNs vs Neural Operators</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<nav class="topbar">
+  <a href="../index.html">Physics-Informed ML</a>
+  <a href="../transcripts.html">Transcripts</a>
+  <a href="../concept-atlas.html">Concept Atlas</a>
+  <a href="../families.html">Families</a>
+  <a href="../comparisons.html">Comparisons</a>
+  <a href="../worked-examples.html">Examples</a>
+  <a href="../theme-map.html">Themes</a>
+  <a href="../evidence-ledger.html">Evidence</a>
+</nav>
+<main>
+
+<h1>PINNs vs Neural Operators</h1>
+<h2>Shared Problem</h2>
+<p>Both try to predict scientific fields without ignoring the physics that makes those fields meaningful.</p>
+<div class="compare-grid">
+  <article class="card">
+    <h3>Physics-informed neural networks</h3>
+    <p>Use this side when you have one problem instance, sparse data, and a known equation you want the fitted field to obey.</p>
+  </article>
+  <article class="card">
+    <h3>Neural operators</h3>
+    <p>Use this side when you have many solved examples and need a fast map from new problem inputs to full solution fields.</p>
+  </article>
+</div>
+<h2>Key Difference</h2>
+<p>A PINN usually learns one field while being punished for breaking an equation. A neural operator learns the input-to-solution map for a named family of fields.</p>
+<h2>Common Wrong Turn</h2>
+<p>Do not use either word as a badge of trust. Ask what changed case was tested.</p>
+<h2>First-Principles Test</h2>
+<p>Before choosing a side, name the scientific quantity, the available evidence, the use range, and the changed case that would expose a bad answer.</p>
+
+</main>
+</body>
+</html>
