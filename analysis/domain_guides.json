@@ -10,6 +10,13 @@
       "physics-informed-neural-networks",
       "uncertainty-and-generalization"
     ],
+    "domain_job": {
+      "scientific_job": "Estimate the full temperature field inside a wall after a boundary temperature changes.",
+      "observed_evidence": "a few sensor readings, starting temperature, boundary temperature, material constants, and the heat equation",
+      "hidden_quantity": "the temperature at unsensed locations and later times",
+      "decision": "decide whether the wall, chip, or sample will exceed a safe temperature",
+      "changed_case_test": "move the heat source or change the boundary temperature and compare against held-out sensors or a trusted solve"
+    },
     "methods": [
       "Use a PDE to name how spreading should behave.",
       "Use sparse measurements as anchors.",
@@ -30,6 +37,13 @@
       "attention-for-scientific-fields",
       "uncertainty-and-generalization"
     ],
+    "domain_job": {
+      "scientific_job": "Predict pressure and velocity around a new wing or channel shape before running the full solver.",
+      "observed_evidence": "trusted simulations for earlier shapes, boundary conditions, inflow speed, and resulting velocity or pressure fields",
+      "hidden_quantity": "the field and forces for a new shape near the edge of the design range",
+      "decision": "screen designs and decide which cases deserve expensive solver runs",
+      "changed_case_test": "hold out a new geometry or flow regime and check drag, lift, boundary behavior, and vortices"
+    },
     "methods": [
       "Name the shape and flow family.",
       "Train on trusted simulated fields.",
@@ -50,6 +64,13 @@
       "graphs-and-geometric-learning",
       "uncertainty-and-generalization"
     ],
+    "domain_job": {
+      "scientific_job": "Find the stress field and likely weak region in a part with a new load or defect pattern.",
+      "observed_evidence": "geometry, mesh, loads, material parameters, sparse strain measurements, and trusted simulations",
+      "hidden_quantity": "internal stress and the local region where failure may begin",
+      "decision": "decide whether the part is safe enough or needs a changed design",
+      "changed_case_test": "change the load path, defect, mesh, or boundary and check stress near failure regions"
+    },
     "methods": [
       "Keep geometry and connections visible.",
       "Compare against trusted simulations or measurements.",
@@ -70,6 +91,13 @@
       "symbolic-regression",
       "uncertainty-and-generalization"
     ],
+    "domain_job": {
+      "scientific_job": "Predict a molecule property or biological activity for a new structure.",
+      "observed_evidence": "atoms, bonds, shape, assay conditions, measured properties, and trusted calculations where available",
+      "hidden_quantity": "which structural relations control the property or response in the new molecule",
+      "decision": "choose which candidate molecules deserve synthesis, testing, or closer calculation",
+      "changed_case_test": "test on a new scaffold, rare atom type, changed assay, or biological condition outside the familiar set"
+    },
     "methods": [
       "Represent connections when interactions matter.",
       "Use generation only with scientific checks.",
@@ -90,6 +118,13 @@
       "attention-for-scientific-fields",
       "uncertainty-and-generalization"
     ],
+    "domain_job": {
+      "scientific_job": "Use a broad PDE model on a new equation case without pretending breadth is proof.",
+      "observed_evidence": "many prior PDE tasks, fields, grids, parameters, boundary types, and trusted solution fields",
+      "hidden_quantity": "which shared structure transfers to the new PDE case and which parts do not",
+      "decision": "decide whether the broad model is a useful shortcut or whether a task-specific solve is still needed",
+      "changed_case_test": "withhold a full equation family, boundary type, scale, or quantity and compare against trusted solves"
+    },
     "methods": [
       "Train across many tasks.",
       "Hold out whole task families.",

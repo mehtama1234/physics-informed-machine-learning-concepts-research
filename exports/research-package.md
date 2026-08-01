@@ -658,30 +658,55 @@
 - Real quantity: temperature, concentration, or another quantity spreading through space
 - Why hard: measurements may be sparse, but the unsensed region still matters
 - Common question: What is happening between sensors, later in time, or under a changed boundary?
+- Scientific job: Estimate the full temperature field inside a wall after a boundary temperature changes.
+- Observed evidence: a few sensor readings, starting temperature, boundary temperature, material constants, and the heat equation
+- Hidden quantity: the temperature at unsensed locations and later times
+- Decision: decide whether the wall, chip, or sample will exceed a safe temperature
+- Changed-case test: move the heat source or change the boundary temperature and compare against held-out sensors or a trusted solve
 - Failure test: Change the boundary temperature, source strength, or sensor placement and see whether the prediction still follows the physical rule.
 
 ### Fluids And Flow
 - Real quantity: velocity, pressure, vorticity, drag, lift, or other flow quantities
 - Why hard: small changes in shape, boundary, or regime can create large changes in the field
 - Common question: Can we predict flow fields or forces quickly enough for design while still catching important failures?
+- Scientific job: Predict pressure and velocity around a new wing or channel shape before running the full solver.
+- Observed evidence: trusted simulations for earlier shapes, boundary conditions, inflow speed, and resulting velocity or pressure fields
+- Hidden quantity: the field and forces for a new shape near the edge of the design range
+- Decision: screen designs and decide which cases deserve expensive solver runs
+- Changed-case test: hold out a new geometry or flow regime and check drag, lift, boundary behavior, and vortices
 - Failure test: Hold out a new geometry or flow condition near the edge of the intended design range.
 
 ### Materials And Mechanics
 - Real quantity: stress, strain, displacement, failure location, or material response
 - Why hard: the same load can produce different behavior when geometry, defects, or material parameters change
 - Common question: Can a model predict how a material or structure responds under a new load or shape?
+- Scientific job: Find the stress field and likely weak region in a part with a new load or defect pattern.
+- Observed evidence: geometry, mesh, loads, material parameters, sparse strain measurements, and trusted simulations
+- Hidden quantity: internal stress and the local region where failure may begin
+- Decision: decide whether the part is safe enough or needs a changed design
+- Changed-case test: change the load path, defect, mesh, or boundary and check stress near failure regions
 - Failure test: Change the geometry, mesh, defect, or load path and check the physical quantity used for decisions.
 
 ### Chemistry And Biology
 - Real quantity: molecular property, reaction behavior, concentration, binding, or biological response
 - Why hard: the object may be a graph, a field, a time process, or a set of interacting parts
 - Common question: Can learned structure help predict scientific behavior while respecting the object being studied?
+- Scientific job: Predict a molecule property or biological activity for a new structure.
+- Observed evidence: atoms, bonds, shape, assay conditions, measured properties, and trusted calculations where available
+- Hidden quantity: which structural relations control the property or response in the new molecule
+- Decision: choose which candidate molecules deserve synthesis, testing, or closer calculation
+- Changed-case test: test on a new scaffold, rare atom type, changed assay, or biological condition outside the familiar set
 - Failure test: Test on a changed molecule, condition, experiment, or biological setting that was not close to training.
 
 ### Many PDE Tasks
 - Real quantity: solution fields across many equations, grids, parameters, or boundary settings
 - Why hard: a model may look broad while only covering the cases it saw often
 - Common question: Can one trained model reuse structure across many related scientific tasks?
+- Scientific job: Use a broad PDE model on a new equation case without pretending breadth is proof.
+- Observed evidence: many prior PDE tasks, fields, grids, parameters, boundary types, and trusted solution fields
+- Hidden quantity: which shared structure transfers to the new PDE case and which parts do not
+- Decision: decide whether the broad model is a useful shortcut or whether a task-specific solve is still needed
+- Changed-case test: withhold a full equation family, boundary type, scale, or quantity and compare against trusted solves
 - Failure test: Withhold a full equation family, boundary type, or scale and check whether the model still earns the claim.
 
 
@@ -1457,7 +1482,7 @@
 
 ### Connect concepts to real domains and concrete scientific jobs.
 - Status: locally verified
-- Evidence: summary reports 5 domain guides and 8 worked examples; worked examples include end-to-end flow traces.
+- Evidence: summary reports 5 domain guides and 8 worked examples; domain guides include concrete scientific job cards and worked examples include end-to-end flow traces.
 
 ### Separate transcript support from proof and show limits of every claim.
 - Status: locally verified

@@ -136,6 +136,8 @@ def check_required_sections() -> list[str]:
         "site/provenance/cross-channel-playbook.html": ("Cross-Channel Replication Playbook", "Process", "Checks"),
         "site/worked-examples/molecule-property-from-structure.html": ("End-To-End Flow", "Claim Boundary"),
         "site/worked-examples/foundation-pde-model-on-new-equation.html": ("End-To-End Flow", "Claim Boundary"),
+        "site/domains/chemistry-and-biology.html": ("Concrete Scientific Job", "Observed Evidence", "Changed-Case Test"),
+        "site/domains/materials-and-mechanics.html": ("Concrete Scientific Job", "Hidden Quantity", "Decision"),
     }
     errors: list[str] = []
     for rel_path, terms in required.items():

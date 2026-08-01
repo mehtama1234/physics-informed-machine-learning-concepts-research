@@ -1266,6 +1266,13 @@ DOMAIN_GUIDES = [
         "why_hard": "measurements may be sparse, but the unsensed region still matters",
         "common_question": "What is happening between sensors, later in time, or under a changed boundary?",
         "concepts": ["partial-differential-equations", "physics-informed-neural-networks", "uncertainty-and-generalization"],
+        "domain_job": {
+            "scientific_job": "Estimate the full temperature field inside a wall after a boundary temperature changes.",
+            "observed_evidence": "a few sensor readings, starting temperature, boundary temperature, material constants, and the heat equation",
+            "hidden_quantity": "the temperature at unsensed locations and later times",
+            "decision": "decide whether the wall, chip, or sample will exceed a safe temperature",
+            "changed_case_test": "move the heat source or change the boundary temperature and compare against held-out sensors or a trusted solve",
+        },
         "methods": ["Use a PDE to name how spreading should behave.", "Use sparse measurements as anchors.", "Use held-out sensors or a trusted solve to check the claim."],
         "failure_test": "Change the boundary temperature, source strength, or sensor placement and see whether the prediction still follows the physical rule.",
         "example": "worked-examples/heat-equation-from-few-measurements.html",
@@ -1277,6 +1284,13 @@ DOMAIN_GUIDES = [
         "why_hard": "small changes in shape, boundary, or regime can create large changes in the field",
         "common_question": "Can we predict flow fields or forces quickly enough for design while still catching important failures?",
         "concepts": ["operator-learning", "surrogate-modeling", "attention-for-scientific-fields", "uncertainty-and-generalization"],
+        "domain_job": {
+            "scientific_job": "Predict pressure and velocity around a new wing or channel shape before running the full solver.",
+            "observed_evidence": "trusted simulations for earlier shapes, boundary conditions, inflow speed, and resulting velocity or pressure fields",
+            "hidden_quantity": "the field and forces for a new shape near the edge of the design range",
+            "decision": "screen designs and decide which cases deserve expensive solver runs",
+            "changed_case_test": "hold out a new geometry or flow regime and check drag, lift, boundary behavior, and vortices",
+        },
         "methods": ["Name the shape and flow family.", "Train on trusted simulated fields.", "Check forces, boundary behavior, and difficult regimes rather than only visual similarity."],
         "failure_test": "Hold out a new geometry or flow condition near the edge of the intended design range.",
         "example": "worked-examples/fast-fluid-field-surrogate.html",
@@ -1288,6 +1302,13 @@ DOMAIN_GUIDES = [
         "why_hard": "the same load can produce different behavior when geometry, defects, or material parameters change",
         "common_question": "Can a model predict how a material or structure responds under a new load or shape?",
         "concepts": ["partial-differential-equations", "surrogate-modeling", "graphs-and-geometric-learning", "uncertainty-and-generalization"],
+        "domain_job": {
+            "scientific_job": "Find the stress field and likely weak region in a part with a new load or defect pattern.",
+            "observed_evidence": "geometry, mesh, loads, material parameters, sparse strain measurements, and trusted simulations",
+            "hidden_quantity": "internal stress and the local region where failure may begin",
+            "decision": "decide whether the part is safe enough or needs a changed design",
+            "changed_case_test": "change the load path, defect, mesh, or boundary and check stress near failure regions",
+        },
         "methods": ["Keep geometry and connections visible.", "Compare against trusted simulations or measurements.", "Name the load, material range, and failure quantity."],
         "failure_test": "Change the geometry, mesh, defect, or load path and check the physical quantity used for decisions.",
         "example": "worked-examples/material-stress-from-sparse-tests.html",
@@ -1299,6 +1320,13 @@ DOMAIN_GUIDES = [
         "why_hard": "the object may be a graph, a field, a time process, or a set of interacting parts",
         "common_question": "Can learned structure help predict scientific behavior while respecting the object being studied?",
         "concepts": ["graphs-and-geometric-learning", "generative-modeling", "symbolic-regression", "uncertainty-and-generalization"],
+        "domain_job": {
+            "scientific_job": "Predict a molecule property or biological activity for a new structure.",
+            "observed_evidence": "atoms, bonds, shape, assay conditions, measured properties, and trusted calculations where available",
+            "hidden_quantity": "which structural relations control the property or response in the new molecule",
+            "decision": "choose which candidate molecules deserve synthesis, testing, or closer calculation",
+            "changed_case_test": "test on a new scaffold, rare atom type, changed assay, or biological condition outside the familiar set",
+        },
         "methods": ["Represent connections when interactions matter.", "Use generation only with scientific checks.", "Look for readable rules only when the measured variables support them."],
         "failure_test": "Test on a changed molecule, condition, experiment, or biological setting that was not close to training.",
         "example": "worked-examples/molecule-property-from-structure.html",
@@ -1310,6 +1338,13 @@ DOMAIN_GUIDES = [
         "why_hard": "a model may look broad while only covering the cases it saw often",
         "common_question": "Can one trained model reuse structure across many related scientific tasks?",
         "concepts": ["foundation-models-for-pdes", "operator-learning", "attention-for-scientific-fields", "uncertainty-and-generalization"],
+        "domain_job": {
+            "scientific_job": "Use a broad PDE model on a new equation case without pretending breadth is proof.",
+            "observed_evidence": "many prior PDE tasks, fields, grids, parameters, boundary types, and trusted solution fields",
+            "hidden_quantity": "which shared structure transfers to the new PDE case and which parts do not",
+            "decision": "decide whether the broad model is a useful shortcut or whether a task-specific solve is still needed",
+            "changed_case_test": "withhold a full equation family, boundary type, scale, or quantity and compare against trusted solves",
+        },
         "methods": ["Train across many tasks.", "Hold out whole task families.", "Compare against trusted solves on changed equations, boundaries, and scales."],
         "failure_test": "Withhold a full equation family, boundary type, or scale and check whether the model still earns the claim.",
         "example": "worked-examples/foundation-pde-model-on-new-equation.html",
@@ -2145,7 +2180,7 @@ COMPLETION_REQUIREMENTS = [
     {
         "slug": "domains-and-examples",
         "requirement": "Connect concepts to real domains and concrete scientific jobs.",
-        "local_evidence": "summary reports 5 domain guides and 8 worked examples; worked examples include end-to-end flow traces.",
+        "local_evidence": "summary reports 5 domain guides and 8 worked examples; domain guides include concrete scientific job cards and worked examples include end-to-end flow traces.",
         "status": "locally verified",
         "links": ["domains.html", "worked-examples.html"],
     },
@@ -3930,6 +3965,7 @@ def write_glossary_page(path: Path, entry: dict[str, object]) -> None:
 
 def write_domain_page(path: Path, guide: dict[str, object]) -> None:
     method_items = "".join(f"<li>{html.escape(str(item))}</li>" for item in guide["methods"])
+    job = guide["domain_job"]
     body = f"""
 <h1>{html.escape(str(guide['title']))}</h1>
 <h2>Real Quantity</h2>
@@ -3938,6 +3974,16 @@ def write_domain_page(path: Path, guide: dict[str, object]) -> None:
 <p>{html.escape(str(guide['why_hard']))}</p>
 <h2>Common Question</h2>
 <p>{html.escape(str(guide['common_question']))}</p>
+<h2>Concrete Scientific Job</h2>
+<table>
+  <tbody>
+    <tr><th>Scientific Job</th><td>{html.escape(str(job['scientific_job']))}</td></tr>
+    <tr><th>Observed Evidence</th><td>{html.escape(str(job['observed_evidence']))}</td></tr>
+    <tr><th>Hidden Quantity</th><td>{html.escape(str(job['hidden_quantity']))}</td></tr>
+    <tr><th>Decision</th><td>{html.escape(str(job['decision']))}</td></tr>
+    <tr><th>Changed-Case Test</th><td>{html.escape(str(job['changed_case_test']))}</td></tr>
+  </tbody>
+</table>
 <h2>Concepts That Matter</h2>
 {concept_links(list(guide['concepts']), root_prefix="../")}
 <h2>How The Methods Enter</h2>
@@ -4606,12 +4652,18 @@ def write_markdown_export(data: dict[str, object]) -> None:
         )
     lines.extend(["", "## Domain Guides"])
     for guide in data["domain_guides"]:
+        job = guide["domain_job"]
         lines.extend(
             [
                 f"### {guide['title']}",
                 f"- Real quantity: {guide['real_quantity']}",
                 f"- Why hard: {guide['why_hard']}",
                 f"- Common question: {guide['common_question']}",
+                f"- Scientific job: {job['scientific_job']}",
+                f"- Observed evidence: {job['observed_evidence']}",
+                f"- Hidden quantity: {job['hidden_quantity']}",
+                f"- Decision: {job['decision']}",
+                f"- Changed-case test: {job['changed_case_test']}",
                 f"- Failure test: {guide['failure_test']}",
                 "",
             ]
@@ -4998,8 +5050,15 @@ def validate(data: dict[str, object] | None = None) -> None:
         if not guide_path.exists():
             raise SystemExit(f"missing domain guide page: {guide['title']}")
         guide_text = guide_path.read_text(encoding="utf-8")
-        if "Real Quantity" not in guide_text or "Failure Test" not in guide_text:
+        if "Real Quantity" not in guide_text or "Failure Test" not in guide_text or "Concrete Scientific Job" not in guide_text:
             raise SystemExit(f"domain guide not rendered correctly: {guide['title']}")
+        job = guide.get("domain_job") or {}
+        for field in ("scientific_job", "observed_evidence", "hidden_quantity", "decision", "changed_case_test"):
+            if not job.get(field):
+                raise SystemExit(f"domain guide missing job field {field}: {guide['title']}")
+        for label in ("Observed Evidence", "Hidden Quantity", "Decision", "Changed-Case Test"):
+            if label not in guide_text:
+                raise SystemExit(f"domain guide missing job label {label}: {guide['title']}")
         for slug in guide["concepts"]:
             target = SITE / "topics" / f"{slug}.html"
             if not target.exists():
