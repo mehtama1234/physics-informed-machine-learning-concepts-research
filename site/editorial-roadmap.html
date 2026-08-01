@@ -142,10 +142,10 @@
 <article class="card">
   <p class="meta">P2</p>
   <h3>Finish Replication And Remote State</h3>
-  <p><strong>Status:</strong> external blocker</p>
+  <p><strong>Status:</strong> locally completed</p>
   <p><strong>Goal:</strong> Make the package easy for another CLI to reproduce and push once the GitHub repository exists.</p>
   <p><strong>Why it matters:</strong> Local validation proves the package files. The final handoff also needs a verified remote so another person can clone and continue.</p>
-  <p><strong>Current Evidence:</strong> The local repository is clean and validated, but the configured GitHub origin still returns Repository not found.</p>
+  <p><strong>Current Evidence:</strong> The GitHub repository exists, main is pushed, and git ls-remote origin main can be compared with git rev-parse main after each final push.</p>
   <h4>Proof Pages</h4>
   <ul><li><a href="completion-audit.html">completion-audit.html</a></li><li><a href="handoff.html">handoff.html</a></li><li><a href="provenance/cli-reproduction.html">provenance/cli-reproduction.html</a></li></ul>
   <h4>Target Pages</h4>

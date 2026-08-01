@@ -59,9 +59,9 @@
     "run the wording scan for restricted filler terms listed in the editorial quality rubric"
   ],
   "remaining_editorial_work": [
-    "Create or grant access to the configured GitHub repository, then push main.",
-    "After push, run git ls-remote origin main and compare it with git rev-parse main.",
-    "If the remote hash matches local main, update this handoff to mark the external blocker resolved.",
+    "Remote repository is created and main is pushed.",
+    "For any later commit, run git push and compare git ls-remote origin main with git rev-parse main.",
+    "Keep this handoff updated whenever the latest local commit changes.",
     "Optional later editorial work: replace selected source anchors with manually verified short lecture quotes."
   ],
   "remote_finish_commands": [
@@ -71,5 +71,5 @@
     "git ls-remote --heads origin main",
     "git push -u origin main"
   ],
-  "remote_blocker": "Configured origin is https://github.com/mehtama1234/physics-informed-machine-learning-concepts-research.git, but GitHub returns Repository not found until the repository exists or access is granted."
+  "remote_status": "Configured origin is https://github.com/mehtama1234/physics-informed-machine-learning-concepts-research.git. The repository exists, main is pushed, and origin/main should match local main after each final push."
 }

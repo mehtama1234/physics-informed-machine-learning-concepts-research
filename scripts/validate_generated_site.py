@@ -104,7 +104,7 @@ def check_internal_links(manifest: list[str]) -> list[str]:
 
 def check_required_sections() -> list[str]:
     required = {
-        "site/handoff.html": ("Start Here", "Remote Finish Commands", "git push -u origin main", "Remaining Editorial Work"),
+        "site/handoff.html": ("Start Here", "Remote Verification Commands", "git push -u origin main", "Remaining Editorial Work"),
         "site/coverage.html": ("Coverage Matrix", "Reader Check"),
         "site/synthesis.html": ("Field Synthesis",),
         "site/quality.html": ("Editorial Quality Rubric",),
@@ -113,8 +113,8 @@ def check_required_sections() -> list[str]:
         "site/reader-checks.html": ("Reader Checks",),
         "site/review-entrypoints.html": ("Review Entrypoints", "End-To-End Test"),
         "site/review-search.html": ("Find Pages By Question", "Review Rule"),
-        "site/editorial-roadmap.html": ("Editorial Roadmap", "Status:", "Current Evidence", "Acceptance Check", "external blocker", "Meaty End-To-End Goal"),
-        "site/completion-audit.html": ("Completion Audit", "Requirement Evidence", "external blocker"),
+        "site/editorial-roadmap.html": ("Editorial Roadmap", "Status:", "Current Evidence", "Acceptance Check", "locally completed", "Meaty End-To-End Goal"),
+        "site/completion-audit.html": ("Completion Audit", "Requirement Evidence", "locally verified"),
         "site/diagrams.html": ("Mathematical Sketches", "Kept Rule", "Failure Case"),
         "site/topics/operator-learning.html": ("Mathematical Sketch", "Field To Field", "Kept Rule"),
         "site/topics/surrogate-modeling.html": ("Mathematical Sketch", "Fast Stand-In", "Failure Case"),

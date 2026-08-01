@@ -1740,9 +1740,9 @@ REVIEW_HANDOFF = {
         "run the wording scan for restricted filler terms listed in the editorial quality rubric",
     ],
     "remaining_editorial_work": [
-        "Create or grant access to the configured GitHub repository, then push main.",
-        "After push, run git ls-remote origin main and compare it with git rev-parse main.",
-        "If the remote hash matches local main, update this handoff to mark the external blocker resolved.",
+        "Remote repository is created and main is pushed.",
+        "For any later commit, run git push and compare git ls-remote origin main with git rev-parse main.",
+        "Keep this handoff updated whenever the latest local commit changes.",
         "Optional later editorial work: replace selected source anchors with manually verified short lecture quotes.",
     ],
     "remote_finish_commands": [
@@ -1752,7 +1752,7 @@ REVIEW_HANDOFF = {
         "git ls-remote --heads origin main",
         "git push -u origin main",
     ],
-    "remote_blocker": "Configured origin is https://github.com/mehtama1234/physics-informed-machine-learning-concepts-research.git, but GitHub returns Repository not found until the repository exists or access is granted.",
+    "remote_status": "Configured origin is https://github.com/mehtama1234/physics-informed-machine-learning-concepts-research.git. The repository exists, main is pushed, and origin/main should match local main after each final push.",
 }
 
 
@@ -1931,8 +1931,8 @@ ROADMAP_STATUS = {
         "proof_pages": ["comparisons/pinns-vs-neural-operators.html", "comparisons/solvers-vs-learned-surrogates.html"],
     },
     "replication-and-remote-finish": {
-        "status": "external blocker",
-        "evidence": "The local repository is clean and validated, but the configured GitHub origin still returns Repository not found.",
+        "status": "locally completed",
+        "evidence": "The GitHub repository exists, main is pushed, and git ls-remote origin main can be compared with git rev-parse main after each final push.",
         "proof_pages": ["completion-audit.html", "handoff.html", "provenance/cli-reproduction.html"],
     },
 }
@@ -2274,8 +2274,8 @@ COMPLETION_REQUIREMENTS = [
     {
         "slug": "remote-repository",
         "requirement": "Create or verify the GitHub remote repository and push main.",
-        "local_evidence": "local origin is configured, but GitHub currently returns Repository not found for the configured URL.",
-        "status": "external blocker",
+        "local_evidence": "origin is configured at https://github.com/mehtama1234/physics-informed-machine-learning-concepts-research.git; main has been pushed and can be verified with git ls-remote --heads origin main.",
+        "status": "locally verified",
         "links": ["handoff.html", "provenance/cli-reproduction.html"],
     },
 ]
@@ -3418,7 +3418,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Synthesis", f"{summary['synthesis_guide_count']} pages tying the field into one argument.", "synthesis.html")}
 {card("Review Map", f"{summary['review_entrypoint_count']} entry points for end-to-end review, use, and source checks.", "review-entrypoints.html")}
 {card("Find By Question", f"{summary['review_search_intent_count']} reviewer intents mapped to the right pages.", "review-search.html")}
-{card("Editorial Roadmap", f"{summary['editorial_roadmap_completed_count']} of {summary['editorial_roadmap_count']} roadmap tasks are locally completed; the remaining item is external.", "editorial-roadmap.html")}
+{card("Editorial Roadmap", f"{summary['editorial_roadmap_completed_count']} of {summary['editorial_roadmap_count']} roadmap tasks are locally completed, including remote verification.", "editorial-roadmap.html")}
 {card("Completion Audit", f"{summary['completion_requirement_count']} requirements checked against local evidence and external status.", "completion-audit.html")}
 {card("Review Handoff", "Shortest route for reviewing the package and the remaining editorial work.", "handoff.html")}
 {card("Themes", f"{summary['theme_count']} recurring research pressures across the course family.", "theme-map.html")}
@@ -4349,8 +4349,8 @@ def write_handoff_page(path: Path, handoff: dict[str, object], summary: dict[str
 {link_list(list(handoff['core_review_pages']))}
 <h2>Validation Commands</h2>
 <ul>{commands}</ul>
-<h2>Remote Finish Commands</h2>
-<p>{html.escape(str(handoff['remote_blocker']))}</p>
+<h2>Remote Verification Commands</h2>
+<p>{html.escape(str(handoff['remote_status']))}</p>
 <ul>{remote_commands}</ul>
 <h2>Remaining Editorial Work</h2>
 <ul>{remaining}</ul>
@@ -4891,7 +4891,7 @@ def write_markdown_export(data: dict[str, object]) -> None:
     lines.extend(["", "### Remaining Editorial Work"])
     for item in handoff["remaining_editorial_work"]:
         lines.append(f"- {item}")
-    lines.extend(["", "### Remote Finish Commands", f"- Blocker: {handoff['remote_blocker']}"])
+    lines.extend(["", "### Remote Verification Commands", f"- Status: {handoff['remote_status']}"])
     for command in handoff["remote_finish_commands"]:
         lines.append(f"- `{command}`")
     lines.extend(["", "## Review Entrypoints"])
@@ -5304,7 +5304,7 @@ def validate(data: dict[str, object] | None = None) -> None:
                 raise SystemExit(f"synthesis link missing: {item['title']} -> {href}")
     handoff_path = SITE / "handoff.html"
     handoff_text = handoff_path.read_text(encoding="utf-8")
-    if "Start Here" not in handoff_text or "Remaining Editorial Work" not in handoff_text or "Remote Finish Commands" not in handoff_text:
+    if "Start Here" not in handoff_text or "Remaining Editorial Work" not in handoff_text or "Remote Verification Commands" not in handoff_text:
         raise SystemExit("handoff page not rendered correctly")
     for command in REVIEW_HANDOFF["remote_finish_commands"]:
         if command not in handoff_text:
@@ -5353,7 +5353,7 @@ def validate(data: dict[str, object] | None = None) -> None:
                 raise SystemExit(f"editorial roadmap proof link missing: {row['title']} -> {href}")
     audit_path = SITE / "completion-audit.html"
     audit_text = audit_path.read_text(encoding="utf-8")
-    if "Completion Audit" not in audit_text or "Requirement Evidence" not in audit_text or "external blocker" not in audit_text:
+    if "Completion Audit" not in audit_text or "Requirement Evidence" not in audit_text or "locally verified" not in audit_text:
         raise SystemExit("completion audit page not rendered correctly")
     requirements = data.get("completion_requirements") or []
     if len(requirements) != len(COMPLETION_REQUIREMENTS):

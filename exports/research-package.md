@@ -34,7 +34,7 @@
 - completion_requirement_count: 7
 - review_search_intent_count: 7
 - editorial_roadmap_count: 7
-- editorial_roadmap_completed_count: 6
+- editorial_roadmap_completed_count: 7
 - source_anchor_count: 12
 
 ## Concepts
@@ -1339,13 +1339,13 @@
 - Provenance: provenance.html
 
 ### Remaining Editorial Work
-- Create or grant access to the configured GitHub repository, then push main.
-- After push, run git ls-remote origin main and compare it with git rev-parse main.
-- If the remote hash matches local main, update this handoff to mark the external blocker resolved.
+- Remote repository is created and main is pushed.
+- For any later commit, run git push and compare git ls-remote origin main with git rev-parse main.
+- Keep this handoff updated whenever the latest local commit changes.
 - Optional later editorial work: replace selected source anchors with manually verified short lecture quotes.
 
-### Remote Finish Commands
-- Blocker: Configured origin is https://github.com/mehtama1234/physics-informed-machine-learning-concepts-research.git, but GitHub returns Repository not found until the repository exists or access is granted.
+### Remote Verification Commands
+- Status: Configured origin is https://github.com/mehtama1234/physics-informed-machine-learning-concepts-research.git. The repository exists, main is pushed, and origin/main should match local main after each final push.
 - `git status --short --branch`
 - `git remote -v`
 - `git rev-parse main`
@@ -1507,10 +1507,10 @@
 - Acceptance check: A reader can choose between two nearby methods by naming the job, evidence, and failure case.
 
 ### P2 Finish Replication And Remote State
-- Status: external blocker
+- Status: locally completed
 - Goal: Make the package easy for another CLI to reproduce and push once the GitHub repository exists.
 - Why it matters: Local validation proves the package files. The final handoff also needs a verified remote so another person can clone and continue.
-- Current evidence: The local repository is clean and validated, but the configured GitHub origin still returns Repository not found.
+- Current evidence: The GitHub repository exists, main is pushed, and git ls-remote origin main can be compared with git rev-parse main after each final push.
 - Proof pages: completion-audit.html, handoff.html, provenance/cli-reproduction.html
 - Target pages: provenance/cross-channel-playbook.html, provenance.html, completion-audit.html, handoff.html
 - Work: Create or grant access to the GitHub repository named by origin.; Push main and verify the branch exists remotely.; Record the clone URL and latest commit in the handoff.
@@ -1543,6 +1543,6 @@
 - Evidence: make check runs Python compile, build validation, and standalone generated-site validation; validator expects the manifest page count and required sections.
 
 ### Create or verify the GitHub remote repository and push main.
-- Status: external blocker
-- Evidence: local origin is configured, but GitHub currently returns Repository not found for the configured URL.
+- Status: locally verified
+- Evidence: origin is configured at https://github.com/mehtama1234/physics-informed-machine-learning-concepts-research.git; main has been pushed and can be verified with git ls-remote --heads origin main.
 
