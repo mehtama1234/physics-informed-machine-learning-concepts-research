@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Physics-Informed ML Completion Audit</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav class="topbar">
+  <a href="index.html">Physics-Informed ML</a>
+  <a href="transcripts.html">Transcripts</a>
+  <a href="concept-atlas.html">Concept Atlas</a>
+  <a href="families.html">Families</a>
+  <a href="comparisons.html">Comparisons</a>
+  <a href="worked-examples.html">Examples</a>
+  <a href="diagrams.html">Diagrams</a>
+  <a href="derivations.html">Derivations</a>
+  <a href="learning-path.html">Path</a>
+  <a href="glossary.html">Glossary</a>
+  <a href="domains.html">Domains</a>
+  <a href="reader-checks.html">Checks</a>
+  <a href="decision-guide.html">Decide</a>
+  <a href="provenance.html">Provenance</a>
+  <a href="coverage.html">Coverage</a>
+  <a href="concept-ladder.html">Ladder</a>
+  <a href="evidence-packets.html">Packets</a>
+  <a href="quality.html">Quality</a>
+  <a href="synthesis.html">Synthesis</a>
+  <a href="review-entrypoints.html">Review Map</a>
+  <a href="completion-audit.html">Audit</a>
+  <a href="handoff.html">Handoff</a>
+  <a href="theme-map.html">Themes</a>
+  <a href="evidence-ledger.html">Evidence</a>
+</nav>
+<main>
+
+<h1>Completion Audit</h1>
+<p>This page maps the requested end-to-end package to concrete local evidence. It also separates the local build state from the external GitHub remote state.</p>
+<h2>Current Local Counts</h2>
+<ul>
+  <li>Videos: 40</li>
+  <li>Available transcripts: 40</li>
+  <li>Concepts: 14</li>
+  <li>Generated concept evidence packets: 14</li>
+  <li>Worked examples: 8</li>
+  <li>Total audit requirements: 7</li>
+</ul>
+<h2>Requirement Evidence</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Requirement</th>
+      <th>Status</th>
+      <th>Evidence</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+  <td>Preserve transcript-backed source material for the two playlist family.</td>
+  <td>locally verified</td>
+  <td>summary reports 2 playlists, 40 videos, and 40 available transcripts; provenance pages name playlists, caption extraction, and local files.<ul><li><a href="transcripts.html">transcripts.html</a></li><li><a href="provenance/source-playlists.html">provenance/source-playlists.html</a></li><li><a href="provenance/transcript-extraction.html">provenance/transcript-extraction.html</a></li></ul></td>
+</tr>
+
+<tr>
+  <td>Explain mathematical concepts from first principles without assuming prior jargon.</td>
+  <td>locally verified</td>
+  <td>topic pages, concept ladder, glossary, derivations, and quality rubric require problem, domain, observed evidence, hidden quantity, formula shape, and failure test.<ul><li><a href="concept-atlas.html">concept-atlas.html</a></li><li><a href="concept-ladder.html">concept-ladder.html</a></li><li><a href="derivations.html">derivations.html</a></li><li><a href="quality.html">quality.html</a></li></ul></td>
+</tr>
+
+<tr>
+  <td>Connect concepts to real domains and concrete scientific jobs.</td>
+  <td>locally verified</td>
+  <td>summary reports 5 domain guides and 8 worked examples; worked examples include end-to-end flow traces.<ul><li><a href="domains.html">domains.html</a></li><li><a href="worked-examples.html">worked-examples.html</a></li></ul></td>
+</tr>
+
+<tr>
+  <td>Separate transcript support from proof and show limits of every claim.</td>
+  <td>locally verified</td>
+  <td>evidence ledger and 14 concept evidence packets state transcript anchors, review links, and what evidence does not prove.<ul><li><a href="evidence-ledger.html">evidence-ledger.html</a></li><li><a href="evidence-packets.html">evidence-packets.html</a></li><li><a href="coverage.html">coverage.html</a></li></ul></td>
+</tr>
+
+<tr>
+  <td>Give reviewers and another CLI an end-to-end route through the package.</td>
+  <td>locally verified</td>
+  <td>review map, handoff, provenance, and cross-channel playbook name review route, extraction steps, build outputs, and validation checks.<ul><li><a href="review-entrypoints.html">review-entrypoints.html</a></li><li><a href="handoff.html">handoff.html</a></li><li><a href="provenance/cross-channel-playbook.html">provenance/cross-channel-playbook.html</a></li></ul></td>
+</tr>
+
+<tr>
+  <td>Run local checks proving generated pages, links, counts, and wording gates are coherent.</td>
+  <td>locally verified</td>
+  <td>make check runs Python compile, build validation, and standalone generated-site validation; validator expects the manifest page count and required sections.<ul><li><a href="provenance/site-generation.html">provenance/site-generation.html</a></li><li><a href="provenance/analysis-build.html">provenance/analysis-build.html</a></li></ul></td>
+</tr>
+
+<tr>
+  <td>Create or verify the GitHub remote repository and push main.</td>
+  <td>external blocker</td>
+  <td>local origin is configured, but GitHub currently returns Repository not found for the configured URL.<ul><li><a href="handoff.html">handoff.html</a></li><li><a href="provenance/cli-reproduction.html">provenance/cli-reproduction.html</a></li></ul></td>
+</tr>
+</tbody>
+</table>
+<h2>How To Read This</h2>
+<p>Locally verified means the generated files and validation commands prove the item inside this workspace. External blocker means the local files are ready, but a condition outside the workspace still has to change.</p>
+
+</main>
+</body>
+</html>
