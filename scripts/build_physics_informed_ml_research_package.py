@@ -586,6 +586,94 @@ TOPIC_DEEP_DIVES = {
 }
 
 
+DIAGRAMS = [
+    {
+        "slug": "data-only-learning-flow",
+        "title": "Data-Only Learning Flow",
+        "topic_slugs": ["deep-learning", "scientific-machine-learning"],
+        "purpose": "Show what a model sees when examples are the only source of correction.",
+        "nodes": [
+            "past examples",
+            "adjustable model",
+            "prediction",
+            "compare with known answers",
+            "test on a changed case",
+        ],
+        "watch_for": "If the changed case is too similar to the past examples, the test says little about scientific use.",
+    },
+    {
+        "slug": "physics-informed-learning-flow",
+        "title": "Physics-Informed Learning Flow",
+        "topic_slugs": ["physics-informed-neural-networks"],
+        "purpose": "Show how measured data and a known physical rule both push on the fitted field.",
+        "nodes": [
+            "sparse measurements",
+            "known equation",
+            "fitted field",
+            "data check plus equation check",
+            "held-out sensor or trusted solve",
+        ],
+        "watch_for": "The equation check must be hard enough to catch mistakes between measured points.",
+    },
+    {
+        "slug": "pde-field-reasoning-flow",
+        "title": "PDE Field Reasoning Flow",
+        "topic_slugs": ["partial-differential-equations"],
+        "purpose": "Show why fields need boundaries, neighbors, and time rather than isolated numbers.",
+        "nodes": [
+            "field value",
+            "nearby values",
+            "boundary or starting information",
+            "local change rule",
+            "future field",
+        ],
+        "watch_for": "A learned shortcut that ignores boundaries can look smooth while answering the wrong physical question.",
+    },
+    {
+        "slug": "operator-learning-flow",
+        "title": "Operator Learning Flow",
+        "topic_slugs": ["operator-learning", "foundation-models-for-pdes", "attention-for-scientific-fields"],
+        "purpose": "Show the difference between learning one answer and learning a map from input fields to output fields.",
+        "nodes": [
+            "many input fields",
+            "many solved output fields",
+            "learned field-to-field map",
+            "new input field",
+            "new output field",
+        ],
+        "watch_for": "The map is useful only for the named family of equations, grids, parameters, and boundaries.",
+    },
+    {
+        "slug": "surrogate-validation-flow",
+        "title": "Surrogate Validation Flow",
+        "topic_slugs": ["surrogate-modeling", "uncertainty-and-generalization"],
+        "purpose": "Show how a fast stand-in earns trust only by being checked against the slow source.",
+        "nodes": [
+            "expensive solver",
+            "training cases",
+            "fast stand-in",
+            "edge-case comparison",
+            "stated use range",
+        ],
+        "watch_for": "A speed claim is incomplete until the use range and failure case are stated.",
+    },
+    {
+        "slug": "model-discovery-flow",
+        "title": "Model Discovery Flow",
+        "topic_slugs": ["symbolic-regression", "neural-differential-equations"],
+        "purpose": "Show how measurements can lead to a candidate rule rather than only a prediction.",
+        "nodes": [
+            "measured motion",
+            "candidate variables",
+            "searched rule or learned rate",
+            "readable law",
+            "new experiment check",
+        ],
+        "watch_for": "A short law can be wrong if important variables were never measured.",
+    },
+]
+
+
 @dataclass
 class TranscriptRecord:
     video_id: str
@@ -883,6 +971,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
             "comparison_count": len(COMPARISON_PAGES),
             "worked_example_count": len(WORKED_EXAMPLES),
             "deep_dive_count": len(TOPIC_DEEP_DIVES),
+            "diagram_count": len(DIAGRAMS),
         },
         "transcript_index": [record_to_dict(record) for record in records],
         "concept_atlas": concept_atlas,
@@ -893,6 +982,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
         "comparison_pages": COMPARISON_PAGES,
         "worked_examples": WORKED_EXAMPLES,
         "topic_deep_dives": TOPIC_DEEP_DIVES,
+        "diagrams": DIAGRAMS,
     }
     for name, value in data.items():
         if name == "summary":
@@ -967,6 +1057,29 @@ p, li { max-width: 900px; }
   border-radius: 8px;
   padding: 12px 14px;
 }
+.flow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  align-items: stretch;
+  max-width: 1040px;
+}
+.flow-node {
+  min-height: 92px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-top: 5px solid #9b5b28;
+  border-radius: 8px;
+  padding: 12px;
+  font-weight: 700;
+}
+.diagram-note {
+  max-width: 1040px;
+  background: #eef4f6;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px 14px;
+}
 .compare-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
 .card {
   background: var(--card);
@@ -1007,6 +1120,7 @@ def html_page(title: str, body: str, root_prefix: str = "") -> str:
   <a href="{root_prefix}families.html">Families</a>
   <a href="{root_prefix}comparisons.html">Comparisons</a>
   <a href="{root_prefix}worked-examples.html">Examples</a>
+  <a href="{root_prefix}diagrams.html">Diagrams</a>
   <a href="{root_prefix}theme-map.html">Themes</a>
   <a href="{root_prefix}evidence-ledger.html">Evidence</a>
 </nav>
@@ -1059,6 +1173,32 @@ def topic_deep_dive_html(slug: str) -> str:
 """
 
 
+def diagram_flow_html(diagram: dict[str, object]) -> str:
+    nodes = "".join(f"<div class=\"flow-node\">{idx}. {html.escape(str(node))}</div>" for idx, node in enumerate(diagram["nodes"], start=1))
+    return f"""
+<div class="flow">{nodes}</div>
+<p class="diagram-note"><strong>Watch for:</strong> {html.escape(str(diagram['watch_for']))}</p>
+"""
+
+
+def topic_diagrams_html(slug: str) -> str:
+    diagrams = [diagram for diagram in DIAGRAMS if slug in diagram["topic_slugs"]]
+    if not diagrams:
+        return ""
+    cards = []
+    for diagram in diagrams:
+        cards.append(
+            f"""
+<article class="card">
+  <h3><a href="../diagrams/{html.escape(str(diagram['slug']))}.html">{html.escape(str(diagram['title']))}</a></h3>
+  <p>{html.escape(str(diagram['purpose']))}</p>
+  {diagram_flow_html(diagram)}
+</article>
+"""
+        )
+    return f"<h2>Visual Map</h2>{''.join(cards)}"
+
+
 def write_site(data: dict[str, object]) -> None:
     SITE.mkdir(parents=True, exist_ok=True)
     write_style()
@@ -1067,7 +1207,8 @@ def write_site(data: dict[str, object]) -> None:
     family_dir = SITE / "families"
     comparison_dir = SITE / "comparisons"
     example_dir = SITE / "worked-examples"
-    for generated_dir in (family_dir, comparison_dir, example_dir):
+    diagram_dir = SITE / "diagrams"
+    for generated_dir in (family_dir, comparison_dir, example_dir, diagram_dir):
         if generated_dir.exists():
             shutil.rmtree(generated_dir)
     topic_dir.mkdir(exist_ok=True)
@@ -1075,6 +1216,7 @@ def write_site(data: dict[str, object]) -> None:
     family_dir.mkdir(exist_ok=True)
     comparison_dir.mkdir(exist_ok=True)
     example_dir.mkdir(exist_ok=True)
+    diagram_dir.mkdir(exist_ok=True)
 
     summary = data["summary"]
     concept_atlas = data["concept_atlas"]
@@ -1085,6 +1227,7 @@ def write_site(data: dict[str, object]) -> None:
     family_pages = data["family_pages"]
     comparison_pages = data["comparison_pages"]
     worked_examples = data["worked_examples"]
+    diagrams = data["diagrams"]
 
     index_body = f"""
 <h1>Physics-Informed Machine Learning Concepts Research</h1>
@@ -1095,6 +1238,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Paper Families", f"{summary['family_count']} routes through related concept families.", "families.html")}
 {card("Comparisons", f"{summary['comparison_count']} plain-language method comparisons.", "comparisons.html")}
 {card("Worked Examples", f"{summary['worked_example_count']} concrete scientific examples.", "worked-examples.html")}
+{card("Diagrams", f"{summary['diagram_count']} visual flows for the main mathematical ideas.", "diagrams.html")}
 {card("Themes", f"{summary['theme_count']} recurring research pressures across the course family.", "theme-map.html")}
 {card("Evidence", "Each major claim links back to transcript or metadata evidence and states its limit.", "evidence-ledger.html")}
 </div>
@@ -1164,6 +1308,16 @@ def write_site(data: dict[str, object]) -> None:
         write_worked_example_page(example_dir / f"{example['slug']}.html", example)
     (SITE / "worked-examples.html").write_text(
         html_page("Physics-Informed ML Worked Examples", f"<h1>Worked Examples</h1><p>These pages anchor the math in concrete scientific jobs. Each example names the observed evidence, the hidden quantity, the method route, and the test that keeps the claim honest.</p><div class=\"grid\">{''.join(example_cards)}</div>"),
+        encoding="utf-8",
+    )
+
+    diagram_cards = []
+    for diagram in diagrams:
+        href = f"diagrams/{diagram['slug']}.html"
+        diagram_cards.append(card(str(diagram["title"]), str(diagram["purpose"]), href))
+        write_diagram_page(diagram_dir / f"{diagram['slug']}.html", diagram)
+    (SITE / "diagrams.html").write_text(
+        html_page("Physics-Informed ML Diagrams", f"<h1>Diagram Index</h1><p>These diagrams show the flow of evidence, rules, learned objects, and validation checks. They are deliberately simple so the core idea is visible before any notation appears.</p><div class=\"grid\">{''.join(diagram_cards)}</div>"),
         encoding="utf-8",
     )
 
@@ -1354,6 +1508,7 @@ def write_topic_page(path: Path, topic: dict[str, object]) -> None:
             evidence_items.append(f"<li><a href=\"{html.escape(str(row['url']))}\">{html.escape(str(row['title']))}</a>: {html.escape(str(row.get('excerpt') or 'metadata evidence'))}</li>")
     derivation = topic_derivation(topic)
     deep_dive = topic_deep_dive_html(str(topic["slug"]))
+    diagrams = topic_diagrams_html(str(topic["slug"]))
     body = f"""
 <h1>{html.escape(str(topic['title']))}</h1>
 <h2>Common Problem This Solves</h2>
@@ -1374,6 +1529,7 @@ def write_topic_page(path: Path, topic: dict[str, object]) -> None:
   <li><strong>Say what it means:</strong> {html.escape(str(derivation['meaning']))}.</li>
 </ol>
 {deep_dive}
+{diagrams}
 <h2>Deeper Mathematical Why</h2>
 <p>The mathematical point is to decide what information is allowed to carry the scientific claim. If the carried information is too small, the model misses the behavior that matters. If it is too broad, the page may claim more than the evidence supports. The useful middle is a named object, a named scientific job, and a changed case that can reject the claim.</p>
 <h2>Reader Test</h2>
@@ -1386,6 +1542,22 @@ def write_topic_page(path: Path, topic: dict[str, object]) -> None:
 <ul>{''.join(evidence_items)}</ul>
 """
     path.write_text(html_page(str(topic["title"]), body, root_prefix="../"), encoding="utf-8")
+
+
+def write_diagram_page(path: Path, diagram: dict[str, object]) -> None:
+    topic_list = concept_links(list(diagram["topic_slugs"]), root_prefix="../")
+    body = f"""
+<h1>{html.escape(str(diagram['title']))}</h1>
+<h2>Purpose</h2>
+<p>{html.escape(str(diagram['purpose']))}</p>
+<h2>Flow</h2>
+{diagram_flow_html(diagram)}
+<h2>Related Concepts</h2>
+{topic_list}
+<h2>How To Read It</h2>
+<p>Move left to right. Each box names the information being carried forward. The last box is not decoration; it is the check that decides whether the claim should be trusted.</p>
+"""
+    path.write_text(html_page(str(diagram["title"]), body, root_prefix="../"), encoding="utf-8")
 
 
 def write_family_page(path: Path, family: dict[str, object]) -> None:
@@ -1522,6 +1694,17 @@ def write_markdown_export(data: dict[str, object]) -> None:
                 "",
             ]
         )
+    lines.extend(["", "## Diagrams"])
+    for diagram in data["diagrams"]:
+        lines.extend(
+            [
+                f"### {diagram['title']}",
+                f"- Purpose: {diagram['purpose']}",
+                f"- Flow: {' -> '.join(diagram['nodes'])}",
+                f"- Watch for: {diagram['watch_for']}",
+                "",
+            ]
+        )
     (EXPORTS / "research-package.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
@@ -1574,6 +1757,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         SITE / "families.html",
         SITE / "comparisons.html",
         SITE / "worked-examples.html",
+        SITE / "diagrams.html",
         SITE / "theme-map.html",
         SITE / "evidence-ledger.html",
     ):
@@ -1588,6 +1772,13 @@ def validate(data: dict[str, object] | None = None) -> None:
     for example in WORKED_EXAMPLES:
         if not (SITE / "worked-examples" / f"{example['slug']}.html").exists():
             raise SystemExit(f"missing worked example page: {example['title']}")
+    for diagram in DIAGRAMS:
+        diagram_path = SITE / "diagrams" / f"{diagram['slug']}.html"
+        if not diagram_path.exists():
+            raise SystemExit(f"missing diagram page: {diagram['title']}")
+        diagram_text = diagram_path.read_text(encoding="utf-8")
+        if "flow-node" not in diagram_text or "Watch for:" not in diagram_text:
+            raise SystemExit(f"diagram not rendered correctly: {diagram['title']}")
     manifest_path = SITE / "page-manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     missing = [item for item in manifest if not (ROOT / item).exists()]

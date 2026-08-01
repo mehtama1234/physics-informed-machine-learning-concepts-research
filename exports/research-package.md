@@ -12,6 +12,7 @@
 - comparison_count: 4
 - worked_example_count: 3
 - deep_dive_count: 8
+- diagram_count: 6
 
 ## Concepts
 ### Deep Learning
@@ -223,4 +224,36 @@
 - Do not use when: Do not confuse broad training with proof that a new scientific regime is covered.
 - Plain formula: many PDE tasks -> shared learned structure -> new task prediction
 - Why it matters: If it works, broad training could reduce repeated model-building for related scientific problems.
+
+
+## Diagrams
+### Data-Only Learning Flow
+- Purpose: Show what a model sees when examples are the only source of correction.
+- Flow: past examples -> adjustable model -> prediction -> compare with known answers -> test on a changed case
+- Watch for: If the changed case is too similar to the past examples, the test says little about scientific use.
+
+### Physics-Informed Learning Flow
+- Purpose: Show how measured data and a known physical rule both push on the fitted field.
+- Flow: sparse measurements -> known equation -> fitted field -> data check plus equation check -> held-out sensor or trusted solve
+- Watch for: The equation check must be hard enough to catch mistakes between measured points.
+
+### PDE Field Reasoning Flow
+- Purpose: Show why fields need boundaries, neighbors, and time rather than isolated numbers.
+- Flow: field value -> nearby values -> boundary or starting information -> local change rule -> future field
+- Watch for: A learned shortcut that ignores boundaries can look smooth while answering the wrong physical question.
+
+### Operator Learning Flow
+- Purpose: Show the difference between learning one answer and learning a map from input fields to output fields.
+- Flow: many input fields -> many solved output fields -> learned field-to-field map -> new input field -> new output field
+- Watch for: The map is useful only for the named family of equations, grids, parameters, and boundaries.
+
+### Surrogate Validation Flow
+- Purpose: Show how a fast stand-in earns trust only by being checked against the slow source.
+- Flow: expensive solver -> training cases -> fast stand-in -> edge-case comparison -> stated use range
+- Watch for: A speed claim is incomplete until the use range and failure case are stated.
+
+### Model Discovery Flow
+- Purpose: Show how measurements can lead to a candidate rule rather than only a prediction.
+- Flow: measured motion -> candidate variables -> searched rule or learned rate -> readable law -> new experiment check
+- Watch for: A short law can be wrong if important variables were never measured.
 

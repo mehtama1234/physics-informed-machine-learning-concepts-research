@@ -1,0 +1,103 @@
+[
+  {
+    "slug": "data-only-learning-flow",
+    "title": "Data-Only Learning Flow",
+    "topic_slugs": [
+      "deep-learning",
+      "scientific-machine-learning"
+    ],
+    "purpose": "Show what a model sees when examples are the only source of correction.",
+    "nodes": [
+      "past examples",
+      "adjustable model",
+      "prediction",
+      "compare with known answers",
+      "test on a changed case"
+    ],
+    "watch_for": "If the changed case is too similar to the past examples, the test says little about scientific use."
+  },
+  {
+    "slug": "physics-informed-learning-flow",
+    "title": "Physics-Informed Learning Flow",
+    "topic_slugs": [
+      "physics-informed-neural-networks"
+    ],
+    "purpose": "Show how measured data and a known physical rule both push on the fitted field.",
+    "nodes": [
+      "sparse measurements",
+      "known equation",
+      "fitted field",
+      "data check plus equation check",
+      "held-out sensor or trusted solve"
+    ],
+    "watch_for": "The equation check must be hard enough to catch mistakes between measured points."
+  },
+  {
+    "slug": "pde-field-reasoning-flow",
+    "title": "PDE Field Reasoning Flow",
+    "topic_slugs": [
+      "partial-differential-equations"
+    ],
+    "purpose": "Show why fields need boundaries, neighbors, and time rather than isolated numbers.",
+    "nodes": [
+      "field value",
+      "nearby values",
+      "boundary or starting information",
+      "local change rule",
+      "future field"
+    ],
+    "watch_for": "A learned shortcut that ignores boundaries can look smooth while answering the wrong physical question."
+  },
+  {
+    "slug": "operator-learning-flow",
+    "title": "Operator Learning Flow",
+    "topic_slugs": [
+      "operator-learning",
+      "foundation-models-for-pdes",
+      "attention-for-scientific-fields"
+    ],
+    "purpose": "Show the difference between learning one answer and learning a map from input fields to output fields.",
+    "nodes": [
+      "many input fields",
+      "many solved output fields",
+      "learned field-to-field map",
+      "new input field",
+      "new output field"
+    ],
+    "watch_for": "The map is useful only for the named family of equations, grids, parameters, and boundaries."
+  },
+  {
+    "slug": "surrogate-validation-flow",
+    "title": "Surrogate Validation Flow",
+    "topic_slugs": [
+      "surrogate-modeling",
+      "uncertainty-and-generalization"
+    ],
+    "purpose": "Show how a fast stand-in earns trust only by being checked against the slow source.",
+    "nodes": [
+      "expensive solver",
+      "training cases",
+      "fast stand-in",
+      "edge-case comparison",
+      "stated use range"
+    ],
+    "watch_for": "A speed claim is incomplete until the use range and failure case are stated."
+  },
+  {
+    "slug": "model-discovery-flow",
+    "title": "Model Discovery Flow",
+    "topic_slugs": [
+      "symbolic-regression",
+      "neural-differential-equations"
+    ],
+    "purpose": "Show how measurements can lead to a candidate rule rather than only a prediction.",
+    "nodes": [
+      "measured motion",
+      "candidate variables",
+      "searched rule or learned rate",
+      "readable law",
+      "new experiment check"
+    ],
+    "watch_for": "A short law can be wrong if important variables were never measured."
+  }
+]
