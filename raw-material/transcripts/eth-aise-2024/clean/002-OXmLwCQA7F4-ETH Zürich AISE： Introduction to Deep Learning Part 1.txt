@@ -1,0 +1,3550 @@
+okay everyone we're going to get
+okay everyone we're going to get
+okay everyone we're going to get
+started um so welcome to this lecture uh
+started um so welcome to this lecture uh
+started um so welcome to this lecture uh
+this is the second lecture in our course
+this is the second lecture in our course
+this is the second lecture in our course
+AI in The Sciences engineering um in
+AI in The Sciences engineering um in
+AI in The Sciences engineering um in
+this lecture I'm going to be covering an
+this lecture I'm going to be covering an
+this lecture I'm going to be covering an
+introduction to deep learning and so
+introduction to deep learning and so
+introduction to deep learning and so
+this is uh the first part of two
+this is uh the first part of two
+this is uh the first part of two
+lectures on this
+subject so before I do that let's just
+subject so before I do that let's just
+subject so before I do that let's just
+recap what I covered in the last lecture
+recap what I covered in the last lecture
+recap what I covered in the last lecture
+in the last lecture I gave you a very
+in the last lecture I gave you a very
+in the last lecture I gave you a very
+high level motivation of the course and
+high level motivation of the course and
+high level motivation of the course and
+introduction to the
+introduction to the
+introduction to the
+course and what I hopefully tried to
+course and what I hopefully tried to
+course and what I hopefully tried to
+show you was that AI is really having a
+show you was that AI is really having a
+show you was that AI is really having a
+massive impact in science and as and is
+massive impact in science and as and is
+massive impact in science and as and is
+driving a lot of breakthroughs uh today
+driving a lot of breakthroughs uh today
+driving a lot of breakthroughs uh today
+so I talked about examples from uh you
+so I talked about examples from uh you
+so I talked about examples from uh you
+know using AI to carry out really fast
+know using AI to carry out really fast
+know using AI to carry out really fast
+and accurate climate simulations and
+and accurate climate simulations and
+and accurate climate simulations and
+weather predictions I also showed you an
+weather predictions I also showed you an
+weather predictions I also showed you an
+example of using AI to help control
+example of using AI to help control
+example of using AI to help control
+Fusion in nuclear
+Fusion in nuclear
+Fusion in nuclear
+reactors um and and AI can also help us
+reactors um and and AI can also help us
+reactors um and and AI can also help us
+predict much much fast much more fast um
+predict much much fast much more fast um
+predict much much fast much more fast um
+the the the 3D structure of
+proteins um I also talked about the kind
+proteins um I also talked about the kind
+proteins um I also talked about the kind
+of key scientific tasks that we often
+of key scientific tasks that we often
+of key scientific tasks that we often
+want to solve when we're doing
+want to solve when we're doing
+want to solve when we're doing
+scientific research and I also try to
+scientific research and I also try to
+scientific research and I also try to
+motivate the ways that AI could help us
+motivate the ways that AI could help us
+motivate the ways that AI could help us
+solve those so for example helping us
+solve those so for example helping us
+solve those so for example helping us
+solve simulation tasks uh maybe making
+solve simulation tasks uh maybe making
+solve simulation tasks uh maybe making
+them more efficient or faster to run
+them more efficient or faster to run
+them more efficient or faster to run
+helping us solve inverse problems um
+helping us solve inverse problems um
+helping us solve inverse problems um
+understanding underlying parameters from
+understanding underlying parameters from
+understanding underlying parameters from
+observations of of a system um perhaps
+observations of of a system um perhaps
+observations of of a system um perhaps
+AI can help us more accurately determine
+AI can help us more accurately determine
+AI can help us more accurately determine
+those parameters and then I also talked
+those parameters and then I also talked
+those parameters and then I also talked
+about equation Discovery and and instead
+about equation Discovery and and instead
+about equation Discovery and and instead
+of relying on human intuition can we can
+of relying on human intuition can we can
+of relying on human intuition can we can
+we have an AI learn kind of to to
+we have an AI learn kind of to to
+we have an AI learn kind of to to
+discover unknown physics for
+example okay and then I also try to
+example okay and then I also try to
+example okay and then I also try to
+introduce this field which is called
+introduce this field which is called
+introduce this field which is called
+scientific machine learning and this is
+scientific machine learning and this is
+scientific machine learning and this is
+kind of the stateoftheart of using AI in
+kind of the stateoftheart of using AI in
+kind of the stateoftheart of using AI in
+scientific research today and it's and
+scientific research today and it's and
+scientific research today and it's and
+and this field this because we realize
+and this field this because we realize
+and this field this because we realize
+there are many disadvantages of using
+there are many disadvantages of using
+there are many disadvantages of using
+machine learning or or or maybe flaws of
+machine learning or or or maybe flaws of
+machine learning or or or maybe flaws of
+machine learning for example lack of
+machine learning for example lack of
+machine learning for example lack of
+interoperability the amount of training
+interoperability the amount of training
+interoperability the amount of training
+data that we
+data that we
+data that we
+require uh and so what we try and do in
+require uh and so what we try and do in
+require uh and so what we try and do in
+this field is really tightly blend our
+this field is really tightly blend our
+this field is really tightly blend our
+existing scientific understanding with
+existing scientific understanding with
+existing scientific understanding with
+ml to make models that are more powerful
+ml to make models that are more powerful
+ml to make models that are more powerful
+more robust uh more
+interpretable okay so uh yeah here's the
+interpretable okay so uh yeah here's the
+interpretable okay so uh yeah here's the
+course timeline that I showed last
+course timeline that I showed last
+course timeline that I showed last
+lecture so we're on the second lecture
+lecture so we're on the second lecture
+lecture so we're on the second lecture
+like I said the first lecture of two on
+like I said the first lecture of two on
+like I said the first lecture of two on
+an introduction to deep
+learning so what we're going to cover in
+learning so what we're going to cover in
+learning so what we're going to cover in
+this lecture um it's a it's a fairly
+this lecture um it's a it's a fairly
+this lecture um it's a it's a fairly
+high level um covery of deep learning
+high level um covery of deep learning
+high level um covery of deep learning
+and so first I'm going to explain what
+and so first I'm going to explain what
+and so first I'm going to explain what
+deep learning is and I'm going to
+deep learning is and I'm going to
+deep learning is and I'm going to
+explain multi-layer perceptrons one of
+explain multi-layer perceptrons one of
+explain multi-layer perceptrons one of
+the most basic noral Network
+the most basic noral Network
+the most basic noral Network
+architectures there is I'm also going to
+architectures there is I'm also going to
+architectures there is I'm also going to
+talk about the universal approximation
+talk about the universal approximation
+talk about the universal approximation
+uh of deep noral networks then I'll talk
+uh of deep noral networks then I'll talk
+uh of deep noral networks then I'll talk
+about the the popular tasks that we use
+about the the popular tasks that we use
+about the the popular tasks that we use
+uh deep learning for so things like
+uh deep learning for so things like
+uh deep learning for so things like
+supervised learning uh unsupervised
+supervised learning uh unsupervised
+supervised learning uh unsupervised
+learning these are kind of classic
+learning these are kind of classic
+learning these are kind of classic
+machine learning tasks that we that we
+machine learning tasks that we that we
+machine learning tasks that we that we
+want to
+want to
+want to
+solve and then uh last I'll talk about
+solve and then uh last I'll talk about
+solve and then uh last I'll talk about
+how we train uh deep noral networks and
+how we train uh deep noral networks and
+how we train uh deep noral networks and
+in particular uh gradient descent back
+in particular uh gradient descent back
+in particular uh gradient descent back
+propagation
+okay so yeah by the end of the lecture
+okay so yeah by the end of the lecture
+okay so yeah by the end of the lecture
+hopefully you'll be able to
+hopefully you'll be able to
+hopefully you'll be able to
+mathematically Define what a deep neural
+mathematically Define what a deep neural
+mathematically Define what a deep neural
+network is you'll be able to understand
+network is you'll be able to understand
+network is you'll be able to understand
+the typical types of tasks that we use
+the typical types of tasks that we use
+the typical types of tasks that we use
+newal networks for and um explain how
+newal networks for and um explain how
+newal networks for and um explain how
+they're trained as
+well and then by the end of these two
+well and then by the end of these two
+well and then by the end of these two
+lectures um you I should have covered
+lectures um you I should have covered
+lectures um you I should have covered
+enough material that you'd be able to
+enough material that you'd be able to
+enough material that you'd be able to
+explain um at a bit lower level how chat
+explain um at a bit lower level how chat
+explain um at a bit lower level how chat
+GPT you know this super popular model or
+GPT you know this super popular model or
+GPT you know this super popular model or
+more generally how large language models
+more generally how large language models
+more generally how large language models
+uh uh are trained and also the
+uh uh are trained and also the
+uh uh are trained and also the
+architecture that they use and you
+architecture that they use and you
+architecture that they use and you
+should be able to understand uh how
+should be able to understand uh how
+should be able to understand uh how
+these
+these
+these
+work
+okay so just to start off uh at a really
+okay so just to start off uh at a really
+okay so just to start off uh at a really
+high level and this is a slide that I
+high level and this is a slide that I
+high level and this is a slide that I
+showed again in the in the course
+showed again in the in the course
+showed again in the in the course
+introduction um AI research has really
+introduction um AI research has really
+introduction um AI research has really
+exploded in the last decade or or more
+exploded in the last decade or or more
+exploded in the last decade or or more
+um and I showed examples of AI impacting
+um and I showed examples of AI impacting
+um and I showed examples of AI impacting
+the world today and I I just talked
+the world today and I I just talked
+the world today and I I just talked
+about chat GPT we have now large
+about chat GPT we have now large
+about chat GPT we have now large
+language models that can have
+language models that can have
+language models that can have
+conversations with us and and do really
+conversations with us and and do really
+conversations with us and and do really
+remarkable things we also have AIS that
+remarkable things we also have AIS that
+remarkable things we also have AIS that
+can generate really realistic images and
+can generate really realistic images and
+can generate really realistic images and
+videos now um we have AIS that can do
+videos now um we have AIS that can do
+videos now um we have AIS that can do
+multitask uh can solve multiple tasks at
+multitask uh can solve multiple tasks at
+multitask uh can solve multiple tasks at
+the same time so for example gate is
+the same time so for example gate is
+the same time so for example gate is
+able to uh classify images and have a
+able to uh classify images and have a
+able to uh classify images and have a
+conversation with you and play games um
+conversation with you and play games um
+conversation with you and play games um
+and uh AI underpins a lot of the
+and uh AI underpins a lot of the
+and uh AI underpins a lot of the
+technologies that we use today so uh for
+technologies that we use today so uh for
+technologies that we use today so uh for
+example uh Speech translation or text uh
+example uh Speech translation or text uh
+example uh Speech translation or text uh
+language translation also helps us Co
+language translation also helps us Co
+language translation also helps us Co
+code Co copilot for
+code Co copilot for
+code Co copilot for
+example um and the the technology that
+example um and the the technology that
+example um and the the technology that
+is really driving AI research and has
+is really driving AI research and has
+is really driving AI research and has
+driven AI research or or I would say 90
+driven AI research or or I would say 90
+driven AI research or or I would say 90
+99% or maybe 90 90% is uh deep
+99% or maybe 90 90% is uh deep
+99% or maybe 90 90% is uh deep
+learning
+learning
+learning
+um and so why why is deep learning so
+um and so why why is deep learning so
+um and so why why is deep learning so
+popular um well again this is the slide
+popular um well again this is the slide
+popular um well again this is the slide
+that I showed in the introduction there
+that I showed in the introduction there
+that I showed in the introduction there
+are broadly three main reasons the first
+are broadly three main reasons the first
+are broadly three main reasons the first
+is there is a lot more data in the world
+is there is a lot more data in the world
+is there is a lot more data in the world
+today that these uh we can train these
+today that these uh we can train these
+today that these uh we can train these
+algorithms on uh Hardware Improvement
+algorithms on uh Hardware Improvement
+algorithms on uh Hardware Improvement
+has improved so uh we can uh train much
+has improved so uh we can uh train much
+has improved so uh we can uh train much
+bigger much bigger
+bigger much bigger
+bigger much bigger
+models um and also there's a lot more
+models um and also there's a lot more
+models um and also there's a lot more
+software out there today that makes it
+software out there today that makes it
+software out there today that makes it
+really easy to train neural networks so
+really easy to train neural networks so
+really easy to train neural networks so
+we have pytorch tensor flow and also a
+we have pytorch tensor flow and also a
+we have pytorch tensor flow and also a
+lot more architectures and a lot more
+lot more architectures and a lot more
+lot more architectures and a lot more
+innovation in in in uh in the theory
+innovation in in in uh in the theory
+innovation in in in uh in the theory
+behind these models as
+well okay so before before I explain uh
+well okay so before before I explain uh
+well okay so before before I explain uh
+deep learning specifically I want to
+deep learning specifically I want to
+deep learning specifically I want to
+just put it in the context of the
+just put it in the context of the
+just put it in the context of the
+broader field of
+broader field of
+broader field of
+AI so AI machine learning deep learning
+AI so AI machine learning deep learning
+AI so AI machine learning deep learning
+these are terms that are used fairly
+these are terms that are used fairly
+these are terms that are used fairly
+vaguely today or kind of hard to Define
+vaguely today or kind of hard to Define
+vaguely today or kind of hard to Define
+sometimes or people have different uh
+sometimes or people have different uh
+sometimes or people have different uh
+definitions of
+definitions of
+definitions of
+them but what I'm going to say is uh or
+them but what I'm going to say is uh or
+them but what I'm going to say is uh or
+what's important to realize is that
+what's important to realize is that
+what's important to realize is that
+machine learning and deep learning is
+machine learning and deep learning is
+machine learning and deep learning is
+one specific part of of AI and for the
+one specific part of of AI and for the
+one specific part of of AI and for the
+purpose of this course I would define AI
+purpose of this course I would define AI
+purpose of this course I would define AI
+as you know an TR training an
+as you know an TR training an
+as you know an TR training an
+intelligent agent to be able to M mimic
+intelligent agent to be able to M mimic
+intelligent agent to be able to M mimic
+human human
+human human
+human human
+behavior and and learning about the
+behavior and and learning about the
+behavior and and learning about the
+world kind of learning about the rules
+world kind of learning about the rules
+world kind of learning about the rules
+of the world is just one aspect of of
+of the world is just one aspect of of
+of the world is just one aspect of of
+what I would expect an AI system to be
+what I would expect an AI system to be
+what I would expect an AI system to be
+able to do you can imagine like once
+able to do you can imagine like once
+able to do you can imagine like once
+you've learned some rules you don't just
+you've learned some rules you don't just
+you've learned some rules you don't just
+want to know those rules you want to be
+want to know those rules you want to be
+want to know those rules you want to be
+able to do something about it so for
+able to do something about it so for
+able to do something about it so for
+example if you if you've learned a lot
+example if you if you've learned a lot
+example if you if you've learned a lot
+of mathematical logic statements about
+of mathematical logic statements about
+of mathematical logic statements about
+the world you might want to infer things
+the world you might want to infer things
+the world you might want to infer things
+from those statements or if you've
+from those statements or if you've
+from those statements or if you've
+learned about Transport Systems you
+learned about Transport Systems you
+learned about Transport Systems you
+might want to be able to then plan a
+might want to be able to then plan a
+might want to be able to then plan a
+route from A to B so so learning is just
+route from A to B so so learning is just
+route from A to B so so learning is just
+one part of autonomous
+one part of autonomous
+one part of autonomous
+system um so machine learning is
+system um so machine learning is
+system um so machine learning is
+concerned about learning the rules of
+concerned about learning the rules of
+concerned about learning the rules of
+the world and then deep learning itself
+the world and then deep learning itself
+the world and then deep learning itself
+is a just a specific part of machine
+is a just a specific part of machine
+is a just a specific part of machine
+learning which is using specifically
+learning which is using specifically
+learning which is using specifically
+deep noral networks to learn learn
+deep noral networks to learn learn
+deep noral networks to learn learn
+patterns or learn these
+patterns or learn these
+patterns or learn these
+rules so yeah we're going to focus a lot
+rules so yeah we're going to focus a lot
+rules so yeah we're going to focus a lot
+on deep learning but it's really
+on deep learning but it's really
+on deep learning but it's really
+important to appreciate this this wider
+important to appreciate this this wider
+important to appreciate this this wider
+field and and if you're interested in
+field and and if you're interested in
+field and and if you're interested in
+getting into AI more generally I there's
+getting into AI more generally I there's
+getting into AI more generally I there's
+a lot of really great material out there
+a lot of really great material out there
+a lot of really great material out there
+the one that I would recommend is this
+the one that I would recommend is this
+the one that I would recommend is this
+book uh a modern approach from Russell
+book uh a modern approach from Russell
+book uh a modern approach from Russell
+and norvic this is a kind of classic
+and norvic this is a kind of classic
+and norvic this is a kind of classic
+textbook which gives you a wider um
+textbook which gives you a wider um
+textbook which gives you a wider um
+introduction to
+AI okay so um if there's one thing that
+AI okay so um if there's one thing that
+AI okay so um if there's one thing that
+I want you to take away from from this
+I want you to take away from from this
+I want you to take away from from this
+lecture um is is this this idea and it's
+lecture um is is this this idea and it's
+lecture um is is this this idea and it's
+the idea that Neal networks are very
+the idea that Neal networks are very
+the idea that Neal networks are very
+simply just flexible functions that are
+simply just flexible functions that are
+simply just flexible functions that are
+fit to data so that that's quite a
+fit to data so that that's quite a
+fit to data so that that's quite a
+simplistic view of of newal networks and
+simplistic view of of newal networks and
+simplistic view of of newal networks and
+of course there's a whole Variety in
+of course there's a whole Variety in
+of course there's a whole Variety in
+many different architectures and a lot
+many different architectures and a lot
+many different architectures and a lot
+of complexity when training networks but
+of complexity when training networks but
+of complexity when training networks but
+this is really useful especially when
+this is really useful especially when
+this is really useful especially when
+we're going to apply uh noral networks
+we're going to apply uh noral networks
+we're going to apply uh noral networks
+to Scientific problems this is a very
+to Scientific problems this is a very
+to Scientific problems this is a very
+useful way of thinking of them so what
+useful way of thinking of them so what
+useful way of thinking of them so what
+do I mean by that so so it's very simply
+do I mean by that so so it's very simply
+do I mean by that so so it's very simply
+the neural network takes some input and
+the neural network takes some input and
+the neural network takes some input and
+this input is usually a vector X it
+this input is usually a vector X it
+this input is usually a vector X it
+passes it through some mathematical
+passes it through some mathematical
+passes it through some mathematical
+function um the normal Network
+function um the normal Network
+function um the normal Network
+architecture itself defines that
+architecture itself defines that
+architecture itself defines that
+function um and that architecture has
+function um and that architecture has
+function um and that architecture has
+some free parameters Theta that we're
+some free parameters Theta that we're
+some free parameters Theta that we're
+going to we're going to tune and then
+going to we're going to tune and then
+going to we're going to tune and then
+the network produces an output Y which
+the network produces an output Y which
+the network produces an output Y which
+again is another
+again is another
+again is another
+vector and what the training process of
+vector and what the training process of
+vector and what the training process of
+the network is to try and match those
+the network is to try and match those
+the network is to try and match those
+outputs of the network to some training
+outputs of the network to some training
+outputs of the network to some training
+data by tuning the values of
+data by tuning the values of
+data by tuning the values of
+theta um so an example a very simple
+theta um so an example a very simple
+theta um so an example a very simple
+example um would just be you know given
+example um would just be you know given
+example um would just be you know given
+this data here so this is uh noisy
+this data here so this is uh noisy
+this data here so this is uh noisy
+measurements of of of some data sample
+measurements of of of some data sample
+measurements of of of some data sample
+from just a polinomial for
+from just a polinomial for
+from just a polinomial for
+example given those y values uh can we
+example given those y values uh can we
+example given those y values uh can we
+produce a function that fits fits that
+produce a function that fits fits that
+produce a function that fits fits that
+curve basically so it's simple curve
+curve basically so it's simple curve
+curve basically so it's simple curve
+fitting
+fitting
+fitting
+um uh and so uh yeah that that's exactly
+um uh and so uh yeah that that's exactly
+um uh and so uh yeah that that's exactly
+it neural networks are simply flexible
+it neural networks are simply flexible
+it neural networks are simply flexible
+functions that are fit to
+data okay so I hope that most of you
+data okay so I hope that most of you
+data okay so I hope that most of you
+know about function fitting already and
+know about function fitting already and
+know about function fitting already and
+have done have done function fitting
+have done have done function fitting
+have done have done function fitting
+before um and kind of uh if we just
+before um and kind of uh if we just
+before um and kind of uh if we just
+assume that this data here is just from
+assume that this data here is just from
+assume that this data here is just from
+a polom then you know the classic way of
+a polom then you know the classic way of
+a polom then you know the classic way of
+doing it is just to do polinomial
+doing it is just to do polinomial
+doing it is just to do polinomial
+aggression or or or actually just linear
+aggression or or or actually just linear
+aggression or or or actually just linear
+aggression this is something that
+aggression this is something that
+aggression this is something that
+hopefully everyone has seen
+hopefully everyone has seen
+hopefully everyone has seen
+before so how would we do it if we if we
+before so how would we do it if we if we
+before so how would we do it if we if we
+were just going to do linear regression
+were just going to do linear regression
+were just going to do linear regression
+how would we do function
+how would we do function
+how would we do function
+fitting so first we would just assume a
+fitting so first we would just assume a
+fitting so first we would just assume a
+model of the data so we would say okay I
+model of the data so we would say okay I
+model of the data so we would say okay I
+I'm going to assume that these data
+I'm going to assume that these data
+I'm going to assume that these data
+points are follow a polom curve so y hat
+points are follow a polom curve so y hat
+points are follow a polom curve so y hat
+is our approximation of the of the true
+is our approximation of the of the true
+is our approximation of the of the true
+function and uh the only thing is we
+function and uh the only thing is we
+function and uh the only thing is we
+don't know what the coefficients of the
+don't know what the coefficients of the
+don't know what the coefficients of the
+polom are so these Theta 1 Theta 2 theta
+polom are so these Theta 1 Theta 2 theta
+polom are so these Theta 1 Theta 2 theta
+3 Theta
+3 Theta
+3 Theta
+4 so one way to frame this is to to say
+4 so one way to frame this is to to say
+4 so one way to frame this is to to say
+um I'm going to use least squares to to
+um I'm going to use least squares to to
+um I'm going to use least squares to to
+estimate what Theta um are so I'm going
+estimate what Theta um are so I'm going
+estimate what Theta um are so I'm going
+to choose a Theta star my best guess of
+to choose a Theta star my best guess of
+to choose a Theta star my best guess of
+what Theta is by minimizing the least
+what Theta is by minimizing the least
+what Theta is by minimizing the least
+squared difference between what my model
+squared difference between what my model
+squared difference between what my model
+predicts and and my my noisy train
+predicts and and my my noisy train
+predicts and and my my noisy train
+training
+training
+training
+measurements okay so this is just Le
+measurements okay so this is just Le
+measurements okay so this is just Le
+squares regression and we can just
+squares regression and we can just
+squares regression and we can just
+rewrite this using linear algebra so so
+rewrite this using linear algebra so so
+rewrite this using linear algebra so so
+um we can say that all of the outputs
+um we can say that all of the outputs
+um we can say that all of the outputs
+all the predictions of my model these y
+all the predictions of my model these y
+all the predictions of my model these y
+hats for each training data point um
+hats for each training data point um
+hats for each training data point um
+just equals this Matrix which is um our
+just equals this Matrix which is um our
+just equals this Matrix which is um our
+values of X and their powers Times by
+values of X and their powers Times by
+values of X and their powers Times by
+our Vector of or our column Vector of of
+our Vector of or our column Vector of of
+our Vector of or our column Vector of of
+thetas
+thetas
+thetas
+and then we can rewrite our least
+and then we can rewrite our least
+and then we can rewrite our least
+squares objective as minimizing Theta in
+squares objective as minimizing Theta in
+squares objective as minimizing Theta in
+this in this Matrix equation and you can
+this in this Matrix equation and you can
+this in this Matrix equation and you can
+show for this polinomial or linear
+show for this polinomial or linear
+show for this polinomial or linear
+aggression case um there's an an
+aggression case um there's an an
+aggression case um there's an an
+analytical solution so you can compute
+analytical solution so you can compute
+analytical solution so you can compute
+this analytically and it just involves
+this analytically and it just involves
+this analytically and it just involves
+Computing an inverse of this of this
+Computing an inverse of this of this
+Computing an inverse of this of this
+five
+five
+five
+Matrix okay great so so hopefully that's
+Matrix okay great so so hopefully that's
+Matrix okay great so so hopefully that's
+something you should be very familiar
+with so how is normal Network regression
+with so how is normal Network regression
+with so how is normal Network regression
+different well to be honest it's very
+different well to be honest it's very
+different well to be honest it's very
+very
+very
+very
+similar it's exactly the same idea where
+similar it's exactly the same idea where
+similar it's exactly the same idea where
+we have you know again some function
+we have you know again some function
+we have you know again some function
+some neural network function which we're
+some neural network function which we're
+some neural network function which we're
+going to try and fit to this
+going to try and fit to this
+going to try and fit to this
+data and typically a very popular U uh
+data and typically a very popular U uh
+data and typically a very popular U uh
+you know method again is to use least
+you know method again is to use least
+you know method again is to use least
+squares and we're going to use exactly
+squares and we're going to use exactly
+squares and we're going to use exactly
+the same objective where we're going to
+the same objective where we're going to
+the same objective where we're going to
+say the outputs of the nor
+say the outputs of the nor
+say the outputs of the nor
+network uh or the difference between the
+network uh or the difference between the
+network uh or the difference between the
+outputs of the nor Network and my
+outputs of the nor Network and my
+outputs of the nor Network and my
+training data should should be minimized
+training data should should be minimized
+training data should should be minimized
+and we'll choose a Theta value that
+and we'll choose a Theta value that
+and we'll choose a Theta value that
+minimizes that
+minimizes that
+minimizes that
+so really the only difference here is
+so really the only difference here is
+so really the only difference here is
+that in general I haven't told you what
+that in general I haven't told you what
+that in general I haven't told you what
+that neural network function is and if
+that neural network function is and if
+that neural network function is and if
+we don't know uh what that function is
+we don't know uh what that function is
+we don't know uh what that function is
+in general we don't have an analytical
+in general we don't have an analytical
+in general we don't have an analytical
+solution and so we have to resort to
+solution and so we have to resort to
+solution and so we have to resort to
+some other way of learning those
+some other way of learning those
+some other way of learning those
+parameters of the network and so you
+parameters of the network and so you
+parameters of the network and so you
+know 99% of the time we we use gradient
+know 99% of the time we we use gradient
+know 99% of the time we we use gradient
+descent to train train deep n networks
+descent to train train deep n networks
+descent to train train deep n networks
+and so that involves taking the
+and so that involves taking the
+and so that involves taking the
+derivative of this uh this loss function
+derivative of this uh this loss function
+derivative of this uh this loss function
+with respect to the weights of the
+with respect to the weights of the
+with respect to the weights of the
+network um and then a gradient descent
+network um and then a gradient descent
+network um and then a gradient descent
+step with some some learning
+step with some some learning
+step with some some learning
+rate um so yeah that's that's it that's
+rate um so yeah that's that's it that's
+rate um so yeah that's that's it that's
+a very simple description of how we
+a very simple description of how we
+a very simple description of how we
+train neural networks and and this is
+train neural networks and and this is
+train neural networks and and this is
+the case for nearly every neural network
+the case for nearly every neural network
+the case for nearly every neural network
+that we
+train so the next question really is
+train so the next question really is
+train so the next question really is
+okay so what exactly is that function
+okay so what exactly is that function
+okay so what exactly is that function
+that we're defining noral network of X
+that we're defining noral network of X
+that we're defining noral network of X
+and as I said this is just depends on
+and as I said this is just depends on
+and as I said this is just depends on
+the specific noral Network architecture
+the specific noral Network architecture
+the specific noral Network architecture
+that you choose
+that you choose
+that you choose
+and the one that I'm going to cover in
+and the one that I'm going to cover in
+and the one that I'm going to cover in
+detail is this multi-layer perceptron so
+detail is this multi-layer perceptron so
+detail is this multi-layer perceptron so
+this is probably one of the most basic
+this is probably one of the most basic
+this is probably one of the most basic
+architectures uh uh that has been around
+architectures uh uh that has been around
+architectures uh uh that has been around
+for the longest um for in or
+for the longest um for in or
+for the longest um for in or
+network uh MLPs come can be defined with
+network uh MLPs come can be defined with
+network uh MLPs come can be defined with
+many with a varying number of layers but
+many with a varying number of layers but
+many with a varying number of layers but
+for a two two layer MLP the actual
+for a two two layer MLP the actual
+for a two two layer MLP the actual
+equation for it is is given below here
+equation for it is is given below here
+equation for it is is given below here
+and so we take our input X we times it
+and so we take our input X we times it
+and so we take our input X we times it
+by some weight Matrix we add a bias
+by some weight Matrix we add a bias
+by some weight Matrix we add a bias
+vector pass it through an activation
+vector pass it through an activation
+vector pass it through an activation
+function this is a sigma value and then
+function this is a sigma value and then
+function this is a sigma value and then
+uh do the same process again depending
+uh do the same process again depending
+uh do the same process again depending
+on how many layers we have of the of the
+on how many layers we have of the of the
+on how many layers we have of the of the
+network um and yeah that's that's the
+network um and yeah that's that's the
+network um and yeah that's that's the
+the simple mathematical definition of of
+the simple mathematical definition of of
+the simple mathematical definition of of
+an
+MLP so um you have to ask the question
+MLP so um you have to ask the question
+MLP so um you have to ask the question
+like why why do we choose that
+like why why do we choose that
+like why why do we choose that
+particular function like there are so
+particular function like there are so
+particular function like there are so
+many different functions we could choose
+many different functions we could choose
+many different functions we could choose
+with with free parameters in like what
+with with free parameters in like what
+with with free parameters in like what
+why does everyone use this this
+why does everyone use this this
+why does everyone use this this
+particular function it seems a bit
+particular function it seems a bit
+particular function it seems a bit
+arbitrary well I mean the reason why we
+arbitrary well I mean the reason why we
+arbitrary well I mean the reason why we
+use neural networks and these functions
+use neural networks and these functions
+use neural networks and these functions
+is uh is because noral networks are
+is uh is because noral networks are
+is uh is because noral networks are
+inspired uh by biology I mean this is
+inspired uh by biology I mean this is
+inspired uh by biology I mean this is
+the reason why this field started is
+the reason why this field started is
+the reason why this field started is
+because we wanted to train algorithms
+because we wanted to train algorithms
+because we wanted to train algorithms
+that were more like how the brain brain
+that were more like how the brain brain
+that were more like how the brain brain
+works and so there's a a caveat there
+works and so there's a a caveat there
+works and so there's a a caveat there
+that noral networks definitely a very
+that noral networks definitely a very
+that noral networks definitely a very
+simple approximation to the brain and
+simple approximation to the brain and
+simple approximation to the brain and
+what the brain does is much much more
+what the brain does is much much more
+what the brain does is much much more
+complicated than this but it's it's a
+complicated than this but it's it's a
+complicated than this but it's it's a
+good analogy at
+good analogy at
+good analogy at
+least um and so uh so if I took just a
+least um and so uh so if I took just a
+least um and so uh so if I took just a
+single Neuron a single output neuron of
+single Neuron a single output neuron of
+single Neuron a single output neuron of
+the MLP here for the last layer and I
+the MLP here for the last layer and I
+the MLP here for the last layer and I
+just draw the um how it processes its
+just draw the um how it processes its
+just draw the um how it processes its
+inputs and pass and gives you its output
+inputs and pass and gives you its output
+inputs and pass and gives you its output
+you can see that it takes the
+you can see that it takes the
+you can see that it takes the
+activations from the previous neurons
+activations from the previous neurons
+activations from the previous neurons
+times times times as it by these scaler
+times times times as it by these scaler
+times times times as it by these scaler
+weights sums it together adds the bias
+weights sums it together adds the bias
+weights sums it together adds the bias
+and passes it through in
+and passes it through in
+and passes it through in
+activation and this is indeed need kind
+activation and this is indeed need kind
+activation and this is indeed need kind
+of a simple uh uh view of how a
+of a simple uh uh view of how a
+of a simple uh uh view of how a
+biological neuron would work so you know
+biological neuron would work so you know
+biological neuron would work so you know
+this is a diagram of a neuron it has has
+this is a diagram of a neuron it has has
+this is a diagram of a neuron it has has
+some inputs here that are being
+some inputs here that are being
+some inputs here that are being
+activated it processes those inputs and
+activated it processes those inputs and
+activated it processes those inputs and
+and produces a spike depending on their
+and produces a spike depending on their
+and produces a spike depending on their
+values and then passes it to the to to
+values and then passes it to the to to
+values and then passes it to the to to
+neurons further further
+neurons further further
+neurons further further
+Downstream so this is kind of similar to
+Downstream so this is kind of similar to
+Downstream so this is kind of similar to
+what a neuron is doing in a in a neuron
+what a neuron is doing in a in a neuron
+what a neuron is doing in a in a neuron
+Network and so then if I if I this is
+Network and so then if I if I this is
+Network and so then if I if I this is
+just for a single neuron in the last
+just for a single neuron in the last
+just for a single neuron in the last
+layer if I if I write an expression for
+layer if I if I write an expression for
+layer if I if I write an expression for
+both the neurons and the last layer I
+both the neurons and the last layer I
+both the neurons and the last layer I
+can actually just turn that into a
+can actually just turn that into a
+can actually just turn that into a
+matrix equation where I put my weights
+matrix equation where I put my weights
+matrix equation where I put my weights
+uh inside this Matrix here times them by
+uh inside this Matrix here times them by
+uh inside this Matrix here times them by
+all the activations from the from the
+all the activations from the from the
+all the activations from the from the
+from the previous layer and add this
+from the previous layer and add this
+from the previous layer and add this
+bias vector and then you can see how we
+bias vector and then you can see how we
+bias vector and then you can see how we
+can arrive at this equation that I
+can arrive at this equation that I
+can arrive at this equation that I
+explained before that defines the noral
+explained before that defines the noral
+explained before that defines the noral
+network function
+network function
+network function
+itself um and so to add more layers we
+itself um and so to add more layers we
+itself um and so to add more layers we
+just compose uh each these layers
+just compose uh each these layers
+just compose uh each these layers
+together and we can just say that the
+together and we can just say that the
+together and we can just say that the
+nor function is just a composition of
+nor function is just a composition of
+nor function is just a composition of
+these layers functions these G gnf
+functions then the final thing I haven't
+functions then the final thing I haven't
+functions then the final thing I haven't
+really talked about is the actual
+really talked about is the actual
+really talked about is the actual
+activation function itself um and so
+activation function itself um and so
+activation function itself um and so
+there are many different choices that
+there are many different choices that
+there are many different choices that
+you can make of the activation function
+you can make of the activation function
+you can make of the activation function
+the probably the most popular one that
+the probably the most popular one that
+the probably the most popular one that
+is used is the relo activation function
+is used is the relo activation function
+is used is the relo activation function
+which is just zero when the summation
+which is just zero when the summation
+which is just zero when the summation
+here is less than zero and otherwise the
+here is less than zero and otherwise the
+here is less than zero and otherwise the
+value of the summation if it's greater
+value of the summation if it's greater
+value of the summation if it's greater
+than
+than
+than
+zero we're going to be covering a few
+zero we're going to be covering a few
+zero we're going to be covering a few
+different activation functions in the
+different activation functions in the
+different activation functions in the
+course of course one that we use a fair
+course of course one that we use a fair
+course of course one that we use a fair
+amount for scientific work is uh is tan
+amount for scientific work is uh is tan
+amount for scientific work is uh is tan
+or or more generally uh continuous or
+or or more generally uh continuous or
+or or more generally uh continuous or
+smooth smoothly varying activation
+smooth smoothly varying activation
+smooth smoothly varying activation
+functions so for example in in physics
+functions so for example in in physics
+functions so for example in in physics
+and formal networks these these are very
+and formal networks these these are very
+and formal networks these these are very
+useful and we'll explain why in in that
+lecture so yeah I've given you all the
+lecture so yeah I've given you all the
+lecture so yeah I've given you all the
+all the the tools necessary to be able
+all the the tools necessary to be able
+all the the tools necessary to be able
+to train this train the neural network
+to train this train the neural network
+to train this train the neural network
+Define it and train it
+Define it and train it
+Define it and train it
+um and so this is just an example of of
+um and so this is just an example of of
+um and so this is just an example of of
+a MLP uh given by this function here uh
+a MLP uh given by this function here uh
+a MLP uh given by this function here uh
+fitting fitting to this training data
+fitting fitting to this training data
+fitting fitting to this training data
+that I I I've been showing
+that I I I've been showing
+that I I I've been showing
+you and uh you can see as it trains it
+you and uh you can see as it trains it
+you and uh you can see as it trains it
+starts to it starts off at a very kind
+starts to it starts off at a very kind
+starts to it starts off at a very kind
+of smooth function that doesn't vary
+of smooth function that doesn't vary
+of smooth function that doesn't vary
+much and slowly fits to the data and so
+much and slowly fits to the data and so
+much and slowly fits to the data and so
+this is an animation of the of the fun
+this is an animation of the of the fun
+this is an animation of the of the fun
+the function estimated by the network as
+the function estimated by the network as
+the function estimated by the network as
+as a function of training
+as a function of training
+as a function of training
+step and I just think it's really
+step and I just think it's really
+step and I just think it's really
+interesting to see how these these
+interesting to see how these these
+interesting to see how these these
+things Evol and Train sometimes it's
+things Evol and Train sometimes it's
+things Evol and Train sometimes it's
+kind of hard to understand exactly why
+kind of hard to understand exactly why
+kind of hard to understand exactly why
+it trains in a certain way one really
+it trains in a certain way one really
+it trains in a certain way one really
+interesting thing you can do is uh plot
+interesting thing you can do is uh plot
+interesting thing you can do is uh plot
+the weights of each uh you know the
+the weights of each uh you know the
+the weights of each uh you know the
+weights for each neuron and how they
+weights for each neuron and how they
+weights for each neuron and how they
+evolve over over training step or over
+evolve over over training step or over
+evolve over over training step or over
+time so this little animation on the
+time so this little animation on the
+time so this little animation on the
+right the width of the line just is just
+right the width of the line just is just
+right the width of the line just is just
+proportional to the to the the absolute
+proportional to the to the the absolute
+proportional to the to the the absolute
+value of the
+value of the
+value of the
+weight so what's kind of interesting as
+weight so what's kind of interesting as
+weight so what's kind of interesting as
+you can see even though this is a very
+you can see even though this is a very
+you can see even though this is a very
+simple function uh the the the output is
+simple function uh the the the output is
+simple function uh the the the output is
+is a a summation o over the over a
+is a a summation o over the over a
+is a a summation o over the over a
+distribu like is distributed over these
+distribu like is distributed over these
+distribu like is distributed over these
+over the hidden neurons so it's not like
+over the hidden neurons so it's not like
+over the hidden neurons so it's not like
+a single neuron is is is just producing
+a single neuron is is is just producing
+a single neuron is is is just producing
+the
+the
+the
+output and so this this actually is the
+output and so this this actually is the
+output and so this this actually is the
+reason why neural networks are actually
+reason why neural networks are actually
+reason why neural networks are actually
+sometimes very hard to interpret because
+sometimes very hard to interpret because
+sometimes very hard to interpret because
+because of this kind of distributed
+because of this kind of distributed
+because of this kind of distributed
+representation that they
+learn okay so it does kind of beg the
+learn okay so it does kind of beg the
+learn okay so it does kind of beg the
+question like if I'm doing like simple
+question like if I'm doing like simple
+question like if I'm doing like simple
+curve fitting a polom curve fitting why
+curve fitting a polom curve fitting why
+curve fitting a polom curve fitting why
+wouldn't I just use uh linear regression
+wouldn't I just use uh linear regression
+wouldn't I just use uh linear regression
+so can anyone give me an answer why why
+so can anyone give me an answer why why
+so can anyone give me an answer why why
+it's a good idea to use a neural network
+it's a good idea to use a neural network
+it's a good idea to use a neural network
+for function
+fitting yeah go
+on yeah yeah
+on yeah yeah
+on yeah yeah
+definitely so the clue is in in the
+definitely so the clue is in in the
+definitely so the clue is in in the
+title so it's this property of noral
+title so it's this property of noral
+title so it's this property of noral
+networks called Universal
+networks called Universal
+networks called Universal
+approximation so what does that mean so
+approximation so what does that mean so
+approximation so what does that mean so
+noral networks are just simp flexible
+noral networks are just simp flexible
+noral networks are just simp flexible
+functions that fit to data but what's
+functions that fit to data but what's
+functions that fit to data but what's
+special about them and what's different
+special about them and what's different
+special about them and what's different
+to say like polom or linear aggression
+to say like polom or linear aggression
+to say like polom or linear aggression
+is that with enough parameters and I'm
+is that with enough parameters and I'm
+is that with enough parameters and I'm
+saying this in a very imprecise way but
+saying this in a very imprecise way but
+saying this in a very imprecise way but
+this can be much more formalized you
+this can be much more formalized you
+this can be much more formalized you
+know using mathematical Theory with
+know using mathematical Theory with
+know using mathematical Theory with
+enough parameters normal networks can
+enough parameters normal networks can
+enough parameters normal networks can
+approximate any arbitrarily complex
+approximate any arbitrarily complex
+approximate any arbitrarily complex
+function and this is the universal
+function and this is the universal
+function and this is the universal
+approximation property of of
+approximation property of of
+approximation property of of
+networks so this is really really really
+networks so this is really really really
+networks so this is really really really
+great and what makes deep learning so
+great and what makes deep learning so
+great and what makes deep learning so
+powerful and what makes deep learning
+powerful and what makes deep learning
+powerful and what makes deep learning
+applicable to all these different tasks
+applicable to all these different tasks
+applicable to all these different tasks
+that it's been applied to you know
+that it's been applied to you know
+that it's been applied to you know
+today so I I can learn not just simple
+today so I I can learn not just simple
+today so I I can learn not just simple
+function fitting but I can learn really
+function fitting but I can learn really
+function fitting but I can learn really
+complicated functions for example the
+complicated functions for example the
+complicated functions for example the
+function that takes an image to like a
+function that takes an image to like a
+function that takes an image to like a
+classification of what that image is
+classification of what that image is
+classification of what that image is
+this can still be thought of as an image
+this can still be thought of as an image
+this can still be thought of as an image
+how can how is an image this can still
+how can how is an image this can still
+how can how is an image this can still
+be thought of as as a function so how
+be thought of as as a function so how
+be thought of as as a function so how
+can an image be thought of as a as a
+can an image be thought of as a as a
+can an image be thought of as a as a
+vector well it's quite easy you could
+vector well it's quite easy you could
+vector well it's quite easy you could
+just imagine each pixel each value of
+just imagine each pixel each value of
+just imagine each pixel each value of
+the pixel in the image is just an
+the pixel in the image is just an
+the pixel in the image is just an
+element of the of the
+element of the of the
+element of the of the
+vector and the classification um is just
+vector and the classification um is just
+vector and the classification um is just
+we just interpret the the output of the
+we just interpret the the output of the
+we just interpret the the output of the
+network as a as a
+network as a as a
+network as a as a
+class um and so yeah this is a really
+class um and so yeah this is a really
+class um and so yeah this is a really
+really great property of of neural
+really great property of of neural
+really great property of of neural
+networks and this is what makes them so
+networks and this is what makes them so
+networks and this is what makes them so
+powerful is that we can train them to do
+powerful is that we can train them to do
+powerful is that we can train them to do
+many many different types of tasks which
+many many different types of tasks which
+many many different types of tasks which
+Pro probably a linear model wouldn't be
+Pro probably a linear model wouldn't be
+Pro probably a linear model wouldn't be
+able to do
+and so what makes it
+and so what makes it
+and so what makes it
+nonlinear uh rather than just a linear
+nonlinear uh rather than just a linear
+nonlinear uh rather than just a linear
+function well it's it's the activation
+function well it's it's the activation
+function well it's it's the activation
+functions you can see if we if we just
+functions you can see if we if we just
+functions you can see if we if we just
+went back to this uh definition of a
+went back to this uh definition of a
+went back to this uh definition of a
+noral network here what happens if I
+noral network here what happens if I
+noral network here what happens if I
+just took out the activation function so
+just took out the activation function so
+just took out the activation function so
+I I didn't pass it through any
+I I didn't pass it through any
+I I didn't pass it through any
+activation function what would happen
+activation function what would happen
+activation function what would happen
+anyone tell me
+anyone tell me
+anyone tell me
+yep yeah yeah so a matrix Times by
+yep yeah yeah so a matrix Times by
+yep yeah yeah so a matrix Times by
+matrix is another Matrix you just
+matrix is another Matrix you just
+matrix is another Matrix you just
+collapse it into one linear function and
+collapse it into one linear function and
+collapse it into one linear function and
+and so if you do like a classification
+and so if you do like a classification
+and so if you do like a classification
+without activation functions for example
+without activation functions for example
+without activation functions for example
+you'll just fit like a a linear
+you'll just fit like a a linear
+you'll just fit like a a linear
+classification to to this data so it
+classification to to this data so it
+classification to to this data so it
+really is these activation functions
+really is these activation functions
+really is these activation functions
+that allow you to draw these kind of
+that allow you to draw these kind of
+that allow you to draw these kind of
+nonlinear uh relationships between
+nonlinear uh relationships between
+nonlinear uh relationships between
+between your
+data okay so we talked about MLPs so I'm
+data okay so we talked about MLPs so I'm
+data okay so we talked about MLPs so I'm
+going to try and explain to you a
+going to try and explain to you a
+going to try and explain to you a
+different type of architecture now which
+different type of architecture now which
+different type of architecture now which
+is the convolutional nor Network um and
+is the convolutional nor Network um and
+is the convolutional nor Network um and
+I explain why is useful to use different
+I explain why is useful to use different
+I explain why is useful to use different
+architectures than just a standard
+architectures than just a standard
+architectures than just a standard
+MLP so we're going to take this example
+MLP so we're going to take this example
+MLP so we're going to take this example
+again of a of classifying an
+again of a of classifying an
+again of a of classifying an
+image and we're just going to think
+image and we're just going to think
+image and we're just going to think
+about if we used an MLP just the number
+about if we used an MLP just the number
+about if we used an MLP just the number
+of parameters that we would need to just
+of parameters that we would need to just
+of parameters that we would need to just
+to do a simple classification
+to do a simple classification
+to do a simple classification
+task so as I said before we could think
+task so as I said before we could think
+task so as I said before we could think
+of the input image here is just a vector
+of the input image here is just a vector
+of the input image here is just a vector
+where we flatten out the image and each
+where we flatten out the image and each
+where we flatten out the image and each
+pixel value is is an element of that
+pixel value is is an element of that
+pixel value is is an element of that
+Vector but that already is a really
+Vector but that already is a really
+Vector but that already is a really
+massive Vector like if we have the
+massive Vector like if we have the
+massive Vector like if we have the
+imagees 128 by 128 so a very small image
+imagees 128 by 128 so a very small image
+imagees 128 by 128 so a very small image
+uh then you remember that each uh layer
+uh then you remember that each uh layer
+uh then you remember that each uh layer
+in the in the MLP is fully connected so
+in the in the MLP is fully connected so
+in the in the MLP is fully connected so
+each each neuron is fully connected to
+each each neuron is fully connected to
+each each neuron is fully connected to
+all of the previous
+all of the previous
+all of the previous
+neurons then you can work out the the
+neurons then you can work out the the
+neurons then you can work out the the
+size of the first weight matric is going
+size of the first weight matric is going
+size of the first weight matric is going
+to have to be assuming there's 100 uh um
+to have to be assuming there's 100 uh um
+to have to be assuming there's 100 uh um
+neurons in the first layer it would be
+neurons in the first layer it would be
+neurons in the first layer it would be
+100 times by 128 time 128 so this is
+100 times by 128 time 128 so this is
+100 times by 128 time 128 so this is
+already 1.6 million parameters just in
+already 1.6 million parameters just in
+already 1.6 million parameters just in
+the first layer of the network in so
+the first layer of the network in so
+the first layer of the network in so
+that's a huge amount of of layers to do
+that's a huge amount of of layers to do
+that's a huge amount of of layers to do
+a fairly simple classification
+a fairly simple classification
+a fairly simple classification
+task so it doesn't really feel like an
+task so it doesn't really feel like an
+task so it doesn't really feel like an
+MLP is the right architecture to use and
+MLP is the right architecture to use and
+MLP is the right architecture to use and
+is very likely to over fit to this data
+is very likely to over fit to this data
+is very likely to over fit to this data
+given the amount of parameters it
+has so how is a convolutional noral
+has so how is a convolutional noral
+has so how is a convolutional noral
+network different well it's used for the
+network different well it's used for the
+network different well it's used for the
+same task so we're still going to
+same task so we're still going to
+same task so we're still going to
+classify the image but the way that the
+classify the image but the way that the
+classify the image but the way that the
+neurons see the input is
+neurons see the input is
+neurons see the input is
+different and so
+different and so
+different and so
+again we have a hidden layer of the
+again we have a hidden layer of the
+again we have a hidden layer of the
+first hidden layer of neurons here and
+first hidden layer of neurons here and
+first hidden layer of neurons here and
+we we lay them out so that they have the
+we we lay them out so that they have the
+we we lay them out so that they have the
+same shape as the
+same shape as the
+same shape as the
+image um and the important difference is
+image um and the important difference is
+image um and the important difference is
+that each neuron neuron in that hidden
+that each neuron neuron in that hidden
+that each neuron neuron in that hidden
+layer only sees a few neighboring values
+layer only sees a few neighboring values
+layer only sees a few neighboring values
+in the in the input
+in the in the input
+in the in the input
+image so for example it sees like a 3X3
+image so for example it sees like a 3X3
+image so for example it sees like a 3X3
+or a 2 by 2 x two patch of the image and
+or a 2 by 2 x two patch of the image and
+or a 2 by 2 x two patch of the image and
+so then this noron here is not connected
+so then this noron here is not connected
+so then this noron here is not connected
+to the entire image and so therefore has
+to the entire image and so therefore has
+to the entire image and so therefore has
+many less weights that we're multiplying
+many less weights that we're multiplying
+many less weights that we're multiplying
+the image with to get that activation of
+the image with to get that activation of
+the image with to get that activation of
+that
+that
+that
+neuron um the other really important uh
+neuron um the other really important uh
+neuron um the other really important uh
+difference of convolutional networks is
+difference of convolutional networks is
+difference of convolutional networks is
+that each neuron here shares the same
+that each neuron here shares the same
+that each neuron here shares the same
+weight values so they all apply the kind
+weight values so they all apply the kind
+weight values so they all apply the kind
+of same filter to the to their patch
+of same filter to the to their patch
+of same filter to the to their patch
+that they see in the image so this this
+that they see in the image so this this
+that they see in the image so this this
+dramatically reduces the number of of
+dramatically reduces the number of of
+dramatically reduces the number of of
+Weights uh inside each layer of the
+Weights uh inside each layer of the
+Weights uh inside each layer of the
+convolutional network in fact for
+convolutional network in fact for
+convolutional network in fact for
+example if the if each neuron just just
+example if the if each neuron just just
+example if the if each neuron just just
+saw a 3X3 pack pure the image then you
+saw a 3X3 pack pure the image then you
+saw a 3X3 pack pure the image then you
+would just have 3 * three weight 3 * 3
+would just have 3 * three weight 3 * 3
+would just have 3 * three weight 3 * 3
+which is nine weights in in the network
+which is nine weights in in the network
+which is nine weights in in the network
+that's dramatically different to you
+that's dramatically different to you
+that's dramatically different to you
+know 1 point however many million
+know 1 point however many million
+know 1 point however many million
+weights in the in the
+weights in the in the
+weights in the in the
+MLP so mathematically we can just write
+MLP so mathematically we can just write
+MLP so mathematically we can just write
+this as a as a cross correlation and and
+this as a as a cross correlation and and
+this as a as a cross correlation and and
+this is the expression and it looks
+this is the expression and it looks
+this is the expression and it looks
+similar to how a fully connected Network
+similar to how a fully connected Network
+similar to how a fully connected Network
+would look it's just that we're we're
+would look it's just that we're we're
+would look it's just that we're we're
+doing a summation over this over this
+doing a summation over this over this
+doing a summation over this over this
+filter um and CNN's uh really good
+filter um and CNN's uh really good
+filter um and CNN's uh really good
+choice for other reasons too they have a
+choice for other reasons too they have a
+choice for other reasons too they have a
+lot of interesting properties and the
+lot of interesting properties and the
+lot of interesting properties and the
+one that is most known is their their
+one that is most known is their their
+one that is most known is their their
+translational
+translational
+translational
+equarian and so this is the idea that
+equarian and so this is the idea that
+equarian and so this is the idea that
+you
+you
+you
+know the the the the head of dog the
+know the the the the head of dog the
+know the the the the head of dog the
+head of the dog for example would give
+head of the dog for example would give
+head of the dog for example would give
+you the same activation no matter no
+you the same activation no matter no
+you the same activation no matter no
+matter where the the head is placed so
+matter where the the head is placed so
+matter where the the head is placed so
+there's translational equivariance to
+there's translational equivariance to
+there's translational equivariance to
+the to the input
+the to the input
+the to the input
+image sounds strange
+is it the radiators or is it the
+is it the radiators or is it the
+is it the radiators or is it the
+blinds hard to say okay I'll try and
+blinds hard to say okay I'll try and
+blinds hard to say okay I'll try and
+carry on
+anyway uh so in practice uh we usually
+anyway uh so in practice uh we usually
+anyway uh so in practice uh we usually
+extend cnns to have multiple input
+extend cnns to have multiple input
+extend cnns to have multiple input
+channels and multiple output channels so
+channels and multiple output channels so
+channels and multiple output channels so
+for example the the image of the dog uh
+for example the the image of the dog uh
+for example the the image of the dog uh
+usually has like a red green and blue uh
+usually has like a red green and blue uh
+usually has like a red green and blue uh
+channel to it um and so we can do the
+channel to it um and so we can do the
+channel to it um and so we can do the
+same with the with the each layer of the
+same with the with the each layer of the
+same with the with the each layer of the
+convolutional Network as well it can
+convolutional Network as well it can
+convolutional Network as well it can
+have multiple channels and then what we
+have multiple channels and then what we
+have multiple channels and then what we
+say is each neuron in each channel is
+say is each neuron in each channel is
+say is each neuron in each channel is
+not only connected to the to a single
+not only connected to the to a single
+not only connected to the to a single
+channel in its input but also all the
+channel in its input but also all the
+channel in its input but also all the
+other channels too so you just build out
+other channels too so you just build out
+other channels too so you just build out
+the the weight Matrix um and sum over
+the the weight Matrix um and sum over
+the the weight Matrix um and sum over
+the channel channel Dimension as well
+the channel channel Dimension as well
+the channel channel Dimension as well
+and so so that's the extra summation
+and so so that's the extra summation
+and so so that's the extra summation
+that we're adding here in in our in our
+that we're adding here in in our in our
+that we're adding here in in our in our
+layer
+layer
+layer
+function so this gives us a few more
+function so this gives us a few more
+function so this gives us a few more
+weights but makes the the network more
+weights but makes the the network more
+weights but makes the the network more
+expressive and it can learn features
+expressive and it can learn features
+expressive and it can learn features
+across different input channels
+across different input channels
+across different input channels
+you can also extend CNN's to their 1D 3D
+you can also extend CNN's to their 1D 3D
+you can also extend CNN's to their 1D 3D
+or even ND equivalents as well you can
+or even ND equivalents as well you can
+or even ND equivalents as well you can
+see how that how that would be would
+see how that how that would be would
+see how that how that would be would
+follow
+follow
+follow
+analogously and yeah there's a lot of
+analogously and yeah there's a lot of
+analogously and yeah there's a lot of
+innovation on on other tricks for cnns
+innovation on on other tricks for cnns
+innovation on on other tricks for cnns
+like for example adding dilations not
+like for example adding dilations not
+like for example adding dilations not
+having uh noral networks connected to
+having uh noral networks connected to
+having uh noral networks connected to
+every single uh neighbor but maybe every
+every single uh neighbor but maybe every
+every single uh neighbor but maybe every
+other neighbor uh and strides uh
+similar so really interesting thing uh
+similar so really interesting thing uh
+similar so really interesting thing uh
+that was realized quite early when we're
+that was realized quite early when we're
+that was realized quite early when we're
+training cnns is that actually the depth
+training cnns is that actually the depth
+training cnns is that actually the depth
+the depth really
+the depth really
+the depth really
+matters so a good question is um how big
+matters so a good question is um how big
+matters so a good question is um how big
+does the does the noral network need to
+does the does the noral network need to
+does the does the noral network need to
+be how many parameters do we need to
+be how many parameters do we need to
+be how many parameters do we need to
+have to be able to train the network um
+have to be able to train the network um
+have to be able to train the network um
+and it for to be able to perform well
+and it for to be able to perform well
+and it for to be able to perform well
+and be able to classify images well well
+and be able to classify images well well
+and be able to classify images well well
+it actually turns out that a really
+it actually turns out that a really
+it actually turns out that a really
+important um uh thing to do is to train
+important um uh thing to do is to train
+important um uh thing to do is to train
+a deeper noral Network and not just a
+a deeper noral Network and not just a
+a deeper noral Network and not just a
+wider noral Network so not just to have
+wider noral Network so not just to have
+wider noral Network so not just to have
+more and more channels or more and more
+more and more channels or more and more
+more and more channels or more and more
+uh hidden neurons but to have more and
+uh hidden neurons but to have more and
+uh hidden neurons but to have more and
+more composed
+more composed
+more composed
+functions and what you can do is like
+functions and what you can do is like
+functions and what you can do is like
+query each kind of layer of the of the
+query each kind of layer of the of the
+query each kind of layer of the of the
+convolutional network to see what it
+convolutional network to see what it
+convolutional network to see what it
+responds to in it in its in its patch
+responds to in it in its in its patch
+responds to in it in its in its patch
+and what we can see is that the first
+and what we can see is that the first
+and what we can see is that the first
+layers of the convolutional network
+layers of the convolutional network
+layers of the convolutional network
+respond to kind of very simple features
+respond to kind of very simple features
+respond to kind of very simple features
+for example edges and Curves in the
+for example edges and Curves in the
+for example edges and Curves in the
+input image but then as you get deeper
+input image but then as you get deeper
+input image but then as you get deeper
+and deeper down uh into the into the
+and deeper down uh into the into the
+and deeper down uh into the into the
+network you can see it starts to uh be
+network you can see it starts to uh be
+network you can see it starts to uh be
+sensitive to more and more complex
+sensitive to more and more complex
+sensitive to more and more complex
+features so you know going from maybe
+features so you know going from maybe
+features so you know going from maybe
+things that look like ears and noses to
+things that look like ears and noses to
+things that look like ears and noses to
+entire
+entire
+entire
+faces so CNN's or Neal networks are
+faces so CNN's or Neal networks are
+faces so CNN's or Neal networks are
+really powerful at learning these like
+really powerful at learning these like
+really powerful at learning these like
+complicated
+complicated
+complicated
+features um so you can even you can do
+features um so you can even you can do
+features um so you can even you can do
+this more numerically and and and plot
+this more numerically and and and plot
+this more numerically and and and plot
+the performance so the test accuracy of
+the performance so the test accuracy of
+the performance so the test accuracy of
+different new network designs so for
+different new network designs so for
+different new network designs so for
+example like a fully connected network
+example like a fully connected network
+example like a fully connected network
+with just with just three three layer or
+with just with just three three layer or
+with just with just three three layer or
+a convolutional network with three
+a convolutional network with three
+a convolutional network with three
+layers or 11 layers and you really see
+layers or 11 layers and you really see
+layers or 11 layers and you really see
+that it's the depth that matters in in
+that it's the depth that matters in in
+that it's the depth that matters in in
+the accuracy of the network and not just
+the accuracy of the network and not just
+the accuracy of the network and not just
+the number of parameters that the
+the number of parameters that the
+the number of parameters that the
+network
+network
+network
+has um so what does this mean what we're
+has um so what does this mean what we're
+has um so what does this mean what we're
+really doing in a very general sense is
+really doing in a very general sense is
+really doing in a very general sense is
+encoding into the network function like
+encoding into the network function like
+encoding into the network function like
+a prior or an inductive bias we call it
+a prior or an inductive bias we call it
+a prior or an inductive bias we call it
+and this inductive bias is the uh you
+and this inductive bias is the uh you
+and this inductive bias is the uh you
+know the the true function that we're
+know the the true function that we're
+know the the true function that we're
+trying to model is is a composition of
+trying to model is is a composition of
+trying to model is is a composition of
+simpler functions and this is kind of a
+simpler functions and this is kind of a
+simpler functions and this is kind of a
+powerful idea in what is the type of
+powerful idea in what is the type of
+powerful idea in what is the type of
+inductive bias that we're encoding into
+inductive bias that we're encoding into
+inductive bias that we're encoding into
+our noral Network
+architecture okay so I've I've given you
+architecture okay so I've I've given you
+architecture okay so I've I've given you
+a brief overview or recap of of what uh
+a brief overview or recap of of what uh
+a brief overview or recap of of what uh
+newal networks are and and how we train
+newal networks are and and how we train
+newal networks are and and how we train
+them so now I'm going to go through some
+them so now I'm going to go through some
+them so now I'm going to go through some
+of the popular deep learning tasks that
+of the popular deep learning tasks that
+of the popular deep learning tasks that
+we often train nor networks
+on um so in particular I'm going to talk
+on um so in particular I'm going to talk
+on um so in particular I'm going to talk
+about supervis supervised learning and
+about supervis supervised learning and
+about supervis supervised learning and
+I'm going to cover regression and and
+I'm going to cover regression and and
+I'm going to cover regression and and
+and
+and
+and
+classification then I'm going to talk
+classification then I'm going to talk
+classification then I'm going to talk
+about unsupervised learning and feature
+about unsupervised learning and feature
+about unsupervised learning and feature
+learning Auto regression and generative
+learning Auto regression and generative
+learning Auto regression and generative
+models but I think I want to go back to
+models but I think I want to go back to
+models but I think I want to go back to
+this point that I said at the start in
+this point that I said at the start in
+this point that I said at the start in
+all of these cases even though we have
+all of these cases even though we have
+all of these cases even though we have
+maybe a different objective in a
+maybe a different objective in a
+maybe a different objective in a
+different different way that we use our
+different different way that we use our
+different different way that we use our
+training data in all cases the noral
+training data in all cases the noral
+training data in all cases the noral
+network is still a function that is fit
+network is still a function that is fit
+network is still a function that is fit
+to some some data some data
+objective so supervised learning um so
+objective so supervised learning um so
+objective so supervised learning um so
+this is where we have some typically we
+this is where we have some typically we
+this is where we have some typically we
+have some inputs and we have some labels
+have some inputs and we have some labels
+have some inputs and we have some labels
+or outputs of the function that we want
+or outputs of the function that we want
+or outputs of the function that we want
+to that we want to model uh so uh in
+to that we want to model uh so uh in
+to that we want to model uh so uh in
+regression it's a it's a continuous
+regression it's a it's a continuous
+regression it's a it's a continuous
+function uh uh that that we want to
+function uh uh that that we want to
+function uh uh that that we want to
+model and as I said before the setting
+model and as I said before the setting
+model and as I said before the setting
+here is we have a set of inputs and
+here is we have a set of inputs and
+here is we have a set of inputs and
+outputs example inputs and outputs uh
+outputs example inputs and outputs uh
+outputs example inputs and outputs uh
+from from some true function or maybe
+from from some true function or maybe
+from from some true function or maybe
+some noisy observations of that true
+some noisy observations of that true
+some noisy observations of that true
+function and then we're going to use use
+function and then we're going to use use
+function and then we're going to use use
+a mean squ error as our loss function or
+a mean squ error as our loss function or
+a mean squ error as our loss function or
+or or our objective function uh to
+or or our objective function uh to
+or or our objective function uh to
+minimize to estimate the weights of the
+minimize to estimate the weights of the
+minimize to estimate the weights of the
+network
+okay so what's very useful is to frame
+okay so what's very useful is to frame
+okay so what's very useful is to frame
+this um as a pro from a probabilistic
+this um as a pro from a probabilistic
+this um as a pro from a probabilistic
+perspective as well um and this this can
+perspective as well um and this this can
+perspective as well um and this this can
+really help us interpret how how the
+really help us interpret how how the
+really help us interpret how how the
+network is learning and also deal with
+network is learning and also deal with
+network is learning and also deal with
+this kind of the in the situation where
+this kind of the in the situation where
+this kind of the in the situation where
+we have some noisy um data data rather
+we have some noisy um data data rather
+we have some noisy um data data rather
+than exact measurements of the function
+than exact measurements of the function
+than exact measurements of the function
+for
+for
+for
+example so how would you PR frame this
+example so how would you PR frame this
+example so how would you PR frame this
+from a probabilistic perspective so you
+from a probabilistic perspective so you
+from a probabilistic perspective so you
+would say well instead of trying to fit
+would say well instead of trying to fit
+would say well instead of trying to fit
+a function what we actually have uh some
+a function what we actually have uh some
+a function what we actually have uh some
+y value some some conditional
+y value some some conditional
+y value some some conditional
+distribution so you know why these y
+distribution so you know why these y
+distribution so you know why these y
+values are sampled from this
+values are sampled from this
+values are sampled from this
+distribution given the values of X and
+distribution given the values of X and
+distribution given the values of X and
+we actually want to approximate the
+we actually want to approximate the
+we actually want to approximate the
+conditional distribution itself and
+conditional distribution itself and
+conditional distribution itself and
+we're going to say there's some values
+we're going to say there's some values
+we're going to say there's some values
+of theta here that we want to find that
+of theta here that we want to find that
+of theta here that we want to find that
+best approximates this distribution
+so how how would we how would we train
+so how how would we how would we train
+so how how would we how would we train
+the network from a probabilistic
+the network from a probabilistic
+the network from a probabilistic
+perspective so often we make we have to
+perspective so often we make we have to
+perspective so often we make we have to
+make some assumptions and and like a
+make some assumptions and and like a
+make some assumptions and and like a
+common one in this setting is to just
+common one in this setting is to just
+common one in this setting is to just
+assume that this conditional
+assume that this conditional
+assume that this conditional
+distribution is just a normal
+distribution is just a normal
+distribution is just a normal
+distribution where the mean of that
+distribution where the mean of that
+distribution where the mean of that
+normal distribution is the output of the
+normal distribution is the output of the
+normal distribution is the output of the
+normal Network given the value of x and
+normal Network given the value of x and
+normal Network given the value of x and
+then maybe the standard deviation is
+then maybe the standard deviation is
+then maybe the standard deviation is
+just a a single number or we could try
+just a a single number or we could try
+just a a single number or we could try
+to learn that as well
+to learn that as well
+to learn that as well
+sometimes then we have to make a couple
+sometimes then we have to make a couple
+sometimes then we have to make a couple
+more assumptions we say that the
+more assumptions we say that the
+more assumptions we say that the
+training data or each training data
+training data or each training data
+training data or each training data
+point here is independently and
+point here is independently and
+point here is independently and
+identically uh sampled from the same
+identically uh sampled from the same
+identically uh sampled from the same
+distribution so from the same normal
+distribution so from the same normal
+distribution so from the same normal
+distribution and that allows us to write
+distribution and that allows us to write
+distribution and that allows us to write
+the probability of our entire data set
+the probability of our entire data set
+the probability of our entire data set
+so the probability that we observe X1 y1
+so the probability that we observe X1 y1
+so the probability that we observe X1 y1
+X2 X Y2 Etc given our values of theta
+X2 X Y2 Etc given our values of theta
+X2 X Y2 Etc given our values of theta
+and we can write it out in this with
+and we can write it out in this with
+and we can write it out in this with
+this
+this
+this
+product and then we just use a very
+product and then we just use a very
+product and then we just use a very
+simple technique in statistics which is
+simple technique in statistics which is
+simple technique in statistics which is
+ma maximum likel likelihood estimation
+ma maximum likel likelihood estimation
+ma maximum likel likelihood estimation
+and that's just to say that
+and that's just to say that
+and that's just to say that
+uh we're going to guess that our best
+uh we're going to guess that our best
+uh we're going to guess that our best
+values of theta here are the values
+values of theta here are the values
+values of theta here are the values
+which maximize the probability of the
+which maximize the probability of the
+which maximize the probability of the
+data given the value of
+data given the value of
+data given the value of
+theta so how do we maximize uh this
+theta so how do we maximize uh this
+theta so how do we maximize uh this
+expression here uh well we given that
+expression here uh well we given that
+expression here uh well we given that
+this is a normal distribution we can
+this is a normal distribution we can
+this is a normal distribution we can
+just uh put in a normal distribution
+just uh put in a normal distribution
+just uh put in a normal distribution
+here and then you can see quite quite
+here and then you can see quite quite
+here and then you can see quite quite
+quickly that the maximization of theta
+quickly that the maximization of theta
+quickly that the maximization of theta
+here is the minimization of of this
+here is the minimization of of this
+here is the minimization of of this
+expression here which is the same as the
+expression here which is the same as the
+expression here which is the same as the
+loss function we used before so it's
+loss function we used before so it's
+loss function we used before so it's
+it's a really nice way to
+it's a really nice way to
+it's a really nice way to
+to interpret loss functions from a
+to interpret loss functions from a
+to interpret loss functions from a
+probabilistic perspective and depending
+probabilistic perspective and depending
+probabilistic perspective and depending
+what distribution you choose changes the
+what distribution you choose changes the
+what distribution you choose changes the
+the loss function that we use to train
+the loss function that we use to train
+the loss function that we use to train
+the
+network okay so let's move on to
+network okay so let's move on to
+network okay so let's move on to
+classification so how is classification
+classification so how is classification
+classification so how is classification
+different to regression well from a
+different to regression well from a
+different to regression well from a
+probabilistic perspective um we're still
+probabilistic perspective um we're still
+probabilistic perspective um we're still
+trying to estimate a conditional
+trying to estimate a conditional
+trying to estimate a conditional
+distribution which is you know given the
+distribution which is you know given the
+distribution which is you know given the
+value of x what's the value of y but
+value of x what's the value of y but
+value of x what's the value of y but
+from a classification perspective this
+from a classification perspective this
+from a classification perspective this
+distribution is now a discrete probably
+distribution is now a discrete probably
+distribution is now a discrete probably
+distribution rather than a continuous
+distribution rather than a continuous
+distribution rather than a continuous
+distribution so we assume that Y is a
+distribution so we assume that Y is a
+distribution so we assume that Y is a
+sample from from some finite class of
+sample from from some finite class of
+sample from from some finite class of
+possible values of Y so for example in
+possible values of Y so for example in
+possible values of Y so for example in
+this in this very simple image
+this in this very simple image
+this in this very simple image
+classification task we can say Y is
+classification task we can say Y is
+classification task we can say Y is
+either a dog or it's a cat so there's
+either a dog or it's a cat so there's
+either a dog or it's a cat so there's
+only two possible classes that it could
+be so how do we how do we Define an
+be so how do we how do we Define an
+be so how do we how do we Define an
+appropriate loss function in this case
+appropriate loss function in this case
+appropriate loss function in this case
+if we want to train this
+if we want to train this
+if we want to train this
+network so one way to do it is just to
+network so one way to do it is just to
+network so one way to do it is just to
+say each class is going to be encoded as
+say each class is going to be encoded as
+say each class is going to be encoded as
+a one one hot Vector what does that mean
+a one one hot Vector what does that mean
+a one one hot Vector what does that mean
+it just means that if uh if the output
+it just means that if uh if the output
+it just means that if uh if the output
+is a dog then we're just going to say
+is a dog then we're just going to say
+is a dog then we're just going to say
+why is this Vector 01 and if it's a cat
+why is this Vector 01 and if it's a cat
+why is this Vector 01 and if it's a cat
+then it's the the one zero Vector
+then it's the the one zero Vector
+then it's the the one zero Vector
+instead um and then we again we have to
+instead um and then we again we have to
+instead um and then we again we have to
+assume some form of this conditional
+assume some form of this conditional
+assume some form of this conditional
+distribution so we'll say now it's just
+distribution so we'll say now it's just
+distribution so we'll say now it's just
+the output of the network itself is just
+the output of the network itself is just
+the output of the network itself is just
+going to represent the probability of
+going to represent the probability of
+going to represent the probability of
+that
+that
+that
+class uh given by this this expression
+class uh given by this this expression
+class uh given by this this expression
+here uh and you can see how that would
+here uh and you can see how that would
+here uh and you can see how that would
+the the probability is just uh uh
+the the probability is just uh uh
+the the probability is just uh uh
+just um because this is a one hot Vector
+just um because this is a one hot Vector
+just um because this is a one hot Vector
+it just pulls out the probability um for
+it just pulls out the probability um for
+it just pulls out the probability um for
+example if this noron
+example if this noron
+example if this noron
+sorry if if this neuron here tells us
+sorry if if this neuron here tells us
+sorry if if this neuron here tells us
+the probability of the dog then this
+the probability of the dog then this
+the probability of the dog then this
+product here is just going to pull out
+product here is just going to pull out
+product here is just going to pull out
+that probability because it's a one hot
+that probability because it's a one hot
+that probability because it's a one hot
+vector and we have to make sure that uh
+vector and we have to make sure that uh
+vector and we have to make sure that uh
+to make sure our probabilities are all
+to make sure our probabilities are all
+to make sure our probabilities are all
+correct is that the the summation over
+correct is that the the summation over
+correct is that the the summation over
+the outputs of the of the network should
+the outputs of the of the network should
+the outputs of the of the network should
+equal one so that we have a well-
+equal one so that we have a well-
+equal one so that we have a well-
+defined
+distribution okay and then uh we do
+distribution okay and then uh we do
+distribution okay and then uh we do
+exactly the same workflow so we use
+exactly the same workflow so we use
+exactly the same workflow so we use
+maximum likelihood likelihood estimation
+maximum likelihood likelihood estimation
+maximum likelihood likelihood estimation
+again we assume that each of our
+again we assume that each of our
+again we assume that each of our
+training data points um is identically
+training data points um is identically
+training data points um is identically
+um and independently distributed and
+um and independently distributed and
+um and independently distributed and
+then we can write out our probability of
+then we can write out our probability of
+then we can write out our probability of
+our data in in this way
+our data in in this way
+our data in in this way
+again and then it's the same idea so we
+again and then it's the same idea so we
+again and then it's the same idea so we
+we maximize the probability of the data
+we maximize the probability of the data
+we maximize the probability of the data
+given given the value of theta and we
+given given the value of theta and we
+given given the value of theta and we
+end up eventually with a minimization of
+end up eventually with a minimization of
+end up eventually with a minimization of
+this of this expression and this is
+this of this expression and this is
+this of this expression and this is
+known as cross cross entrop in and uh
+known as cross cross entrop in and uh
+known as cross cross entrop in and uh
+yeah that's the standard standard loss
+yeah that's the standard standard loss
+yeah that's the standard standard loss
+function for training
+classifiers okay so um oh one other
+classifiers okay so um oh one other
+classifiers okay so um oh one other
+thing I said before we had to make sure
+thing I said before we had to make sure
+thing I said before we had to make sure
+the outputs sum to one and so the
+the outputs sum to one and so the
+the outputs sum to one and so the
+typical way that we do this is we use a
+typical way that we do this is we use a
+typical way that we do this is we use a
+softmax output layer in of the network
+softmax output layer in of the network
+softmax output layer in of the network
+to enure that and so we just say the
+to enure that and so we just say the
+to enure that and so we just say the
+final activation here is uh is
+final activation here is uh is
+final activation here is uh is
+normalized by the summation over the
+normalized by the summation over the
+normalized by the summation over the
+outputs and that makes sure that it sums
+outputs and that makes sure that it sums
+outputs and that makes sure that it sums
+to
+one okay so let's move on to
+one okay so let's move on to
+one okay so let's move on to
+unsupervised learning tasks uh and so
+unsupervised learning tasks uh and so
+unsupervised learning tasks uh and so
+again remember I said newal networks are
+again remember I said newal networks are
+again remember I said newal networks are
+functions fit to data and it's the same
+functions fit to data and it's the same
+functions fit to data and it's the same
+thing here it's just the data that we're
+thing here it's just the data that we're
+thing here it's just the data that we're
+fitting the the network to is slightly
+fitting the the network to is slightly
+fitting the the network to is slightly
+different so we don't have like explicit
+different so we don't have like explicit
+different so we don't have like explicit
+labels and explicit inputs we just have
+labels and explicit inputs we just have
+labels and explicit inputs we just have
+some data set and we're we're going to
+some data set and we're we're going to
+some data set and we're we're going to
+try and learn some function that learns
+try and learn some function that learns
+try and learn some function that learns
+something like in the middle of that
+something like in the middle of that
+something like in the middle of that
+data set
+data set
+data set
+somehow so so for example uh Feature
+somehow so so for example uh Feature
+somehow so so for example uh Feature
+Feature learning is is is one
+Feature learning is is is one
+Feature learning is is is one
+unsupervised technique and it's the idea
+unsupervised technique and it's the idea
+unsupervised technique and it's the idea
+that we can take an image and we can say
+that we can take an image and we can say
+that we can take an image and we can say
+well actually that image can be
+well actually that image can be
+well actually that image can be
+compressed into a lower dimensional
+compressed into a lower dimensional
+compressed into a lower dimensional
+space that contains uh you know each
+space that contains uh you know each
+space that contains uh you know each
+element of that space is like a Salient
+element of that space is like a Salient
+element of that space is like a Salient
+feature of that image so maybe we could
+feature of that image so maybe we could
+feature of that image so maybe we could
+describe images of dogs by by like the
+describe images of dogs by by like the
+describe images of dogs by by like the
+color of the thir and the size of their
+color of the thir and the size of their
+color of the thir and the size of their
+head for example and they're like two
+head for example and they're like two
+head for example and they're like two
+Salient features that we could learn
+Salient features that we could learn
+Salient features that we could learn
+learn to describe images
+learn to describe images
+learn to describe images
+with so in this setting we have a noral
+with so in this setting we have a noral
+with so in this setting we have a noral
+network which will compress the image
+network which will compress the image
+network which will compress the image
+down into just a like a vector which is
+down into just a like a vector which is
+down into just a like a vector which is
+much smaller than the the input vector
+much smaller than the the input vector
+much smaller than the the input vector
+and then decompress it back outwards
+and then decompress it back outwards
+and then decompress it back outwards
+again and we have a loss function which
+again and we have a loss function which
+again and we have a loss function which
+just matches the output of the network
+just matches the output of the network
+just matches the output of the network
+uh to the input of the network so to
+uh to the input of the network so to
+uh to the input of the network so to
+reconstruct the
+reconstruct the
+reconstruct the
+image and just by doing this we can
+image and just by doing this we can
+image and just by doing this we can
+force the network to learn like a
+force the network to learn like a
+force the network to learn like a
+Salient representation which which is
+Salient representation which which is
+Salient representation which which is
+very useful for for further Downstream
+very useful for for further Downstream
+very useful for for further Downstream
+tasks so for example if we want to do
+tasks so for example if we want to do
+tasks so for example if we want to do
+some sort of clustering of the images or
+some sort of clustering of the images or
+some sort of clustering of the images or
+or some some extra task on
+or some some extra task on
+or some some extra task on
+top um so a good example of this a
+top um so a good example of this a
+top um so a good example of this a
+variational autoencoders so this this
+variational autoencoders so this this
+variational autoencoders so this this
+frames it in a fully probabilistic
+frames it in a fully probabilistic
+frames it in a fully probabilistic
+framework um and it's really good at
+framework um and it's really good at
+framework um and it's really good at
+discovering these kind of latent latent
+discovering these kind of latent latent
+discovering these kind of latent latent
+variables so for example if we train a
+variables so for example if we train a
+variables so for example if we train a
+vae on um on nness which is just lots of
+vae on um on nness which is just lots of
+vae on um on nness which is just lots of
+images of digits and we just use two
+images of digits and we just use two
+images of digits and we just use two
+salient you know we use a vector here
+salient you know we use a vector here
+salient you know we use a vector here
+with just two elements in the in the
+with just two elements in the in the
+with just two elements in the in the
+middle latent vector and we we we then
+middle latent vector and we we we then
+middle latent vector and we we we then
+um sample those values across their
+um sample those values across their
+um sample those values across their
+ranges and see what the output of the
+ranges and see what the output of the
+ranges and see what the output of the
+vae gives us we can see that the you
+vae gives us we can see that the you
+vae gives us we can see that the you
+know they learn to smoothly interpolate
+know they learn to smoothly interpolate
+know they learn to smoothly interpolate
+between different numbers in in the data
+set okay so kind of related to that
+set okay so kind of related to that
+set okay so kind of related to that
+feature learning like reconstruction of
+feature learning like reconstruction of
+feature learning like reconstruction of
+the data is uh autor regression this can
+the data is uh autor regression this can
+the data is uh autor regression this can
+be thought of as an unsupervised
+be thought of as an unsupervised
+be thought of as an unsupervised
+learning
+learning
+learning
+task so instead of just reconstructing
+task so instead of just reconstructing
+task so instead of just reconstructing
+the whole data the the goal here is to
+the whole data the the goal here is to
+the whole data the the goal here is to
+to predict forwards what will happen in
+to predict forwards what will happen in
+to predict forwards what will happen in
+the data so it's a prediction task so
+the data so it's a prediction task so
+the data so it's a prediction task so
+there are many different examples of
+there are many different examples of
+there are many different examples of
+Auto regression one is for example
+Auto regression one is for example
+Auto regression one is for example
+predicting stock prices if you given the
+predicting stock prices if you given the
+predicting stock prices if you given the
+previous price from the last like 10
+previous price from the last like 10
+previous price from the last like 10
+days can you predict tomorrow's price or
+days can you predict tomorrow's price or
+days can you predict tomorrow's price or
+another example of these large language
+another example of these large language
+another example of these large language
+models like Chachi BT where they're
+models like Chachi BT where they're
+models like Chachi BT where they're
+given a sentence or like part of a
+given a sentence or like part of a
+given a sentence or like part of a
+sentence and then the goal is to
+sentence and then the goal is to
+sentence and then the goal is to
+complete the next word in the
+complete the next word in the
+complete the next word in the
+sentence so the task is G given many
+sentence so the task is G given many
+sentence so the task is G given many
+example sequences train a model to
+example sequences train a model to
+example sequences train a model to
+predict the future values from from the
+predict the future values from from the
+predict the future values from from the
+past
+values um so this is how one noral
+values um so this is how one noral
+values um so this is how one noral
+network architecture might work this is
+network architecture might work this is
+network architecture might work this is
+a a recur a recurrent neural
+a a recur a recurrent neural
+a a recur a recurrent neural
+network so you can imagine uh X we have
+network so you can imagine uh X we have
+network so you can imagine uh X we have
+our our previous values x0 X1 X2 X3 we
+our our previous values x0 X1 X2 X3 we
+our our previous values x0 X1 X2 X3 we
+pass them into the network and they're
+pass them into the network and they're
+pass them into the network and they're
+processed uh you know by some some
+processed uh you know by some some
+processed uh you know by some some
+network module and I'm not going to be
+network module and I'm not going to be
+network module and I'm not going to be
+specific about what that is but it could
+specific about what that is but it could
+specific about what that is but it could
+be for example convolutional networks or
+be for example convolutional networks or
+be for example convolutional networks or
+MLPs or something like that and then we
+MLPs or something like that and then we
+MLPs or something like that and then we
+run we uh run these networks recursive
+run we uh run these networks recursive
+run we uh run these networks recursive
+recurrently through time and then
+recurrently through time and then
+recurrently through time and then
+produce outputs after that to predict
+produce outputs after that to predict
+produce outputs after that to predict
+the next the next
+values okay then the final kind of class
+values okay then the final kind of class
+values okay then the final kind of class
+of unsupervised learning algorithms that
+of unsupervised learning algorithms that
+of unsupervised learning algorithms that
+I'm going to talk about are generative
+I'm going to talk about are generative
+I'm going to talk about are generative
+models um and so again this is this is
+models um and so again this is this is
+models um and so again this is this is
+another type of task given some training
+another type of task given some training
+another type of task given some training
+data so so given many examples of of of
+data so so given many examples of of of
+data so so given many examples of of of
+uh X's here so some some training data
+uh X's here so some some training data
+uh X's here so some some training data
+set what I now want to do is learn a
+set what I now want to do is learn a
+set what I now want to do is learn a
+distribution or or more more
+distribution or or more more
+distribution or or more more
+specifically I want to be able to sample
+specifically I want to be able to sample
+specifically I want to be able to sample
+from the distribution that those those
+from the distribution that those those
+from the distribution that those those
+examples came
+examples came
+examples came
+from so an example would be if we have
+from so an example would be if we have
+from so an example would be if we have
+lots of images um I want to be able to
+lots of images um I want to be able to
+lots of images um I want to be able to
+sample a new image from that
+sample a new image from that
+sample a new image from that
+distribution that's never perhaps been
+distribution that's never perhaps been
+distribution that's never perhaps been
+seen
+seen
+seen
+before um and so yeah image generation
+before um and so yeah image generation
+before um and so yeah image generation
+is is one example and one way you might
+is is one example and one way you might
+is is one example and one way you might
+do this is you might have a something
+do this is you might have a something
+do this is you might have a something
+called a generative network uh which for
+called a generative network uh which for
+called a generative network uh which for
+example might take like a random random
+example might take like a random random
+example might take like a random random
+Vector as a seed as the input and given
+Vector as a seed as the input and given
+Vector as a seed as the input and given
+that random Vector it will process it
+that random Vector it will process it
+that random Vector it will process it
+into into an image there are many types
+into into an image there are many types
+into into an image there are many types
+of generative networks out there and and
+of generative networks out there and and
+of generative networks out there and and
+ways to train generative models um and
+ways to train generative models um and
+ways to train generative models um and
+one of the most famous ones called
+one of the most famous ones called
+one of the most famous ones called
+generative adversarial Networks
+generative adversarial Networks
+generative adversarial Networks
+and uh these these generative networks
+and uh these these generative networks
+and uh these these generative networks
+look like this kind of architecture but
+look like this kind of architecture but
+look like this kind of architecture but
+the way that they're trained they also
+the way that they're trained they also
+the way that they're trained they also
+have uh a discriminator which which
+have uh a discriminator which which
+have uh a discriminator which which
+helps to train the generative network uh
+helps to train the generative network uh
+helps to train the generative network uh
+by telling you or guessing whether that
+by telling you or guessing whether that
+by telling you or guessing whether that
+image has been generated or whether it's
+image has been generated or whether it's
+image has been generated or whether it's
+A True True
+A True True
+A True True
+Image
+um so yeah I've given just a very brief
+um so yeah I've given just a very brief
+um so yeah I've given just a very brief
+and quick overview of the different
+and quick overview of the different
+and quick overview of the different
+types of tasks that we that we train
+types of tasks that we that we train
+types of tasks that we that we train
+noral networks to solve and and there
+noral networks to solve and and there
+noral networks to solve and and there
+are many of many tasks like this in
+are many of many tasks like this in
+are many of many tasks like this in
+scientific research that we want to
+scientific research that we want to
+scientific research that we want to
+solve and so it's it's very useful to
+solve and so it's it's very useful to
+solve and so it's it's very useful to
+understand all these different
+understand all these different
+understand all these different
+techniques okay in in the last couple of
+techniques okay in in the last couple of
+techniques okay in in the last couple of
+minutes I'm I'm going to talk a little
+minutes I'm I'm going to talk a little
+minutes I'm I'm going to talk a little
+bit more about training deep neural
+bit more about training deep neural
+bit more about training deep neural
+networks and in particular um how we use
+networks and in particular um how we use
+networks and in particular um how we use
+gradient to Center train train the
+gradient to Center train train the
+gradient to Center train train the
+networks in more
+detail um so yeah I already said this
+detail um so yeah I already said this
+detail um so yeah I already said this
+before um again most
+before um again most
+before um again most
+task that we're using neural networks
+task that we're using neural networks
+task that we're using neural networks
+for we're trying to fit a function to
+for we're trying to fit a function to
+for we're trying to fit a function to
+data and we just we use some sort of
+data and we just we use some sort of
+data and we just we use some sort of
+loss function um sometimes it's the
+loss function um sometimes it's the
+loss function um sometimes it's the
+squared sometimes it's something else
+squared sometimes it's something else
+squared sometimes it's something else
+and in general there's no analytical
+and in general there's no analytical
+and in general there's no analytical
+solution that will let us minimize that
+solution that will let us minimize that
+solution that will let us minimize that
+loss function um and so we have to use
+loss function um and so we have to use
+loss function um and so we have to use
+we often use gradient descent and this
+we often use gradient descent and this
+we often use gradient descent and this
+is the kind of algorithm of choice for
+is the kind of algorithm of choice for
+is the kind of algorithm of choice for
+for most training
+tasks so um the question is how do we
+tasks so um the question is how do we
+tasks so um the question is how do we
+actually computationally uh compute uh
+actually computationally uh compute uh
+actually computationally uh compute uh
+this the derivative of the Lost function
+this the derivative of the Lost function
+this the derivative of the Lost function
+with with respect to Theta and that's
+with with respect to Theta and that's
+with with respect to Theta and that's
+that's kind of an interesting question
+that's kind of an interesting question
+that's kind of an interesting question
+that's worth
+exploring so um what we do is we utilize
+exploring so um what we do is we utilize
+exploring so um what we do is we utilize
+the chain rule basically to to be able
+the chain rule basically to to be able
+the chain rule basically to to be able
+to evaluate this gradient um and so you
+to evaluate this gradient um and so you
+to evaluate this gradient um and so you
+know given this lease squared loss
+know given this lease squared loss
+know given this lease squared loss
+function we can already apply the chain
+function we can already apply the chain
+function we can already apply the chain
+rule once to to to show very easily that
+rule once to to to show very easily that
+rule once to to to show very easily that
+DL by D Theta is just you know two times
+DL by D Theta is just you know two times
+DL by D Theta is just you know two times
+the network output minus the True Value
+the network output minus the True Value
+the network output minus the True Value
+Times by the derivative of the network
+Times by the derivative of the network
+Times by the derivative of the network
+with respect to
+with respect to
+with respect to
+Theta okay so so we've applied the chain
+Theta okay so so we've applied the chain
+Theta okay so so we've applied the chain
+rule once to to to get the to to
+rule once to to to get the to to
+rule once to to to get the to to
+evaluate the the
+evaluate the the
+evaluate the the
+gradient so now we have to bring in the
+gradient so now we have to bring in the
+gradient so now we have to bring in the
+actual nor Network function itself so
+actual nor Network function itself so
+actual nor Network function itself so
+let's just assume that it's a fully
+let's just assume that it's a fully
+let's just assume that it's a fully
+connected Network here that's composed
+connected Network here that's composed
+connected Network here that's composed
+of these lay these layer functions uh
+of these lay these layer functions uh
+of these lay these layer functions uh
+you know very simple weight weight
+you know very simple weight weight
+you know very simple weight weight
+matrices Times by the input plus the
+matrices Times by the input plus the
+matrices Times by the input plus the
+bias so the next question is how do we
+bias so the next question is how do we
+bias so the next question is how do we
+calculate what is the derivative of the
+calculate what is the derivative of the
+calculate what is the derivative of the
+network with respect to say one of the
+network with respect to say one of the
+network with respect to say one of the
+Theta values so the W
+Theta values so the W
+Theta values so the W
+W1 so how how would you go about or how
+W1 so how how would you go about or how
+W1 so how how would you go about or how
+how can we derive that does anyone
+know how would how would someone go
+know how would how would someone go
+know how would how would someone go
+about finding the derivative of this
+about finding the derivative of this
+about finding the derivative of this
+function with respect to
+W1 uh yep go on chain roll yeah but what
+W1 uh yep go on chain roll yeah but what
+W1 uh yep go on chain roll yeah but what
+makes it a little bit
+makes it a little bit
+makes it a little bit
+harder than just a simple chain rule
+harder than just a simple chain rule
+harder than just a simple chain rule
+I mean that is the answer
+I mean that is the answer
+I mean that is the answer
+but yeah yeah so this is a multivariate
+but yeah yeah so this is a multivariate
+but yeah yeah so this is a multivariate
+problem because uh this function the
+problem because uh this function the
+problem because uh this function the
+output of this function is in general a
+output of this function is in general a
+output of this function is in general a
+vector and the input is also a vector
+vector and the input is also a vector
+vector and the input is also a vector
+and we've got matric multi
+and we've got matric multi
+and we've got matric multi
+multiplications so what we have to
+multiplications so what we have to
+multiplications so what we have to
+do is do yeah multivariate chain
+do is do yeah multivariate chain
+do is do yeah multivariate chain
+R and uh to do that we can evaluate this
+R and uh to do that we can evaluate this
+R and uh to do that we can evaluate this
+DM by
+DM by
+DM by
+dw1 um but this object here is not a
+dw1 um but this object here is not a
+dw1 um but this object here is not a
+Scala Scala is actually a matrix a
+Scala Scala is actually a matrix a
+Scala Scala is actually a matrix a
+Jacobian to be more precise which is a
+Jacobian to be more precise which is a
+Jacobian to be more precise which is a
+matrix which contains the derivative of
+matrix which contains the derivative of
+matrix which contains the derivative of
+the each component of the output with
+the each component of the output with
+the each component of the output with
+respect to each component of the of the
+respect to each component of the of the
+respect to each component of the of the
+weight Matrix so this is depending on
+weight Matrix so this is depending on
+weight Matrix so this is depending on
+how big W1 is and the output of the
+how big W1 is and the output of the
+how big W1 is and the output of the
+network this can actually be a really
+network this can actually be a really
+network this can actually be a really
+massive Matrix with a lot of values in
+massive Matrix with a lot of values in
+massive Matrix with a lot of values in
+it for example if this weight Matrix has
+it for example if this weight Matrix has
+it for example if this weight Matrix has
+a million values in this is going to
+a million values in this is going to
+a million values in this is going to
+have like a million uh rows I
+have like a million uh rows I
+have like a million uh rows I
+guess um so uh or sorry a million
+guess um so uh or sorry a million
+guess um so uh or sorry a million
+columns looking at the
+columns looking at the
+columns looking at the
+definition so yeah we have to apply the
+definition so yeah we have to apply the
+definition so yeah we have to apply the
+multivariate
+cham so I can actually write this down
+cham so I can actually write this down
+cham so I can actually write this down
+anal analytically and I don't I don't
+anal analytically and I don't I don't
+anal analytically and I don't I don't
+have the time to explain this in the
+have the time to explain this in the
+have the time to explain this in the
+lecture but you can go away and and
+lecture but you can go away and and
+lecture but you can go away and and
+write this down and uh prove it for
+write this down and uh prove it for
+write this down and uh prove it for
+yourself if I use the multivari chain
+yourself if I use the multivari chain
+yourself if I use the multivari chain
+rule then this is the expression for the
+rule then this is the expression for the
+rule then this is the expression for the
+for the gradient with respect to
+for the gradient with respect to
+for the gradient with respect to
+W1 um and it just involves derivatives
+W1 um and it just involves derivatives
+W1 um and it just involves derivatives
+of my activation function and the weight
+of my activation function and the weight
+of my activation function and the weight
+matrices and the values of of of X and
+matrices and the values of of of X and
+matrices and the values of of of X and
+and the intermediate activations of the
+and the intermediate activations of the
+and the intermediate activations of the
+of each
+of each
+of each
+layer so then we can just finally
+layer so then we can just finally
+layer so then we can just finally
+compute DL by dw1 so that L is a
+compute DL by dw1 so that L is a
+compute DL by dw1 so that L is a
+summation over all the examples so we
+summation over all the examples so we
+summation over all the examples so we
+have this summation in the final
+have this summation in the final
+have this summation in the final
+gradient and it's this expression
+here um and so the way that modern
+here um and so the way that modern
+here um and so the way that modern
+Frameworks for doing deep learning like
+Frameworks for doing deep learning like
+Frameworks for doing deep learning like
+P torch and tensorflow work is they use
+P torch and tensorflow work is they use
+P torch and tensorflow work is they use
+this Alor called back propagation to
+this Alor called back propagation to
+this Alor called back propagation to
+evaluate these gradients of the loss
+evaluate these gradients of the loss
+evaluate these gradients of the loss
+function with respect to the the
+function with respect to the the
+function with respect to the the
+trainable parameters of the
+trainable parameters of the
+trainable parameters of the
+network and back propagation does exact
+network and back propagation does exact
+network and back propagation does exact
+evaluates exactly this
+evaluates exactly this
+evaluates exactly this
+expression um and for efficiency reasons
+expression um and for efficiency reasons
+expression um and for efficiency reasons
+and we're going to get much more into
+and we're going to get much more into
+and we're going to get much more into
+detail in this in the in the second half
+detail in this in the in the second half
+detail in this in the in the second half
+of the course when we talk about
+of the course when we talk about
+of the course when we talk about
+differentiable physics and autod
+differentiable physics and autod
+differentiable physics and autod
+differentiation in much more detail um
+differentiation in much more detail um
+differentiation in much more detail um
+for efficiency reasons it evaluates this
+for efficiency reasons it evaluates this
+for efficiency reasons it evaluates this
+expression from left to right this means
+expression from left to right this means
+expression from left to right this means
+that we can do
+that we can do
+that we can do
+uh vector vector Jacobian products
+uh vector vector Jacobian products
+uh vector vector Jacobian products
+instead of big Matrix Matrix multiplies
+instead of big Matrix Matrix multiplies
+instead of big Matrix Matrix multiplies
+which are very impossible to
+which are very impossible to
+which are very impossible to
+compute um so yeah we evaluate this from
+compute um so yeah we evaluate this from
+compute um so yeah we evaluate this from
+uh from left to right and so how these
+uh from left to right and so how these
+uh from left to right and so how these
+algorithms work or or the
+algorithms work or or the
+algorithms work or or the
+differentiation works is that we do a
+differentiation works is that we do a
+differentiation works is that we do a
+forward pass first where we where we
+forward pass first where we where we
+forward pass first where we where we
+evaluate the output of the network and
+evaluate the output of the network and
+evaluate the output of the network and
+store all the intermediate activations
+store all the intermediate activations
+store all the intermediate activations
+and then we do a backwards pass where we
+and then we do a backwards pass where we
+and then we do a backwards pass where we
+compute the the gradient from from those
+compute the the gradient from from those
+compute the the gradient from from those
+from those
+from those
+from those
+values um
+values um
+values um
+yeah and I've just shown you the
+yeah and I've just shown you the
+yeah and I've just shown you the
+gradient with respect to W1 you can
+gradient with respect to W1 you can
+gradient with respect to W1 you can
+derive similar expressions for all the
+derive similar expressions for all the
+derive similar expressions for all the
+other all the other parameters of the
+network so yeah in practice we're going
+network so yeah in practice we're going
+network so yeah in practice we're going
+to use Auto differentiation to do all of
+to use Auto differentiation to do all of
+to use Auto differentiation to do all of
+this stuff for us and we don't have to
+this stuff for us and we don't have to
+this stuff for us and we don't have to
+worry about this when we're practically
+worry about this when we're practically
+worry about this when we're practically
+coding noral networks all we have to do
+coding noral networks all we have to do
+coding noral networks all we have to do
+is Define the forward function of the
+is Define the forward function of the
+is Define the forward function of the
+model and auto differentiation pytorch
+model and auto differentiation pytorch
+model and auto differentiation pytorch
+tensorflow will be able to evaluate that
+tensorflow will be able to evaluate that
+tensorflow will be able to evaluate that
+gradient and help you train that model
+gradient and help you train that model
+gradient and help you train that model
+automatically using autoi
+okay so uh that's the end of this
+okay so uh that's the end of this
+okay so uh that's the end of this
+lecture because we're it's a a short
+lecture because we're it's a a short
+lecture because we're it's a a short
+lecture today um so just to summarize
+lecture today um so just to summarize
+lecture today um so just to summarize
+the main thing I want you to take away
+the main thing I want you to take away
+the main thing I want you to take away
+is that noral networks are simply
+is that noral networks are simply
+is that noral networks are simply
+flexible functions that fit to
+flexible functions that fit to
+flexible functions that fit to
+data the magic of noral networks is that
+data the magic of noral networks is that
+data the magic of noral networks is that
+they have Universal approximation they
+they have Universal approximation they
+they have Universal approximation they
+can be trained on many many different
+can be trained on many many different
+can be trained on many many different
+tasks and we train them using the
+tasks and we train them using the
+tasks and we train them using the
+gradient uh the chain Rule and gradient
+gradient uh the chain Rule and gradient
+gradient uh the chain Rule and gradient
+descent So yeah thank you very much and
+descent So yeah thank you very much and
+descent So yeah thank you very much and
+see you see you next time
+see you see you next time
+see you see you next time
+[Applause]

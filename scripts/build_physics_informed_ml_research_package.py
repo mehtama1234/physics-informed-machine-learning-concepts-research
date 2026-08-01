@@ -1,0 +1,1023 @@
+#!/usr/bin/env python3
+from __future__ import annotations
+
+import argparse
+import html
+import json
+import re
+import subprocess
+from collections import Counter, defaultdict
+from dataclasses import dataclass
+from pathlib import Path
+from urllib.parse import parse_qs, urlparse
+
+
+ROOT = Path(__file__).resolve().parents[1]
+RAW = ROOT / "raw-material"
+ANALYSIS = ROOT / "analysis"
+SITE = ROOT / "site"
+EXPORTS = ROOT / "exports"
+
+
+PLAYLISTS = [
+    {
+        "slug": "eth-aise-2025",
+        "title": "ETH Zurich AI in the Sciences and Engineering 2025",
+        "url": "https://www.youtube.com/playlist?list=PLJkYEExhe7rYBo2KBwsirSF-B0R3Q0nt7",
+    },
+    {
+        "slug": "eth-aise-2024",
+        "title": "ETH Zurich AI in the Sciences and Engineering 2024",
+        "url": "https://www.youtube.com/playlist?list=PLJkYEExhe7rYFkBIB2U5pf_RWzYnFLj7r",
+    },
+]
+
+
+CONCEPTS = [
+    {
+        "slug": "deep-learning",
+        "name": "Deep Learning",
+        "keywords": ["deep learning", "neural network", "neural networks", "backprop", "gradient descent"],
+        "domain": "scientific prediction from large measured or simulated data sets",
+        "problem": "scientists often have examples of behavior but no short rule that predicts the next case",
+        "keeps": "many adjustable weights that turn inputs into predictions",
+        "leaves_out": "a direct explanation of which physical reason caused each prediction",
+        "why": "it can learn useful patterns when hand-written rules are incomplete, but the result still needs tests outside the examples used for fitting",
+        "failure": "the model can fit familiar examples while failing on a new material, geometry, scale, or boundary condition",
+    },
+    {
+        "slug": "physics-informed-neural-networks",
+        "name": "Physics-Informed Neural Networks",
+        "keywords": ["pinn", "pinns", "physics-informed", "physics informed", "residual", "collocation"],
+        "domain": "differential equations in science and engineering",
+        "problem": "measurements may be sparse, but the answer must still respect a known physical equation",
+        "keeps": "a neural network prediction plus a penalty for violating the known equation",
+        "leaves_out": "guaranteed accuracy when the equation, boundary data, or training points are poor",
+        "why": "it lets known physics push the fit toward physically possible behavior instead of treating data points as the only evidence",
+        "failure": "the equation penalty can look small while the solution is wrong in hard regions, sharp layers, or unseen boundary cases",
+    },
+    {
+        "slug": "partial-differential-equations",
+        "name": "Partial Differential Equations",
+        "keywords": ["pde", "pdes", "differential equation", "partial differential", "boundary", "initial condition"],
+        "domain": "fluids, heat, waves, mechanics, chemistry, climate, and other changing fields",
+        "problem": "a quantity changes over space and time, so one number is not enough to describe the situation",
+        "keeps": "a field, its rates of change, and the boundary or starting information needed to evolve it",
+        "leaves_out": "unmodeled forces, unresolved scales, uncertain parameters, and numerical error",
+        "why": "PDEs are the language many scientific models use before machine learning enters the story",
+        "failure": "a learned shortcut can ignore boundary conditions or conservation behavior that the PDE was carrying",
+    },
+    {
+        "slug": "operator-learning",
+        "name": "Operator Learning",
+        "keywords": ["operator learning", "deeponet", "fourier neural operator", "fno", "neural operator", "operator"],
+        "domain": "fast prediction for families of scientific simulations",
+        "problem": "one simulation answer is not enough when engineers need the whole map from inputs to solution fields",
+        "keeps": "a learned map from a forcing, coefficient, shape, or starting field to a solution field",
+        "leaves_out": "proof that the map works for resolutions, geometries, or physics outside the training family",
+        "why": "it can replace many expensive solves with a fast approximation when the requested cases stay inside the tested family",
+        "failure": "the learned map can give plausible-looking fields that violate the equation or fail on a shifted input family",
+    },
+    {
+        "slug": "scientific-machine-learning",
+        "name": "Scientific Machine Learning",
+        "keywords": ["scientific machine learning", "sciML", "science", "engineering", "ai in the sciences"],
+        "domain": "using data-driven models inside scientific workflows",
+        "problem": "scientific work needs predictions that respect measurements, equations, uncertainty, and domain limits at the same time",
+        "keeps": "data evidence, scientific structure, and validation against changed cases",
+        "leaves_out": "the idea that a high score alone proves scientific understanding",
+        "why": "it connects flexible prediction to the checks scientists already need: units, conservation, boundaries, uncertainty, and failure cases",
+        "failure": "the method becomes a generic fitting tool if the physical quantity, scientific claim, and validation case are not named",
+    },
+    {
+        "slug": "surrogate-modeling",
+        "name": "Surrogate Modeling",
+        "keywords": ["surrogate", "emulator", "reduced", "reduced order", "simulation", "solver"],
+        "domain": "expensive simulation and design loops",
+        "problem": "a trusted simulator may be too slow to run for every design, control, or uncertainty question",
+        "keeps": "the input-output behavior needed for a specified family of queries",
+        "leaves_out": "full simulation detail outside the tested query family",
+        "why": "it makes repeated scientific decisions possible when full simulation cost would stop the workflow",
+        "failure": "speed can hide missing physics when the surrogate is used beyond the regime where it was checked",
+    },
+    {
+        "slug": "uncertainty-and-generalization",
+        "name": "Uncertainty And Generalization",
+        "keywords": ["uncertainty", "generalization", "error", "validation", "test", "out-of-distribution", "distribution"],
+        "domain": "model use under new conditions",
+        "problem": "a prediction is not enough unless the user knows when it should be believed",
+        "keeps": "error checks, changed-case tests, and limits on where the model was trained",
+        "leaves_out": "confidence in cases that were never tested",
+        "why": "scientific models are used to make decisions, so the cost of being confidently wrong can be high",
+        "failure": "training error can look good while the model fails under a new geometry, parameter range, sensor, or physical regime",
+    },
+    {
+        "slug": "optimization-for-learning",
+        "name": "Optimization For Learning",
+        "keywords": ["optimization", "loss", "objective", "training", "gradient", "minimize"],
+        "domain": "turning model fitting into a repeatable computation",
+        "problem": "learning needs a way to decide which model settings are better or worse",
+        "keeps": "a written score that compares model output against data, physics penalties, or design goals",
+        "leaves_out": "everything the score forgot to penalize",
+        "why": "the model only learns what the training score asks it to improve",
+        "failure": "a model can optimize the written score while missing the scientific behavior the score failed to name",
+    },
+    {
+        "slug": "generative-modeling",
+        "name": "Generative Modeling",
+        "keywords": ["generative", "diffusion", "score", "vae", "gan", "flow model"],
+        "domain": "creating plausible scientific samples, fields, or candidate designs",
+        "problem": "some tasks need many possible examples, not one predicted answer",
+        "keeps": "a learned rule for sampling outputs that resemble the training family",
+        "leaves_out": "a guarantee that each sample is physically valid or useful for a decision",
+        "why": "it can explore candidate fields, shapes, or scenarios when direct enumeration is impossible",
+        "failure": "generated samples can look realistic while breaking constraints, conservation, or rare-event behavior",
+    },
+    {
+        "slug": "graphs-and-geometric-learning",
+        "name": "Graphs And Geometric Learning",
+        "keywords": ["graph", "gnn", "geometric", "mesh", "equivariant", "symmetry"],
+        "domain": "systems made of interacting parts, meshes, molecules, or spatial relations",
+        "problem": "many scientific objects are not simple rows of numbers; their connections matter",
+        "keeps": "nodes, edges, spatial relations, and symmetry rules that should not change the answer",
+        "leaves_out": "interactions or long-range effects not represented in the graph",
+        "why": "it lets the model respect the structure of the object instead of flattening away important relations",
+        "failure": "the graph can encode the wrong neighborhood, hide missing interactions, or fail when the mesh changes",
+    },
+    {
+        "slug": "neural-differential-equations",
+        "name": "Neural Differential Equations",
+        "keywords": ["neural differential", "neural ode", "differential equation", "ode", "time integration"],
+        "domain": "changing systems where time evolution is part of the model",
+        "problem": "scientists may know that a system changes continuously but not know the exact rule for that change",
+        "keeps": "a learned rate rule inside a time-stepping calculation",
+        "leaves_out": "a guarantee that the learned rate respects hidden physics or long-time behavior",
+        "why": "it lets learning focus on the missing change rule while the time update still carries the idea of continuous evolution",
+        "failure": "small learned-rate errors can accumulate until long-time predictions drift away from the real system",
+    },
+    {
+        "slug": "symbolic-regression",
+        "name": "Symbolic Regression And Model Discovery",
+        "keywords": ["symbolic regression", "model discovery", "equation discovery", "sparse", "formula"],
+        "domain": "turning data into equations people can inspect",
+        "problem": "a scientist may need a readable equation, not only a model that predicts well",
+        "keeps": "candidate formulas that can be written, checked, and compared",
+        "leaves_out": "terms that were not searched, variables that were not measured, and physics not excited by the data",
+        "why": "a short equation can be tested, criticized, and reused more easily than a large fitted model",
+        "failure": "a neat formula can fit the training data while using the wrong variables or failing on a changed experiment",
+    },
+    {
+        "slug": "foundation-models-for-pdes",
+        "name": "Foundation Models For PDEs",
+        "keywords": ["foundation model", "foundation models", "poseidon", "large-scale", "scaling laws"],
+        "domain": "broad families of PDE problems and scientific fields",
+        "problem": "one trained model may be asked to handle many related equations, grids, parameters, or physical settings",
+        "keeps": "shared structure across many scientific problem instances",
+        "leaves_out": "certainty that shared training structure covers the new scientific case",
+        "why": "a broad model could reduce repeated training cost if it keeps the physical features that matter across tasks",
+        "failure": "the model can look broad while missing rare regimes, new boundary conditions, or quantities not represented in training",
+    },
+    {
+        "slug": "attention-for-scientific-fields",
+        "name": "Attention For Scientific Fields",
+        "keywords": ["attention", "transformer", "transformers", "windowed attention"],
+        "domain": "large scientific fields where distant parts may interact",
+        "problem": "a local patch of a field may depend on faraway information, but looking everywhere can be expensive",
+        "keeps": "selected interactions between parts of the input field",
+        "leaves_out": "interactions the attention pattern never compares",
+        "why": "it gives the model a way to move information across a field without treating every location as isolated",
+        "failure": "windowing or scaling choices can miss long-range effects that matter for the scientific quantity being predicted",
+    },
+]
+
+
+THEMES = [
+    {
+        "slug": "data-to-scientific-prediction",
+        "name": "Data To Scientific Prediction",
+        "problem": "The lectures repeatedly ask how examples become predictions that scientists can check.",
+        "concepts": ["deep-learning", "scientific-machine-learning", "optimization-for-learning"],
+    },
+    {
+        "slug": "physics-as-a-training-constraint",
+        "name": "Physics As A Training Constraint",
+        "problem": "The recurring pressure is that a learned model should not ignore equations, boundaries, or conservation behavior.",
+        "concepts": ["physics-informed-neural-networks", "partial-differential-equations"],
+    },
+    {
+        "slug": "fast-surrogates-for-expensive-solvers",
+        "name": "Fast Surrogates For Expensive Solvers",
+        "problem": "The practical need is to replace repeated expensive solves with checked approximations.",
+        "concepts": ["operator-learning", "surrogate-modeling", "partial-differential-equations"],
+    },
+    {
+        "slug": "trust-under-changed-conditions",
+        "name": "Trust Under Changed Conditions",
+        "problem": "The package must separate fitting familiar examples from earning belief on new scientific cases.",
+        "concepts": ["uncertainty-and-generalization", "scientific-machine-learning", "generative-modeling"],
+    },
+    {
+        "slug": "structure-in-scientific-objects",
+        "name": "Structure In Scientific Objects",
+        "problem": "Some scientific data carries geometry, connections, fields, or symmetries that a plain table would erase.",
+        "concepts": ["graphs-and-geometric-learning", "operator-learning", "partial-differential-equations", "attention-for-scientific-fields"],
+    },
+    {
+        "slug": "readable-laws-from-learned-models",
+        "name": "Readable Laws From Learned Models",
+        "problem": "The course also asks when learned behavior can be turned back into equations or mechanisms people can inspect.",
+        "concepts": ["symbolic-regression", "neural-differential-equations", "optimization-for-learning"],
+    },
+    {
+        "slug": "broad-models-for-many-scientific-tasks",
+        "name": "Broad Models For Many Scientific Tasks",
+        "problem": "The newest lectures ask whether one model can carry shared structure across many PDE or scientific tasks.",
+        "concepts": ["foundation-models-for-pdes", "operator-learning", "uncertainty-and-generalization"],
+    },
+]
+
+
+@dataclass
+class TranscriptRecord:
+    video_id: str
+    playlist_slug: str
+    playlist_title: str
+    index: int
+    title: str
+    url: str
+    transcript_status: str
+    clean_txt: str
+    raw_vtt: str
+    metadata_json: str
+    word_count: int
+    concepts: list[str]
+    themes: list[str]
+    evidence_excerpt: str
+
+
+def slugify(value: str) -> str:
+    value = re.sub(r"[^\w\s-]", "", value.lower(), flags=re.ASCII)
+    value = re.sub(r"[-\s]+", "-", value).strip("-")
+    return value or "item"
+
+
+def playlist_id(url: str) -> str:
+    return parse_qs(urlparse(url).query).get("list", [""])[0]
+
+
+def run(cmd: list[str]) -> None:
+    subprocess.run(cmd, cwd=ROOT, check=True)
+
+
+def clean_vtt_text(vtt_path: Path) -> str:
+    lines: list[str] = []
+    seen_recent: set[str] = set()
+    for raw in vtt_path.read_text(encoding="utf-8", errors="ignore").splitlines():
+        line = raw.strip()
+        if not line or line == "WEBVTT" or line.startswith("Kind:") or line.startswith("Language:"):
+            continue
+        if "-->" in line or re.match(r"^[0-9]+$", line):
+            seen_recent.clear()
+            continue
+        line = re.sub(r"<[^>]+>", "", line)
+        line = re.sub(r"\s+", " ", line).strip()
+        if not line or line in seen_recent:
+            continue
+        seen_recent.add(line)
+        lines.append(line)
+    return "\n".join(lines).strip() + "\n"
+
+
+def download_playlist(playlist: dict[str, str]) -> None:
+    slug = playlist["slug"]
+    raw_dir = RAW / "transcripts" / slug / "raw-vtt"
+    clean_dir = RAW / "transcripts" / slug / "clean"
+    meta_dir = RAW / "metadata" / slug
+    playlist_dir = RAW / "playlists"
+    for path in (raw_dir, clean_dir, meta_dir, playlist_dir):
+        path.mkdir(parents=True, exist_ok=True)
+
+    manifest_path = playlist_dir / f"{slug}.json"
+    flat = subprocess.check_output(
+        ["yt-dlp", "--flat-playlist", "--dump-single-json", playlist["url"]],
+        cwd=ROOT,
+        text=True,
+    )
+    manifest_path.write_text(flat, encoding="utf-8")
+
+    run(
+        [
+            "yt-dlp",
+            "--ignore-errors",
+            "--skip-download",
+            "--write-info-json",
+            "--write-subs",
+            "--write-auto-subs",
+            "--sub-langs",
+            "en,en-orig,en.*",
+            "--sub-format",
+            "vtt",
+            "--download-archive",
+            str(RAW / "transcripts" / slug / "download-archive.txt"),
+            "-o",
+            str(raw_dir / "%(playlist_index)03d-%(id)s-%(title).120B.%(ext)s"),
+            playlist["url"],
+        ]
+    )
+
+    for info in raw_dir.glob("*.info.json"):
+        target = meta_dir / info.name
+        if target.exists():
+            target.unlink()
+        info.replace(target)
+
+    for vtt in sorted(raw_dir.glob("*.vtt")):
+        clean_name = re.sub(r"\.(en|en-orig|en-[A-Za-z0-9_.-]+)\.vtt$", ".txt", vtt.name)
+        (clean_dir / clean_name).write_text(clean_vtt_text(vtt), encoding="utf-8")
+
+
+def load_manifest(playlist: dict[str, str]) -> dict[str, object]:
+    path = RAW / "playlists" / f"{playlist['slug']}.json"
+    if not path.exists():
+        flat = subprocess.check_output(
+            ["yt-dlp", "--flat-playlist", "--dump-single-json", playlist["url"]],
+            cwd=ROOT,
+            text=True,
+        )
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(flat, encoding="utf-8")
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def find_file_by_id(directory: Path, video_id: str, suffix: str) -> Path | None:
+    matches = sorted(directory.glob(f"*-{video_id}-*{suffix}"))
+    return matches[0] if matches else None
+
+
+def concept_hits(text: str) -> list[str]:
+    lowered = text.lower()
+    hits = []
+    for concept in CONCEPTS:
+        if any(keyword.lower() in lowered for keyword in concept["keywords"]):
+            hits.append(concept["slug"])
+    if not hits:
+        hits.append("scientific-machine-learning")
+    return hits
+
+
+def theme_hits(concepts: list[str]) -> list[str]:
+    hits = []
+    concept_set = set(concepts)
+    for theme in THEMES:
+        if concept_set.intersection(theme["concepts"]):
+            hits.append(theme["slug"])
+    return hits[:3] or ["data-to-scientific-prediction"]
+
+
+def first_excerpt(text: str, terms: list[str], limit: int = 44) -> str:
+    words = re.findall(r"[A-Za-z][A-Za-z'-]*", text)
+    if not words:
+        return ""
+    lowered_words = [word.lower() for word in words]
+    term_words = [part for term in terms for part in term.lower().split()]
+    start = 0
+    for idx, word in enumerate(lowered_words):
+        if word in term_words:
+            start = max(0, idx - 8)
+            break
+    return " ".join(words[start : start + limit])
+
+
+def load_records() -> list[TranscriptRecord]:
+    records: list[TranscriptRecord] = []
+    for playlist in PLAYLISTS:
+        manifest = load_manifest(playlist)
+        entries = manifest.get("entries") or []
+        for fallback_index, entry in enumerate(entries, start=1):
+            video_id = str(entry.get("id") or "")
+            if not video_id:
+                continue
+            title = str(entry.get("title") or f"Video {fallback_index}")
+            index = int(entry.get("playlist_index") or fallback_index)
+            clean_path = find_file_by_id(RAW / "transcripts" / playlist["slug"] / "clean", video_id, ".txt")
+            raw_path = find_file_by_id(RAW / "transcripts" / playlist["slug"] / "raw-vtt", video_id, ".vtt")
+            meta_path = find_file_by_id(RAW / "metadata" / playlist["slug"], video_id, ".info.json")
+            text = clean_path.read_text(encoding="utf-8", errors="ignore") if clean_path else ""
+            concepts = concept_hits(f"{title}\n{text}")
+            themes = theme_hits(concepts)
+            concept_terms = []
+            for slug in concepts:
+                concept_terms.extend(next(item["keywords"] for item in CONCEPTS if item["slug"] == slug))
+            records.append(
+                TranscriptRecord(
+                    video_id=video_id,
+                    playlist_slug=playlist["slug"],
+                    playlist_title=playlist["title"],
+                    index=index,
+                    title=title,
+                    url=f"https://www.youtube.com/watch?v={video_id}&list={playlist_id(playlist['url'])}",
+                    transcript_status="available" if clean_path and text.strip() else "missing",
+                    clean_txt=str(clean_path.relative_to(ROOT)) if clean_path else "",
+                    raw_vtt=str(raw_path.relative_to(ROOT)) if raw_path else "",
+                    metadata_json=str(meta_path.relative_to(ROOT)) if meta_path else "",
+                    word_count=len(re.findall(r"\w+", text)),
+                    concepts=concepts,
+                    themes=themes,
+                    evidence_excerpt=first_excerpt(text, concept_terms),
+                )
+            )
+    return sorted(records, key=lambda row: (row.playlist_slug, row.index, row.title))
+
+
+def record_to_dict(record: TranscriptRecord) -> dict[str, object]:
+    return {
+        "video_id": record.video_id,
+        "playlist_slug": record.playlist_slug,
+        "playlist_title": record.playlist_title,
+        "index": record.index,
+        "title": record.title,
+        "url": record.url,
+        "transcript_status": record.transcript_status,
+        "clean_txt": record.clean_txt,
+        "raw_vtt": record.raw_vtt,
+        "metadata_json": record.metadata_json,
+        "word_count": record.word_count,
+        "concepts": record.concepts,
+        "themes": record.themes,
+        "evidence_excerpt": record.evidence_excerpt,
+    }
+
+
+def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
+    ANALYSIS.mkdir(parents=True, exist_ok=True)
+    EXPORTS.mkdir(parents=True, exist_ok=True)
+    concept_counts: Counter[str] = Counter(slug for record in records for slug in record.concepts)
+    concept_records: dict[str, list[TranscriptRecord]] = defaultdict(list)
+    for record in records:
+        for concept in record.concepts:
+            concept_records[concept].append(record)
+
+    concept_atlas = []
+    for concept in CONCEPTS:
+        supporting = concept_records.get(concept["slug"], [])
+        if not supporting:
+            continue
+        concept_atlas.append(
+            {
+                **concept,
+                "video_count": len(supporting),
+                "evidence": [
+                    {
+                        "title": row.title,
+                        "url": row.url,
+                        "clean_txt": row.clean_txt,
+                        "excerpt": row.evidence_excerpt,
+                    }
+                    for row in supporting[:6]
+                ],
+            }
+        )
+
+    theme_map = []
+    for theme in THEMES:
+        rows = [record for record in records if theme["slug"] in record.themes]
+        theme_map.append(
+            {
+                **theme,
+                "video_count": len(rows),
+                "videos": [{"title": row.title, "url": row.url} for row in rows[:8]],
+            }
+        )
+
+    evidence_ledger = []
+    for record in records:
+        for concept in record.concepts:
+            evidence_ledger.append(
+                {
+                    "claim": f"{record.title} supports the concept {concept.replace('-', ' ')} inside this playlist family.",
+                    "support_type": "direct transcript" if record.transcript_status == "available" else "metadata only",
+                    "video": record.title,
+                    "url": record.url,
+                    "clean_txt": record.clean_txt,
+                    "excerpt": record.evidence_excerpt,
+                    "limit": "This evidence shows the lecture discusses the concept; it does not by itself prove the method is valid outside the examples in the course.",
+                }
+            )
+
+    topic_treatments = []
+    for concept in concept_atlas:
+        topic_treatments.append(
+            {
+                "slug": concept["slug"],
+                "title": concept["name"],
+                "common_problem": concept["problem"],
+                "domain": concept["domain"],
+                "why_it_matters": concept["why"],
+                "keeps": concept["keeps"],
+                "leaves_out": concept["leaves_out"],
+                "failure_boundary": concept["failure"],
+                "everyday_anchor": everyday_anchor(str(concept["slug"])),
+                "evidence": concept["evidence"],
+            }
+        )
+
+    data = {
+        "summary": {
+            "title": "Physics-Informed Machine Learning Concepts Research",
+            "playlist_count": len(PLAYLISTS),
+            "video_count": len(records),
+            "available_transcripts": sum(1 for row in records if row.transcript_status == "available"),
+            "missing_transcripts": sum(1 for row in records if row.transcript_status != "available"),
+            "concept_count": len(concept_atlas),
+            "theme_count": len(theme_map),
+        },
+        "transcript_index": [record_to_dict(record) for record in records],
+        "concept_atlas": concept_atlas,
+        "theme_map": theme_map,
+        "evidence_ledger": evidence_ledger,
+        "topic_treatments": topic_treatments,
+    }
+    for name, value in data.items():
+        if name == "summary":
+            continue
+        (ANALYSIS / f"{name}.json").write_text(json.dumps(value, indent=2) + "\n", encoding="utf-8")
+    (ANALYSIS / "summary.json").write_text(json.dumps(data["summary"], indent=2) + "\n", encoding="utf-8")
+    write_markdown_export(data)
+    return data
+
+
+def everyday_anchor(slug: str) -> str:
+    anchors = {
+        "deep-learning": "A lab notebook may contain many examples of inputs and outcomes. Deep learning is the adjustable recipe that tries to match those examples, then must be checked on a new page of the notebook.",
+        "physics-informed-neural-networks": "A student drawing a bridge cannot ignore gravity. A PINN is similar: the fitted curve is pushed to obey the equation, not only the measured dots.",
+        "partial-differential-equations": "A weather map changes from place to place and hour to hour. A PDE is a way to say how nearby values push each other forward.",
+        "operator-learning": "Instead of solving one puzzle, the learner tries to learn the machine that turns many puzzle inputs into many full answers.",
+        "scientific-machine-learning": "A scientist does not just want a number; they want a number with a reason, a check, and a warning label for when it should fail.",
+        "surrogate-modeling": "A wind-tunnel test is expensive. A surrogate is a cheaper stand-in that can be used only after showing which wind-tunnel questions it still answers.",
+        "uncertainty-and-generalization": "A map is useful only if you know where it ends. Model uncertainty marks the edge of the map instead of pretending every road is known.",
+        "optimization-for-learning": "Training is like grading many drafts with one rubric. The model improves the rubric score, so the rubric must match the scientific goal.",
+        "generative-modeling": "A generator can make many candidate sketches. The scientific question is which sketches obey the rules, not only which ones look familiar.",
+        "graphs-and-geometric-learning": "A molecule, mesh, or network is not just a list. The connections decide what can influence what.",
+    }
+    return anchors.get(slug, "Start with the observed object, name what must be predicted, then test the claim on a changed case.")
+
+
+def write_style() -> None:
+    assets = SITE / "assets"
+    assets.mkdir(parents=True, exist_ok=True)
+    (assets / "style.css").write_text(
+        """
+:root {
+  --bg: #f7f8fb;
+  --text: #1b2430;
+  --muted: #5e6b7a;
+  --line: #d9e0ea;
+  --card: #ffffff;
+  --accent: #0f6b78;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.55;
+}
+.topbar {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 14px 28px;
+  border-bottom: 1px solid var(--line);
+  background: #fff;
+  position: sticky;
+  top: 0;
+}
+.topbar a { color: var(--accent); text-decoration: none; font-weight: 700; }
+main { max-width: 1180px; margin: 0 auto; padding: 34px 28px 72px; }
+h1 { font-size: 2.35rem; line-height: 1.12; margin: 0 0 14px; }
+h2 { margin-top: 34px; border-top: 1px solid var(--line); padding-top: 20px; }
+h3 { margin-top: 0; }
+p, li { max-width: 900px; }
+.meta { color: var(--muted); font-size: .95rem; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; align-items: start; }
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 16px;
+}
+.card a { color: var(--accent); text-decoration: none; }
+table { width: 100%; border-collapse: collapse; background: #fff; }
+th, td { border: 1px solid var(--line); padding: 10px; vertical-align: top; text-align: left; }
+th { background: #eef4f6; }
+code { background: #eef1f5; padding: 1px 4px; border-radius: 4px; }
+@media (max-width: 760px) {
+  main { padding: 24px 18px 56px; }
+  h1 { font-size: 1.8rem; }
+  .topbar { position: static; padding: 12px 18px; }
+}
+""".strip()
+        + "\n",
+        encoding="utf-8",
+    )
+
+
+def html_page(title: str, body: str, root_prefix: str = "") -> str:
+    return f"""<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{html.escape(title)}</title>
+  <link rel="stylesheet" href="{root_prefix}assets/style.css">
+</head>
+<body>
+<nav class="topbar">
+  <a href="{root_prefix}index.html">Physics-Informed ML</a>
+  <a href="{root_prefix}transcripts.html">Transcripts</a>
+  <a href="{root_prefix}concept-atlas.html">Concept Atlas</a>
+  <a href="{root_prefix}theme-map.html">Themes</a>
+  <a href="{root_prefix}evidence-ledger.html">Evidence</a>
+</nav>
+<main>
+{body}
+</main>
+</body>
+</html>
+"""
+
+
+def card(title: str, text: str, href: str = "") -> str:
+    heading = f'<h3><a href="{html.escape(href)}">{html.escape(title)}</a></h3>' if href else f"<h3>{html.escape(title)}</h3>"
+    return f'<article class="card">{heading}<p>{html.escape(text)}</p></article>'
+
+
+def write_site(data: dict[str, object]) -> None:
+    SITE.mkdir(parents=True, exist_ok=True)
+    write_style()
+    topic_dir = SITE / "topics"
+    video_dir = SITE / "videos"
+    topic_dir.mkdir(exist_ok=True)
+    video_dir.mkdir(exist_ok=True)
+
+    summary = data["summary"]
+    concept_atlas = data["concept_atlas"]
+    records = [TranscriptRecord(**row) for row in data["transcript_index"]]
+    topics = data["topic_treatments"]
+    themes = data["theme_map"]
+    evidence = data["evidence_ledger"]
+
+    index_body = f"""
+<h1>Physics-Informed Machine Learning Concepts Research</h1>
+<p>This package turns two ETH Zurich AI in the Sciences and Engineering playlists into a transcript-backed research map for physics-informed machine learning. It is built from first principles: what problem each idea solves, what scientific domain needs it, what information it keeps, what it leaves out, and how the claim can fail.</p>
+<div class="grid">
+{card("Videos", f"{summary['video_count']} source videos across two playlists, with {summary['available_transcripts']} available transcripts.", "transcripts.html")}
+{card("Concepts", f"{summary['concept_count']} concepts extracted into plain-language topic treatments.", "concept-atlas.html")}
+{card("Themes", f"{summary['theme_count']} recurring research pressures across the course family.", "theme-map.html")}
+{card("Evidence", "Each major claim links back to transcript or metadata evidence and states its limit.", "evidence-ledger.html")}
+</div>
+<h2>Central Big Picture</h2>
+<p>The course family asks how machine learning can help science without throwing away physics. The recurring problem is not simply prediction. The real problem is turning data, equations, simulations, geometry, and uncertainty into models that can be trusted for a named scientific job.</p>
+<h2>Core Route Through The Material</h2>
+<ol>
+  <li>Start with scientific data and the need to predict or explain a changed case.</li>
+  <li>Add neural networks as adjustable function builders, but keep their limits visible.</li>
+  <li>Bring in PDEs, physics penalties, operators, geometry, and uncertainty as ways to stop the model from becoming an unchecked fit.</li>
+  <li>Judge every method by the scientific claim it can support and the failure case it can expose.</li>
+</ol>
+"""
+    (SITE / "index.html").write_text(html_page("Physics-Informed Machine Learning Concepts Research", index_body), encoding="utf-8")
+
+    transcript_cards = []
+    for record in records:
+        href = f"videos/{record.playlist_slug}-{record.index:03d}-{slugify(record.title)}.html"
+        transcript_cards.append(
+            card(
+                f"{record.index:03d}. {record.title}",
+                f"{record.playlist_title}. Transcript: {record.transcript_status}. Words: {record.word_count}. Concepts: {', '.join(record.concepts)}.",
+                href,
+            )
+        )
+        write_video_page(video_dir / Path(href).name, record)
+    (SITE / "transcripts.html").write_text(
+        html_page("Physics-Informed ML Transcripts", f"<h1>Transcript Index</h1><div class=\"grid\">{''.join(transcript_cards)}</div>"),
+        encoding="utf-8",
+    )
+
+    concept_cards = []
+    for concept in concept_atlas:
+        href = f"topics/{concept['slug']}.html"
+        concept_cards.append(card(str(concept["name"]), str(concept["problem"]), href))
+    (SITE / "concept-atlas.html").write_text(
+        html_page("Physics-Informed ML Concept Atlas", f"<h1>Mathematical Concept Atlas</h1><div class=\"grid\">{''.join(concept_cards)}</div>"),
+        encoding="utf-8",
+    )
+    for topic in topics:
+        write_topic_page(topic_dir / f"{topic['slug']}.html", topic)
+
+    theme_cards = []
+    for theme in themes:
+        video_links = "".join(f"<li>{html.escape(row['title'])}</li>" for row in theme["videos"][:5])
+        theme_cards.append(f"<article class=\"card\"><h3>{html.escape(theme['name'])}</h3><p>{html.escape(theme['problem'])}</p><ul>{video_links}</ul></article>")
+    (SITE / "theme-map.html").write_text(
+        html_page("Physics-Informed ML Theme Map", f"<h1>Theme Map</h1><div class=\"grid\">{''.join(theme_cards)}</div>"),
+        encoding="utf-8",
+    )
+
+    evidence_rows = []
+    for row in evidence:
+        evidence_rows.append(
+            f"<tr><td>{html.escape(row['claim'])}</td><td>{html.escape(row['support_type'])}</td><td><a href=\"{html.escape(row['url'])}\">{html.escape(row['video'])}</a></td><td>{html.escape(row['limit'])}</td></tr>"
+        )
+    (SITE / "evidence-ledger.html").write_text(
+        html_page(
+            "Physics-Informed ML Evidence Ledger",
+            f"<h1>Evidence Ledger</h1><table><thead><tr><th>Claim</th><th>Support</th><th>Video</th><th>Limit</th></tr></thead><tbody>{''.join(evidence_rows)}</tbody></table>",
+        ),
+        encoding="utf-8",
+    )
+
+    manifest = sorted(str(path.relative_to(ROOT)) for path in SITE.rglob("*.html"))
+    (SITE / "page-manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+
+
+def write_video_page(path: Path, record: TranscriptRecord) -> None:
+    excerpt = record.evidence_excerpt or "No transcript excerpt was available; this page is based on metadata until captions can be added."
+    body = f"""
+<h1>{html.escape(record.title)}</h1>
+<p class="meta">{html.escape(record.playlist_title)} · transcript {html.escape(record.transcript_status)} · {record.word_count} words</p>
+<p><a href="{html.escape(record.url)}">Source video</a></p>
+<h2>Core Problem</h2>
+<p>This lecture belongs to a course family about using AI for scientific and engineering claims. The page should be read by asking what scientific quantity is being predicted, what evidence is available, and what changed case would show the model is not ready.</p>
+<h2>Key Concepts</h2>
+<ul>{''.join(f'<li>{html.escape(concept)}</li>' for concept in record.concepts)}</ul>
+<h2>Transcript-Backed Note</h2>
+<p>{html.escape(excerpt)}</p>
+<h2>What This Does Not Prove</h2>
+<p>A transcript mention shows the concept appears in the lecture. It does not prove the method works for every scientific system, every data size, or every future case.</p>
+<h2>Local Files</h2>
+<ul>
+  <li>Clean transcript: {html.escape(record.clean_txt or 'missing')}</li>
+  <li>Raw captions: {html.escape(record.raw_vtt or 'missing')}</li>
+  <li>Metadata: {html.escape(record.metadata_json or 'missing')}</li>
+</ul>
+"""
+    path.write_text(html_page(record.title, body, root_prefix="../"), encoding="utf-8")
+
+
+def topic_derivation(topic: dict[str, object]) -> dict[str, object]:
+    slug = str(topic["slug"])
+    derivations = {
+        "physics-informed-neural-networks": {
+            "observed": "some measured values, boundary values, starting values, and a known differential equation",
+            "hidden": "the full field value at every point in space and time",
+            "move": "fit a neural network while also measuring how badly its output violates the known equation",
+            "form": "prediction error + equation error + boundary error",
+            "meaning": "the model is not allowed to match points while freely breaking the equation between those points",
+            "test": "move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements",
+        },
+        "operator-learning": {
+            "observed": "many example inputs and their full solution fields",
+            "hidden": "the rule that maps a new input field to its new solution field",
+            "move": "learn the map from problem input to solution, not only one solution at a time",
+            "form": "input function -> learned map -> output function",
+            "meaning": "the learned object is a shortcut for a family of solves, so the family must be named",
+            "test": "change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed",
+        },
+        "partial-differential-equations": {
+            "observed": "a field such as temperature, pressure, concentration, velocity, or displacement",
+            "hidden": "how every point in the field affects nearby points over time",
+            "move": "write a local change rule that uses rates across space and time",
+            "form": "future change = spatial change + sources + boundary information",
+            "meaning": "the equation carries how a whole field changes, not just how one number changes",
+            "test": "change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error",
+        },
+        "deep-learning": {
+            "observed": "many input-output examples from experiments, simulations, or measurements",
+            "hidden": "the exact rule that connects the input to the output",
+            "move": "adjust many weights until the model maps familiar inputs to the right outputs",
+            "form": "input -> layered adjustable calculation -> prediction",
+            "meaning": "the model earns attention only when prediction survives examples it did not train on",
+            "test": "hold out a changed material, geometry, parameter range, or sensor condition",
+        },
+        "scientific-machine-learning": {
+            "observed": "data, equations, units, simulation outputs, and domain limits",
+            "hidden": "which parts of the scientific system are missing, noisy, or too costly to compute directly",
+            "move": "combine learned prediction with scientific checks that name what the claim is allowed to mean",
+            "form": "data fit + scientific structure + validation case",
+            "meaning": "the model is judged by a scientific job, not by a score floating away from the job",
+            "test": "state the scientific quantity first, then test it under a changed case that matters in that domain",
+        },
+        "surrogate-modeling": {
+            "observed": "expensive solver inputs and outputs for a limited set of cases",
+            "hidden": "the solver answer for every new query someone wants to ask",
+            "move": "train a cheaper stand-in for the expensive input-output behavior",
+            "form": "query -> fast stand-in -> approximate answer",
+            "meaning": "speed is useful only inside the query family where the stand-in was checked",
+            "test": "compare against the full solver on new cases near the edge of the intended use",
+        },
+        "uncertainty-and-generalization": {
+            "observed": "training cases, validation cases, prediction errors, and known shifts between cases",
+            "hidden": "how wrong the model may be on a case unlike the ones it learned from",
+            "move": "separate fit on familiar examples from evidence on changed examples",
+            "form": "prediction + error check + stated use range",
+            "meaning": "a prediction without a use range is not yet a scientific claim",
+            "test": "move one important condition outside the training range and measure the first failure",
+        },
+        "optimization-for-learning": {
+            "observed": "a written score that says which model behavior is better or worse",
+            "hidden": "whether that score matches the scientific behavior the user actually cares about",
+            "move": "change model settings to lower the written score",
+            "form": "choose settings that reduce data error, physics error, or design cost",
+            "meaning": "the model learns the score, so the score must include the scientific burden",
+            "test": "inspect what the score ignores, then check whether the ignored behavior fails after training",
+        },
+        "generative-modeling": {
+            "observed": "examples of fields, molecules, flows, shapes, or other scientific objects",
+            "hidden": "the spread of possible valid objects beyond the examples",
+            "move": "learn how to sample new candidates that resemble the training family",
+            "form": "random seed + learned sampler -> candidate scientific object",
+            "meaning": "a generated object must still pass physics and usefulness checks",
+            "test": "measure constraints, rare cases, conservation, and downstream task performance on generated samples",
+        },
+        "graphs-and-geometric-learning": {
+            "observed": "objects with parts and connections, such as meshes, molecules, or interacting components",
+            "hidden": "which neighboring and long-range interactions control the scientific quantity",
+            "move": "let information move along the object connections instead of flattening the object into a plain row",
+            "form": "nodes + edges + update rule -> predicted property or field",
+            "meaning": "the model keeps the structure of the scientific object visible",
+            "test": "change the mesh, rotate or move the object, or add missing interactions and inspect what breaks",
+        },
+        "neural-differential-equations": {
+            "observed": "measurements of a system changing over time",
+            "hidden": "the rate rule that moves the present value into the future",
+            "move": "learn the missing rate rule and place it inside a time-evolution calculation",
+            "form": "current state -> learned rate -> next state",
+            "meaning": "learning supplies the unknown change rule while the time update carries the idea of continuous motion",
+            "test": "run longer than the training window and check whether small rate errors accumulate into drift",
+        },
+        "symbolic-regression": {
+            "observed": "measured variables and candidate mathematical ingredients",
+            "hidden": "which short formula, if any, actually explains the measured change",
+            "move": "search for a readable equation that fits the data and survives a changed case",
+            "form": "candidate formulas -> selected formula -> held-out test",
+            "meaning": "a compact equation is a claim about structure, not just a curve through points",
+            "test": "remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts",
+        },
+        "foundation-models-for-pdes": {
+            "observed": "many PDE problem instances across equations, grids, parameters, or physical settings",
+            "hidden": "which shared structure carries from one scientific task to another",
+            "move": "train one broad model to reuse structure across many related field-prediction tasks",
+            "form": "many PDE tasks -> shared learned representation -> new task prediction",
+            "meaning": "breadth is useful only if the new task shares the structure the model actually learned",
+            "test": "hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver",
+        },
+        "attention-for-scientific-fields": {
+            "observed": "large fields where one location may depend on other locations",
+            "hidden": "which distant parts matter for the local prediction",
+            "move": "let the model choose which parts of the field exchange information",
+            "form": "field pieces -> selected information exchange -> updated field pieces",
+            "meaning": "attention is a routing rule for information, not proof that the selected route is physically complete",
+            "test": "change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures",
+        },
+    }
+    return derivations.get(
+        slug,
+        {
+            "observed": "the available scientific evidence",
+            "hidden": "the part of the system the evidence does not directly reveal",
+            "move": "keep the information needed for the named scientific job",
+            "form": "observed evidence -> kept representation -> checked claim",
+            "meaning": "the concept is useful only where the kept information supports the claim",
+            "test": "change the case and inspect the first visible failure",
+        },
+    )
+
+
+def write_topic_page(path: Path, topic: dict[str, object]) -> None:
+    evidence = topic.get("evidence", [])
+    evidence_items = []
+    if isinstance(evidence, list):
+        for row in evidence:
+            evidence_items.append(f"<li><a href=\"{html.escape(str(row['url']))}\">{html.escape(str(row['title']))}</a>: {html.escape(str(row.get('excerpt') or 'metadata evidence'))}</li>")
+    derivation = topic_derivation(topic)
+    body = f"""
+<h1>{html.escape(str(topic['title']))}</h1>
+<h2>Common Problem This Solves</h2>
+<p>{html.escape(str(topic['common_problem']))}</p>
+<h2>Big Picture Plain Summary</h2>
+<p><strong>Domain:</strong> {html.escape(str(topic['domain']))}</p>
+<p><strong>Why it matters:</strong> {html.escape(str(topic['why_it_matters']))}</p>
+<p><strong>What it keeps:</strong> {html.escape(str(topic['keeps']))}</p>
+<p><strong>What it leaves out:</strong> {html.escape(str(topic['leaves_out']))}</p>
+<h2>Everyday Anchor</h2>
+<p>{html.escape(str(topic['everyday_anchor']))}</p>
+<h2>First-Principles Walkthrough</h2>
+<ol>
+  <li><strong>Start with what is observed:</strong> {html.escape(str(derivation['observed']))}.</li>
+  <li><strong>Name what is hidden:</strong> {html.escape(str(derivation['hidden']))}.</li>
+  <li><strong>Make the smallest mathematical move:</strong> {html.escape(str(derivation['move']))}.</li>
+  <li><strong>Read the shape:</strong> {html.escape(str(derivation['form']))}.</li>
+  <li><strong>Say what it means:</strong> {html.escape(str(derivation['meaning']))}.</li>
+</ol>
+<h2>Deeper Mathematical Why</h2>
+<p>The mathematical point is to decide what information is allowed to carry the scientific claim. If the carried information is too small, the model misses the behavior that matters. If it is too broad, the page may claim more than the evidence supports. The useful middle is a named object, a named scientific job, and a changed case that can reject the claim.</p>
+<h2>Reader Test</h2>
+<p>A reader understands this concept only if they can say what is observed, what is hidden, what is kept, what is ignored, and why this changed-case test matters: {html.escape(str(derivation['test']))}.</p>
+<h2>Failure Boundary</h2>
+<p>{html.escape(str(topic['failure_boundary']))}</p>
+<h2>What The Transcript Does Not Prove</h2>
+<p>The transcript evidence shows where the course introduces or uses this concept. It does not prove the concept works for every equation, data set, solver, material, geometry, or scientific task. That wider claim needs explicit validation evidence.</p>
+<h2>Transcript Evidence</h2>
+<ul>{''.join(evidence_items)}</ul>
+"""
+    path.write_text(html_page(str(topic["title"]), body, root_prefix="../"), encoding="utf-8")
+
+
+def write_markdown_export(data: dict[str, object]) -> None:
+    lines = ["# Physics-Informed Machine Learning Concepts Research", ""]
+    lines.append("## Summary")
+    for key, value in data["summary"].items():
+        lines.append(f"- {key}: {value}")
+    lines.extend(["", "## Concepts"])
+    for concept in data["concept_atlas"]:
+        lines.extend(
+            [
+                f"### {concept['name']}",
+                f"- Problem: {concept['problem']}",
+                f"- Domain: {concept['domain']}",
+                f"- Why: {concept['why']}",
+                f"- Failure: {concept['failure']}",
+                "",
+            ]
+        )
+    (EXPORTS / "research-package.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def validate(data: dict[str, object] | None = None) -> None:
+    if data is None:
+        records_path = ANALYSIS / "transcript_index.json"
+        concepts_path = ANALYSIS / "concept_atlas.json"
+        themes_path = ANALYSIS / "theme_map.json"
+        evidence_path = ANALYSIS / "evidence_ledger.json"
+        for path in (records_path, concepts_path, themes_path, evidence_path):
+            if not path.exists():
+                raise SystemExit(f"missing analysis file: {path}")
+        data = {
+            "transcript_index": json.loads(records_path.read_text(encoding="utf-8")),
+            "concept_atlas": json.loads(concepts_path.read_text(encoding="utf-8")),
+            "theme_map": json.loads(themes_path.read_text(encoding="utf-8")),
+            "evidence_ledger": json.loads(evidence_path.read_text(encoding="utf-8")),
+        }
+
+    records = data["transcript_index"]
+    if len(records) != 40:
+        raise SystemExit(f"expected 40 playlist records, found {len(records)}")
+    for record in records:
+        if record.get("transcript_status") not in {"available", "missing"}:
+            raise SystemExit(f"bad transcript status: {record.get('title')}")
+        if record.get("transcript_status") == "available" and not record.get("clean_txt"):
+            raise SystemExit(f"available transcript missing clean path: {record.get('title')}")
+        if not record.get("concepts"):
+            raise SystemExit(f"record missing concepts: {record.get('title')}")
+    required_fields = ("problem", "domain", "why", "keeps", "leaves_out", "failure", "evidence")
+    for concept in data["concept_atlas"]:
+        for field in required_fields:
+            if not concept.get(field):
+                raise SystemExit(f"concept missing {field}: {concept.get('name')}")
+    for path in (SITE / "index.html", SITE / "transcripts.html", SITE / "concept-atlas.html", SITE / "theme-map.html", SITE / "evidence-ledger.html"):
+        if not path.exists():
+            raise SystemExit(f"missing site page: {path}")
+    manifest_path = SITE / "page-manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    missing = [item for item in manifest if not (ROOT / item).exists()]
+    if missing:
+        raise SystemExit(f"manifest points to missing pages: {missing[:3]}")
+    print(f"physics-informed ml package validation ok: {len(records)} videos, {len(data['concept_atlas'])} concepts, {len(manifest)} pages")
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--download", action="store_true", help="Download playlist manifests, captions, and metadata with yt-dlp.")
+    parser.add_argument("--build", action="store_true", help="Build analysis files and site pages.")
+    parser.add_argument("--validate", action="store_true", help="Validate generated analysis and site files.")
+    args = parser.parse_args()
+
+    if args.download:
+        for playlist in PLAYLISTS:
+            download_playlist(playlist)
+    data = None
+    if args.build:
+        records = load_records()
+        data = build_analysis(records)
+        write_site(data)
+    if args.validate:
+        validate(data)
+    if not (args.download or args.build or args.validate):
+        parser.print_help()
+
+
+if __name__ == "__main__":
+    main()

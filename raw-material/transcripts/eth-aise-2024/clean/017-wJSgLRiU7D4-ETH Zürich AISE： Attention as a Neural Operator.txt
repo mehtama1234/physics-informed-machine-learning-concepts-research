@@ -1,0 +1,3273 @@
+okay so welcome to lecture number 17 uh
+okay so welcome to lecture number 17 uh
+okay so welcome to lecture number 17 uh
+let's more or
+less go from where we left off last time
+less go from where we left off last time
+less go from where we left off last time
+so the objective in the last lecture was
+so the objective in the last lecture was
+so the objective in the last lecture was
+to use
+to use
+to use
+Transformers so let me use this so use
+Transformers so let me use this so use
+Transformers so let me use this so use
+Transformers to do operator learning
+Transformers to do operator learning
+Transformers to do operator learning
+right so I'm not going to reiterate what
+right so I'm not going to reiterate what
+right so I'm not going to reiterate what
+operator learning is we have been
+operator learning is we have been
+operator learning is we have been
+looking at that for last 10 lectures so
+looking at that for last 10 lectures so
+looking at that for last 10 lectures so
+but the idea why we wanted to use
+but the idea why we wanted to use
+but the idea why we wanted to use
+Transformers is to scale right so this
+Transformers is to scale right so this
+Transformers is to scale right so this
+is the the keyword here is
+is the the keyword here is
+is the the keyword here is
+scaling so you want to scale with
+scaling so you want to scale with
+scaling so you want to scale with
+respect to
+respect to
+respect to
+data and with respect to model size so
+data and with respect to model size so
+data and with respect to model size so
+overall with respect to computer so
+overall with respect to computer so
+overall with respect to computer so
+that's the objective now right and we
+that's the objective now right and we
+that's the objective now right and we
+started in last lecture by giving you
+started in last lecture by giving you
+started in last lecture by giving you
+some ideas of how this works and this
+some ideas of how this works and this
+some ideas of how this works and this
+was the let's say summary slide summary
+was the let's say summary slide summary
+was the let's say summary slide summary
+box so your input or input embedding the
+box so your input or input embedding the
+box so your input or input embedding the
+doesn't really matter let's say that
+doesn't really matter let's say that
+doesn't really matter let's say that
+this is your input
+this is your input
+this is your input
+function uh V of X because we can
+function uh V of X because we can
+function uh V of X because we can
+interpret all these operations in terms
+interpret all these operations in terms
+interpret all these operations in terms
+of uh operators right Me Not In terms
+of uh operators right Me Not In terms
+of uh operators right Me Not In terms
+just of matrices or of functions between
+just of matrices or of functions between
+just of matrices or of functions between
+vectors and vectors but as operators
+vectors and vectors but as operators
+vectors and vectors but as operators
+between functions and functions so we
+between functions and functions so we
+between functions and functions so we
+needed some positional encoding in order
+needed some positional encoding in order
+needed some positional encoding in order
+to because otherwise everything is
+to because otherwise everything is
+to because otherwise everything is
+permutation and variant and then
+permutation and variant and then
+permutation and variant and then
+essentially the there were only three
+essentially the there were only three
+essentially the there were only three
+elements three three Essential Elements
+elements three three Essential Elements
+elements three three Essential Elements
+there is MLPs which were here there are
+there is MLPs which were here there are
+there is MLPs which were here there are
+norms so this was the layer Norm that I
+norms so this was the layer Norm that I
+norms so this was the layer Norm that I
+just described in the last lecture and
+just described in the last lecture and
+just described in the last lecture and
+the most important element of course is
+the most important element of course is
+the most important element of course is
+attention right and this is where let's
+attention right and this is where let's
+attention right and this is where let's
+use this perhaps so this is the element
+use this perhaps so this is the element
+use this perhaps so this is the element
+that was the most important and that's
+that was the most important and that's
+that was the most important and that's
+sort of in some sense a new element when
+sort of in some sense a new element when
+sort of in some sense a new element when
+it comes to Transformers and just to
+it comes to Transformers and just to
+it comes to Transformers and just to
+reiterate what that is again at the
+reiterate what that is again at the
+reiterate what that is again at the
+level of functions even though
+level of functions even though
+level of functions even though
+everything can be done with respect to
+everything can be done with respect to
+everything can be done with respect to
+to discrete quantities functions on the
+to discrete quantities functions on the
+to discrete quantities functions on the
+grid so what you get is that attention
+grid so what you get is that attention
+grid so what you get is that attention
+has this single head attention
+has this single head attention
+has this single head attention
+multi-head attention is just summing
+multi-head attention is just summing
+multi-head attention is just summing
+over over all the heads so you get this
+over over all the heads so you get this
+over over all the heads so you get this
+structure here so essentially what you
+structure here so essentially what you
+structure here so essentially what you
+do is that uh you it's sort of um Point
+do is that uh you it's sort of um Point
+do is that uh you it's sort of um Point
+to Point connection if you want to think
+to Point connection if you want to think
+to Point connection if you want to think
+of it that way perhaps with uh putting a
+of it that way perhaps with uh putting a
+of it that way perhaps with uh putting a
+picture so in other words you have this
+picture so in other words you have this
+picture so in other words you have this
+point you have this what what to call
+point you have this what what to call
+point you have this what what to call
+tokens or values at these points so
+tokens or values at these points so
+tokens or values at these points so
+let's say that this
+let's say that this
+let's say that this
+is something like
+is something like
+is something like
+this and then you have uh the same
+this and then you have uh the same
+this and then you have uh the same
+points again because we want to indicate
+points again because we want to indicate
+points again because we want to indicate
+connections and you can just imagine
+connections and you can just imagine
+connections and you can just imagine
+that this is your VK this is your VJ and
+that this is your VK this is your VJ and
+that this is your VK this is your VJ and
+so on and what attention does is that it
+so on and what attention does is that it
+so on and what attention does is that it
+uh in order to update the value at this
+uh in order to update the value at this
+uh in order to update the value at this
+point you look at the sort of of
+point you look at the sort of of
+point you look at the sort of of
+relative information that each of these
+relative information that each of these
+relative information that each of these
+guys throw throws to this point right so
+guys throw throws to this point right so
+guys throw throws to this point right so
+this one this one this one so on so
+this one this one this one so on so
+this one this one this one so on so
+everything is thrown out here and then
+everything is thrown out here and then
+everything is thrown out here and then
+the idea is that you take a relative
+the idea is that you take a relative
+the idea is that you take a relative
+weightage of how important the
+weightage of how important the
+weightage of how important the
+information from all these points are
+information from all these points are
+information from all these points are
+okay and this relative waiting is done
+okay and this relative waiting is done
+okay and this relative waiting is done
+through a softmax which is in the
+through a softmax which is in the
+through a softmax which is in the
+integral version it is given by this
+integral version it is given by this
+integral version it is given by this
+term here and in the discrete the
+term here and in the discrete the
+term here and in the discrete the
+quadrature version is given by this this
+quadrature version is given by this this
+quadrature version is given by this this
+classic formula here so in some sense
+classic formula here so in some sense
+classic formula here so in some sense
+attention is a very very intuitive
+attention is a very very intuitive
+attention is a very very intuitive
+mechanism because it just takes into
+mechanism because it just takes into
+mechanism because it just takes into
+account correlations or relative
+account correlations or relative
+account correlations or relative
+contributions of different parts of the
+contributions of different parts of the
+contributions of different parts of the
+input to the output that's that's the
+input to the output that's that's the
+input to the output that's that's the
+huis thing and it is easily seen when
+huis thing and it is easily seen when
+huis thing and it is easily seen when
+you when you do this means when you
+you when you do this means when you
+you when you do this means when you
+think of it as a kernel because in
+think of it as a kernel because in
+think of it as a kernel because in
+contrast to fno CNO and so on where all
+contrast to fno CNO and so on where all
+contrast to fno CNO and so on where all
+the time whenever we do the work at the
+the time whenever we do the work at the
+the time whenever we do the work at the
+level of uh functions operators we have
+level of uh functions operators we have
+level of uh functions operators we have
+to do some sort of Kernel operations so
+to do some sort of Kernel operations so
+to do some sort of Kernel operations so
+for CNO we know that the kernel itself
+for CNO we know that the kernel itself
+for CNO we know that the kernel itself
+was translation inv variant and it was
+was translation inv variant and it was
+was translation inv variant and it was
+sort of a fixed kernel it was learnable
+sort of a fixed kernel it was learnable
+sort of a fixed kernel it was learnable
+kernel we infer the col from data but
+kernel we infer the col from data but
+kernel we infer the col from data but
+during the inference for instance uh
+during the inference for instance uh
+during the inference for instance uh
+this is not the case right it's just
+this is not the case right it's just
+this is not the case right it's just
+something that has already been there
+something that has already been there
+something that has already been there
+here on the other hand because we take
+here on the other hand because we take
+here on the other hand because we take
+into account the relative relative
+into account the relative relative
+into account the relative relative
+contribution of each each of these uh
+contribution of each each of these uh
+contribution of each each of these uh
+tokens each of these points then what
+tokens each of these points then what
+tokens each of these points then what
+you end up is some sort of a nonlinear
+you end up is some sort of a nonlinear
+you end up is some sort of a nonlinear
+data dependent C okay so perhaps I
+data dependent C okay so perhaps I
+data dependent C okay so perhaps I
+should use the word data
+dependent so this is why in some sense
+dependent so this is why in some sense
+dependent so this is why in some sense
+Transformers has some desirable
+Transformers has some desirable
+Transformers has some desirable
+properties that you will see here so
+properties that you will see here so
+properties that you will see here so
+this is the way to think of it that
+this is the way to think of it that
+this is the way to think of it that
+instead of having a kernel that is uh
+instead of having a kernel that is uh
+instead of having a kernel that is uh
+inbuilt that is something that we give
+inbuilt that is something that we give
+inbuilt that is something that we give
+using some prior knowledge for instance
+using some prior knowledge for instance
+using some prior knowledge for instance
+the inductive bias that is used here is
+the inductive bias that is used here is
+the inductive bias that is used here is
+translation uh invariance equivariance
+translation uh invariance equivariance
+translation uh invariance equivariance
+right uh that's why we take this sort of
+right uh that's why we take this sort of
+right uh that's why we take this sort of
+a what xus Y type of Kernel on the other
+a what xus Y type of Kernel on the other
+a what xus Y type of Kernel on the other
+hand here we have no such inbuilt
+hand here we have no such inbuilt
+hand here we have no such inbuilt
+implicit biases or inductive biases what
+implicit biases or inductive biases what
+implicit biases or inductive biases what
+we have instead is that it has to learn
+we have instead is that it has to learn
+we have instead is that it has to learn
+it from the data okay and we offer it a
+it from the data okay and we offer it a
+it from the data okay and we offer it a
+lot of scope to learn from the data
+lot of scope to learn from the data
+lot of scope to learn from the data
+because as you can see there are lots of
+because as you can see there are lots of
+because as you can see there are lots of
+um all all data points make a
+um all all data points make a
+um all all data points make a
+contribution it could be that the nearby
+contribution it could be that the nearby
+contribution it could be that the nearby
+points make much larger contributions
+points make much larger contributions
+points make much larger contributions
+than the far off points that's the
+than the far off points that's the
+than the far off points that's the
+structure of the data in that case you
+structure of the data in that case you
+structure of the data in that case you
+can imagine that you're slowly hinging
+can imagine that you're slowly hinging
+can imagine that you're slowly hinging
+towards this right because here it gives
+towards this right because here it gives
+towards this right because here it gives
+more weightage to the neighborhood
+more weightage to the neighborhood
+more weightage to the neighborhood
+actually it gives all the weightage to
+actually it gives all the weightage to
+actually it gives all the weightage to
+the neighborhood then to the others
+the neighborhood then to the others
+the neighborhood then to the others
+right but in some sense you can see
+right but in some sense you can see
+right but in some sense you can see
+intuitively that if that is the case if
+intuitively that if that is the case if
+intuitively that if that is the case if
+that there is more weightage to the
+that there is more weightage to the
+that there is more weightage to the
+neighborhood all that it will do is that
+neighborhood all that it will do is that
+neighborhood all that it will do is that
+the attention the relative attention
+the attention the relative attention
+the attention the relative attention
+weights for the neighboring points so
+weights for the neighboring points so
+weights for the neighboring points so
+let's say these three points would be
+let's say these three points would be
+let's say these three points would be
+almost 100% and the rest fall up very
+almost 100% and the rest fall up very
+almost 100% and the rest fall up very
+very quickly so you can somehow recover
+very quickly so you can somehow recover
+very quickly so you can somehow recover
+this locality also from having this kind
+this locality also from having this kind
+this locality also from having this kind
+of a global structure but of course in
+of a global structure but of course in
+of a global structure but of course in
+some other problems perhaps this is not
+some other problems perhaps this is not
+some other problems perhaps this is not
+the right kind of an inductive bias then
+the right kind of an inductive bias then
+the right kind of an inductive bias then
+it is able to leverage it is able to
+it is able to leverage it is able to
+it is able to leverage it is able to
+sort of understand this and should be
+sort of understand this and should be
+sort of understand this and should be
+able to learn so this is some let's say
+able to learn so this is some let's say
+able to learn so this is some let's say
+very rough heuristics into why of course
+very rough heuristics into why of course
+very rough heuristics into why of course
+it was proposed more from the
+it was proposed more from the
+it was proposed more from the
+perspective of language where if you
+perspective of language where if you
+perspective of language where if you
+think in terms of language uh attention
+think in terms of language uh attention
+think in terms of language uh attention
+makes a lot lot of sense right in vision
+makes a lot lot of sense right in vision
+makes a lot lot of sense right in vision
+and in pdes it's a little bit less but
+and in pdes it's a little bit less but
+and in pdes it's a little bit less but
+if you think of it in terms of a
+if you think of it in terms of a
+if you think of it in terms of a
+nonlinear kernel then of course the
+nonlinear kernel then of course the
+nonlinear kernel then of course the
+intuition becomes in some sense stronger
+intuition becomes in some sense stronger
+intuition becomes in some sense stronger
+so this was the sort of the key element
+so this was the sort of the key element
+so this was the sort of the key element
+right uh this was the key element and
+right uh this was the key element and
+right uh this was the key element and
+the rest were of course some details
+the rest were of course some details
+the rest were of course some details
+because as you can imagine that uh the
+because as you can imagine that uh the
+because as you can imagine that uh the
+other elements were like pointwise
+other elements were like pointwise
+other elements were like pointwise
+operations MLP lay normalization and in
+operations MLP lay normalization and in
+operations MLP lay normalization and in
+some sense they are not the essence of
+some sense they are not the essence of
+some sense they are not the essence of
+uh attention a sense of attention is
+uh attention a sense of attention is
+uh attention a sense of attention is
+really this ense of a transformer is
+really this ense of a transformer is
+really this ense of a transformer is
+really this attention block here good so
+really this attention block here good so
+really this attention block here good so
+now that seems all well and good but
+now that seems all well and good but
+now that seems all well and good but
+there must be a caveat right the fact
+there must be a caveat right the fact
+there must be a caveat right the fact
+that we are allowed to be so General
+that we are allowed to be so General
+that we are allowed to be so General
+that we can interpret local locality we
+that we can interpret local locality we
+that we can interpret local locality we
+can interpret Global Information so on
+can interpret Global Information so on
+can interpret Global Information so on
+we should pay a price and what is the
+we should pay a price and what is the
+we should pay a price and what is the
+price that we pay remember that I
+price that we pay remember that I
+price that we pay remember that I
+already alluded to it that in order to
+already alluded to it that in order to
+already alluded to it that in order to
+compute this relative weights we had to
+compute this relative weights we had to
+compute this relative weights we had to
+do another loop here right so we had to
+do another loop here right so we had to
+do another loop here right so we had to
+go again and then compute the tension
+go again and then compute the tension
+go again and then compute the tension
+weights by doing a so we fix this point
+weights by doing a so we fix this point
+weights by doing a so we fix this point
+and then again we do a broadcast so
+and then again we do a broadcast so
+and then again we do a broadcast so
+essentially all these points make a
+essentially all these points make a
+essentially all these points make a
+contribution and then you compute that
+contribution and then you compute that
+contribution and then you compute that
+so you here you have K operations or k
+so you here you have K operations or k
+so you here you have K operations or k
+tokens here you have K more tokens so
+tokens here you have K more tokens so
+tokens here you have K more tokens so
+you have this quadratic complexity and
+you have this quadratic complexity and
+you have this quadratic complexity and
+this is exactly what I wrote down here
+this is exactly what I wrote down here
+this is exactly what I wrote down here
+that in terms of the number of Tokens
+that in terms of the number of Tokens
+that in terms of the number of Tokens
+The cost is actually quadratic so the
+The cost is actually quadratic so the
+The cost is actually quadratic so the
+compute in the even just one single
+compute in the even just one single
+compute in the even just one single
+inference remember that the with respect
+inference remember that the with respect
+inference remember that the with respect
+to machine learning algorithms there are
+to machine learning algorithms there are
+to machine learning algorithms there are
+two distinct processes there is
+two distinct processes there is
+two distinct processes there is
+inference and there is training so
+inference and there is training so
+inference and there is training so
+inference is when you deploy your
+inference is when you deploy your
+inference is when you deploy your
+architecture right and this is during
+architecture right and this is during
+architecture right and this is during
+training what you do is that you
+training what you do is that you
+training what you do is that you
+repeatedly Loop over keep on inferring
+repeatedly Loop over keep on inferring
+repeatedly Loop over keep on inferring
+through all the data set that you have
+through all the data set that you have
+through all the data set that you have
+right so there is a so training of
+right so there is a so training of
+right so there is a so training of
+course is much more expensive but uh
+course is much more expensive but uh
+course is much more expensive but uh
+these are not completely unrelated to
+these are not completely unrelated to
+these are not completely unrelated to
+each other right because during training
+each other right because during training
+each other right because during training
+you have lots and lots of inference
+you have lots and lots of inference
+you have lots and lots of inference
+rounds so now how does the compute look
+rounds so now how does the compute look
+rounds so now how does the compute look
+like so essentially this can be computed
+like so essentially this can be computed
+like so essentially this can be computed
+uh it's rather straightforward to
+uh it's rather straightforward to
+uh it's rather straightforward to
+compute I could have gotten some uh
+compute I could have gotten some uh
+compute I could have gotten some uh
+something wrong but the key Point here
+something wrong but the key Point here
+something wrong but the key Point here
+is that it's quadratic in the number of
+is that it's quadratic in the number of
+is that it's quadratic in the number of
+uh
+uh
+uh
+okay so this has serious implications of
+okay so this has serious implications of
+okay so this has serious implications of
+course remember that we also have some
+course remember that we also have some
+course remember that we also have some
+input features and this is the hidden
+input features and this is the hidden
+input features and this is the hidden
+Dimension so hidden Dimension was uh
+Dimension so hidden Dimension was uh
+Dimension so hidden Dimension was uh
+here right so this q k and so on if you
+here right so this q k and so on if you
+here right so this q k and so on if you
+remember the query for instance is a m *
+remember the query for instance is a m *
+remember the query for instance is a m *
+n Matrix so what you do is that you take
+n Matrix so what you do is that you take
+n Matrix so what you do is that you take
+information from n dimensions and
+information from n dimensions and
+information from n dimensions and
+typically you lift it to n Dimensions uh
+typically you lift it to n Dimensions uh
+typically you lift it to n Dimensions uh
+the other way around you start with n
+the other way around you start with n
+the other way around you start with n
+dimensions and you lift it to M
+dimensions and you lift it to M
+dimensions and you lift it to M
+dimensions so you can think of M being
+dimensions so you can think of M being
+dimensions so you can think of M being
+much larger than n perhaps not much
+much larger than n perhaps not much
+much larger than n perhaps not much
+larger but certainly larger than n
+larger but certainly larger than n
+larger but certainly larger than n
+because it's a lifting Dimension a in
+because it's a lifting Dimension a in
+because it's a lifting Dimension a in
+space in some sense so this is of course
+space in some sense so this is of course
+space in some sense so this is of course
+also quadratic in the number of features
+also quadratic in the number of features
+also quadratic in the number of features
+but that's uh less mild compared to the
+but that's uh less mild compared to the
+but that's uh less mild compared to the
+number of tokens why is that let us
+number of tokens why is that let us
+number of tokens why is that let us
+imagine that we are talking about um
+imagine that we are talking about um
+imagine that we are talking about um
+forget about the weather but let us take
+forget about the weather but let us take
+forget about the weather but let us take
+a very very simple situation we have
+a very very simple situation we have
+a very very simple situation we have
+fluid flows incompressible fluid flows
+fluid flows incompressible fluid flows
+fluid flows incompressible fluid flows
+so now stoic equation so our unknown in
+so now stoic equation so our unknown in
+so now stoic equation so our unknown in
+some sense is the velocity V and this is
+some sense is the velocity V and this is
+some sense is the velocity V and this is
+two components the X and Y
+two components the X and Y
+two components the X and Y
+component and uh so in 2D it has two
+component and uh so in 2D it has two
+component and uh so in 2D it has two
+components so this means that n is equal
+components so this means that n is equal
+components so this means that n is equal
+to 2 even if M was equal
+to 2 even if M was equal
+to 2 even if M was equal
+to 100 or let's say 10 okay because I'm
+to 100 or let's say 10 okay because I'm
+to 100 or let's say 10 okay because I'm
+just putting some numbers here usually
+just putting some numbers here usually
+just putting some numbers here usually
+it's not 10 it's more closer to 100 then
+it's not 10 it's more closer to 100 then
+it's not 10 it's more closer to 100 then
+it is to 10 but let's say that it's 10
+it is to 10 but let's say that it's 10
+it is to 10 but let's say that it's 10
+so this you can see is just 20 it could
+so this you can see is just 20 it could
+so this you can see is just 20 it could
+be 200 it does not really matter now
+be 200 it does not really matter now
+be 200 it does not really matter now
+what is the number of tokens so remember
+what is the number of tokens so remember
+what is the number of tokens so remember
+theistic that we have now is that if you
+theistic that we have now is that if you
+theistic that we have now is that if you
+think of an image in
+2D so we have an image so this is the
+2D so we have an image so this is the
+2D so we have an image so this is the
+domain then each point corresponds to a
+domain then each point corresponds to a
+domain then each point corresponds to a
+token right because in each point the
+token right because in each point the
+token right because in each point the
+point value at that point corresponds to
+point value at that point corresponds to
+point value at that point corresponds to
+a token there are two channels let's
+a token there are two channels let's
+a token there are two channels let's
+forget the channel Dimension because
+forget the channel Dimension because
+forget the channel Dimension because
+that is included here but uh so there
+that is included here but uh so there
+that is included here but uh so there
+are how many points now in 2D so it
+are how many points now in 2D so it
+are how many points now in 2D so it
+depends let's say say that we do some
+depends let's say say that we do some
+depends let's say say that we do some
+let's even take 128 squ right so 128
+let's even take 128 squ right so 128
+let's even take 128 squ right so 128
+squar is 2 to the power how much is that
+squar is 2 to the power how much is that
+squar is 2 to the power how much is that
+so 2 to the 7 so 2 to the 14 right 2 to
+so 2 to the 7 so 2 to the 14 right 2 to
+so 2 to the 7 so 2 to the 14 right 2 to
+the 14 is a very very big number already
+the 14 is a very very big number already
+the 14 is a very very big number already
+so that's the number of
+so that's the number of
+so that's the number of
+tokens okay K is 2 to the 14 because
+tokens okay K is 2 to the 14 because
+tokens okay K is 2 to the 14 because
+each of these points uh gets expanded
+each of these points uh gets expanded
+each of these points uh gets expanded
+into a line right so you have 2 to the
+into a line right so you have 2 to the
+into a line right so you have 2 to the
+14 tokens so what is the complexity now
+14 tokens so what is the complexity now
+14 tokens so what is the complexity now
+of a single INF run is 2 to the 28 so it
+of a single INF run is 2 to the 28 so it
+of a single INF run is 2 to the 28 so it
+is 20 * 2 to the 28 now 2 to the 28 is a
+is 20 * 2 to the 28 now 2 to the 28 is a
+is 20 * 2 to the 28 now 2 to the 28 is a
+very big number I don't even want to
+very big number I don't even want to
+very big number I don't even want to
+imagine how big it is right roughly
+imagine how big it is right roughly
+imagine how big it is right roughly
+speaking it is 2 to the 28 is like 10 to
+speaking it is 2 to the 28 is like 10 to
+speaking it is 2 to the 28 is like 10 to
+the it's three so 10 to the 9 it's more
+the it's three so 10 to the 9 it's more
+the it's three so 10 to the 9 it's more
+than a billion right so it's more than
+than a billion right so it's more than
+than a billion right so it's more than
+already more than a billion which is a
+already more than a billion which is a
+already more than a billion which is a
+which is a very very it's it's big this
+which is a very very it's it's big this
+which is a very very it's it's big this
+is just in 2D at a low resolution now
+is just in 2D at a low resolution now
+is just in 2D at a low resolution now
+just scale the resolution up and just
+just scale the resolution up and just
+just scale the resolution up and just
+let's start doing some numbers if you're
+let's start doing some numbers if you're
+let's start doing some numbers if you're
+in 3D and you're at 128 cubed then all
+in 3D and you're at 128 cubed then all
+in 3D and you're at 128 cubed then all
+bets are off right because now you can
+bets are off right because now you can
+bets are off right because now you can
+see that the number of tokens K is uh 2
+see that the number of tokens K is uh 2
+see that the number of tokens K is uh 2
+to the 21 right no isn't that correct 2
+to the 21 right no isn't that correct 2
+to the 21 right no isn't that correct 2
+to the 7 cubed is 2 the
+to the 7 cubed is 2 the
+to the 7 cubed is 2 the
+21 and uh the number of parameters the
+21 and uh the number of parameters the
+21 and uh the number of parameters the
+the number of total number of the cost
+the number of total number of the cost
+the number of total number of the cost
+in terms of the number of tokens is 2 to
+in terms of the number of tokens is 2 to
+in terms of the number of tokens is 2 to
+42 and that is uh you're talking about
+42 and that is uh you're talking about
+42 and that is uh you're talking about
+trillions already right so this is even
+trillions already right so this is even
+trillions already right so this is even
+for the even for the biggest machines
+for the even for the biggest machines
+for the even for the biggest machines
+that are available there these are still
+that are available there these are still
+that are available there these are still
+forbidding numbers okay so this is it's
+forbidding numbers okay so this is it's
+forbidding numbers okay so this is it's
+okay because the point where
+okay because the point where
+okay because the point where
+Transformers were very good was for text
+Transformers were very good was for text
+Transformers were very good was for text
+in the in the beginning you only had
+in the in the beginning you only had
+in the in the beginning you only had
+text and you know that text uh spoken
+text and you know that text uh spoken
+text and you know that text uh spoken
+text or written text this is not very
+text or written text this is not very
+text or written text this is not very
+rich information because this can be
+rich information because this can be
+rich information because this can be
+stored with a very few number of tokens
+stored with a very few number of tokens
+stored with a very few number of tokens
+usually there are these embeddings uh
+usually there are these embeddings uh
+usually there are these embeddings uh
+bite pair word piece and so on and these
+bite pair word piece and so on and these
+bite pair word piece and so on and these
+store it in very you even the whole of
+store it in very you even the whole of
+store it in very you even the whole of
+human knowledge as encapsulated in
+human knowledge as encapsulated in
+human knowledge as encapsulated in
+Wikipedia for instance is not that many
+Wikipedia for instance is not that many
+Wikipedia for instance is not that many
+tokens you know in terms of tokens but
+tokens you know in terms of tokens but
+tokens you know in terms of tokens but
+as soon as you come to images and as
+as soon as you come to images and as
+as soon as you come to images and as
+soon as you come to sort of scientific
+soon as you come to sort of scientific
+soon as you come to sort of scientific
+data sets which are more closer to
+data sets which are more closer to
+data sets which are more closer to
+images and even videos three-dimensional
+images and even videos three-dimensional
+images and even videos three-dimensional
+images and so on you get into problem so
+images and so on you get into problem so
+images and so on you get into problem so
+this is uh this is the problem with
+this is uh this is the problem with
+this is uh this is the problem with
+Transformers right because they have
+Transformers right because they have
+Transformers right because they have
+this quadratic cost and that can hit you
+this quadratic cost and that can hit you
+this quadratic cost and that can hit you
+hard in some cases of course there is
+hard in some cases of course there is
+hard in some cases of course there is
+also a way out and the point about
+also a way out and the point about
+also a way out and the point about
+Transformers is that there is Extreme
+Transformers is that there is Extreme
+Transformers is that there is Extreme
+parallelism what does it mean
+parallelism what does it mean
+parallelism what does it mean
+parallelism means that different
+parallelism means that different
+parallelism means that different
+processes during computation can be
+processes during computation can be
+processes during computation can be
+chopped off and this can be sent to
+chopped off and this can be sent to
+chopped off and this can be sent to
+different parts of the processor
+different parts of the processor
+different parts of the processor
+different threads different gpus whatnot
+different threads different gpus whatnot
+different threads different gpus whatnot
+right and in fact it's very easy to
+right and in fact it's very easy to
+right and in fact it's very easy to
+calculate this that there are exactly
+calculate this that there are exactly
+calculate this that there are exactly
+order of one sequential operations
+order of one sequential operations
+order of one sequential operations
+nothing depends on anything else so in
+nothing depends on anything else so in
+nothing depends on anything else so in
+particular if you think of the
+particular if you think of the
+particular if you think of the
+operations here or let's take the
+operations here or let's take the
+operations here or let's take the
+operations here because this is the
+operations here because this is the
+operations here because this is the
+expensive one right MLP and uh layer
+expensive one right MLP and uh layer
+expensive one right MLP and uh layer
+norm and so on these are very very easy
+norm and so on these are very very easy
+norm and so on these are very very easy
+operations these are pointwise that is
+operations these are pointwise that is
+operations these are pointwise that is
+nothing nothing that is happening as you
+nothing nothing that is happening as you
+nothing nothing that is happening as you
+can imagine here for each of these
+can imagine here for each of these
+can imagine here for each of these
+points or whether here for each of these
+points or whether here for each of these
+points or whether here for each of these
+points we can we could have computed
+points we can we could have computed
+points we can we could have computed
+things in parallel there is no
+things in parallel there is no
+things in parallel there is no
+interaction between them right we could
+interaction between them right we could
+interaction between them right we could
+have taken the query you would have uh
+have taken the query you would have uh
+have taken the query you would have uh
+applied it onto the vector and we could
+applied it onto the vector and we could
+applied it onto the vector and we could
+have just done it for each of these
+have just done it for each of these
+have just done it for each of these
+points independently of each other and
+points independently of each other and
+points independently of each other and
+similar all these operations are only
+similar all these operations are only
+similar all these operations are only
+things that depend are the computation
+things that depend are the computation
+things that depend are the computation
+of the keys the computation of the
+of the keys the computation of the
+of the keys the computation of the
+values these are all can be done
+values these are all can be done
+values these are all can be done
+independent of each other only when you
+independent of each other only when you
+independent of each other only when you
+take a DOT product have you got to
+take a DOT product have you got to
+take a DOT product have you got to
+combine them right but that's not a very
+combine them right but that's not a very
+combine them right but that's not a very
+dot product is a easy operation compared
+dot product is a easy operation compared
+dot product is a easy operation compared
+to the actual computation of this Matrix
+to the actual computation of this Matrix
+to the actual computation of this Matrix
+Vector products and similarly softmax
+Vector products and similarly softmax
+Vector products and similarly softmax
+can be computed all the all the things
+can be computed all the all the things
+can be computed all the all the things
+that go into the softmax these
+that go into the softmax these
+that go into the softmax these
+exponentials they can be computed
+exponentials they can be computed
+exponentials they can be computed
+completely independently of each other
+completely independently of each other
+completely independently of each other
+and they just have there is one
+and they just have there is one
+and they just have there is one
+accumulation operation so you can
+accumulation operation so you can
+accumulation operation so you can
+imagine that there's a lot of
+imagine that there's a lot of
+imagine that there's a lot of
+parallelization
+parallelization
+parallelization
+and this is the reason why even though
+and this is the reason why even though
+and this is the reason why even though
+the compute can be expensive you can
+the compute can be expensive you can
+the compute can be expensive you can
+parallelize and uh you can extremely
+parallelize and uh you can extremely
+parallelize and uh you can extremely
+parallelize and that's why Transformers
+parallelize and that's why Transformers
+parallelize and that's why Transformers
+works so well because you have this
+works so well because you have this
+works so well because you have this
+parallelization features that that I
+parallelization features that that I
+parallelization features that that I
+explained and also there is a concept of
+explained and also there is a concept of
+explained and also there is a concept of
+path length that I don't want to go into
+path length that I don't want to go into
+path length that I don't want to go into
+any details it says that in the same
+any details it says that in the same
+any details it says that in the same
+round you can go from any point to any
+round you can go from any point to any
+round you can go from any point to any
+point so paath length is how well are
+point so paath length is how well are
+point so paath length is how well are
+different parts of a computation
+different parts of a computation
+different parts of a computation
+connected to each other we know in
+connected to each other we know in
+connected to each other we know in
+Transformers every point is connected to
+Transformers every point is connected to
+Transformers every point is connected to
+every other point or every every Point
+every other point or every every Point
+every other point or every every Point
+including itself so of course there is a
+including itself so of course there is a
+including itself so of course there is a
+unit one path length so it's very very
+unit one path length so it's very very
+unit one path length so it's very very
+easy to leverage those those those
+easy to leverage those those those
+easy to leverage those those those
+facilities yeah so the parallelism helps
+facilities yeah so the parallelism helps
+facilities yeah so the parallelism helps
+but it doesn't help if you still have
+but it doesn't help if you still have
+but it doesn't help if you still have
+100 trillion uh computer sies right so
+100 trillion uh computer sies right so
+100 trillion uh computer sies right so
+there is a limit to so in 2D potentially
+there is a limit to so in 2D potentially
+there is a limit to so in 2D potentially
+you could get away but no one does that
+you could get away but no one does that
+you could get away but no one does that
+even for images no one does that because
+even for images no one does that because
+even for images no one does that because
+uh you don't want uh you don't want this
+uh you don't want uh you don't want this
+uh you don't want uh you don't want this
+large computational volumes so we need
+large computational volumes so we need
+large computational volumes so we need
+some sort of that's why it's sort of
+some sort of that's why it's sort of
+some sort of that's why it's sort of
+attention pointwise attention is this
+attention pointwise attention is this
+attention pointwise attention is this
+would be considered still infeasible and
+would be considered still infeasible and
+would be considered still infeasible and
+perhaps unnecessary also because uh you
+perhaps unnecessary also because uh you
+perhaps unnecessary also because uh you
+don't need that kind of local
+don't need that kind of local
+don't need that kind of local
+information after all the difference
+information after all the difference
+information after all the difference
+between text and image or text and
+between text and image or text and
+between text and image or text and
+scientific data sets is that if you
+scientific data sets is that if you
+scientific data sets is that if you
+think of um this room for instance and
+think of um this room for instance and
+think of um this room for instance and
+we are interested in temperature in this
+we are interested in temperature in this
+we are interested in temperature in this
+room there's some much more regularity
+room there's some much more regularity
+room there's some much more regularity
+in the temperature in this room there's
+in the temperature in this room there's
+in the temperature in this room there's
+a lot less variation between the
+a lot less variation between the
+a lot less variation between the
+temperature here and temperature here
+temperature here and temperature here
+temperature here and temperature here
+compared to temp of course you can argue
+compared to temp of course you can argue
+compared to temp of course you can argue
+compared to temperature here and far
+compared to temperature here and far
+compared to temperature here and far
+away right so there's a lot more
+away right so there's a lot more
+away right so there's a lot more
+regularities so you could leverage those
+regularities so you could leverage those
+regularities so you could leverage those
+regularities it's the same with an image
+regularities it's the same with an image
+regularities it's the same with an image
+when I look at you guys there is much
+when I look at you guys there is much
+when I look at you guys there is much
+more regularity than at a pixel level
+more regularity than at a pixel level
+more regularity than at a pixel level
+than it would be for instance when I'm
+than it would be for instance when I'm
+than it would be for instance when I'm
+talking because each of the words that I
+talking because each of the words that I
+talking because each of the words that I
+say there is no regularity as such you
+say there is no regularity as such you
+say there is no regularity as such you
+know there are discrete events in some
+know there are discrete events in some
+know there are discrete events in some
+sense so we are going to leverage those
+sense so we are going to leverage those
+sense so we are going to leverage those
+regular I ities that these data
+regular I ities that these data
+regular I ities that these data
+structures have in order to reduce the
+structures have in order to reduce the
+structures have in order to reduce the
+cost of computation and this is what
+cost of computation and this is what
+cost of computation and this is what
+I'll try to do for the rest of the
+I'll try to do for the rest of the
+I'll try to do for the rest of the
+lecture today are there any questions
+lecture today are there any questions
+lecture today are there any questions
+about the computational aspects or what
+about the computational aspects or what
+about the computational aspects or what
+are the computational challenges of
+are the computational challenges of
+are the computational challenges of
+Transformers no it's
+obvious
+obvious
+obvious
+good let's move
+good let's move
+good let's move
+on so one possible solution which is
+on so one possible solution which is
+on so one possible solution which is
+widely used in Vision uh because Vision
+widely used in Vision uh because Vision
+widely used in Vision uh because Vision
+has exactly the same problems remember
+has exactly the same problems remember
+has exactly the same problems remember
+that the inputs of images is what is
+that the inputs of images is what is
+that the inputs of images is what is
+called Vision Transformers so this was
+called Vision Transformers so this was
+called Vision Transformers so this was
+actually proposed by some mostly people
+actually proposed by some mostly people
+actually proposed by some mostly people
+sitting in Google at zc and this is
+sitting in Google at zc and this is
+sitting in Google at zc and this is
+called Vision
+called Vision
+called Vision
+Transformers and let me explain what it
+Transformers and let me explain what it
+Transformers and let me explain what it
+is and then we can look at some of the
+is and then we can look at some of the
+is and then we can look at some of the
+details so the idea is to use images as
+details so the idea is to use images as
+details so the idea is to use images as
+the main sort of uh concept here so
+the main sort of uh concept here so
+the main sort of uh concept here so
+think of an
+think of an
+think of an
+image
+image
+image
+so po drawing
+so po drawing
+so po drawing
+it will serve the
+it will serve the
+it will serve the
+purpose and uh you can think of a domain
+purpose and uh you can think of a domain
+purpose and uh you can think of a domain
+a computational domain and you know that
+a computational domain and you know that
+a computational domain and you know that
+at the end of the day things are
+at the end of the day things are
+at the end of the day things are
+discrete so there's a bunch of
+discrete so there's a bunch of
+discrete so there's a bunch of
+points at which we are going to sample
+points at which we are going to sample
+points at which we are going to sample
+the solution
+the solution
+the solution
+right a bunch of points at which we have
+right a bunch of points at which we have
+right a bunch of points at which we have
+the image
+the image
+the image
+represent something like
+represent something like
+represent something like
+this usually 128 squ 256 squ 52 squ and
+this usually 128 squ 256 squ 52 squ and
+this usually 128 squ 256 squ 52 squ and
+so on the idea as I said is to leverage
+so on the idea as I said is to leverage
+so on the idea as I said is to leverage
+regularity the fact that locally things
+regularity the fact that locally things
+regularity the fact that locally things
+change slowly but of course if you
+change slowly but of course if you
+change slowly but of course if you
+accumulate these changes over global uh
+accumulate these changes over global uh
+accumulate these changes over global uh
+scales spatial scales then there'll be
+scales spatial scales then there'll be
+scales spatial scales then there'll be
+large of changes right so the idea
+large of changes right so the idea
+large of changes right so the idea
+behind this people who proposed Vision
+behind this people who proposed Vision
+behind this people who proposed Vision
+Transformers was very simple that why
+Transformers was very simple that why
+Transformers was very simple that why
+don't we divide the domain or divide the
+don't we divide the domain or divide the
+don't we divide the domain or divide the
+image into what are called patches so
+image into what are called patches so
+image into what are called patches so
+what humanistically what it is is
+what humanistically what it is is
+what humanistically what it is is
+actually very very simple writing it
+actually very very simple writing it
+actually very very simple writing it
+down in formulas is a bit some but so I
+down in formulas is a bit some but so I
+down in formulas is a bit some but so I
+divide it into blocks or
+divide it into blocks or
+divide it into blocks or
+patches I've just done a very very crude
+patches I've just done a very very crude
+patches I've just done a very very crude
+approximation of it right so instead of
+approximation of it right so instead of
+approximation of it right so instead of
+looking at these uh how many points did
+looking at these uh how many points did
+looking at these uh how many points did
+I draw 20 points I just look at in this
+I draw 20 points I just look at in this
+I draw 20 points I just look at in this
+case six patches this just some numbers
+case six patches this just some numbers
+case six patches this just some numbers
+that I'm throwing here right so six
+that I'm throwing here right so six
+that I'm throwing here right so six
+patches and the idea is that there's so
+patches and the idea is that there's so
+patches and the idea is that there's so
+little variation within the patch
+little variation within the patch
+little variation within the patch
+there's so much of regularity within the
+there's so much of regularity within the
+there's so much of regularity within the
+patch that I could essentially instead
+patch that I could essentially instead
+patch that I could essentially instead
+of having these four pixel values I
+of having these four pixel values I
+of having these four pixel values I
+could replace them with a single uh
+could replace them with a single uh
+could replace them with a single uh
+feature a single attribute from the
+feature a single attribute from the
+feature a single attribute from the
+patch or single feature single attribute
+patch or single feature single attribute
+patch or single feature single attribute
+from this patch single attribute from
+from this patch single attribute from
+from this patch single attribute from
+this patch and so on so by dividing into
+this patch and so on so by dividing into
+this patch and so on so by dividing into
+patches instead of having 20 potential
+patches instead of having 20 potential
+patches instead of having 20 potential
+tokens I went down to six tokens of
+tokens I went down to six tokens of
+tokens I went down to six tokens of
+course this process scales just imagine
+course this process scales just imagine
+course this process scales just imagine
+if I have 128 squar image and each patch
+if I have 128 squar image and each patch
+if I have 128 squar image and each patch
+is 16 by 16 and this was typically what
+is 16 by 16 and this was typically what
+is 16 by 16 and this was typically what
+the original Vision Transformers paper
+the original Vision Transformers paper
+the original Vision Transformers paper
+resolved then instead of looking at 128
+resolved then instead of looking at 128
+resolved then instead of looking at 128
+squared Point values I I simply look at
+squared Point values I I simply look at
+squared Point values I I simply look at
+128 divided by 16 squar and that is 64.
+128 divided by 16 squar and that is 64.
+128 divided by 16 squar and that is 64.
+vales right so there's a dramatic
+vales right so there's a dramatic
+vales right so there's a dramatic
+reduction in the number of tokens all
+reduction in the number of tokens all
+reduction in the number of tokens all
+that you Leverage is the fact that
+that you Leverage is the fact that
+that you Leverage is the fact that
+neighborhood information is taken into
+neighborhood information is taken into
+neighborhood information is taken into
+account that things are don't vary
+account that things are don't vary
+account that things are don't vary
+dramatically within the neighborhood as
+dramatically within the neighborhood as
+dramatically within the neighborhood as
+you would expect also Solutions yes
+James multi like Fast multiple
+[Music]
+yeah it's a very simple partition of
+yeah it's a very simple partition of
+yeah it's a very simple partition of
+unity type uh idea in some sense
+unity type uh idea in some sense
+unity type uh idea in some sense
+right multipole is a bit more
+right multipole is a bit more
+right multipole is a bit more
+hierarchical this is much simpler
+hierarchical this is much simpler
+hierarchical this is much simpler
+because when for those who know multiple
+because when for those who know multiple
+because when for those who know multiple
+methods or these are called tree methods
+methods or these are called tree methods
+methods or these are called tree methods
+anyway so there is a hierarchy where uh
+anyway so there is a hierarchy where uh
+anyway so there is a hierarchy where uh
+you leverage the hierarchy you don't use
+you leverage the hierarchy you don't use
+you leverage the hierarchy you don't use
+any such deep sort of you could do it
+any such deep sort of you could do it
+any such deep sort of you could do it
+you could also patch based on on that
+you could also patch based on on that
+you could also patch based on on that
+kind of a featurization but this is a
+kind of a featurization but this is a
+kind of a featurization but this is a
+much more naive way of doing because you
+much more naive way of doing because you
+much more naive way of doing because you
+see that multiple would work very well
+see that multiple would work very well
+see that multiple would work very well
+if you have a lot of regularity right
+if you have a lot of regularity right
+if you have a lot of regularity right
+then you can just cut off some some
+then you can just cut off some some
+then you can just cut off some some
+parts here images and solutions to very
+parts here images and solutions to very
+parts here images and solutions to very
+complicated pdes they have some
+complicated pdes they have some
+complicated pdes they have some
+regularity but they don't have that many
+regularity but they don't have that many
+regularity but they don't have that many
+that are jumps and so on that probably
+that are jumps and so on that probably
+that are jumps and so on that probably
+it's just as well to do this okay so
+it's just as well to do this okay so
+it's just as well to do this okay so
+let's let's try to look at some of the
+let's let's try to look at some of the
+let's let's try to look at some of the
+map so the idea is very simple right
+map so the idea is very simple right
+map so the idea is very simple right
+that you just uh take this
+that you just uh take this
+that you just uh take this
+non-overlapping patch
+non-overlapping patch
+non-overlapping patch
+and in each patch you aggregate the
+and in each patch you aggregate the
+and in each patch you aggregate the
+features of these nearby tokens uh
+features of these nearby tokens uh
+features of these nearby tokens uh
+nearby points let's say and you form
+nearby points let's say and you form
+nearby points let's say and you form
+them into this so-called visual tokens
+them into this so-called visual tokens
+them into this so-called visual tokens
+okay so each of these guys is a visual
+okay so each of these guys is a visual
+okay so each of these guys is a visual
+token visual token it's like a word you
+token visual token it's like a word you
+token visual token it's like a word you
+know token is roughly a word in natural
+know token is roughly a word in natural
+know token is roughly a word in natural
+language processing so it's like that so
+language processing so it's like that so
+language processing so it's like that so
+the key key point is this patch
+the key key point is this patch
+the key key point is this patch
+formation
+formation
+formation
+sorry let's use this so this is patching
+sorry let's use this so this is patching
+sorry let's use this so this is patching
+and I just explained what that is by the
+and I just explained what that is by the
+and I just explained what that is by the
+way I made a mistake here H equal to W
+way I made a mistake here H equal to W
+way I made a mistake here H equal to W
+just for Simplicity all of this can be
+just for Simplicity all of this can be
+just for Simplicity all of this can be
+done with unequal scied images there's
+done with unequal scied images there's
+done with unequal scied images there's
+nothing nothing fancy here so now you
+nothing nothing fancy here so now you
+nothing nothing fancy here so now you
+pick up um patch size P by P as I said
+pick up um patch size P by P as I said
+pick up um patch size P by P as I said
+16 by 16 was a default choice in the
+16 by 16 was a default choice in the
+16 by 16 was a default choice in the
+numerical examples that I'll show you in
+numerical examples that I'll show you in
+numerical examples that I'll show you in
+the next lecture we would use 4x4
+the next lecture we would use 4x4
+the next lecture we would use 4x4
+because we expect that for Solutions of
+because we expect that for Solutions of
+because we expect that for Solutions of
+PD the patches are to be even smaller
+PD the patches are to be even smaller
+PD the patches are to be even smaller
+but anyway so the so you have so you
+but anyway so the so you have so you
+but anyway so the so you have so you
+have n patches
+have n patches
+have n patches
+so you can imagine that if H was 128 and
+so you can imagine that if H was 128 and
+so you can imagine that if H was 128 and
+P was 16 then this is a severe reduction
+P was 16 then this is a severe reduction
+P was 16 then this is a severe reduction
+okay so instead of having 128 squar
+okay so instead of having 128 squar
+okay so instead of having 128 squar
+which is uh 2 the^ 14 tokens you'll only
+which is uh 2 the^ 14 tokens you'll only
+which is uh 2 the^ 14 tokens you'll only
+have 64 tokens which is which is much
+have 64 tokens which is which is much
+have 64 tokens which is which is much
+much easier to work with right and then
+much easier to work with right and then
+much easier to work with right and then
+the point is that this is where do we so
+the point is that this is where do we so
+the point is that this is where do we so
+there could be a loss of information
+there could be a loss of information
+there could be a loss of information
+right so the loss of information could
+right so the loss of information could
+right so the loss of information could
+be from the fact that okay you're just
+be from the fact that okay you're just
+be from the fact that okay you're just
+cutting off the image into discrete
+cutting off the image into discrete
+cutting off the image into discrete
+points and then so what means you're
+points and then so what means you're
+points and then so what means you're
+losing information also you're
+losing information also you're
+losing information also you're
+essentially taking averages right but
+essentially taking averages right but
+essentially taking averages right but
+what you do is that always in machine
+what you do is that always in machine
+what you do is that always in machine
+learning you learn something you learn
+learning you learn something you learn
+learning you learn something you learn
+some additional features you say okay
+some additional features you say okay
+some additional features you say okay
+let me learn the best roughly speaking
+let me learn the best roughly speaking
+let me learn the best roughly speaking
+there a heuristic right there's no
+there a heuristic right there's no
+there a heuristic right there's no
+guarantee that that heuristic is taken
+guarantee that that heuristic is taken
+guarantee that that heuristic is taken
+care of during the Ping process but let
+care of during the Ping process but let
+care of during the Ping process but let
+me learn uh instead of just taking an
+me learn uh instead of just taking an
+me learn uh instead of just taking an
+average of these four points which is
+average of these four points which is
+average of these four points which is
+what I could have done this the easiest
+what I could have done this the easiest
+what I could have done this the easiest
+aggregation that I can do let me take a
+aggregation that I can do let me take a
+aggregation that I can do let me take a
+learnable uh sort of feature uh
+learnable uh sort of feature uh
+learnable uh sort of feature uh
+extraction okay so I what does it mean
+extraction okay so I what does it mean
+extraction okay so I what does it mean
+roughly speaking is that you take
+roughly speaking is that you take
+roughly speaking is that you take
+weighted
+weighted
+weighted
+averages you'll see when the operator
+averages you'll see when the operator
+averages you'll see when the operator
+version comes in the next next slide you
+version comes in the next next slide you
+version comes in the next next slide you
+take some sort of roughly speaking
+take some sort of roughly speaking
+take some sort of roughly speaking
+averages means uh with shared weights so
+averages means uh with shared weights so
+averages means uh with shared weights so
+the patches are so it's the same
+the patches are so it's the same
+the patches are so it's the same
+features that are being learned the same
+features that are being learned the same
+features that are being learned the same
+types of features that have been learned
+types of features that have been learned
+types of features that have been learned
+across the different patches and then of
+across the different patches and then of
+across the different patches and then of
+course each time you embed it into a
+course each time you embed it into a
+course each time you embed it into a
+Laten dimension
+Laten dimension
+Laten dimension
+plus some latent
+plus some latent
+plus some latent
+embeds there always that uh okay we lose
+embeds there always that uh okay we lose
+embeds there always that uh okay we lose
+some information because we are taking
+some information because we are taking
+some information because we are taking
+into account the regularity but perhaps
+into account the regularity but perhaps
+into account the regularity but perhaps
+we keep that information because we
+we keep that information because we
+we keep that information because we
+projecting into a bigger space this is
+projecting into a bigger space this is
+projecting into a bigger space this is
+always the trick right also with the
+always the trick right also with the
+always the trick right also with the
+remember with the unet architecture this
+remember with the unet architecture this
+remember with the unet architecture this
+is what we did we courent we down
+is what we did we courent we down
+is what we did we courent we down
+sampled but we increased the number of
+sampled but we increased the number of
+sampled but we increased the number of
+channels because there we could we could
+channels because there we could we could
+channels because there we could we could
+learn something and remember that the
+learn something and remember that the
+learn something and remember that the
+the sort of the increasing the number of
+the sort of the increasing the number of
+the sort of the increasing the number of
+channels would have been a very very
+channels would have been a very very
+channels would have been a very very
+mild operation because this is this is a
+mild operation because this is this is a
+mild operation because this is this is a
+very mild thing to begin with right so
+very mild thing to begin with right so
+very mild thing to begin with right so
+even if I go from 20 to 120 it is
+even if I go from 20 to 120 it is
+even if I go from 20 to 120 it is
+nothing like the 2 to the^ 42 numbers
+nothing like the 2 to the^ 42 numbers
+nothing like the 2 to the^ 42 numbers
+that we saw with the number of tokens so
+that we saw with the number of tokens so
+that we saw with the number of tokens so
+this is what what happens here again the
+this is what what happens here again the
+this is what what happens here again the
+detail is not not that important so what
+detail is not not that important so what
+detail is not not that important so what
+you do is that you you extract this
+you do is that you you extract this
+you do is that you you extract this
+local averages so these are the local
+local averages so these are the local
+local averages so these are the local
+Point values they just B together into
+Point values they just B together into
+Point values they just B together into
+into this uh into these objects and then
+into this uh into these objects and then
+into this uh into these objects and then
+you embed them into a into a bigger
+you embed them into a into a bigger
+you embed them into a into a bigger
+space so these are some learnable
+space so these are some learnable
+space so these are some learnable
+embeddings so at the end of the day
+embeddings so at the end of the day
+embeddings so at the end of the day
+instead of having an image you have and
+instead of having an image you have and
+instead of having an image you have and
+instead of taking every single Pixel and
+instead of taking every single Pixel and
+instead of taking every single Pixel and
+laying it out as a very very large uh
+laying it out as a very very large uh
+laying it out as a very very large uh
+Vector large sequence what you do is
+Vector large sequence what you do is
+Vector large sequence what you do is
+that you do this in this clever manner
+that you do this in this clever manner
+that you do this in this clever manner
+so each of this is the same embedding as
+so each of this is the same embedding as
+so each of this is the same embedding as
+you can see so that as I said the
+you can see so that as I said the
+you can see so that as I said the
+weights are shared it's like a local
+weights are shared it's like a local
+weights are shared it's like a local
+average so think of this V1 V2 as local
+average so think of this V1 V2 as local
+average so think of this V1 V2 as local
+averages weighted learned averages with
+averages weighted learned averages with
+averages weighted learned averages with
+the the same features that are being
+the the same features that are being
+the the same features that are being
+extracted across each um each patch for
+extracted across each um each patch for
+extracted across each um each patch for
+instance right so the advantage now is
+instance right so the advantage now is
+instance right so the advantage now is
+that we have exactly end tokens we have
+that we have exactly end tokens we have
+that we have exactly end tokens we have
+reduced the computational complexity
+reduced the computational complexity
+reduced the computational complexity
+considerably and at the same time
+considerably and at the same time
+considerably and at the same time
+hopefully by taking this learnable
+hopefully by taking this learnable
+hopefully by taking this learnable
+elements we keep some of the information
+elements we keep some of the information
+elements we keep some of the information
+that is that is that is available and
+that is that is that is available and
+that is that is that is available and
+these are the things that are fed into a
+these are the things that are fed into a
+these are the things that are fed into a
+Transformer so the Transformer remains
+Transformer so the Transformer remains
+Transformer so the Transformer remains
+as before that it is going to attend but
+as before that it is going to attend but
+as before that it is going to attend but
+now what it is going to attend to is
+now what it is going to attend to is
+now what it is going to attend to is
+different earlier it would have just
+different earlier it would have just
+different earlier it would have just
+attended every every single point value
+attended every every single point value
+attended every every single point value
+now it is attending this learned local
+now it is attending this learned local
+now it is attending this learned local
+averages okay so there is a subtle Point
+averages okay so there is a subtle Point
+averages okay so there is a subtle Point
+here and this sort of becomes very very
+here and this sort of becomes very very
+here and this sort of becomes very very
+clear one so at the end of the day if
+clear one so at the end of the day if
+clear one so at the end of the day if
+you think of it realistically all that
+you think of it realistically all that
+you think of it realistically all that
+you are left with are these tokens so I
+you are left with are these tokens so I
+you are left with are these tokens so I
+just Bunch these things
+just Bunch these things
+just Bunch these things
+here and I have extracted them of course
+here and I have extracted them of course
+here and I have extracted them of course
+the channel dimensions are different
+the channel dimensions are different
+the channel dimensions are different
+right so instead of just temperature
+right so instead of just temperature
+right so instead of just temperature
+pressure humidity whatever it has 20
+pressure humidity whatever it has 20
+pressure humidity whatever it has 20
+different parameters which are
+different parameters which are
+different parameters which are
+supposedly learning some features that
+supposedly learning some features that
+supposedly learning some features that
+are lost while patching patch F now
+are lost while patching patch F now
+are lost while patching patch F now
+these are very very simple heris in that
+these are very very simple heris in that
+these are very very simple heris in that
+sense it can be written as operators
+sense it can be written as operators
+sense it can be written as operators
+means this is exactly sort of justifying
+means this is exactly sort of justifying
+means this is exactly sort of justifying
+what I have just said that you do this
+what I have just said that you do this
+what I have just said that you do this
+you divide the domain into this
+you divide the domain into this
+you divide the domain into this
+non-overlapping equal patches if
+non-overlapping equal patches if
+non-overlapping equal patches if
+possible it may not be equal but that's
+possible it may not be equal but that's
+possible it may not be equal but that's
+a simplist then you take weighted
+a simplist then you take weighted
+a simplist then you take weighted
+averages across each patch and these
+averages across each patch and these
+averages across each patch and these
+weights are shared right and then
+weights are shared right and then
+weights are shared right and then
+finally you sort of embed them into a
+finally you sort of embed them into a
+finally you sort of embed them into a
+into a latent Dimension so this is
+into a latent Dimension so this is
+into a latent Dimension so this is
+roughly what this form indicate as I
+roughly what this form indicate as I
+roughly what this form indicate as I
+said the emphasis is to aggregate
+said the emphasis is to aggregate
+said the emphasis is to aggregate
+information while at the same time
+information while at the same time
+information while at the same time
+keeping some of it through additional
+keeping some of it through additional
+keeping some of it through additional
+channels okay so the htics is very
+channels okay so the htics is very
+channels okay so the htics is very
+simple these are very very easy to
+simple these are very very easy to
+simple these are very very easy to
+implement operations because all that
+implement operations because all that
+implement operations because all that
+you do is you just multiply right kind
+you do is you just multiply right kind
+you do is you just multiply right kind
+of matrices or tensors based on uh the
+of matrices or tensors based on uh the
+of matrices or tensors based on uh the
+right kind of embedding Dimensions that
+right kind of embedding Dimensions that
+right kind of embedding Dimensions that
+you take so is pafic pacification clear
+you take so is pafic pacification clear
+you take so is pafic pacification clear
+the mental image that you should always
+the mental image that you should always
+the mental image that you should always
+keep is this that from this complicated
+keep is this that from this complicated
+keep is this that from this complicated
+image you come to to a simple sequence
+image you come to to a simple sequence
+image you come to to a simple sequence
+instead of coming to a much longer
+instead of coming to a much longer
+instead of coming to a much longer
+sequence that would have that would have
+sequence that would have that would have
+sequence that would have that would have
+happened right any questions about this
+happened right any questions about this
+happened right any questions about this
+yes still need
+yes still need
+yes still need
+a we absolutely need a positional
+a we absolutely need a positional
+a we absolutely need a positional
+embeding you cannot because now
+embeding you cannot because now
+embeding you cannot because now
+this it is still there is some some
+this it is still there is some some
+this it is still there is some some
+information there's some inductive bias
+information there's some inductive bias
+information there's some inductive bias
+I will talk a little bit about it in
+I will talk a little bit about it in
+I will talk a little bit about it in
+fact that was the next slide right so
+fact that was the next slide right so
+fact that was the next slide right so
+okay let me let me get to it so that I I
+okay let me let me get to it so that I I
+okay let me let me get to it so that I I
+discuss we still need to add positional
+discuss we still need to add positional
+discuss we still need to add positional
+embeds because there is no sense of once
+embeds because there is no sense of once
+embeds because there is no sense of once
+you put these tokens there's no reason
+you put these tokens there's no reason
+you put these tokens there's no reason
+why I I I just took them in one
+why I I I just took them in one
+why I I I just took them in one
+particular order right I could have just
+particular order right I could have just
+particular order right I could have just
+uh juggled them around and I would have
+uh juggled them around and I would have
+uh juggled them around and I would have
+gotten s similar thing right so there's
+gotten s similar thing right so there's
+gotten s similar thing right so there's
+no sense of any kind of position in this
+no sense of any kind of position in this
+no sense of any kind of position in this
+process so what do we do how do we put
+process so what do we do how do we put
+process so what do we do how do we put
+position uh we we put learnable ones
+position uh we we put learnable ones
+position uh we we put learnable ones
+just like I explained in the last
+just like I explained in the last
+just like I explained in the last
+lecture actually it's very simple so I
+lecture actually it's very simple so I
+lecture actually it's very simple so I
+just
+just
+just
+append now instead of doing last time I
+append now instead of doing last time I
+append now instead of doing last time I
+said the most General case in MLP but in
+said the most General case in MLP but in
+said the most General case in MLP but in
+practice people use just linear very
+practice people use just linear very
+practice people use just linear very
+simple linear positional embeddings so
+simple linear positional embeddings so
+simple linear positional embeddings so
+remember that this guy
+remember that this guy
+remember that this guy
+here
+sorry so each of these so these are so
+sorry so each of these so these are so
+sorry so each of these so these are so
+this is a vector right each of them is
+this is a vector right each of them is
+this is a vector right each of them is
+so there are n of these capital N of
+so there are n of these capital N of
+so there are n of these capital N of
+these tokens each of them is I probably
+these tokens each of them is I probably
+these tokens each of them is I probably
+made a mistake with the number of
+made a mistake with the number of
+made a mistake with the number of
+Dimensions here but maybe not um so each
+Dimensions here but maybe not um so each
+Dimensions here but maybe not um so each
+of this is an RN Vector RN Vector so
+of this is an RN Vector RN Vector so
+of this is an RN Vector RN Vector so
+these are new
+these are new
+these are new
+features and then all that I do is I add
+features and then all that I do is I add
+features and then all that I do is I add
+an additional piece of information I
+an additional piece of information I
+an additional piece of information I
+append to it an additional piece of
+append to it an additional piece of
+append to it an additional piece of
+information which simply tells you what
+information which simply tells you what
+information which simply tells you what
+the location where the position is right
+the location where the position is right
+the location where the position is right
+so roughly speaking this here which is a
+so roughly speaking this here which is a
+so roughly speaking this here which is a
+vector which is n cross n Vector so each
+vector which is n cross n Vector so each
+vector which is n cross n Vector so each
+of these components so for instance e+
+of these components so for instance e+
+of these components so for instance e+
+one e+ one is essentially telling me
+one e+ one is essentially telling me
+one e+ one is essentially telling me
+what is the position of ev1 EOS 2 is
+what is the position of ev1 EOS 2 is
+what is the position of ev1 EOS 2 is
+telling me what is the position of ev2
+telling me what is the position of ev2
+telling me what is the position of ev2
+and so on and so forth of course there's
+and so on and so forth of course there's
+and so on and so forth of course there's
+a trivial way in which you can view it
+a trivial way in which you can view it
+a trivial way in which you can view it
+as an operator that's that's not
+as an operator that's that's not
+as an operator that's that's not
+important it simply tells you where the
+important it simply tells you where the
+important it simply tells you where the
+thing is inside the D okay inside inside
+thing is inside the D okay inside inside
+thing is inside the D okay inside inside
+the which patch does it belong to and so
+the which patch does it belong to and so
+the which patch does it belong to and so
+on and where what is the relative
+on and where what is the relative
+on and where what is the relative
+position of this patch good so you
+position of this patch good so you
+position of this patch good so you
+always need position embeddings you have
+always need position embeddings you have
+always need position embeddings you have
+the position embeddings you have the new
+the position embeddings you have the new
+the position embeddings you have the new
+features the patched features and these
+features the patched features and these
+features the patched features and these
+are the ones that you feed into the
+are the ones that you feed into the
+are the ones that you feed into the
+Transformer so the WID operator block as
+Transformer so the WID operator block as
+Transformer so the WID operator block as
+you can see is of the following
+form okay so as you can see that you
+form okay so as you can see that you
+form okay so as you can see that you
+have this is in 2D you can do this in 3D
+have this is in 2D you can do this in 3D
+have this is in 2D you can do this in 3D
+also you can not 4D any Dimensions you
+also you can not 4D any Dimensions you
+also you can not 4D any Dimensions you
+can make patches but the algebra becomes
+can make patches but the algebra becomes
+can make patches but the algebra becomes
+complicated that's why I explained it
+complicated that's why I explained it
+complicated that's why I explained it
+simply in Tod
+simply in Tod
+simply in Tod
+okay so now you have your domain
+okay so now you have your domain
+okay so now you have your domain
+computational domain you have your input
+computational domain you have your input
+computational domain you have your input
+which I'm assuming is a continuous
+which I'm assuming is a continuous
+which I'm assuming is a continuous
+function with C channels and then it's a
+function with C channels and then it's a
+function with C channels and then it's a
+sequence of operators so as you can
+sequence of operators so as you can
+sequence of operators so as you can
+imagine the first step is to do the
+imagine the first step is to do the
+imagine the first step is to do the
+patch embeddings so do the patch
+patch embeddings so do the patch
+patch embeddings so do the patch
+embeddings and the positional embeddings
+embeddings and the positional embeddings
+embeddings and the positional embeddings
+and these are the new set of tokens
+and these are the new set of tokens
+and these are the new set of tokens
+right so this is uh roughly the set of
+right so this is uh roughly the set of
+right so this is uh roughly the set of
+tokens that uh that I just extracted
+tokens that uh that I just extracted
+tokens that uh that I just extracted
+with the position edic so these tokens
+with the position edic so these tokens
+with the position edic so these tokens
+tell you where roughly where these
+tell you where roughly where these
+tell you where roughly where these
+things are and then you throw them into
+things are and then you throw them into
+things are and then you throw them into
+attention right so you start by layer
+attention right so you start by layer
+attention right so you start by layer
+normalization so you normalize then you
+normalization so you normalize then you
+normalization so you normalize then you
+put some attention I hope I didn't make
+put some attention I hope I didn't make
+put some attention I hope I didn't make
+a mistake here I don't think so and then
+a mistake here I don't think so and then
+a mistake here I don't think so and then
+you do a residual connection as before
+you do a residual connection as before
+you do a residual connection as before
+and similarly you repeat the process you
+and similarly you repeat the process you
+and similarly you repeat the process you
+again take the output here you do a
+again take the output here you do a
+again take the output here you do a
+perhaps I should
+perhaps I should
+perhaps I should
+have okay it's roughly don't I have a
+have okay it's roughly don't I have a
+have okay it's roughly don't I have a
+picture no but it's it's along the same
+picture no but it's it's along the same
+picture no but it's it's along the same
+lines as before
+lines as before
+lines as before
+I should have had a picture I'm sorry so
+I should have had a picture I'm sorry so
+I should have had a picture I'm sorry so
+except that now you have the input
+except that now you have the input
+except that now you have the input
+embedding is in terms of a patch this
+embedding is in terms of a patch this
+embedding is in terms of a patch this
+the patch
+formation okay and then it's the now the
+formation okay and then it's the now the
+formation okay and then it's the now the
+the order of these things is reversed
+the order of these things is reversed
+the order of these things is reversed
+you know so the norm comes first and
+you know so the norm comes first and
+you know so the norm comes first and
+then it's attention Norms come first and
+then it's attention Norms come first and
+then it's attention Norms come first and
+then it's attention and these are simply
+then it's attention and these are simply
+then it's attention and these are simply
+to do with how well gradients this is
+to do with how well gradients this is
+to do with how well gradients this is
+empirically observed that in some cases
+empirically observed that in some cases
+empirically observed that in some cases
+putting the norm before the attention is
+putting the norm before the attention is
+putting the norm before the attention is
+better in some other cases putting the
+better in some other cases putting the
+better in some other cases putting the
+norm after the attention is better and
+norm after the attention is better and
+norm after the attention is better and
+this keeps on changing based on the
+this keeps on changing based on the
+this keeps on changing based on the
+architecture so there is this there's no
+architecture so there is this there's no
+architecture so there is this there's no
+no no sort of uh proper way to say which
+no no sort of uh proper way to say which
+no no sort of uh proper way to say which
+is good and which is bad because this is
+is good and which is bad because this is
+is good and which is bad because this is
+uh whether you normalize and attend or
+uh whether you normalize and attend or
+uh whether you normalize and attend or
+whether you attend to normalize you
+whether you attend to normalize you
+whether you attend to normalize you
+should roughly be in the same order
+should roughly be in the same order
+should roughly be in the same order
+right but the difference now is that in
+right but the difference now is that in
+right but the difference now is that in
+terms of the gradient propagation
+terms of the gradient propagation
+terms of the gradient propagation
+because one has to train these
+because one has to train these
+because one has to train these
+algorithms there could be some marginal
+algorithms there could be some marginal
+algorithms there could be some marginal
+differences so that's that's a detail I
+differences so that's that's a detail I
+differences so that's that's a detail I
+just want to give you what uh what
+just want to give you what uh what
+just want to give you what uh what
+people have done in this in this regard
+people have done in this in this regard
+people have done in this in this regard
+right so okay where is it
+right so okay where is it
+right so okay where is it
+now here so as you can see so you start
+now here so as you can see so you start
+now here so as you can see so you start
+with your input uh so let let me write
+with your input uh so let let me write
+with your input uh so let let me write
+it down so you have your input then you
+it down so you have your input then you
+it down so you have your input then you
+do
+do
+do
+patch then a layer Norm right so patch
+patch then a layer Norm right so patch
+patch then a layer Norm right so patch
+layer Norm then the multi-headed self
+layer Norm then the multi-headed self
+layer Norm then the multi-headed self
+attention right and then the input uh
+attention right and then the input uh
+attention right and then the input uh
+plus the residual this is your new input
+plus the residual this is your new input
+plus the residual this is your new input
+and then this goes through uh so this is
+and then this goes through uh so this is
+and then this goes through uh so this is
+a plus then it goes through uh layor
+a plus then it goes through uh layor
+a plus then it goes through uh layor
+again then an MLP so this is an
+again then an MLP so this is an
+again then an MLP so this is an
+MLP and then again
+MLP and then again
+MLP and then again
+another uh plus here and this is your
+another uh plus here and this is your
+another uh plus here and this is your
+final output so this is how it looks
+final output so this is how it looks
+final output so this is how it looks
+like right I should have I should have
+like right I should have I should have
+like right I should have I should have
+drawn this before but you get this you
+drawn this before but you get this you
+drawn this before but you get this you
+get the sense and you have to stack
+get the sense and you have to stack
+get the sense and you have to stack
+several of the yes
+uh is that correct let's see so what is
+uh is that correct let's see so what is
+uh is that correct let's see so what is
+V hat now V hat is just the input of the
+V hat now V hat is just the input of the
+V hat now V hat is just the input of the
+patching oh yeah of course yeah I always
+patching oh yeah of course yeah I always
+patching oh yeah of course yeah I always
+make this mistake also last time there
+make this mistake also last time there
+make this mistake also last time there
+was a mistake right okay good uh because
+was a mistake right okay good uh because
+was a mistake right okay good uh because
+I prepare these things late at night and
+I prepare these things late at night and
+I prepare these things late at night and
+I myself not having the full
+I myself not having the full
+I myself not having the full
+concentration but good you're right of
+concentration but good you're right of
+concentration but good you're right of
+course everything is done in terms of
+course everything is done in terms of
+course everything is done in terms of
+patches so at the end of the day you get
+patches so at the end of the day you get
+patches so at the end of the day you get
+features per patch so the very final
+features per patch so the very final
+features per patch so the very final
+thing you have to extract things at the
+thing you have to extract things at the
+thing you have to extract things at the
+level of the image but that is a very
+level of the image but that is a very
+level of the image but that is a very
+very simple upsampling operation right
+very simple upsampling operation right
+very simple upsampling operation right
+so you just have each patch and you have
+so you just have each patch and you have
+so you just have each patch and you have
+to get the local information to each
+to get the local information to each
+to get the local information to each
+point so again reverse what you did when
+point so again reverse what you did when
+point so again reverse what you did when
+you did patch formation right so in
+you did patch formation right so in
+you did patch formation right so in
+terms of matrices this is very
+terms of matrices this is very
+terms of matrices this is very
+straightforward I think in the next
+straightforward I think in the next
+straightforward I think in the next
+tutorial they are going to teach you
+tutorial they are going to teach you
+tutorial they are going to teach you
+guys how to code up a vision
+guys how to code up a vision
+guys how to code up a vision
+Transformers so you you'll learn it
+Transformers so you you'll learn it
+Transformers so you you'll learn it
+there so what is the computational
+there so what is the computational
+there so what is the computational
+complexity now and then uh where do
+complexity now and then uh where do
+complexity now and then uh where do
+where do we stand Vis comp computation
+where do we stand Vis comp computation
+where do we stand Vis comp computation
+complexity the point is that again I
+complexity the point is that again I
+complexity the point is that again I
+have given in terms of an image but you
+have given in terms of an image but you
+have given in terms of an image but you
+can imagine in terms of a function
+can imagine in terms of a function
+can imagine in terms of a function
+defined on a grid right so the
+defined on a grid right so the
+defined on a grid right so the
+resolution is here and the compute uh
+resolution is here and the compute uh
+resolution is here and the compute uh
+just in terms of number of tokens right
+just in terms of number of tokens right
+just in terms of number of tokens right
+I've forgotten the fact that you have so
+I've forgotten the fact that you have so
+I've forgotten the fact that you have so
+many channels and so many features and
+many channels and so many features and
+many channels and so many features and
+so on those are not important the
+so on those are not important the
+so on those are not important the
+dominant cost is given by the number of
+dominant cost is given by the number of
+dominant cost is given by the number of
+tokens so if you take a standard
+tokens so if you take a standard
+tokens so if you take a standard
+Transformer pointto Point Transformer
+Transformer pointto Point Transformer
+Transformer pointto Point Transformer
+then this would have been my cost right
+then this would have been my cost right
+then this would have been my cost right
+and just imagine for 128 by 128 image
+and just imagine for 128 by 128 image
+and just imagine for 128 by 128 image
+this is quite expensive right but now if
+this is quite expensive right but now if
+this is quite expensive right but now if
+you if you have patches then uh this is
+you if you have patches then uh this is
+you if you have patches then uh this is
+much better so let's do the math here so
+much better so let's do the math here so
+much better so let's do the math here so
+you have 2 the 7 * 2 7 squared so this
+you have 2 the 7 * 2 7 squared so this
+you have 2 the 7 * 2 7 squared so this
+would have been 2 to the 28 right but
+would have been 2 to the 28 right but
+would have been 2 to the 28 right but
+now when we do the patches so you have
+now when we do the patches so you have
+now when we do the patches so you have
+uh 2 to the 7
+uh 2 to the 7
+uh 2 to the 7
+so okay there the same number 2 to the
+so okay there the same number 2 to the
+so okay there the same number 2 to the
+28 but the patch was how how much did I
+28 but the patch was how how much did I
+28 but the patch was how how much did I
+say 16 right so 2 to the 4 so 2 to the
+say 16 right so 2 to the 4 so 2 to the
+say 16 right so 2 to the 4 so 2 to the
+16 so this becomes much more manageable
+16 so this becomes much more manageable
+16 so this becomes much more manageable
+right so 2 to the 12 is a very very mild
+right so 2 to the 12 is a very very mild
+right so 2 to the 12 is a very very mild
+number so it's not a lot of computer so
+number so it's not a lot of computer so
+number so it's not a lot of computer so
+of course it it really so as you
+of course it it really so as you
+of course it it really so as you
+increase the patch size it's very very
+increase the patch size it's very very
+increase the patch size it's very very
+clear that uh the compute becomes better
+clear that uh the compute becomes better
+clear that uh the compute becomes better
+however there is a Twist here right and
+however there is a Twist here right and
+however there is a Twist here right and
+what is the twist as you increase the
+what is the twist as you increase the
+what is the twist as you increase the
+patch size okay you can take the whole
+patch size okay you can take the whole
+patch size okay you can take the whole
+image as one patch so at the end of the
+image as one patch so at the end of the
+image as one patch so at the end of the
+day each time you do patching you lose
+day each time you do patching you lose
+day each time you do patching you lose
+information you're trying to recover
+information you're trying to recover
+information you're trying to recover
+that information by adding additional
+that information by adding additional
+that information by adding additional
+channels and so on but you can imagine
+channels and so on but you can imagine
+channels and so on but you can imagine
+that if I had a 4x4 patch there would
+that if I had a 4x4 patch there would
+that if I had a 4x4 patch there would
+have much better representation of the
+have much better representation of the
+have much better representation of the
+function then I would have taken a 16 x
+function then I would have taken a 16 x
+function then I would have taken a 16 x
+16 patch right so there is always this
+16 patch right so there is always this
+16 patch right so there is always this
+uh tussle this push and pull dog of war
+uh tussle this push and pull dog of war
+uh tussle this push and pull dog of war
+between computation and accuracy means
+between computation and accuracy means
+between computation and accuracy means
+you want the things to be
+you want the things to be
+you want the things to be
+computationally feasible which would
+computationally feasible which would
+computationally feasible which would
+mean that you want large patches but at
+mean that you want large patches but at
+mean that you want large patches but at
+the same time you want uh reasonable
+the same time you want uh reasonable
+the same time you want uh reasonable
+amount of accuracy so you can't have
+amount of accuracy so you can't have
+amount of accuracy so you can't have
+very very large patches so by for some
+very very large patches so by for some
+very very large patches so by for some
+applications like in imaging and so on
+applications like in imaging and so on
+applications like in imaging and so on
+it is okay because at the end of the day
+it is okay because at the end of the day
+it is okay because at the end of the day
+uh a lot of Imaging is about
+uh a lot of Imaging is about
+uh a lot of Imaging is about
+classification you see so you just look
+classification you see so you just look
+classification you see so you just look
+at the image and you
+at the image and you
+at the image and you
+identify boy or girl in our case it's
+identify boy or girl in our case it's
+identify boy or girl in our case it's
+only boys here so it's very very easy
+only boys here so it's very very easy
+only boys here so it's very very easy
+right but men or women but then you
+right but men or women but then you
+right but men or women but then you
+could have
+could have
+could have
+uh so in in the classroom of course and
+uh so in in the classroom of course and
+uh so in in the classroom of course and
+then uh this is a very very easy
+then uh this is a very very easy
+then uh this is a very very easy
+classification it doesn't require a lot
+classification it doesn't require a lot
+classification it doesn't require a lot
+of detailed information about the face
+of detailed information about the face
+of detailed information about the face
+and so on however if the there was a
+and so on however if the there was a
+and so on however if the there was a
+much more quantitative question being
+much more quantitative question being
+much more quantitative question being
+asked like what would be the temperature
+asked like what would be the temperature
+asked like what would be the temperature
+given a certain amount of pressure then
+given a certain amount of pressure then
+given a certain amount of pressure then
+can we really go to 16 x 16 patches or
+can we really go to 16 x 16 patches or
+can we really go to 16 x 16 patches or
+32x 32 patches it becomes harder and
+32x 32 patches it becomes harder and
+32x 32 patches it becomes harder and
+harder right so it depends on the
+harder right so it depends on the
+harder right so it depends on the
+question that is being asked so for most
+question that is being asked so for most
+question that is being asked so for most
+Imaging applications uh 16 by 16 is a
+Imaging applications uh 16 by 16 is a
+Imaging applications uh 16 by 16 is a
+very good patch size but just
+very good patch size but just
+very good patch size but just
+empirically you can imagine that uh if
+empirically you can imagine that uh if
+empirically you can imagine that uh if
+you want to do temperature calculations
+you want to do temperature calculations
+you want to do temperature calculations
+or structural strength calculations and
+or structural strength calculations and
+or structural strength calculations and
+so on 16 by 16 is not so good and we
+so on 16 by 16 is not so good and we
+so on 16 by 16 is not so good and we
+have to reduce the patch sizes to 4X 4
+have to reduce the patch sizes to 4X 4
+have to reduce the patch sizes to 4X 4
+or 8 by 8 and then again the computation
+or 8 by 8 and then again the computation
+or 8 by 8 and then again the computation
+scales up because just by taking 4x4 I
+scales up because just by taking 4x4 I
+scales up because just by taking 4x4 I
+would have gotten another factor of 64
+would have gotten another factor of 64
+would have gotten another factor of 64
+here and that's a big number you see so
+here and that's a big number you see so
+here and that's a big number you see so
+this is in some sense doesn't scale for
+this is in some sense doesn't scale for
+this is in some sense doesn't scale for
+the applications that we have so what do
+the applications that we have so what do
+the applications that we have so what do
+you do when you have relatively smaller
+you do when you have relatively smaller
+you do when you have relatively smaller
+patch sizes we have another trick of the
+patch sizes we have another trick of the
+patch sizes we have another trick of the
+of the sleeve and this is the one that
+of the sleeve and this is the one that
+of the sleeve and this is the one that
+seems to at the moment work the best let
+seems to at the moment work the best let
+seems to at the moment work the best let
+me just briefly describe it because I
+me just briefly describe it because I
+me just briefly describe it because I
+have five more minutes and in next
+have five more minutes and in next
+have five more minutes and in next
+lecture we sort of focus much more is it
+lecture we sort of focus much more is it
+lecture we sort of focus much more is it
+a very interesting and a very natural
+a very interesting and a very natural
+a very interesting and a very natural
+idea very recent uh in in imaging of
+idea very recent uh in in imaging of
+idea very recent uh in in imaging of
+course all these ideas come from vision
+course all these ideas come from vision
+course all these ideas come from vision
+and then we we just reiterate and
+and then we we just reiterate and
+and then we we just reiterate and
+recycle them for our purposes so this is
+recycle them for our purposes so this is
+recycle them for our purposes so this is
+called windowed attention is there are
+called windowed attention is there are
+called windowed attention is there are
+many many ideas means there's axial
+many many ideas means there's axial
+many many ideas means there's axial
+attention there is
+attention there is
+attention there is
+uh shifted attention there there all
+uh shifted attention there there all
+uh shifted attention there there all
+kinds of long attention hierarchical
+kinds of long attention hierarchical
+kinds of long attention hierarchical
+attention but I think this is the
+attention but I think this is the
+attention but I think this is the
+intuitively the simplest in some sense
+intuitively the simplest in some sense
+intuitively the simplest in some sense
+and the idea is that you go to another
+and the idea is that you go to another
+and the idea is that you go to another
+level of complexity or another level of
+level of complexity or another level of
+level of complexity or another level of
+representation and work at that level of
+representation and work at that level of
+representation and work at that level of
+this was introduced approximately 2
+this was introduced approximately 2
+this was introduced approximately 2
+three years ago by two two and a half
+three years ago by two two and a half
+three years ago by two two and a half
+years ago perhaps by some people from
+years ago perhaps by some people from
+years ago perhaps by some people from
+Microsoft in Beijing and the idea is
+Microsoft in Beijing and the idea is
+Microsoft in Beijing and the idea is
+window detention what does it mean so
+window detention what does it mean so
+window detention what does it mean so
+remember that this was my original image
+remember that this was my original image
+remember that this was my original image
+it's some sort of a castle as you can
+it's some sort of a castle as you can
+it's some sort of a castle as you can
+see it's not a it's just at the level of
+see it's not a it's just at the level of
+see it's not a it's just at the level of
+an image and that's that's good enough
+an image and that's that's good enough
+an image and that's that's good enough
+to explain and then what you do is that
+to explain and then what you do is that
+to explain and then what you do is that
+each of these boxes here are patches
+each of these boxes here are patches
+each of these boxes here are patches
+okay so each of these boxes here are
+okay so each of these boxes here are
+okay so each of these boxes here are
+patches and uh we have whatever number
+patches and uh we have whatever number
+patches and uh we have whatever number
+of patches that are there and when you
+of patches that are there and when you
+of patches that are there and when you
+do attention all that we do is that we
+do attention all that we do is that we
+do attention all that we do is that we
+take let's say we fix a patch here let's
+take let's say we fix a patch here let's
+take let's say we fix a patch here let's
+say this patch and then we compute the
+say this patch and then we compute the
+say this patch and then we compute the
+tension weights from all the other
+tension weights from all the other
+tension weights from all the other
+patches right we calculate the value
+patches right we calculate the value
+patches right we calculate the value
+here we calculate the value here of
+here we calculate the value here of
+here we calculate the value here of
+course we calculate the neighboring
+course we calculate the neighboring
+course we calculate the neighboring
+values and so on and so forth for and
+values and so on and so forth for and
+values and so on and so forth for and
+this uh particularly if you have small
+this uh particularly if you have small
+this uh particularly if you have small
+enough patch sizes which is what we want
+enough patch sizes which is what we want
+enough patch sizes which is what we want
+to do then this can be expensive and
+to do then this can be expensive and
+to do then this can be expensive and
+this is what I just explained that this
+this is what I just explained that this
+this is what I just explained that this
+can be expensive the idea of these
+can be expensive the idea of these
+can be expensive the idea of these
+people was very simple that instead of
+people was very simple that instead of
+people was very simple that instead of
+doing attention over patch over each
+doing attention over patch over each
+doing attention over patch over each
+patch to patch instead of point to point
+patch to patch instead of point to point
+patch to patch instead of point to point
+we went to patch to patch now they say
+we went to patch to patch now they say
+we went to patch to patch now they say
+let's not do attention over patch to
+let's not do attention over patch to
+let's not do attention over patch to
+patch because that's the expensive part
+patch because that's the expensive part
+patch because that's the expensive part
+right because that's where it's
+right because that's where it's
+right because that's where it's
+quadratic let's do it over windows so
+quadratic let's do it over windows so
+quadratic let's do it over windows so
+these windows are an additional layer an
+these windows are an additional layer an
+these windows are an additional layer an
+additional level of description of uh of
+additional level of description of uh of
+additional level of description of uh of
+detail which is that you divide the
+detail which is that you divide the
+detail which is that you divide the
+image in addition to the patches you
+image in addition to the patches you
+image in addition to the patches you
+divide them into these kind of Windows
+divide them into these kind of Windows
+divide them into these kind of Windows
+the windows are much bigger so each
+the windows are much bigger so each
+the windows are much bigger so each
+window contains quite a few patches
+window contains quite a few patches
+window contains quite a few patches
+these can be equally distributed in
+these can be equally distributed in
+these can be equally distributed in
+practice they always are because the
+practice they always are because the
+practice they always are because the
+more equal things are the easier it is
+more equal things are the easier it is
+more equal things are the easier it is
+to call things from memory to cach
+to call things from memory to cach
+to call things from memory to cach
+things and so on so you make it as
+things and so on so you make it as
+things and so on so you make it as
+simple as possible at the level of
+simple as possible at the level of
+simple as possible at the level of
+computation although in principle you
+computation although in principle you
+computation although in principle you
+could make this differenti differently
+could make this differenti differently
+could make this differenti differently
+sized and so on but each of them
+sized and so on but each of them
+sized and so on but each of them
+contains quite a few number of tokens
+contains quite a few number of tokens
+contains quite a few number of tokens
+let's say in this particular case each
+let's say in this particular case each
+let's say in this particular case each
+of these um Windows contain 16 patches
+of these um Windows contain 16 patches
+of these um Windows contain 16 patches
+okay each of them contains 16 patches
+okay each of them contains 16 patches
+okay each of them contains 16 patches
+and attention is only happening inside
+and attention is only happening inside
+and attention is only happening inside
+the window what does it mean that when
+the window what does it mean that when
+the window what does it mean that when
+I'm Computing the update for this
+I'm Computing the update for this
+I'm Computing the update for this
+particular Point here I know that I have
+particular Point here I know that I have
+particular Point here I know that I have
+to compute attention right but this
+to compute attention right but this
+to compute attention right but this
+comput to compute attention I have to
+comput to compute attention I have to
+comput to compute attention I have to
+compute uh attention with respect
+compute uh attention with respect
+compute uh attention with respect
+earlier I did it with respect to all
+earlier I did it with respect to all
+earlier I did it with respect to all
+these points this point here this point
+these points this point here this point
+these points this point here this point
+here as well as this point here now I
+here as well as this point here now I
+here as well as this point here now I
+don't need to do this I don't need to do
+don't need to do this I don't need to do
+don't need to do this I don't need to do
+this I don't need to do this I just look
+this I don't need to do this I just look
+this I don't need to do this I just look
+at the nearby points so the global
+at the nearby points so the global
+at the nearby points so the global
+information is lost I'm just looking at
+information is lost I'm just looking at
+information is lost I'm just looking at
+local
+local
+local
+information like I would do in a CNN for
+information like I would do in a CNN for
+information like I would do in a CNN for
+instance right in in a CNN I would do
+instance right in in a CNN I would do
+instance right in in a CNN I would do
+exactly the same I'm taking local
+exactly the same I'm taking local
+exactly the same I'm taking local
+information and I'm using that to update
+information and I'm using that to update
+information and I'm using that to update
+okay so of course this makes things much
+okay so of course this makes things much
+okay so of course this makes things much
+easier because now instead of attending
+easier because now instead of attending
+easier because now instead of attending
+to all the other 63 tokens I'm only
+to all the other 63 tokens I'm only
+to all the other 63 tokens I'm only
+attending to the 15 other or including
+attending to the 15 other or including
+attending to the 15 other or including
+itself so 16 tokens instead of 64 tokens
+itself so 16 tokens instead of 64 tokens
+itself so 16 tokens instead of 64 tokens
+right so and similarly here in order to
+right so and similarly here in order to
+right so and similarly here in order to
+compute attention uh I just compute over
+compute attention uh I just compute over
+compute attention uh I just compute over
+all the neighboring points here I
+all the neighboring points here I
+all the neighboring points here I
+compute over all the neighboring points
+compute over all the neighboring points
+compute over all the neighboring points
+here so this is not Global anymore it is
+here so this is not Global anymore it is
+here so this is not Global anymore it is
+local so we all just imagine in terms of
+local so we all just imagine in terms of
+local so we all just imagine in terms of
+kernels this kernel has a support inside
+kernels this kernel has a support inside
+kernels this kernel has a support inside
+the window right and that of course
+the window right and that of course
+the window right and that of course
+reduces computation considerably because
+reduces computation considerably because
+reduces computation considerably because
+because now attention is not happening
+because now attention is not happening
+because now attention is not happening
+across the entire domain it's only AC
+across the entire domain it's only AC
+across the entire domain it's only AC
+happening across this windows and M is
+happening across this windows and M is
+happening across this windows and M is
+the number of Windows m is the number of
+the number of Windows m is the number of
+the number of Windows m is the number of
+Windows and of course this is the number
+Windows and of course this is the number
+Windows and of course this is the number
+of Windows is much less than the number
+of Windows is much less than the number
+of Windows is much less than the number
+of patches so of course uh if I have 20
+of patches so of course uh if I have 20
+of patches so of course uh if I have 20
+Windows 20 squared is nothing compared
+Windows 20 squared is nothing compared
+Windows 20 squared is nothing compared
+to the total number of patches then of
+to the total number of patches then of
+to the total number of patches then of
+course the question that you will ask is
+course the question that you will ask is
+course the question that you will ask is
+okay then how am I ever going to learn
+okay then how am I ever going to learn
+okay then how am I ever going to learn
+anything about uh then what's the
+anything about uh then what's the
+anything about uh then what's the
+difference between this and essentially
+difference between this and essentially
+difference between this and essentially
+CNN because at least in a CNN you're
+CNN because at least in a CNN you're
+CNN because at least in a CNN you're
+sliding across each of the your window
+sliding across each of the your window
+sliding across each of the your window
+is sliding so you are sort of uh
+is sliding so you are sort of uh
+is sliding so you are sort of uh
+intuitively taking care of other points
+intuitively taking care of other points
+intuitively taking care of other points
+how do we do that and the idea is and
+how do we do that and the idea is and
+how do we do that and the idea is and
+this is what I finish with okay I I'll
+this is what I finish with okay I I'll
+this is what I finish with okay I I'll
+talk about it the idea just to give you
+talk about it the idea just to give you
+talk about it the idea just to give you
+an idea is that across each layer you
+an idea is that across each layer you
+an idea is that across each layer you
+shift the window just like uh so okay so
+shift the window just like uh so okay so
+shift the window just like uh so okay so
+across so intuitively it's very simple
+across so intuitively it's very simple
+across so intuitively it's very simple
+let's say that I was never attending to
+let's say that I was never attending to
+let's say that I was never attending to
+these two points uh
+these two points uh
+these two points uh
+but now if I shift the window in the
+but now if I shift the window in the
+but now if I shift the window in the
+next layer then what happens is that
+next layer then what happens is that
+next layer then what happens is that
+this point and this point are exactly in
+this point and this point are exactly in
+this point and this point are exactly in
+the same window and if I shift it in the
+the same window and if I shift it in the
+the same window and if I shift it in the
+next layer then two other points will be
+next layer then two other points will be
+next layer then two other points will be
+in the same window and so on so
+in the same window and so on so
+in the same window and so on so
+intuitively by Shifting the window
+intuitively by Shifting the window
+intuitively by Shifting the window
+across layers in each layer you still
+across layers in each layer you still
+across layers in each layer you still
+keep it constant but across no one tells
+keep it constant but across no one tells
+keep it constant but across no one tells
+me that the window size should be fixed
+me that the window size should be fixed
+me that the window size should be fixed
+across layers you're going to stride
+across layers you're going to stride
+across layers you're going to stride
+over the whole image okay and this is
+over the whole image okay and this is
+over the whole image okay and this is
+sort of the key feature by which one can
+sort of the key feature by which one can
+sort of the key feature by which one can
+attend to all the let's say all parts
+attend to all the let's say all parts
+attend to all the let's say all parts
+representative parts of the image right
+representative parts of the image right
+representative parts of the image right
+but perhaps this requires a little bit
+but perhaps this requires a little bit
+but perhaps this requires a little bit
+more detail which we will do in the next
+more detail which we will do in the next
+more detail which we will do in the next
+lecture but you can think that where
+lecture but you can think that where
+lecture but you can think that where
+this ideas come from it's the ideas are
+this ideas come from it's the ideas are
+this ideas come from it's the ideas are
+rather rather simple and by doing this
+rather rather simple and by doing this
+rather rather simple and by doing this
+rding you reduce the path length across
+rding you reduce the path length across
+rding you reduce the path length across
+tokens so you do have a Global
+tokens so you do have a Global
+tokens so you do have a Global
+Information propagation by just
+Information propagation by just
+Information propagation by just
+harnessing the fact that you're striding
+harnessing the fact that you're striding
+harnessing the fact that you're striding
+the windows okay simple and a very
+the windows okay simple and a very
+the windows okay simple and a very
+elegant idea that that works quite well
+elegant idea that that works quite well
+elegant idea that that works quite well
+okay with this uh let's stop here today
+okay with this uh let's stop here today
+okay with this uh let's stop here today
+was again this short lecture not very
+was again this short lecture not very
+was again this short lecture not very
+effective because half the time I'm
+effective because half the time I'm
+effective because half the time I'm
+reminding what I did in the last lecture
+reminding what I did in the last lecture
+reminding what I did in the last lecture
+but but yeah so and next Wednesday
+but but yeah so and next Wednesday
+but but yeah so and next Wednesday
+There's a holiday we are all supposed to
+There's a holiday we are all supposed to
+There's a holiday we are all supposed to
+stop working on that day because of
+stop working on that day because of
+stop working on that day because of
+workers rights but uh but then we are
+workers rights but uh but then we are
+workers rights but uh but then we are
+back on the sixth right oh no third
+back on the sixth right oh no third
+back on the sixth right oh no third
+third sorry okay Chia then

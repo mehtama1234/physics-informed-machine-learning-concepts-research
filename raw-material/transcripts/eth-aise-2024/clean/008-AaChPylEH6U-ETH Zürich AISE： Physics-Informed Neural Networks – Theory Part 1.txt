@@ -1,0 +1,3346 @@
+okay so welcome everyone to today's
+okay so welcome everyone to today's
+okay so welcome everyone to today's
+lecture my apologies for not being there
+lecture my apologies for not being there
+lecture my apologies for not being there
+in person because of a health situation
+in person because of a health situation
+in person because of a health situation
+in my family but let's do it on Zoom
+in my family but let's do it on Zoom
+in my family but let's do it on Zoom
+okay so let's dive straight
+okay so let's dive straight
+okay so let's dive straight
+in so so what have we learned so far uh
+in so so what have we learned so far uh
+in so so what have we learned so far uh
+just a quick recollection we have had an
+just a quick recollection we have had an
+just a quick recollection we have had an
+introduction to deep learning and then
+introduction to deep learning and then
+introduction to deep learning and then
+for the last several lectures Ben has
+for the last several lectures Ben has
+for the last several lectures Ben has
+been teaching you about physics and form
+been teaching you about physics and form
+been teaching you about physics and form
+NE Network
+NE Network
+NE Network
+or pins for solving pdes and what he has
+or pins for solving pdes and what he has
+or pins for solving pdes and what he has
+done is that he has taught you
+done is that he has taught you
+done is that he has taught you
+algorithms he has also taught you what
+algorithms he has also taught you what
+algorithms he has also taught you what
+are the various successes of these
+are the various successes of these
+are the various successes of these
+algorithms as well as a few limitations
+algorithms as well as a few limitations
+algorithms as well as a few limitations
+right so this has been the content so
+right so this has been the content so
+right so this has been the content so
+far and in today's lecture and also in
+far and in today's lecture and also in
+far and in today's lecture and also in
+the lecture next week sort of the main
+the lecture next week sort of the main
+the lecture next week sort of the main
+focus would be somehow to find out some
+focus would be somehow to find out some
+focus would be somehow to find out some
+insights particularly some theoretical
+insights particularly some theoretical
+insights particularly some theoretical
+insights into why pins work and what
+insights into why pins work and what
+insights into why pins work and what
+particularly why they don't work so in
+particularly why they don't work so in
+particularly why they don't work so in
+as you saw there were several
+as you saw there were several
+as you saw there were several
+limitations of these methods why do
+limitations of these methods why do
+limitations of these methods why do
+these limitations come off and what can
+these limitations come off and what can
+these limitations come off and what can
+we do to solve it so that would be the
+we do to solve it so that would be the
+we do to solve it so that would be the
+main main content of today's lecture and
+main main content of today's lecture and
+main main content of today's lecture and
+a bit of the lecture next week so let's
+a bit of the lecture next week so let's
+a bit of the lecture next week so let's
+get started uh just to sort of
+get started uh just to sort of
+get started uh just to sort of
+recapitulate what pins are and to
+recapitulate what pins are and to
+recapitulate what pins are and to
+introduce a bit of the notation because
+introduce a bit of the notation because
+introduce a bit of the notation because
+since we're going to do a little bit of
+since we're going to do a little bit of
+since we're going to do a little bit of
+theory I have to be more precise with my
+theory I have to be more precise with my
+theory I have to be more precise with my
+notation and also more sparse in some
+notation and also more sparse in some
+notation and also more sparse in some
+sense than one what Ben was was so first
+sense than one what Ben was was so first
+sense than one what Ben was was so first
+of all so let's focus today on the
+of all so let's focus today on the
+of all so let's focus today on the
+forward problem for the PD so as you all
+forward problem for the PD so as you all
+forward problem for the PD so as you all
+know uh pins can also be used in the
+know uh pins can also be used in the
+know uh pins can also be used in the
+context of inverse problems but I think
+context of inverse problems but I think
+context of inverse problems but I think
+for the perspective of this lecture
+for the perspective of this lecture
+for the perspective of this lecture
+let's focus on forward problems and then
+let's focus on forward problems and then
+let's focus on forward problems and then
+the target is um to approximate the
+the target is um to approximate the
+the target is um to approximate the
+solutions of this abstract PD so this is
+solutions of this abstract PD so this is
+solutions of this abstract PD so this is
+an abstract PD as abstract as it gets
+an abstract PD as abstract as it gets
+an abstract PD as abstract as it gets
+because we are writing everything in
+because we are writing everything in
+because we are writing everything in
+terms of a differential operation data
+terms of a differential operation data
+terms of a differential operation data
+uh D and in terms of uh input F and in
+uh D and in terms of uh input F and in
+uh D and in terms of uh input F and in
+terms of the BD solution U right so
+terms of the BD solution U right so
+terms of the BD solution U right so
+where are these objects defined so in
+where are these objects defined so in
+where are these objects defined so in
+particular because our inputs so let's
+particular because our inputs so let's
+particular because our inputs so let's
+let me as I said our input as well as
+let me as I said our input as well as
+let me as I said our input as well as
+our solution so U is the PD solution
+our solution so U is the PD solution
+our solution so U is the PD solution
+these objects are both functions right
+these objects are both functions right
+these objects are both functions right
+so they have to live in some function
+so they have to live in some function
+so they have to live in some function
+spaces so we say that the input lives in
+spaces so we say that the input lives in
+spaces so we say that the input lives in
+a function space y this could just be
+a function space y this could just be
+a function space y this could just be
+some LP space so LP simply means uh P
+some LP space so LP simply means uh P
+some LP space so LP simply means uh P
+integrable functions so L1 would be
+integrable functions so L1 would be
+integrable functions so L1 would be
+integrable functions L2 would be square
+integrable functions L2 would be square
+integrable functions L2 would be square
+integrable functions and so on and
+integrable functions and so on and
+integrable functions and so on and
+similarly U the solution this lives in
+similarly U the solution this lives in
+similarly U the solution this lives in
+the Space X which is another function
+the Space X which is another function
+the Space X which is another function
+space okay and these function spaces
+space okay and these function spaces
+space okay and these function spaces
+they are defined on a domain so this
+they are defined on a domain so this
+they are defined on a domain so this
+domain could be an open set in space or
+domain could be an open set in space or
+domain could be an open set in space or
+it could be open set in space time
+it could be open set in space time
+it could be open set in space time
+depending on whether the PD that we are
+depending on whether the PD that we are
+depending on whether the PD that we are
+having is a steady state PD or whether
+having is a steady state PD or whether
+having is a steady state PD or whether
+it's a Time dependent PD so this is sort
+it's a Time dependent PD so this is sort
+it's a Time dependent PD so this is sort
+of the basic setup and so we have an
+of the basic setup and so we have an
+of the basic setup and so we have an
+input to the PD and we have an output to
+input to the PD and we have an output to
+input to the PD and we have an output to
+the PD so this is f is the input U is
+the PD so this is f is the input U is
+the PD so this is f is the input U is
+the output and what links them together
+the output and what links them together
+the output and what links them together
+is the differential operator right this
+is the differential operator right this
+is the differential operator right this
+is pde has to have an underlying
+is pde has to have an underlying
+is pde has to have an underlying
+differential operator and this
+differential operator and this
+differential operator and this
+differential operator is the one which
+differential operator is the one which
+differential operator is the one which
+takes the input which sits in the Space
+takes the input which sits in the Space
+takes the input which sits in the Space
+X and goes all the way to the output
+X and goes all the way to the output
+X and goes all the way to the output
+which sits in the space y right so this
+which sits in the space y right so this
+which sits in the space y right so this
+is sort of the basic setup and this is
+is sort of the basic setup and this is
+is sort of the basic setup and this is
+let's say that this spaces X and Y are
+let's say that this spaces X and Y are
+let's say that this spaces X and Y are
+defined such that this differential
+defined such that this differential
+defined such that this differential
+operator is well defined so now you can
+operator is well defined so now you can
+operator is well defined so now you can
+ask me where are the boundary conditions
+ask me where are the boundary conditions
+ask me where are the boundary conditions
+where the initial conditions so because
+where the initial conditions so because
+where the initial conditions so because
+for time dependent PDS we need an
+for time dependent PDS we need an
+for time dependent PDS we need an
+initial condition and for all PDS we
+initial condition and for all PDS we
+initial condition and for all PDS we
+need boundary conditions so what I've
+need boundary conditions so what I've
+need boundary conditions so what I've
+have done is just to keep notation
+have done is just to keep notation
+have done is just to keep notation
+simple and straightforward uh these
+simple and straightforward uh these
+simple and straightforward uh these
+conditions are actually implicit so in
+conditions are actually implicit so in
+conditions are actually implicit so in
+the sense that they are already included
+the sense that they are already included
+the sense that they are already included
+in the input F okay so when you have the
+in the input F okay so when you have the
+in the input F okay so when you have the
+input F you you have the initial
+input F you you have the initial
+input F you you have the initial
+conditions and the boundary conditions
+conditions and the boundary conditions
+conditions and the boundary conditions
+that are included and in the concrete
+that are included and in the concrete
+that are included and in the concrete
+example we always look at the heat
+example we always look at the heat
+example we always look at the heat
+equation so this is a heat equation in
+equation so this is a heat equation in
+equation so this is a heat equation in
+multi several space dimensions so in
+multi several space dimensions so in
+multi several space dimensions so in
+this case the differential operator D
+this case the differential operator D
+this case the differential operator D
+here is given in terms of the time
+here is given in terms of the time
+here is given in terms of the time
+derivative the partial derivative with
+derivative the partial derivative with
+derivative the partial derivative with
+respect to time and the laian with
+respect to time and the laian with
+respect to time and the laian with
+respect to space and remember that the
+respect to space and remember that the
+respect to space and remember that the
+laian um laian of d u is nothing but the
+laian um laian of d u is nothing but the
+laian um laian of d u is nothing but the
+summation J from 1 to D of U XJ XJ so
+summation J from 1 to D of U XJ XJ so
+summation J from 1 to D of U XJ XJ so
+you take all the second derivatives the
+you take all the second derivatives the
+you take all the second derivatives the
+second derivative Matrix uh it's called
+second derivative Matrix uh it's called
+second derivative Matrix uh it's called
+the Hessian and you just take the trace
+the Hessian and you just take the trace
+the Hessian and you just take the trace
+and then you'll get the laian so this is
+and then you'll get the laian so this is
+and then you'll get the laian so this is
+a concrete example so you take a
+a concrete example so you take a
+a concrete example so you take a
+function U you apply the differential
+function U you apply the differential
+function U you apply the differential
+operator the heat equation the heat
+operator the heat equation the heat
+operator the heat equation the heat
+operator which is given here and then
+operator which is given here and then
+operator which is given here and then
+you get uh the input so the task of
+you get uh the input so the task of
+you get uh the input so the task of
+solving the PD is given this input F and
+solving the PD is given this input F and
+solving the PD is given this input F and
+the differential operator D we have to
+the differential operator D we have to
+the differential operator D we have to
+find the solution VI so this is very
+find the solution VI so this is very
+find the solution VI so this is very
+very straightforward setup that you can
+very straightforward setup that you can
+very straightforward setup that you can
+imagine and then how do we work with uh
+imagine and then how do we work with uh
+imagine and then how do we work with uh
+pins how are pins going to solve it so
+pins how are pins going to solve it so
+pins how are pins going to solve it so
+if you remember uh the first ingredient
+if you remember uh the first ingredient
+if you remember uh the first ingredient
+of pins of course uh without saying much
+of pins of course uh without saying much
+of pins of course uh without saying much
+are deep neural networks again I need
+are deep neural networks again I need
+are deep neural networks again I need
+some notation because this is sort of my
+some notation because this is sort of my
+some notation because this is sort of my
+notation so as you can imagine we have a
+notation so as you can imagine we have a
+notation so as you can imagine we have a
+mapping which takes uh some input uh in
+mapping which takes uh some input uh in
+mapping which takes uh some input uh in
+this case y if you remember
+this case y if you remember
+this case y if you remember
+so D is the domain now so this sort of
+so D is the domain now so this sort of
+so D is the domain now so this sort of
+caligraphic D is the domain and this
+caligraphic D is the domain and this
+caligraphic D is the domain and this
+could depending on the context be just
+could depending on the context be just
+could depending on the context be just
+um a subset of space or of space time
+um a subset of space or of space time
+um a subset of space or of space time
+and this y now I didn't write it but
+and this y now I didn't write it but
+and this y now I didn't write it but
+this y belongs to this caligraphic D
+this y belongs to this caligraphic D
+this y belongs to this caligraphic D
+okay so these are the coordinates space
+okay so these are the coordinates space
+okay so these are the coordinates space
+and time coordinates and then the Deep
+and time coordinates and then the Deep
+and time coordinates and then the Deep
+neural network UST star is defined in
+neural network UST star is defined in
+neural network UST star is defined in
+terms of all these layers uh that you
+terms of all these layers uh that you
+terms of all these layers uh that you
+know very well each layer has two
+know very well each layer has two
+know very well each layer has two
+elements to to it the first one is this
+elements to to it the first one is this
+elements to to it the first one is this
+aine piece given in terms of a weight
+aine piece given in terms of a weight
+aine piece given in terms of a weight
+Matrix W and bias Vector B BK and w k
+Matrix W and bias Vector B BK and w k
+Matrix W and bias Vector B BK and w k
+for the K layer and then you also have
+for the K layer and then you also have
+for the K layer and then you also have
+an activation function a scalar
+an activation function a scalar
+an activation function a scalar
+activation function and because we are
+activation function and because we are
+activation function and because we are
+going to differentiate sometimes many
+going to differentiate sometimes many
+going to differentiate sometimes many
+times our activation function is
+times our activation function is
+times our activation function is
+typically a sigmoid or a hyperbolic
+typically a sigmoid or a hyperbolic
+typically a sigmoid or a hyperbolic
+tangent or something smooth not relu
+tangent or something smooth not relu
+tangent or something smooth not relu
+which has discont potential
+which has discont potential
+which has discont potential
+discontinuities in its derivatives and
+discontinuities in its derivatives and
+discontinuities in its derivatives and
+the parameters so this is just the
+the parameters so this is just the
+the parameters so this is just the
+neural network that defines um
+neural network that defines um
+neural network that defines um
+ultimately goes in the pin algorithm and
+ultimately goes in the pin algorithm and
+ultimately goes in the pin algorithm and
+the parameters the free parameters that
+the parameters the free parameters that
+the parameters the free parameters that
+we are going to tune are the weight
+we are going to tune are the weight
+we are going to tune are the weight
+Matrix is uh w k and the bias vectors BK
+Matrix is uh w k and the bias vectors BK
+Matrix is uh w k and the bias vectors BK
+so this is sort of the basic setup
+so this is sort of the basic setup
+so this is sort of the basic setup
+standard plain vanilla deep neuron
+standard plain vanilla deep neuron
+standard plain vanilla deep neuron
+networks you have seen several examples
+networks you have seen several examples
+networks you have seen several examples
+of them also in the tutorials now what
+of them also in the tutorials now what
+of them also in the tutorials now what
+we do with pins is that we take this
+we do with pins is that we take this
+we do with pins is that we take this
+deep neural networks we know what the
+deep neural networks we know what the
+deep neural networks we know what the
+inputs are we Al know what the
+inputs are we Al know what the
+inputs are we Al know what the
+differential operator is and we're going
+differential operator is and we're going
+differential operator is and we're going
+to approximate the solution here U with
+to approximate the solution here U with
+to approximate the solution here U with
+deep neuron networks right so this is
+deep neuron networks right so this is
+deep neuron networks right so this is
+the basic objective the basic algorithm
+the basic objective the basic algorithm
+the basic objective the basic algorithm
+so as I said means each of these um neur
+so as I said means each of these um neur
+so as I said means each of these um neur
+networks are defined in terms of this uh
+networks are defined in terms of this uh
+networks are defined in terms of this uh
+parameter Vector Theta and this
+parameter Vector Theta and this
+parameter Vector Theta and this
+parameter Vector Theta is uh now given
+parameter Vector Theta is uh now given
+parameter Vector Theta is uh now given
+by so it's here and this defines the
+by so it's here and this defines the
+by so it's here and this defines the
+Deep Nur Network Q Theta and this is
+Deep Nur Network Q Theta and this is
+Deep Nur Network Q Theta and this is
+what is going to approximate my solution
+what is going to approximate my solution
+what is going to approximate my solution
+of the PD I don't know why there is a
+of the PD I don't know why there is a
+of the PD I don't know why there is a
+star here let's say that it also belongs
+star here let's say that it also belongs
+star here let's say that it also belongs
+to X or we could say that this was a
+to X or we could say that this was a
+to X or we could say that this was a
+subset of X okay good so now aim
+subset of X okay good so now aim
+subset of X okay good so now aim
+objective here is that we know that
+objective here is that we know that
+objective here is that we know that
+there is a solution to the PD which we
+there is a solution to the PD which we
+there is a solution to the PD which we
+we don't know what it is we are going to
+we don't know what it is we are going to
+we don't know what it is we are going to
+find the Theta such that uh this guy
+find the Theta such that uh this guy
+find the Theta such that uh this guy
+approximates this U and it approximates
+approximates this U and it approximates
+approximates this U and it approximates
+it in a suitable sense and what is the
+it in a suitable sense and what is the
+it in a suitable sense and what is the
+sense in which it approximates is what
+sense in which it approximates is what
+sense in which it approximates is what
+we are going to talk about today but the
+we are going to talk about today but the
+we are going to talk about today but the
+way way in which it does this
+way way in which it does this
+way way in which it does this
+approximation is it doesn't have any
+approximation is it doesn't have any
+approximation is it doesn't have any
+labels right it does not have access to
+labels right it does not have access to
+labels right it does not have access to
+necessarily have access to values of you
+necessarily have access to values of you
+necessarily have access to values of you
+all that it has to do is to work with
+all that it has to do is to work with
+all that it has to do is to work with
+the inputs which are given by this F
+the inputs which are given by this F
+the inputs which are given by this F
+here and by the differential operator
+here and by the differential operator
+here and by the differential operator
+because we know what the differential
+because we know what the differential
+because we know what the differential
+operator is so recalling what you do is
+operator is so recalling what you do is
+operator is so recalling what you do is
+that you compute the PD residual so PD
+that you compute the PD residual so PD
+that you compute the PD residual so PD
+residual remember that the PD is simply
+residual remember that the PD is simply
+residual remember that the PD is simply
+D of U equals F right so now you just
+D of U equals F right so now you just
+D of U equals F right so now you just
+apply instead of U you apply this
+apply instead of U you apply this
+apply instead of U you apply this
+differential operator to U Theta and
+differential operator to U Theta and
+differential operator to U Theta and
+take the difference here of course this
+take the difference here of course this
+take the difference here of course this
+is not going to be zero because if you
+is not going to be zero because if you
+is not going to be zero because if you
+lucky and it's zero then the problem is
+lucky and it's zero then the problem is
+lucky and it's zero then the problem is
+solved without any error but in general
+solved without any error but in general
+solved without any error but in general
+it will lead to what is called a
+it will lead to what is called a
+it will lead to what is called a
+residual this is the residual with
+residual this is the residual with
+residual this is the residual with
+respect to Theta and we can compute this
+respect to Theta and we can compute this
+respect to Theta and we can compute this
+residual as I said by automatic
+residual as I said by automatic
+residual as I said by automatic
+differentiation in general but also I
+differentiation in general but also I
+differentiation in general but also I
+think pen told you that sometimes you
+think pen told you that sometimes you
+think pen told you that sometimes you
+can also use finite differences but
+can also use finite differences but
+can also use finite differences but
+let's say from our perspective we'll
+let's say from our perspective we'll
+let's say from our perspective we'll
+just use automatic differentiation so
+just use automatic differentiation so
+just use automatic differentiation so
+now at every point in principle we can
+now at every point in principle we can
+now at every point in principle we can
+compute the residual of the PD for a
+compute the residual of the PD for a
+compute the residual of the PD for a
+given neural network but of course um it
+given neural network but of course um it
+given neural network but of course um it
+doesn't help to be able to compute it at
+doesn't help to be able to compute it at
+doesn't help to be able to compute it at
+every point because at the end of the
+every point because at the end of the
+every point because at the end of the
+day we have to take some sort of an
+day we have to take some sort of an
+day we have to take some sort of an
+integral some sort of a um Global
+integral some sort of a um Global
+integral some sort of a um Global
+quantity right because pointwise
+quantity right because pointwise
+quantity right because pointwise
+quantities they're not really useful so
+quantities they're not really useful so
+quantities they're not really useful so
+what we are going to do is that we are
+what we are going to do is that we are
+what we are going to do is that we are
+going to take uh the lp Norm here of the
+going to take uh the lp Norm here of the
+going to take uh the lp Norm here of the
+residual so we integrate it AC Ross the
+residual so we integrate it AC Ross the
+residual so we integrate it AC Ross the
+domain we take an average in some sense
+domain we take an average in some sense
+domain we take an average in some sense
+and usually the p is equal to 1 or two
+and usually the p is equal to 1 or two
+and usually the p is equal to 1 or two
+so these are the two common spaces
+so these are the two common spaces
+so these are the two common spaces
+although sometimes you might need
+although sometimes you might need
+although sometimes you might need
+something else okay but for the time
+something else okay but for the time
+something else okay but for the time
+being let's say that these are one or
+being let's say that these are one or
+being let's say that these are one or
+two so now the objective is you find a
+two so now the objective is you find a
+two so now the objective is you find a
+Theta such that this residual is going
+Theta such that this residual is going
+Theta such that this residual is going
+to be minimized but of course this is an
+to be minimized but of course this is an
+to be minimized but of course this is an
+integral and you can't just compute
+integral and you can't just compute
+integral and you can't just compute
+integral by hands sorry integrals by
+integral by hands sorry integrals by
+integral by hands sorry integrals by
+hand so what you have to do is to
+hand so what you have to do is to
+hand so what you have to do is to
+replace this integral here by a
+replace this integral here by a
+replace this integral here by a
+quadrature okay now this is sort of
+quadrature okay now this is sort of
+quadrature okay now this is sort of
+standard in numerical analysis you
+standard in numerical analysis you
+standard in numerical analysis you
+replace the integral by a quadrature and
+replace the integral by a quadrature and
+replace the integral by a quadrature and
+to do so you just choose some so you
+to do so you just choose some so you
+to do so you just choose some so you
+have a domain here D this is your domain
+have a domain here D this is your domain
+have a domain here D this is your domain
+you throw some quad points in it this
+you throw some quad points in it this
+you throw some quad points in it this
+could be random points okay usually the
+could be random points okay usually the
+could be random points okay usually the
+simplest is to take random points but
+simplest is to take random points but
+simplest is to take random points but
+that's not necessarily the best so it
+that's not necessarily the best so it
+that's not necessarily the best so it
+there has to be a quadrature rule there
+there has to be a quadrature rule there
+there has to be a quadrature rule there
+are some quadrature weights here and you
+are some quadrature weights here and you
+are some quadrature weights here and you
+replace this integral out here with this
+replace this integral out here with this
+replace this integral out here with this
+quantity here so this is a quadrature
+quantity here so this is a quadrature
+quantity here so this is a quadrature
+this is an approximation of the integral
+this is an approximation of the integral
+this is an approximation of the integral
+and then you take a Theta star you just
+and then you take a Theta star you just
+and then you take a Theta star you just
+minimize this right so this is the loss
+minimize this right so this is the loss
+minimize this right so this is the loss
+function now this is often called the
+function now this is often called the
+function now this is often called the
+physics inform
+physics inform
+physics inform
+loss because there is no supervision
+loss because there is no supervision
+loss because there is no supervision
+here except for the initial and boundary
+here except for the initial and boundary
+here except for the initial and boundary
+conditions which we have said are
+conditions which we have said are
+conditions which we have said are
+implicit so we have some Physics inform
+implicit so we have some Physics inform
+implicit so we have some Physics inform
+law and now you just uh this is of
+law and now you just uh this is of
+law and now you just uh this is of
+course as as always in machine learning
+course as as always in machine learning
+course as as always in machine learning
+this is a
+this is a
+this is a
+High dimensional non-convex problem very
+High dimensional non-convex problem very
+High dimensional non-convex problem very
+high dimensional non-convex problem and
+high dimensional non-convex problem and
+high dimensional non-convex problem and
+we are going to use some stochastic
+we are going to use some stochastic
+we are going to use some stochastic
+radient Dent right so this is the pins
+radient Dent right so this is the pins
+radient Dent right so this is the pins
+algorithm that you take a class of
+algorithm that you take a class of
+algorithm that you take a class of
+neural networks you compute the residual
+neural networks you compute the residual
+neural networks you compute the residual
+in terms a pointwise by using automatic
+in terms a pointwise by using automatic
+in terms a pointwise by using automatic
+differentiation and then use a
+differentiation and then use a
+differentiation and then use a
+quadrature to approximate some Global
+quadrature to approximate some Global
+quadrature to approximate some Global
+quantities minimize and you're done so
+quantities minimize and you're done so
+quantities minimize and you're done so
+this is the algorithm and I think Ben
+this is the algorithm and I think Ben
+this is the algorithm and I think Ben
+Ben has explained this algorithm shown
+Ben has explained this algorithm shown
+Ben has explained this algorithm shown
+many examples of this and you could say
+many examples of this and you could say
+many examples of this and you could say
+that in some sense it works I mean this
+that in some sense it works I mean this
+that in some sense it works I mean this
+a question does it work so for instance
+a question does it work so for instance
+a question does it work so for instance
+some some sense it does work so here is
+some some sense it does work so here is
+some some sense it does work so here is
+the multid heat equation remember this
+the multid heat equation remember this
+the multid heat equation remember this
+is U minus llan of t u equal Z so this
+is U minus llan of t u equal Z so this
+is U minus llan of t u equal Z so this
+is the multid heat equation now D here
+is the multid heat equation now D here
+is the multid heat equation now D here
+changes all the way from 1 to 100 so
+changes all the way from 1 to 100 so
+changes all the way from 1 to 100 so
+this is um a very high dimensional pde
+this is um a very high dimensional pde
+this is um a very high dimensional pde
+you'll see later why we care about that
+you'll see later why we care about that
+you'll see later why we care about that
+and then we fix the pin here the neural
+and then we fix the pin here the neural
+and then we fix the pin here the neural
+network uh width it's just four layers
+network uh width it's just four layers
+network uh width it's just four layers
+so you have four four layers 20 neurons
+so you have four four layers 20 neurons
+so you have four four layers 20 neurons
+in each layer not at all a big neural
+in each layer not at all a big neural
+in each layer not at all a big neural
+network and then we need quite a few
+network and then we need quite a few
+network and then we need quite a few
+quadri points because we have so many
+quadri points because we have so many
+quadri points because we have so many
+dimensions and then we try to do this
+dimensions and then we try to do this
+dimensions and then we try to do this
+approximation procedure right so this
+approximation procedure right so this
+approximation procedure right so this
+can be done and the all the points here
+can be done and the all the points here
+can be done and the all the points here
+so these interior points and Boundary
+so these interior points and Boundary
+so these interior points and Boundary
+points these are sort of random points
+points these are sort of random points
+points these are sort of random points
+because in very high
+because in very high
+because in very high
+Dimensions nothing else works right you
+Dimensions nothing else works right you
+Dimensions nothing else works right you
+just have to take random points and when
+just have to take random points and when
+just have to take random points and when
+you do that then you see that for the
+you do that then you see that for the
+you do that then you see that for the
+same network somehow and for the same
+same network somehow and for the same
+same network somehow and for the same
+amount of training time you'll see that
+amount of training time you'll see that
+amount of training time you'll see that
+there is a increase in error it's of
+there is a increase in error it's of
+there is a increase in error it's of
+course very very small for very small
+course very very small for very small
+course very very small for very small
+dimensions and as you go up in
+dimensions and as you go up in
+dimensions and as you go up in
+Dimensions the error does increase but
+Dimensions the error does increase but
+Dimensions the error does increase but
+it's not increasing exponentially or
+it's not increasing exponentially or
+it's not increasing exponentially or
+anything if you see now from going from
+anything if you see now from going from
+anything if you see now from going from
+20 to 50 it is roughly doubling which is
+20 to 50 it is roughly doubling which is
+20 to 50 it is roughly doubling which is
+what you would expect and then from 50
+what you would expect and then from 50
+what you would expect and then from 50
+to 100 it's also less than doubling so
+to 100 it's also less than doubling so
+to 100 it's also less than doubling so
+you would say that this is a linear
+you would say that this is a linear
+you would say that this is a linear
+increase which is the minimum so in some
+increase which is the minimum so in some
+increase which is the minimum so in some
+sense it does not have what is called a
+sense it does not have what is called a
+sense it does not have what is called a
+curse of dimensionality curse of
+curse of dimensionality curse of
+curse of dimensionality curse of
+dimensionality would be for instance if
+dimensionality would be for instance if
+dimensionality would be for instance if
+you would have an exponential increase
+you would have an exponential increase
+you would have an exponential increase
+right here this is not not at all the
+right here this is not not at all the
+right here this is not not at all the
+case so at least for this simple example
+case so at least for this simple example
+case so at least for this simple example
+where the complexity comes from the fact
+where the complexity comes from the fact
+where the complexity comes from the fact
+that you have lots of Dimensions because
+that you have lots of Dimensions because
+that you have lots of Dimensions because
+in general you know you can't solve the
+in general you know you can't solve the
+in general you know you can't solve the
+heat equation in 100 Dimensions using
+heat equation in 100 Dimensions using
+heat equation in 100 Dimensions using
+the finite difference methods that I I
+the finite difference methods that I I
+the finite difference methods that I I
+taught you in one of the lectures so it
+taught you in one of the lectures so it
+taught you in one of the lectures so it
+somehow works right but then you have
+somehow works right but then you have
+somehow works right but then you have
+also seen other examples where it
+also seen other examples where it
+also seen other examples where it
+doesn't work so how do we know when it
+doesn't work so how do we know when it
+doesn't work so how do we know when it
+works when it doesn't work why does it
+works when it doesn't work why does it
+works when it doesn't work why does it
+work why doesn't it work and so on so
+work why doesn't it work and so on so
+work why doesn't it work and so on so
+this will be the focus of the next
+this will be the focus of the next
+this will be the focus of the next
+couple of lectures so let us get started
+couple of lectures so let us get started
+couple of lectures so let us get started
+uh of course if you have any questions
+uh of course if you have any questions
+uh of course if you have any questions
+you can always ask me in the chat button
+you can always ask me in the chat button
+you can always ask me in the chat button
+okay this is always possible from time
+okay this is always possible from time
+okay this is always possible from time
+to time or you can raise your hands uh
+to time or you can raise your hands uh
+to time or you can raise your hands uh
+if you're so inclined so either of the
+if you're so inclined so either of the
+if you're so inclined so either of the
+options is is there we can still make it
+options is is there we can still make it
+options is is there we can still make it
+interactive even if we all on Zoom
+interactive even if we all on Zoom
+interactive even if we all on Zoom
+nevertheless let's let's go ahead and
+nevertheless let's let's go ahead and
+nevertheless let's let's go ahead and
+let's try to address this question right
+let's try to address this question right
+let's try to address this question right
+why does why do they work sometimes and
+why does why do they work sometimes and
+why does why do they work sometimes and
+why don't they work sometimes okay so
+why don't they work sometimes okay so
+why don't they work sometimes okay so
+then uh again I go back to the abstract
+then uh again I go back to the abstract
+then uh again I go back to the abstract
+PD because then the notation becomes
+PD because then the notation becomes
+PD because then the notation becomes
+very very light and you sort of see the
+very very light and you sort of see the
+very very light and you sort of see the
+abstract structures the mathematical
+abstract structures the mathematical
+abstract structures the mathematical
+reasons why things may or may not works
+reasons why things may or may not works
+reasons why things may or may not works
+so this is the PD duals F and remember
+so this is the PD duals F and remember
+so this is the PD duals F and remember
+that my pin solution is U Theta right so
+that my pin solution is U Theta right so
+that my pin solution is U Theta right so
+this is the U Theta this is what the pin
+this is the U Theta this is what the pin
+this is the U Theta this is what the pin
+algorithm gives me and the objective
+algorithm gives me and the objective
+algorithm gives me and the objective
+always in this problem there is a very
+always in this problem there is a very
+always in this problem there is a very
+very specific objective which is that
+very specific objective which is that
+very specific objective which is that
+you have to minimize the total error
+you have to minimize the total error
+you have to minimize the total error
+right so the error is between U which is
+right so the error is between U which is
+right so the error is between U which is
+the exact
+the exact
+the exact
+solution we don't know it but it is
+solution we don't know it but it is
+solution we don't know it but it is
+there and U Theta is the approximation
+there and U Theta is the approximation
+there and U Theta is the approximation
+that we obtain with the algorithm that I
+that we obtain with the algorithm that I
+that we obtain with the algorithm that I
+just described to you right so this is
+just described to you right so this is
+just described to you right so this is
+this is sort of the objective so now the
+this is sort of the objective so now the
+this is sort of the objective so now the
+question is that so this is what we want
+question is that so this is what we want
+question is that so this is what we want
+to minimize we want to make this as
+to minimize we want to make this as
+to minimize we want to make this as
+small as possible right depending on the
+small as possible right depending on the
+small as possible right depending on the
+accuracy so in engineering for instance
+accuracy so in engineering for instance
+accuracy so in engineering for instance
+it's usually around 1% so a couple of
+it's usually around 1% so a couple of
+it's usually around 1% so a couple of
+digits three digits in some of the
+digits three digits in some of the
+digits three digits in some of the
+applications it could be more in some
+applications it could be more in some
+applications it could be more in some
+other applications it could be less now
+other applications it could be less now
+other applications it could be less now
+what contrast spins from what is
+what contrast spins from what is
+what contrast spins from what is
+standard supervised learning is that we
+standard supervised learning is that we
+standard supervised learning is that we
+don't or we may not have in general we
+don't or we may not have in general we
+don't or we may not have in general we
+don't have access to samples from the
+don't have access to samples from the
+don't have access to samples from the
+exact solution so we have no control we
+exact solution so we have no control we
+exact solution so we have no control we
+are never training the network directly
+are never training the network directly
+are never training the network directly
+on this error because in let's say in
+on this error because in let's say in
+on this error because in let's say in
+regression or classification uh
+regression or classification uh
+regression or classification uh
+traditional use of machine learning in
+traditional use of machine learning in
+traditional use of machine learning in
+images or text what you do is that you
+images or text what you do is that you
+images or text what you do is that you
+you have some labels and then you have
+you have some labels and then you have
+you have some labels and then you have
+the predictions of your network and then
+the predictions of your network and then
+the predictions of your network and then
+you try to make the distance between
+you try to make the distance between
+you try to make the distance between
+them as small as possible here we don't
+them as small as possible here we don't
+them as small as possible here we don't
+have access to that right that's why
+have access to that right that's why
+have access to that right that's why
+it's a fully unsupervised approach
+it's a fully unsupervised approach
+it's a fully unsupervised approach
+however so what we do here is if you
+however so what we do here is if you
+however so what we do here is if you
+remember we are working with the PD
+remember we are working with the PD
+remember we are working with the PD
+residual um which we are of course
+residual um which we are of course
+residual um which we are of course
+taking some Norm on it some LP
+taking some Norm on it some LP
+taking some Norm on it some LP
+Norm um yeah so this is the lp Norm you
+Norm um yeah so this is the lp Norm you
+Norm um yeah so this is the lp Norm you
+see so that you take the P power and you
+see so that you take the P power and you
+see so that you take the P power and you
+take a 1 / P so just think of p = 2
+take a 1 / P so just think of p = 2
+take a 1 / P so just think of p = 2
+would be like the root mean
+would be like the root mean
+would be like the root mean
+square and P = 1 would be the mean
+square and P = 1 would be the mean
+square and P = 1 would be the mean
+absolute many of you might have seen
+absolute many of you might have seen
+absolute many of you might have seen
+this these objects okay so now this is
+this these objects okay so now this is
+this these objects okay so now this is
+uh what we what we try to minimize what
+uh what we what we try to minimize what
+uh what we what we try to minimize what
+we have some access to are these
+we have some access to are these
+we have some access to are these
+residuals and I denote this by EG
+residuals and I denote this by EG
+residuals and I denote this by EG
+sometimes people call this as
+sometimes people call this as
+sometimes people call this as
+generalization error but think of it as
+generalization error but think of it as
+generalization error but think of it as
+a PD residual because you don't have
+a PD residual because you don't have
+a PD residual because you don't have
+access to this this is not even your
+access to this this is not even your
+access to this this is not even your
+target you don't try to make it small
+target you don't try to make it small
+target you don't try to make it small
+what you try to make small is this
+what you try to make small is this
+what you try to make small is this
+mismatch here how much does of a
+mismatch here how much does of a
+mismatch here how much does of a
+mismatch does it have at the level of
+mismatch does it have at the level of
+mismatch does it have at the level of
+the PD and in fact in practice you don't
+the PD and in fact in practice you don't
+the PD and in fact in practice you don't
+have access to this guy here what you
+have access to this guy here what you
+have access to this guy here what you
+have access to is the training error
+have access to is the training error
+have access to is the training error
+right so the training error is nothing
+right so the training error is nothing
+right so the training error is nothing
+but a p root of the loss function
+but a p root of the loss function
+but a p root of the loss function
+because if you remember this is my loss
+because if you remember this is my loss
+because if you remember this is my loss
+function so the idea is that by
+function so the idea is that by
+function so the idea is that by
+minimizing or making the loss F function
+minimizing or making the loss F function
+minimizing or making the loss F function
+as small as possible can I sorry can I
+as small as possible can I sorry can I
+as small as possible can I sorry can I
+somehow go back make this small make the
+somehow go back make this small make the
+somehow go back make this small make the
+total residual small and eventually from
+total residual small and eventually from
+total residual small and eventually from
+here can I go back and make the total
+here can I go back and make the total
+here can I go back and make the total
+error small so let us try to sort of uh
+error small so let us try to sort of uh
+error small so let us try to sort of uh
+put these questions together and this is
+put these questions together and this is
+put these questions together and this is
+what I have done as somehow the key
+what I have done as somehow the key
+what I have done as somehow the key
+theoretical questions the first thing is
+theoretical questions the first thing is
+theoretical questions the first thing is
+and this is very important in some sense
+and this is very important in some sense
+and this is very important in some sense
+is that we not searching for a vacuum
+is that we not searching for a vacuum
+is that we not searching for a vacuum
+you're not searching for a vacuous
+you're not searching for a vacuous
+you're not searching for a vacuous
+statement what do I mean by that so
+statement what do I mean by that so
+statement what do I mean by that so
+remember that my objective or my OB in
+remember that my objective or my OB in
+remember that my objective or my OB in
+some sense my objective is to make the
+some sense my objective is to make the
+some sense my objective is to make the
+training error as small as possible and
+training error as small as possible and
+training error as small as possible and
+underlying why I want to make the
+underlying why I want to make the
+underlying why I want to make the
+training error as small as possible is
+training error as small as possible is
+training error as small as possible is
+because it's after all a discretized
+because it's after all a discretized
+because it's after all a discretized
+version
+version
+version
+of the of the residual so I want to make
+of the of the residual so I want to make
+of the of the residual so I want to make
+the residual as small as possible so the
+the residual as small as possible so the
+the residual as small as possible so the
+question is can this even be done means
+question is can this even be done means
+question is can this even be done means
+otherwise what are we doing right so in
+otherwise what are we doing right so in
+otherwise what are we doing right so in
+other words do there exist parameters do
+other words do there exist parameters do
+other words do there exist parameters do
+there exist uh in this class of neural
+there exist uh in this class of neural
+there exist uh in this class of neural
+networks such that let's say the
+networks such that let's say the
+networks such that let's say the
+training error can be made as small as
+training error can be made as small as
+training error can be made as small as
+possible and the PD residual made as
+possible and the PD residual made as
+possible and the PD residual made as
+small as possible because if these
+small as possible because if these
+small as possible because if these
+errors are not going to be or these
+errors are not going to be or these
+errors are not going to be or these
+objects are not going to be as small as
+objects are not going to be as small as
+objects are not going to be as small as
+possible there's no point in doing
+possible there's no point in doing
+possible there's no point in doing
+anything let's say say that this Epsilon
+anything let's say say that this Epsilon
+anything let's say say that this Epsilon
+is like a 100 then what is the order of
+is like a 100 then what is the order of
+is like a 100 then what is the order of
+the error will always be of the order of
+the error will always be of the order of
+the error will always be of the order of
+100 right so it does not really help so
+100 right so it does not really help so
+100 right so it does not really help so
+in other words what kind of neural
+in other words what kind of neural
+in other words what kind of neural
+networks can we take such that these
+networks can we take such that these
+networks can we take such that these
+quantities at least a priority can be
+quantities at least a priority can be
+quantities at least a priority can be
+made as small as possible in principle
+made as small as possible in principle
+made as small as possible in principle
+in practice whether this happens or not
+in practice whether this happens or not
+in practice whether this happens or not
+is another question and we will see that
+is another question and we will see that
+is another question and we will see that
+so that's the first question that we
+so that's the first question that we
+so that's the first question that we
+have to ask is this even a feasible
+have to ask is this even a feasible
+have to ask is this even a feasible
+problem in some sense can we even
+problem in some sense can we even
+problem in some sense can we even
+address the feasibility
+address the feasibility
+address the feasibility
+then of course as I said means in
+then of course as I said means in
+then of course as I said means in
+practice we don't have access to this
+practice we don't have access to this
+practice we don't have access to this
+error we only have access to this error
+error we only have access to this error
+error we only have access to this error
+here the residual so it's natural to ask
+here the residual so it's natural to ask
+here the residual so it's natural to ask
+if I make the residual as small as
+if I make the residual as small as
+if I make the residual as small as
+possible does it automatically imply
+possible does it automatically imply
+possible does it automatically imply
+that my total error the object that I
+that my total error the object that I
+that my total error the object that I
+want to make as small as possible can
+want to make as small as possible can
+want to make as small as possible can
+that be made as small as possible of
+that be made as small as possible of
+that be made as small as possible of
+course trivially this is true if we have
+course trivially this is true if we have
+course trivially this is true if we have
+a bound which looks like this it tells
+a bound which looks like this it tells
+a bound which looks like this it tells
+us that the total error the object that
+us that the total error the object that
+us that the total error the object that
+we want to
+we want to
+we want to
+minimize is bounded in terms of some
+minimize is bounded in terms of some
+minimize is bounded in terms of some
+constant times the PD residual so making
+constant times the PD residual so making
+constant times the PD residual so making
+the PD residual small will automatically
+the PD residual small will automatically
+the PD residual small will automatically
+imply making this will automatically
+imply making this will automatically
+imply making this will automatically
+make this object small right so this
+make this object small right so this
+make this object small right so this
+will somehow justify why we are going to
+will somehow justify why we are going to
+will somehow justify why we are going to
+try and make this residual as small as
+try and make this residual as small as
+try and make this residual as small as
+possible but we never have access to
+possible but we never have access to
+possible but we never have access to
+this quantity because remember that this
+this quantity because remember that this
+this quantity because remember that this
+quantity here is an sorry is an integral
+quantity here is an sorry is an integral
+quantity here is an sorry is an integral
+right so we don't have access to this
+right so we don't have access to this
+right so we don't have access to this
+quantity we always have access to it
+quantity we always have access to it
+quantity we always have access to it
+through its discretization through this
+through its discretization through this
+through its discretization through this
+training era so then we have to go one
+training era so then we have to go one
+training era so then we have to go one
+step further and say that if you have a
+step further and say that if you have a
+step further and say that if you have a
+small training loss because that's the
+small training loss because that's the
+small training loss because that's the
+only thing that we can read out during
+only thing that we can read out during
+only thing that we can read out during
+our algorithm if you have a small enough
+our algorithm if you have a small enough
+our algorithm if you have a small enough
+training loss does it automatically
+training loss does it automatically
+training loss does it automatically
+imply that the residual is small if it
+imply that the residual is small if it
+imply that the residual is small if it
+is so or in other words if it is so then
+is so or in other words if it is so then
+is so or in other words if it is so then
+or this will be true if you have a bound
+or this will be true if you have a bound
+or this will be true if you have a bound
+which looks like this
+which looks like this
+which looks like this
+so this tells us that as long as the
+so this tells us that as long as the
+so this tells us that as long as the
+number of n is the number of quadrature
+number of n is the number of quadrature
+number of n is the number of quadrature
+points so n is the number of quadrature
+points so what does this tell us this
+points so what does this tell us this
+points so what does this tell us this
+tells us that as long as you can make
+tells us that as long as you can make
+tells us that as long as you can make
+the training loss small and the number
+the training loss small and the number
+the training loss small and the number
+of quadri points as large as you want
+of quadri points as large as you want
+of quadri points as large as you want
+then the total mean somehow this
+then the total mean somehow this
+then the total mean somehow this
+generalization error can be as small as
+generalization error can be as small as
+generalization error can be as small as
+possible this residual can be as small
+possible this residual can be as small
+possible this residual can be as small
+as possible and from here you can go
+as possible and from here you can go
+as possible and from here you can go
+back to the total error and make it as
+back to the total error and make it as
+back to the total error and make it as
+small as possible so this is sort of the
+small as possible so this is sort of the
+small as possible so this is sort of the
+let's say the hierarchy of questions
+let's say the hierarchy of questions
+let's say the hierarchy of questions
+that we have so let me recapitulate so
+that we have so let me recapitulate so
+that we have so let me recapitulate so
+what we want to do is first can we make
+what we want to do is first can we make
+what we want to do is first can we make
+the training error as small as possible
+the training error as small as possible
+the training error as small as possible
+and then once we have small enough
+and then once we have small enough
+and then once we have small enough
+training error and large number of
+training error and large number of
+training error and large number of
+quadrature points does it automatically
+quadrature points does it automatically
+quadrature points does it automatically
+imply that there's a small residual and
+imply that there's a small residual and
+imply that there's a small residual and
+does a small residual automatically
+does a small residual automatically
+does a small residual automatically
+imply that the total error is so that
+imply that the total error is so that
+imply that the total error is so that
+that's the mechanism through which pins
+that's the mechanism through which pins
+that's the mechanism through which pins
+can work right otherwise how else can we
+can work right otherwise how else can we
+can work right otherwise how else can we
+connect the training error to the total
+connect the training error to the total
+connect the training error to the total
+error which is uh these are completely
+error which is uh these are completely
+error which is uh these are completely
+different quantities they're sitting in
+different quantities they're sitting in
+different quantities they're sitting in
+different spaces they have different
+different spaces they have different
+different spaces they have different
+meanings so the only way we can do this
+meanings so the only way we can do this
+meanings so the only way we can do this
+is through this route at least one way
+is through this route at least one way
+is through this route at least one way
+in which we can do this is through this
+in which we can do this is through this
+in which we can do this is through this
+route now let me try to explain this a
+route now let me try to explain this a
+route now let me try to explain this a
+little bit more in detail so that you
+little bit more in detail so that you
+little bit more in detail so that you
+don't don't get lost right so actually
+don't don't get lost right so actually
+don't don't get lost right so actually
+this is not uh not that let's say
+this is not uh not that let's say
+this is not uh not that let's say
+it looks a bit abstract but it's it's
+it looks a bit abstract but it's it's
+it looks a bit abstract but it's it's
+not that unrealistic to or not illogical
+not that unrealistic to or not illogical
+not that unrealistic to or not illogical
+to expect this uh if you know what I
+to expect this uh if you know what I
+to expect this uh if you know what I
+mean so let me start by the first
+mean so let me start by the first
+mean so let me start by the first
+question here the first question is are
+question here the first question is are
+question here the first question is are
+we even solving a feasible problem in
+we even solving a feasible problem in
+we even solving a feasible problem in
+some sense in other words can the total
+some sense in other words can the total
+some sense in other words can the total
+error and the training error be made as
+error and the training error be made as
+error and the training error be made as
+small as possible and the answer to that
+small as possible and the answer to that
+small as possible and the answer to that
+actually is yes because this depends on
+actually is yes because this depends on
+actually is yes because this depends on
+the PD residual this depends on the
+the PD residual this depends on the
+the PD residual this depends on the
+smallness of the training error so how
+smallness of the training error so how
+smallness of the training error so how
+can you do that so the answer is uh here
+can you do that so the answer is uh here
+can you do that so the answer is uh here
+because remember that at the end of the
+because remember that at the end of the
+because remember that at the end of the
+day so let me use this so we are solving
+day so let me use this so we are solving
+day so let me use this so we are solving
+a PD which is given by here so now the
+a PD which is given by here so now the
+a PD which is given by here so now the
+PD solution is although it's not always
+PD solution is although it's not always
+PD solution is although it's not always
+the case in many many cases is actually
+the case in many many cases is actually
+the case in many many cases is actually
+a smooth function so just imagine that
+a smooth function so just imagine that
+a smooth function so just imagine that
+you have the heat equation so the heat
+you have the heat equation so the heat
+you have the heat equation so the heat
+equation is um having one time
+equation is um having one time
+equation is um having one time
+derivative and two space derivatives so
+derivative and two space derivatives so
+derivative and two space derivatives so
+if the right hand side is even an
+if the right hand side is even an
+if the right hand side is even an
+integrable function the solution of the
+integrable function the solution of the
+integrable function the solution of the
+heat equation better have two space
+heat equation better have two space
+heat equation better have two space
+derivatives and one time derivatives so
+derivatives and one time derivatives so
+derivatives and one time derivatives so
+it's smoother than the F here than the
+it's smoother than the F here than the
+it's smoother than the F here than the
+input here now this is not always the
+input here now this is not always the
+input here now this is not always the
+case as you will see in the next lecture
+case as you will see in the next lecture
+case as you will see in the next lecture
+but often this is the case that there
+but often this is the case that there
+but often this is the case that there
+exists a Sol PD solution is going to be
+exists a Sol PD solution is going to be
+exists a Sol PD solution is going to be
+smooth very good so what does that imply
+smooth very good so what does that imply
+smooth very good so what does that imply
+that implies that if you look at the pin
+that implies that if you look at the pin
+that implies that if you look at the pin
+residual so the pin residual is here
+residual so the pin residual is here
+residual so the pin residual is here
+this is defined like this so you apply
+this is defined like this so you apply
+this is defined like this so you apply
+the neural network you apply the
+the neural network you apply the
+the neural network you apply the
+differential operator the neural network
+differential operator the neural network
+differential operator the neural network
+take out the input now what is the F
+take out the input now what is the F
+take out the input now what is the F
+here f is nothing but D of U right so
+here f is nothing but D of U right so
+here f is nothing but D of U right so
+this is f is nothing but D of U so I
+this is f is nothing but D of U so I
+this is f is nothing but D of U so I
+have simply substituted this here so now
+have simply substituted this here so now
+have simply substituted this here so now
+we have the differential operator
+we have the differential operator
+we have the differential operator
+applied to U Theta and the differential
+applied to U Theta and the differential
+applied to U Theta and the differential
+operator applied to U and this gives us
+operator applied to U and this gives us
+operator applied to U and this gives us
+a an estimate let me you know let me
+a an estimate let me you know let me
+a an estimate let me you know let me
+just just for Simplicity let me try to
+just just for Simplicity let me try to
+just just for Simplicity let me try to
+take this and expand it out for the heat
+take this and expand it out for the heat
+take this and expand it out for the heat
+equation for instance
+equation for instance
+equation for instance
+uh so that you're not completely lost so
+uh so that you're not completely lost so
+uh so that you're not completely lost so
+for the heat equation if you remember so
+for the heat equation if you remember so
+for the heat equation if you remember so
+let me take black here so this is object
+let me take black here so this is object
+let me take black here so this is object
+that I'm going to sort of expand right
+that I'm going to sort of expand right
+that I'm going to sort of expand right
+so I have D of U
+so I have D of U
+so I have D of U
+Theta minus D of U right so D of U Theta
+Theta minus D of U right so D of U Theta
+Theta minus D of U right so D of U Theta
+is nothing but DT the partial derivative
+is nothing but DT the partial derivative
+is nothing but DT the partial derivative
+of U Theta minus Lan of U Theta minus DT
+of U Theta minus Lan of U Theta minus DT
+of U Theta minus Lan of U Theta minus DT
+of uus
+of uus
+of uus
+of U right let's put some Norm here so
+of U right let's put some Norm here so
+of U right let's put some Norm here so
+this is nothing but DT of U Theta minus
+this is nothing but DT of U Theta minus
+this is nothing but DT of U Theta minus
+U minus laian of U Theta minus U the
+U minus laian of U Theta minus U the
+U minus laian of U Theta minus U the
+differential operators are linear so
+differential operators are linear so
+differential operators are linear so
+this is less than or equal to by using
+this is less than or equal to by using
+this is less than or equal to by using
+triangle inequality U Theta minus U plus
+triangle inequality U Theta minus U plus
+triangle inequality U Theta minus U plus
+laian of uum
+laian of uum
+laian of uum
+see or in other words this is nothing
+see or in other words this is nothing
+see or in other words this is nothing
+but you can say U Theta minus U and I
+but you can say U Theta minus U and I
+but you can say U Theta minus U and I
+don't want to sort of expand notation
+don't want to sort of expand notation
+don't want to sort of expand notation
+too much but in what is called W1 p and
+too much but in what is called W1 p and
+too much but in what is called W1 p and
+laian is a second derivative so this is
+laian is a second derivative so this is
+laian is a second derivative so this is
+U Theta minus u in what is w2p one is in
+U Theta minus u in what is w2p one is in
+U Theta minus u in what is w2p one is in
+time and the other is in space okay just
+time and the other is in space okay just
+time and the other is in space okay just
+very formally I'm not not doing the math
+very formally I'm not not doing the math
+very formally I'm not not doing the math
+so w1p simply means that the function is
+so w1p simply means that the function is
+so w1p simply means that the function is
+close to something and its first
+close to something and its first
+close to something and its first
+derivative is close close to something
+derivative is close close to something
+derivative is close close to something
+to the first derivative of the same
+to the first derivative of the same
+to the first derivative of the same
+thing here it means that these two
+thing here it means that these two
+thing here it means that these two
+functions are close to each other the
+functions are close to each other the
+functions are close to each other the
+first spatial derivatives are close to
+first spatial derivatives are close to
+first spatial derivatives are close to
+each other and the second spatial
+each other and the second spatial
+each other and the second spatial
+derivatives are close to each other so
+derivatives are close to each other so
+derivatives are close to each other so
+when I measure things in this spaces wsp
+when I measure things in this spaces wsp
+when I measure things in this spaces wsp
+it means that I'm demanding that not
+it means that I'm demanding that not
+it means that I'm demanding that not
+only are two functions close to each
+only are two functions close to each
+only are two functions close to each
+other but also the derivatives the
+other but also the derivatives the
+other but also the derivatives the
+second derivatives the third derivatives
+second derivatives the third derivatives
+second derivatives the third derivatives
+fourth derivatives and so on are also
+fourth derivatives and so on are also
+fourth derivatives and so on are also
+close to each other and this s here as
+close to each other and this s here as
+close to each other and this s here as
+you can see really depends on this
+you can see really depends on this
+you can see really depends on this
+differential operator D if we have more
+differential operator D if we have more
+differential operator D if we have more
+derivatives then we are going to have
+derivatives then we are going to have
+derivatives then we are going to have
+more of this object there good so this
+more of this object there good so this
+more of this object there good so this
+was essentially the content of what I
+was essentially the content of what I
+was essentially the content of what I
+wanted to say for a nonlinear PD of
+wanted to say for a nonlinear PD of
+wanted to say for a nonlinear PD of
+course as you can imagine this was a
+course as you can imagine this was a
+course as you can imagine this was a
+linear PD so there everything sort of
+linear PD so there everything sort of
+linear PD so there everything sort of
+worked out but for a nonlinear PD it's
+worked out but for a nonlinear PD it's
+worked out but for a nonlinear PD it's
+slightly more complicated and you get
+slightly more complicated and you get
+slightly more complicated and you get
+some things some constants which depend
+some things some constants which depend
+some things some constants which depend
+on the function itself that's why it's
+on the function itself that's why it's
+on the function itself that's why it's
+not linear right otherwise it would be a
+not linear right otherwise it would be a
+not linear right otherwise it would be a
+linear PD but it's essentially what it
+linear PD but it's essentially what it
+linear PD but it's essentially what it
+says is that the PD residual can be
+says is that the PD residual can be
+says is that the PD residual can be
+estimated in terms of the difference
+estimated in terms of the difference
+estimated in terms of the difference
+between the exact solution the function
+between the exact solution the function
+between the exact solution the function
+and the neural network measured with the
+and the neural network measured with the
+and the neural network measured with the
+right number of derivatives so that's
+right number of derivatives so that's
+right number of derivatives so that's
+that's all all is there to this
+that's all all is there to this
+that's all all is there to this
+mathematical derivation so all that we
+mathematical derivation so all that we
+mathematical derivation so all that we
+need to guarantee so to guarantee that
+need to guarantee so to guarantee that
+need to guarantee so to guarantee that
+the PD residual is going to be small all
+the PD residual is going to be small all
+the PD residual is going to be small all
+that we need is to guarantee that there
+that we need is to guarantee that there
+that we need is to guarantee that there
+are neural networks which are going to
+are neural networks which are going to
+are neural networks which are going to
+approximate the PD solution ution which
+approximate the PD solution ution which
+approximate the PD solution ution which
+is a smooth function with sufficient
+is a smooth function with sufficient
+is a smooth function with sufficient
+number of derivatives right that that's
+number of derivatives right that that's
+number of derivatives right that that's
+all that you do now this is where
+all that you do now this is where
+all that you do now this is where
+already I think Ben has introduced what
+already I think Ben has introduced what
+already I think Ben has introduced what
+is called a universal approximation
+is called a universal approximation
+is called a universal approximation
+theorem so what is a universal
+theorem so what is a universal
+theorem so what is a universal
+approximation theorem it's it's a very
+approximation theorem it's it's a very
+approximation theorem it's it's a very
+important statement for uh for neural
+important statement for uh for neural
+important statement for uh for neural
+networks it's one of the reasons why
+networks it's one of the reasons why
+networks it's one of the reasons why
+people believe neural networks work so
+people believe neural networks work so
+people believe neural networks work so
+well which is that if you take any
+well which is that if you take any
+well which is that if you take any
+function mean this U is as long as it's
+function mean this U is as long as it's
+function mean this U is as long as it's
+a continuous function or even an
+a continuous function or even an
+a continuous function or even an
+integrable function then there always
+integrable function then there always
+integrable function then there always
+exists a neural network even a shallow
+exists a neural network even a shallow
+exists a neural network even a shallow
+neural network which is going to
+neural network which is going to
+neural network which is going to
+approximate it in the right Norm as to
+approximate it in the right Norm as to
+approximate it in the right Norm as to
+as much of a tolerance as accurately as
+as much of a tolerance as accurately as
+as much of a tolerance as accurately as
+possible so this is the advantage of
+possible so this is the advantage of
+possible so this is the advantage of
+neural networks that you think of any
+neural networks that you think of any
+neural networks that you think of any
+function you see any function it it just
+function you see any function it it just
+function you see any function it it just
+needs to be integrable in fact it needs
+needs to be integrable in fact it needs
+needs to be integrable in fact it needs
+to be what is called measurable there
+to be what is called measurable there
+to be what is called measurable there
+always exists a neural network which is
+always exists a neural network which is
+always exists a neural network which is
+very close to it right so this is sort
+very close to it right so this is sort
+very close to it right so this is sort
+of the basis of neuron networks now we
+of the basis of neuron networks now we
+of the basis of neuron networks now we
+are invoking a similar kind of a
+are invoking a similar kind of a
+are invoking a similar kind of a
+question except that we want not just
+question except that we want not just
+question except that we want not just
+the function to be close to another
+the function to be close to another
+the function to be close to another
+function but also its derivative should
+function but also its derivative should
+function but also its derivative should
+be close to the derivative of the
+be close to the derivative of the
+be close to the derivative of the
+function its second derivative should be
+function its second derivative should be
+function its second derivative should be
+close to the second derivative of the
+close to the second derivative of the
+close to the second derivative of the
+function and so on and there are similar
+function and so on and there are similar
+function and so on and there are similar
+theorems for instance one of my own
+theorems for instance one of my own
+theorems for instance one of my own
+theorems which uh say say this that this
+theorems which uh say say this that this
+theorems which uh say say this that this
+indeed can be done that you can always
+indeed can be done that you can always
+indeed can be done that you can always
+find neural networks which not only
+find neural networks which not only
+find neural networks which not only
+approximate a function in an integrable
+approximate a function in an integrable
+approximate a function in an integrable
+sense in an average sense but also
+sense in an average sense but also
+sense in an average sense but also
+approximate the derivatives the second
+approximate the derivatives the second
+approximate the derivatives the second
+derivatives the third derivatives and so
+derivatives the third derivatives and so
+derivatives the third derivatives and so
+on so because the solutions of the PD
+on so because the solutions of the PD
+on so because the solutions of the PD
+are in some sense smooth this
+are in some sense smooth this
+are in some sense smooth this
+automatically imply and because neural
+automatically imply and because neural
+automatically imply and because neural
+networks are Universal they can
+networks are Universal they can
+networks are Universal they can
+approximate any function it
+approximate any function it
+approximate any function it
+automatically means that there exists
+automatically means that there exists
+automatically means that there exists
+neural networks such that the pin
+neural networks such that the pin
+neural networks such that the pin
+residual is going to be small okay which
+residual is going to be small okay which
+residual is going to be small okay which
+is what we wanted to right we wanted
+is what we wanted to right we wanted
+is what we wanted to right we wanted
+this pin residual to be as small as
+this pin residual to be as small as
+this pin residual to be as small as
+possible so that we are not solving a
+possible so that we are not solving a
+possible so that we are not solving a
+vacuous problem and the same argument
+vacuous problem and the same argument
+vacuous problem and the same argument
+also works for the training error
+also works for the training error
+also works for the training error
+because what is training error after all
+because what is training error after all
+because what is training error after all
+the training error just takes the if you
+the training error just takes the if you
+the training error just takes the if you
+remember I have it somewhere yeah so the
+remember I have it somewhere yeah so the
+remember I have it somewhere yeah so the
+training error is simply that it takes
+training error is simply that it takes
+training error is simply that it takes
+this integral and it approximates it by
+this integral and it approximates it by
+this integral and it approximates it by
+a quadri right so this is traditional
+a quadri right so this is traditional
+a quadri right so this is traditional
+numerical analysis how do we take the
+numerical analysis how do we take the
+numerical analysis how do we take the
+integral of a function and just
+integral of a function and just
+integral of a function and just
+approximate it by some weighted
+approximate it by some weighted
+approximate it by some weighted
+combination of the function evaluated at
+combination of the function evaluated at
+combination of the function evaluated at
+points so as long as the function is
+points so as long as the function is
+points so as long as the function is
+smooth the underlying function is smooth
+smooth the underlying function is smooth
+smooth the underlying function is smooth
+there are many many different ways in
+there are many many different ways in
+there are many many different ways in
+which you can do it even if it is not
+which you can do it even if it is not
+which you can do it even if it is not
+smooth you can use Monte Carlo or
+smooth you can use Monte Carlo or
+smooth you can use Monte Carlo or
+Central limit theorem so this tells us
+Central limit theorem so this tells us
+Central limit theorem so this tells us
+that if the pin residual is small and if
+that if the pin residual is small and if
+that if the pin residual is small and if
+there are sufficient number of
+there are sufficient number of
+there are sufficient number of
+quadrature points remember that we have
+quadrature points remember that we have
+quadrature points remember that we have
+smooth activations so this is typically
+smooth activations so this is typically
+smooth activations so this is typically
+hyperbolic tangent then this this this
+hyperbolic tangent then this this this
+hyperbolic tangent then this this this
+works quite well and this tells us that
+works quite well and this tells us that
+works quite well and this tells us that
+from this result you can come to this
+from this result you can come to this
+from this result you can come to this
+result so in other words that the loss
+result so in other words that the loss
+result so in other words that the loss
+function or the training error provided
+function or the training error provided
+function or the training error provided
+that there are sufficient number of
+that there are sufficient number of
+that there are sufficient number of
+points can be made as small as possible
+points can be made as small as possible
+points can be made as small as possible
+so you are not searching for some needle
+so you are not searching for some needle
+so you are not searching for some needle
+in a haast stack probably at least uh
+in a haast stack probably at least uh
+in a haast stack probably at least uh
+there is a needle somewhere mean you're
+there is a needle somewhere mean you're
+there is a needle somewhere mean you're
+not searching for nothing in a ha stack
+not searching for nothing in a ha stack
+not searching for nothing in a ha stack
+you know so this tells us that this kind
+you know so this tells us that this kind
+you know so this tells us that this kind
+of arguments what they tell us is that
+of arguments what they tell us is that
+of arguments what they tell us is that
+the problem that we're trying to solve
+the problem that we're trying to solve
+the problem that we're trying to solve
+is in some sense uh well posed or is
+is in some sense uh well posed or is
+is in some sense uh well posed or is
+feasible that you can actually find
+feasible that you can actually find
+feasible that you can actually find
+neural networks such that this training
+neural networks such that this training
+neural networks such that this training
+error can be made as small as possible
+error can be made as small as possible
+error can be made as small as possible
+and if you have sufficient number of
+and if you have sufficient number of
+and if you have sufficient number of
+quad points this automatically implies
+quad points this automatically implies
+quad points this automatically implies
+that the that the total error is going
+that the that the total error is going
+that the that the total error is going
+to be as small as possible okay or the
+to be as small as possible okay or the
+to be as small as possible okay or the
+residual is going to be as small as
+residual is going to be as small as
+residual is going to be as small as
+possible so in some sense these kind of
+possible so in some sense these kind of
+possible so in some sense these kind of
+simple arguments of course for each PD
+simple arguments of course for each PD
+simple arguments of course for each PD
+this has to be carried out by itself you
+this has to be carried out by itself you
+this has to be carried out by itself you
+have to compute this kind of a this kind
+have to compute this kind of a this kind
+have to compute this kind of a this kind
+of an estimate you have to you have to
+of an estimate you have to you have to
+of an estimate you have to you have to
+argue why this result is true and so on
+argue why this result is true and so on
+argue why this result is true and so on
+but the road map is right here and it's
+but the road map is right here and it's
+but the road map is right here and it's
+it's it's fairly straightforward so that
+it's it's fairly straightforward so that
+it's it's fairly straightforward so that
+part is easy that at least in terms of
+part is easy that at least in terms of
+part is easy that at least in terms of
+The Well posedness of the problem it is
+The Well posedness of the problem it is
+The Well posedness of the problem it is
+a wellos problem in the sense that there
+a wellos problem in the sense that there
+a wellos problem in the sense that there
+are neural networks uh which sort of
+are neural networks uh which sort of
+are neural networks uh which sort of
+minimize or there are new networks which
+minimize or there are new networks which
+minimize or there are new networks which
+can make the training error in Principle
+can make the training error in Principle
+can make the training error in Principle
+as small as possible whether you find
+as small as possible whether you find
+as small as possible whether you find
+this neural networks when you start at a
+this neural networks when you start at a
+this neural networks when you start at a
+certain point and you use stochastic rad
+certain point and you use stochastic rad
+certain point and you use stochastic rad
+in descent this a different question
+in descent this a different question
+in descent this a different question
+alog together and this is what we are
+alog together and this is what we are
+alog together and this is what we are
+going to address in the next lecture
+going to address in the next lecture
+going to address in the next lecture
+okay so so far so good this tells us
+okay so so far so good this tells us
+okay so so far so good this tells us
+that it's a problem that we in principle
+that it's a problem that we in principle
+that it's a problem that we in principle
+can solve but this is only good to know
+can solve but this is only good to know
+can solve but this is only good to know
+right because in practice we are not
+right because in practice we are not
+right because in practice we are not
+doing this in practice we are starting
+doing this in practice we are starting
+doing this in practice we are starting
+with something we are trying to take
+with something we are trying to take
+with something we are trying to take
+make the training error as small as
+make the training error as small as
+make the training error as small as
+possible and from there we want to
+possible and from there we want to
+possible and from there we want to
+conclude that the total error is going
+conclude that the total error is going
+conclude that the total error is going
+to be small so this is we have to invert
+to be small so this is we have to invert
+to be small so this is we have to invert
+this uh pyramid as it were so how do you
+this uh pyramid as it were so how do you
+this uh pyramid as it were so how do you
+do that so let me just explain uh it's
+do that so let me just explain uh it's
+do that so let me just explain uh it's
+not not very difficult at all so this
+not not very difficult at all so this
+not not very difficult at all so this
+again goes to some papers that I wrote
+again goes to some papers that I wrote
+again goes to some papers that I wrote
+some years back where this um argument
+some years back where this um argument
+some years back where this um argument
+was first made but now of course many
+was first made but now of course many
+was first made but now of course many
+people have fine-tuned it and have
+people have fine-tuned it and have
+people have fine-tuned it and have
+improved it um these were the first
+improved it um these were the first
+improved it um these were the first
+rigorous results on why pins pins would
+rigorous results on why pins pins would
+rigorous results on why pins pins would
+work okay so the idea is very simple so
+work okay so the idea is very simple so
+work okay so the idea is very simple so
+remember that we have essentially so
+remember that we have essentially so
+remember that we have essentially so
+this is essentially the slide that
+this is essentially the slide that
+this is essentially the slide that
+explains everything and I think after
+explains everything and I think after
+explains everything and I think after
+that I will probably conclude because I
+that I will probably conclude because I
+that I will probably conclude because I
+don't have that much of time probably
+don't have that much of time probably
+don't have that much of time probably
+have 10 minutes okay good so the idea is
+have 10 minutes okay good so the idea is
+have 10 minutes okay good so the idea is
+that now we know in principle that the
+that now we know in principle that the
+that now we know in principle that the
+error can be made as small as possible
+error can be made as small as possible
+error can be made as small as possible
+the training error can be made as small
+the training error can be made as small
+the training error can be made as small
+as possible but given a small training
+as possible but given a small training
+as possible but given a small training
+error can we go go the other way and can
+error can we go go the other way and can
+error can we go go the other way and can
+we conclude that the total error is
+we conclude that the total error is
+we conclude that the total error is
+going to be small so this is done in two
+going to be small so this is done in two
+going to be small so this is done in two
+steps the first step we are going to
+steps the first step we are going to
+steps the first step we are going to
+argue so again it goes back to this
+argue so again it goes back to this
+argue so again it goes back to this
+picture here so this is done now right
+picture here so this is done now right
+picture here so this is done now right
+so let's use a green and say that this
+so let's use a green and say that this
+so let's use a green and say that this
+part is done that there exists neural
+part is done that there exists neural
+part is done that there exists neural
+networks such that these errors can be
+networks such that these errors can be
+networks such that these errors can be
+small so now the question that I'm
+small so now the question that I'm
+small so now the question that I'm
+asking is this one so does it mean if I
+asking is this one so does it mean if I
+asking is this one so does it mean if I
+have a small pin residual can I make the
+have a small pin residual can I make the
+have a small pin residual can I make the
+total error small or in other words can
+total error small or in other words can
+total error small or in other words can
+I get a bound which looks like this okay
+I get a bound which looks like this okay
+I get a bound which looks like this okay
+let us try to see whether this can be
+let us try to see whether this can be
+let us try to see whether this can be
+done and here is a strategy to do it it
+done and here is a strategy to do it it
+done and here is a strategy to do it it
+is based on a property that we call a
+is based on a property that we call a
+is based on a property that we call a
+square
+square
+square
+civity this is there is no univers
+civity this is there is no univers
+civity this is there is no univers
+notation but this is the term that we
+notation but this is the term that we
+notation but this is the term that we
+used what does coity mean it's it's sort
+used what does coity mean it's it's sort
+used what does coity mean it's it's sort
+of a stability property of the PD so
+of a stability property of the PD so
+of a stability property of the PD so
+remember that this is a
+remember that this is a
+remember that this is a
+PD so PD is nothing but um associated
+PD so PD is nothing but um associated
+PD so PD is nothing but um associated
+with the PD as you'll see in a couple of
+with the PD as you'll see in a couple of
+with the PD as you'll see in a couple of
+lectures there's something called a
+lectures there's something called a
+lectures there's something called a
+solution operator which is think of it
+solution operator which is think of it
+solution operator which is think of it
+as the inverse of the differential
+as the inverse of the differential
+as the inverse of the differential
+operator because given an F it will take
+operator because given an F it will take
+operator because given an F it will take
+give you the U okay so this this is how
+give you the U okay so this this is how
+give you the U okay so this this is how
+the PD works so now the idea of this
+the PD works so now the idea of this
+the PD works so now the idea of this
+coity so remember all the time f is the
+input right so now let us consider
+input right so now let us consider
+input right so now let us consider
+another input which is close to this PD
+another input which is close to this PD
+another input which is close to this PD
+or in other words let us consider d uh U
+or in other words let us consider d uh U
+or in other words let us consider d uh U
+Bar is equal to F Bar remember that my
+Bar is equal to F Bar remember that my
+Bar is equal to F Bar remember that my
+original PD is Du equal to F and now I
+original PD is Du equal to F and now I
+original PD is Du equal to F and now I
+have T Bar equal to F Bar so the idea is
+have T Bar equal to F Bar so the idea is
+have T Bar equal to F Bar so the idea is
+i perturb f so I have a f bar which is
+i perturb f so I have a f bar which is
+i perturb f so I have a f bar which is
+Clos close to F what happens to U and U
+Clos close to F what happens to U and U
+Clos close to F what happens to U and U
+Bar right me this is a question of
+Bar right me this is a question of
+Bar right me this is a question of
+stability I changed the inputs to the PD
+stability I changed the inputs to the PD
+stability I changed the inputs to the PD
+a little bit does it also get reflected
+a little bit does it also get reflected
+a little bit does it also get reflected
+in how the solution behaves and
+in how the solution behaves and
+in how the solution behaves and
+coercivity says yes that is indeed the
+coercivity says yes that is indeed the
+coercivity says yes that is indeed the
+case so this is precisely the question
+case so this is precisely the question
+case so this is precisely the question
+so this is nothing but F Bar this is
+so this is nothing but F Bar this is
+so this is nothing but F Bar this is
+nothing but F so it says that if you
+nothing but F so it says that if you
+nothing but F so it says that if you
+inputs are close to each other the
+inputs are close to each other the
+inputs are close to each other the
+output of the PD so this is a stability
+output of the PD so this is a stability
+output of the PD so this is a stability
+of the inverse operator somehow of the
+of the inverse operator somehow of the
+of the inverse operator somehow of the
+solution operator the outputs of the PD
+solution operator the outputs of the PD
+solution operator the outputs of the PD
+are going to be close to each other and
+are going to be close to each other and
+are going to be close to each other and
+in general this of course there are
+in general this of course there are
+in general this of course there are
+constants because this PDS can be
+constants because this PDS can be
+constants because this PDS can be
+nonlinear so this is like let's say
+nonlinear so this is like let's say
+nonlinear so this is like let's say
+lipshits continuity roughly speaking
+lipshits continuity roughly speaking
+lipshits continuity roughly speaking
+it's it's it's a continuity statement
+it's it's it's a continuity statement
+it's it's it's a continuity statement
+it's a lip shits or a holder continuous
+it's a lip shits or a holder continuous
+it's a lip shits or a holder continuous
+statement so this is a stability
+statement so this is a stability
+statement so this is a stability
+statement we call it coercivity because
+statement we call it coercivity because
+statement we call it coercivity because
+uh this is property that the PD can have
+uh this is property that the PD can have
+uh this is property that the PD can have
+so remember that the bottom line here of
+so remember that the bottom line here of
+so remember that the bottom line here of
+this entire estimate that I wrote down
+this entire estimate that I wrote down
+this entire estimate that I wrote down
+is given small changes in the inputs to
+is given small changes in the inputs to
+is given small changes in the inputs to
+the PD outputs to the PD
+the PD outputs to the PD
+the PD outputs to the PD
+which which the PD
+which which the PD
+which which the PD
+solution would also have very small or
+solution would also have very small or
+solution would also have very small or
+relatively small changes because of
+relatively small changes because of
+relatively small changes because of
+course this depends on the
+course this depends on the
+course this depends on the
+constants now how can we convert this
+constants now how can we convert this
+constants now how can we convert this
+into uh bounds in terms of residuals so
+into uh bounds in terms of residuals so
+into uh bounds in terms of residuals so
+remember my objective and this is very
+remember my objective and this is very
+remember my objective and this is very
+very straightforward and and but it
+very straightforward and and but it
+very straightforward and and but it
+requires a little bit of concentration
+requires a little bit of concentration
+requires a little bit of concentration
+let's let's try to have that
+let's let's try to have that
+let's let's try to have that
+concentration so this is the definition
+concentration so this is the definition
+concentration so this is the definition
+of error error is nothing but the neural
+of error error is nothing but the neural
+of error error is nothing but the neural
+network minus the exact solution in some
+network minus the exact solution in some
+network minus the exact solution in some
+Norm but remember that the PD itself is
+Norm but remember that the PD itself is
+Norm but remember that the PD itself is
+Du equals to F again and again but what
+Du equals to F again and again but what
+Du equals to F again and again but what
+is the neural network doing the neural
+is the neural network doing the neural
+is the neural network doing the neural
+network is solving duu Theta is equal to
+network is solving duu Theta is equal to
+network is solving duu Theta is equal to
+f plus the re
+right this is because you always get
+right this is because you always get
+right this is because you always get
+this residual so the neural network is
+this residual so the neural network is
+this residual so the neural network is
+solving it's a it's a perturbation it's
+solving it's a it's a perturbation it's
+solving it's a it's a perturbation it's
+a perturbation of F and the perturbation
+a perturbation of F and the perturbation
+a perturbation of F and the perturbation
+is precisely in terms of the residual
+is precisely in terms of the residual
+is precisely in terms of the residual
+now this can be small or big we don't
+now this can be small or big we don't
+now this can be small or big we don't
+know that yet but this is a perturbation
+know that yet but this is a perturbation
+know that yet but this is a perturbation
+so remember what does the stability say
+so remember what does the stability say
+so remember what does the stability say
+that the difference between the outputs
+that the difference between the outputs
+that the difference between the outputs
+is bounded in terms of the difference
+is bounded in terms of the difference
+is bounded in terms of the difference
+between the inputs so these are the
+between the inputs so these are the
+between the inputs so these are the
+inputs and du equal to f so this is the
+inputs and du equal to f so this is the
+inputs and du equal to f so this is the
+this is what it is and du minus f is
+this is what it is and du minus f is
+this is what it is and du minus f is
+actually the because it's a norm this is
+actually the because it's a norm this is
+actually the because it's a norm this is
+this generalization error this
+this generalization error this
+this generalization error this
+generalization error EG is nothing but
+generalization error EG is nothing but
+generalization error EG is nothing but
+the norm of the resido rests in some nor
+the norm of the resido rests in some nor
+the norm of the resido rests in some nor
+so that's it so this tells us that if
+so that's it so this tells us that if
+so that's it so this tells us that if
+this quantity is going to be small right
+this quantity is going to be small right
+this quantity is going to be small right
+so this guy is going to be small if
+so this guy is going to be small if
+so this guy is going to be small if
+these this nonlinear terms these
+these this nonlinear terms these
+these this nonlinear terms these
+constants are going to be bounded
+constants are going to be bounded
+constants are going to be bounded
+automatically the exact solution is
+automatically the exact solution is
+automatically the exact solution is
+going to be small and it solves our
+going to be small and it solves our
+going to be small and it solves our
+problem because what we say by
+problem because what we say by
+problem because what we say by
+minimizing the residual by making it as
+minimizing the residual by making it as
+minimizing the residual by making it as
+small as possible we are saying that the
+small as possible we are saying that the
+small as possible we are saying that the
+object that is making this residual as
+object that is making this residual as
+object that is making this residual as
+small as possible is as close as we want
+small as possible is as close as we want
+small as possible is as close as we want
+to the exact solution of the B okay so
+to the exact solution of the B okay so
+to the exact solution of the B okay so
+this is one let's say a sufficient
+this is one let's say a sufficient
+this is one let's say a sufficient
+condition this is not necessary
+condition this is not necessary
+condition this is not necessary
+condition but it's a sufficient
+condition but it's a sufficient
+condition but it's a sufficient
+condition which tells us that a
+condition which tells us that a
+condition which tells us that a
+mechanism by which minimizing the
+mechanism by which minimizing the
+mechanism by which minimizing the
+residual is a keen to sort of making the
+residual is a keen to sort of making the
+residual is a keen to sort of making the
+or approximating the solution of the pde
+or approximating the solution of the pde
+or approximating the solution of the pde
+is provided by this coer civity so this
+is provided by this coer civity so this
+is provided by this coer civity so this
+is a mechanism by which you can convert
+is a mechanism by which you can convert
+is a mechanism by which you can convert
+the properties of the PD into an error
+the properties of the PD into an error
+the properties of the PD into an error
+estimate for the PIN for instance right
+estimate for the PIN for instance right
+estimate for the PIN for instance right
+so this is uh if this is true we have to
+so this is uh if this is true we have to
+so this is uh if this is true we have to
+verify for each uh different PD and this
+verify for each uh different PD and this
+verify for each uh different PD and this
+is uh far from easy but uh that that's
+is uh far from easy but uh that that's
+is uh far from easy but uh that that's
+that's how in the next lecture you'll
+that's how in the next lecture you'll
+that's how in the next lecture you'll
+see some concrete examples and then but
+see some concrete examples and then but
+see some concrete examples and then but
+this is not job done right because in
+this is not job done right because in
+this is not job done right because in
+practice we don't have access to this
+practice we don't have access to this
+practice we don't have access to this
+residual we only have an access at least
+residual we only have an access at least
+residual we only have an access at least
+the norm of the residual we only have
+the norm of the residual we only have
+the norm of the residual we only have
+access to the quadri right this is where
+access to the quadri right this is where
+access to the quadri right this is where
+is it now the quadrature which is here
+is it now the quadrature which is here
+is it now the quadrature which is here
+so we don't have access to the residual
+so we don't have access to the residual
+so we don't have access to the residual
+we only have access to the quadrature so
+we only have access to the quadrature so
+we only have access to the quadrature so
+but this is again there is a
+but this is again there is a
+but this is again there is a
+relationship between them because this
+relationship between them because this
+relationship between them because this
+is numerical analysis you have a
+is numerical analysis you have a
+is numerical analysis you have a
+function and you have it uh you
+function and you have it uh you
+function and you have it uh you
+integrate the function exactly or you
+integrate the function exactly or you
+integrate the function exactly or you
+integrate it approximately so how Clos
+integrate it approximately so how Clos
+integrate it approximately so how Clos
+the error is and this is essentially
+the error is and this is essentially
+the error is and this is essentially
+what is called a quar chair so this is
+what is called a quar chair so this is
+what is called a quar chair so this is
+done in traditional numerical analysis
+done in traditional numerical analysis
+done in traditional numerical analysis
+for instance if you use um let's say
+for instance if you use um let's say
+for instance if you use um let's say
+just random points this uh number is
+just random points this uh number is
+just random points this uh number is
+going to be a half right because we know
+going to be a half right because we know
+going to be a half right because we know
+that if you have random points uh
+that if you have random points uh
+that if you have random points uh
+Central limit theorem tells us that you
+Central limit theorem tells us that you
+Central limit theorem tells us that you
+can approximate uh the integral of a
+can approximate uh the integral of a
+can approximate uh the integral of a
+function by just the what is called the
+function by just the what is called the
+function by just the what is called the
+empirical sum or the point wise sum and
+empirical sum or the point wise sum and
+empirical sum or the point wise sum and
+the error is going to scale like the
+the error is going to scale like the
+the error is going to scale like the
+square root of the number of points so
+square root of the number of points so
+square root of the number of points so
+the PD residual is given in terms of the
+the PD residual is given in terms of the
+the PD residual is given in terms of the
+training error plus some constants of
+training error plus some constants of
+training error plus some constants of
+course these constants they don't depend
+course these constants they don't depend
+course these constants they don't depend
+on the PD itself they only depend on the
+on the PD itself they only depend on the
+on the PD itself they only depend on the
+regularity of the smoothness of this
+regularity of the smoothness of this
+regularity of the smoothness of this
+function here of the neural network and
+function here of the neural network and
+function here of the neural network and
+the number of quadrature points so Alpha
+the number of quadrature points so Alpha
+the number of quadrature points so Alpha
+is sort of the rate of convergence that
+is sort of the rate of convergence that
+is sort of the rate of convergence that
+I Told You So if you think of Monte
+I Told You So if you think of Monte
+I Told You So if you think of Monte
+Carlo s random sampling then this is
+Carlo s random sampling then this is
+Carlo s random sampling then this is
+going to be a half so this is this is
+going to be a half so this is this is
+going to be a half so this is this is
+and P is equal to 2 Alpha is going to be
+and P is equal to 2 Alpha is going to be
+and P is equal to 2 Alpha is going to be
+equal to 1 so this is sort of the
+equal to 1 so this is sort of the
+equal to 1 so this is sort of the
+mechanism so first if we can make the
+mechanism so first if we can make the
+mechanism so first if we can make the
+training error small maybe I have even a
+training error small maybe I have even a
+training error small maybe I have even a
+slide here uh yeah so let's say that uh
+slide here uh yeah so let's say that uh
+slide here uh yeah so let's say that uh
+if I if I can make this error small the
+if I if I can make this error small the
+if I if I can make this error small the
+training error is small and this is not
+training error is small and this is not
+training error is small and this is not
+going to be an easy task you know so in
+going to be an easy task you know so in
+going to be an easy task you know so in
+the next lecture you will see that this
+the next lecture you will see that this
+the next lecture you will see that this
+is this is a hard task if I can make my
+is this is a hard task if I can make my
+is this is a hard task if I can make my
+training error as small as I want and if
+training error as small as I want and if
+training error as small as I want and if
+this constant is going to be bounded if
+this constant is going to be bounded if
+this constant is going to be bounded if
+I take as many quadrature points as I
+I take as many quadrature points as I
+I take as many quadrature points as I
+want then the residual is going to be
+want then the residual is going to be
+want then the residual is going to be
+small so to make the residual small I
+small so to make the residual small I
+small so to make the residual small I
+need to train my neural network in such
+need to train my neural network in such
+need to train my neural network in such
+a manner that I have a small training
+a manner that I have a small training
+a manner that I have a small training
+error and I have sufficient number of
+error and I have sufficient number of
+error and I have sufficient number of
+quadrature points okay that makes my uh
+quadrature points okay that makes my uh
+quadrature points okay that makes my uh
+residual so this you should think is
+residual so this you should think is
+residual so this you should think is
+just the norm of the residual right
+just the norm of the residual right
+just the norm of the residual right
+residual norm and then by using the
+residual norm and then by using the
+residual norm and then by using the
+civity this is the one that I have
+civity this is the one that I have
+civity this is the one that I have
+sketched out what you can do is that you
+sketched out what you can do is that you
+sketched out what you can do is that you
+can uh you can say that the total error
+can uh you can say that the total error
+can uh you can say that the total error
+is going to be small so again you have
+is going to be small so again you have
+is going to be small so again you have
+to compute these constants here in some
+to compute these constants here in some
+to compute these constants here in some
+sense means well this completely depends
+sense means well this completely depends
+sense means well this completely depends
+on the properties of the pte as we will
+on the properties of the pte as we will
+on the properties of the pte as we will
+see in the next lecture and the first
+see in the next lecture and the first
+see in the next lecture and the first
+line here gives you guarantees that at
+line here gives you guarantees that at
+line here gives you guarantees that at
+least the global minimum of this ET is
+least the global minimum of this ET is
+least the global minimum of this ET is
+going to be as small as you want you
+going to be as small as you want you
+going to be as small as you want you
+know this is a loss function um you you
+know this is a loss function um you you
+know this is a loss function um you you
+never reach Global Minima this is
+never reach Global Minima this is
+never reach Global Minima this is
+because it's a it's a non-convex
+because it's a it's a non-convex
+because it's a it's a non-convex
+function but if you did then the the the
+function but if you did then the the the
+function but if you did then the the the
+GL minimum can be made as small as
+GL minimum can be made as small as
+GL minimum can be made as small as
+possible so that there is a there's a
+possible so that there is a there's a
+possible so that there is a there's a
+hope but there's a possibility that this
+hope but there's a possibility that this
+hope but there's a possibility that this
+quantity can be made as small as
+quantity can be made as small as
+quantity can be made as small as
+possible this quantity can be made as
+possible this quantity can be made as
+possible this quantity can be made as
+small as possible and if you have the
+small as possible and if you have the
+small as possible and if you have the
+right kind of pde that can be converted
+right kind of pde that can be converted
+right kind of pde that can be converted
+into making the error as small as
+into making the error as small as
+into making the error as small as
+possible okay so this is sort of the
+possible okay so this is sort of the
+possible okay so this is sort of the
+algorithm by which we can verify whether
+algorithm by which we can verify whether
+algorithm by which we can verify whether
+pins can work or not at least one of the
+pins can work or not at least one of the
+pins can work or not at least one of the
+this is as I said it's all sufficient
+this is as I said it's all sufficient
+this is as I said it's all sufficient
+conditions it's not necessary conditions
+conditions it's not necessary conditions
+conditions it's not necessary conditions
+so what we are going to do is is in the
+so what we are going to do is is in the
+so what we are going to do is is in the
+next lecture at least part of the next
+next lecture at least part of the next
+next lecture at least part of the next
+lecture is to look at some examples to
+lecture is to look at some examples to
+lecture is to look at some examples to
+see whether it is feasible or not but I
+see whether it is feasible or not but I
+see whether it is feasible or not but I
+keep on repeating and this is important
+keep on repeating and this is important
+keep on repeating and this is important
+so that you get a sense for where we
+so that you get a sense for where we
+so that you get a sense for where we
+stand the way it will work is you do
+stand the way it will work is you do
+stand the way it will work is you do
+your training all right when you train
+your training all right when you train
+your training all right when you train
+the neural networks you can actually
+the neural networks you can actually
+the neural networks you can actually
+compute the training error explicitly
+compute the training error explicitly
+compute the training error explicitly
+because this is this the loss function
+because this is this the loss function
+because this is this the loss function
+is given to us and you take a square
+is given to us and you take a square
+is given to us and you take a square
+root of it or a p root of it and you get
+root of it or a p root of it and you get
+root of it or a p root of it and you get
+the training error that tells us
+that tells us the Quantum of uh this
+that tells us the Quantum of uh this
+that tells us the Quantum of uh this
+this loss function here and then if you
+this loss function here and then if you
+this loss function here and then if you
+have sufficient number of quadrature
+have sufficient number of quadrature
+have sufficient number of quadrature
+points this tells us that we need
+points this tells us that we need
+points this tells us that we need
+sufficient number of quadrature points
+sufficient number of quadrature points
+sufficient number of quadrature points
+that will make the residual small and
+that will make the residual small and
+that will make the residual small and
+then depending on the properties of the
+then depending on the properties of the
+then depending on the properties of the
+pde the total error is going to be small
+pde the total error is going to be small
+pde the total error is going to be small
+so now you can also see that this this
+so now you can also see that this this
+so now you can also see that this this
+Arrangement can fail in many ways right
+Arrangement can fail in many ways right
+Arrangement can fail in many ways right
+for instance it can fail if you're are
+for instance it can fail if you're are
+for instance it can fail if you're are
+unable to train the network well uh the
+unable to train the network well uh the
+unable to train the network well uh the
+training GRS are going to be large it
+training GRS are going to be large it
+training GRS are going to be large it
+can fail if you don't have sufficient
+can fail if you don't have sufficient
+can fail if you don't have sufficient
+number of quar points if it can fail if
+number of quar points if it can fail if
+number of quar points if it can fail if
+the PD itself does not have this
+the PD itself does not have this
+the PD itself does not have this
+coercivity property it can fail if these
+coercivity property it can fail if these
+coercivity property it can fail if these
+constants are going to be very bad and
+constants are going to be very bad and
+constants are going to be very bad and
+there are or these constants are going
+there are or these constants are going
+there are or these constants are going
+to be very bad so there are diff several
+to be very bad so there are diff several
+to be very bad so there are diff several
+kinds of failure modes here and we'll
+kinds of failure modes here and we'll
+kinds of failure modes here and we'll
+also see some examples of that so I
+also see some examples of that so I
+also see some examples of that so I
+think I have come to the end of my time
+think I have come to the end of my time
+think I have come to the end of my time
+today and uh as I said in the next
+today and uh as I said in the next
+today and uh as I said in the next
+lecture we we sort of work it out uh
+lecture we we sort of work it out uh
+lecture we we sort of work it out uh
+what is when will the project be online
+what is when will the project be online
+what is when will the project be online
+people are more interested in that than
+people are more interested in that than
+people are more interested in that than
+in the lectures soon soon is the
+in the lectures soon soon is the
+in the lectures soon soon is the
+answer soon because some of you
+answer soon because some of you
+answer soon because some of you
+requested that uh we don't
+requested that uh we don't
+requested that uh we don't
+have a project deadline in the end of
+have a project deadline in the end of
+have a project deadline in the end of
+May because people have exams so we had
+May because people have exams so we had
+May because people have exams so we had
+to sort of change the schedule so now
+to sort of change the schedule so now
+to sort of change the schedule so now
+there will be there will be no project
+there will be there will be no project
+there will be there will be no project
+deadlines at the end of
+deadlines at the end of
+deadlines at the end of
+May right uh someone is saying
+May right uh someone is saying
+May right uh someone is saying
+something just because it is
+something just because it is
+something just because it is
+graded yeah yeah it's okay means we I
+graded yeah yeah it's okay means we I
+graded yeah yeah it's okay means we I
+think soon means either today or
+think soon means either today or
+think soon means either today or
+tomorrow I cannot guarantee that because
+tomorrow I cannot guarantee that because
+tomorrow I cannot guarantee that because
+the last time I looked it was more or
+the last time I looked it was more or
+the last time I looked it was more or
+less ready but I think it's either today
+less ready but I think it's either today
+less ready but I think it's either today
+or tomorrow that's uh who is saying now
+or tomorrow that's uh who is saying now
+or tomorrow that's uh who is saying now
+what does she want now can you give us a
+what does she want now can you give us a
+what does she want now can you give us a
+preliminary schedule for all the
+preliminary schedule for all the
+preliminary schedule for all the
+projects uh okay this will be provided
+projects uh okay this will be provided
+projects uh okay this will be provided
+okay I will tell the assistants to
+okay I will tell the assistants to
+okay I will tell the assistants to
+release that but tentative I think we
+release that but tentative I think we
+release that but tentative I think we
+just moved things a bit right so now
+just moved things a bit right so now
+just moved things a bit right so now
+it's the pins project will be issued
+it's the pins project will be issued
+it's the pins project will be issued
+today will be something towards the end
+today will be something towards the end
+today will be something towards the end
+of April and there'll be something
+of April and there'll be something
+of April and there'll be something
+towards the middle of June but the exact
+towards the middle of June but the exact
+towards the middle of June but the exact
+dates I think they will they will
+dates I think they will they will
+dates I think they will they will
+provide okay so in that case uh let's
+provide okay so in that case uh let's
+provide okay so in that case uh let's
+meet in person and also on Zoom next
+meet in person and also on Zoom next
+meet in person and also on Zoom next
+week bye-bye can I ask a question yes
+week bye-bye can I ask a question yes
+week bye-bye can I ask a question yes
+sure um regarding the quador yeah uh
+sure um regarding the quador yeah uh
+sure um regarding the quador yeah uh
+bounds uh why do you must use quador
+bounds uh why do you must use quador
+bounds uh why do you must use quador
+bounds would there be other kind of
+bounds would there be other kind of
+bounds would there be other kind of
+approximations that that we can use or
+approximations that that we can use or
+approximations that that we can use or
+is the qu approximation the best
+is the qu approximation the best
+is the qu approximation the best
+one any approximation is a quadrature
+one any approximation is a quadrature
+one any approximation is a quadrature
+right what is a quadrature quadrature is
+right what is a quadrature quadrature is
+right what is a quadrature quadrature is
+when you replace an integral which is a
+when you replace an integral which is a
+when you replace an integral which is a
+continuous quantity by some sort of some
+continuous quantity by some sort of some
+continuous quantity by some sort of some
+form of a sum okay which is a discrete
+form of a sum okay which is a discrete
+form of a sum okay which is a discrete
+quantity so whether you use Monte Carlo
+quantity so whether you use Monte Carlo
+quantity so whether you use Monte Carlo
+Monte Carlo you just if it's Monte Carlo
+Monte Carlo you just if it's Monte Carlo
+Monte Carlo you just if it's Monte Carlo
+maybe I can just so instead of now of
+maybe I can just so instead of now of
+maybe I can just so instead of now of
+course my pen has stopped working so if
+course my pen has stopped working so if
+course my pen has stopped working so if
+you have F of Y Dy you're going to
+you have F of Y Dy you're going to
+you have F of Y Dy you're going to
+approximate it by 1 / m f of Yi I from 1
+approximate it by 1 / m f of Yi I from 1
+approximate it by 1 / m f of Yi I from 1
+to M so that would be Monte Carlo of
+to M so that would be Monte Carlo of
+to M so that would be Monte Carlo of
+course in a in a probabilistic sense but
+course in a in a probabilistic sense but
+course in a in a probabilistic sense but
+uh all of this are quadrature to me you
+uh all of this are quadrature to me you
+uh all of this are quadrature to me you
+know quadrature is any way in which you
+know quadrature is any way in which you
+know quadrature is any way in which you
+take a integral and you approximate it
+discretly so everything whether it's
+discretly so everything whether it's
+discretly so everything whether it's
+Monte Carlo quasi Monte Carlo means
+Monte Carlo quasi Monte Carlo means
+Monte Carlo quasi Monte Carlo means
+house quadrature Newton codes all of
+house quadrature Newton codes all of
+house quadrature Newton codes all of
+them are included in the same same
+them are included in the same same
+them are included in the same same
+Ambit is that clear okay yeah it's
+Ambit is that clear okay yeah it's
+Ambit is that clear okay yeah it's
+perfect thank you so
+perfect thank you so
+perfect thank you so
+much any further
+questions no so the recordings will be
+questions no so the recordings will be
+questions no so the recordings will be
+provided and also the slides if they
+provided and also the slides if they
+provided and also the slides if they
+have not already been put on they will
+have not already been put on they will
+have not already been put on they will
+be put on pretty soon okay bye-bye

@@ -1,0 +1,5321 @@
+okay short
+okay short
+okay short
+break uh but let's move on so this is
+break uh but let's move on so this is
+break uh but let's move on so this is
+kind of the
+kind of the
+kind of the
+last uh new topic that we're gonna we're
+last uh new topic that we're gonna we're
+last uh new topic that we're gonna we're
+going to cover uh this is the last last
+going to cover uh this is the last last
+going to cover uh this is the last last
+Topic in the in the course before our
+Topic in the in the course before our
+Topic in the in the course before our
+two guest lectures next next week and so
+two guest lectures next next week and so
+two guest lectures next next week and so
+what we're going to talk about is um
+what we're going to talk about is um
+what we're going to talk about is um
+symbolic regression and and model
+Discovery uh yeah so like I said we just
+Discovery uh yeah so like I said we just
+Discovery uh yeah so like I said we just
+we just had the introduction to Jack now
+we just had the introduction to Jack now
+we just had the introduction to Jack now
+we're going to to be talking about
+we're going to to be talking about
+we're going to to be talking about
+symbolic progression and model Discovery
+symbolic progression and model Discovery
+symbolic progression and model Discovery
+for the last
+part um so in this lecture I'm going to
+part um so in this lecture I'm going to
+part um so in this lecture I'm going to
+tell you what model Discovery is how we
+tell you what model Discovery is how we
+tell you what model Discovery is how we
+Define model
+Define model
+Define model
+Discovery uh and then I'm going to talk
+Discovery uh and then I'm going to talk
+Discovery uh and then I'm going to talk
+about symbolic regression as a way to
+about symbolic regression as a way to
+about symbolic regression as a way to
+kind of solve this task of model model
+kind of solve this task of model model
+kind of solve this task of model model
+Discovery and we're going to spend quite
+Discovery and we're going to spend quite
+Discovery and we're going to spend quite
+a lot of time talking about the
+a lot of time talking about the
+a lot of time talking about the
+challenges of symbolic regression and
+challenges of symbolic regression and
+challenges of symbolic regression and
+why this is such a difficult task to to
+why this is such a difficult task to to
+why this is such a difficult task to to
+achieve
+achieve
+achieve
+uh we're also going to spend time
+uh we're also going to spend time
+uh we're also going to spend time
+talking about function discovery which
+talking about function discovery which
+talking about function discovery which
+is maybe a uh a con conceptually simp
+is maybe a uh a con conceptually simp
+is maybe a uh a con conceptually simp
+simpler task before we think about model
+simpler task before we think about model
+simpler task before we think about model
+Discovery um and then we'll talk about
+Discovery um and then we'll talk about
+Discovery um and then we'll talk about
+kind of state-ofthe-art model Discovery
+kind of state-ofthe-art model Discovery
+kind of state-ofthe-art model Discovery
+Discovery
+Discovery
+Discovery
+systems um so yeah by the end of the
+systems um so yeah by the end of the
+systems um so yeah by the end of the
+lecture hopefully you'll understand how
+lecture hopefully you'll understand how
+lecture hopefully you'll understand how
+symbolic regression algorithms work or
+symbolic regression algorithms work or
+symbolic regression algorithms work or
+designed all the kind of the important
+designed all the kind of the important
+designed all the kind of the important
+Concepts that you need to uh understand
+Concepts that you need to uh understand
+Concepts that you need to uh understand
+or the the kind of difficult challenges
+or the the kind of difficult challenges
+or the the kind of difficult challenges
+that you need to solve for these types
+that you need to solve for these types
+that you need to solve for these types
+of
+of
+of
+algorithms and then we'll you'll
+algorithms and then we'll you'll
+algorithms and then we'll you'll
+understand how we use symbolic
+understand how we use symbolic
+understand how we use symbolic
+regression for function and model model
+regression for function and model model
+regression for function and model model
+this
+discovery okay so uh here's an equation
+discovery okay so uh here's an equation
+discovery okay so uh here's an equation
+anyone know what this equation
+anyone know what this equation
+anyone know what this equation
+is one person anyone else who's seen
+is one person anyone else who's seen
+is one person anyone else who's seen
+this before hands
+this before hands
+this before hands
+up okay so anyone wants to tell me what
+up okay so anyone wants to tell me what
+up okay so anyone wants to tell me what
+this equation is
+yeah Einstein's field equations for
+yeah Einstein's field equations for
+yeah Einstein's field equations for
+general relativity yeah so this is
+general relativity yeah so this is
+general relativity yeah so this is
+probably one of the most famous
+probably one of the most famous
+probably one of the most famous
+equations in physics anyone can you can
+equations in physics anyone can you can
+equations in physics anyone can you can
+anyone tell me what the left hand side
+anyone tell me what the left hand side
+anyone tell me what the left hand side
+and the right hand side says like at a
+and the right hand side says like at a
+and the right hand side says like at a
+highly conceptual
+highly conceptual
+highly conceptual
+level maybe anyone anyone else
+know okay go on
+know okay go on
+know okay go on
+yeah
+yeah yeah
+yeah yeah
+yeah yeah
+yeah exactly yeah
+yeah exactly yeah
+yeah exactly yeah
+so this is a really remarkable equation
+so this is a really remarkable equation
+so this is a really remarkable equation
+but Einstein with the help of other
+but Einstein with the help of other
+but Einstein with the help of other
+amazing physicist kind of eventually
+amazing physicist kind of eventually
+amazing physicist kind of eventually
+worked out is it relates the kind of
+worked out is it relates the kind of
+worked out is it relates the kind of
+curvature of the SpaceTime with the
+curvature of the SpaceTime with the
+curvature of the SpaceTime with the
+stress energy and momentum content
+stress energy and momentum content
+stress energy and momentum content
+within the
+within the
+within the
+SpaceTime uh so basically saying that
+SpaceTime uh so basically saying that
+SpaceTime uh so basically saying that
+like the physics or like uh gravitation
+like the physics or like uh gravitation
+like the physics or like uh gravitation
+um depends on on Geometry and this is
+um depends on on Geometry and this is
+um depends on on Geometry and this is
+like a super ground breaking idea that
+like a super ground breaking idea that
+like a super ground breaking idea that
+uh you know has defined a lot of modern
+uh you know has defined a lot of modern
+uh you know has defined a lot of modern
+physics
+physics
+physics
+today I'm not going to go into details
+today I'm not going to go into details
+today I'm not going to go into details
+of the equation but these are kind of
+of the equation but these are kind of
+of the equation but these are kind of
+the terms uh that that we Define and it
+the terms uh that that we Define and it
+the terms uh that that we Define and it
+includes things like the gravitational
+includes things like the gravitational
+includes things like the gravitational
+constant the cosmological constant the
+constant the cosmological constant the
+constant the cosmological constant the
+speed of light and other interesting
+speed of light and other interesting
+speed of light and other interesting
+kind of physics physics quantities and
+constants
+constants
+constants
+um
+um
+um
+so I guess the question that I'm ask in
+so I guess the question that I'm ask in
+so I guess the question that I'm ask in
+this kind of lecture is What If
+this kind of lecture is What If
+this kind of lecture is What If
+eventually uh maybe not today but maybe
+eventually uh maybe not today but maybe
+eventually uh maybe not today but maybe
+in the future what if AI could help us
+in the future what if AI could help us
+in the future what if AI could help us
+do this sort of thing like make these
+do this sort of thing like make these
+do this sort of thing like make these
+kind of groundbreaking discoveries in
+kind of groundbreaking discoveries in
+kind of groundbreaking discoveries in
+physics now I want to I want to carry
+physics now I want to I want to carry
+physics now I want to I want to carry
+out this and say we definitely are not
+out this and say we definitely are not
+out this and say we definitely are not
+at this level uh today in my opinion of
+at this level uh today in my opinion of
+at this level uh today in my opinion of
+using AI to like discover relationships
+using AI to like discover relationships
+using AI to like discover relationships
+between geometry and like matter I think
+between geometry and like matter I think
+between geometry and like matter I think
+that that is uh relies on remarkable
+that that is uh relies on remarkable
+that that is uh relies on remarkable
+human intuition um but I do think this
+human intuition um but I do think this
+human intuition um but I do think this
+is an exciting field and I think we're
+is an exciting field and I think we're
+is an exciting field and I think we're
+making some like steps towards this kind
+making some like steps towards this kind
+making some like steps towards this kind
+of grand goal of like helping us to
+of grand goal of like helping us to
+of grand goal of like helping us to
+discover physics or other kind of
+discover physics or other kind of
+discover physics or other kind of
+fundamental scientific phenomena and how
+fundamental scientific phenomena and how
+fundamental scientific phenomena and how
+they work and so what I'm going to try
+they work and so what I'm going to try
+they work and so what I'm going to try
+and give you a flavor of in this lecture
+and give you a flavor of in this lecture
+and give you a flavor of in this lecture
+is just some of the start kind of
+is just some of the start kind of
+is just some of the start kind of
+starting ideas that people are trying to
+starting ideas that people are trying to
+starting ideas that people are trying to
+to get towards this
+to get towards this
+to get towards this
+goal and why would it be useful to have
+goal and why would it be useful to have
+goal and why would it be useful to have
+an AI that does this well these are two
+an AI that does this well these are two
+an AI that does this well these are two
+examples or reasons that I tried to tell
+examples or reasons that I tried to tell
+examples or reasons that I tried to tell
+you in the first lecture uh of kind of
+you in the first lecture uh of kind of
+you in the first lecture uh of kind of
+the struggle that that that we're having
+the struggle that that that we're having
+the struggle that that that we're having
+as scientists today um in in doing
+as scientists today um in in doing
+as scientists today um in in doing
+scientific discovery and and one of the
+scientific discovery and and one of the
+scientific discovery and and one of the
+one of the challenges is the just the
+one of the challenges is the just the
+one of the challenges is the just the
+sheer amount of data that some of our
+sheer amount of data that some of our
+sheer amount of data that some of our
+experiments are producing so if you
+experiments are producing so if you
+experiments are producing so if you
+remember this is a plot of the amount of
+remember this is a plot of the amount of
+remember this is a plot of the amount of
+data and terabytes recorded by CERN the
+data and terabytes recorded by CERN the
+data and terabytes recorded by CERN the
+particle collider like every month and
+particle collider like every month and
+particle collider like every month and
+we're recording like thousands of
+we're recording like thousands of
+we're recording like thousands of
+terabytes petabytes of of of data every
+terabytes petabytes of of of data every
+terabytes petabytes of of of data every
+month and so a human it's just
+month and so a human it's just
+month and so a human it's just
+impossible for like a person to go
+impossible for like a person to go
+impossible for like a person to go
+through that dat by hand and look at all
+through that dat by hand and look at all
+through that dat by hand and look at all
+the events and categorize them and try
+the events and categorize them and try
+the events and categorize them and try
+and reason about those events so AI
+and reason about those events so AI
+and reason about those events so AI
+could help us just like pull out
+could help us just like pull out
+could help us just like pull out
+patterns and maybe at a more deeper
+patterns and maybe at a more deeper
+patterns and maybe at a more deeper
+level kind of figure out some scientific
+level kind of figure out some scientific
+level kind of figure out some scientific
+theory behind those
+theory behind those
+theory behind those
+patterns another example is is the
+patterns another example is is the
+patterns another example is is the
+complexity of the scientific problems
+complexity of the scientific problems
+complexity of the scientific problems
+that we're studying like as we learn
+that we're studying like as we learn
+that we're studying like as we learn
+more about scientific phenomena they
+more about scientific phenomena they
+more about scientific phenomena they
+often get more complex and and again
+often get more complex and and again
+often get more complex and and again
+there might be kind of hidden patterns
+there might be kind of hidden patterns
+there might be kind of hidden patterns
+that ai ai could help us pull out that
+that ai ai could help us pull out that
+that ai ai could help us pull out that
+we just wouldn't see before so example
+we just wouldn't see before so example
+we just wouldn't see before so example
+this is kind of evolution of the the
+this is kind of evolution of the the
+this is kind of evolution of the the
+covid virus and and uh this evolution is
+covid virus and and uh this evolution is
+covid virus and and uh this evolution is
+incredibly complex and depends on you
+incredibly complex and depends on you
+incredibly complex and depends on you
+know Global dynamics of of populations
+know Global dynamics of of populations
+know Global dynamics of of populations
+and politics and everything else
+so so yeah can can AI help us uh deal
+so so yeah can can AI help us uh deal
+so so yeah can can AI help us uh deal
+with this data deal with the types of
+with this data deal with the types of
+with this data deal with the types of
+problems that we're that we're trying to
+problems that we're that we're trying to
+problems that we're that we're trying to
+solve
+today so I'm going to Define two tasks
+today so I'm going to Define two tasks
+today so I'm going to Define two tasks
+that um people are looking into to to
+that um people are looking into to to
+that um people are looking into to to
+use machine Lear to help us and one is
+use machine Lear to help us and one is
+use machine Lear to help us and one is
+uh
+uh
+uh
+what I would Define as model
+what I would Define as model
+what I would Define as model
+Discovery and there are different ways
+Discovery and there are different ways
+Discovery and there are different ways
+to Define this but for the purposes of
+to Define this but for the purposes of
+to Define this but for the purposes of
+this lecture I'm going to keep it simple
+this lecture I'm going to keep it simple
+this lecture I'm going to keep it simple
+and and just
+and and just
+and and just
+say given some observations of some
+say given some observations of some
+say given some observations of some
+scientific or physical system let's just
+scientific or physical system let's just
+scientific or physical system let's just
+take a very simple system that we've
+take a very simple system that we've
+take a very simple system that we've
+already looked at so far and this is the
+already looked at so far and this is the
+already looked at so far and this is the
+The Damp harmonic oscillator so imagine
+The Damp harmonic oscillator so imagine
+The Damp harmonic oscillator so imagine
+that we're just watching the spring
+that we're just watching the spring
+that we're just watching the spring
+oscillate and we have we make we take
+oscillate and we have we make we take
+oscillate and we have we make we take
+measurements of its position through
+measurements of its position through
+measurements of its position through
+time maybe we also know the mass of the
+time maybe we also know the mass of the
+time maybe we also know the mass of the
+spring it's spring constant the the
+spring it's spring constant the the
+spring it's spring constant the the
+dampening coefficient these sort of
+dampening coefficient these sort of
+dampening coefficient these sort of
+things so given these observations the
+things so given these observations the
+things so given these observations the
+task is to actually find an underlying
+task is to actually find an underlying
+task is to actually find an underlying
+model uh that describes this system and
+model uh that describes this system and
+model uh that describes this system and
+I don't just mean like a a functional
+I don't just mean like a a functional
+I don't just mean like a a functional
+fit to this curve I mean like what is
+fit to this curve I mean like what is
+fit to this curve I mean like what is
+the actual uh fundamental uh model that
+the actual uh fundamental uh model that
+the actual uh fundamental uh model that
+describes the system and in this case
+describes the system and in this case
+describes the system and in this case
+it's the this ordinary differential
+it's the this ordinary differential
+it's the this ordinary differential
+equation forat can we actually discover
+equation forat can we actually discover
+equation forat can we actually discover
+the whole equation itself
+so a more conceptually simpler task but
+so a more conceptually simpler task but
+so a more conceptually simpler task but
+still very challenging in my opinion um
+still very challenging in my opinion um
+still very challenging in my opinion um
+is what I would call function
+is what I would call function
+is what I would call function
+Discovery and so this is the task of
+Discovery and so this is the task of
+Discovery and so this is the task of
+given some observations of some function
+given some observations of some function
+given some observations of some function
+in general this could be a vector
+in general this could be a vector
+in general this could be a vector
+function or even a vector valid function
+function or even a vector valid function
+function or even a vector valid function
+as well so given like say n examples of
+as well so given like say n examples of
+as well so given like say n examples of
+that function can we figure out what
+that function can we figure out what
+that function can we figure out what
+it's actual mathematical expression is
+it's actual mathematical expression is
+it's actual mathematical expression is
+so let's assume that that function has
+so let's assume that that function has
+so let's assume that that function has
+like an analytical expression can we
+like an analytical expression can we
+like an analytical expression can we
+discover
+discover
+discover
+can we not just fit the function but can
+can we not just fit the function but can
+can we not just fit the function but can
+we actually discover its mathematical
+we actually discover its mathematical
+we actually discover its mathematical
+expression so you can see how that's
+expression so you can see how that's
+expression so you can see how that's
+different to like standard function
+different to like standard function
+different to like standard function
+fitting so anyone recognize these
+fitting so anyone recognize these
+fitting so anyone recognize these
+equations can anyone tell me what any of
+equations can anyone tell me what any of
+equations can anyone tell me what any of
+these equations
+these equations
+these equations
+are
+are
+are
+yeah ideal gas law yeah
+yeah ideal gas law yeah
+yeah ideal gas law yeah
+anymore
+yeah yeah y
+yeah relativistic energy yeah did you
+yeah relativistic energy yeah did you
+yeah relativistic energy yeah did you
+have your hand
+have your hand
+have your hand
+up
+up
+up
+yeah yeah Stephan bolman's law for black
+yeah yeah Stephan bolman's law for black
+yeah yeah Stephan bolman's law for black
+body
+radiation
+radiation
+radiation
+yeah oh oh plank planks equation yeah
+yeah oh oh plank planks equation yeah
+yeah oh oh plank planks equation yeah
+planks equation so I'll go through the
+planks equation so I'll go through the
+planks equation so I'll go through the
+rest so you've got 's law the snow's law
+rest so you've got 's law the snow's law
+rest so you've got 's law the snow's law
+this is the THM direct distribution for
+this is the THM direct distribution for
+this is the THM direct distribution for
+ferons so yeah these are just examp
+ferons so yeah these are just examp
+ferons so yeah these are just examp
+famous examples in physics of of
+famous examples in physics of of
+famous examples in physics of of
+functions that you know we've we've
+functions that you know we've we've
+functions that you know we've we've
+often derived by hand but say if we had
+often derived by hand but say if we had
+often derived by hand but say if we had
+measurements of the temperature of a
+measurements of the temperature of a
+measurements of the temperature of a
+black body in its surface area could we
+black body in its surface area could we
+black body in its surface area could we
+actually discover what this uh what this
+actually discover what this uh what this
+actually discover what this uh what this
+equation is that's or similarly if we
+equation is that's or similarly if we
+equation is that's or similarly if we
+had uh observations of rays going
+had uh observations of rays going
+had uh observations of rays going
+through different media can we and we
+through different media can we and we
+through different media can we and we
+know their angles and their refractive
+know their angles and their refractive
+know their angles and their refractive
+indices can we can we figure out what s
+indices can we can we figure out what s
+indices can we can we figure out what s
+law is for
+law is for
+law is for
+example so that that's the that's the
+task okay so I've got a function here so
+task okay so I've got a function here so
+task okay so I've got a function here so
+I'm going to give you a challenge of
+I'm going to give you a challenge of
+I'm going to give you a challenge of
+guessing the punching so I'm going to
+guessing the punching so I'm going to
+guessing the punching so I'm going to
+try something I haven't done before
+try something I haven't done before
+try something I haven't done before
+hopefully this will
+hopefully this will
+hopefully this will
+work so if you could all pull out your
+work so if you could all pull out your
+work so if you could all pull out your
+your phones or your
+your phones or your
+your phones or your
+devices we can try this also on for the
+devices we can try this also on for the
+devices we can try this also on for the
+people on Zoom you can also have a go at
+people on Zoom you can also have a go at
+people on Zoom you can also have a go at
+this so
+this so
+this so
+present so what you need to do is just
+present so what you need to do is just
+present so what you need to do is just
+scan this QR code and then it should
+scan this QR code and then it should
+scan this QR code and then it should
+give you all of these options and you
+give you all of these options and you
+give you all of these options and you
+can you can have a guess at what what
+can you can have a guess at what what
+can you can have a guess at what what
+this function is
+so I've got six different options for
+so I've got six different options for
+so I've got six different options for
+you uh and I've given you some help
+you uh and I've given you some help
+you uh and I've given you some help
+because each of the each of them have
+because each of the each of them have
+because each of the each of them have
+things that the function looks like so
+things that the function looks like so
+things that the function looks like so
+there are things like cosines there so
+there are things like cosines there so
+there are things like cosines there so
+making the function oscillatory there
+making the function oscillatory there
+making the function oscillatory there
+are some like linear dependence there
+are some like linear dependence there
+are some like linear dependence there
+there's some
+squares so tell me if it's working if
+squares so tell me if it's working if
+squares so tell me if it's working if
+when someone votes hopefully it should
+when someone votes hopefully it should
+when someone votes hopefully it should
+pop up but I've never tried this before
+pop up but I've never tried this before
+pop up but I've never tried this before
+so
+I'll give you a few
+minutes oh great it's
+working nice a couple of votes for X cos
+working nice a couple of votes for X cos
+working nice a couple of votes for X cos
+pix s
+give you a few more
+seconds okay so I think most people have
+seconds okay so I think most people have
+seconds okay so I think most people have
+gone for option three uh so X cos pi x
+gone for option three uh so X cos pi x
+gone for option three uh so X cos pi x
+squ so anyone that went for that option
+squ so anyone that went for that option
+squ so anyone that went for that option
+can you tell me why you chose that
+can you tell me why you chose that
+can you tell me why you chose that
+option or what was your process
+option or what was your process
+option or what was your process
+they're figuring
+now
+yeah
+symmetry what do you mean
+by
+by
+by
+yeah
+yeah yeah so that the x
+yeah yeah so that the x
+yeah yeah so that the x
+s cos x gives you like an oscillatory
+s cos x gives you like an oscillatory
+s cos x gives you like an oscillatory
+function the x s does what
+function the x s does what
+function the x s does what
+it it changes the frequency of the
+it it changes the frequency of the
+it it changes the frequency of the
+oscillation basically which is actually
+oscillation basically which is actually
+oscillation basically which is actually
+what you're seeing here so yeah that's
+what you're seeing here so yeah that's
+what you're seeing here so yeah that's
+good
+yeah
+yeah
+yeah
+yeah yeah
+EXA yeah
+yeah okay so you said yeah it's growing
+yeah okay so you said yeah it's growing
+yeah okay so you said yeah it's growing
+it's it looks like a linear linear
+it's it looks like a linear linear
+it's it looks like a linear linear
+growth here so it a good kind of guess
+growth here so it a good kind of guess
+growth here so it a good kind of guess
+would be x times by something or a
+would be x times by something or a
+would be x times by something or a
+linear dependence on X so this is got x
+linear dependence on X so this is got x
+linear dependence on X so this is got x
+times cos x yeah so no one went for this
+times cos x yeah so no one went for this
+times cos x yeah so no one went for this
+option maybe it's just too small to
+option maybe it's just too small to
+option maybe it's just too small to
+see uh I put this in as a trick so this
+see uh I put this in as a trick so this
+see uh I put this in as a trick so this
+is actually the tailor series of the of
+is actually the tailor series of the of
+is actually the tailor series of the of
+the true function but you could have
+the true function but you could have
+the true function but you could have
+chosen this and it' be correct
+chosen this and it' be correct
+chosen this and it' be correct
+um yeah this is the this is the answer
+um yeah this is the this is the answer
+um yeah this is the this is the answer
+so well done everyone that guesss guess
+so well done everyone that guesss guess
+so well done everyone that guesss guess
+the option
+the option
+the option
+three um so let's go back
+to the
+to the
+to the
+[Music]
+presentation okay so uh this is the this
+presentation okay so uh this is the this
+presentation okay so uh this is the this
+is the function and um I think it's
+is the function and um I think it's
+is the function and um I think it's
+really interesting to like introspect
+really interesting to like introspect
+really interesting to like introspect
+and think think about how we would do it
+and think think about how we would do it
+and think think about how we would do it
+as as a human like how we would actually
+as as a human like how we would actually
+as as a human like how we would actually
+guess this function given these
+guess this function given these
+guess this function given these
+observations of the the function over
+observations of the the function over
+observations of the the function over
+minus 3 to three say
+minus 3 to three say
+minus 3 to three say
+so here's how I would have maybe done it
+so here's how I would have maybe done it
+so here's how I would have maybe done it
+it's hard to say how I would have done
+it's hard to say how I would have done
+it's hard to say how I would have done
+it because I knew what it was when I did
+it because I knew what it was when I did
+it because I knew what it was when I did
+it but I probably would have guessed
+it but I probably would have guessed
+it but I probably would have guessed
+that it's oscillatory to start with and
+that it's oscillatory to start with and
+that it's oscillatory to start with and
+I would have also made the observation
+I would have also made the observation
+I would have also made the observation
+that the frequency increases as X
+that the frequency increases as X
+that the frequency increases as X
+increases so there's some
+increases so there's some
+increases so there's some
+nonlinear uh uh dependence on X inside
+nonlinear uh uh dependence on X inside
+nonlinear uh uh dependence on X inside
+of this clost
+of this clost
+of this clost
+function also the amplitude is growing
+function also the amplitude is growing
+function also the amplitude is growing
+linearly like someone just pointed out
+linearly like someone just pointed out
+linearly like someone just pointed out
+um and based on all that then maybe I
+um and based on all that then maybe I
+um and based on all that then maybe I
+would just actually to get the actual
+would just actually to get the actual
+would just actually to get the actual
+coefficients of these functions I would
+coefficients of these functions I would
+coefficients of these functions I would
+look at at the the actual values of Y
+look at at the the actual values of Y
+look at at the the actual values of Y
+and try and figure out what the what the
+and try and figure out what the what the
+and try and figure out what the what the
+coefficients would be and we would find
+coefficients would be and we would find
+coefficients would be and we would find
+y x cos Pi
+x^2 and so I just want to make the
+x^2 and so I just want to make the
+x^2 and so I just want to make the
+explicit difference between symbolic
+explicit difference between symbolic
+explicit difference between symbolic
+regression which is guessing the actual
+regression which is guessing the actual
+regression which is guessing the actual
+mathematical expression and function
+mathematical expression and function
+mathematical expression and function
+fitting function fitting would take
+fitting function fitting would take
+fitting function fitting would take
+examples of this function and fit some
+examples of this function and fit some
+examples of this function and fit some
+function to that
+function to that
+function to that
+data so how would we how would we do
+data so how would we how would we do
+data so how would we how would we do
+this with a nor Network we would just
+this with a nor Network we would just
+this with a nor Network we would just
+say okay the function we're going to
+say okay the function we're going to
+say okay the function we're going to
+assume what the what that mathematical
+assume what the what that mathematical
+assume what the what that mathematical
+expression is rather than trying to
+expression is rather than trying to
+expression is rather than trying to
+discover it and the thing in that
+discover it and the thing in that
+discover it and the thing in that
+mathematical expression that we're going
+mathematical expression that we're going
+mathematical expression that we're going
+to vary it just the coefficients inside
+to vary it just the coefficients inside
+to vary it just the coefficients inside
+that function so maybe we would assume
+that function so maybe we would assume
+that function so maybe we would assume
+that you know it's a a fully connected
+that you know it's a a fully connected
+that you know it's a a fully connected
+network with some activation and we
+network with some activation and we
+network with some activation and we
+would just learn the weights and biases
+would just learn the weights and biases
+would just learn the weights and biases
+of the network so so we're only
+of the network so so we're only
+of the network so so we're only
+discovering coefficients rather than
+discovering coefficients rather than
+discovering coefficients rather than
+discovering the operators in this in
+discovering the operators in this in
+discovering the operators in this in
+this mathematical expression everyone
+this mathematical expression everyone
+this mathematical expression everyone
+clear on the difference that should be
+obvious okay okay so my question is why
+obvious okay okay so my question is why
+obvious okay okay so my question is why
+why is symbolic progression often harder
+why is symbolic progression often harder
+why is symbolic progression often harder
+than doing this kind of function fing I
+than doing this kind of function fing I
+than doing this kind of function fing I
+mean both are can be very complicated
+mean both are can be very complicated
+mean both are can be very complicated
+and difficult tasks but why is this
+and difficult tasks but why is this
+and difficult tasks but why is this
+often
+harder
+harder
+harder
+something you know change some
+something you know change some
+something you know change some
+slightly yeah right so it can be very
+slightly yeah right so it can be very
+slightly yeah right so it can be very
+difficult to use gradient descent for
+difficult to use gradient descent for
+difficult to use gradient descent for
+symbolic progression and the reason is
+symbolic progression and the reason is
+symbolic progression and the reason is
+because how do you do GR on a on a
+because how do you do GR on a on a
+because how do you do GR on a on a
+symbol or operation it's like a
+symbol or operation it's like a
+symbol or operation it's like a
+discrete operation instead of something
+discrete operation instead of something
+discrete operation instead of something
+continuous to differentiate
+continuous to differentiate
+continuous to differentiate
+yeah yep definitely any there are many
+yeah yep definitely any there are many
+yeah yep definitely any there are many
+others many other reasons anyone anyone
+others many other reasons anyone anyone
+others many other reasons anyone anyone
+thought of any
+others
+others
+others
+yeah yes can you expand on that
+yeah yeah right so the search base is
+yeah yeah right so the search base is
+yeah yeah right so the search base is
+much bigger so in here we assume we know
+much bigger so in here we assume we know
+much bigger so in here we assume we know
+the number of coefficients uh that we're
+the number of coefficients uh that we're
+the number of coefficients uh that we're
+fitting to generally here the expression
+fitting to generally here the expression
+fitting to generally here the expression
+could contain
+could contain
+could contain
+an like an infinite amount of operators
+an like an infinite amount of operators
+an like an infinite amount of operators
+or maybe a very large number of
+or maybe a very large number of
+or maybe a very large number of
+operators depending on the complexity of
+operators depending on the complexity of
+operators depending on the complexity of
+the
+the
+the
+expression okay so yeah
+yeah so yeah so I'm going to explain uh
+yeah so yeah so I'm going to explain uh
+yeah so yeah so I'm going to explain uh
+a lot about how we uh reduce the search
+a lot about how we uh reduce the search
+a lot about how we uh reduce the search
+Spas basically and and allow us to
+Spas basically and and allow us to
+Spas basically and and allow us to
+figure out what what the function is
+figure out what what the function is
+figure out what what the function is
+that's one idea there are many good
+that's one idea there are many good
+that's one idea there are many good
+ideas to
+ideas to
+ideas to
+uh so so here's here's some of the
+uh so so here's here's some of the
+uh so so here's here's some of the
+reasons um most of them you pointed out
+reasons um most of them you pointed out
+reasons um most of them you pointed out
+so as you pointed out we need to learn
+so as you pointed out we need to learn
+so as you pointed out we need to learn
+the whole expression and not just
+the whole expression and not just
+the whole expression and not just
+coefficients and we may not know the
+coefficients and we may not know the
+coefficients and we may not know the
+length of the expression so this is this
+length of the expression so this is this
+length of the expression so this is this
+is really
+is really
+is really
+challenging this is probably the biggest
+challenging this is probably the biggest
+challenging this is probably the biggest
+challenge is that the search base in
+challenge is that the search base in
+challenge is that the search base in
+general is
+general is
+general is
+exponential just think of a if we can
+exponential just think of a if we can
+exponential just think of a if we can
+describe a mathematical exess expression
+describe a mathematical exess expression
+describe a mathematical exess expression
+is a
+is a
+is a
+string uh where where the each uh
+string uh where where the each uh
+string uh where where the each uh
+element of the string is like an
+element of the string is like an
+element of the string is like an
+elementary operator Like A Plus or a
+elementary operator Like A Plus or a
+elementary operator Like A Plus or a
+minus something like this then you know
+minus something like this then you know
+minus something like this then you know
+basic com
+basic com
+basic com
+combinatorial uh uh if you just look at
+combinatorial uh uh if you just look at
+combinatorial uh uh if you just look at
+all the different combinations of all
+all the different combinations of all
+all the different combinations of all
+those strings they're like s to the N
+those strings they're like s to the N
+those strings they're like s to the N
+possible combinations so this is an
+possible combinations so this is an
+possible combinations so this is an
+exponential suchar uh sech
+exponential suchar uh sech
+exponential suchar uh sech
+space where we don't even know what n is
+space where we don't even know what n is
+space where we don't even know what n is
+so yeah very
+so yeah very
+so yeah very
+challenging and then the next one is to
+challenging and then the next one is to
+challenging and then the next one is to
+do with the differentiability uh we're
+do with the differentiability uh we're
+do with the differentiability uh we're
+now trying to search over operators you
+now trying to search over operators you
+now trying to search over operators you
+know additions divisions multiplications
+know additions divisions multiplications
+know additions divisions multiplications
+uh uh these sort of things and it's
+uh uh these sort of things and it's
+uh uh these sort of things and it's
+typically not differentiable like how
+typically not differentiable like how
+typically not differentiable like how
+how can we differentiate over an
+how can we differentiate over an
+how can we differentiate over an
+operator that doesn't quite make sense
+operator that doesn't quite make sense
+operator that doesn't quite make sense
+in my head there are ways to do it but
+in my head there are ways to do it but
+in my head there are ways to do it but
+we'll talk about them
+we'll talk about them
+we'll talk about them
+later um the other one that maybe you
+later um the other one that maybe you
+later um the other one that maybe you
+didn't see is that I told you before
+didn't see is that I told you before
+didn't see is that I told you before
+generally we just have a finite set of
+generally we just have a finite set of
+generally we just have a finite set of
+examples of the function so you know a
+examples of the function so you know a
+examples of the function so you know a
+finite number of training training
+finite number of training training
+finite number of training training
+points of the
+points of the
+points of the
+function so why why would why is this
+function so why why would why is this
+function so why why would why is this
+statement true that with only a finite
+statement true that with only a finite
+statement true that with only a finite
+number of observations there may be many
+number of observations there may be many
+number of observations there may be many
+valid Expressions can
+tells all these points exactly we can
+tells all these points exactly we can
+tells all these points exactly we can
+always do a polinomial fit with however
+always do a polinomial fit with however
+always do a polinomial fit with however
+many with n points or n minus one points
+many with n points or n minus one points
+many with n points or n minus one points
+to to uh to fit the function perfectly
+to to uh to fit the function perfectly
+to to uh to fit the function perfectly
+so it's it's illposed it might not give
+so it's it's illposed it might not give
+so it's it's illposed it might not give
+us the true function that generalizes to
+us the true function that generalizes to
+us the true function that generalizes to
+new new points for example
+new new points for example
+new new points for example
+so we can overfit symbolic regression
+so we can overfit symbolic regression
+so we can overfit symbolic regression
+just like we can overfit uh uh normal
+just like we can overfit uh uh normal
+just like we can overfit uh uh normal
+function regression in exactly the same
+function regression in exactly the same
+function regression in exactly the same
+sense
+okay so we're going to go into details
+okay so we're going to go into details
+okay so we're going to go into details
+like how do we solve how do we come up
+like how do we solve how do we come up
+like how do we solve how do we come up
+how do we overcome these big challenges
+how do we overcome these big challenges
+how do we overcome these big challenges
+in symbolic regression and uh and um
+in symbolic regression and uh and um
+in symbolic regression and uh and um
+we're going to talk about it in terms of
+we're going to talk about it in terms of
+we're going to talk about it in terms of
+function uh Discovery and then we're GNA
+function uh Discovery and then we're GNA
+function uh Discovery and then we're GNA
+once we've talked about function
+once we've talked about function
+once we've talked about function
+Discovery then the last half of the
+Discovery then the last half of the
+Discovery then the last half of the
+lecture probably I'll cover on Friday
+lecture probably I'll cover on Friday
+lecture probably I'll cover on Friday
+we'll talk about model Discovery how we
+we'll talk about model Discovery how we
+we'll talk about model Discovery how we
+can use the same types of algorithms to
+can use the same types of algorithms to
+can use the same types of algorithms to
+discover like differential equations as
+discover like differential equations as
+discover like differential equations as
+well as just simple mathematical
+Expressions so um one way to think about
+Expressions so um one way to think about
+Expressions so um one way to think about
+mathematical Expressions uh and it's
+mathematical Expressions uh and it's
+mathematical Expressions uh and it's
+very important to choose the right
+very important to choose the right
+very important to choose the right
+representation um when we're defining
+representation um when we're defining
+representation um when we're defining
+our search
+our search
+our search
+algorithms uh so that we can like
+algorithms uh so that we can like
+algorithms uh so that we can like
+efficiently search this space and so one
+efficiently search this space and so one
+efficiently search this space and so one
+one representation is uh to think of
+one representation is uh to think of
+one representation is uh to think of
+these mathematical Expressions as trees
+these mathematical Expressions as trees
+these mathematical Expressions as trees
+who's seen trees before in like computer
+who's seen trees before in like computer
+who's seen trees before in like computer
+science or or similar yeah
+science or or similar yeah
+science or or similar yeah
+okay so it turns out we can write any
+okay so it turns out we can write any
+okay so it turns out we can write any
+mathematical expression as a tree um and
+mathematical expression as a tree um and
+mathematical expression as a tree um and
+we just say the tree has some root and
+we just say the tree has some root and
+we just say the tree has some root and
+then has some branches uh and at each uh
+then has some branches uh and at each uh
+then has some branches uh and at each uh
+kind of node on the tree we have an
+kind of node on the tree we have an
+kind of node on the tree we have an
+operation and then at each Leaf of the
+operation and then at each Leaf of the
+operation and then at each Leaf of the
+tree so at each end member here is just
+tree so at each end member here is just
+tree so at each end member here is just
+a coefficient value so whether it's the
+a coefficient value so whether it's the
+a coefficient value so whether it's the
+x value or if it's some other
+x value or if it's some other
+x value or if it's some other
+coefficient so some some Scala value
+coefficient so some some Scala value
+coefficient so some some Scala value
+here so you can see uh uh we can just
+here so you can see uh uh we can just
+here so you can see uh uh we can just
+rewrite this whole expression as a tree
+rewrite this whole expression as a tree
+rewrite this whole expression as a tree
+where the kind of the root of the tree
+where the kind of the root of the tree
+where the kind of the root of the tree
+is this multiplication it's this x times
+is this multiplication it's this x times
+is this multiplication it's this x times
+by this cause object here and then we
+by this cause object here and then we
+by this cause object here and then we
+can decompose cause down into some other
+can decompose cause down into some other
+can decompose cause down into some other
+lower level operations which is you know
+lower level operations which is you know
+lower level operations which is you know
+pi times by x s and then X squ is also a
+pi times by x s and then X squ is also a
+pi times by x s and then X squ is also a
+power
+power
+power
+operation everyone see how that can just
+operation everyone see how that can just
+operation everyone see how that can just
+be represented as a as a
+tree so yeah like I said the root is the
+tree so yeah like I said the root is the
+tree so yeah like I said the root is the
+is basically the final expression we
+is basically the final expression we
+is basically the final expression we
+once we've got to the roote we can
+once we've got to the roote we can
+once we've got to the roote we can
+evaluate the expression the noes are all
+evaluate the expression the noes are all
+evaluate the expression the noes are all
+the operations and then the branches are
+the operations and then the branches are
+the operations and then the branches are
+either unary or
+either unary or
+either unary or
+binary so why why not have like a branch
+binary so why why not have like a branch
+binary so why why not have like a branch
+of three why not have an operation with
+of three why not have an operation with
+of three why not have an operation with
+three why can we just use binary and not
+yeah
+yeah
+yeah
+operations yeah yeah exactly most
+operations yeah yeah exactly most
+operations yeah yeah exactly most
+operations can just be written as like a
+operations can just be written as like a
+operations can just be written as like a
+two two inputs and one output or like
+two two inputs and one output or like
+two two inputs and one output or like
+this down into their perimeter of
+this down into their perimeter of
+this down into their perimeter of
+operations
+operations
+operations
+yeah uh and then we can Define you know
+yeah uh and then we can Define you know
+yeah uh and then we can Define you know
+General tree quantities things like the
+General tree quantities things like the
+General tree quantities things like the
+depth of the tree the is an important
+depth of the tree the is an important
+depth of the tree the is an important
+thing to to
+thing to to
+thing to to
+know
+okay so let me talk about the search
+okay so let me talk about the search
+okay so let me talk about the search
+space and just tell you again why it's
+space and just tell you again why it's
+space and just tell you again why it's
+such a large space what what I did here
+such a large space what what I did here
+such a large space what what I did here
+is uh enumerate all the possible
+is uh enumerate all the possible
+is uh enumerate all the possible
+expressions for trees that only have a
+expressions for trees that only have a
+expressions for trees that only have a
+depth of
+depth of
+depth of
+two and for a very very limited library
+two and for a very very limited library
+two and for a very very limited library
+of possible operations so the expression
+of possible operations so the expression
+of possible operations so the expression
+can only contain X there can't be any
+can only contain X there can't be any
+can only contain X there can't be any
+other like scal coefficients in in the
+other like scal coefficients in in the
+other like scal coefficients in in the
+expression and then it can only combine
+expression and then it can only combine
+expression and then it can only combine
+plus multiply to the power of two
+plus multiply to the power of two
+plus multiply to the power of two
+and already with just the tree depth of
+and already with just the tree depth of
+and already with just the tree depth of
+two like in general the tree depth can
+two like in general the tree depth can
+two like in general the tree depth can
+be 10
+be 10
+be 10
+100 uh we have like 65 expressions and
+100 uh we have like 65 expressions and
+100 uh we have like 65 expressions and
+you can just see how many Expressions we
+you can just see how many Expressions we
+you can just see how many Expressions we
+have here it's interesting that some of
+have here it's interesting that some of
+have here it's interesting that some of
+these are actually redundant like a uh
+these are actually redundant like a uh
+these are actually redundant like a uh
+like X Plus X Plus X is like 4X for
+like X Plus X Plus X is like 4X for
+like X Plus X Plus X is like 4X for
+example or like a I think there's some
+example or like a I think there's some
+example or like a I think there's some
+better examples here yeah like x x x
+better examples here yeah like x x x
+better examples here yeah like x x x
+time x x x is uh
+time x x x is uh
+time x x x is uh
+like this this expression here if we
+like this this expression here if we
+like this this expression here if we
+just collapse it down uh so that's
+just collapse it down uh so that's
+just collapse it down uh so that's
+that's interesting maybe you can use
+that's interesting maybe you can use
+that's interesting maybe you can use
+that redundancy to reduce this the space
+that redundancy to reduce this the space
+that redundancy to reduce this the space
+but in general uh yeah this this is a
+but in general uh yeah this this is a
+but in general uh yeah this this is a
+huge space as such you can imagine if I
+huge space as such you can imagine if I
+huge space as such you can imagine if I
+increase the Tre depth just by one this
+increase the Tre depth just by one this
+increase the Tre depth just by one this
+is going to go up probably in the
+is going to go up probably in the
+is going to go up probably in the
+hundreds or thousands of of
+Expressions
+okay so how are we going to solve this
+okay so how are we going to solve this
+okay so how are we going to solve this
+uh so what we need to do is uh we need
+uh so what we need to do is uh we need
+uh so what we need to do is uh we need
+to what what is often called as pruning
+to what what is often called as pruning
+to what what is often called as pruning
+the search
+the search
+the search
+space so there's absolutely no way that
+space so there's absolutely no way that
+space so there's absolutely no way that
+we can enumerate in a com combinatorial
+we can enumerate in a com combinatorial
+we can enumerate in a com combinatorial
+way all of these possible expressions
+way all of these possible expressions
+way all of these possible expressions
+and then test if each expression is
+and then test if each expression is
+and then test if each expression is
+going to match our data that's just it's
+going to match our data that's just it's
+going to match our data that's just it's
+just not
+just not
+just not
+possible and so fundamentally whatever
+possible and so fundamentally whatever
+possible and so fundamentally whatever
+whatever task we're doing in symbolic
+whatever task we're doing in symbolic
+whatever task we're doing in symbolic
+regression we usually have to do
+regression we usually have to do
+regression we usually have to do
+something like this where we have to
+something like this where we have to
+something like this where we have to
+assume some structure of the trees we
+assume some structure of the trees we
+assume some structure of the trees we
+have to prune the trees
+have to prune the trees
+have to prune the trees
+say for example that they have a a less
+say for example that they have a a less
+say for example that they have a a less
+number of operations or a small number
+number of operations or a small number
+number of operations or a small number
+of coefficients or more more in general
+of coefficients or more more in general
+of coefficients or more more in general
+we just have to assume some some subset
+we just have to assume some some subset
+we just have to assume some some subset
+of the possible structure of trees that
+of the possible structure of trees that
+of the possible structure of trees that
+we're going to search
+we're going to search
+we're going to search
+over does this make sense we're defining
+over does this make sense we're defining
+over does this make sense we're defining
+uh in a problemistic way we're defining
+uh in a problemistic way we're defining
+uh in a problemistic way we're defining
+like a prior like all the possible
+like a prior like all the possible
+like a prior like all the possible
+versions of the the Expressions that we
+versions of the the Expressions that we
+versions of the the Expressions that we
+we expect the expression to to
+satisfy so who's heard of oam's Razer
+satisfy so who's heard of oam's Razer
+satisfy so who's heard of oam's Razer
+hands
+up okay so this is like a often stated
+up okay so this is like a often stated
+up okay so this is like a often stated
+in the wrong way but uh usually right is
+in the wrong way but uh usually right is
+in the wrong way but uh usually right is
+uh the simplest explanation is usually
+uh the simplest explanation is usually
+uh the simplest explanation is usually
+the best one this is like a really
+the best one this is like a really
+the best one this is like a really
+famous famous quote or kind of
+famous famous quote or kind of
+famous famous quote or kind of
+observation so yeah I mean we we looked
+observation so yeah I mean we we looked
+observation so yeah I mean we we looked
+at um overfitting in the Deep uh deep
+at um overfitting in the Deep uh deep
+at um overfitting in the Deep uh deep
+learning lectures and I talk to you
+learning lectures and I talk to you
+learning lectures and I talk to you
+about this kind of bias variance
+about this kind of bias variance
+about this kind of bias variance
+trade-off between uh machine learning
+trade-off between uh machine learning
+trade-off between uh machine learning
+models where as you increase the model
+models where as you increase the model
+models where as you increase the model
+complexity often the error goes down but
+complexity often the error goes down but
+complexity often the error goes down but
+then the variance or basically the
+then the variance or basically the
+then the variance or basically the
+susceptibility to overfitting goes up of
+susceptibility to overfitting goes up of
+susceptibility to overfitting goes up of
+the model and so we argued that there
+the model and so we argued that there
+the model and so we argued that there
+was like some sweet spot where the model
+was like some sweet spot where the model
+was like some sweet spot where the model
+doesn't overfit but still has a good
+doesn't overfit but still has a good
+doesn't overfit but still has a good
+good error so like we're choosing the
+good error so like we're choosing the
+good error so like we're choosing the
+kind of optimal model
+kind of optimal model
+kind of optimal model
+complexity this is just a fun fun uh
+complexity this is just a fun fun uh
+complexity this is just a fun fun uh
+poker conspiracy theories like
+poker conspiracy theories like
+poker conspiracy theories like
+uh they are e theory and perhaps they're
+uh they are e theory and perhaps they're
+uh they are e theory and perhaps they're
+true but you the amount of evidence
+true but you the amount of evidence
+true but you the amount of evidence
+against those Theory makes it very hard
+against those Theory makes it very hard
+against those Theory makes it very hard
+to explain the theory and maybe a razor
+to explain the theory and maybe a razor
+to explain the theory and maybe a razor
+could be applied to these
+could be applied to these
+could be applied to these
+things
+okay right so at a high level uh before
+okay right so at a high level uh before
+okay right so at a high level uh before
+we talk about specific symbolic
+we talk about specific symbolic
+we talk about specific symbolic
+regression algorithms um these are the
+regression algorithms um these are the
+regression algorithms um these are the
+requirements that we need to solve the
+requirements that we need to solve the
+requirements that we need to solve the
+symbolic progression problem for for a
+symbolic progression problem for for a
+symbolic progression problem for for a
+large difficult problem we need these
+large difficult problem we need these
+large difficult problem we need these
+two things we need most importantly we
+two things we need most importantly we
+two things we need most importantly we
+need an assumption on what the structure
+need an assumption on what the structure
+need an assumption on what the structure
+of the expression is going to be so that
+of the expression is going to be so that
+of the expression is going to be so that
+we don't do a combination combin notori
+we don't do a combination combin notori
+we don't do a combination combin notori
+search and then we need to Define some
+search and then we need to Define some
+search and then we need to Define some
+search algorithm that can efficiently
+search algorithm that can efficiently
+search algorithm that can efficiently
+search through those possible structures
+search through those possible structures
+search through those possible structures
+that we've defined and eventually
+that we've defined and eventually
+that we've defined and eventually
+Converge on the on an expression that
+Converge on the on an expression that
+Converge on the on an expression that
+fits the data that we that we
+fits the data that we that we
+fits the data that we that we
+have so this is a huge kind of area of
+have so this is a huge kind of area of
+have so this is a huge kind of area of
+research by its own bright and there's
+research by its own bright and there's
+research by its own bright and there's
+you know a couple of review papers if
+you know a couple of review papers if
+you know a couple of review papers if
+you want to go deep into this field I
+you want to go deep into this field I
+you want to go deep into this field I
+definitely recommend looking at these
+definitely recommend looking at these
+definitely recommend looking at these
+research papers they describe many
+research papers they describe many
+research papers they describe many
+different papers and research directions
+different papers and research directions
+different papers and research directions
+on both of these two points the search
+on both of these two points the search
+on both of these two points the search
+algorithm and and the
+algorithm and and the
+algorithm and and the
+assumptions so we're at the end of
+assumptions so we're at the end of
+assumptions so we're at the end of
+today's lecture so I'll pick it up and
+today's lecture so I'll pick it up and
+today's lecture so I'll pick it up and
+and go into this on
+and go into this on
+and go into this on
+Friday so obviously see you then thanks
+Friday so obviously see you then thanks
+Friday so obviously see you then thanks
+for
+for
+for
+com okay so we're going to carry on uh
+com okay so we're going to carry on uh
+com okay so we're going to carry on uh
+talking about symbolic progression and
+talking about symbolic progression and
+talking about symbolic progression and
+model
+model
+model
+Discovery let me remind you what we were
+Discovery let me remind you what we were
+Discovery let me remind you what we were
+talking about last lecture so we started
+talking about last lecture so we started
+talking about last lecture so we started
+off by thinking about this maybe cons
+off by thinking about this maybe cons
+off by thinking about this maybe cons
+conceptually simpler uh idea which is to
+conceptually simpler uh idea which is to
+conceptually simpler uh idea which is to
+discover functions or to discover the
+discover functions or to discover the
+discover functions or to discover the
+mathematical expressions of functions
+mathematical expressions of functions
+mathematical expressions of functions
+and once I've done talking about this
+and once I've done talking about this
+and once I've done talking about this
+then we'll move on to how we actually
+then we'll move on to how we actually
+then we'll move on to how we actually
+dis how we could discover actual
+dis how we could discover actual
+dis how we could discover actual
+scientific models so not just functions
+scientific models so not just functions
+scientific models so not just functions
+but like underlying differential
+but like underlying differential
+but like underlying differential
+equations that kind of govern a
+equations that kind of govern a
+equations that kind of govern a
+system so we're talking about uh the
+system so we're talking about uh the
+system so we're talking about uh the
+specific task so given some observations
+specific task so given some observations
+specific task so given some observations
+of a function and so just assume we have
+of a function and so just assume we have
+of a function and so just assume we have
+n examples um can we actually derive it
+n examples um can we actually derive it
+n examples um can we actually derive it
+mathematical expression and not just fit
+mathematical expression and not just fit
+mathematical expression and not just fit
+the function so actually figure out the
+the function so actually figure out the
+the function so actually figure out the
+the mathematical
+the mathematical
+the mathematical
+expression and these are kind of some
+expression and these are kind of some
+expression and these are kind of some
+example famous expressions in physics
+example famous expressions in physics
+example famous expressions in physics
+that you know tell us about different
+that you know tell us about different
+that you know tell us about different
+physical
+systems um so can anyone remember why
+systems um so can anyone remember why
+systems um so can anyone remember why
+it's often harder to do kind of symbolic
+it's often harder to do kind of symbolic
+it's often harder to do kind of symbolic
+progression and just to fit this
+progression and just to fit this
+progression and just to fit this
+function we talked about this last
+function we talked about this last
+function we talked about this last
+lecture can anyone remember the
+lecture can anyone remember the
+lecture can anyone remember the
+challenges can anyone tell me a
+challenges can anyone tell me a
+challenges can anyone tell me a
+challenge yeah big search space big SP
+challenge yeah big search space big SP
+challenge yeah big search space big SP
+search space yeah
+yeah the search base is exponential so
+yeah the search base is exponential so
+yeah the search base is exponential so
+yeah really hard to search interactable
+yeah really hard to search interactable
+yeah really hard to search interactable
+in fact yeah any
+in fact yeah any
+in fact yeah any
+others
+yeah
+yeah
+yeah
+yeah yeah search Bas is not
+yeah yeah search Bas is not
+yeah yeah search Bas is not
+differentiable so a small change like a
+differentiable so a small change like a
+differentiable so a small change like a
+change of one operator can dramatically
+change of one operator can dramatically
+change of one operator can dramatically
+change the uh the function yeah any
+change the uh the function yeah any
+change the uh the function yeah any
+others yeah
+yeah or so given end data points there
+yeah or so given end data points there
+yeah or so given end data points there
+are many possible functions that could
+are many possible functions that could
+are many possible functions that could
+fit it yeah so it's ill posed yeah okay
+fit it yeah so it's ill posed yeah okay
+fit it yeah so it's ill posed yeah okay
+so you've uh I think you've got
+so you've uh I think you've got
+so you've uh I think you've got
+everything so the other one is that we
+everything so the other one is that we
+everything so the other one is that we
+don't know what the length of the
+don't know what the length of the
+don't know what the length of the
+expression is so even the the search Bas
+expression is so even the the search Bas
+expression is so even the the search Bas
+is exponential but we don't even know
+is exponential but we don't even know
+is exponential but we don't even know
+how big the search space
+how big the search space
+how big the search space
+is um there's not a smooth interpolation
+is um there's not a smooth interpolation
+is um there's not a smooth interpolation
+and yeah there's a many valid
+and yeah there's a many valid
+and yeah there's a many valid
+Expressions given a finite number of
+Expressions given a finite number of
+Expressions given a finite number of
+points
+points
+points
+Okay so then we I showed you that we can
+Okay so then we I showed you that we can
+Okay so then we I showed you that we can
+often think of these Expressions as
+often think of these Expressions as
+often think of these Expressions as
+trees this is a lot of uh approaches
+trees this is a lot of uh approaches
+trees this is a lot of uh approaches
+that try to do symbolic regression use
+that try to do symbolic regression use
+that try to do symbolic regression use
+this kind of tree
+this kind of tree
+this kind of tree
+representation where the nodes are the
+representation where the nodes are the
+representation where the nodes are the
+tree of the operations and then we
+tree of the operations and then we
+tree of the operations and then we
+either have binary operations or or
+either have binary operations or or
+either have binary operations or or
+unary
+unary
+unary
+operations and then the leaves of the
+operations and then the leaves of the
+operations and then the leaves of the
+tree are the the reals either the
+tree are the the reals either the
+tree are the the reals either the
+coefficients or the variables
+coefficients or the variables
+coefficients or the variables
+themselves and uh I said well I showed
+themselves and uh I said well I showed
+themselves and uh I said well I showed
+you all the possible expressions for a
+you all the possible expressions for a
+you all the possible expressions for a
+tree depth of two for this very small
+tree depth of two for this very small
+tree depth of two for this very small
+library and we're already getting like
+library and we're already getting like
+library and we're already getting like
+60 65 expressions and you could see how
+60 65 expressions and you could see how
+60 65 expressions and you could see how
+this will grow very very large very very
+this will grow very very large very very
+this will grow very very large very very
+quickly if we increase the library and
+quickly if we increase the library and
+quickly if we increase the library and
+if we increase the depth of the
+expression okay so then I showed you
+expression okay so then I showed you
+expression okay so then I showed you
+this idea that we're never going to be
+this idea that we're never going to be
+this idea that we're never going to be
+able to search that whole exponential
+able to search that whole exponential
+able to search that whole exponential
+search space it's just impossible um and
+search space it's just impossible um and
+search space it's just impossible um and
+so what we have to do no matter what
+so what we have to do no matter what
+so what we have to do no matter what
+symb symbolic regression algorithm we
+symb symbolic regression algorithm we
+symb symbolic regression algorithm we
+choose we have to ruin the tree or we
+choose we have to ruin the tree or we
+choose we have to ruin the tree or we
+have to basically assume some prior
+have to basically assume some prior
+have to basically assume some prior
+structure of this expression to give us
+structure of this expression to give us
+structure of this expression to give us
+like some sort of a chance to be able to
+like some sort of a chance to be able to
+like some sort of a chance to be able to
+search the space
+search the space
+search the space
+attractively so we can we can do many
+attractively so we can we can do many
+attractively so we can we can do many
+different types of pruning can anyone
+different types of pruning can anyone
+different types of pruning can anyone
+think of any ways you might try and
+think of any ways you might try and
+think of any ways you might try and
+simplify the search
+space if you think about trees how do
+space if you think about trees how do
+space if you think about trees how do
+how would you simplify this
+how would you simplify this
+how would you simplify this
+tree kind of a weird question
+any ideas
+yeah yeah okay yeah yeah so you could
+yeah yeah okay yeah yeah so you could
+yeah yeah okay yeah yeah so you could
+just uh start with like so this might
+just uh start with like so this might
+just uh start with like so this might
+say that we have some prior guess of
+say that we have some prior guess of
+say that we have some prior guess of
+what the structure of the equation
+what the structure of the equation
+what the structure of the equation
+should be so maybe we know that it
+should be so maybe we know that it
+should be so maybe we know that it
+should be a coine expression for example
+should be a coine expression for example
+should be a coine expression for example
+but we don't know the frequency of the
+but we don't know the frequency of the
+but we don't know the frequency of the
+expression another thing we can do is
+expression another thing we can do is
+expression another thing we can do is
+just part off the tree to a certain
+just part off the tree to a certain
+just part off the tree to a certain
+depth so we can just say the expression
+depth so we can just say the expression
+depth so we can just say the expression
+has to have no a depth of no more than
+has to have no a depth of no more than
+has to have no a depth of no more than
+five or 10 or
+five or 10 or
+five or 10 or
+something um or we can reduce the number
+something um or we can reduce the number
+something um or we can reduce the number
+of possible operations in the
+of possible operations in the
+of possible operations in the
+tree so the size of the
+library so as we go through and I show
+library so as we go through and I show
+library so as we go through and I show
+you these types of methods you'll you'll
+you these types of methods you'll you'll
+you these types of methods you'll you'll
+hopefully understand the different ways
+hopefully understand the different ways
+hopefully understand the different ways
+we can kind of restrict this search
+SP so yeah these are the requirements to
+SP so yeah these are the requirements to
+SP so yeah these are the requirements to
+successfully solve problem we need an
+successfully solve problem we need an
+successfully solve problem we need an
+assumption on the kind of structure of
+assumption on the kind of structure of
+assumption on the kind of structure of
+the expression and then we need some
+the expression and then we need some
+the expression and then we need some
+search algorithm and there's a lot of
+search algorithm and there's a lot of
+search algorithm and there's a lot of
+innovation in these two areas and what
+innovation in these two areas and what
+innovation in these two areas and what
+is interesting is these two are kind of
+is interesting is these two are kind of
+is interesting is these two are kind of
+independent choices you can have many
+independent choices you can have many
+independent choices you can have many
+different types of assumptions and you
+different types of assumptions and you
+different types of assumptions and you
+can mix and match them with many
+can mix and match them with many
+can mix and match them with many
+different types of search algorithms and
+different types of search algorithms and
+different types of search algorithms and
+it's kind of interesting to see which
+it's kind of interesting to see which
+it's kind of interesting to see which
+choices are the best for the problem
+choices are the best for the problem
+choices are the best for the problem
+that you
+that you
+that you
+have so what we're going to do first is
+have so what we're going to do first is
+have so what we're going to do first is
+we're going to think about the first
+we're going to think about the first
+we're going to think about the first
+requirement so how are we going to
+requirement so how are we going to
+requirement so how are we going to
+put a prior on the structure of the
+put a prior on the structure of the
+put a prior on the structure of the
+expression so I'm going to talk about
+expression so I'm going to talk about
+expression so I'm going to talk about
+one approach there are many as I just
+one approach there are many as I just
+one approach there are many as I just
+said and if you're interested more
+said and if you're interested more
+said and if you're interested more
+deeply you can kind of read these review
+deeply you can kind of read these review
+deeply you can kind of read these review
+papers or state-of-the-art papers at the
+papers or state-of-the-art papers at the
+papers or state-of-the-art papers at the
+bottom here they they go into it in more
+bottom here they they go into it in more
+bottom here they they go into it in more
+detail um so who's heard of AI findan
+detail um so who's heard of AI findan
+detail um so who's heard of AI findan
+just put your hand up if you've heard of
+just put your hand up if you've heard of
+just put your hand up if you've heard of
+this
+this
+this
+paper maybe okay one not maybe one okay
+paper maybe okay one not maybe one okay
+paper maybe okay one not maybe one okay
+so this is a really nice paper I
+so this is a really nice paper I
+so this is a really nice paper I
+definitely recommend reading it um and
+definitely recommend reading it um and
+definitely recommend reading it um and
+this is a way to search for underlying
+this is a way to search for underlying
+this is a way to search for underlying
+simplifications of the function that
+simplifications of the function that
+simplifications of the function that
+you're trying to uh to to to
+you're trying to uh to to to
+you're trying to uh to to to
+find so before we do a search algorithm
+find so before we do a search algorithm
+find so before we do a search algorithm
+what we're going to do is we're going to
+what we're going to do is we're going to
+what we're going to do is we're going to
+look for kind of hidden simplicities
+look for kind of hidden simplicities
+look for kind of hidden simplicities
+that we can kind of derive from the
+that we can kind of derive from the
+that we can kind of derive from the
+function uh that we're trying to
+function uh that we're trying to
+function uh that we're trying to
+discover so let's just take a you know a
+discover so let's just take a you know a
+discover so let's just take a you know a
+classic classic function from physics
+classic classic function from physics
+classic classic function from physics
+this is uh Newton's law of gravitation
+this is uh Newton's law of gravitation
+this is uh Newton's law of gravitation
+uh between two masses and so this this
+uh between two masses and so this this
+uh between two masses and so this this
+expression just describes the force
+expression just describes the force
+expression just describes the force
+given their their masses and the
+given their their masses and the
+given their their masses and the
+gravitational constant and their
+gravitational constant and their
+gravitational constant and their
+distance between the two
+distance between the two
+distance between the two
+objects so if you look at this function
+objects so if you look at this function
+objects so if you look at this function
+what's what kind of what makes this
+what's what kind of what makes this
+what's what kind of what makes this
+function simple can anyone just kind of
+function simple can anyone just kind of
+function simple can anyone just kind of
+tell me why this function is maybe
+simple yeah symmetry symmetry what do
+simple yeah symmetry symmetry what do
+simple yeah symmetry symmetry what do
+you mean by
+you mean by
+you mean by
+that that's
+yeah okay this there there's a
+yeah okay this there there's a
+yeah okay this there there's a
+fundamental symmetry here that's
+fundamental symmetry here that's
+fundamental symmetry here that's
+absolutely correct yeah so so the force
+absolutely correct yeah so so the force
+absolutely correct yeah so so the force
+on this mass is the same as the force on
+on this mass is the same as the force on
+on this mass is the same as the force on
+this Mass how does that kind of show up
+this Mass how does that kind of show up
+this Mass how does that kind of show up
+in this
+expression
+expression
+expression
+yeah very very nice so another way of
+yeah very very nice so another way of
+yeah very very nice so another way of
+saying that is the force only depends on
+saying that is the force only depends on
+saying that is the force only depends on
+the the distance between the objects so
+the the distance between the objects so
+the the distance between the objects so
+there's some kind of like trans
+there's some kind of like trans
+there's some kind of like trans
+translational symmetry here it doesn't
+translational symmetry here it doesn't
+translational symmetry here it doesn't
+depend on the absolute Valu of X2 and X1
+depend on the absolute Valu of X2 and X1
+depend on the absolute Valu of X2 and X1
+that's that's what that's really good
+that's that's what that's really good
+that's that's what that's really good
+observation there's there other
+simplicities uh what do you mean by that
+simplicities uh what do you mean by that
+simplicities uh what do you mean by that
+it's a rational
+function yeah
+function yeah
+function yeah
+yeah yeah so there's two po two pols
+yeah yeah so there's two po two pols
+yeah yeah so there's two po two pols
+here uh that's that may be related to
+here uh that's that may be related to
+here uh that's that may be related to
+something I'm going to tell you about in
+something I'm going to tell you about in
+something I'm going to tell you about in
+a minute so that's good any think else
+yeah yeah that's really good so one
+yeah yeah that's really good so one
+yeah yeah that's really good so one
+thing we do in physics all the time is
+thing we do in physics all the time is
+thing we do in physics all the time is
+dimensionality uh
+dimensionality uh
+dimensionality uh
+analysis so what it means is the units
+analysis so what it means is the units
+analysis so what it means is the units
+must match so the you know this is
+must match so the you know this is
+must match so the you know this is
+Newtons here and we need to have some
+Newtons here and we need to have some
+Newtons here and we need to have some
+sort of combination of these units of of
+sort of combination of these units of of
+sort of combination of these units of of
+mass and the gravitational constant and
+mass and the gravitational constant and
+mass and the gravitational constant and
+distance to turn it into a Newton unit
+distance to turn it into a Newton unit
+distance to turn it into a Newton unit
+so yeah that's definitely a constraint
+so yeah that's definitely a constraint
+so yeah that's definitely a constraint
+that we can exploit
+that we can exploit
+that we can exploit
+okay so that's really good so the first
+okay so that's really good so the first
+okay so that's really good so the first
+thing I'm going to do is talk about this
+thing I'm going to do is talk about this
+thing I'm going to do is talk about this
+this thing your observation that the
+this thing your observation that the
+this thing your observation that the
+units must match so yeah Newtons for the
+units must match so yeah Newtons for the
+units must match so yeah Newtons for the
+force then the gravitational constant
+force then the gravitational constant
+force then the gravitational constant
+has this uh this unit then the mass is
+has this uh this unit then the mass is
+has this uh this unit then the mass is
+kilograms and then the distance is
+kilograms and then the distance is
+kilograms and then the distance is
+meters
+meters
+meters
+squar
+squar
+squar
+so what we can do in physics and we do
+so what we can do in physics and we do
+so what we can do in physics and we do
+this quite often is because we know that
+this quite often is because we know that
+this quite often is because we know that
+the units must match we can TR we can
+the units must match we can TR we can
+the units must match we can TR we can
+always transform this function into a
+always transform this function into a
+always transform this function into a
+dimensionist function
+dimensionist function
+dimensionist function
+so we can make it dimensionless and you
+so we can make it dimensionless and you
+so we can make it dimensionless and you
+can see how we can do this by just
+can see how we can do this by just
+can see how we can do this by just
+dividing uh you know the so remember
+dividing uh you know the so remember
+dividing uh you know the so remember
+remember the function that we're trying
+remember the function that we're trying
+remember the function that we're trying
+to discover here is um we don't know
+to discover here is um we don't know
+to discover here is um we don't know
+what this expression is that's the
+what this expression is that's the
+what this expression is that's the
+Assumption so but we do know that it's
+Assumption so but we do know that it's
+Assumption so but we do know that it's
+some Scala function is a function of G
+some Scala function is a function of G
+some Scala function is a function of G
+M1 M2 X1 X2 y1 Y2 Z1 Z2 and we know we
+M1 M2 X1 X2 y1 Y2 Z1 Z2 and we know we
+M1 M2 X1 X2 y1 Y2 Z1 Z2 and we know we
+know we're assuming that we know what
+know we're assuming that we know what
+know we're assuming that we know what
+the units of all of these variables are
+the units of all of these variables are
+the units of all of these variables are
+and the unit of
+and the unit of
+and the unit of
+F and so so we can dimensionalize all of
+F and so so we can dimensionalize all of
+F and so so we can dimensionalize all of
+these variables M1 can just be divided
+these variables M1 can just be divided
+these variables M1 can just be divided
+by some constant which has a unit of
+by some constant which has a unit of
+by some constant which has a unit of
+mass in this case uh yeah so we divide
+mass in this case uh yeah so we divide
+mass in this case uh yeah so we divide
+for example M2 by M1 M1 up here so we we
+for example M2 by M1 M1 up here so we we
+for example M2 by M1 M1 up here so we we
+have this uh kind of non-dimensional
+have this uh kind of non-dimensional
+have this uh kind of non-dimensional
+constant as well with the
+constant as well with the
+constant as well with the
+function and so if I rewrite it in this
+function and so if I rewrite it in this
+function and so if I rewrite it in this
+way uh we can just say that F this
+way uh we can just say that F this
+way uh we can just say that F this
+unknown unknown function we have we know
+unknown unknown function we have we know
+unknown unknown function we have we know
+that it can be written as some constant
+that it can be written as some constant
+that it can be written as some constant
+some non-dimensionalizing constant uh
+some non-dimensionalizing constant uh
+some non-dimensionalizing constant uh
+Times by a function which is a function
+Times by a function which is a function
+Times by a function which is a function
+of a b c d e and f these non-dimensional
+of a b c d e and f these non-dimensional
+of a b c d e and f these non-dimensional
+units can everyone see how we can kind
+units can everyone see how we can kind
+units can everyone see how we can kind
+of write rewrite it in this way and this
+of write rewrite it in this way and this
+of write rewrite it in this way and this
+is true for any function where we know
+is true for any function where we know
+is true for any function where we know
+know that the units must match it can be
+know that the units must match it can be
+know that the units must match it can be
+written as a constant times by some
+written as a constant times by some
+written as a constant times by some
+function of some
+function of some
+function of some
+non-dimensional
+variables so can anyone tell me tell me
+variables so can anyone tell me tell me
+variables so can anyone tell me tell me
+what this does to the search base if we
+what this does to the search base if we
+what this does to the search base if we
+can say okay no the units match we can
+can say okay no the units match we can
+can say okay no the units match we can
+rewrite f as constant times by some some
+rewrite f as constant times by some some
+rewrite f as constant times by some some
+non-dimensional function here what have
+non-dimensional function here what have
+non-dimensional function here what have
+I just done to the search
+Bas spot on yeah so if you look at this
+Bas spot on yeah so if you look at this
+Bas spot on yeah so if you look at this
+function now I've reduced the number of
+function now I've reduced the number of
+function now I've reduced the number of
+uh inde dependent variables of the
+uh inde dependent variables of the
+uh inde dependent variables of the
+function so it's gone from 1 two 3 four
+function so it's gone from 1 two 3 four
+function so it's gone from 1 two 3 four
+five from 9 to six yeah like you said
+five from 9 to six yeah like you said
+five from 9 to six yeah like you said
+and it's because some of these variables
+and it's because some of these variables
+and it's because some of these variables
+are now just pulled out into this
+are now just pulled out into this
+are now just pulled out into this
+constant at the front of the function so
+constant at the front of the function so
+constant at the front of the function so
+um so so now we just have to search for
+um so so now we just have to search for
+um so so now we just have to search for
+a function which is much lower
+a function which is much lower
+a function which is much lower
+dimensional and that dramatically
+dimensional and that dramatically
+dimensional and that dramatically
+reduces the search base the number of
+reduces the search base the number of
+reduces the search base the number of
+possible combinations of these input
+variables so yeah reduces the number of
+variables so yeah reduces the number of
+variables so yeah reduces the number of
+variables so the question is how do we
+variables so the question is how do we
+variables so the question is how do we
+given that we don't actually know what
+given that we don't actually know what
+given that we don't actually know what
+the mathematical expression of the
+the mathematical expression of the
+the mathematical expression of the
+function is how can we figure out what
+function is how can we figure out what
+function is how can we figure out what
+these dimensionist variables are and
+these dimensionist variables are and
+these dimensionist variables are and
+what the constant is in front of the
+what the constant is in front of the
+what the constant is in front of the
+function I'm not going to go into how
+function I'm not going to go into how
+function I'm not going to go into how
+that's done but there is a a
+that's done but there is a a
+that's done but there is a a
+deterministic way to do that so you can
+deterministic way to do that so you can
+deterministic way to do that so you can
+do this for every every function and uh
+do this for every every function and uh
+do this for every every function and uh
+I'm just taking that to be true true for
+now
+now
+now
+okay so next imetry or next hidden
+okay so next imetry or next hidden
+okay so next imetry or next hidden
+Simplicity is the we talk about this the
+Simplicity is the we talk about this the
+Simplicity is the we talk about this the
+trans trans uh translational
+trans trans uh translational
+trans trans uh translational
+symmetry so this is just the property
+symmetry so this is just the property
+symmetry so this is just the property
+that it doesn't this this function
+that it doesn't this this function
+that it doesn't this this function
+doesn't depend on the absolute values of
+doesn't depend on the absolute values of
+doesn't depend on the absolute values of
+the positions it only depends on the
+the positions it only depends on the
+the positions it only depends on the
+distance between them so how do you
+distance between them so how do you
+distance between them so how do you
+think we can exploit
+think we can exploit
+think we can exploit
+that or how might that reduce the search
+that or how might that reduce the search
+that or how might that reduce the search
+base how how could you reduce the search
+base how how could you reduce the search
+base how how could you reduce the search
+base given that
+observation yeah
+yeah absolutely so we can do a simple
+yeah absolutely so we can do a simple
+yeah absolutely so we can do a simple
+change of variables where uh we
+change of variables where uh we
+change of variables where uh we
+substitute r or D the difference between
+substitute r or D the difference between
+substitute r or D the difference between
+these two instead of the two variables
+these two instead of the two variables
+these two instead of the two variables
+themselves and then we again we reduce
+themselves and then we again we reduce
+themselves and then we again we reduce
+the number of variables that the
+the number of variables that the
+the number of variables that the
+function depends
+function depends
+function depends
+on
+on
+on
+um so yeah I just give I've just asked
+um so yeah I just give I've just asked
+um so yeah I just give I've just asked
+that question and you told me the answer
+that question and you told me the answer
+that question and you told me the answer
+so if I just plot f of x so what I can
+so if I just plot f of x so what I can
+so if I just plot f of x so what I can
+do is I can query this function and I
+do is I can query this function and I
+do is I can query this function and I
+can just test it for X1 and X2 and I can
+can just test it for X1 and X2 and I can
+can just test it for X1 and X2 and I can
+see that the the output function is like
+see that the the output function is like
+see that the the output function is like
+a linear
+a linear
+a linear
+function and that's telling me that we
+function and that's telling me that we
+function and that's telling me that we
+have translational
+have translational
+have translational
+symmetry um so in this case we can like
+symmetry um so in this case we can like
+symmetry um so in this case we can like
+you said we can substitute in uh D1 D2
+you said we can substitute in uh D1 D2
+you said we can substitute in uh D1 D2
+D3 is just X2 - X1 Y2 - y1 uh like this
+D3 is just X2 - X1 Y2 - y1 uh like this
+D3 is just X2 - X1 Y2 - y1 uh like this
+and then we've you can see how we're
+and then we've you can see how we're
+and then we've you can see how we're
+reducing the function again to from six
+reducing the function again to from six
+reducing the function again to from six
+variables down to one two three four
+variables down to one two three four
+variables down to one two three four
+uh six where have I got wrong here
+oh yeah so I'm not assuming
+oh yeah so I'm not assuming
+oh yeah so I'm not assuming
+here so I'm not assuming here we did the
+here so I'm not assuming here we did the
+here so I'm not assuming here we did the
+dimensionality analysis but if we did it
+dimensionality analysis but if we did it
+dimensionality analysis but if we did it
+would have reduced it even further so we
+would have reduced it even further so we
+would have reduced it even further so we
+just assuming we haven't done a
+just assuming we haven't done a
+just assuming we haven't done a
+dimensionality analysis here and we're
+dimensionality analysis here and we're
+dimensionality analysis here and we're
+just using the translational symmetry
+just using the translational symmetry
+just using the translational symmetry
+that gets us down to six variables
+that gets us down to six variables
+that gets us down to six variables
+instead of nine just like we did before
+instead of nine just like we did before
+instead of nine just like we did before
+in the
+in the
+in the
+dimensional
+dimensional
+dimensional
+um but we need to know that that's true
+um but we need to know that that's true
+um but we need to know that that's true
+so how how can we test for symmetry like
+so how how can we test for symmetry like
+so how how can we test for symmetry like
+if if you're able to query this
+if if you're able to query this
+if if you're able to query this
+function any set of variables how how
+function any set of variables how how
+function any set of variables how how
+could you test that this property is
+could you test that this property is
+could you test that this property is
+true that f of x f when of X2 and X X1
+true that f of x f when of X2 and X X1
+true that f of x f when of X2 and X X1
+is just some function of the difference
+is just some function of the difference
+is just some function of the difference
+between the
+two
+yeah yeah
+yeah I think I think you're basically
+yeah I think I think you're basically
+yeah I think I think you're basically
+right so so what you can do you just
+right so so what you can do you just
+right so so what you can do you just
+choose some constant a so and then you
+choose some constant a so and then you
+choose some constant a so and then you
+for all values of X1 and X2 or actually
+for all values of X1 and X2 or actually
+for all values of X1 and X2 or actually
+all values of the input function you can
+all values of the input function you can
+all values of the input function you can
+add a to these two and if it equals the
+add a to these two and if it equals the
+add a to these two and if it equals the
+same as the the function without a added
+same as the the function without a added
+same as the the function without a added
+to X1 and X2 then then you can if you
+to X1 and X2 then then you can if you
+to X1 and X2 then then you can if you
+stare at that long enough you you'll
+stare at that long enough you you'll
+stare at that long enough you you'll
+you'll realize that that tells you that
+you'll realize that that tells you that
+you'll realize that that tells you that
+it's symmetric
+it's symmetric
+it's symmetric
+well that's a sufficient condition to to
+well that's a sufficient condition to to
+well that's a sufficient condition to to
+show that this is
+true
+true
+true
+okay there's another one that we haven't
+okay there's another one that we haven't
+okay there's another one that we haven't
+uh talked about which is the
+uh talked about which is the
+uh talked about which is the
+multiplicative separ separability so
+multiplicative separ separability so
+multiplicative separ separability so
+what do I mean by that can anyone
+guess this function is
+guess this function is
+guess this function is
+separable how is it
+separable how is it
+separable how is it
+separable yeah
+yeah exactly so the top the numerator
+yeah exactly so the top the numerator
+yeah exactly so the top the numerator
+here only depends on masses this only
+here only depends on masses this only
+here only depends on masses this only
+depends on on the differences so another
+depends on on the differences so another
+depends on on the differences so another
+way of saying that is we can we can
+way of saying that is we can we can
+way of saying that is we can we can
+rewrite this function as some function
+rewrite this function as some function
+rewrite this function as some function
+which only depends on G another function
+which only depends on G another function
+which only depends on G another function
+which only depends on M Etc in a
+which only depends on M Etc in a
+which only depends on M Etc in a
+multiplicative way so we' kind of
+multiplicative way so we' kind of
+multiplicative way so we' kind of
+separated out these different factors in
+separated out these different factors in
+separated out these different factors in
+the
+the
+the
+function so again how does this if we
+function so again how does this if we
+function so again how does this if we
+knew that this was the case for this
+knew that this was the case for this
+knew that this was the case for this
+function how would we how does this
+function how would we how does this
+function how would we how does this
+reduce the search space can anyone tell
+reduce the search space can anyone tell
+reduce the search space can anyone tell
+me
+so what we've done here is we've now
+so what we've done here is we've now
+so what we've done here is we've now
+decompos this function into four
+decompos this function into four
+decompos this function into four
+separate
+separate
+separate
+functions and suppose that I knew the
+functions and suppose that I knew the
+functions and suppose that I knew the
+first three
+first three
+first three
+functions then all I would have to do is
+functions then all I would have to do is
+functions then all I would have to do is
+learn a function which has less
+learn a function which has less
+learn a function which has less
+variables than the the initi
+variables than the the initi
+variables than the the initi
+function so what it actually allows us
+function so what it actually allows us
+function so what it actually allows us
+to do is to carry out four independent
+to do is to carry out four independent
+to do is to carry out four independent
+searches for for this so if we knew that
+searches for for this so if we knew that
+searches for for this so if we knew that
+this is the case we can just fix the
+this is the case we can just fix the
+this is the case we can just fix the
+values of X1 X2 y1 Y2 zed1
+values of X1 X2 y1 Y2 zed1
+values of X1 X2 y1 Y2 zed1
+Z2 uh and then just search for these
+Z2 uh and then just search for these
+Z2 uh and then just search for these
+these three or even go further fix the
+these three or even go further fix the
+these three or even go further fix the
+value of M1 and G and then just search
+value of M1 and G and then just search
+value of M1 and G and then just search
+for this I as a function of M2 and then
+for this I as a function of M2 and then
+for this I as a function of M2 and then
+once we've figured out what I have a
+once we've figured out what I have a
+once we've figured out what I have a
+function of M2 is we can do the same for
+function of M2 is we can do the same for
+function of M2 is we can do the same for
+the other other three
+the other other three
+the other other three
+functions so this this again makes the
+functions so this this again makes the
+functions so this this again makes the
+search problem a bit simpler yeah
+know if you just if you fix the value
+know if you just if you fix the value
+know if you just if you fix the value
+you would still you still query the
+you would still you still query the
+you would still you still query the
+function M2 here and you get like some
+function M2 here and you get like some
+function M2 here and you get like some
+varying function that you could then do
+varying function that you could then do
+varying function that you could then do
+a just a a symbolic progression and just
+a just a a symbolic progression and just
+a just a a symbolic progression and just
+in regards to
+N2 I I'll show you so the way that you
+N2 I I'll show you so the way that you
+N2 I I'll show you so the way that you
+can test this basically if this is
+can test this basically if this is
+can test this basically if this is
+true is a is a very it's kind of a
+true is a is a very it's kind of a
+true is a is a very it's kind of a
+similar test to that trans transtion
+similar test to that trans transtion
+similar test to that trans transtion
+symmetry that if you uh fix the values
+symmetry that if you uh fix the values
+symmetry that if you uh fix the values
+of of one of one parameter and just vary
+of of one of one parameter and just vary
+of of one of one parameter and just vary
+the one that you want to test for
+the one that you want to test for
+the one that you want to test for
+separability and you compute this for
+separability and you compute this for
+separability and you compute this for
+all values of X and show that it just
+all values of X and show that it just
+all values of X and show that it just
+equals this as if you didn't fix the
+equals this as if you didn't fix the
+equals this as if you didn't fix the
+values then then it's separable and
+values then then it's separable and
+values then then it's separable and
+again this is a sort of thing if you
+again this is a sort of thing if you
+again this is a sort of thing if you
+stare at it for long enough you can see
+stare at it for long enough you can see
+stare at it for long enough you can see
+that it it it is sufficient to show that
+that it it it is sufficient to show that
+that it it it is sufficient to show that
+there uh it's it's separable
+okay
+okay
+okay
+so that's worth going back to and just
+so that's worth going back to and just
+so that's worth going back to and just
+convincing yourself that this is this is
+convincing yourself that this is this is
+convincing yourself that this is this is
+true and and again if you go into the
+true and and again if you go into the
+true and and again if you go into the
+paper they explain how they do these
+paper they explain how they do these
+paper they explain how they do these
+sets of the
+function so just to summarize how this
+function so just to summarize how this
+function so just to summarize how this
+is working
+is working
+is working
+is we start off with some mystery
+is we start off with some mystery
+is we start off with some mystery
+function which we know is a function of
+function which we know is a function of
+function which we know is a function of
+of these nine
+of these nine
+of these nine
+variables and then we do each of these
+variables and then we do each of these
+variables and then we do each of these
+kind of hidden Simplicity tests on the
+kind of hidden Simplicity tests on the
+kind of hidden Simplicity tests on the
+function so the first test that we do is
+function so the first test that we do is
+function so the first test that we do is
+a dimensionality analysis and we realize
+a dimensionality analysis and we realize
+a dimensionality analysis and we realize
+that we can write it as some constant
+that we can write it as some constant
+that we can write it as some constant
+times by a function that is non non
+times by a function that is non non
+times by a function that is non non
+non-dimensionalized with a smaller
+non-dimensionalized with a smaller
+non-dimensionalized with a smaller
+number of
+number of
+number of
+variables now that we know that that's
+variables now that we know that that's
+variables now that we know that that's
+the uh function we're looking for then
+the uh function we're looking for then
+the uh function we're looking for then
+we do symmetry testing on that function
+we do symmetry testing on that function
+we do symmetry testing on that function
+and we figure out that G and H
+and we figure out that G and H
+and we figure out that G and H
+translationally have translational
+translationally have translational
+translationally have translational
+symmetry that get that allows us to get
+symmetry that get that allows us to get
+symmetry that get that allows us to get
+rid of another scale another variable
+rid of another scale another variable
+rid of another scale another variable
+then we do our separability testing we
+then we do our separability testing we
+then we do our separability testing we
+find that we can SE separate out a uh we
+find that we can SE separate out a uh we
+find that we can SE separate out a uh we
+can separate out a
+can separate out a
+can separate out a
+here um and that's as far as that's as
+here um and that's as far as that's as
+here um and that's as far as that's as
+far as it goes at which point we then
+far as it goes at which point we then
+far as it goes at which point we then
+have to bring in a search algorithm to
+have to bring in a search algorithm to
+have to bring in a search algorithm to
+try and figure out this final function
+try and figure out this final function
+try and figure out this final function
+which is only a function of three three
+which is only a function of three three
+which is only a function of three three
+variables um given our you know our
+variables um given our you know our
+variables um given our you know our
+examples of the function that we that we
+examples of the function that we that we
+examples of the function that we that we
+have
+have
+have
+available so then this AI fan does a bre
+available so then this AI fan does a bre
+available so then this AI fan does a bre
+Force search but um you can use any
+Force search but um you can use any
+Force search but um you can use any
+search algorithm if you if you like
+search algorithm if you if you like
+search algorithm if you if you like
+and then that brief Force search will
+and then that brief Force search will
+and then that brief Force search will
+then give us the kind of final
+then give us the kind of final
+then give us the kind of final
+mathematical expression hopefully if it
+mathematical expression hopefully if it
+mathematical expression hopefully if it
+converges and then we resubstitute all
+converges and then we resubstitute all
+converges and then we resubstitute all
+of our variables or the kind of uh
+of our variables or the kind of uh
+of our variables or the kind of uh
+variable Expressions that we've we've
+variable Expressions that we've we've
+variable Expressions that we've we've
+discovered and we eventually end up at
+discovered and we eventually end up at
+discovered and we eventually end up at
+the final
+the final
+the final
+expression so can people see how by you
+expression so can people see how by you
+expression so can people see how by you
+know simply just testing the function
+know simply just testing the function
+know simply just testing the function
+for these kind of simplicities that we
+for these kind of simplicities that we
+for these kind of simplicities that we
+can really reduce the kind of final
+can really reduce the kind of final
+can really reduce the kind of final
+function that we actually need to
+function that we actually need to
+function that we actually need to
+discover good
+okay so this is the full workflow from
+okay so this is the full workflow from
+okay so this is the full workflow from
+the from the paper it's a bit uh more
+the from the paper it's a bit uh more
+the from the paper it's a bit uh more
+complex the actual algorithm they they
+complex the actual algorithm they they
+complex the actual algorithm they they
+designed but it it's basically doing all
+designed but it it's basically doing all
+designed but it it's basically doing all
+those different tests that I said and
+those different tests that I said and
+those different tests that I said and
+then if those tests don't pass then it
+then if those tests don't pass then it
+then if those tests don't pass then it
+has to rely on some brute force uh to to
+has to rely on some brute force uh to to
+has to rely on some brute force uh to to
+solve to solve the
+solve to solve the
+solve to solve the
+problem so you might notice that they
+problem so you might notice that they
+problem so you might notice that they
+also train in network in here which
+also train in network in here which
+also train in network in here which
+seems like it's completely different to
+seems like it's completely different to
+seems like it's completely different to
+what I just described but they don't
+what I just described but they don't
+what I just described but they don't
+actually the only reason why they train
+actually the only reason why they train
+actually the only reason why they train
+a network here is they just fit it on on
+a network here is they just fit it on on
+a network here is they just fit it on on
+that observational data of the function
+that observational data of the function
+that observational data of the function
+that we have just to directly
+that we have just to directly
+that we have just to directly
+approximate the
+approximate the
+approximate the
+function and this just allows us to to
+function and this just allows us to to
+function and this just allows us to to
+query the function at any point in X so
+query the function at any point in X so
+query the function at any point in X so
+it's like an interpolation of those
+it's like an interpolation of those
+it's like an interpolation of those
+those observational values remember we
+those observational values remember we
+those observational values remember we
+have to query the function to do these
+have to query the function to do these
+have to query the function to do these
+separability tests like whether it's mul
+separability tests like whether it's mul
+separability tests like whether it's mul
+uh uh whether it's has symmetry or if
+uh uh whether it's has symmetry or if
+uh uh whether it's has symmetry or if
+it's
+it's
+it's
+separable so the network here isn't
+separable so the network here isn't
+separable so the network here isn't
+doing anything like trying to understand
+doing anything like trying to understand
+doing anything like trying to understand
+the symbolic expression or anything like
+the symbolic expression or anything like
+the symbolic expression or anything like
+this it's just a function fitting
+um and yeah just the key takeaway is
+um and yeah just the key takeaway is
+um and yeah just the key takeaway is
+that this approach looks for ways to
+that this approach looks for ways to
+that this approach looks for ways to
+simplify the expression before we search
+simplify the expression before we search
+simplify the expression before we search
+for that final mathematical
+expression okay so there's a problem
+expression okay so there's a problem
+expression okay so there's a problem
+possibly is um these simp Simplicity
+possibly is um these simp Simplicity
+possibly is um these simp Simplicity
+tests might just fail if the expression
+tests might just fail if the expression
+tests might just fail if the expression
+doesn't have any of these uh kind of
+doesn't have any of these uh kind of
+doesn't have any of these uh kind of
+hidden
+hidden
+hidden
+simplicities and this algorithm it basic
+simplicities and this algorithm it basic
+simplicities and this algorithm it basic
+version just relies on Brute Force so
+version just relies on Brute Force so
+version just relies on Brute Force so
+it's then just going to take this
+it's then just going to take this
+it's then just going to take this
+unknown function them do a a Brute Force
+unknown function them do a a Brute Force
+unknown function them do a a Brute Force
+combinatorial search across our our
+combinatorial search across our our
+combinatorial search across our our
+library of operators to try and find
+library of operators to try and find
+library of operators to try and find
+that
+that
+that
+expression and so what I'm going to move
+expression and so what I'm going to move
+expression and so what I'm going to move
+on to now is is to think about different
+on to now is is to think about different
+on to now is is to think about different
+search algorithms that are not just
+search algorithms that are not just
+search algorithms that are not just
+combinatorial that might help us solve
+combinatorial that might help us solve
+combinatorial that might help us solve
+these problems
+these problems
+these problems
+better so yeah I've given you uh uh one
+better so yeah I've given you uh uh one
+better so yeah I've given you uh uh one
+idea on how
+idea on how
+idea on how
+to make some assumptions on the
+to make some assumptions on the
+to make some assumptions on the
+structure of the expression what aian
+structure of the expression what aian
+structure of the expression what aian
+does is actually allows us to discover
+does is actually allows us to discover
+does is actually allows us to discover
+those actual underlying simplicities of
+those actual underlying simplicities of
+those actual underlying simplicities of
+the
+function any questions on this before I
+function any questions on this before I
+function any questions on this before I
+move on to talking about search
+algorithms
+yeah yeah yeah that's a really good
+yeah yeah yeah that's a really good
+yeah yeah yeah that's a really good
+observation so in practice F
+observation so in practice F
+observation so in practice F
+observations of f have noise and this
+observations of f have noise and this
+observations of f have noise and this
+right might really mess up our our tests
+right might really mess up our our tests
+right might really mess up our our tests
+so that they in the paper they have kind
+so that they in the paper they have kind
+so that they in the paper they have kind
+of thresholds right so so when you're
+of thresholds right so so when you're
+of thresholds right so so when you're
+for example when you're doing something
+for example when you're doing something
+for example when you're doing something
+like this you're querying the function
+like this you're querying the function
+like this you're querying the function
+at many points and testing if this is
+at many points and testing if this is
+at many points and testing if this is
+true it's not actually a perfect equals
+true it's not actually a perfect equals
+true it's not actually a perfect equals
+they'll just have some threshold that's
+they'll just have some threshold that's
+they'll just have some threshold that's
+based on the magnitude of the the
+based on the magnitude of the the
+based on the magnitude of the the
+function or something so yeah that's a
+function or something so yeah that's a
+function or something so yeah that's a
+good good observation the other the
+good good observation the other the
+good good observation the other the
+other thing is when they use the noral
+other thing is when they use the noral
+other thing is when they use the noral
+network here to fit the observational
+network here to fit the observational
+network here to fit the observational
+data that actually can smooth out the
+data that actually can smooth out the
+data that actually can smooth out the
+noise and kind of fit like a smooth
+noise and kind of fit like a smooth
+noise and kind of fit like a smooth
+approximation and make it more
+approximation and make it more
+approximation and make it more
+stable
+stable
+stable
+y any other
+questions
+questions
+questions
+okay
+okay
+okay
+so search algorithms can anyone think of
+so search algorithms can anyone think of
+so search algorithms can anyone think of
+a better search algorithm that's not
+a better search algorithm that's not
+a better search algorithm that's not
+just combinatorial
+search who knows of other like search
+search who knows of other like search
+search who knows of other like search
+algorithms that
+algorithms that
+algorithms that
+work or just general search algorithms
+work or just general search algorithms
+work or just general search algorithms
+that might not require gradients like
+that might not require gradients like
+that might not require gradients like
+gradient research algorithms which ones
+gradient research algorithms which ones
+gradient research algorithms which ones
+have you studied
+before
+before
+before
+again oh sorry I still
+again oh sorry I still
+again oh sorry I still
+didn't okay yeah I haven't I'm not sure
+didn't okay yeah I haven't I'm not sure
+didn't okay yeah I haven't I'm not sure
+I've heard that yeah any
+I've heard that yeah any
+I've heard that yeah any
+others conqur and divide yeah yeah
+others conqur and divide yeah yeah
+others conqur and divide yeah yeah
+yeah that breath search so you're
+yeah that breath search so you're
+yeah that breath search so you're
+thinking of like tree search algorithms
+thinking of like tree search algorithms
+thinking of like tree search algorithms
+kind of yeah yeah so you might start at
+kind of yeah yeah so you might start at
+kind of yeah yeah so you might start at
+the root the tree and do a depth first
+the root the tree and do a depth first
+the root the tree and do a depth first
+search or bre first search yeah
+search or bre first search yeah
+search or bre first search yeah
+interesting any
+others so who's heard of yeah
+others so who's heard of yeah
+others so who's heard of yeah
+on minimum man tree yeah
+on minimum man tree yeah
+on minimum man tree yeah
+yeah so yeah so you suggested quite a
+yeah so yeah so you suggested quite a
+yeah so yeah so you suggested quite a
+few tree search algorithms so you're
+few tree search algorithms so you're
+few tree search algorithms so you're
+assuming that we're trying to search a
+assuming that we're trying to search a
+assuming that we're trying to search a
+tree
+tree
+tree
+um we are kind of doing that but we're
+um we are kind of doing that but we're
+um we are kind of doing that but we're
+actually just searching for trees it's a
+actually just searching for trees it's a
+actually just searching for trees it's a
+bit of a
+bit of a
+bit of a
+search problem it's not like we're
+search problem it's not like we're
+search problem it's not like we're
+searching through the tree to find like
+searching through the tree to find like
+searching through the tree to find like
+a end node of the tree we actually just
+a end node of the tree we actually just
+a end node of the tree we actually just
+want to discover the whole tree itself
+want to discover the whole tree itself
+want to discover the whole tree itself
+it's a slightly different search but I
+it's a slightly different search but I
+it's a slightly different search but I
+can see where you're coming from um
+can see where you're coming from um
+can see where you're coming from um
+who's heard of genetic
+who's heard of genetic
+who's heard of genetic
+algorithms yeah everyone so well most
+algorithms yeah everyone so well most
+algorithms yeah everyone so well most
+people yeah so genetic algorithm Super
+people yeah so genetic algorithm Super
+people yeah so genetic algorithm Super
+Famous used for many different problems
+Famous used for many different problems
+Famous used for many different problems
+and there are gradient free
+and there are gradient free
+and there are gradient free
+method
+method
+method
+um so this is what we're going to talk
+um so this is what we're going to talk
+um so this is what we're going to talk
+about next is a is a better way to
+about next is a is a better way to
+about next is a is a better way to
+search for these expressions using
+search for these expressions using
+search for these expressions using
+evolutionary research or genetic
+evolutionary research or genetic
+evolutionary research or genetic
+algorithms
+algorithms
+algorithms
+so how is a genetic algorithm like Pro
+so how is a genetic algorithm like Pro
+so how is a genetic algorithm like Pro
+uh searching this searching this space
+uh searching this searching this space
+uh searching this searching this space
+more cleverly than just doing a
+more cleverly than just doing a
+more cleverly than just doing a
+combinatorial
+combinatorial
+combinatorial
+search so what the search does is it
+search so what the search does is it
+search so what the search does is it
+relies on some hor istics some like some
+relies on some hor istics some like some
+relies on some hor istics some like some
+observations that are may be empirical
+observations that are may be empirical
+observations that are may be empirical
+but help us search the space in a
+but help us search the space in a
+but help us search the space in a
+principled way than than just doing a
+principled way than than just doing a
+principled way than than just doing a
+comor
+comor
+comor
+search and so one of theistic that that
+search and so one of theistic that that
+search and so one of theistic that that
+uh you could use when uh to when you're
+uh you could use when uh to when you're
+uh you could use when uh to when you're
+searching these trees to find a find the
+searching these trees to find a find the
+searching these trees to find a find the
+correct tree that represents the
+correct tree that represents the
+correct tree that represents the
+expression is you could say well say
+expression is you could say well say
+expression is you could say well say
+that we we have this tree uh here and we
+that we we have this tree uh here and we
+that we we have this tree uh here and we
+look at how well it predicts our
+look at how well it predicts our
+look at how well it predicts our
+observations here and this is uh this
+observations here and this is uh this
+observations here and this is uh this
+expression is X Plus cos Pi x^ s and we
+expression is X Plus cos Pi x^ s and we
+expression is X Plus cos Pi x^ s and we
+see oh actually this expression is doing
+see oh actually this expression is doing
+see oh actually this expression is doing
+a fairly good job of fitting our data
+a fairly good job of fitting our data
+a fairly good job of fitting our data
+it's got the OS lat Behavior but it's
+it's got the OS lat Behavior but it's
+it's got the OS lat Behavior but it's
+got like a con it's got like a linear
+got like a con it's got like a linear
+got like a con it's got like a linear
+Behavior instead of like a or like it's
+Behavior instead of like a or like it's
+Behavior instead of like a or like it's
+it's constantly increasing instead of
+it's constantly increasing instead of
+it's constantly increasing instead of
+being centered around
+being centered around
+being centered around
+zero um and so the idea here is that
+zero um and so the idea here is that
+zero um and so the idea here is that
+maybe the true expression might look
+maybe the true expression might look
+maybe the true expression might look
+very similar to this tree but maybe we
+very similar to this tree but maybe we
+very similar to this tree but maybe we
+just got one of the operators wrong and
+just got one of the operators wrong and
+just got one of the operators wrong and
+so what we might do in the search is
+so what we might do in the search is
+so what we might do in the search is
+instead of like just doing combinatorial
+instead of like just doing combinatorial
+instead of like just doing combinatorial
+search like varying each of these across
+search like varying each of these across
+search like varying each of these across
+its range in a in a big Brute Force way
+its range in a in a big Brute Force way
+its range in a in a big Brute Force way
+is maybe we would just take one of the
+is maybe we would just take one of the
+is maybe we would just take one of the
+operations and just mutate it and
+operations and just mutate it and
+operations and just mutate it and
+basically just randomly change the
+basically just randomly change the
+basically just randomly change the
+operation and our kind of horis or
+operation and our kind of horis or
+operation and our kind of horis or
+assumption is that that might be a
+assumption is that that might be a
+assumption is that that might be a
+better way to get us to the true the
+better way to get us to the true the
+better way to get us to the true the
+true
+true
+true
+expression and so you can see here that
+expression and so you can see here that
+expression and so you can see here that
+this is the case if I just mutate uh the
+this is the case if I just mutate uh the
+this is the case if I just mutate uh the
+top the top the the top node here we
+top the top the the top node here we
+top the top the the top node here we
+actually do discover the the perfect
+actually do discover the the perfect
+actually do discover the the perfect
+expression so everyone understand how we
+expression so everyone understand how we
+expression so everyone understand how we
+could use a mutation in the search
+could use a mutation in the search
+could use a mutation in the search
+algorithm to to inside the search
+yeah can anyone else think of any other
+yeah can anyone else think of any other
+yeah can anyone else think of any other
+genetic algorithm inspired changes we
+genetic algorithm inspired changes we
+genetic algorithm inspired changes we
+can make to these Expressions
+can make to these Expressions
+can make to these Expressions
+yeah
+cross yeah so another classic thing
+cross yeah so another classic thing
+cross yeah so another classic thing
+that's exactly right so another classic
+that's exactly right so another classic
+that's exactly right so another classic
+thing in genetic search this to do
+thing in genetic search this to do
+thing in genetic search this to do
+crossover uh so I have that as the next
+crossover uh so I have that as the next
+crossover uh so I have that as the next
+slide so so a crossover is is slightly
+slide so so a crossover is is slightly
+slide so so a crossover is is slightly
+different it says okay say that we have
+different it says okay say that we have
+different it says okay say that we have
+these two expressions and that we know
+these two expressions and that we know
+these two expressions and that we know
+that they're fairly close to the
+that they're fairly close to the
+that they're fairly close to the
+solution but not perfect let's do a
+solution but not perfect let's do a
+solution but not perfect let's do a
+random crossover so let's take maybe a
+random crossover so let's take maybe a
+random crossover so let's take maybe a
+sub a sub tree of the of of the two
+sub a sub tree of the of of the two
+sub a sub tree of the of of the two
+trees and and swap them over and you
+trees and and swap them over and you
+trees and and swap them over and you
+could see how you could do this
+could see how you could do this
+could see how you could do this
+crossover for any kind of random sub
+crossover for any kind of random sub
+crossover for any kind of random sub
+tree that you're picking in the in the
+tree that you're picking in the in the
+tree that you're picking in the in the
+trees so we take this this sub tree
+trees so we take this this sub tree
+trees so we take this this sub tree
+which in this case is just a leaf and
+which in this case is just a leaf and
+which in this case is just a leaf and
+then we just flip it with this smaller
+then we just flip it with this smaller
+then we just flip it with this smaller
+sub tree here and and rebuild the
+sub tree here and and rebuild the
+sub tree here and and rebuild the
+expression based on that and again you
+expression based on that and again you
+expression based on that and again you
+can see if we do this I mean I've picked
+can see if we do this I mean I've picked
+can see if we do this I mean I've picked
+this to work work but of course but if
+this to work work but of course but if
+this to work work but of course but if
+we do this we end up with the correct
+we do this we end up with the correct
+we do this we end up with the correct
+expression at the bottom here after that
+cross who's with
+cross who's with
+cross who's with
+me
+me
+me
+okay any
+okay any
+okay any
+questions yeah we
+said yeah IDE
+ofation
+ofation
+ofation
+dire how does it apply yeah I mean so
+dire how does it apply yeah I mean so
+dire how does it apply yeah I mean so
+you're making a very valid observation
+you're making a very valid observation
+you're making a very valid observation
+so I said to repeat so I said at the
+so I said to repeat so I said at the
+so I said to repeat so I said at the
+start one of the challenges is the
+start one of the challenges is the
+start one of the challenges is the
+search Bas is not differentiable or
+search Bas is not differentiable or
+search Bas is not differentiable or
+another way of saying that is there's
+another way of saying that is there's
+another way of saying that is there's
+there can be big changes in the function
+there can be big changes in the function
+there can be big changes in the function
+if you just flip one of the operators
+if you just flip one of the operators
+if you just flip one of the operators
+and that is exactly what we're
+and that is exactly what we're
+and that is exactly what we're
+suggesting here is that actually if you
+suggesting here is that actually if you
+suggesting here is that actually if you
+just flip an operator you might get
+just flip an operator you might get
+just flip an operator you might get
+close to the final final result so I
+close to the final final result so I
+close to the final final result so I
+think this just depends on the the types
+think this just depends on the the types
+think this just depends on the the types
+of functions and the types of libraries
+of functions and the types of libraries
+of functions and the types of libraries
+that you're searching over but for sure
+that you're searching over but for sure
+that you're searching over but for sure
+this is not guaranteed to converge any
+this is not guaranteed to converge any
+this is not guaranteed to converge any
+faster than a Brute Force for some for
+some
+some
+some
+yes Solutions and then you continue
+yes Solutions and then you continue
+yes Solutions and then you continue
+those yes but then what I'm saying is
+those yes but then what I'm saying is
+those yes but then what I'm saying is
+that that solution that might be the
+that that solution that might be the
+that that solution that might be the
+best up to this point you might
+best up to this point you might
+best up to this point you might
+something yeah no I agree with you I
+something yeah no I agree with you I
+something yeah no I agree with you I
+think this is a limitation so this is
+think this is a limitation so this is
+think this is a limitation so this is
+why it's so horis it's like our guess at
+why it's so horis it's like our guess at
+why it's so horis it's like our guess at
+what is a good direction to move in the
+what is a good direction to move in the
+what is a good direction to move in the
+search Bas but it might not always be
+search Bas but it might not always be
+search Bas but it might not always be
+the best one and it's probably not
+the best one and it's probably not
+the best one and it's probably not
+provable that it's the best one I think
+provable that it's the best one I think
+provable that it's the best one I think
+crossover is a bit more interesting um
+crossover is a bit more interesting um
+crossover is a bit more interesting um
+uh one way you can think of crossovers
+uh one way you can think of crossovers
+uh one way you can think of crossovers
+what I think makes it powerful is we're
+what I think makes it powerful is we're
+what I think makes it powerful is we're
+not just flipping a single uh operation
+not just flipping a single uh operation
+not just flipping a single uh operation
+but we're actually maybe you could think
+but we're actually maybe you could think
+but we're actually maybe you could think
+of this as like shifting around
+of this as like shifting around
+of this as like shifting around
+mathematical abstractions
+mathematical abstractions
+mathematical abstractions
+like for example this might be the
+like for example this might be the
+like for example this might be the
+subtree if you think about that
+subtree if you think about that
+subtree if you think about that
+Newtonian um forces uh example that I
+Newtonian um forces uh example that I
+Newtonian um forces uh example that I
+just showed where one of the
+just showed where one of the
+just showed where one of the
+calculations was the um radius or the
+calculations was the um radius or the
+calculations was the um radius or the
+difference between two
+difference between two
+difference between two
+points maybe the genetic algorithm might
+points maybe the genetic algorithm might
+points maybe the genetic algorithm might
+realize that that's a good abstraction
+realize that that's a good abstraction
+realize that that's a good abstraction
+to use and maybe that would be the bit
+to use and maybe that would be the bit
+to use and maybe that would be the bit
+that's crossed over to different uh
+that's crossed over to different uh
+that's crossed over to different uh
+other Expressions that it's testing so I
+other Expressions that it's testing so I
+other Expressions that it's testing so I
+think this is quite powerful it's like
+think this is quite powerful it's like
+think this is quite powerful it's like
+reasoning on the abstraction matter what
+reasoning on the abstraction matter what
+reasoning on the abstraction matter what
+abstraction level which is kind of
+abstraction level which is kind of
+abstraction level which is kind of
+interesting
+interesting
+interesting
+but yeah good good points any other
+questions
+questions
+questions
+okay so yeah this is how we would
+okay so yeah this is how we would
+okay so yeah this is how we would
+actually write a genetic search
+actually write a genetic search
+actually write a genetic search
+algorithm for for searching for
+algorithm for for searching for
+algorithm for for searching for
+expressions
+expressions
+expressions
+and um what we do is is this kind of
+and um what we do is is this kind of
+and um what we do is is this kind of
+this this uh this pseudo code so what we
+this this uh this pseudo code so what we
+this this uh this pseudo code so what we
+would do is actually we would start with
+would do is actually we would start with
+would do is actually we would start with
+a a random population of trees this is
+a a random population of trees this is
+a a random population of trees this is
+just a random population of mathematical
+just a random population of mathematical
+just a random population of mathematical
+expressions
+expressions
+expressions
+and then we would start this
+and then we would start this
+and then we would start this
+evolutionary Loop so it it's just a for
+evolutionary Loop so it it's just a for
+evolutionary Loop so it it's just a for
+Loop and generally we would select the
+Loop and generally we would select the
+Loop and generally we would select the
+fittest
+fittest
+fittest
+trees uh and one way to select the
+trees uh and one way to select the
+trees uh and one way to select the
+fittest trees would be based on their
+fittest trees would be based on their
+fittest trees would be based on their
+test error so you just measure given the
+test error so you just measure given the
+test error so you just measure given the
+data points of the function how close
+data points of the function how close
+data points of the function how close
+what what's the what's the uh mean squ
+what what's the what's the uh mean squ
+what what's the what's the uh mean squ
+error for
+error for
+error for
+example and then we apply these genetic
+example and then we apply these genetic
+example and then we apply these genetic
+operations to those fittest trees so we
+operations to those fittest trees so we
+operations to those fittest trees so we
+might do a mutation of one of them or we
+might do a mutation of one of them or we
+might do a mutation of one of them or we
+might cross over randomly um uh some of
+might cross over randomly um uh some of
+might cross over randomly um uh some of
+the some of the trees
+the some of the trees
+the some of the trees
+together and then we would have to have
+together and then we would have to have
+together and then we would have to have
+some notion of the oldest trees this
+some notion of the oldest trees this
+some notion of the oldest trees this
+might be the ones that have not never
+might be the ones that have not never
+might be the ones that have not never
+had uh genetic operators or might have
+had uh genetic operators or might have
+had uh genetic operators or might have
+very low Fitness we would remove those
+very low Fitness we would remove those
+very low Fitness we would remove those
+and then we would just keep looping and
+and then we would just keep looping and
+and then we would just keep looping and
+the kind of idea of evolutionary search
+the kind of idea of evolutionary search
+the kind of idea of evolutionary search
+or genetic search is this kind of
+or genetic search is this kind of
+or genetic search is this kind of
+mirrors what happens in in biology it's
+mirrors what happens in in biology it's
+mirrors what happens in in biology it's
+kind of the same this is what inspires
+kind of the same this is what inspires
+kind of the same this is what inspires
+these
+these
+these
+algorithms so we do that until we meet
+algorithms so we do that until we meet
+algorithms so we do that until we meet
+some
+some
+some
+convergence criteria it could be just
+convergence criteria it could be just
+convergence criteria it could be just
+number of steps or it could be that
+number of steps or it could be that
+number of steps or it could be that
+we've got Fitness above a certain
+we've got Fitness above a certain
+we've got Fitness above a certain
+threshold and that's the
+output any
+questions that makes sense to everyone
+questions that makes sense to everyone
+questions that makes sense to everyone
+yeah okay
+yeah okay
+yeah okay
+so here's a really cool video um so this
+so here's a really cool video um so this
+so here's a really cool video um so this
+is pi symbolic regression hands up who
+is pi symbolic regression hands up who
+is pi symbolic regression hands up who
+who's looked at this liary before one
+who's looked at this liary before one
+who's looked at this liary before one
+person yeah so this is uh written by
+person yeah so this is uh written by
+person yeah so this is uh written by
+Milos kler he's done some really amazing
+Milos kler he's done some really amazing
+Milos kler he's done some really amazing
+work in this in this field along with
+work in this in this field along with
+work in this in this field along with
+many other
+many other
+many other
+researchers so this
+researchers so this
+researchers so this
+is his library that he's got on GitHub
+is his library that he's got on GitHub
+is his library that he's got on GitHub
+so you can go and play with this and
+so you can go and play with this and
+so you can go and play with this and
+this video is taken from from that
+this video is taken from from that
+this video is taken from from that
+GitHub
+GitHub
+GitHub
+page um and it's a symbolic progression
+page um and it's a symbolic progression
+page um and it's a symbolic progression
+library and the main engine that does
+library and the main engine that does
+library and the main engine that does
+symbolic progression here is genetic uh
+symbolic progression here is genetic uh
+symbolic progression here is genetic uh
+search so what you're seeing here is uh
+search so what you're seeing here is uh
+search so what you're seeing here is uh
+you know observations of some uh of some
+you know observations of some uh of some
+you know observations of some uh of some
+true function and this is how this
+true function and this is how this
+true function and this is how this
+evolutionary search algorithm is is
+evolutionary search algorithm is is
+evolutionary search algorithm is is
+evolving over over
+evolving over over
+evolving over over
+time um so it's you can see in the
+time um so it's you can see in the
+time um so it's you can see in the
+background I guess it's meant to
+background I guess it's meant to
+background I guess it's meant to
+represent all all the trees in the
+represent all all the trees in the
+represent all all the trees in the
+population that are evolving over time
+population that are evolving over time
+population that are evolving over time
+uh but this is um this algorithm has a
+uh but this is um this algorithm has a
+uh but this is um this algorithm has a
+lot more added on top of it than just
+lot more added on top of it than just
+lot more added on top of it than just
+that basic pseudo code that I showed you
+that basic pseudo code that I showed you
+that basic pseudo code that I showed you
+one thing that it does uh inside that
+one thing that it does uh inside that
+one thing that it does uh inside that
+for Loop um sometimes it will choose
+for Loop um sometimes it will choose
+for Loop um sometimes it will choose
+instead of doing a mutation it will
+instead of doing a mutation it will
+instead of doing a mutation it will
+choose to do some constant optimization
+choose to do some constant optimization
+choose to do some constant optimization
+so the leaves here that it it adds to
+so the leaves here that it it adds to
+so the leaves here that it it adds to
+the Expressions some of them are
+the Expressions some of them are
+the Expressions some of them are
+constants and obviously they need to be
+constants and obviously they need to be
+constants and obviously they need to be
+kind of tuned to their values and and he
+kind of tuned to their values and and he
+kind of tuned to their values and and he
+does a a constant optimization randomly
+does a a constant optimization randomly
+does a a constant optimization randomly
+at some steps to try and optimize those
+at some steps to try and optimize those
+at some steps to try and optimize those
+before carrying on the genetic search so
+before carrying on the genetic search so
+before carrying on the genetic search so
+that's what you're seeing in these kind
+that's what you're seeing in these kind
+that's what you're seeing in these kind
+of constant optimization
+of constant optimization
+of constant optimization
+steps so really really impressive
+steps so really really impressive
+steps so really really impressive
+Library definitely worth having a look
+Library definitely worth having a look
+Library definitely worth having a look
+at um and playing around with it's
+at um and playing around with it's
+at um and playing around with it's
+really really interesting to see how it
+really really interesting to see how it
+really really interesting to see how it
+how it
+converges okay
+so uh I probably don't have time to get
+so uh I probably don't have time to get
+so uh I probably don't have time to get
+into this but uh this code P um also
+into this but uh this code P um also
+into this but uh this code P um also
+runs in parallel across multiple threads
+runs in parallel across multiple threads
+runs in parallel across multiple threads
+and what each thread is doing is
+and what each thread is doing is
+and what each thread is doing is
+actually uh evolving its own separate
+actually uh evolving its own separate
+actually uh evolving its own separate
+population um for a number of steps and
+population um for a number of steps and
+population um for a number of steps and
+then at some point in the algorithm
+then at some point in the algorithm
+then at some point in the algorithm
+those those separate populations cross
+those those separate populations cross
+those those separate populations cross
+over they kind of fittest individuals
+over they kind of fittest individuals
+over they kind of fittest individuals
+and then you kind of get this tournament
+and then you kind of get this tournament
+and then you kind of get this tournament
+selection algorithm it's kind of a a
+selection algorithm it's kind of a a
+selection algorithm it's kind of a a
+more complex ver of this genetic
+more complex ver of this genetic
+more complex ver of this genetic
+search there's a lot more to be said
+search there's a lot more to be said
+search there's a lot more to be said
+about this but I I don't have the time
+about this but I I don't have the time
+about this but I I don't have the time
+so okay so I've talked about um other uh
+so okay so I've talked about um other uh
+so okay so I've talked about um other uh
+genetic search there are also many other
+genetic search there are also many other
+genetic search there are also many other
+search algorithms that I don't have time
+search algorithms that I don't have time
+search algorithms that I don't have time
+to talk about um but I'm just going to
+to talk about um but I'm just going to
+to talk about um but I'm just going to
+give you a quick fire idea of what these
+give you a quick fire idea of what these
+give you a quick fire idea of what these
+other search args might be so again the
+other search args might be so again the
+other search args might be so again the
+goal is to find F given our data set so
+goal is to find F given our data set so
+goal is to find F given our data set so
+one way to do it is just to do it
+one way to do it is just to do it
+one way to do it is just to do it
+directly to not actually have some like
+directly to not actually have some like
+directly to not actually have some like
+full loop of a search going on
+full loop of a search going on
+full loop of a search going on
+but just to take all those observations
+but just to take all those observations
+but just to take all those observations
+as input and just try and learn some
+as input and just try and learn some
+as input and just try and learn some
+model that spits out the expression at
+model that spits out the expression at
+model that spits out the expression at
+the at the
+the at the
+the at the
+end and Transformers may be a very
+end and Transformers may be a very
+end and Transformers may be a very
+interesting model to do that because you
+interesting model to do that because you
+interesting model to do that because you
+could think of these mathematical
+could think of these mathematical
+could think of these mathematical
+Expressions as actually like a language
+Expressions as actually like a language
+Expressions as actually like a language
+right we have like some sort of grammar
+right we have like some sort of grammar
+right we have like some sort of grammar
+which is the kind of operations of the
+which is the kind of operations of the
+which is the kind of operations of the
+inside the
+inside the
+inside the
+expression so we might think of using a
+expression so we might think of using a
+expression so we might think of using a
+Transformer with it kind of attention to
+Transformer with it kind of attention to
+Transformer with it kind of attention to
+like attend to different parts of these
+like attend to different parts of these
+like attend to different parts of these
+expressions and help us kind of derive
+expressions and help us kind of derive
+expressions and help us kind of derive
+what the expressions
+what the expressions
+what the expressions
+um so there's a lot more to be said but
+um so there's a lot more to be said but
+um so there's a lot more to be said but
+that's a very interesting kind of
+that's a very interesting kind of
+that's a very interesting kind of
+method um another whole idea is to use
+method um another whole idea is to use
+method um another whole idea is to use
+reinforcement learning again this is
+reinforcement learning again this is
+reinforcement learning again this is
+another whole kind of field of P of
+another whole kind of field of P of
+another whole kind of field of P of
+symbolic progression and this is to say
+symbolic progression and this is to say
+symbolic progression and this is to say
+okay we have some environment and the
+okay we have some environment and the
+okay we have some environment and the
+environment is the tree that we're
+environment is the tree that we're
+environment is the tree that we're
+searching and uh we have an agent in
+searching and uh we have an agent in
+searching and uh we have an agent in
+that environment that is going to pick
+that environment that is going to pick
+that environment that is going to pick
+the next node or the next operation in
+the next node or the next operation in
+the next node or the next operation in
+that tree and it's going to pick that
+that tree and it's going to pick that
+that tree and it's going to pick that
+that uh that uh extension to the tree
+that uh that uh extension to the tree
+that uh that uh extension to the tree
+based on its observation of the tree so
+based on its observation of the tree so
+based on its observation of the tree so
+far and the kind of test error and and
+far and the kind of test error and and
+far and the kind of test error and and
+uh uh such such like
+uh uh such such like
+uh uh such such like
+that um so the agent takes a number of
+that um so the agent takes a number of
+that um so the agent takes a number of
+steps in this environment adding adding
+steps in this environment adding adding
+steps in this environment adding adding
+noes to the tree and building this
+noes to the tree and building this
+noes to the tree and building this
+expression and then it's trained with
+expression and then it's trained with
+expression and then it's trained with
+some reward at the end of it so did it
+some reward at the end of it so did it
+some reward at the end of it so did it
+match the expression or not so you can
+match the expression or not so you can
+match the expression or not so you can
+kind of see how that that would be
+kind of see how that that would be
+kind of see how that that would be
+framed as a reinforcement learning
+framed as a reinforcement learning
+framed as a reinforcement learning
+problem you can also learn Tre search
+problem you can also learn Tre search
+problem you can also learn Tre search
+algorithms you mentioned a few you can
+algorithms you mentioned a few you can
+algorithms you mentioned a few you can
+kind of think of this as a tree search
+kind of think of this as a tree search
+kind of think of this as a tree search
+as well
+as well
+as well
+uh but if you have a look at this review
+uh but if you have a look at this review
+uh but if you have a look at this review
+paper they again they they uh split out
+paper they again they they uh split out
+paper they again they they uh split out
+all the possible different search
+all the possible different search
+all the possible different search
+algorithms that people have proposed and
+algorithms that people have proposed and
+algorithms that people have proposed and
+there's a there's a lot going
+on okay so um I'm going fast because we
+on okay so um I'm going fast because we
+on okay so um I'm going fast because we
+haven't got much time left so um I'm
+haven't got much time left so um I'm
+haven't got much time left so um I'm
+I've got one example of or maybe two
+I've got one example of or maybe two
+I've got one example of or maybe two
+examples of model discovery that I'm
+examples of model discovery that I'm
+examples of model discovery that I'm
+going to try and explain to you quickly
+going to try and explain to you quickly
+going to try and explain to you quickly
+um but if I don't get the chance then
+um but if I don't get the chance then
+um but if I don't get the chance then
+just have a look through the slides and
+just have a look through the slides and
+just have a look through the slides and
+and uh lat later there
+so yeah we're going to take a break so
+so yeah we're going to take a break so
+so yeah we're going to take a break so
+model Discovery is this idea of finding
+model Discovery is this idea of finding
+model Discovery is this idea of finding
+the actual model rather than the the
+the actual model rather than the the
+the actual model rather than the the
+function itself and so in this case we
+function itself and so in this case we
+function itself and so in this case we
+have operators we have differential
+have operators we have differential
+have operators we have differential
+operators that apply to these these
+operators that apply to these these
+operators that apply to these these
+variables rather than just simple kind
+variables rather than just simple kind
+variables rather than just simple kind
+of add additions Transformations
+Etc so we can still use symbolic
+Etc so we can still use symbolic
+Etc so we can still use symbolic
+regression all of those methods I just
+regression all of those methods I just
+regression all of those methods I just
+talked about to try and discover these
+talked about to try and discover these
+talked about to try and discover these
+models these underlying equations but
+models these underlying equations but
+models these underlying equations but
+what we usually have to do is we have to
+what we usually have to do is we have to
+what we usually have to do is we have to
+add extra operators so we add the
+add extra operators so we add the
+add extra operators so we add the
+derivatives as as another possible
+derivatives as as another possible
+derivatives as as another possible
+operator that we can apply to this
+operator that we can apply to this
+operator that we can apply to this
+tree this makes it harder and so we have
+tree this makes it harder and so we have
+tree this makes it harder and so we have
+to add some kind of domain constraints
+to add some kind of domain constraints
+to add some kind of domain constraints
+on top of this usually to help these
+on top of this usually to help these
+on top of this usually to help these
+these methods
+these methods
+these methods
+converge
+converge
+converge
+um so this is Cindy hands up who's heard
+um so this is Cindy hands up who's heard
+um so this is Cindy hands up who's heard
+of Cindy this is quite a famous
+of Cindy this is quite a famous
+of Cindy this is quite a famous
+algorithm so what it does is it tries to
+algorithm so what it does is it tries to
+algorithm so what it does is it tries to
+find the equation for dynamical systems
+find the equation for dynamical systems
+find the equation for dynamical systems
+that have this form where you just have
+that have this form where you just have
+that have this form where you just have
+you say uh it's an ordinary differential
+you say uh it's an ordinary differential
+you say uh it's an ordinary differential
+equation so DX by DT where X can be a
+equation so DX by DT where X can be a
+equation so DX by DT where X can be a
+vector basically the state of the
+vector basically the state of the
+vector basically the state of the
+system uh is some is some Vector
+system uh is some is some Vector
+system uh is some is some Vector
+function here and what they assume in
+function here and what they assume in
+function here and what they assume in
+the paper is that you have many examples
+the paper is that you have many examples
+the paper is that you have many examples
+of both the the rate of change of X and
+of both the the rate of change of X and
+of both the the rate of change of X and
+of the uh and of X
+of the uh and of X
+of the uh and of X
+itself so uh an example is uh the Loren
+itself so uh an example is uh the Loren
+itself so uh an example is uh the Loren
+system
+system
+system
+so this is an example X here in this
+so this is an example X here in this
+so this is an example X here in this
+case is the path of this uh of this
+case is the path of this uh of this
+case is the path of this uh of this
+system behaving in this way and it's a
+system behaving in this way and it's a
+system behaving in this way and it's a
+chaotic system so it's really
+chaotic system so it's really
+chaotic system so it's really
+interesting to study but you can plot
+interesting to study but you can plot
+interesting to study but you can plot
+the path through through its uh phase
+the path through through its uh phase
+the path through through its uh phase
+base here and so what we're just saying
+base here and so what we're just saying
+base here and so what we're just saying
+is we have lots of observations of its
+is we have lots of observations of its
+is we have lots of observations of its
+position in this uh in the phase space
+position in this uh in the phase space
+position in this uh in the phase space
+and also um of its velocity as it's
+and also um of its velocity as it's
+and also um of its velocity as it's
+moving
+around so what you can just realize is
+around so what you can just realize is
+around so what you can just realize is
+that we just have measurements of X the
+that we just have measurements of X the
+that we just have measurements of X the
+derivative of x and um of X
+derivative of x and um of X
+derivative of x and um of X
+itself and so you just transform this
+itself and so you just transform this
+itself and so you just transform this
+into saying here's this is our data we
+into saying here's this is our data we
+into saying here's this is our data we
+have measurements of X and both the
+have measurements of X and both the
+have measurements of X and both the
+derivative which is f and this just
+derivative which is f and this just
+derivative which is f and this just
+turns into a standard symbolic
+turns into a standard symbolic
+turns into a standard symbolic
+regression task without any derivatives
+regression task without any derivatives
+regression task without any derivatives
+in it the only difference here is that
+in it the only difference here is that
+in it the only difference here is that
+we're trying to find a vector value
+we're trying to find a vector value
+we're trying to find a vector value
+function instead of a scalar function
+function instead of a scalar function
+function instead of a scalar function
+and people see how that is kind of if I
+and people see how that is kind of if I
+and people see how that is kind of if I
+know what uh DX DT is or if I have
+know what uh DX DT is or if I have
+know what uh DX DT is or if I have
+observations then all I need to do is
+observations then all I need to do is
+observations then all I need to do is
+find F
+um so yeah we just assume Cindy makes an
+um so yeah we just assume Cindy makes an
+um so yeah we just assume Cindy makes an
+assumption on the structure of the of
+assumption on the structure of the of
+assumption on the structure of the of
+the function it assumes that we have
+the function it assumes that we have
+the function it assumes that we have
+some library of of of
+some library of of of
+some library of of of
+coefficients and that that function can
+coefficients and that that function can
+coefficients and that that function can
+just be written as a as a as a
+just be written as a as a as a
+just be written as a as a as a
+multiplication of that library with some
+multiplication of that library with some
+multiplication of that library with some
+uh Matrix which holds all the
+uh Matrix which holds all the
+uh Matrix which holds all the
+coefficients of those of those uh of
+coefficients of those of those uh of
+coefficients of those of those uh of
+those Library functions inside of
+those Library functions inside of
+those Library functions inside of
+it so an example for the Loren system we
+it so an example for the Loren system we
+it so an example for the Loren system we
+could just write F ofx here uh is just
+could just write F ofx here uh is just
+could just write F ofx here uh is just
+this library of operators here Times by
+this library of operators here Times by
+this library of operators here Times by
+this coefficients Matrix here and this
+this coefficients Matrix here and this
+this coefficients Matrix here and this
+kind of transforms the task into just
+kind of transforms the task into just
+kind of transforms the task into just
+learning what these coefficients are
+learning what these coefficients are
+learning what these coefficients are
+this coefficient
+Matrix um so what you do is you just uh
+Matrix um so what you do is you just uh
+Matrix um so what you do is you just uh
+take all your training data for each of
+take all your training data for each of
+take all your training data for each of
+your training inputs you just compute
+your training inputs you just compute
+your training inputs you just compute
+all these these Library operators so you
+all these these Library operators so you
+all these these Library operators so you
+just take X you take y Zed all the
+just take X you take y Zed all the
+just take X you take y Zed all the
+different operators you compute all them
+different operators you compute all them
+different operators you compute all them
+into a matrix
+into a matrix
+into a matrix
+you put into this Matrix here just your
+you put into this Matrix here just your
+you put into this Matrix here just your
+observations of the Velocity that you
+observations of the Velocity that you
+observations of the Velocity that you
+have already and then from this
+have already and then from this
+have already and then from this
+expression we know that F can just be
+expression we know that F can just be
+expression we know that F can just be
+written uh uh as the your your basis uh
+written uh uh as the your your basis uh
+written uh uh as the your your basis uh
+uh Matrix here Times by these
+uh Matrix here Times by these
+uh Matrix here Times by these
+coefficients and and the coefficients
+coefficients and and the coefficients
+coefficients and and the coefficients
+are the things that we don't
+are the things that we don't
+are the things that we don't
+know so how how would you solve how
+know so how how would you solve how
+know so how how would you solve how
+would you find the coefficient Matrix
+would you find the coefficient Matrix
+would you find the coefficient Matrix
+there who would what would you
+do gradient descent yeah is is there a
+do gradient descent yeah is is there a
+do gradient descent yeah is is there a
+better way what does this look like to
+better way what does this look like to
+better way what does this look like to
+you this Matrix
+you this Matrix
+you this Matrix
+equation
+equation
+equation
+yeah aggression exactly it's linear
+yeah aggression exactly it's linear
+yeah aggression exactly it's linear
+aggression so we know what this Matrix
+aggression so we know what this Matrix
+aggression so we know what this Matrix
+is it's just all of our operators
+is it's just all of our operators
+is it's just all of our operators
+applied to X which we know so it's just
+applied to X which we know so it's just
+applied to X which we know so it's just
+linear regression so we just do Matrix
+linear regression so we just do Matrix
+linear regression so we just do Matrix
+inversion we we can also use the fact
+inversion we we can also use the fact
+inversion we we can also use the fact
+that we we're prior that we think the
+that we we're prior that we think the
+that we we're prior that we think the
+coefficients are probably sparse you can
+coefficients are probably sparse you can
+coefficients are probably sparse you can
+see there's a lot of zeros here that
+see there's a lot of zeros here that
+see there's a lot of zeros here that
+we're not going to use all the about
+we're not going to use all the about
+we're not going to use all the about
+operators in our
+operators in our
+operators in our
+library so we can carry out sparse
+library so we can carry out sparse
+library so we can carry out sparse
+sparse linear
+sparse linear
+sparse linear
+aggression um so uh I'm gonna I'm well
+aggression um so uh I'm gonna I'm well
+aggression um so uh I'm gonna I'm well
+I'll go through very very quick so Cindy
+I'll go through very very quick so Cindy
+I'll go through very very quick so Cindy
+is using what's the assumption that it's
+is using what's the assumption that it's
+is using what's the assumption that it's
+making on this task we're assuming that
+making on this task we're assuming that
+making on this task we're assuming that
+the Expressions have this form which is
+the Expressions have this form which is
+the Expressions have this form which is
+very restrictive and also that we have a
+very restrictive and also that we have a
+very restrictive and also that we have a
+set a certain library that we've Chosen
+set a certain library that we've Chosen
+set a certain library that we've Chosen
+and then the search algorithm that we
+and then the search algorithm that we
+and then the search algorithm that we
+use is just Spar linear aggression like
+use is just Spar linear aggression like
+use is just Spar linear aggression like
+lassu or R agression something
+lassu or R agression something
+lassu or R agression something
+this okay I'm going to start because we
+this okay I'm going to start because we
+this okay I'm going to start because we
+haven't got much time so uh this is a
+haven't got much time so uh this is a
+haven't got much time so uh this is a
+really interesting extension of Cindy uh
+really interesting extension of Cindy uh
+really interesting extension of Cindy uh
+which says it takes it a step further
+which says it takes it a step further
+which says it takes it a step further
+and says if we have not observations of
+and says if we have not observations of
+and says if we have not observations of
+the state itself but maybe some uh some
+the state itself but maybe some uh some
+the state itself but maybe some uh some
+transformed version of that of that
+transformed version of that of that
+transformed version of that of that
+state say that for example in this
+state say that for example in this
+state say that for example in this
+equation the state is the angle of a
+equation the state is the angle of a
+equation the state is the angle of a
+pendulum what if we just have images of
+pendulum what if we just have images of
+pendulum what if we just have images of
+the pendulum moving through time it
+the pendulum moving through time it
+the pendulum moving through time it
+turns out you can even discover given
+turns out you can even discover given
+turns out you can even discover given
+this kind of video of the of the
+this kind of video of the of the
+this kind of video of the of the
+physical system you can even discover
+physical system you can even discover
+physical system you can even discover
+the underlying iCal
+the underlying iCal
+the underlying iCal
+system and they do this by assuming or
+system and they do this by assuming or
+system and they do this by assuming or
+learning some decoder that takes or
+learning some decoder that takes or
+learning some decoder that takes or
+encoder that takes your image to your
+encoder that takes your image to your
+encoder that takes your image to your
+lat to your uh State
+lat to your uh State
+lat to your uh State
+space okay so um I don't have the time
+space okay so um I don't have the time
+space okay so um I don't have the time
+for this
+for this
+for this
+but so yeah it's it's unfortunate we
+but so yeah it's it's unfortunate we
+but so yeah it's it's unfortunate we
+don't have more time to talk about
+don't have more time to talk about
+don't have more time to talk about
+symbolic regression there's a it's a
+symbolic regression there's a it's a
+symbolic regression there's a it's a
+huge field by itself and it's a really
+huge field by itself and it's a really
+huge field by itself and it's a really
+interesting new kind of direction of
+interesting new kind of direction of
+interesting new kind of direction of
+using AI to kind of discover physics or
+using AI to kind of discover physics or
+using AI to kind of discover physics or
+help us understand physics more deeply
+help us understand physics more deeply
+help us understand physics more deeply
+than just doing kind of some function
+than just doing kind of some function
+than just doing kind of some function
+fitting or Black Box model prediction
+fitting or Black Box model prediction
+fitting or Black Box model prediction
+with a with a
+with a with a
+with a with a
+network
+network
+network
+um okay
+um okay
+um okay
+so I'm G to spend maybe just three
+so I'm G to spend maybe just three
+so I'm G to spend maybe just three
+minutes just doing a quick summary if
+minutes just doing a quick summary if
+minutes just doing a quick summary if
+you have time but if you need to leave
+you have time but if you need to leave
+you have time but if you need to leave
+feel free to leave that's that's that's
+feel free to leave that's that's that's
+feel free to leave that's that's that's
+it
+um so yeah we've gone through a massive
+um so yeah we've gone through a massive
+um so yeah we've gone through a massive
+journey in this course um we've covered
+journey in this course um we've covered
+journey in this course um we've covered
+a huge amount of different topics in in
+a huge amount of different topics in in
+a huge amount of different topics in in
+uh in scientific machine learning in AI
+uh in scientific machine learning in AI
+uh in scientific machine learning in AI
+for science in general and these were
+for science in general and these were
+for science in general and these were
+kind of our our learning objectives that
+kind of our our learning objectives that
+kind of our our learning objectives that
+we we had at the start and what I really
+we we had at the start and what I really
+we we had at the start and what I really
+hope is that you have now Come Away with
+hope is that you have now Come Away with
+hope is that you have now Come Away with
+a a much better understanding of the
+a a much better understanding of the
+a a much better understanding of the
+kind of state-of-the-art applications of
+kind of state-of-the-art applications of
+kind of state-of-the-art applications of
+using AI insights but you also should
+using AI insights but you also should
+using AI insights but you also should
+hopefully understand much more deeply
+hopefully understand much more deeply
+hopefully understand much more deeply
+how these algorithms work how you can
+how these algorithms work how you can
+how these algorithms work how you can
+design them and and how uh and the
+design them and and how uh and the
+design them and and how uh and the
+theory behind them as
+theory behind them as
+theory behind them as
+well hopefully you also real you're
+well hopefully you also real you're
+well hopefully you also real you're
+realistic in that we can't just apply AI
+realistic in that we can't just apply AI
+realistic in that we can't just apply AI
+to think it's not a sledg handmer there
+to think it's not a sledg handmer there
+to think it's not a sledg handmer there
+are pros and cons of using especially
+are pros and cons of using especially
+are pros and cons of using especially
+deep newal networks in these scientific
+deep newal networks in these scientific
+deep newal networks in these scientific
+workflows and there's a lot of other
+workflows and there's a lot of other
+workflows and there's a lot of other
+kind of broader Concepts and themes in
+kind of broader Concepts and themes in
+kind of broader Concepts and themes in
+this field of SEL that for example like
+this field of SEL that for example like
+this field of SEL that for example like
+the power of a auto differentiation and
+the power of a auto differentiation and
+the power of a auto differentiation and
+and where you should learn your
+and where you should learn your
+and where you should learn your
+components of your system uh but
+components of your system uh but
+components of your system uh but
+hopefully you've taken away in this
+hopefully you've taken away in this
+hopefully you've taken away in this
+course
+course
+course
+um so yeah this is how how it looked we
+um so yeah this is how how it looked we
+um so yeah this is how how it looked we
+we learned about pins and we did
+we learned about pins and we did
+we learned about pins and we did
+operator learning then we did
+operator learning then we did
+operator learning then we did
+Transformers and then we've done a lot
+Transformers and then we've done a lot
+Transformers and then we've done a lot
+of work on these kind of hybrid
+of work on these kind of hybrid
+of work on these kind of hybrid
+workflows and all differential equations
+workflows and all differential equations
+workflows and all differential equations
+and and model
+and and model
+and and model
+Discovery and as we've gone through I
+Discovery and as we've gone through I
+Discovery and as we've gone through I
+was we were kind of showing you that you
+was we were kind of showing you that you
+was we were kind of showing you that you
+can put kind of scientific understanding
+can put kind of scientific understanding
+can put kind of scientific understanding
+it in many different parts of your
+it in many different parts of your
+it in many different parts of your
+machine learning workflows it can be
+machine learning workflows it can be
+machine learning workflows it can be
+like through the loss function it can be
+like through the loss function it can be
+like through the loss function it can be
+through the architecture design or it
+through the architecture design or it
+through the architecture design or it
+could be more tightly integrated into
+could be more tightly integrated into
+could be more tightly integrated into
+our traditional scientific workflows and
+our traditional scientific workflows and
+our traditional scientific workflows and
+that's kind of what's really amazing
+that's kind of what's really amazing
+that's kind of what's really amazing
+about siml is that there's so many
+about siml is that there's so many
+about siml is that there's so many
+different opportunities to to
+different opportunities to to
+different opportunities to to
+incorporate science into our machine
+incorporate science into our machine
+incorporate science into our machine
+learning algorithms
+um so skip this so I think I've just
+um so skip this so I think I've just
+um so skip this so I think I've just
+kind of settled this this is quite a
+kind of settled this this is quite a
+kind of settled this this is quite a
+heavy slide but this is pretty much
+heavy slide but this is pretty much
+heavy slide but this is pretty much
+everything I just said so there are
+everything I just said so there are
+everything I just said so there are
+definitely pros and cons of using deep
+definitely pros and cons of using deep
+definitely pros and cons of using deep
+learning in your in your workflows you
+learning in your in your workflows you
+learning in your in your workflows you
+have to be aware of them and and not
+have to be aware of them and and not
+have to be aware of them and and not
+just use it
+just use it
+just use it
+naively but in general adding scientific
+naively but in general adding scientific
+naively but in general adding scientific
+understanding to ml um usually improves
+understanding to ml um usually improves
+understanding to ml um usually improves
+performance of our of our
+performance of our of our
+performance of our of our
+workplace
+workplace
+workplace
+um so I just have one final slide which
+um so I just have one final slide which
+um so I just have one final slide which
+is a super high level slide but I think
+is a super high level slide but I think
+is a super high level slide but I think
+it's people often ask me what's a good
+it's people often ask me what's a good
+it's people often ask me what's a good
+good place to like research and SC
+good place to like research and SC
+good place to like research and SC
+science and machine learning uh or what
+science and machine learning uh or what
+science and machine learning uh or what
+are impactful directions in the future I
+are impactful directions in the future I
+are impactful directions in the future I
+mean this is a sort of slide which is
+mean this is a sort of slide which is
+mean this is a sort of slide which is
+both quite useful but also not very
+both quite useful but also not very
+both quite useful but also not very
+useful because it's so high
+useful because it's so high
+useful because it's so high
+level but I just want to draw a
+level but I just want to draw a
+level but I just want to draw a
+connection here between uh you know
+connection here between uh you know
+connection here between uh you know
+things that we care about applications
+things that we care about applications
+things that we care about applications
+that we care about in science and
+that we care about in science and
+that we care about in science and
+applications that we care about in in AI
+applications that we care about in in AI
+applications that we care about in in AI
+and the kind of well you can boil it
+and the kind of well you can boil it
+and the kind of well you can boil it
+down to at a super high level it's kind
+down to at a super high level it's kind
+down to at a super high level it's kind
+of two big goals that we really want to
+of two big goals that we really want to
+of two big goals that we really want to
+try and solve and for sure there are
+try and solve and for sure there are
+try and solve and for sure there are
+massive outstanding challenges that we
+massive outstanding challenges that we
+massive outstanding challenges that we
+haven't solved in these directions yet
+haven't solved in these directions yet
+haven't solved in these directions yet
+and and this is where I think the most
+and and this is where I think the most
+and and this is where I think the most
+impactful research can be done and these
+impactful research can be done and these
+impactful research can be done and these
+kind of kind of tasks search and
+kind of kind of tasks search and
+kind of kind of tasks search and
+optimization and
+optimization and
+optimization and
+representation um and if you think about
+representation um and if you think about
+representation um and if you think about
+it in science we have these these
+it in science we have these these
+it in science we have these these
+problems like inverse model problems
+problems like inverse model problems
+problems like inverse model problems
+model Discovery control it's all us High
+model Discovery control it's all us High
+model Discovery control it's all us High
+level just be thought of like a search
+level just be thought of like a search
+level just be thought of like a search
+problem like we have some goal and we
+problem like we have some goal and we
+problem like we have some goal and we
+want to search for some inputs or some
+want to search for some inputs or some
+want to search for some inputs or some
+parameters to achieve that goal we
+parameters to achieve that goal we
+parameters to achieve that goal we
+actually have the same in AI right we
+actually have the same in AI right we
+actually have the same in AI right we
+have planning we want to create plans we
+have planning we want to create plans we
+have planning we want to create plans we
+want to do some reasoning or even just
+want to do some reasoning or even just
+want to do some reasoning or even just
+learning is a is a can be thought of as
+learning is a is a can be thought of as
+learning is a is a can be thought of as
+a search
+a search
+a search
+problem so Des thinking about doing
+problem so Des thinking about doing
+problem so Des thinking about doing
+research and search or optimization like
+research and search or optimization like
+research and search or optimization like
+how do we design good search algorithms
+how do we design good search algorithms
+how do we design good search algorithms
+that have good prior understanding just
+that have good prior understanding just
+that have good prior understanding just
+as I've been talking about for symbolic
+as I've been talking about for symbolic
+as I've been talking about for symbolic
+regression coming up with those can
+regression coming up with those can
+regression coming up with those can
+really impact across science and AI
+really impact across science and AI
+really impact across science and AI
+depending on where you want to to have
+depending on where you want to to have
+depending on where you want to to have
+impact and then the other the other big
+impact and then the other the other big
+impact and then the other the other big
+topic is representation and in science
+topic is representation and in science
+topic is representation and in science
+this is basically the statement as
+this is basically the statement as
+this is basically the statement as
+everyone has everyone heard the the
+everyone has everyone heard the the
+everyone has everyone heard the the
+quote every model is approximate but
+quote every model is approximate but
+quote every model is approximate but
+some are useful like this really
+some are useful like this really
+some are useful like this really
+famous so what that's really saying is
+famous so what that's really saying is
+famous so what that's really saying is
+like we only have a finite amount of
+like we only have a finite amount of
+like we only have a finite amount of
+computing power to like do to for
+computing power to like do to for
+computing power to like do to for
+example solve a PD like we have to
+example solve a PD like we have to
+example solve a PD like we have to
+choose some representation or some
+choose some representation or some
+choose some representation or some
+approximation of system and and that is
+approximation of system and and that is
+approximation of system and and that is
+the fundamental question is what is the
+the fundamental question is what is the
+the fundamental question is what is the
+right approximation to use uh like when
+right approximation to use uh like when
+right approximation to use uh like when
+we're talking about operator learning
+we're talking about operator learning
+we're talking about operator learning
+like what is the basis that we're going
+like what is the basis that we're going
+like what is the basis that we're going
+to use is it like a 4E basis or is it
+to use is it like a 4E basis or is it
+to use is it like a 4E basis or is it
+something else like these have massive
+something else like these have massive
+something else like these have massive
+impacts in the um in the performance of
+impacts in the um in the performance of
+impacts in the um in the performance of
+the scientific code for example in
+the scientific code for example in
+the scientific code for example in
+finite element methods like what is the
+finite element methods like what is the
+finite element methods like what is the
+basis function we use or how should we
+basis function we use or how should we
+basis function we use or how should we
+use it how should we discre our mesh
+use it how should we discre our mesh
+use it how should we discre our mesh
+like all these sort of
+like all these sort of
+like all these sort of
+things and the same kind of questions
+things and the same kind of questions
+things and the same kind of questions
+occur in AI so we talk about
+occur in AI so we talk about
+occur in AI so we talk about
+representation it's obviously super
+representation it's obviously super
+representation it's obviously super
+important like at what level is llm
+important like at what level is llm
+important like at what level is llm
+reasoning is it reasoning about simple
+reasoning is it reasoning about simple
+reasoning is it reasoning about simple
+features or is it abstracting and
+features or is it abstracting and
+features or is it abstracting and
+telling it like understands what the
+telling it like understands what the
+telling it like understands what the
+principle of like thermodynamics is or
+principle of like thermodynamics is or
+principle of like thermodynamics is or
+something like this you
+something like this you
+something like this you
+know uh the latest kind of planning
+know uh the latest kind of planning
+know uh the latest kind of planning
+algorithms in AO for example use like
+algorithms in AO for example use like
+algorithms in AO for example use like
+hierarchical representations that uh to
+hierarchical representations that uh to
+hierarchical representations that uh to
+be able to like attractively search the
+be able to like attractively search the
+be able to like attractively search the
+world around us so again thinking about
+world around us so again thinking about
+world around us so again thinking about
+representation at a very deep level will
+representation at a very deep level will
+representation at a very deep level will
+help you impact both of these these
+help you impact both of these these
+help you impact both of these these
+different
+different
+different
+fields so yeah useful but also not
+fields so yeah useful but also not
+fields so yeah useful but also not
+useful but uh hopefully that's given you
+useful but uh hopefully that's given you
+useful but uh hopefully that's given you
+some inspiration to to carry on and do
+some inspiration to to carry on and do
+some inspiration to to carry on and do
+research so thank you very much for
+research so thank you very much for
+research so thank you very much for
+being part of the course I hope you took
+being part of the course I hope you took
+being part of the course I hope you took
+something away from it and that you
+something away from it and that you
+something away from it and that you
+enjoy the lectures next week given by
+enjoy the lectures next week given by
+enjoy the lectures next week given by
+David so yeah he'll be there yeah thank
+David so yeah he'll be there yeah thank
+David so yeah he'll be there yeah thank
+you very much

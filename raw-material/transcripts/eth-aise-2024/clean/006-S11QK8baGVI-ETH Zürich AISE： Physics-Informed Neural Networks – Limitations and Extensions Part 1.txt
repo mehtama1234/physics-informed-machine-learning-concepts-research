@@ -1,0 +1,3416 @@
+okay so let's get started with today's
+okay so let's get started with today's
+okay so let's get started with today's
+lecture this is the second lecture on
+lecture this is the second lecture on
+lecture this is the second lecture on
+physics and formed noral networks last
+physics and formed noral networks last
+physics and formed noral networks last
+lecture I introduced pins to you and uh
+lecture I introduced pins to you and uh
+lecture I introduced pins to you and uh
+this lecture and also um half of the
+this lecture and also um half of the
+this lecture and also um half of the
+lecture on Wednesday next week is all
+lecture on Wednesday next week is all
+lecture on Wednesday next week is all
+about discussing the limitations of pins
+about discussing the limitations of pins
+about discussing the limitations of pins
+and also the extensions and like I
+and also the extensions and like I
+and also the extensions and like I
+showed you there are so many hundreds of
+showed you there are so many hundreds of
+showed you there are so many hundreds of
+extensions of pins and it's an entire
+extensions of pins and it's an entire
+extensions of pins and it's an entire
+research field by itself and and so
+research field by itself and and so
+research field by itself and and so
+we're going to delve into some of these
+we're going to delve into some of these
+we're going to delve into some of these
+that that improve the perform perance of
+that that improve the perform perance of
+that that improve the perform perance of
+of physics and formal
+networks so before we get into the
+networks so before we get into the
+networks so before we get into the
+extensions let's recap what a physics
+extensions let's recap what a physics
+extensions let's recap what a physics
+informed nor network is so this is the
+informed nor network is so this is the
+informed nor network is so this is the
+key slide from uh last lecture and it
+key slide from uh last lecture and it
+key slide from uh last lecture and it
+has all the concepts behind pins in this
+has all the concepts behind pins in this
+has all the concepts behind pins in this
+slide so I'm just going to spend some
+slide so I'm just going to spend some
+slide so I'm just going to spend some
+time just recapping what a physics
+time just recapping what a physics
+time just recapping what a physics
+informed new network is
+informed new network is
+informed new network is
+so um physics inform formal networks are
+so um physics inform formal networks are
+so um physics inform formal networks are
+ways to solve differential equations um
+ways to solve differential equations um
+ways to solve differential equations um
+or sated to differential
+or sated to differential
+or sated to differential
+equations and so the example in the
+equations and so the example in the
+equations and so the example in the
+slide here is the damp monic oscillator
+slide here is the damp monic oscillator
+slide here is the damp monic oscillator
+which we looked at last
+which we looked at last
+which we looked at last
+lecture and the key idea of a pin is
+lecture and the key idea of a pin is
+lecture and the key idea of a pin is
+very simple it's just to use a neural
+very simple it's just to use a neural
+very simple it's just to use a neural
+network to directly approximate the
+network to directly approximate the
+network to directly approximate the
+solution to the to the differential
+solution to the to the differential
+solution to the to the differential
+equation so pins work for many different
+equation so pins work for many different
+equation so pins work for many different
+differential equations not just uh the
+differential equations not just uh the
+differential equations not just uh the
+Harmon oscillator thing here and and
+Harmon oscillator thing here and and
+Harmon oscillator thing here and and
+this is what we always do we we say the
+this is what we always do we we say the
+this is what we always do we we say the
+noral network which is just a flexible
+noral network which is just a flexible
+noral network which is just a flexible
+function that takes as input the the
+function that takes as input the the
+function that takes as input the the
+coordinates of the of the solution so in
+coordinates of the of the solution so in
+coordinates of the of the solution so in
+this case just the time coordinate
+this case just the time coordinate
+this case just the time coordinate
+because it's a 1D
+because it's a 1D
+because it's a 1D
+problem and then the output directly
+problem and then the output directly
+problem and then the output directly
+approximates what the solution value is
+approximates what the solution value is
+approximates what the solution value is
+so this U here which in this case is the
+so this U here which in this case is the
+so this U here which in this case is the
+displacement of the
+displacement of the
+displacement of the
+oscillator and typically the network
+oscillator and typically the network
+oscillator and typically the network
+we'll start use start with is a MLP a
+we'll start use start with is a MLP a
+we'll start use start with is a MLP a
+simple fully connected Network for
+simple fully connected Network for
+simple fully connected Network for
+example and it's really important to
+example and it's really important to
+example and it's really important to
+note that this is a meshfree approach
+note that this is a meshfree approach
+note that this is a meshfree approach
+and that means that once once we've
+and that means that once once we've
+and that means that once once we've
+trained this network we get a function
+trained this network we get a function
+trained this network we get a function
+as as the approximation to the solution
+as as the approximation to the solution
+as as the approximation to the solution
+which we can query at any point in the
+which we can query at any point in the
+which we can query at any point in the
+domain so this is um different to how
+domain so this is um different to how
+domain so this is um different to how
+for example finite difference methods
+for example finite difference methods
+for example finite difference methods
+work where once we've run the simulation
+work where once we've run the simulation
+work where once we've run the simulation
+we get the the solution on a finite um
+we get the the solution on a finite um
+we get the the solution on a finite um
+Point um on a mesh so discretized on a
+mesh okay and then the loss function
+mesh okay and then the loss function
+mesh okay and then the loss function
+that we used to train the network has
+that we used to train the network has
+that we used to train the network has
+these two uh main components the first
+these two uh main components the first
+these two uh main components the first
+is called the boundary loss and that
+is called the boundary loss and that
+is called the boundary loss and that
+makes sure that the network matches
+makes sure that the network matches
+makes sure that the network matches
+whatever the initial conditions and the
+whatever the initial conditions and the
+whatever the initial conditions and the
+boundary conditions we have um of the
+boundary conditions we have um of the
+boundary conditions we have um of the
+problem so in this case we're going to
+problem so in this case we're going to
+problem so in this case we're going to
+make sure that the oscillator starts at
+make sure that the oscillator starts at
+make sure that the oscillator starts at
+a displacement of one and has a velocity
+a displacement of one and has a velocity
+a displacement of one and has a velocity
+of
+of
+of
+zero and so we just to get the velocity
+zero and so we just to get the velocity
+zero and so we just to get the velocity
+for example we just take the gradient of
+for example we just take the gradient of
+for example we just take the gradient of
+the network for the respect of
+the network for the respect of
+the network for the respect of
+time and then the important important
+time and then the important important
+time and then the important important
+component is the physics loss and this
+component is the physics loss and this
+component is the physics loss and this
+is minimizing the residual of the
+is minimizing the residual of the
+is minimizing the residual of the
+differential equation itself so we know
+differential equation itself so we know
+differential equation itself so we know
+from the differential equation this left
+from the differential equation this left
+from the differential equation this left
+hand side should equal zero and so we
+hand side should equal zero and so we
+hand side should equal zero and so we
+evaluate all these gradients that we
+evaluate all these gradients that we
+evaluate all these gradients that we
+require to evaluate that left hand side
+require to evaluate that left hand side
+require to evaluate that left hand side
+um using the neural network and we try
+um using the neural network and we try
+um using the neural network and we try
+and push that residual to
+and push that residual to
+and push that residual to
+zero so kind of intuitively boundry loss
+zero so kind of intuitively boundry loss
+zero so kind of intuitively boundry loss
+make sure that the solution that the
+make sure that the solution that the
+make sure that the solution that the
+network learns is a unique
+network learns is a unique
+network learns is a unique
+solution um and the physics loss make
+solution um and the physics loss make
+solution um and the physics loss make
+sure that the underlying differential
+sure that the underlying differential
+sure that the underlying differential
+equation is bed at every point in the
+equation is bed at every point in the
+equation is bed at every point in the
+domain so we evaluate this at many
+domain so we evaluate this at many
+domain so we evaluate this at many
+collocation points um these green points
+collocation points um these green points
+collocation points um these green points
+in the domain
+in the domain
+in the domain
+here so as I said last lecture this is a
+here so as I said last lecture this is a
+here so as I said last lecture this is a
+really key slide to understand so has
+really key slide to understand so has
+really key slide to understand so has
+anyone got any more questions on on the
+anyone got any more questions on on the
+anyone got any more questions on on the
+basics before we move
+on hopefully it should be clear clear by
+on hopefully it should be clear clear by
+on hopefully it should be clear clear by
+now
+okay so yeah I I told you that um pins
+okay so yeah I I told you that um pins
+okay so yeah I I told you that um pins
+are a general purpose technique for
+are a general purpose technique for
+are a general purpose technique for
+solving many different differential
+solving many different differential
+solving many different differential
+equations and so this is an example of
+equations and so this is an example of
+equations and so this is an example of
+using pins in two Dimensions to solve
+using pins in two Dimensions to solve
+using pins in two Dimensions to solve
+the 1 D Burgers equation plus is time
+the 1 D Burgers equation plus is time
+the 1 D Burgers equation plus is time
+Evolution so 1 plus 1
+Evolution so 1 plus 1
+Evolution so 1 plus 1
+D um and I'm not going to go into this
+D um and I'm not going to go into this
+D um and I'm not going to go into this
+in detail but um the only difference
+in detail but um the only difference
+in detail but um the only difference
+here is now we're sampling boundary
+here is now we're sampling boundary
+here is now we're sampling boundary
+points across the whole boundary so
+points across the whole boundary so
+points across the whole boundary so
+instead of just needing one boundary
+instead of just needing one boundary
+instead of just needing one boundary
+point we need
+point we need
+point we need
+many and uh we sample collocation points
+many and uh we sample collocation points
+many and uh we sample collocation points
+in the entire domain and we explained
+in the entire domain and we explained
+in the entire domain and we explained
+that this is kind of an interesting
+that this is kind of an interesting
+that this is kind of an interesting
+problem to study because it forms a
+problem to study because it forms a
+problem to study because it forms a
+shock in the solution um which
+shock in the solution um which
+shock in the solution um which
+traditional numerical methods often
+traditional numerical methods often
+traditional numerical methods often
+struggle with and and so the pin seems
+struggle with and and so the pin seems
+struggle with and and so the pin seems
+to perform fairly well in this
+case and then last lecture I talked
+case and then last lecture I talked
+case and then last lecture I talked
+about um all the different types of
+about um all the different types of
+about um all the different types of
+problems that we can solve um using pins
+problems that we can solve um using pins
+problems that we can solve um using pins
+and we we we can not only solve forward
+and we we we can not only solve forward
+and we we we can not only solve forward
+simulation tasks but we can also solve
+simulation tasks but we can also solve
+simulation tasks but we can also solve
+inverse problems where we're given some
+inverse problems where we're given some
+inverse problems where we're given some
+observations of the solution and we want
+observations of the solution and we want
+observations of the solution and we want
+we want to understand what the some
+we want to understand what the some
+we want to understand what the some
+underlying parameters of the
+underlying parameters of the
+underlying parameters of the
+differential equation are these five
+differential equation are these five
+differential equation are these five
+five parameters here so for example in
+five parameters here so for example in
+five parameters here so for example in
+the damp time monic oscillator it could
+the damp time monic oscillator it could
+the damp time monic oscillator it could
+be understanding what the um coefficient
+be understanding what the um coefficient
+be understanding what the um coefficient
+of friction is or the or the spring
+of friction is or the or the spring
+of friction is or the or the spring
+constant and the way that we can solve
+constant and the way that we can solve
+constant and the way that we can solve
+these invest problems is that we we have
+these invest problems is that we we have
+these invest problems is that we we have
+this extra data loss term where we match
+this extra data loss term where we match
+this extra data loss term where we match
+the networks output to the to the
+the networks output to the to the
+the networks output to the to the
+observe data points that we have and
+observe data points that we have and
+observe data points that we have and
+then when we're training the pin we do a
+then when we're training the pin we do a
+then when we're training the pin we do a
+joint optimization where we both learn
+joint optimization where we both learn
+joint optimization where we both learn
+the parameters of the pin Theta and the
+the parameters of the pin Theta and the
+the parameters of the pin Theta and the
+underlying parameters of the
+underlying parameters of the
+underlying parameters of the
+differential equation f um jointly in in
+differential equation f um jointly in in
+differential equation f um jointly in in
+the same optimization
+the same optimization
+the same optimization
+algorithm um and then you can take this
+algorithm um and then you can take this
+algorithm um and then you can take this
+concept further and even try and start
+concept further and even try and start
+concept further and even try and start
+to learn the underlying differential
+to learn the underlying differential
+to learn the underlying differential
+equation by learning the individual
+equation by learning the individual
+equation by learning the individual
+coefficients for each term in the in the
+coefficients for each term in the in the
+coefficients for each term in the in the
+differential equation and so this is how
+differential equation and so this is how
+differential equation and so this is how
+we can use pins for equation
+we can use pins for equation
+we can use pins for equation
+Discovery so in this case we have fire
+Discovery so in this case we have fire
+Discovery so in this case we have fire
+here now is is a is a vector or a
+here now is is a is a vector or a
+here now is is a is a vector or a
+library of of differential differential
+library of of differential differential
+library of of differential differential
+operators um for example all the
+operators um for example all the
+operators um for example all the
+gradients that you might think would
+gradients that you might think would
+gradients that you might think would
+appear in the differential equation so d
+appear in the differential equation so d
+appear in the differential equation so d
+d by DT d by DX
+d by DT d by DX
+d by DT d by DX
+Etc um and then Lambda here is a matrix
+Etc um and then Lambda here is a matrix
+Etc um and then Lambda here is a matrix
+which has contains all the the
+which has contains all the the
+which has contains all the the
+coefficients of that of that uh
+coefficients of that of that uh
+coefficients of that of that uh
+PD and we we typically so we do the same
+PD and we we typically so we do the same
+PD and we we typically so we do the same
+thing as in inversion we we match the
+thing as in inversion we we match the
+thing as in inversion we we match the
+network to some observed values of the
+network to some observed values of the
+network to some observed values of the
+solution and we jointly optimize the the
+solution and we jointly optimize the the
+solution and we jointly optimize the the
+coefficients of the PD here to try and
+coefficients of the PD here to try and
+coefficients of the PD here to try and
+learn the the underlying differential
+learn the the underlying differential
+learn the the underlying differential
+equation now this this problem is is
+equation now this this problem is is
+equation now this this problem is is
+often very osed because there are many
+often very osed because there are many
+often very osed because there are many
+different combinations of PDs that the
+different combinations of PDs that the
+different combinations of PDs that the
+data could fit potentially so we often
+data could fit potentially so we often
+data could fit potentially so we often
+add like a a regularization like a
+add like a a regularization like a
+add like a a regularization like a
+sparity constraint to say we want the
+sparity constraint to say we want the
+sparity constraint to say we want the
+equation that has the minimum number of
+equation that has the minimum number of
+equation that has the minimum number of
+terms to uh to be the one that we
+choose
+okay so we're on the second lecture of
+okay so we're on the second lecture of
+okay so we're on the second lecture of
+of pins limitations and extensions um
+of pins limitations and extensions um
+of pins limitations and extensions um
+like I said I'm also going to do half of
+like I said I'm also going to do half of
+like I said I'm also going to do half of
+the next lecture is also going to be on
+the next lecture is also going to be on
+the next lecture is also going to be on
+extension zi pins I'm going to give half
+extension zi pins I'm going to give half
+extension zi pins I'm going to give half
+of that lecture and then Sid's going to
+of that lecture and then Sid's going to
+of that lecture and then Sid's going to
+come through come halfway and give the
+come through come halfway and give the
+come through come halfway and give the
+rest of the
+rest of the
+rest of the
+lecture um he'll talk more about the
+lecture um he'll talk more about the
+lecture um he'll talk more about the
+theoretical aspects of
+theoretical aspects of
+theoretical aspects of
+pins then we're done with pins and we'll
+pins then we're done with pins and we'll
+pins then we're done with pins and we'll
+move on to another big Topic in siml for
+move on to another big Topic in siml for
+move on to another big Topic in siml for
+scientific machine learning which is uh
+scientific machine learning which is uh
+scientific machine learning which is uh
+operator
+learning okay so I've just explained
+learning okay so I've just explained
+learning okay so I've just explained
+that
+that
+that
+um so I'm going to uh first in this
+um so I'm going to uh first in this
+um so I'm going to uh first in this
+lecture just talk about the limitations
+lecture just talk about the limitations
+lecture just talk about the limitations
+of pins we've we already touched on a
+of pins we've we already touched on a
+of pins we've we already touched on a
+few of them last lecture um and once
+few of them last lecture um and once
+few of them last lecture um and once
+I've given you what those limitations
+I've given you what those limitations
+I've given you what those limitations
+are then I'm going to spend the rest of
+are then I'm going to spend the rest of
+are then I'm going to spend the rest of
+the lecture telling you about uh how we
+the lecture telling you about uh how we
+the lecture telling you about uh how we
+extend pins to overcome those
+extend pins to overcome those
+extend pins to overcome those
+limitations and the one that I'm going
+limitations and the one that I'm going
+limitations and the one that I'm going
+to cover in this lecture is mostly
+to cover in this lecture is mostly
+to cover in this lecture is mostly
+focused on the computational cost and
+focused on the computational cost and
+focused on the computational cost and
+how can we um make pins faster to train
+how can we um make pins faster to train
+how can we um make pins faster to train
+and this is a really important thing to
+and this is a really important thing to
+and this is a really important thing to
+be able to do
+be able to do
+be able to do
+by the end of next lecture I'll give you
+by the end of next lecture I'll give you
+by the end of next lecture I'll give you
+a summary on the kind of realistic re
+a summary on the kind of realistic re
+a summary on the kind of realistic re
+cases where you should use pins and
+cases where you should use pins and
+cases where you should use pins and
+where you shouldn't use pins and you
+where you shouldn't use pins and you
+where you shouldn't use pins and you
+should have a good idea of of when
+should have a good idea of of when
+should have a good idea of of when
+they're the best technique to
+choose so yeah you should be able to
+choose so yeah you should be able to
+choose so yeah you should be able to
+understand the advantages and
+understand the advantages and
+understand the advantages and
+disadvantage of pins by the end of these
+disadvantage of pins by the end of these
+disadvantage of pins by the end of these
+lectures and um also in these lectures
+lectures and um also in these lectures
+lectures and um also in these lectures
+there's a lot of current research on on
+there's a lot of current research on on
+there's a lot of current research on on
+physics and form networks so you should
+physics and form networks so you should
+physics and form networks so you should
+be able to have a fairly good idea of
+be able to have a fairly good idea of
+be able to have a fairly good idea of
+the the current state of the art in in
+the the current state of the art in in
+the the current state of the art in in
+pin research by by the end of
+this okay so let's just recap the
+this okay so let's just recap the
+this okay so let's just recap the
+advantages before we talk about
+advantages before we talk about
+advantages before we talk about
+disadvantages and I talked I talked a
+disadvantages and I talked I talked a
+disadvantages and I talked I talked a
+lot about the advantages last
+lot about the advantages last
+lot about the advantages last
+lecture um so here's a list of some of
+lecture um so here's a list of some of
+lecture um so here's a list of some of
+the biggest ones um as I've been trying
+the biggest ones um as I've been trying
+the biggest ones um as I've been trying
+to say pins are pins are different than
+to say pins are pins are different than
+to say pins are pins are different than
+kind of traditional finite difference
+kind of traditional finite difference
+kind of traditional finite difference
+methods for example because they're mesh
+methods for example because they're mesh
+methods for example because they're mesh
+free and this this means that we don't
+free and this this means that we don't
+free and this this means that we don't
+have to generate a mesh when we're doing
+have to generate a mesh when we're doing
+have to generate a mesh when we're doing
+the simulation and I told you in the
+the simulation and I told you in the
+the simulation and I told you in the
+course introduction just the act of
+course introduction just the act of
+course introduction just the act of
+defining a mesh in your computer program
+defining a mesh in your computer program
+defining a mesh in your computer program
+can take humans like days or weeks
+can take humans like days or weeks
+can take humans like days or weeks
+depending on the complexity of the
+depending on the complexity of the
+depending on the complexity of the
+simulation so being able to not do that
+simulation so being able to not do that
+simulation so being able to not do that
+step is is a big Advantage if if the pin
+step is is a big Advantage if if the pin
+step is is a big Advantage if if the pin
+Works another big advantage of pins is
+Works another big advantage of pins is
+Works another big advantage of pins is
+that they can jointly solve these um
+that they can jointly solve these um
+that they can jointly solve these um
+forward in inverse problems at the same
+forward in inverse problems at the same
+forward in inverse problems at the same
+time so I was I was telling you how we
+time so I was I was telling you how we
+time so I was I was telling you how we
+solve an inverse problem with a pin We
+solve an inverse problem with a pin We
+solve an inverse problem with a pin We
+join optimize the Theta values and the
+join optimize the Theta values and the
+join optimize the Theta values and the
+underlying parameters at the same time
+underlying parameters at the same time
+underlying parameters at the same time
+this is kind of different to how we
+this is kind of different to how we
+this is kind of different to how we
+traditionally solve an inverse problem
+traditionally solve an inverse problem
+traditionally solve an inverse problem
+where we'll have a forward simulator and
+where we'll have a forward simulator and
+where we'll have a forward simulator and
+we'll differentiate uh we'll get
+we'll differentiate uh we'll get
+we'll differentiate uh we'll get
+gradients of that that forward simulator
+gradients of that that forward simulator
+gradients of that that forward simulator
+so in this case we don't have to
+so in this case we don't have to
+so in this case we don't have to
+differentiate through the forward
+differentiate through the forward
+differentiate through the forward
+simulator which can take a lot of time
+simulator which can take a lot of time
+simulator which can take a lot of time
+to to
+to to
+to to
+do um so often they're they're best
+do um so often they're they're best
+do um so often they're they're best
+where we have these situations where we
+where we have these situations where we
+where we have these situations where we
+have some some observations of of the
+have some some observations of of the
+have some some observations of of the
+data but we want to understand what the
+data but we want to understand what the
+data but we want to understand what the
+solution is um and maybe we want to
+solution is um and maybe we want to
+solution is um and maybe we want to
+understand what some underlying
+understand what some underlying
+understand what some underlying
+parameters are as
+parameters are as
+parameters are as
+well one thing I didn't mention is is
+well one thing I didn't mention is is
+well one thing I didn't mention is is
+pins also have tra track tractable
+pins also have tra track tractable
+pins also have tra track tractable
+analytical solution uh solution
+analytical solution uh solution
+analytical solution uh solution
+gradients which um this is uh sometimes
+gradients which um this is uh sometimes
+gradients which um this is uh sometimes
+overlooked but actually quite useful so
+overlooked but actually quite useful so
+overlooked but actually quite useful so
+this just means that we can evaluate du
+this just means that we can evaluate du
+this just means that we can evaluate du
+by DT and du by DX you know the
+by DT and du by DX you know the
+by DT and du by DX you know the
+gradients of of the solution with
+gradients of of the solution with
+gradients of of the solution with
+respect to its inputs and this can be
+respect to its inputs and this can be
+respect to its inputs and this can be
+very useful for doing for example
+very useful for doing for example
+very useful for doing for example
+sensitivity analysis studies on how the
+sensitivity analysis studies on how the
+sensitivity analysis studies on how the
+simulation might change depending on
+simulation might change depending on
+simulation might change depending on
+some
+some
+some
+inputs um and they're mostly
+inputs um and they're mostly
+inputs um and they're mostly
+unsupervised if we if we think of pins
+unsupervised if we if we think of pins
+unsupervised if we if we think of pins
+from a machine learning perspective we
+from a machine learning perspective we
+from a machine learning perspective we
+have this PD term which is an
+have this PD term which is an
+have this PD term which is an
+unsupervised regularizer and so we can
+unsupervised regularizer and so we can
+unsupervised regularizer and so we can
+actually get away with training pins
+actually get away with training pins
+actually get away with training pins
+with very little data and this is very
+with very little data and this is very
+with very little data and this is very
+different to these like big data uh big
+different to these like big data uh big
+different to these like big data uh big
+data regimes or or ideas of training
+models okay so we'll talk about the
+models okay so we'll talk about the
+models okay so we'll talk about the
+limitations so there's there's three big
+limitations so there's there's three big
+limitations so there's there's three big
+Li ation that I'm going to cover the
+Li ation that I'm going to cover the
+Li ation that I'm going to cover the
+first one is computational cost and and
+first one is computational cost and and
+first one is computational cost and and
+I gave you a hint of this last
+I gave you a hint of this last
+I gave you a hint of this last
+lecture I showed you an example of pins
+lecture I showed you an example of pins
+lecture I showed you an example of pins
+solving the wave equation uh again we
+solving the wave equation uh again we
+solving the wave equation uh again we
+have like a an earthquake or explosion
+have like a an earthquake or explosion
+have like a an earthquake or explosion
+in in some in the earth so in some which
+in in some in the earth so in some which
+in in some in the earth so in some which
+we model with a velocity
+we model with a velocity
+we model with a velocity
+model and the wave field it propagates
+model and the wave field it propagates
+model and the wave field it propagates
+outwards and causes Reflections and
+Etc um and this wasn't a wasn't a very
+Etc um and this wasn't a wasn't a very
+Etc um and this wasn't a wasn't a very
+Network it was only or like 10 layers
+Network it was only or like 10 layers
+Network it was only or like 10 layers
+thousand hidden units like that's not
+thousand hidden units like that's not
+thousand hidden units like that's not
+massive compared to today's billion
+massive compared to today's billion
+massive compared to today's billion
+parameter
+parameter
+parameter
+models but even just training this
+models but even just training this
+models but even just training this
+network to solve this simple kind of 2D
+network to solve this simple kind of 2D
+network to solve this simple kind of 2D
+problem it took an hour to train on a
+problem it took an hour to train on a
+problem it took an hour to train on a
+GPU and and the finite difference
+GPU and and the finite difference
+GPU and and the finite difference
+simulation would take probably about a
+simulation would take probably about a
+simulation would take probably about a
+minute or or less to run so this just
+minute or or less to run so this just
+minute or or less to run so this just
+this just isn't competitive with with a
+this just isn't competitive with with a
+this just isn't competitive with with a
+numerical technique uh in this
+numerical technique uh in this
+numerical technique uh in this
+form
+form
+form
+um the real killer is that once we
+um the real killer is that once we
+um the real killer is that once we
+changed the initial condition and so if
+changed the initial condition and so if
+changed the initial condition and so if
+we try to simulate a source that's to
+we try to simulate a source that's to
+we try to simulate a source that's to
+the left or to the right or maybe we
+the left or to the right or maybe we
+the left or to the right or maybe we
+change the frequency or something like
+change the frequency or something like
+change the frequency or something like
+that uh the pin has to be retrained for
+that uh the pin has to be retrained for
+that uh the pin has to be retrained for
+every new initial and boundry condition
+every new initial and boundry condition
+every new initial and boundry condition
+so so you know every simulation you run
+so so you know every simulation you run
+so so you know every simulation you run
+you're going to have to retrain a newal
+network okay so that's a big limitation
+network okay so that's a big limitation
+network okay so that's a big limitation
+so let's let's talk about another
+so let's let's talk about another
+so let's let's talk about another
+limitation and this is the sometimes
+limitation and this is the sometimes
+limitation and this is the sometimes
+poor convergence of of pins and it's not
+poor convergence of of pins and it's not
+poor convergence of of pins and it's not
+guaranteed that the pin is going to
+guaranteed that the pin is going to
+guaranteed that the pin is going to
+converge um to the Minima of your loss
+converge um to the Minima of your loss
+converge um to the Minima of your loss
+function and this goes back to our
+function and this goes back to our
+function and this goes back to our
+introduction to deep burning course
+introduction to deep burning course
+introduction to deep burning course
+lecture where we talked about all these
+lecture where we talked about all these
+lecture where we talked about all these
+error sources so you know the finiteness
+error sources so you know the finiteness
+error sources so you know the finiteness
+of the training data the approximation
+of the training data the approximation
+of the training data the approximation
+error of the network and the optimizer
+error of the network and the optimizer
+error of the network and the optimizer
+like the optimizer not might not be able
+like the optimizer not might not be able
+like the optimizer not might not be able
+to navigate the complicated loss
+to navigate the complicated loss
+to navigate the complicated loss
+landscape of the that we're using to
+landscape of the that we're using to
+landscape of the that we're using to
+train the
+train the
+train the
+pin start um one of the biggest factors
+pin start um one of the biggest factors
+pin start um one of the biggest factors
+when specific tyly when training pins is
+when specific tyly when training pins is
+when specific tyly when training pins is
+is this issue of how to choose these
+is this issue of how to choose these
+is this issue of how to choose these
+Lambda
+Lambda
+Lambda
+values so I mentioned that the Lambda
+values so I mentioned that the Lambda
+values so I mentioned that the Lambda
+values are very important because they
+values are very important because they
+values are very important because they
+control the balance between the boundary
+control the balance between the boundary
+control the balance between the boundary
+loss and the physics
+loss and the physics
+loss and the physics
+loss so for example if we if we choose
+loss so for example if we if we choose
+loss so for example if we if we choose
+lamba to be too small in this in this
+lamba to be too small in this in this
+lamba to be too small in this in this
+particular loss
+particular loss
+particular loss
+function it means that we won't we don't
+function it means that we won't we don't
+function it means that we won't we don't
+care so much about the boundary
+care so much about the boundary
+care so much about the boundary
+conditions and we're only going to
+conditions and we're only going to
+conditions and we're only going to
+minimize the PD
+minimize the PD
+minimize the PD
+residual but that's dangerous because
+residual but that's dangerous because
+residual but that's dangerous because
+that means the network could learn any
+that means the network could learn any
+that means the network could learn any
+particular any any particular solution
+particular any any particular solution
+particular any any particular solution
+of the of the pde and it might not be
+of the of the pde and it might not be
+of the of the pde and it might not be
+the one that we want given the boundary
+the one that we want given the boundary
+the one that we want given the boundary
+conditions that we
+conditions that we
+conditions that we
+have um in the opposite if Lambda is too
+have um in the opposite if Lambda is too
+have um in the opposite if Lambda is too
+large then we're not going to satisfy
+large then we're not going to satisfy
+large then we're not going to satisfy
+the underlying differential equation and
+the underlying differential equation and
+the underlying differential equation and
+the boundary conditions might just be
+the boundary conditions might just be
+the boundary conditions might just be
+imposed everywhere in the
+imposed everywhere in the
+imposed everywhere in the
+domain um so I've got an example of this
+domain um so I've got an example of this
+domain um so I've got an example of this
+uh this is again using a physics
+uh this is again using a physics
+uh this is again using a physics
+informal Network to solve the wave
+informal Network to solve the wave
+informal Network to solve the wave
+equation now we have a point source
+equation now we have a point source
+equation now we have a point source
+that's propagating through this uh uh um
+that's propagating through this uh uh um
+that's propagating through this uh uh um
+velocity model here which is just a
+velocity model here which is just a
+velocity model here which is just a
+couple of Gans basically G Gan
+couple of Gans basically G Gan
+couple of Gans basically G Gan
+perations and you can see the W field is
+perations and you can see the W field is
+perations and you can see the W field is
+like uh just propagating through these
+like uh just propagating through these
+like uh just propagating through these
+different pertubations and kind of
+different pertubations and kind of
+different pertubations and kind of
+squashing and changing its shape based
+squashing and changing its shape based
+squashing and changing its shape based
+on those
+on those
+on those
+perturbations and this is the PIN so the
+perturbations and this is the PIN so the
+perturbations and this is the PIN so the
+top top row here is the BR truth finite
+top top row here is the BR truth finite
+top top row here is the BR truth finite
+difference modeling uh output the middle
+difference modeling uh output the middle
+difference modeling uh output the middle
+row is after I've trained the pin after
+row is after I've trained the pin after
+row is after I've trained the pin after
+the you know after the final training
+the you know after the final training
+the you know after the final training
+step this is this is what the pin looks
+step this is this is what the pin looks
+step this is this is what the pin looks
+like and at first glance it looks like
+like and at first glance it looks like
+like and at first glance it looks like
+it does a pretty good job at estimating
+it does a pretty good job at estimating
+it does a pretty good job at estimating
+the
+the
+the
+solution but what's interesting is if I
+solution but what's interesting is if I
+solution but what's interesting is if I
+look at the the loss curve as a function
+look at the the loss curve as a function
+look at the the loss curve as a function
+of training step so what I'm plotting
+of training step so what I'm plotting
+of training step so what I'm plotting
+here is the is the test error so this is
+here is the is the test error so this is
+here is the is the test error so this is
+the difference between the pin solution
+the difference between the pin solution
+the difference between the pin solution
+and the ground truth solution um
+and the ground truth solution um
+and the ground truth solution um
+averaged over all the all the points in
+averaged over all the all the points in
+averaged over all the all the points in
+the
+the
+the
+domain and it's very interesting to see
+domain and it's very interesting to see
+domain and it's very interesting to see
+that um whilst it does converge at a
+that um whilst it does converge at a
+that um whilst it does converge at a
+fairly low um absolute error
+fairly low um absolute error
+fairly low um absolute error
+halfway through training the loss is
+halfway through training the loss is
+halfway through training the loss is
+still incredibly high and if you look a
+still incredibly high and if you look a
+still incredibly high and if you look a
+bit further it's very spiky as well it
+bit further it's very spiky as well it
+bit further it's very spiky as well it
+so what I would interpret this as is is
+so what I would interpret this as is is
+so what I would interpret this as is is
+the PIN solution thrashing around it
+the PIN solution thrashing around it
+the PIN solution thrashing around it
+it's trying it's really trying to figure
+it's trying it's really trying to figure
+it's trying it's really trying to figure
+out what the solution
+out what the solution
+out what the solution
+is and so it's it's interesting to plot
+is and so it's it's interesting to plot
+is and so it's it's interesting to plot
+the the pins uh prediction of the
+the the pins uh prediction of the
+the the pins uh prediction of the
+solution at training step 20,000 so this
+solution at training step 20,000 so this
+solution at training step 20,000 so this
+is like here before it started
+is like here before it started
+is like here before it started
+converging what you can see is it's
+converging what you can see is it's
+converging what you can see is it's
+learned the boundry condition well but
+learned the boundry condition well but
+learned the boundry condition well but
+then the rest of the domain it's
+then the rest of the domain it's
+then the rest of the domain it's
+basically set of solution to
+basically set of solution to
+basically set of solution to
+zero so anyone got any ideas why why
+zero so anyone got any ideas why why
+zero so anyone got any ideas why why
+this is zero here why it hasn't even
+this is zero here why it hasn't even
+this is zero here why it hasn't even
+started putting amplitudes
+in
+yeah maybe
+yeah maybe
+yeah maybe
+yeah yeah that could be a reason it
+yeah yeah that could be a reason it
+yeah yeah that could be a reason it
+could be
+initialization yeah that's a good point
+initialization yeah that's a good point
+initialization yeah that's a good point
+um so why is it a a local Minima in the
+um so why is it a a local Minima in the
+um so why is it a a local Minima in the
+loss
+function yeah yeah yeah you're you're on
+function yeah yeah yeah you're you're on
+function yeah yeah yeah you're you're on
+the right lines there's there's another
+the right lines there's there's another
+the right lines there's there's another
+reason that's related to that
+yeah exactly yeah yeah so you've got it
+yeah exactly yeah yeah so you've got it
+yeah exactly yeah yeah so you've got it
+so so if you go back to the wave
+so so if you go back to the wave
+so so if you go back to the wave
+equation um uh a trivial solution of the
+equation um uh a trivial solution of the
+equation um uh a trivial solution of the
+the wave equation is that U equals Zer
+the wave equation is that U equals Zer
+the wave equation is that U equals Zer
+everywhere like this satisfies the PD
+everywhere like this satisfies the PD
+everywhere like this satisfies the PD
+constraint it will give you exactly zero
+constraint it will give you exactly zero
+constraint it will give you exactly zero
+in that in that physics loss
+in that in that physics loss
+in that in that physics loss
+term so my intuition my guess here and I
+term so my intuition my guess here and I
+term so my intuition my guess here and I
+think it's correct is if you think about
+think it's correct is if you think about
+think it's correct is if you think about
+the PD term in this whole part of the
+the PD term in this whole part of the
+the PD term in this whole part of the
+domain you know from this time Point um
+domain you know from this time Point um
+domain you know from this time Point um
+further further the PD loss is basically
+further further the PD loss is basically
+further further the PD loss is basically
+zero so it's very happy that it's
+zero so it's very happy that it's
+zero so it's very happy that it's
+minimized that turn um the only problem
+minimized that turn um the only problem
+minimized that turn um the only problem
+is that there's some disconnect with the
+is that there's some disconnect with the
+is that there's some disconnect with the
+boundary condition um you know just
+boundary condition um you know just
+boundary condition um you know just
+after the just after the boundary
+after the just after the boundary
+after the just after the boundary
+condition the PD res will be fairly high
+condition the PD res will be fairly high
+condition the PD res will be fairly high
+but overall the the L function is fairly
+but overall the the L function is fairly
+but overall the the L function is fairly
+well satisfied so that is definitely a
+well satisfied so that is definitely a
+well satisfied so that is definitely a
+local Minima if you think of it that
+local Minima if you think of it that
+local Minima if you think of it that
+way um so this you can see how this loss
+way um so this you can see how this loss
+way um so this you can see how this loss
+landscape is quite difficult and uh you
+landscape is quite difficult and uh you
+landscape is quite difficult and uh you
+know non-convex to
+optimize okay um the final limitation
+optimize okay um the final limitation
+optimize okay um the final limitation
+um and it's related to the poor
+um and it's related to the poor
+um and it's related to the poor
+convergence is is the our ability to be
+convergence is is the our ability to be
+convergence is is the our ability to be
+able to scale pins to more complex
+able to scale pins to more complex
+able to scale pins to more complex
+problems so so everything all the kind
+problems so so everything all the kind
+problems so so everything all the kind
+of applications that I've been showing
+of applications that I've been showing
+of applications that I've been showing
+you so far I would argue have been
+you so far I would argue have been
+you so far I would argue have been
+related to what I would call very
+related to what I would call very
+related to what I would call very
+simplified or toy problems so for
+simplified or toy problems so for
+simplified or toy problems so for
+example you know waves propagating
+example you know waves propagating
+example you know waves propagating
+through just simple horizontally layered
+through just simple horizontally layered
+through just simple horizontally layered
+Media or maybe the fluid flow past a
+Media or maybe the fluid flow past a
+Media or maybe the fluid flow past a
+cylinder this is kind of a canonical
+cylinder this is kind of a canonical
+cylinder this is kind of a canonical
+problem that we study in fluid dynamics
+problem that we study in fluid dynamics
+problem that we study in fluid dynamics
+but if we talk about having you know a
+but if we talk about having you know a
+but if we talk about having you know a
+significant impact in the world and
+significant impact in the world and
+significant impact in the world and
+having kind of real world impacts what
+having kind of real world impacts what
+having kind of real world impacts what
+we really want to do is solve these like
+we really want to do is solve these like
+we really want to do is solve these like
+large scale problems that people that we
+large scale problems that people that we
+large scale problems that people that we
+care about so you
+care about so you
+care about so you
+know understanding or predicting how the
+know understanding or predicting how the
+know understanding or predicting how the
+whole climate system evolves or for
+whole climate system evolves or for
+whole climate system evolves or for
+example how earthquakes propagate
+example how earthquakes propagate
+example how earthquakes propagate
+through the whole state of California
+through the whole state of California
+through the whole state of California
+like if we could be able to solve these
+like if we could be able to solve these
+like if we could be able to solve these
+problems faster and more accurately this
+problems faster and more accurately this
+problems faster and more accurately this
+would have a massive
+would have a massive
+would have a massive
+impact um but there's a massive
+impact um but there's a massive
+impact um but there's a massive
+difference between left hand side and
+difference between left hand side and
+difference between left hand side and
+the right hand
+the right hand
+the right hand
+side and if you think about our
+side and if you think about our
+side and if you think about our
+traditional methods that uh we would use
+traditional methods that uh we would use
+traditional methods that uh we would use
+to solve these kind of larger scale
+to solve these kind of larger scale
+to solve these kind of larger scale
+problems it's often really challenging
+problems it's often really challenging
+problems it's often really challenging
+to scale them right this is why we're
+to scale them right this is why we're
+to scale them right this is why we're
+thinking about using machine learning to
+thinking about using machine learning to
+thinking about using machine learning to
+help especially when we have multiscale
+help especially when we have multiscale
+help especially when we have multiscale
+multiphysics uh systems if we have large
+multiphysics uh systems if we have large
+multiphysics uh systems if we have large
+or high
+or high
+or high
+frequencies um and if we have noisy and
+frequencies um and if we have noisy and
+frequencies um and if we have noisy and
+real or sparse data as well these things
+real or sparse data as well these things
+real or sparse data as well these things
+can really make our traditional method
+can really make our traditional method
+can really make our traditional method
+struggle
+struggle
+struggle
+and I think it's a very valid question
+and I think it's a very valid question
+and I think it's a very valid question
+to ask all these siml techniques you
+to ask all these siml techniques you
+to ask all these siml techniques you
+know even though they have some kind of
+know even though they have some kind of
+know even though they have some kind of
+interesting ways to put scientific
+interesting ways to put scientific
+interesting ways to put scientific
+understanding into our ml algorithm how
+understanding into our ml algorithm how
+understanding into our ml algorithm how
+do they COPE in these settings like do
+do they COPE in these settings like do
+do they COPE in these settings like do
+they scale in the same way or do they
+they scale in the same way or do they
+they scale in the same way or do they
+have different kind of limitations and
+have different kind of limitations and
+have different kind of limitations and
+that that's kind of an interesting
+that that's kind of an interesting
+that that's kind of an interesting
+research question to
+research question to
+research question to
+me so yeah how do how do pins COPE in
+me so yeah how do how do pins COPE in
+me so yeah how do how do pins COPE in
+this setting so so unfortunately pins
+this setting so so unfortunately pins
+this setting so so unfortunately pins
+struggle um especially uh in this case
+struggle um especially uh in this case
+struggle um especially uh in this case
+where we want to scale pins to higher
+where we want to scale pins to higher
+where we want to scale pins to higher
+frequencies so so what what I'm showing
+frequencies so so what what I'm showing
+frequencies so so what what I'm showing
+here is using a PIN to solve you know
+here is using a PIN to solve you know
+here is using a PIN to solve you know
+one of the simplest Odes I could think
+one of the simplest Odes I could think
+one of the simplest Odes I could think
+of du by DX equals cos Omega X right so
+of du by DX equals cos Omega X right so
+of du by DX equals cos Omega X right so
+the solution is just
+the solution is just
+the solution is just
+sign um and what's interesting to plot
+sign um and what's interesting to plot
+sign um and what's interesting to plot
+is how the pin's performance as I
+is how the pin's performance as I
+is how the pin's performance as I
+increase the frequency of the solution
+increase the frequency of the solution
+increase the frequency of the solution
+so as I increase Omega
+so as I increase Omega
+so as I increase Omega
+here so on the top left here is is the
+here so on the top left here is is the
+here so on the top left here is is the
+easiest problem where the the frequency
+easiest problem where the the frequency
+easiest problem where the the frequency
+is very low so frequency of one here and
+is very low so frequency of one here and
+is very low so frequency of one here and
+I can train this very rapidly and very
+I can train this very rapidly and very
+I can train this very rapidly and very
+accurately using a pin uh and the pin
+accurately using a pin uh and the pin
+accurately using a pin uh and the pin
+only needs two layers and 16 hidden
+only needs two layers and 16 hidden
+only needs two layers and 16 hidden
+units and so in total that's around 300
+units and so in total that's around 300
+units and so in total that's around 300
+parameters to fit this fit this sine
+parameters to fit this fit this sine
+parameters to fit this fit this sine
+wave using using a fully connected
+wave using using a fully connected
+wave using using a fully connected
+network if you look at the loss curve
+network if you look at the loss curve
+network if you look at the loss curve
+for this this is the test loss as a
+for this this is the test loss as a
+for this this is the test loss as a
+function of training step it's this red
+function of training step it's this red
+function of training step it's this red
+line in the bottom here so again it
+line in the bottom here so again it
+line in the bottom here so again it
+converges within a few thousand gradient
+converges within a few thousand gradient
+converges within a few thousand gradient
+descend steps and stays quite a
+descend steps and stays quite a
+descend steps and stays quite a
+level but the real issue comes when I
+level but the real issue comes when I
+level but the real issue comes when I
+increase Omega and so if I go to Omega
+increase Omega and so if I go to Omega
+increase Omega and so if I go to Omega
+equals 15 so much higher frequency
+equals 15 so much higher frequency
+equals 15 so much higher frequency
+problem um the same pin with two layers
+problem um the same pin with two layers
+problem um the same pin with two layers
+and 16 hidden units here on the top
+and 16 hidden units here on the top
+and 16 hidden units here on the top
+right um really struggles to fit the
+right um really struggles to fit the
+right um really struggles to fit the
+solution and in fact it only fits maybe
+solution and in fact it only fits maybe
+solution and in fact it only fits maybe
+six or seven of the
+six or seven of the
+six or seven of the
+Cycles so why don't you think that it
+Cycles so why don't you think that it
+Cycles so why don't you think that it
+can fit any more Cycles in this
+can fit any more Cycles in this
+can fit any more Cycles in this
+case y
+yeah yeah exactly so we only we only
+yeah yeah exactly so we only we only
+yeah yeah exactly so we only we only
+have 321 parameters in in this network
+have 321 parameters in in this network
+have 321 parameters in in this network
+and so there's just not enough to fit
+and so there's just not enough to fit
+and so there's just not enough to fit
+all of these cycles of the solution
+y yes well yeah absolutely so the the
+y yes well yeah absolutely so the the
+y yes well yeah absolutely so the the
+point the question was doesn't this show
+point the question was doesn't this show
+point the question was doesn't this show
+that the network doesn't learn at all
+that the network doesn't learn at all
+that the network doesn't learn at all
+but simply memorizes I so I agree I said
+but simply memorizes I so I agree I said
+but simply memorizes I so I agree I said
+last lecture pins stuff the same issues
+last lecture pins stuff the same issues
+last lecture pins stuff the same issues
+uh you know estimation or error issues
+uh you know estimation or error issues
+uh you know estimation or error issues
+as standard noral networks so they still
+as standard noral networks so they still
+as standard noral networks so they still
+have generalization error approximation
+have generalization error approximation
+have generalization error approximation
+error optimization error um and we're
+error optimization error um and we're
+error optimization error um and we're
+not we're not telling the pin that we
+not we're not telling the pin that we
+not we're not telling the pin that we
+expect the solution to be signal so deal
+expect the solution to be signal so deal
+expect the solution to be signal so deal
+here this is just a flexible function
+here this is just a flexible function
+here this is just a flexible function
+that's trying to fit to a sign sign
+that's trying to fit to a sign sign
+that's trying to fit to a sign sign
+curve there are there are ways to put
+curve there are there are ways to put
+curve there are there are ways to put
+kind of understanding of what you think
+kind of understanding of what you think
+kind of understanding of what you think
+the solution will be into the pins uh
+the solution will be into the pins uh
+the solution will be into the pins uh
+architecture and I'll I'll talk about
+architecture and I'll I'll talk about
+architecture and I'll I'll talk about
+that next lecture which can help
+that next lecture which can help
+that next lecture which can help
+yeah so the only solution in this case
+yeah so the only solution in this case
+yeah so the only solution in this case
+if we're stuck with using an MLP is to
+if we're stuck with using an MLP is to
+if we're stuck with using an MLP is to
+increase the size of the
+increase the size of the
+increase the size of the
+MLP so this is the plot if you increase
+MLP so this is the plot if you increase
+MLP so this is the plot if you increase
+it to four layers in 64 H units and you
+it to four layers in 64 H units and you
+it to four layers in 64 H units and you
+can see it learns more more Cycles but
+can see it learns more more Cycles but
+can see it learns more more Cycles but
+not all of them and I have I have to
+not all of them and I have I have to
+not all of them and I have I have to
+push it all the way to five layers and
+push it all the way to five layers and
+push it all the way to five layers and
+128 units and this is this is taking 60
+128 units and this is this is taking 60
+128 units and this is this is taking 60
+you know over 60,000 parameters just to
+you know over 60,000 parameters just to
+you know over 60,000 parameters just to
+fit a sign
+fit a sign
+fit a sign
+curve um and even so if you look at the
+curve um and even so if you look at the
+curve um and even so if you look at the
+training ER the test loss as a function
+training ER the test loss as a function
+training ER the test loss as a function
+of training step even though it
+of training step even though it
+of training step even though it
+decreases it's nowhere near as
+decreases it's nowhere near as
+decreases it's nowhere near as
+performant as the as the low frequency
+pin so I've got a little animation of
+pin so I've got a little animation of
+pin so I've got a little animation of
+this just to show you show you in a in
+this just to show you show you in a in
+this just to show you show you in a in
+an animation and so this is um a pin
+an animation and so this is um a pin
+an animation and so this is um a pin
+training on this stamped harmonic
+training on this stamped harmonic
+training on this stamped harmonic
+oscillator problem it's the same as what
+oscillator problem it's the same as what
+oscillator problem it's the same as what
+I've been showing before but all I've
+I've been showing before but all I've
+I've been showing before but all I've
+done here is just increase the the
+done here is just increase the the
+done here is just increase the the
+oscillator's frequency so we're modeling
+oscillator's frequency so we're modeling
+oscillator's frequency so we're modeling
+out to more Cycles here
+out to more Cycles here
+out to more Cycles here
+and uh what's happening is the PIN is
+and uh what's happening is the PIN is
+and uh what's happening is the PIN is
+really struggling to fit fit the
+really struggling to fit fit the
+really struggling to fit fit the
+solution
+so
+so
+so
+um okay so there're the three big
+um okay so there're the three big
+um okay so there're the three big
+limitations I would say a pins the
+limitations I would say a pins the
+limitations I would say a pins the
+computational cost especially for
+computational cost especially for
+computational cost especially for
+forward only problems for inverse
+forward only problems for inverse
+forward only problems for inverse
+problems they're more competitive like I
+problems they're more competitive like I
+problems they're more competitive like I
+said because we don't have to run the
+said because we don't have to run the
+said because we don't have to run the
+forward simulator thousands of
+forward simulator thousands of
+forward simulator thousands of
+times um they can be hard to optimize
+times um they can be hard to optimize
+times um they can be hard to optimize
+because of these competing terms in the
+because of these competing terms in the
+because of these competing terms in the
+loss
+loss
+loss
+function and they challenging to scale
+function and they challenging to scale
+function and they challenging to scale
+to larger domains like when we have high
+to larger domains like when we have high
+to larger domains like when we have high
+frequencies or multisale
+frequencies or multisale
+frequencies or multisale
+frequencies so that sounds fairly dire
+frequencies so that sounds fairly dire
+frequencies so that sounds fairly dire
+but the good news is that there are many
+but the good news is that there are many
+but the good news is that there are many
+many pin extensions and and uh there are
+many pin extensions and and uh there are
+many pin extensions and and uh there are
+many better Alternatives than just
+many better Alternatives than just
+many better Alternatives than just
+training a fully connected Network on on
+training a fully connected Network on on
+training a fully connected Network on on
+the
+solution um so as I said before there's
+solution um so as I said before there's
+solution um so as I said before there's
+this is a whole research field now in
+this is a whole research field now in
+this is a whole research field now in
+its own right um and this uh ricey paper
+its own right um and this uh ricey paper
+its own right um and this uh ricey paper
+has got over 8,000 citations now of and
+has got over 8,000 citations now of and
+has got over 8,000 citations now of and
+and if you go into those there's there's
+and if you go into those there's there's
+and if you go into those there's there's
+hundreds or even thousands of
+hundreds or even thousands of
+hundreds or even thousands of
+applications and extensions of pins that
+applications and extensions of pins that
+applications and extensions of pins that
+that people have
+shown so we're going to talk about a few
+shown so we're going to talk about a few
+shown so we're going to talk about a few
+some selected examples in the lecture we
+some selected examples in the lecture we
+some selected examples in the lecture we
+can't cover
+everything so I'm I'm going to move on
+everything so I'm I'm going to move on
+everything so I'm I'm going to move on
+to talk about uh extensions for
+to talk about uh extensions for
+to talk about uh extensions for
+improving the computational cost and
+improving the computational cost and
+improving the computational cost and
+that's going to be the rest of this
+that's going to be the rest of this
+that's going to be the rest of this
+lecture um next lecture I'll talk about
+lecture um next lecture I'll talk about
+lecture um next lecture I'll talk about
+those other two limitations the
+those other two limitations the
+those other two limitations the
+convergence and uh the scalability to
+convergence and uh the scalability to
+convergence and uh the scalability to
+more complex problems
+okay so computational cost how can we
+okay so computational cost how can we
+okay so computational cost how can we
+improve
+improve
+improve
+this so one big idea is is this idea of
+this so one big idea is is this idea of
+this so one big idea is is this idea of
+conditioning the pin on on additional
+conditioning the pin on on additional
+conditioning the pin on on additional
+inputs um so it's a very simple idea
+inputs um so it's a very simple idea
+inputs um so it's a very simple idea
+it's to say um instead of having to
+it's to say um instead of having to
+it's to say um instead of having to
+retrain our pin for every new initial
+retrain our pin for every new initial
+retrain our pin for every new initial
+condition or boundary condition why
+condition or boundary condition why
+condition or boundary condition why
+don't we just add those initial
+don't we just add those initial
+don't we just add those initial
+conditions or other pre PD parameters
+conditions or other pre PD parameters
+conditions or other pre PD parameters
+that we want to solve cross as just
+that we want to solve cross as just
+that we want to solve cross as just
+additional networks to the additional
+additional networks to the additional
+additional networks to the additional
+inputs to the
+inputs to the
+inputs to the
+network so let's think about this
+network so let's think about this
+network so let's think about this
+seismic simulation task again and this
+seismic simulation task again and this
+seismic simulation task again and this
+is our standard pin where we just the
+is our standard pin where we just the
+is our standard pin where we just the
+only inputs to the network are the
+only inputs to the network are the
+only inputs to the network are the
+coordinates and the time
+coordinates and the time
+coordinates and the time
+value and the output is the the seismic
+value and the output is the the seismic
+value and the output is the the seismic
+pressure
+pressure
+pressure
+essentially um so this is how a
+essentially um so this is how a
+essentially um so this is how a
+conditioned pin might work if we want to
+conditioned pin might work if we want to
+conditioned pin might work if we want to
+train the PIN to learn across one of the
+train the PIN to learn across one of the
+train the PIN to learn across one of the
+initial conditions so say that we want
+initial conditions so say that we want
+initial conditions so say that we want
+to learn a model that is able to predict
+to learn a model that is able to predict
+to learn a model that is able to predict
+this the output no matter where the
+this the output no matter where the
+this the output no matter where the
+source location is so what we would do
+source location is so what we would do
+source location is so what we would do
+is we would add the source location here
+is we would add the source location here
+is we would add the source location here
+the x and y coordinate of the source to
+the x and y coordinate of the source to
+the x and y coordinate of the source to
+as an input to the to the to the uh
+as an input to the to the to the uh
+as an input to the to the to the uh
+pin and then once this m network has
+pin and then once this m network has
+pin and then once this m network has
+been trained we don't have to retrain it
+been trained we don't have to retrain it
+been trained we don't have to retrain it
+uh on a new source location we can query
+uh on a new source location we can query
+uh on a new source location we can query
+at any Source location it will give us a
+at any Source location it will give us a
+at any Source location it will give us a
+prediction of the
+solution
+solution
+solution
+okay so have
+yeah yeah yeah so I'll will answer that
+yeah yeah yeah so I'll will answer that
+yeah yeah yeah so I'll will answer that
+once I've talked about how we train it
+once I've talked about how we train it
+once I've talked about how we train it
+but yeah um it's a good
+but yeah um it's a good
+but yeah um it's a good
+question so uh so this is the L function
+question so uh so this is the L function
+question so uh so this is the L function
+we use for the standard pin uh you know
+we use for the standard pin uh you know
+we use for the standard pin uh you know
+PD residual and boundary conditions and
+PD residual and boundary conditions and
+PD residual and boundary conditions and
+in this example I just trained the pin
+in this example I just trained the pin
+in this example I just trained the pin
+with a a few time steps of find that
+with a a few time steps of find that
+with a a few time steps of find that
+different solution is the is the
+different solution is the is the
+different solution is the is the
+boundary loss that was just how I
+boundary loss that was just how I
+boundary loss that was just how I
+defined it so it's just trained on this
+defined it so it's just trained on this
+defined it so it's just trained on this
+on this red essentially this red time
+on this red essentially this red time
+on this red essentially this red time
+step here and and it's learning to
+step here and and it's learning to
+step here and and it's learning to
+propagate outwards based on the PD
+loss so how do we train the condition
+loss so how do we train the condition
+loss so how do we train the condition
+pin so it's very simple same same loss
+pin so it's very simple same same loss
+pin so it's very simple same same loss
+function all we do is we not only sample
+function all we do is we not only sample
+function all we do is we not only sample
+over the per location points and the
+over the per location points and the
+over the per location points and the
+boundary points we also sample over the
+boundary points we also sample over the
+boundary points we also sample over the
+sources as well when we're training the
+sources as well when we're training the
+sources as well when we're training the
+PIN
+PIN
+PIN
+so let's let's think about the boundary
+so let's let's think about the boundary
+so let's let's think about the boundary
+loss we have to generate lots of finite
+loss we have to generate lots of finite
+loss we have to generate lots of finite
+different simulations with different
+different simulations with different
+different simulations with different
+examples of the source location and to
+examples of the source location and to
+examples of the source location and to
+match now because we want to generalize
+match now because we want to generalize
+match now because we want to generalize
+across the source location so this is
+across the source location so this is
+across the source location so this is
+boundary losses now matching the the
+boundary losses now matching the the
+boundary losses now matching the the
+Network's output across many different
+Network's output across many different
+Network's output across many different
+uh boundary or initial initial
+uh boundary or initial initial
+uh boundary or initial initial
+conditions from the finite difference
+conditions from the finite difference
+conditions from the finite difference
+so and then in the physics loss when
+so and then in the physics loss when
+so and then in the physics loss when
+we're remember this is still
+we're remember this is still
+we're remember this is still
+unsupervised um to evaluate it or we
+unsupervised um to evaluate it or we
+unsupervised um to evaluate it or we
+need it all we needed before was random
+need it all we needed before was random
+need it all we needed before was random
+points of x and t now we also just
+points of x and t now we also just
+points of x and t now we also just
+randomly sample an S value and we make
+randomly sample an S value and we make
+randomly sample an S value and we make
+sure that the physics losses across all
+sure that the physics losses across all
+sure that the physics losses across all
+the s value inputs to the
+network um does that make sense to
+network um does that make sense to
+network um does that make sense to
+everyone so it's just simply adding an
+everyone so it's just simply adding an
+everyone so it's just simply adding an
+extra input to the network and training
+extra input to the network and training
+extra input to the network and training
+over
+it
+it
+it
+um so uh so this is some work that we
+um so uh so this is some work that we
+um so uh so this is some work that we
+did we tried to condition this this
+did we tried to condition this this
+did we tried to condition this this
+physic for Network on the source
+physic for Network on the source
+physic for Network on the source
+location and we took this velocity model
+location and we took this velocity model
+location and we took this velocity model
+um which is a more complex velocity
+um which is a more complex velocity
+um which is a more complex velocity
+model than I've been showing you and the
+model than I've been showing you and the
+model than I've been showing you and the
+white points here show show you the
+white points here show show you the
+white points here show show you the
+source locations that we we used as
+source locations that we we used as
+source locations that we we used as
+training uh points so we carried out a
+training uh points so we carried out a
+training uh points so we carried out a
+finite different simulation at each y
+finite different simulation at each y
+finite different simulation at each y
+Point here to get our boundary data and
+Point here to get our boundary data and
+Point here to get our boundary data and
+then we randomly sampled across this
+then we randomly sampled across this
+then we randomly sampled across this
+area uh to evaluate our physics loss as
+area uh to evaluate our physics loss as
+area uh to evaluate our physics loss as
+well and then the test the test runs
+well and then the test the test runs
+well and then the test the test runs
+here that I'm showing are just sampled
+here that I'm showing are just sampled
+here that I'm showing are just sampled
+from these red points so kind of in the
+from these red points so kind of in the
+from these red points so kind of in the
+same distribution but not the exactly
+same distribution but not the exactly
+same distribution but not the exactly
+the same um training
+the same um training
+the same um training
+points and you can see that the pin does
+points and you can see that the pin does
+points and you can see that the pin does
+learn to generalize across the source
+learn to generalize across the source
+learn to generalize across the source
+location it is allowing us to evaluate
+location it is allowing us to evaluate
+location it is allowing us to evaluate
+this the amplitude you know wherever the
+this the amplitude you know wherever the
+this the amplitude you know wherever the
+source is located in this region um
+source is located in this region um
+source is located in this region um
+there's some interesting things here so
+there's some interesting things here so
+there's some interesting things here so
+the pin solution is not uh very accurate
+the pin solution is not uh very accurate
+the pin solution is not uh very accurate
+compared to the ground truth actually so
+compared to the ground truth actually so
+compared to the ground truth actually so
+what it does do is a good job of getting
+what it does do is a good job of getting
+what it does do is a good job of getting
+the direct arrival so this like the main
+the direct arrival so this like the main
+the direct arrival so this like the main
+amplitude response of the wave but it
+amplitude response of the wave but it
+amplitude response of the wave but it
+starts to really struggle with getting
+starts to really struggle with getting
+starts to really struggle with getting
+the reflections and and I think this is
+the reflections and and I think this is
+the reflections and and I think this is
+in part because they're much lower
+in part because they're much lower
+in part because they're much lower
+amplitude than the the direct
+amplitude than the the direct
+amplitude than the the direct
+arrival um but what it does mean now is
+arrival um but what it does mean now is
+arrival um but what it does mean now is
+that this pin doesn't need to be retrain
+that this pin doesn't need to be retrain
+that this pin doesn't need to be retrain
+for each of these Source locations so we
+for each of these Source locations so we
+for each of these Source locations so we
+can do some interesting analysis with
+can do some interesting analysis with
+can do some interesting analysis with
+this now so for example we can say
+this now so for example we can say
+this now so for example we can say
+remember I said you have tract tractable
+remember I said you have tract tractable
+remember I said you have tract tractable
+solution gradients we can say how does
+solution gradients we can say how does
+solution gradients we can say how does
+the um simulation vary as uh with the
+the um simulation vary as uh with the
+the um simulation vary as uh with the
+values of s so what's if I change the
+values of s so what's if I change the
+values of s so what's if I change the
+source location how does the amplitude
+source location how does the amplitude
+source location how does the amplitude
+change is it very sensitive or not and
+change is it very sensitive or not and
+change is it very sensitive or not and
+this is a very interesting question for
+this is a very interesting question for
+this is a very interesting question for
+for example seismic hazards analysis
+for example seismic hazards analysis
+for example seismic hazards analysis
+when when you want to know what the
+when when you want to know what the
+when when you want to know what the
+amplitude response is at the surface
+amplitude response is at the surface
+amplitude response is at the surface
+whether it's going to be a big shock if
+whether it's going to be a big shock if
+whether it's going to be a big shock if
+an earthquake occurs or not and how
+an earthquake occurs or not and how
+an earthquake occurs or not and how
+sensitive is that to the the location of
+sensitive is that to the the location of
+sensitive is that to the the location of
+the earthquake
+the earthquake
+the earthquake
+exactly so so this this this type of
+exactly so so this this this type of
+exactly so so this this this type of
+surrogate model where we've where we've
+surrogate model where we've where we've
+surrogate model where we've where we've
+uh got a fast kind of approximation of
+uh got a fast kind of approximation of
+uh got a fast kind of approximation of
+the solution can be can can be very
+the solution can be can can be very
+the solution can be can can be very
+useful in in uh yeah in
+Industry
+Industry
+Industry
+okay here's another example of a of a
+okay here's another example of a of a
+okay here's another example of a of a
+conditioned physics informal Network
+conditioned physics informal Network
+conditioned physics informal Network
+um so this is this is an example of
+um so this is this is an example of
+um so this is this is an example of
+using a a Depot net uh with a physics
+using a a Depot net uh with a physics
+using a a Depot net uh with a physics
+inform constraint and um Sid is going to
+inform constraint and um Sid is going to
+inform constraint and um Sid is going to
+talk a lot about Depon Nets and uh Depon
+talk a lot about Depon Nets and uh Depon
+talk a lot about Depon Nets and uh Depon
+Nets a more commonly known as an
+Nets a more commonly known as an
+Nets a more commonly known as an
+operator learning technique um and he'll
+operator learning technique um and he'll
+operator learning technique um and he'll
+talk about that from that perspective uh
+talk about that from that perspective uh
+talk about that from that perspective uh
+but from this perspective as a condition
+but from this perspective as a condition
+but from this perspective as a condition
+pin you can just think of it as a as a
+pin you can just think of it as a as a
+pin you can just think of it as a as a
+condition pin this this physics informed
+condition pin this this physics informed
+condition pin this this physics informed
+Depon
+Depon
+Depon
+net and so what is the network
+net and so what is the network
+net and so what is the network
+architecture um it's just a fully
+architecture um it's just a fully
+architecture um it's just a fully
+essentially a fully connected Network
+essentially a fully connected Network
+essentially a fully connected Network
+that again gives me a prediction of the
+that again gives me a prediction of the
+that again gives me a prediction of the
+solution of our differential equation
+solution of our differential equation
+solution of our differential equation
+here and it takes in our x and t our
+here and it takes in our x and t our
+here and it takes in our x and t our
+coordinates in our domain but it also
+coordinates in our domain but it also
+coordinates in our domain but it also
+has us a kind of special conditioning
+has us a kind of special conditioning
+has us a kind of special conditioning
+input that allows us to uh you know
+input that allows us to uh you know
+input that allows us to uh you know
+condition the output based on some some
+condition the output based on some some
+condition the output based on some some
+function
+function
+function
+here that's that's the architecture and
+here that's that's the architecture and
+here that's that's the architecture and
+this is an example of using a Depon net
+this is an example of using a Depon net
+this is an example of using a Depon net
+to to solve the reaction diffusion uh
+to to solve the reaction diffusion uh
+to to solve the reaction diffusion uh
+equations so uh this is the reaction
+equations so uh this is the reaction
+equations so uh this is the reaction
+diffusion equation and uh in this
+diffusion equation and uh in this
+diffusion equation and uh in this
+equation you here would represent for
+equation you here would represent for
+equation you here would represent for
+example the concentration of some
+example the concentration of some
+example the concentration of some
+chemical reaction as a function of space
+chemical reaction as a function of space
+chemical reaction as a function of space
+and
+and
+and
+time um and what we're interested in
+time um and what we're interested in
+time um and what we're interested in
+doing is predicting the solution with
+doing is predicting the solution with
+doing is predicting the solution with
+for different values of this this uh
+for different values of this this uh
+for different values of this this uh
+function here this F
+function here this F
+function here this F
+term so the way the Depon works is it
+term so the way the Depon works is it
+term so the way the Depon works is it
+just discretizes this function over over
+just discretizes this function over over
+just discretizes this function over over
+end points so it takes n samples of that
+end points so it takes n samples of that
+end points so it takes n samples of that
+function into as a vector and that's the
+function into as a vector and that's the
+function into as a vector and that's the
+conditioning input to the Depon net and
+conditioning input to the Depon net and
+conditioning input to the Depon net and
+then the other inputs of these x and t
+then the other inputs of these x and t
+then the other inputs of these x and t
+values within the in within the
+values within the in within the
+values within the in within the
+domain and uh this paper trained this
+domain and uh this paper trained this
+domain and uh this paper trained this
+Depon net using exactly the the
+Depon net using exactly the the
+Depon net using exactly the the
+conditioned pin loss function so you
+conditioned pin loss function so you
+conditioned pin loss function so you
+know a boundary loss and a and a a a PD
+know a boundary loss and a and a a a PD
+know a boundary loss and a and a a a PD
+loss and this is the result they get
+loss and this is the result they get
+loss and this is the result they get
+they these are different examples of
+they these are different examples of
+they these are different examples of
+that conditioning function here and this
+that conditioning function here and this
+that conditioning function here and this
+is the the prediction or the exact
+is the the prediction or the exact
+is the the prediction or the exact
+solution in the predicted solution based
+solution in the predicted solution based
+solution in the predicted solution based
+on that conditioning
+function so I put this example in
+function so I put this example in
+function so I put this example in
+because this is an interesting way to
+because this is an interesting way to
+because this is an interesting way to
+think about Depot Nets and you can
+think about Depot Nets and you can
+think about Depot Nets and you can
+compare that to how Sid will describe
+compare that to how Sid will describe
+compare that to how Sid will describe
+them in in the operator learning
+lectures okay so the next way to speed
+lectures okay so the next way to speed
+lectures okay so the next way to speed
+pins up is to uh discretize their
+pins up is to uh discretize their
+pins up is to uh discretize their
+outputs so this is what a technique
+outputs so this is what a technique
+outputs so this is what a technique
+which is quite different um which I call
+which is quite different um which I call
+which is quite different um which I call
+I describe as discretized pins
+I describe as discretized pins
+I describe as discretized pins
+um and so what is the discretized PIN so
+um and so what is the discretized PIN so
+um and so what is the discretized PIN so
+so the idea here now is to say instead
+so the idea here now is to say instead
+so the idea here now is to say instead
+of having a fully connected Network that
+of having a fully connected Network that
+of having a fully connected Network that
+is giving us a a functional
+is giving us a a functional
+is giving us a a functional
+approximation to the solution that we
+approximation to the solution that we
+approximation to the solution that we
+can query at any point in the domain
+can query at any point in the domain
+can query at any point in the domain
+we're going to go back to just trying to
+we're going to go back to just trying to
+we're going to go back to just trying to
+predict the solution on a mes of
+predict the solution on a mes of
+predict the solution on a mes of
+points so we're going to have some newal
+points so we're going to have some newal
+points so we're going to have some newal
+Network um and the the output of the
+Network um and the the output of the
+Network um and the the output of the
+network is going to be a discretize
+network is going to be a discretize
+network is going to be a discretize
+solution so a matrix of values like for
+solution so a matrix of values like for
+solution so a matrix of values like for
+example if we want to solve the Burger's
+example if we want to solve the Burger's
+example if we want to solve the Burger's
+equation here it would be 128 by 256
+equation here it would be 128 by 256
+equation here it would be 128 by 256
+points and the the network that's going
+points and the the network that's going
+points and the the network that's going
+to produce this solution for now let's
+to produce this solution for now let's
+to produce this solution for now let's
+just say that it just has a fixed input
+just say that it just has a fixed input
+just say that it just has a fixed input
+it's just maybe a random number or just
+it's just maybe a random number or just
+it's just maybe a random number or just
+a zero
+a zero
+a zero
+and from that value it um decodes that
+and from that value it um decodes that
+and from that value it um decodes that
+value into the solution so for example
+value into the solution so for example
+value into the solution so for example
+we could use a transpose convolutional
+we could use a transpose convolutional
+we could use a transpose convolutional
+uh architecture to do
+uh architecture to do
+uh architecture to do
+that so the process of learning the
+that so the process of learning the
+that so the process of learning the
+weights is then to just to match the
+weights is then to just to match the
+weights is then to just to match the
+output to the true solution
+output to the true solution
+output to the true solution
+someh so yeah to be very clear that the
+someh so yeah to be very clear that the
+someh so yeah to be very clear that the
+newal network outputs the the elements
+newal network outputs the the elements
+newal network outputs the the elements
+of that of that Matrix and now the
+of that of that Matrix and now the
+of that of that Matrix and now the
+solution at those uh grid points and
+solution at those uh grid points and
+solution at those uh grid points and
+it's not a functional approximation so
+it's not a functional approximation so
+it's not a functional approximation so
+this is the difference
+so how do we train train this network in
+so how do we train train this network in
+so how do we train train this network in
+a similar way to how we would train a
+a similar way to how we would train a
+a similar way to how we would train a
+pin and so so we can use a very similar
+pin and so so we can use a very similar
+pin and so so we can use a very similar
+loss function to to train this network
+loss function to to train this network
+loss function to to train this network
+in an unsupervised way uh just like pins
+in an unsupervised way uh just like pins
+in an unsupervised way uh just like pins
+are
+are
+are
+unsupervised so what we do is we say we
+unsupervised so what we do is we say we
+unsupervised so what we do is we say we
+we have this output solution here and we
+we have this output solution here and we
+we have this output solution here and we
+still want to minimize the residual of
+still want to minimize the residual of
+still want to minimize the residual of
+the PD of that output
+the PD of that output
+the PD of that output
+solution and we know that for example
+solution and we know that for example
+solution and we know that for example
+the burgers equation here we have to
+the burgers equation here we have to
+the burgers equation here we have to
+evaluate the gradients of the network
+evaluate the gradients of the network
+evaluate the gradients of the network
+with respect to T with respect to
+with respect to T with respect to
+with respect to T with respect to
+X so here we have a discretized solution
+X so here we have a discretized solution
+X so here we have a discretized solution
+so the way that we can evaluate those
+so the way that we can evaluate those
+so the way that we can evaluate those
+gradients of the of the of the solution
+gradients of the of the of the solution
+gradients of the of the of the solution
+is just to take finite difference
+is just to take finite difference
+is just to take finite difference
+derivatives so we replace our exact
+derivatives so we replace our exact
+derivatives so we replace our exact
+derivatives that we can get from a fully
+derivatives that we can get from a fully
+derivatives that we can get from a fully
+connected functional approximation to
+connected functional approximation to
+connected functional approximation to
+finite derivatives that we get from just
+finite derivatives that we get from just
+finite derivatives that we get from just
+taking differences on the
+taking differences on the
+taking differences on the
+grid and it turns out that we can use
+grid and it turns out that we can use
+grid and it turns out that we can use
+this loss function and train this to
+this loss function and train this to
+this loss function and train this to
+match the solution just just like we can
+match the solution just just like we can
+match the solution just just like we can
+use this l l function to train the
+use this l l function to train the
+use this l l function to train the
+pin um so to be fully explicit when
+pin um so to be fully explicit when
+pin um so to be fully explicit when
+we're evaluating the derivative of the
+we're evaluating the derivative of the
+we're evaluating the derivative of the
+solution with respect to time we just
+solution with respect to time we just
+solution with respect to time we just
+use like a a finite difference on two
+use like a a finite difference on two
+use like a a finite difference on two
+elements for
+elements for
+elements for
+example does anyone have any questions
+example does anyone have any questions
+example does anyone have any questions
+on that that's a kind of a a different
+on that that's a kind of a a different
+on that that's a kind of a a different
+way of thinking about
+way of thinking about
+way of thinking about
+this yeah
+fixed value
+fixed value
+fixed value
+yeah yeah so it so in the simplest case
+yeah yeah so it so in the simplest case
+yeah yeah so it so in the simplest case
+it's a fixed value and it can be
+it's a fixed value and it can be
+it's a fixed value and it can be
+anything um it doesn't matter what it is
+anything um it doesn't matter what it is
+anything um it doesn't matter what it is
+but it should stay fixed it should never
+but it should stay fixed it should never
+but it should stay fixed it should never
+change if you think about the function
+change if you think about the function
+change if you think about the function
+that this network this network is
+that this network this network is
+that this network this network is
+representing it's like a function it's a
+representing it's like a function it's a
+representing it's like a function it's a
+vector or it's a function that takes a
+vector or it's a function that takes a
+vector or it's a function that takes a
+here it takes a Scala value as input it
+here it takes a Scala value as input it
+here it takes a Scala value as input it
+gives you a matrix as output and that
+gives you a matrix as output and that
+gives you a matrix as output and that
+function has some free parameters
+function has some free parameters
+function has some free parameters
+but you just think of that as a blackbox
+but you just think of that as a blackbox
+but you just think of that as a blackbox
+function with some free parameters that
+function with some free parameters that
+function with some free parameters that
+we're tuning to make the output match
+we're tuning to make the output match
+we're tuning to make the output match
+the solution of
+the solution of
+the solution of
+PDA does that make sense but what if I
+PDA does that make sense but what if I
+PDA does that make sense but what if I
+were to suppos change the input let's
+were to suppos change the input let's
+were to suppos change the input let's
+say would
+say would
+say would
+change yeah would change it in a really
+change yeah would change it in a really
+change yeah would change it in a really
+strange way that doesn't make any
+strange way that doesn't make any
+strange way that doesn't make any
+physical sense so we're only using the
+physical sense so we're only using the
+physical sense so we're only using the
+architecture as a just as a way as a
+architecture as a just as a way as a
+architecture as a just as a way as a
+flexible function we're just hijacking
+flexible function we're just hijacking
+flexible function we're just hijacking
+the fact that it's a flexible function
+the fact that it's a flexible function
+the fact that it's a flexible function
+that we
+that we
+that we
+frame to produce a solution we're going
+frame to produce a solution we're going
+frame to produce a solution we're going
+to change that in a minute so it's going
+to change that in a minute so it's going
+to change that in a minute so it's going
+to make more sense but this is the this
+to make more sense but this is the this
+to make more sense but this is the this
+is the direct analog with it as if we
+is the direct analog with it as if we
+is the direct analog with it as if we
+were going to train the
+were going to train the
+were going to train the
+pin
+yeah yeah yeah this could be thought of
+yeah yeah yeah this could be thought of
+yeah yeah yeah this could be thought of
+as a as a decoder for example yeah yeah
+as a as a decoder for example yeah yeah
+as a as a decoder for example yeah yeah
+but the difference is that this doesn't
+but the difference is that this doesn't
+but the difference is that this doesn't
+have any physical uh the way that I
+have any physical uh the way that I
+have any physical uh the way that I
+framed it it doesn't have any physical
+framed it it doesn't have any physical
+framed it it doesn't have any physical
+meaning at the moment yeah yeah
+meaning at the moment yeah yeah
+meaning at the moment yeah yeah
+but you you understand how we replace
+but you you understand how we replace
+but you you understand how we replace
+the exact derivatives with the the
+the exact derivatives with the the
+the exact derivatives with the the
+finite difference derivatives okay
+yeah okay yeah so you got it so we're
+yeah okay yeah so you got it so we're
+yeah okay yeah so you got it so we're
+gonna change we're gonna change it now
+gonna change we're gonna change it now
+gonna change we're gonna change it now
+um just before that it's actually the
+um just before that it's actually the
+um just before that it's actually the
+one thing I didn't talk about was how we
+one thing I didn't talk about was how we
+one thing I didn't talk about was how we
+make sure that the solution obeys the
+make sure that the solution obeys the
+make sure that the solution obeys the
+boundary conditions so that actually
+boundary conditions so that actually
+boundary conditions so that actually
+this is really important I only showed
+this is really important I only showed
+this is really important I only showed
+you the the physics loss here what do
+you the the physics loss here what do
+you the the physics loss here what do
+the what does the boundary loss look
+the what does the boundary loss look
+the what does the boundary loss look
+like
+like
+like
+well we we can't really have a lost
+well we we can't really have a lost
+well we we can't really have a lost
+function that asserts the bandry
+function that asserts the bandry
+function that asserts the bandry
+conditions here because um well I guess
+conditions here because um well I guess
+conditions here because um well I guess
+you probably could actually but but a
+you probably could actually but but a
+you probably could actually but but a
+better way to do it is is just to make
+better way to do it is is just to make
+better way to do it is is just to make
+them hard constraints because we can do
+them hard constraints because we can do
+them hard constraints because we can do
+that here so we just um add padding
+that here so we just um add padding
+that here so we just um add padding
+around the outside and we just pad with
+around the outside and we just pad with
+around the outside and we just pad with
+the values that we know the boundary
+the values that we know the boundary
+the values that we know the boundary
+values so for example um we know the
+values so for example um we know the
+values so for example um we know the
+initial condition here that the weight
+initial condition here that the weight
+initial condition here that the weight
+the the fluid flow should start with a
+the the fluid flow should start with a
+the the fluid flow should start with a
+sign of soal profile so we're just going
+sign of soal profile so we're just going
+sign of soal profile so we're just going
+to pad the elements here with with a
+to pad the elements here with with a
+to pad the elements here with with a
+signos audio function here and likewise
+signos audio function here and likewise
+signos audio function here and likewise
+here we're going to pad these values to
+here we're going to pad these values to
+here we're going to pad these values to
+be zero to make sure the flow outside
+be zero to make sure the flow outside
+be zero to make sure the flow outside
+the domain is
+the domain is
+the domain is
+zero and you can see that when we start
+zero and you can see that when we start
+zero and you can see that when we start
+taking these finite difference
+taking these finite difference
+taking these finite difference
+derivatives we're going to be uh
+derivatives we're going to be uh
+derivatives we're going to be uh
+evaluating the derivative against those
+evaluating the derivative against those
+evaluating the derivative against those
+padded values and that's is what's going
+padded values and that's is what's going
+padded values and that's is what's going
+to constrain or make the solution
+to constrain or make the solution
+to constrain or make the solution
+converge to the particular
+converge to the particular
+converge to the particular
+solution so this is kind of different to
+solution so this is kind of different to
+solution so this is kind of different to
+uh normal pins because we're having hard
+uh normal pins because we're having hard
+uh normal pins because we're having hard
+hard boundary constraints we don't have
+hard boundary constraints we don't have
+hard boundary constraints we don't have
+that issue with the different Lambda
+that issue with the different Lambda
+that issue with the different Lambda
+values in the in the Lost function
+values in the in the Lost function
+values in the in the Lost function
+anymore
+yeah uh yes but we don't solve the
+yeah uh yes but we don't solve the
+yeah uh yes but we don't solve the
+numerical method
+numerical method
+numerical method
+um uh with like linear
+um uh with like linear
+um uh with like linear
+solves because the function that we're
+solves because the function that we're
+solves because the function that we're
+fitting is not like a linear function
+fitting is not like a linear function
+fitting is not like a linear function
+it's like a
+it's like a
+it's like a
+complicated yeah yeah just for the B
+complicated yeah yeah just for the B
+complicated yeah yeah just for the B
+terms yeah so just the Ping was just so
+terms yeah so just the Ping was just so
+terms yeah so just the Ping was just so
+we don't have problem those points when
+we don't have problem those points when
+we don't have problem those points when
+we yeah do
+we yeah do
+we yeah do
+the AL also that yeah yeah so this you
+the AL also that yeah yeah so this you
+the AL also that yeah yeah so this you
+can see how we're getting closer to
+can see how we're getting closer to
+can see how we're getting closer to
+finite difference methods here I guess
+finite difference methods here I guess
+finite difference methods here I guess
+the key difference is the function that
+the key difference is the function that
+the key difference is the function that
+we're fitting is like a nonlinear
+we're fitting is like a nonlinear
+we're fitting is like a nonlinear
+function so we have to when we train
+function so we have to when we train
+function so we have to when we train
+this we we're
+this we we're
+this we we're
+using we still use Auto diff we still
+using we still use Auto diff we still
+using we still use Auto diff we still
+use autoi here to update the weights so
+use autoi here to update the weights so
+use autoi here to update the weights so
+we still using the gradient descent to
+we still using the gradient descent to
+we still using the gradient descent to
+actually converge the algorith
+yep yeah yeah so this now depends on the
+yep yeah yeah so this now depends on the
+yep yeah yeah so this now depends on the
+mesh this is a limitation of this method
+mesh this is a limitation of this method
+mesh this is a limitation of this method
+yeah
+yeah
+yeah
+okay so as uh someone suggested over
+okay so as uh someone suggested over
+okay so as uh someone suggested over
+there um what we what is great is now we
+there um what we what is great is now we
+there um what we what is great is now we
+can also condition discretize pins just
+can also condition discretize pins just
+can also condition discretize pins just
+like we condition uh normal pins and we
+like we condition uh normal pins and we
+like we condition uh normal pins and we
+change that input instead of being some
+change that input instead of being some
+change that input instead of being some
+random fixed value uh we change that
+random fixed value uh we change that
+random fixed value uh we change that
+input to be the parameters that we want
+input to be the parameters that we want
+input to be the parameters that we want
+to condition the discretized pin over so
+to condition the discretized pin over so
+to condition the discretized pin over so
+for example in the burgers of you might
+for example in the burgers of you might
+for example in the burgers of you might
+want to be able to simulate over many
+want to be able to simulate over many
+want to be able to simulate over many
+different viscosity values and uh maybe
+different viscosity values and uh maybe
+different viscosity values and uh maybe
+many different initial profiles of of
+many different initial profiles of of
+many different initial profiles of of
+the
+the
+the
+flow and it's the same concept of
+flow and it's the same concept of
+flow and it's the same concept of
+condition pins where to train this we
+condition pins where to train this we
+condition pins where to train this we
+use the same loss function uh we just
+use the same loss function uh we just
+use the same loss function uh we just
+inside the loss function we sample over
+inside the loss function we sample over
+inside the loss function we sample over
+all these different inputs when we
+all these different inputs when we
+all these different inputs when we
+training the network so we'll sample the
+training the network so we'll sample the
+training the network so we'll sample the
+the physics loss over different
+the physics loss over different
+the physics loss over different
+viscosity values and different uh kind
+viscosity values and different uh kind
+viscosity values and different uh kind
+of initial conditions in the in the
+of initial conditions in the in the
+of initial conditions in the in the
+padding of the of the of the
+padding of the of the of the
+padding of the of the of the
+output so now it starts to make more
+output so now it starts to make more
+output so now it starts to make more
+sense I guess that this is like a a fast
+sense I guess that this is like a a fast
+sense I guess that this is like a a fast
+surrogate
+surrogate
+surrogate
+model so what's the what's the other way
+model so what's the what's the other way
+model so what's the what's the other way
+that you could train this by the way
+that you could train this by the way
+that you could train this by the way
+just forget about this physics loss
+just forget about this physics loss
+just forget about this physics loss
+function what we have here is a CNN that
+function what we have here is a CNN that
+function what we have here is a CNN that
+takes in some initial conditions and
+takes in some initial conditions and
+takes in some initial conditions and
+gives us a discretized version of the
+gives us a discretized version of the
+gives us a discretized version of the
+solution what's the other way of
+solution what's the other way of
+solution what's the other way of
+training it
+yeah yeah yeah you could so if you're
+yeah yeah yeah you could so if you're
+yeah yeah yeah you could so if you're
+given examples of this you could try and
+given examples of this you could try and
+given examples of this you could try and
+learn this instead yeah and that you can
+learn this instead yeah and that you can
+learn this instead yeah and that you can
+directly learn a map that's a good a
+directly learn a map that's a good a
+directly learn a map that's a good a
+really good
+really good
+really good
+idea what I was thinking of is the
+idea what I was thinking of is the
+idea what I was thinking of is the
+simplest way to train it is just it with
+simplest way to train it is just it with
+simplest way to train it is just it with
+a purely data driven loss function right
+a purely data driven loss function right
+a purely data driven loss function right
+you can just generate loads of finite
+you can just generate loads of finite
+you can just generate loads of finite
+different simulations and just train the
+different simulations and just train the
+different simulations and just train the
+network based on
+network based on
+network based on
+those um so what's what's cool about
+those um so what's what's cool about
+those um so what's what's cool about
+this method is that this doesn't need
+this method is that this doesn't need
+this method is that this doesn't need
+those simulation training examples so we
+those simulation training examples so we
+those simulation training examples so we
+don't have to spend the expensive
+don't have to spend the expensive
+don't have to spend the expensive
+computation to get training data
+so this is the uh one of the main papers
+so this is the uh one of the main papers
+so this is the uh one of the main papers
+that proposes this kind of technique and
+that proposes this kind of technique and
+that proposes this kind of technique and
+it's uh yeah a very influential paper
+it's uh yeah a very influential paper
+it's uh yeah a very influential paper
+you definitely should read
+you definitely should read
+you definitely should read
+it and the example one of the examples
+it and the example one of the examples
+it and the example one of the examples
+they showed in the paper was doing a
+they showed in the paper was doing a
+they showed in the paper was doing a
+disc a condition discretize pin uh to
+disc a condition discretize pin uh to
+disc a condition discretize pin uh to
+solve the Dary flow so this is you know
+solve the Dary flow so this is you know
+solve the Dary flow so this is you know
+given um some porous medium so this
+given um some porous medium so this
+given um some porous medium so this
+could be just a rock with fractures in
+could be just a rock with fractures in
+could be just a rock with fractures in
+for example can I predict what the
+for example can I predict what the
+for example can I predict what the
+pressure is across that media of some
+pressure is across that media of some
+pressure is across that media of some
+fluid going through the med Med and what
+fluid going through the med Med and what
+fluid going through the med Med and what
+the flux is through through the through
+the flux is through through the through
+the flux is through through the through
+the structure of the The
+the structure of the The
+the structure of the The
+Rock and uh yeah what's really cool is
+Rock and uh yeah what's really cool is
+Rock and uh yeah what's really cool is
+that they trained this this so they used
+that they trained this this so they used
+that they trained this this so they used
+to a more complicated architecture it
+to a more complicated architecture it
+to a more complicated architecture it
+was had convolutions and fully connected
+was had convolutions and fully connected
+was had convolutions and fully connected
+networks and other other kind of things
+networks and other other kind of things
+networks and other other kind of things
+going on but uh um they trained it with
+going on but uh um they trained it with
+going on but uh um they trained it with
+this physics loss so fully unsupervised
+this physics loss so fully unsupervised
+this physics loss so fully unsupervised
+no simulation data required only
+no simulation data required only
+no simulation data required only
+requires um input per Mobility Fields as
+requires um input per Mobility Fields as
+requires um input per Mobility Fields as
+the input that's the only thing you need
+the input that's the only thing you need
+the input that's the only thing you need
+to tr to train this to
+to tr to train this to
+to tr to train this to
+converge and they're using soell filters
+converge and they're using soell filters
+converge and they're using soell filters
+which is just you know finite
+which is just you know finite
+which is just you know finite
+differences essentially to to get the
+differences essentially to to get the
+differences essentially to to get the
+gradients of this uh of this physics
+loss so here's some examples of the um
+loss so here's some examples of the um
+loss so here's some examples of the um
+simulation I think this is the
+simulation I think this is the
+simulation I think this is the
+prediction and and the simulation brr
+prediction and and the simulation brr
+prediction and and the simulation brr
+simulation looks like it does a really
+simulation looks like it does a really
+simulation looks like it does a really
+good job at at modeling this
+good job at at modeling this
+good job at at modeling this
+clue and they produced a couple of plots
+clue and they produced a couple of plots
+clue and they produced a couple of plots
+in the paper which are quite interesting
+in the paper which are quite interesting
+in the paper which are quite interesting
+to look at and so
+to look at and so
+to look at and so
+what we're comparing here is is the test
+what we're comparing here is is the test
+what we're comparing here is is the test
+accuracy so you know the the accuracy
+accuracy so you know the the accuracy
+accuracy so you know the the accuracy
+averaged over many example
+averaged over many example
+averaged over many example
+inputs as a function of the number of
+inputs as a function of the number of
+inputs as a function of the number of
+training data that we have so um this is
+training data that we have so um this is
+training data that we have so um this is
+basically the for the unsupervised
+basically the for the unsupervised
+basically the for the unsupervised
+discretized condition pin uh this is the
+discretized condition pin uh this is the
+discretized condition pin uh this is the
+number of uh input permeability fields
+number of uh input permeability fields
+number of uh input permeability fields
+that we train it
+that we train it
+that we train it
+on and you can see if we train it on
+on and you can see if we train it on
+on and you can see if we train it on
+more more inputs then the the error
+more more inputs then the the error
+more more inputs then the the error
+decreases is nicely which is good they
+decreases is nicely which is good they
+decreases is nicely which is good they
+they also compare it to the data driven
+they also compare it to the data driven
+they also compare it to the data driven
+version which is the blue line here so
+version which is the blue line here so
+version which is the blue line here so
+the data driven version is when they've
+the data driven version is when they've
+the data driven version is when they've
+generated many thousands of example
+generated many thousands of example
+generated many thousands of example
+simulations uh using ground truth
+simulations uh using ground truth
+simulations uh using ground truth
+modeling and what's kind of cool is that
+modeling and what's kind of cool is that
+modeling and what's kind of cool is that
+the UNS supervis method is nearly as
+the UNS supervis method is nearly as
+the UNS supervis method is nearly as
+performant especially when you have more
+performant especially when you have more
+performant especially when you have more
+training data as
+training data as
+training data as
+performant than the supervis method so
+performant than the supervis method so
+performant than the supervis method so
+you don't need simulation data to train
+you don't need simulation data to train
+you don't need simulation data to train
+these models it's kind of cool to show
+these models it's kind of cool to show
+these models it's kind of cool to show
+that what's even more impressive is if
+that what's even more impressive is if
+that what's even more impressive is if
+you
+you
+you
+the network given some input that's
+the network given some input that's
+the network given some input that's
+outside of its training distribution so
+outside of its training distribution so
+outside of its training distribution so
+the the generalization error of the
+the the generalization error of the
+the the generalization error of the
+network say if I give it a permeability
+network say if I give it a permeability
+network say if I give it a permeability
+field that has way more channels or or
+field that has way more channels or or
+field that has way more channels or or
+way more Connections in the channels um
+way more Connections in the channels um
+way more Connections in the channels um
+they found that this unsupervised uh
+they found that this unsupervised uh
+they found that this unsupervised uh
+model the discretise pin has better
+model the discretise pin has better
+model the discretise pin has better
+generalization performance than the the
+generalization performance than the the
+generalization performance than the the
+model that's trained with only data so
+model that's trained with only data so
+model that's trained with only data so
+the fully data driven model so that's
+the fully data driven model so that's
+the fully data driven model so that's
+kind of interesting maybe maybe the
+kind of interesting maybe maybe the
+kind of interesting maybe maybe the
+physics loss is imposing more of physics
+physics loss is imposing more of physics
+physics loss is imposing more of physics
+understanding into the network
+somehow
+somehow
+somehow
+okay so advantages and limitations of
+okay so advantages and limitations of
+okay so advantages and limitations of
+discretized pins uh advantages we can
+discretized pins uh advantages we can
+discretized pins uh advantages we can
+now start to use fancy architectures
+now start to use fancy architectures
+now start to use fancy architectures
+like CNN to learn the inputs and outputs
+like CNN to learn the inputs and outputs
+like CNN to learn the inputs and outputs
+and we can extend them to regular
+and we can extend them to regular
+and we can extend them to regular
+geometries we can even do time dependent
+geometries we can even do time dependent
+geometries we can even do time dependent
+versions of these with rnns um but the
+versions of these with rnns um but the
+versions of these with rnns um but the
+the limitation is that they require
+the limitation is that they require
+the limitation is that they require
+approximate gradients and we we only we
+approximate gradients and we we only we
+approximate gradients and we we only we
+fixed the the mesh that we use we can't
+fixed the the mesh that we use we can't
+fixed the the mesh that we use we can't
+change the
+change the
+change the
+mesh okay I've got one more one more
+mesh okay I've got one more one more
+mesh okay I've got one more one more
+slide to show you before before we
+slide to show you before before we
+slide to show you before before we
+finish and um this is uh training pins
+finish and um this is uh training pins
+finish and um this is uh training pins
+with finite differences so the main
+with finite differences so the main
+with finite differences so the main
+reason why pins are slow to train is
+reason why pins are slow to train is
+reason why pins are slow to train is
+because we have to compute these
+because we have to compute these
+because we have to compute these
+gradients the gradients of the output
+gradients the gradients of the output
+gradients the gradients of the output
+with respect to the coordinates and I
+with respect to the coordinates and I
+with respect to the coordinates and I
+showed you last lecture that takes a lot
+showed you last lecture that takes a lot
+showed you last lecture that takes a lot
+of time to do so the idea here is to not
+of time to do so the idea here is to not
+of time to do so the idea here is to not
+use aodi to get those gradients but
+use aodi to get those gradients but
+use aodi to get those gradients but
+instead use finite difference uh meth
+instead use finite difference uh meth
+instead use finite difference uh meth
+methods to approximate those
+methods to approximate those
+methods to approximate those
+gradients um and you can get kind of two
+gradients um and you can get kind of two
+gradients um and you can get kind of two
+to four speed UPS just by doing this but
+to four speed UPS just by doing this but
+to four speed UPS just by doing this but
+the downside of this is then you're
+the downside of this is then you're
+the downside of this is then you're
+using approximate gradients and this
+using approximate gradients and this
+using approximate gradients and this
+choice of a this like width of the
+choice of a this like width of the
+choice of a this like width of the
+filter is is a very important
+choice okay so um I've covered just the
+choice okay so um I've covered just the
+choice okay so um I've covered just the
+first extensions of pins which improve
+first extensions of pins which improve
+first extensions of pins which improve
+the computational cost uh next lecture
+the computational cost uh next lecture
+the computational cost uh next lecture
+I'm going to talk about improving the
+I'm going to talk about improving the
+I'm going to talk about improving the
+convergence and then also the
+convergence and then also the
+convergence and then also the
+scalability to higher frequencies
+scalability to higher frequencies
+scalability to higher frequencies
+so yeah thanks thanks for coming see you
+so yeah thanks thanks for coming see you
+so yeah thanks thanks for coming see you
+next time

@@ -1,0 +1,2370 @@
+so I have in the last lecture and just
+so I have in the last lecture and just
+so I have in the last lecture and just
+now I've just given you the basic
+now I've just given you the basic
+now I've just given you the basic
+definition neural differential equations
+definition neural differential equations
+definition neural differential equations
+I also told you about this link between
+I also told you about this link between
+I also told you about this link between
+ndes and newal network architectures and
+ndes and newal network architectures and
+ndes and newal network architectures and
+then I told you about kind of a
+then I told you about kind of a
+then I told you about kind of a
+state-ofthe-art Neal differential
+state-ofthe-art Neal differential
+state-ofthe-art Neal differential
+equation model these coupled oscillatory
+equation model these coupled oscillatory
+equation model these coupled oscillatory
+ons to to solve with high performance
+ons to to solve with high performance
+ons to to solve with high performance
+these kind of machine learning
+these kind of machine learning
+these kind of machine learning
+tasks so now I'm going to spend the rest
+tasks so now I'm going to spend the rest
+tasks so now I'm going to spend the rest
+of the lecture talking about uh
+of the lecture talking about uh
+of the lecture talking about uh
+diffusion
+diffusion
+diffusion
+models uh so who's heard of diffusion
+models uh so who's heard of diffusion
+models uh so who's heard of diffusion
+models before
+models before
+models before
+pretty much everyone so who's actually
+pretty much everyone so who's actually
+pretty much everyone so who's actually
+used the diffusion model who's trained
+used the diffusion model who's trained
+used the diffusion model who's trained
+one okay two people okay great so um I'm
+one okay two people okay great so um I'm
+one okay two people okay great so um I'm
+going to explain what a diffusion model
+going to explain what a diffusion model
+going to explain what a diffusion model
+is and how it's actually linked or how
+is and how it's actually linked or how
+is and how it's actually linked or how
+it can be interpreted as a as a noral
+it can be interpreted as a as a noral
+it can be interpreted as a as a noral
+differential equation it's kind of
+differential equation it's kind of
+differential equation it's kind of
+interesting
+interesting
+interesting
+um
+um
+um
+so these are this is examples of outputs
+so these are this is examples of outputs
+so these are this is examples of outputs
+of some diffusion models and so who's
+of some diffusion models and so who's
+of some diffusion models and so who's
+heard of Dary or stable diffusion yeah
+heard of Dary or stable diffusion yeah
+heard of Dary or stable diffusion yeah
+okay so you probably played around with
+okay so you probably played around with
+okay so you probably played around with
+it uh this is now publicly available you
+it uh this is now publicly available you
+it uh this is now publicly available you
+can these models you basically type in a
+can these models you basically type in a
+can these models you basically type in a
+prompt uh for example like uh a chair
+prompt uh for example like uh a chair
+prompt uh for example like uh a chair
+that looks like a strawberry or
+that looks like a strawberry or
+that looks like a strawberry or
+something I don't know uh and uh these
+something I don't know uh and uh these
+something I don't know uh and uh these
+models will like imagine or just
+models will like imagine or just
+models will like imagine or just
+generate a random image that looks like
+generate a random image that looks like
+generate a random image that looks like
+that prompt or it's conditioned on that
+that prompt or it's conditioned on that
+that prompt or it's conditioned on that
+prompt so they generative models they're
+prompt so they generative models they're
+prompt so they generative models they're
+models that take an input and maybe some
+models that take an input and maybe some
+models that take an input and maybe some
+random input as well and then generate
+random input as well and then generate
+random input as well and then generate
+an image from that kind of conditional
+an image from that kind of conditional
+an image from that kind of conditional
+distribution uh and they're super
+distribution uh and they're super
+distribution uh and they're super
+impressive like just over the last five
+impressive like just over the last five
+impressive like just over the last five
+years there's been so much improvement
+years there's been so much improvement
+years there's been so much improvement
+in the the quality of these generated
+in the the quality of these generated
+in the the quality of these generated
+images from these generative models and
+images from these generative models and
+images from these generative models and
+kind of the the generative model that's
+kind of the the generative model that's
+kind of the the generative model that's
+doing the best so far or is the most
+doing the best so far or is the most
+doing the best so far or is the most
+popular at the moment are these
+popular at the moment are these
+popular at the moment are these
+diffusion
+diffusion
+diffusion
+models um so what is diffusion can
+models um so what is diffusion can
+models um so what is diffusion can
+anyone tell me or give me a definition
+anyone tell me or give me a definition
+anyone tell me or give me a definition
+of what they think diffusion is
+yeah random movement of particles yeah
+yeah random movement of particles yeah
+yeah random movement of particles yeah
+what exactly happens though when
+what exactly happens though when
+what exactly happens though when
+particles are moving around
+particles are moving around
+particles are moving around
+randomly yeah and diffuse yeah yeah so
+randomly yeah and diffuse yeah yeah so
+randomly yeah and diffuse yeah yeah so
+so so you've got it so this is diffusion
+so so you've got it so this is diffusion
+so so you've got it so this is diffusion
+is just the movement of it doesn't have
+is just the movement of it doesn't have
+is just the movement of it doesn't have
+to be particles actually many processes
+to be particles actually many processes
+to be particles actually many processes
+in in science can be thought of as
+in in science can be thought of as
+in in science can be thought of as
+diffusion processes so let's just talk
+diffusion processes so let's just talk
+diffusion processes so let's just talk
+about particles for now it's the
+about particles for now it's the
+about particles for now it's the
+movement of particles from regions of
+movement of particles from regions of
+movement of particles from regions of
+higher concentration to lower
+higher concentration to lower
+higher concentration to lower
+concentration and and it's just this
+concentration and and it's just this
+concentration and and it's just this
+movement is just driven by the random
+movement is just driven by the random
+movement is just driven by the random
+motion of the particles the random
+motion of the particles the random
+motion of the particles the random
+movement of the particles who's heard of
+movement of the particles who's heard of
+movement of the particles who's heard of
+brownie in motion this isn't yeah so
+brownie in motion this isn't yeah so
+brownie in motion this isn't yeah so
+this is an example of like random
+this is an example of like random
+this is an example of like random
+particles randomly colliding with each
+particles randomly colliding with each
+particles randomly colliding with each
+other and moving around kind of on a
+other and moving around kind of on a
+other and moving around kind of on a
+random walk in some
+random walk in some
+random walk in some
+space another example is uh is like gas
+space another example is uh is like gas
+space another example is uh is like gas
+for example particles of gas so say say
+for example particles of gas so say say
+for example particles of gas so say say
+they confined inside this box and then
+they confined inside this box and then
+they confined inside this box and then
+uh we take out like one of the walls of
+uh we take out like one of the walls of
+uh we take out like one of the walls of
+the box and make the Box bigger even
+the box and make the Box bigger even
+the box and make the Box bigger even
+though these particles are just randomly
+though these particles are just randomly
+though these particles are just randomly
+moving they they'll eventually start
+moving they they'll eventually start
+moving they they'll eventually start
+diffusing into the into the wider
+diffusing into the into the wider
+diffusing into the into the wider
+box and so what you end up with with a
+box and so what you end up with with a
+box and so what you end up with with a
+diffusion process is you go from some
+diffusion process is you go from some
+diffusion process is you go from some
+highly structured concentration to to
+highly structured concentration to to
+highly structured concentration to to
+some uniform distribution that's
+some uniform distribution that's
+some uniform distribution that's
+generally what happens in in
+generally what happens in in
+generally what happens in in
+diffusion so uh people also use
+diffusion so uh people also use
+diffusion so uh people also use
+diffusion to model other other things so
+diffusion to model other other things so
+diffusion to model other other things so
+uh energy but also in uh Finance we can
+uh energy but also in uh Finance we can
+uh energy but also in uh Finance we can
+use diffusion models to to model the the
+use diffusion models to to model the the
+use diffusion models to to model the the
+evolution of stock prices it's basically
+evolution of stock prices it's basically
+evolution of stock prices it's basically
+saying they they evolve
+saying they they evolve
+saying they they evolve
+randomly uh from some initial
+randomly uh from some initial
+randomly uh from some initial
+time so how is it used for images so for
+time so how is it used for images so for
+time so how is it used for images so for
+these image models these generative
+these image models these generative
+these image models these generative
+models that are using diffusion to
+models that are using diffusion to
+models that are using diffusion to
+produce images it's just applying
+produce images it's just applying
+produce images it's just applying
+diffusion to to an image so what we do
+diffusion to to an image so what we do
+diffusion to to an image so what we do
+is we just start off with a with an
+is we just start off with a with an
+is we just start off with a with an
+image on the left in and we just
+image on the left in and we just
+image on the left in and we just
+interpret that each pixel as like a as a
+interpret that each pixel as like a as a
+interpret that each pixel as like a as a
+as a particle if you like and we're just
+as a particle if you like and we're just
+as a particle if you like and we're just
+going to let the pixel the pixel values
+going to let the pixel the pixel values
+going to let the pixel the pixel values
+themselves just do a random walk like
+themselves just do a random walk like
+themselves just do a random walk like
+start randomly moving around and diffuse
+start randomly moving around and diffuse
+start randomly moving around and diffuse
+like
+like
+like
+that mathematically that just means or
+that mathematically that just means or
+that mathematically that just means or
+most of the case that means we'll just
+most of the case that means we'll just
+most of the case that means we'll just
+add some galsi and noise to the P pixels
+add some galsi and noise to the P pixels
+add some galsi and noise to the P pixels
+every every time every time step of of
+every every time every time step of of
+every every time every time step of of
+the
+the
+the
+evolution and so we just start adding
+evolution and so we just start adding
+evolution and so we just start adding
+noise to to this image and what you find
+noise to to this image and what you find
+noise to to this image and what you find
+is whatever image you take you'll end up
+is whatever image you take you'll end up
+is whatever image you take you'll end up
+with some uh generally simple
+with some uh generally simple
+with some uh generally simple
+distribution at the end in this case
+distribution at the end in this case
+distribution at the end in this case
+case just a ging
+case just a ging
+case just a ging
+distribution um
+distribution um
+distribution um
+so this is really interesting this this
+so this is really interesting this this
+so this is really interesting this this
+tells us that we can go from very easily
+tells us that we can go from very easily
+tells us that we can go from very easily
+from an image to to some noise basically
+from an image to to some noise basically
+from an image to to some noise basically
+at the end and it's just a diffusion
+at the end and it's just a diffusion
+at the end and it's just a diffusion
+process that gets us
+process that gets us
+process that gets us
+there everyone mve me so far yeah
+there everyone mve me so far yeah
+there everyone mve me so far yeah
+okay so let's try and just Define it a
+okay so let's try and just Define it a
+okay so let's try and just Define it a
+bit more mathematically what what this
+bit more mathematically what what this
+bit more mathematically what what this
+process of diffusion is when we're
+process of diffusion is when we're
+process of diffusion is when we're
+applying it to images so we can we need
+applying it to images so we can we need
+applying it to images so we can we need
+to talk about
+to talk about
+to talk about
+probability uh uh distributions because
+probability uh uh distributions because
+probability uh uh distributions because
+diffusion is a random
+diffusion is a random
+diffusion is a random
+process so we can just say that we we
+process so we can just say that we we
+process so we can just say that we we
+start with some image here which is
+start with some image here which is
+start with some image here which is
+drawn from some uh data distribution so
+drawn from some uh data distribution so
+drawn from some uh data distribution so
+so P of X what does this mean this just
+so P of X what does this mean this just
+so P of X what does this mean this just
+means uh it's just the probability of
+means uh it's just the probability of
+means uh it's just the probability of
+that image occurring naturally like it's
+that image occurring naturally like it's
+that image occurring naturally like it's
+the probability distribution of natural
+the probability distribution of natural
+the probability distribution of natural
+images if we sample from this
+images if we sample from this
+images if we sample from this
+distribution we just get a natural image
+distribution we just get a natural image
+distribution we just get a natural image
+if you like that's that's the
+if you like that's that's the
+if you like that's that's the
+distribution that we would like to learn
+distribution that we would like to learn
+distribution that we would like to learn
+and then we apply diffusion all the way
+and then we apply diffusion all the way
+and then we apply diffusion all the way
+down and we just we can assume that our
+down and we just we can assume that our
+down and we just we can assume that our
+diffusion model is going to end us up at
+diffusion model is going to end us up at
+diffusion model is going to end us up at
+some very simple well defined
+some very simple well defined
+some very simple well defined
+distribution say a gan distribution over
+distribution say a gan distribution over
+distribution say a gan distribution over
+those pixels this is our kind of Prior
+those pixels this is our kind of Prior
+those pixels this is our kind of Prior
+we would call it a PRI prior
+distribution and so we can model many
+distribution and so we can model many
+distribution and so we can model many
+different diffusion processes uh with
+different diffusion processes uh with
+different diffusion processes uh with
+stochastic differential equations who's
+stochastic differential equations who's
+stochastic differential equations who's
+learned about sdes before stochastic
+learned about sdes before stochastic
+learned about sdes before stochastic
+differential equations
+differential equations
+differential equations
+okay so some some people not everyone
+okay so some some people not everyone
+okay so some some people not everyone
+it's that's
+it's that's
+it's that's
+okay so we can write this kind of uh uh
+okay so we can write this kind of uh uh
+okay so we can write this kind of uh uh
+diffusion process is this this kind
+diffusion process is this this kind
+diffusion process is this this kind
+of equation here where we say a small
+of equation here where we say a small
+of equation here where we say a small
+change in in the image in the pixel
+change in in the image in the pixel
+change in in the image in the pixel
+values
+values
+values
+DX is just some deterministic process so
+DX is just some deterministic process so
+DX is just some deterministic process so
+some you can imagine that maybe over
+some you can imagine that maybe over
+some you can imagine that maybe over
+time they just have a deterministic
+time they just have a deterministic
+time they just have a deterministic
+drift to them where their means just
+drift to them where their means just
+drift to them where their means just
+change
+change
+change
+slowly uh so this is just determined by
+slowly uh so this is just determined by
+slowly uh so this is just determined by
+this drift function but then the
+this drift function but then the
+this drift function but then the
+interesting thing is uh we also add uh
+interesting thing is uh we also add uh
+interesting thing is uh we also add uh
+this small uh random noise to the image
+this small uh random noise to the image
+this small uh random noise to the image
+uh here so we call this the diffusion
+uh here so we call this the diffusion
+uh here so we call this the diffusion
+kind of change and what we just say is
+kind of change and what we just say is
+kind of change and what we just say is
+that this kind of random variable that
+that this kind of random variable that
+that this kind of random variable that
+we add to the images here this W is just
+we add to the images here this W is just
+we add to the images here this W is just
+a just a wiener
+a just a wiener
+a just a wiener
+process which can be a whole leure by
+process which can be a whole leure by
+process which can be a whole leure by
+itself just describing mathematically
+itself just describing mathematically
+itself just describing mathematically
+these kind of uh random random processes
+these kind of uh random random processes
+these kind of uh random random processes
+but for now you can just think of it as
+but for now you can just think of it as
+but for now you can just think of it as
+adding gaussian noise at each step and
+adding gaussian noise at each step and
+adding gaussian noise at each step and
+and GF just tells you how much galum
+and GF just tells you how much galum
+and GF just tells you how much galum
+noise we add the kind of magnitude of
+noise we add the kind of magnitude of
+noise we add the kind of magnitude of
+that
+that
+that
+noise any questions on this equation
+noise any questions on this equation
+noise any questions on this equation
+does that make
+does that make
+does that make
+sense no it does yeah okay good yeah
+sense no it does yeah okay good yeah
+sense no it does yeah okay good yeah
+menus
+menus
+menus
+process yeah yeah so this this weening
+process yeah yeah so this this weening
+process yeah yeah so this this weening
+process describes like uh these uh
+process describes like uh these uh
+process describes like uh these uh
+articles as they randomly like change
+articles as they randomly like change
+articles as they randomly like change
+over time and so it's not a
+over time and so it's not a
+over time and so it's not a
+deterministic movement you kind of have
+deterministic movement you kind of have
+deterministic movement you kind of have
+to sum Le this process to when you're
+to sum Le this process to when you're
+to sum Le this process to when you're
+when you're forward simulating SD you
+when you're forward simulating SD you
+when you're forward simulating SD you
+have to kind of sample many paths to
+have to kind of sample many paths to
+have to kind of sample many paths to
+create these distributions rather than
+create these distributions rather than
+create these distributions rather than
+just a deterministic
+just a deterministic
+just a deterministic
+part uh so yeah you have to Define kind
+part uh so yeah you have to Define kind
+part uh so yeah you have to Define kind
+of the how W evolves mathematically is
+of the how W evolves mathematically is
+of the how W evolves mathematically is
+like a probability distribution you just
+like a probability distribution you just
+like a probability distribution you just
+say at time some later time the
+say at time some later time the
+say at time some later time the
+distribution is like a gan
+distribution so there's a super
+distribution so there's a super
+distribution so there's a super
+remarkable result uh which was shown I
+remarkable result uh which was shown I
+remarkable result uh which was shown I
+Believe by Anderson in the
+Believe by Anderson in the
+Believe by Anderson in the
+1980s uh that we can go the opposite
+1980s uh that we can go the opposite
+1980s uh that we can go the opposite
+direction and and so this is what we
+direction and and so this is what we
+direction and and so this is what we
+want to do if we want to gener if we
+want to do if we want to gener if we
+want to do if we want to gener if we
+want to um learn a diffusion model which
+want to um learn a diffusion model which
+want to um learn a diffusion model which
+you know given some random input can
+you know given some random input can
+you know given some random input can
+produce a sample from our from our data
+produce a sample from our from our data
+produce a sample from our from our data
+distribution basically give us a natural
+distribution basically give us a natural
+distribution basically give us a natural
+image what we want to be able to do is
+image what we want to be able to do is
+image what we want to be able to do is
+to go from right to left we want to take
+to go from right to left we want to take
+to go from right to left we want to take
+some prior distribution we want to
+some prior distribution we want to
+some prior distribution we want to
+sample of gon distribution and turn that
+sample of gon distribution and turn that
+sample of gon distribution and turn that
+into into an image here
+into into an image here
+into into an image here
+and this is a kind of a really
+and this is a kind of a really
+and this is a kind of a really
+remarkable result it says there is an a
+remarkable result it says there is an a
+remarkable result it says there is an a
+corresponding stochastic differential
+corresponding stochastic differential
+corresponding stochastic differential
+equation that if we solve this
+equation that if we solve this
+equation that if we solve this
+differential equation reverse in time so
+differential equation reverse in time so
+differential equation reverse in time so
+if we start at XT and and do time
+if we start at XT and and do time
+if we start at XT and and do time
+stepping from T to
+stepping from T to
+stepping from T to
+zero we will end up with a sample from
+zero we will end up with a sample from
+zero we will end up with a sample from
+the from the uh initial distribution
+the from the uh initial distribution
+the from the uh initial distribution
+from this data
+from this data
+from this data
+distribution so I think this is a really
+distribution so I think this is a really
+distribution so I think this is a really
+remarkable result it gives us a way to
+remarkable result it gives us a way to
+remarkable result it gives us a way to
+to take some random image here and then
+to take some random image here and then
+to take some random image here and then
+then just uh model it with a through the
+then just uh model it with a through the
+then just uh model it with a through the
+stochastic differential equation to end
+stochastic differential equation to end
+stochastic differential equation to end
+up with an image
+up with an image
+up with an image
+here and what does this uh equation
+here and what does this uh equation
+here and what does this uh equation
+depend on well it just depends on this
+depend on well it just depends on this
+depend on well it just depends on this
+this the stuff that we already know so
+this the stuff that we already know so
+this the stuff that we already know so
+this kind of uh this drift function here
+this kind of uh this drift function here
+this kind of uh this drift function here
+and our diffusion function here um DW
+and our diffusion function here um DW
+and our diffusion function here um DW
+here is just is another Weena process
+here is just is another Weena process
+here is just is another Weena process
+it's just in Reverse uh so again can be
+it's just in Reverse uh so again can be
+it's just in Reverse uh so again can be
+easily mathematically defined
+easily mathematically defined
+easily mathematically defined
+um and the other thing that it depends
+um and the other thing that it depends
+um and the other thing that it depends
+on which is not in the original forward
+on which is not in the original forward
+on which is not in the original forward
+model is this PT of X so this is the
+model is this PT of X so this is the
+model is this PT of X so this is the
+probability of X this kind of
+probability of X this kind of
+probability of X this kind of
+distribution of the images as a function
+distribution of the images as a function
+distribution of the images as a function
+of the time step so at time equals time
+of the time step so at time equals time
+of the time step so at time equals time
+equals T the P of T is just this ging
+equals T the P of T is just this ging
+equals T the P of T is just this ging
+distribution and at P zero it's the data
+distribution and at P zero it's the data
+distribution and at P zero it's the data
+distribution and at T equals T it's
+distribution and at T equals T it's
+distribution and at T equals T it's
+somewhere in
+between so I'm not going to go into how
+between so I'm not going to go into how
+between so I'm not going to go into how
+that's derived uh uh but it's worth
+that's derived uh uh but it's worth
+that's derived uh uh but it's worth
+looking into and reading these papers to
+looking into and reading these papers to
+looking into and reading these papers to
+kind of understand uh why there is such
+kind of understand uh why there is such
+kind of understand uh why there is such
+a corresponding sde for the for the
+a corresponding sde for the for the
+a corresponding sde for the for the
+reverse
+reverse
+reverse
+model now you can actually go one step
+model now you can actually go one step
+model now you can actually go one step
+further it can also be shown that
+further it can also be shown that
+further it can also be shown that
+there's a corresponding ordinary
+there's a corresponding ordinary
+there's a corresponding ordinary
+differential equation which if you do
+differential equation which if you do
+differential equation which if you do
+the same thing if you solve this OD
+the same thing if you solve this OD
+the same thing if you solve this OD
+backwards in time starting from some
+backwards in time starting from some
+backwards in time starting from some
+sample of this prior distribution so
+sample of this prior distribution so
+sample of this prior distribution so
+some random noise
+some random noise
+some random noise
+image uh you will also end up with an x0
+image uh you will also end up with an x0
+image uh you will also end up with an x0
+here that is drawn from again our data
+here that is drawn from again our data
+here that is drawn from again our data
+distribution our P0
+distribution our P0
+distribution our P0
+F so this is not a stochastic uh
+F so this is not a stochastic uh
+F so this is not a stochastic uh
+equation anymore this is just a simple
+equation anymore this is just a simple
+equation anymore this is just a simple
+standard
+standard
+standard
+OD which is deterministic so we give it
+OD which is deterministic so we give it
+OD which is deterministic so we give it
+a a random image here and it will give
+a a random image here and it will give
+a a random image here and it will give
+you a deterministic kind of sample from
+you a deterministic kind of sample from
+you a deterministic kind of sample from
+from this uh initial
+from this uh initial
+from this uh initial
+distribution so I think this is another
+distribution so I think this is another
+distribution so I think this is another
+really amazing result this is shown in
+really amazing result this is shown in
+really amazing result this is shown in
+this song song paper how to derive this
+this song song paper how to derive this
+this song song paper how to derive this
+OD and um it looks very very similar to
+OD and um it looks very very similar to
+OD and um it looks very very similar to
+this reverse SD which so if we solve the
+this reverse SD which so if we solve the
+this reverse SD which so if we solve the
+reverse SD we get lots of samples if we
+reverse SD we get lots of samples if we
+reverse SD we get lots of samples if we
+solve the OD we just get single sample
+solve the OD we just get single sample
+solve the OD we just get single sample
+but all of those samples are still
+but all of those samples are still
+but all of those samples are still
+samples from this initial
+samples from this initial
+samples from this initial
+distribution um and it looks very
+distribution um and it looks very
+distribution um and it looks very
+similar so we again we have the the
+similar so we again we have the the
+similar so we again we have the the
+drift term we have the diffusion term
+drift term we have the diffusion term
+drift term we have the diffusion term
+and we have this the log of the of the
+and we have this the log of the of the
+and we have this the log of the of the
+density through time
+yeah yeah so when when you solve the SD
+yeah yeah so when when you solve the SD
+yeah yeah so when when you solve the SD
+imagine taking an increment of X like
+imagine taking an increment of X like
+imagine taking an increment of X like
+you have X XT here and we want to we
+you have X XT here and we want to we
+you have X XT here and we want to we
+have to time we have to discretize the
+have to time we have to discretize the
+have to time we have to discretize the
+to solve it as as we do normally so you
+to solve it as as we do normally so you
+to solve it as as we do normally so you
+take to take one increment of X you you
+take to take one increment of X you you
+take to take one increment of X you you
+apply this thing which is deterministic
+apply this thing which is deterministic
+apply this thing which is deterministic
+but then when you apply the the Rena
+but then when you apply the the Rena
+but then when you apply the the Rena
+process you have to sample like a random
+process you have to sample like a random
+process you have to sample like a random
+gaussian noise that you'll add to the
+gaussian noise that you'll add to the
+gaussian noise that you'll add to the
+image so you could do it once and just
+image so you could do it once and just
+image so you could do it once and just
+create one sample and that would give
+create one sample and that would give
+create one sample and that would give
+you one path but you could also each
+you one path but you could also each
+you one path but you could also each
+time step you could also sample it many
+time step you could also sample it many
+time step you could also sample it many
+many times and generate 10 samples for
+many times and generate 10 samples for
+many times and generate 10 samples for
+for each time step
+for each time step
+for each time step
+and then take those samples forward so
+and then take those samples forward so
+and then take those samples forward so
+the next time step and like generate an
+the next time step and like generate an
+the next time step and like generate an
+exponential amount of samples that way
+exponential amount of samples that way
+exponential amount of samples that way
+whereas the OD is just defining One path
+whereas the OD is just defining One path
+whereas the OD is just defining One path
+like a deterministic path but the cool
+like a deterministic path but the cool
+like a deterministic path but the cool
+result is that the OD still gives at the
+result is that the OD still gives at the
+result is that the OD still gives at the
+end of that path it will still give you
+end of that path it will still give you
+end of that path it will still give you
+a sample drawn from this distribution so
+a sample drawn from this distribution so
+a sample drawn from this distribution so
+it will still be a natural image it's
+it will still be a natural image it's
+it will still be a natural image it's
+just a single natural image
+yeah
+yeah
+yeah
+mod yeah yeah yeah so so the B SCS model
+mod yeah yeah yeah so so the B SCS model
+mod yeah yeah yeah so so the B SCS model
+can be is very similar to this so you
+can be is very similar to this so you
+can be is very similar to this so you
+can use similar kind of Sol this as well
+can use similar kind of Sol this as well
+can use similar kind of Sol this as well
+yeah uh
+yeah uh
+yeah uh
+so so how do we generate an image so let
+so so how do we generate an image so let
+so so how do we generate an image so let
+me just write it step by step um so it's
+me just write it step by step um so it's
+me just write it step by step um so it's
+very simple there's just two steps uh we
+very simple there's just two steps uh we
+very simple there's just two steps uh we
+generate a random image you know
+generate a random image you know
+generate a random image you know
+sampling each pixel from a galum
+sampling each pixel from a galum
+sampling each pixel from a galum
+distribution um or usually a gum so some
+distribution um or usually a gum so some
+distribution um or usually a gum so some
+it depends on the SV that you define
+it depends on the SV that you define
+it depends on the SV that you define
+some and the kind of final distribution
+some and the kind of final distribution
+some and the kind of final distribution
+that it evolves to but often it's just
+that it evolves to but often it's just
+that it evolves to but often it's just
+the
+the
+the
+gum then you just solve this OD or the
+gum then you just solve this OD or the
+gum then you just solve this OD or the
+reverse SD if you want uh backwards from
+reverse SD if you want uh backwards from
+reverse SD if you want uh backwards from
+time T to time zero and it's just a a
+time T to time zero and it's just a a
+time T to time zero and it's just a a
+simple we can use any OD solver that we
+simple we can use any OD solver that we
+simple we can use any OD solver that we
+like that fits this this equation you
+like that fits this this equation you
+like that fits this this equation you
+know so this could be Oiler this could
+know so this could be Oiler this could
+know so this could be Oiler this could
+be anything you
+be anything you
+be anything you
+like we have access to
+like we have access to
+like we have access to
+yeah right so you you've just you just
+yeah right so you you've just you just
+yeah right so you you've just you just
+asked asked my question or answered my
+asked asked my question or answered my
+asked asked my question or answered my
+question so what's the what's the
+question so what's the what's the
+question so what's the what's the
+problem here what do you think is the
+problem here what do you think is the
+problem here what do you think is the
+problem
+problem
+problem
+yeah we don't know what we don't know
+yeah we don't know what we don't know
+yeah we don't know what we don't know
+what PT XIs this is like some super
+what PT XIs this is like some super
+what PT XIs this is like some super
+complicated
+complicated
+complicated
+function uh well we know it here we know
+function uh well we know it here we know
+function uh well we know it here we know
+that this is a gaan but we don't know it
+that this is a gaan but we don't know it
+that this is a gaan but we don't know it
+anywhere else this this is a really
+anywhere else this this is a really
+anywhere else this this is a really
+complicated probably not never be able
+complicated probably not never be able
+complicated probably not never be able
+to express analytically function
+to express analytically function
+to express analytically function
+so what do you think we can do how can
+so what do you think we can do how can
+so what do you think we can do how can
+we get around this
+we get around this
+we get around this
+yeah
+yeah
+yeah
+yeah
+yeah
+yeah
+yeah yeah so we're GNA try and learn it
+yeah yeah so we're GNA try and learn it
+yeah yeah so we're GNA try and learn it
+that's absolutely right so the the
+that's absolutely right so the the
+that's absolutely right so the the
+process of training a diffusion model is
+process of training a diffusion model is
+process of training a diffusion model is
+actually just the process of learning
+actually just the process of learning
+actually just the process of learning
+this distribution this PT of
+this distribution this PT of
+this distribution this PT of
+X but what we actually do is not it's
+X but what we actually do is not it's
+X but what we actually do is not it's
+nearly that we we actually say we're
+nearly that we we actually say we're
+nearly that we we actually say we're
+going to learn this whole term here so
+going to learn this whole term here so
+going to learn this whole term here so
+this the gradient of the of the log of
+this the gradient of the of the log of
+this the gradient of the of the log of
+the
+the
+the
+probability and we just approximate that
+probability and we just approximate that
+probability and we just approximate that
+whole term with with a newal network so
+whole term with with a newal network so
+whole term with with a newal network so
+that's that's the goal is to train in or
+that's that's the goal is to train in or
+that's that's the goal is to train in or
+network in some way which I'm going to
+network in some way which I'm going to
+network in some way which I'm going to
+talk about
+talk about
+talk about
+later so that it matches very closely
+later so that it matches very closely
+later so that it matches very closely
+this this uh probability distribution or
+this this uh probability distribution or
+this this uh probability distribution or
+or at least it's uh we call it the score
+or at least it's uh we call it the score
+or at least it's uh we call it the score
+the score
+the score
+the score
+function so what what are the actual
+function so what what are the actual
+function so what what are the actual
+inputs and outputs of the network well
+inputs and outputs of the network well
+inputs and outputs of the network well
+it's exactly the same as the as this
+it's exactly the same as the as this
+it's exactly the same as the as this
+right hand side so this right hand side
+right hand side so this right hand side
+right hand side so this right hand side
+depends on the image and a time so then
+depends on the image and a time so then
+depends on the image and a time so then
+the network is going to take x and t and
+the network is going to take x and t and
+the network is going to take x and t and
+produce uh some output so what
+produce uh some output so what
+produce uh some output so what
+dimensionality output will that would
+dimensionality output will that would
+dimensionality output will that would
+that be by the way if the if the network
+that be by the way if the if the network
+that be by the way if the if the network
+takes in an image what does it output or
+takes in an image what does it output or
+takes in an image what does it output or
+what's the diens dimensionality of the
+what's the diens dimensionality of the
+what's the diens dimensionality of the
+output just from this mathematical
+output just from this mathematical
+output just from this mathematical
+equation what what should it look
+like yeah
+yeah yeah yeah you got it so so this is
+yeah yeah yeah you got it so so this is
+yeah yeah yeah you got it so so this is
+the gradient of a Scala function the
+the gradient of a Scala function the
+the gradient of a Scala function the
+prob this is a this is probably an image
+prob this is a this is probably an image
+prob this is a this is probably an image
+or a matrix this is now a probability
+or a matrix this is now a probability
+or a matrix this is now a probability
+it's a single value this is a gradient
+it's a single value this is a gradient
+it's a single value this is a gradient
+with respect to X so the output of s
+with respect to X so the output of s
+with respect to X so the output of s
+will just be another kind of image you
+will just be another kind of image you
+will just be another kind of image you
+or the shape of an image at
+least
+least
+least
+okay so how can we learn it anyone got
+okay so how can we learn it anyone got
+okay so how can we learn it anyone got
+any ideas
+yeah K diverence measures the similarity
+yeah K diverence measures the similarity
+yeah K diverence measures the similarity
+between two probability
+between two probability
+between two probability
+distributions
+distributions
+distributions
+[Music]
+[Music]
+[Music]
+so
+so
+so
+um so you to be able to um match your
+um so you to be able to um match your
+um so you to be able to um match your
+network to that you'd have to have some
+network to that you'd have to have some
+network to that you'd have to have some
+data that you know is drawn from the the
+data that you know is drawn from the the
+data that you know is drawn from the the
+ground truth distribution which we can
+ground truth distribution which we can
+ground truth distribution which we can
+do here and here but I guess we probably
+do here and here but I guess we probably
+do here and here but I guess we probably
+could do it here actually if we just do
+could do it here actually if we just do
+could do it here actually if we just do
+lots of forward samping so
+lots of forward samping so
+lots of forward samping so
+yeah yeah yeah yeah so I think that
+yeah yeah yeah yeah so I think that
+yeah yeah yeah yeah so I think that
+could work yeah it's not how I've we've
+could work yeah it's not how I've we've
+could work yeah it's not how I've we've
+typically defined it but that may be a
+typically defined it but that may be a
+typically defined it but that may be a
+different way yeah anyone
+else okay
+else okay
+else okay
+so this is a well so one way it's not
+so this is a well so one way it's not
+so this is a well so one way it's not
+the way that I'm going to describe next
+the way that I'm going to describe next
+the way that I'm going to describe next
+but uh this is just
+but uh this is just
+but uh this is just
+a this is just a nor nor OD
+right once we replace the score function
+right once we replace the score function
+right once we replace the score function
+with some noral network with some threee
+with some noral network with some threee
+with some noral network with some threee
+parameters this is exactly an orod that
+parameters this is exactly an orod that
+parameters this is exactly an orod that
+we've just been looking at so how do we
+we've just been looking at so how do we
+we've just been looking at so how do we
+train these networks when we train or
+train these networks when we train or
+train these networks when we train or
+ODS can anyone remind
+me
+me
+me
+yeah yeah yes so we we simulate it
+yeah yeah yes so we we simulate it
+yeah yeah yes so we we simulate it
+forwards and then match the outputs with
+forwards and then match the outputs with
+forwards and then match the outputs with
+respect to the inputs so we know that if
+respect to the inputs so we know that if
+respect to the inputs so we know that if
+we simulate this the process we know
+we simulate this the process we know
+we simulate this the process we know
+what the outputs of the of the backwards
+what the outputs of the of the backwards
+what the outputs of the of the backwards
+so should be so we can match it to those
+so should be so we can match it to those
+so should be so we can match it to those
+outputs that that's one way of doing
+outputs that that's one way of doing
+outputs that that's one way of doing
+it the way that people actually do it is
+it the way that people actually do it is
+it the way that people actually do it is
+uh to use this type of loss
+uh to use this type of loss
+uh to use this type of loss
+function uh where we just say that um
+function uh where we just say that um
+function uh where we just say that um
+very simply like even simpler we want
+very simply like even simpler we want
+very simply like even simpler we want
+the the network just to match you know
+the the network just to match you know
+the the network just to match you know
+this uh the score the score of the
+this uh the score the score of the
+this uh the score the score of the
+probability distribution so I'm not
+probability distribution so I'm not
+probability distribution so I'm not
+saying anything new just to say I'm just
+saying anything new just to say I'm just
+saying anything new just to say I'm just
+trying to make sure that this is
+trying to make sure that this is
+trying to make sure that this is
+true and we're just taking the L2 Norm
+true and we're just taking the L2 Norm
+true and we're just taking the L2 Norm
+because this isn't this network outputs
+because this isn't this network outputs
+because this isn't this network outputs
+an image that's the gradient of the
+an image that's the gradient of the
+an image that's the gradient of the
+distribution um and we want to make sure
+distribution um and we want to make sure
+distribution um and we want to make sure
+that this is true across all the inputs
+that this is true across all the inputs
+that this is true across all the inputs
+of the score function right so that we
+of the score function right so that we
+of the score function right so that we
+want to sample all the values of T and
+want to sample all the values of T and
+want to sample all the values of T and
+all the possible values of
+all the possible values of
+all the possible values of
+XT does that that makes sense as a
+XT does that that makes sense as a
+XT does that that makes sense as a
+simple kind of loss
+function okay so again you can I'm
+function okay so again you can I'm
+function okay so again you can I'm
+taking multiple steps at the same time
+taking multiple steps at the same time
+taking multiple steps at the same time
+here to give you the overview but there
+here to give you the overview but there
+here to give you the overview but there
+is another paper you can read which says
+is another paper you can read which says
+is another paper you can read which says
+that this uh expectation over T and XT
+that this uh expectation over T and XT
+that this uh expectation over T and XT
+here can be Rewritten as this
+here can be Rewritten as this
+here can be Rewritten as this
+expectation um where what we've done is
+expectation um where what we've done is
+expectation um where what we've done is
+we've uh turned the kind of
+we've uh turned the kind of
+we've uh turned the kind of
+unconditioned distribution as a function
+unconditioned distribution as a function
+unconditioned distribution as a function
+of X here into a conditional
+of X here into a conditional
+of X here into a conditional
+distribution of x given the initial
+distribution of x given the initial
+distribution of x given the initial
+value of x so this is what does a no
+value of x so this is what does a no
+value of x so this is what does a no
+what's the probability of a noisy image
+what's the probability of a noisy image
+what's the probability of a noisy image
+given some initial noise distribution
+given some initial noise distribution
+given some initial noise distribution
+here so yeah you'll have to look at this
+here so yeah you'll have to look at this
+here so yeah you'll have to look at this
+paper to believe me that it's but this
+paper to believe me that it's but this
+paper to believe me that it's but this
+is this is a equivalent
+is this is a equivalent
+is this is a equivalent
+expectation so now we Define this the
+expectation so now we Define this the
+expectation so now we Define this the
+probability of some X at time some time
+probability of some X at time some time
+probability of some X at time some time
+given the kind of initial gaan value or
+given the kind of initial gaan value or
+given the kind of initial gaan value or
+or initial prior image is the transition
+or initial prior image is the transition
+or initial prior image is the transition
+probability uh of of the
+system okay so let's just think of a
+system okay so let's just think of a
+system okay so let's just think of a
+really simple SD let's forget about the
+really simple SD let's forget about the
+really simple SD let's forget about the
+drift terms and the diffusion function
+drift terms and the diffusion function
+drift terms and the diffusion function
+and just say that the diffusion of X is
+and just say that the diffusion of X is
+and just say that the diffusion of X is
+just exactly a weener process and so I
+just exactly a weener process and so I
+just exactly a weener process and so I
+told you before you can just think of a
+told you before you can just think of a
+told you before you can just think of a
+weener process as adding gaussian noise
+weener process as adding gaussian noise
+weener process as adding gaussian noise
+at each time step but it's kind of a
+at each time step but it's kind of a
+at each time step but it's kind of a
+continuous version of that and and the
+continuous version of that and and the
+continuous version of that and and the
+weener process actually tells us
+weener process actually tells us
+weener process actually tells us
+analytically what this transition
+analytically what this transition
+analytically what this transition
+probability is it says you know given
+probability is it says you know given
+probability is it says you know given
+some starting image here the image at
+some starting image here the image at
+some starting image here the image at
+time T is just uh you know some Gan uh
+time T is just uh you know some Gan uh
+time T is just uh you know some Gan uh
+Gan different like a like it's the same
+Gan different like a like it's the same
+Gan different like a like it's the same
+image but with some gting noise added to
+image but with some gting noise added to
+image but with some gting noise added to
+it you know this is the distribution
+it you know this is the distribution
+it you know this is the distribution
+and the kind of magnitude of that gaan
+and the kind of magnitude of that gaan
+and the kind of magnitude of that gaan
+noise is just proportional to the time
+noise is just proportional to the time
+noise is just proportional to the time
+the time so the standard deviation of
+the time so the standard deviation of
+the time so the standard deviation of
+the g g Gan noise just depends on how
+the g g Gan noise just depends on how
+the g g Gan noise just depends on how
+long the process has been evolving
+for um can everyone kind of get the kind
+for um can everyone kind of get the kind
+for um can everyone kind of get the kind
+of high level concept even though the
+of high level concept even though the
+of high level concept even though the
+math might not look too
+math might not look too
+math might not look too
+familiar
+familiar
+familiar
+yeah so this is just a an expression
+yeah so this is just a an expression
+yeah so this is just a an expression
+that we can take the the gradient of
+that we can take the the gradient of
+that we can take the the gradient of
+with respect to X it's very simple you
+with respect to X it's very simple you
+with respect to X it's very simple you
+can derive it is this that's very
+can derive it is this that's very
+can derive it is this that's very
+trivial to
+trivial to
+trivial to
+show and so then if we just plug this
+show and so then if we just plug this
+show and so then if we just plug this
+transition probability into our kind of
+transition probability into our kind of
+transition probability into our kind of
+transform loss
+transform loss
+transform loss
+function we just say that uh the loss
+function we just say that uh the loss
+function we just say that uh the loss
+now is just an expectation uh of the
+now is just an expectation uh of the
+now is just an expectation uh of the
+output of the score Network and we want
+output of the score Network and we want
+output of the score Network and we want
+to try and match it to one / T Times by
+to try and match it to one / T Times by
+to try and match it to one / T Times by
+xus
+xus
+xus
+XT so we're going to average this this
+XT so we're going to average this this
+XT so we're going to average this this
+difference over all times all possible
+difference over all times all possible
+difference over all times all possible
+uh initial uh random
+uh initial uh random
+uh initial uh random
+images and then over all uh halfs of
+images and then over all uh halfs of
+images and then over all uh halfs of
+that image
+that image
+that image
+takes so all XT all XD
+images uh and if you just look at this
+images uh and if you just look at this
+images uh and if you just look at this
+in a bit more closely just think of
+in a bit more closely just think of
+in a bit more closely just think of
+we're just what we're trying to match
+we're just what we're trying to match
+we're just what we're trying to match
+the score Network to uh this is simply
+the score Network to uh this is simply
+the score Network to uh this is simply
+just the difference between our random
+just the difference between our random
+just the difference between our random
+noise and the image at time T so what
+noise and the image at time T so what
+noise and the image at time T so what
+the score network is trying to do is
+the score network is trying to do is
+the score network is trying to do is
+just predict the noise that's been added
+just predict the noise that's been added
+just predict the noise that's been added
+to that image at time T that's kind of
+to that image at time T that's kind of
+to that image at time T that's kind of
+just the interpretation of the of the
+just the interpretation of the of the
+just the interpretation of the of the
+loss
+okay hopefully that kind of gives you
+okay hopefully that kind of gives you
+okay hopefully that kind of gives you
+the how we like the Lost function that
+the how we like the Lost function that
+the how we like the Lost function that
+we often use to train the to train these
+we often use to train the to train these
+we often use to train the to train these
+diffusion models any any questions on
+diffusion models any any questions on
+diffusion models any any questions on
+this I recommend going through this in
+this I recommend going through this in
+this I recommend going through this in
+your own time and think and uh uh trying
+your own time and think and uh uh trying
+your own time and think and uh uh trying
+to see if it makes sense
+to see if it makes sense
+to see if it makes sense
+mathematically
+mathematically
+mathematically
+um okay
+um okay
+um okay
+so here's the summary of the of the
+so here's the summary of the of the
+so here's the summary of the of the
+fusion models like uh and then I'll give
+fusion models like uh and then I'll give
+fusion models like uh and then I'll give
+you an example of of how we use them uh
+you an example of of how we use them uh
+you an example of of how we use them uh
+in science
+in science
+in science
+so how do we train a diffusion model so
+so how do we train a diffusion model so
+so how do we train a diffusion model so
+first of all uh there's well there's
+first of all uh there's well there's
+first of all uh there's well there's
+five steps first of all you need to get
+five steps first of all you need to get
+five steps first of all you need to get
+lots and lots of examples of whatever
+lots and lots of examples of whatever
+lots and lots of examples of whatever
+image distribution you want to model so
+image distribution you want to model so
+image distribution you want to model so
+these could just be lot many examples of
+these could just be lot many examples of
+these could just be lot many examples of
+natural
+natural
+natural
+images then you have to assume some
+images then you have to assume some
+images then you have to assume some
+underlying form of your stochastic
+underlying form of your stochastic
+underlying form of your stochastic
+differential equation that is defining
+differential equation that is defining
+differential equation that is defining
+that diffusion process as it evolves
+that diffusion process as it evolves
+that diffusion process as it evolves
+through
+through
+through
+time um and we need to to understand
+time um and we need to to understand
+time um and we need to to understand
+what the transition probability is what
+what the transition probability is what
+what the transition probability is what
+takes uh kind of the uh initial uh
+takes uh kind of the uh initial uh
+takes uh kind of the uh initial uh
+initial image here to sometime t t here
+initial image here to sometime t t here
+initial image here to sometime t t here
+what's the transition probability of
+what's the transition probability of
+what's the transition probability of
+that
+that
+that
+happening and then we Define our loss
+happening and then we Define our loss
+happening and then we Define our loss
+function just as I said before and we
+function just as I said before and we
+function just as I said before and we
+can differentiate through this because
+can differentiate through this because
+can differentiate through this because
+we can analytically uh derive what this
+we can analytically uh derive what this
+we can analytically uh derive what this
+score value
+score value
+score value
+is uh so we train the network and then
+is uh so we train the network and then
+is uh so we train the network and then
+uh when we want to generate an image
+uh when we want to generate an image
+uh when we want to generate an image
+then we just sample uh or we we solve
+then we just sample uh or we we solve
+then we just sample uh or we we solve
+this nor OD or if we want the the
+this nor OD or if we want the the
+this nor OD or if we want the the
+reverse stochastic differential equation
+reverse stochastic differential equation
+reverse stochastic differential equation
+given that learn score function uh
+given that learn score function uh
+given that learn score function uh
+backwards in time uh to be able to
+backwards in time uh to be able to
+backwards in time uh to be able to
+generate a new image so we start from
+generate a new image so we start from
+generate a new image so we start from
+some random sample as the initial
+some random sample as the initial
+some random sample as the initial
+condition of this OD and then we solve
+condition of this OD and then we solve
+condition of this OD and then we solve
+it solve it through time with like an
+it solve it through time with like an
+it solve it through time with like an
+oiless over or whatever other type of
+oiless over or whatever other type of
+oiless over or whatever other type of
+discretized St you
+like um so this review paper here this
+like um so this review paper here this
+like um so this review paper here this
+by Yang gives a really nice uh goes a
+by Yang gives a really nice uh goes a
+by Yang gives a really nice uh goes a
+bit more into the math behind diffusion
+bit more into the math behind diffusion
+bit more into the math behind diffusion
+models if if you want to learn more
+models if if you want to learn more
+models if if you want to learn more
+about that and give some a really good
+about that and give some a really good
+about that and give some a really good
+overview of all the different extensions
+overview of all the different extensions
+overview of all the different extensions
+of diffusion models and also their
+of diffusion models and also their
+of diffusion models and also their
+applications today so I super recommend
+applications today so I super recommend
+applications today so I super recommend
+this paper if you if you want to learn
+this paper if you if you want to learn
+this paper if you if you want to learn
+more about
+more about
+more about
+these uh okay any questions yeah
+these uh okay any questions yeah
+these uh okay any questions yeah
+practice this D
+practice this D
+practice this D
+[Music]
+[Music]
+[Music]
+function yeah so if I go if I go to uh
+function yeah so if I go if I go to uh
+function yeah so if I go if I go to uh
+if I go to this example where we have
+if I go to this example where we have
+if I go to this example where we have
+like a stock for example so what this is
+like a stock for example so what this is
+like a stock for example so what this is
+showing is the random uh random walk of
+showing is the random uh random walk of
+showing is the random uh random walk of
+of a stock price if you sample it like
+of a stock price if you sample it like
+of a stock price if you sample it like
+four times or five
+four times or five
+four times or five
+times uh so this is like solving the the
+times uh so this is like solving the the
+times uh so this is like solving the the
+S forwards in time for for a bunch of
+S forwards in time for for a bunch of
+S forwards in time for for a bunch of
+variables for a bunch of yeah instances
+variables for a bunch of yeah instances
+variables for a bunch of yeah instances
+so the drift function you can see here
+so the drift function you can see here
+so the drift function you can see here
+if you look at the the Gan distribution
+if you look at the the Gan distribution
+if you look at the the Gan distribution
+at the end it's just the center is
+at the end it's just the center is
+at the end it's just the center is
+around zero so what that drift function
+around zero so what that drift function
+around zero so what that drift function
+just does is Def find some deterministic
+just does is Def find some deterministic
+just does is Def find some deterministic
+drift that that would otherwise end up
+drift that that would otherwise end up
+drift that that would otherwise end up
+this this galum might like just drift
+this this galum might like just drift
+this this galum might like just drift
+upwards linearly for example and that so
+upwards linearly for example and that so
+upwards linearly for example and that so
+that would just be a linear function as
+that would just be a linear function as
+that would just be a linear function as
+a function of
+time yeah I'm not sure how to interpret
+time yeah I'm not sure how to interpret
+time yeah I'm not sure how to interpret
+that properly I so uh have a look at
+that properly I so uh have a look at
+that properly I so uh have a look at
+that review paper it's got it goes way
+that review paper it's got it goes way
+that review paper it's got it goes way
+more into the different choices that
+more into the different choices that
+more into the different choices that
+people make for these SD and uh the
+people make for these SD and uh the
+people make for these SD and uh the
+types of diffusion models that they
+types of diffusion models that they
+types of diffusion models that they
+produce it's really really interesting
+okay
+okay
+okay
+so we're now going to think about using
+so we're now going to think about using
+so we're now going to think about using
+I showed you at the start the fusion
+I showed you at the start the fusion
+I showed you at the start the fusion
+models are the State ofthe art for image
+models are the State ofthe art for image
+models are the State ofthe art for image
+generation uh like generative models for
+generation uh like generative models for
+generation uh like generative models for
+images but people are also using the
+images but people are also using the
+images but people are also using the
+fusion models now to to solve scientific
+fusion models now to to solve scientific
+fusion models now to to solve scientific
+problems and so what I have is an
+problems and so what I have is an
+problems and so what I have is an
+example of uh the fusion model solving
+example of uh the fusion model solving
+example of uh the fusion model solving
+computed tomography so everyone uh
+computed tomography so everyone uh
+computed tomography so everyone uh
+understands this hopefully we covered
+understands this hopefully we covered
+understands this hopefully we covered
+this when we were talking about hybrid
+this when we were talking about hybrid
+this when we were talking about hybrid
+Methods at the start so again we we have
+Methods at the start so again we we have
+Methods at the start so again we we have
+some sinogram that we observe from some
+some sinogram that we observe from some
+some sinogram that we observe from some
+image so so we scan ourselves we want to
+image so so we scan ourselves we want to
+image so so we scan ourselves we want to
+produce one of these uh x-ray images but
+produce one of these uh x-ray images but
+produce one of these uh x-ray images but
+what the um device actually measures of
+what the um device actually measures of
+what the um device actually measures of
+these sinograms it's the intensity at
+these sinograms it's the intensity at
+these sinograms it's the intensity at
+the screen and so the goal is to do the
+the screen and so the goal is to do the
+the screen and so the goal is to do the
+inverse problem take take this sinogram
+inverse problem take take this sinogram
+inverse problem take take this sinogram
+data and try and reconstruct the image
+data and try and reconstruct the image
+data and try and reconstruct the image
+or the the absorption as a function of
+or the the absorption as a function of
+or the the absorption as a function of
+space uh uh here
+okay so uh there was this paper that
+okay so uh there was this paper that
+okay so uh there was this paper that
+came out very fairly recently from song
+came out very fairly recently from song
+came out very fairly recently from song
+where they used the diffusion model to
+where they used the diffusion model to
+where they used the diffusion model to
+generate these CT images so so you can
+generate these CT images so so you can
+generate these CT images so so you can
+instead of learning the space of like
+instead of learning the space of like
+instead of learning the space of like
+natural images now we want to learn to
+natural images now we want to learn to
+natural images now we want to learn to
+sample like medical images so like image
+sample like medical images so like image
+sample like medical images so like image
+you know images that would be output
+you know images that would be output
+you know images that would be output
+from CT from CT
+from CT from CT
+from CT from CT
+scans and you can imagine if I if I run
+scans and you can imagine if I if I run
+scans and you can imagine if I if I run
+like a million CT scans I would have a
+like a million CT scans I would have a
+like a million CT scans I would have a
+good training data set and I could train
+good training data set and I could train
+good training data set and I could train
+diffusion model to generate new CT
+diffusion model to generate new CT
+diffusion model to generate new CT
+images from that training data just
+images from that training data just
+images from that training data just
+using the process or the training
+using the process or the training
+using the process or the training
+algorithm that I just
+described um but the problem is if I
+described um but the problem is if I
+described um but the problem is if I
+just train that diffusion model as it is
+just train that diffusion model as it is
+just train that diffusion model as it is
+uh when I sample it I'm just going to
+uh when I sample it I'm just going to
+uh when I sample it I'm just going to
+get a random image I'm not there's at
+get a random image I'm not there's at
+get a random image I'm not there's at
+the moment I don't have a way to like
+the moment I don't have a way to like
+the moment I don't have a way to like
+incorporate the cogram into this
+incorporate the cogram into this
+incorporate the cogram into this
+workflow so that it doesn't just produce
+workflow so that it doesn't just produce
+workflow so that it doesn't just produce
+a random image it actually produces the
+a random image it actually produces the
+a random image it actually produces the
+image that I want the the result of the
+image that I want the the result of the
+image that I want the the result of the
+inverse
+inverse
+inverse
+problem so can anyone think of a way
+problem so can anyone think of a way
+problem so can anyone think of a way
+that we would incorporate our sinogram
+that we would incorporate our sinogram
+that we would incorporate our sinogram
+into this workflow to to help the
+into this workflow to to help the
+into this workflow to to help the
+diffusion model like come up with an
+diffusion model like come up with an
+diffusion model like come up with an
+image that solves the solve the
+image that solves the solve the
+image that solves the solve the
+problem what we're trying to do is
+problem what we're trying to do is
+problem what we're trying to do is
+create a condition distribution here
+create a condition distribution here
+create a condition distribution here
+we're trying to condition our our
+we're trying to condition our our
+we're trying to condition our our
+diffusion model on some um observe data
+diffusion model on some um observe data
+diffusion model on some um observe data
+to make to make an image that is like
+to make to make an image that is like
+to make to make an image that is like
+the the
+solution any ideas
+well how could you use this diffusion
+well how could you use this diffusion
+well how could you use this diffusion
+model in a traditional inverse algorithm
+model in a traditional inverse algorithm
+model in a traditional inverse algorithm
+as well like how could you use
+as well like how could you use
+as well like how could you use
+it yeah
+gu
+gu
+gu
+yeah yeah I see what you mean so it's
+so yeah yeah you're kind of on right
+so yeah yeah you're kind of on right
+so yeah yeah you're kind of on right
+track so I'll tell you because it's not
+track so I'll tell you because it's not
+track so I'll tell you because it's not
+it's not obvious how to do this actually
+it's not obvious how to do this actually
+it's not obvious how to do this actually
+um so what they did is again this is
+um so what they did is again this is
+um so what they did is again this is
+just the let's just assume that we've
+just the let's just assume that we've
+just the let's just assume that we've
+trained that diffusion model so it
+trained that diffusion model so it
+trained that diffusion model so it
+generates given some random noise it
+generates given some random noise it
+generates given some random noise it
+generates a CT image that is in the in
+generates a CT image that is in the in
+generates a CT image that is in the in
+the right distribution of CT images that
+the right distribution of CT images that
+the right distribution of CT images that
+we know the image uh lives
+we know the image uh lives
+we know the image uh lives
+in so yeah again to once we train that
+in so yeah again to once we train that
+in so yeah again to once we train that
+model we can just sample it just in the
+model we can just sample it just in the
+model we can just sample it just in the
+process exactly as I described and this
+process exactly as I described and this
+process exactly as I described and this
+is the kind of code that does it you
+is the kind of code that does it you
+is the kind of code that does it you
+just generate a random image and then
+just generate a random image and then
+just generate a random image and then
+you solve this nor OD in Reverse where
+you solve this nor OD in Reverse where
+you solve this nor OD in Reverse where
+you have this trained score Network
+you have this trained score Network
+you have this trained score Network
+function that we've
+function that we've
+function that we've
+pre-trained so what this paper suggested
+pre-trained so what this paper suggested
+pre-trained so what this paper suggested
+is is uh doing a very simple extra step
+is is uh doing a very simple extra step
+is is uh doing a very simple extra step
+inside of that uh OD
+inside of that uh OD
+inside of that uh OD
+solver and it says as we solve this uh
+solver and it says as we solve this uh
+solver and it says as we solve this uh
+OD solver three times as we slowly turn
+OD solver three times as we slowly turn
+OD solver three times as we slowly turn
+this noisy image into the into the final
+this noisy image into the into the final
+this noisy image into the into the final
+image at each time step that we're doing
+image at each time step that we're doing
+image at each time step that we're doing
+that we add this extra update to the to
+that we add this extra update to the to
+that we add this extra update to the to
+the image uh on top of the the update
+the image uh on top of the the update
+the image uh on top of the the update
+that St that removes the noise from the
+that St that removes the noise from the
+that St that removes the noise from the
+image so this is a it's called a
+image so this is a it's called a
+image so this is a it's called a
+proximal optimization step that's a very
+proximal optimization step that's a very
+proximal optimization step that's a very
+kind of fancy
+kind of fancy
+kind of fancy
+phrase uh and there's a whole theory of
+phrase uh and there's a whole theory of
+phrase uh and there's a whole theory of
+like proximal optimation optimization
+like proximal optimation optimization
+like proximal optimation optimization
+Theory which I'm not going to get into
+Theory which I'm not going to get into
+Theory which I'm not going to get into
+but what you can think of at the highest
+but what you can think of at the highest
+but what you can think of at the highest
+level is this optimization step is just
+level is this optimization step is just
+level is this optimization step is just
+trying to nudge the image closer to the
+trying to nudge the image closer to the
+trying to nudge the image closer to the
+solution of the inverse problem and what
+solution of the inverse problem and what
+solution of the inverse problem and what
+it does is it just says okay given the
+it does is it just says okay given the
+it does is it just says okay given the
+current image at time step T I want to
+current image at time step T I want to
+current image at time step T I want to
+update the image so that it's so that
+update the image so that it's so that
+update the image so that it's so that
+the loss of the inverse problem so if I
+the loss of the inverse problem so if I
+the loss of the inverse problem so if I
+do a forward simulation that image to
+do a forward simulation that image to
+do a forward simulation that image to
+produce an expected cogram I should try
+produce an expected cogram I should try
+produce an expected cogram I should try
+and minimize the difference between that
+and minimize the difference between that
+and minimize the difference between that
+expected cogram and the observational
+expected cogram and the observational
+expected cogram and the observational
+data that I have so it will it will you
+data that I have so it will it will you
+data that I have so it will it will you
+could also think of this as a loose
+could also think of this as a loose
+could also think of this as a loose
+level taking like a gradient step in the
+level taking like a gradient step in the
+level taking like a gradient step in the
+direction of the of the loss function of
+direction of the of the loss function of
+direction of the of the loss function of
+the inverse
+the inverse
+the inverse
+problem uh so it tries to push the the
+problem uh so it tries to push the the
+problem uh so it tries to push the the
+the image so that it's so that it's
+the image so that it's so that it's
+the image so that it's so that it's
+satis the observation of data and then
+satis the observation of data and then
+satis the observation of data and then
+and then carries on diffusing reverse
+and then carries on diffusing reverse
+and then carries on diffusing reverse
+diffusing the image to eventually end up
+diffusing the image to eventually end up
+diffusing the image to eventually end up
+with a with an image that satisfies the
+with a with an image that satisfies the
+with a with an image that satisfies the
+inverse problem uh at the same
+inverse problem uh at the same
+inverse problem uh at the same
+time okay so that's that's probably
+time okay so that's that's probably
+time okay so that's that's probably
+fairly complex but the do you get the
+fairly complex but the do you get the
+fairly complex but the do you get the
+high level kind of
+idea
+idea
+idea
+yeah
+yeah
+yeah
+yes we
+yes we
+yes we
+to
+find yes yes exactly yeah so what we're
+find yes yes exactly yeah so what we're
+find yes yes exactly yeah so what we're
+doing is we're like inter leaving a kind
+doing is we're like inter leaving a kind
+doing is we're like inter leaving a kind
+of gradient descent algorithm to update
+of gradient descent algorithm to update
+of gradient descent algorithm to update
+the image just like we talked about
+the image just like we talked about
+the image just like we talked about
+before we were doing gradient descent on
+before we were doing gradient descent on
+before we were doing gradient descent on
+the image to update it to match the
+the image to update it to match the
+the image to update it to match the
+sonogram but at the same time we're also
+sonogram but at the same time we're also
+sonogram but at the same time we're also
+adding diffus we're assuming our initial
+adding diffus we're assuming our initial
+adding diffus we're assuming our initial
+image is a gum and at the same time
+image is a gum and at the same time
+image is a gum and at the same time
+we're like adding diffusion reverse
+we're like adding diffusion reverse
+we're like adding diffusion reverse
+diffusion into that image to like help
+diffusion into that image to like help
+diffusion into that image to like help
+it give it a prior basically it's
+it give it a prior basically it's
+it give it a prior basically it's
+guiding the image to like the image
+guiding the image to like the image
+guiding the image to like the image
+distribution that we know of so it's
+distribution that we know of so it's
+distribution that we know of so it's
+really a really cool method like inter
+really a really cool method like inter
+really a really cool method like inter
+leaves kind of standard optimization
+leaves kind of standard optimization
+leaves kind of standard optimization
+with with a diffusion models as the
+with with a diffusion models as the
+with with a diffusion models as the
+prior
+prior
+prior
+so so
+yeah evaluation time what do you mean uh
+yeah evaluation time what do you mean uh
+yeah evaluation time what do you mean uh
+would have
+uh so you you yeah so when you do a new
+uh so you you yeah so when you do a new
+uh so you you yeah so when you do a new
+scan you will always generate a new
+scan you will always generate a new
+scan you will always generate a new
+sonogram so you always have this label
+sonogram so you always have this label
+sonogram so you always have this label
+in the you know this observe data that
+in the you know this observe data that
+in the you know this observe data that
+you're trying to match to when when
+you're trying to match to when when
+you're trying to match to when when
+you're updating the the
+you're updating the the
+you're updating the the
+image
+image
+image
+yeah so it's actually really cool
+yeah so it's actually really cool
+yeah so it's actually really cool
+because this doesn't depend on the
+because this doesn't depend on the
+because this doesn't depend on the
+observational setup of the scan you just
+observational setup of the scan you just
+observational setup of the scan you just
+uh you
+uh you
+uh you
+just you just compute the gradient no
+just you just compute the gradient no
+just you just compute the gradient no
+matter what the observation is set up is
+matter what the observation is set up is
+matter what the observation is set up is
+you can still get a graded in that so
+you can still get a graded in that so
+you can still get a graded in that so
+it's kind of independent to
+that so I mean here's some plots from
+that so I mean here's some plots from
+that so I mean here's some plots from
+from that paper it's just comparing this
+from that paper it's just comparing this
+from that paper it's just comparing this
+uh kind of optimization inter Le with
+uh kind of optimization inter Le with
+uh kind of optimization inter Le with
+the fusion model U method uh with some
+the fusion model U method uh with some
+the fusion model U method uh with some
+other kind of state-of-the-art methods
+other kind of state-of-the-art methods
+other kind of state-of-the-art methods
+like using Gans to as your prior for
+like using Gans to as your prior for
+like using Gans to as your prior for
+your images and and more traditional
+your images and and more traditional
+your images and and more traditional
+total variation method as well and yeah
+total variation method as well and yeah
+total variation method as well and yeah
+at least on the data sets that they show
+at least on the data sets that they show
+at least on the data sets that they show
+in the paper this is seems to be a very
+in the paper this is seems to be a very
+in the paper this is seems to be a very
+itive algorithm for for learning these
+itive algorithm for for learning these
+itive algorithm for for learning these
+these CT image reconstruction
+these CT image reconstruction
+these CT image reconstruction
+problems okay so I need to stop there so
+problems okay so I need to stop there so
+problems okay so I need to stop there so
+ndes use nor networks to represent
+ndes use nor networks to represent
+ndes use nor networks to represent
+learnable parts of the equation
+learnable parts of the equation
+learnable parts of the equation
+discretized ND solvers can be thought of
+discretized ND solvers can be thought of
+discretized ND solvers can be thought of
+as nor network architectures uh with
+as nor network architectures uh with
+as nor network architectures uh with
+interpretable Dynamics and it provides
+interpretable Dynamics and it provides
+interpretable Dynamics and it provides
+this really fascinating link and many
+this really fascinating link and many
+this really fascinating link and many
+state-of-the-art models like diff Fusion
+state-of-the-art models like diff Fusion
+state-of-the-art models like diff Fusion
+modeled co rnns uh can be interpreted as
+modeled co rnns uh can be interpreted as
+modeled co rnns uh can be interpreted as
+ndes and it's really interesting to
+ndes and it's really interesting to
+ndes and it's really interesting to
+study them so
+study them so
+study them so
+thank you very much I'll see you on
+thank you very much I'll see you on
+thank you very much I'll see you on
+Wednesday next week uh yeah see you then

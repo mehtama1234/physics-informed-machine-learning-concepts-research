@@ -1,0 +1,5402 @@
+Let's get started.
+Let's get started.
+Let's get started.
+Uh so this lecture we're going to be
+Uh so this lecture we're going to be
+Uh so this lecture we're going to be
+talking about uh JAX,
+talking about uh JAX,
+talking about uh JAX,
+which is
+which is
+which is
+uh a Python library.
+uh a Python library.
+uh a Python library.
+Hands up, who's heard of JAX?
+Hands up, who's heard of JAX?
+Hands up, who's heard of JAX?
+Okay, most of you. Hands up, who's
+Okay, most of you. Hands up, who's
+Okay, most of you. Hands up, who's
+actually actively used JAX?
+actually actively used JAX?
+actually actively used JAX?
+One person. Yeah, okay.
+One person. Yeah, okay.
+One person. Yeah, okay.
+Good. So So it's something you've
+Good. So So it's something you've
+Good. So So it's something you've
+definitely heard about, I'm sure. Um
+definitely heard about, I'm sure. Um
+definitely heard about, I'm sure. Um
+and it's a library that I'm using a lot
+and it's a library that I'm using a lot
+and it's a library that I'm using a lot
+now in my research and I think a lot of
+now in my research and I think a lot of
+now in my research and I think a lot of
+people who are carrying out scientific
+people who are carrying out scientific
+people who are carrying out scientific
+machine learning are using libraries
+machine learning are using libraries
+machine learning are using libraries
+like JAX
+like JAX
+like JAX
+uh to carry out their experiments. And
+uh to carry out their experiments. And
+uh to carry out their experiments. And
+so
+so
+so
+the purpose of of this lecture is to
+the purpose of of this lecture is to
+the purpose of of this lecture is to
+give you a high-level overview of what
+give you a high-level overview of what
+give you a high-level overview of what
+the library is and and why it's useful
+the library is and and why it's useful
+the library is and and why it's useful
+for all the kind of techniques that
+for all the kind of techniques that
+for all the kind of techniques that
+we've been studying so far. So,
+we've been studying so far. So,
+we've been studying so far. So,
+you know, coding up and training things
+you know, coding up and training things
+you know, coding up and training things
+like neural operators, physical formal
+like neural operators, physical formal
+like neural operators, physical formal
+networks, hybrid workflows, these sort
+networks, hybrid workflows, these sort
+networks, hybrid workflows, these sort
+of things.
+Um
+So we'll hopefully spend the first half
+So we'll hopefully spend the first half
+So we'll hopefully spend the first half
+of this lecture talking about JAX and
+of this lecture talking about JAX and
+of this lecture talking about JAX and
+then I'll try to move on to symbolic
+then I'll try to move on to symbolic
+then I'll try to move on to symbolic
+regression. We're a little bit behind,
+regression. We're a little bit behind,
+regression. We're a little bit behind,
+so
+so
+so
+um
+um
+um
+we I won't finish symbolic regression
+we I won't finish symbolic regression
+we I won't finish symbolic regression
+this lecture. We'll move on and cover it
+this lecture. We'll move on and cover it
+this lecture. We'll move on and cover it
+on Friday as well. Um
+Okay.
+Okay.
+Okay.
+So
+So
+So
+I'm going to be explaining to you what
+I'm going to be explaining to you what
+I'm going to be explaining to you what
+JAX is. I'm going to be talking about
+JAX is. I'm going to be talking about
+JAX is. I'm going to be talking about
+the core kind of functionality of JAX
+the core kind of functionality of JAX
+the core kind of functionality of JAX
+and how it's maybe a little different to
+and how it's maybe a little different to
+and how it's maybe a little different to
+other
+other
+other
+uh deep learning or auto differentiation
+uh deep learning or auto differentiation
+uh deep learning or auto differentiation
+libraries like PyTorch and TensorFlow.
+libraries like PyTorch and TensorFlow.
+libraries like PyTorch and TensorFlow.
+Um I'll do some live coding and then
+Um I'll do some live coding and then
+Um I'll do some live coding and then
+I'll also talk a bit about how we can
+I'll also talk a bit about how we can
+I'll also talk a bit about how we can
+use JAX for for SciML.
+use JAX for for SciML.
+use JAX for for SciML.
+So you should, by the end of the
+So you should, by the end of the
+So you should, by the end of the
+lecture, hopefully have a basic
+lecture, hopefully have a basic
+lecture, hopefully have a basic
+familiarity with JAX,
+familiarity with JAX,
+familiarity with JAX,
+um understand what this core idea of JAX
+um understand what this core idea of JAX
+um understand what this core idea of JAX
+is, which is single function
+is, which is single function
+is, which is single function
+transformation. I'll tell you what that
+transformation. I'll tell you what that
+transformation. I'll tell you what that
+is in much more detail.
+is in much more detail.
+is in much more detail.
+And then be aware of how you can use JAX
+And then be aware of how you can use JAX
+And then be aware of how you can use JAX
+to to work on these scientific machine
+to to work on these scientific machine
+to to work on these scientific machine
+learning algorithms and research
+learning algorithms and research
+learning algorithms and research
+questions.
+So what is JAX? I already said JAX is a
+So what is JAX? I already said JAX is a
+So what is JAX? I already said JAX is a
+Python library
+Python library
+Python library
+and
+and
+and
+it simply does these two things. Uh
+it simply does these two things. Uh
+it simply does these two things. Uh
+one is accelerated array computation.
+one is accelerated array computation.
+one is accelerated array computation.
+So this is doing JAX is extremely fast
+So this is doing JAX is extremely fast
+So this is doing JAX is extremely fast
+uh uh
+uh uh
+uh uh
+uh array computation. So basic kind of
+uh array computation. So basic kind of
+uh array computation. So basic kind of
+linear algebra computations.
+linear algebra computations.
+linear algebra computations.
+And it does it is able it allows you to
+And it does it is able it allows you to
+And it does it is able it allows you to
+do that not on the CPU, but also on the
+do that not on the CPU, but also on the
+do that not on the CPU, but also on the
+GPU and and
+GPU and and
+GPU and and
+fully exploit the parallelism of like
+fully exploit the parallelism of like
+fully exploit the parallelism of like
+our modern GPU devices.
+our modern GPU devices.
+our modern GPU devices.
+It also has this really amazing feature,
+It also has this really amazing feature,
+It also has this really amazing feature,
+which is program transformation and this
+which is program transformation and this
+which is program transformation and this
+is kind of the heart of JAX and how JAX
+is kind of the heart of JAX and how JAX
+is kind of the heart of JAX and how JAX
+is JAX is designed. So we'll we'll talk
+is JAX is designed. So we'll we'll talk
+is JAX is designed. So we'll we'll talk
+about why this is such a powerful idea
+about why this is such a powerful idea
+about why this is such a powerful idea
+uh coming up.
+uh coming up.
+uh coming up.
+Um but these two things combined
+Um but these two things combined
+Um but these two things combined
+together makes it very easy and very
+together makes it very easy and very
+together makes it very easy and very
+powerful
+powerful
+powerful
+uh to to design kind of these high
+uh to to design kind of these high
+uh to to design kind of these high
+high-performing, highly scalable
+high-performing, highly scalable
+high-performing, highly scalable
+uh scientific machine learning
+uh scientific machine learning
+uh scientific machine learning
+algorithms. Or you can just um ML um
+algorithms. Or you can just um ML um
+algorithms. Or you can just um ML um
+algorithms or even just scientific
+algorithms or even just scientific
+algorithms or even just scientific
+computing. It doesn't have to be both at
+computing. It doesn't have to be both at
+computing. It doesn't have to be both at
+the same time.
+So just to give you some motivation why
+So just to give you some motivation why
+So just to give you some motivation why
+why JAX is interesting and why a lot of
+why JAX is interesting and why a lot of
+why JAX is interesting and why a lot of
+people using it now. Um JAX has been
+people using it now. Um JAX has been
+people using it now. Um JAX has been
+used to build some of the biggest
+used to build some of the biggest
+used to build some of the biggest
+machine learning models. So it was it's
+machine learning models. So it was it's
+machine learning models. So it was it's
+developed by uh Google
+developed by uh Google
+developed by uh Google
+and so a lot of the kind of uh Google's
+and so a lot of the kind of uh Google's
+and so a lot of the kind of uh Google's
+biggest products and research are built
+biggest products and research are built
+biggest products and research are built
+in JAX.
+in JAX.
+in JAX.
+So I I imagine everyone's heard of
+So I I imagine everyone's heard of
+So I I imagine everyone's heard of
+Gemini. This is Google's uh recent LLM
+Gemini. This is Google's uh recent LLM
+Gemini. This is Google's uh recent LLM
+model, large language model. So this
+model, large language model. So this
+model, large language model. So this
+model was trained in JAX and used all of
+model was trained in JAX and used all of
+model was trained in JAX and used all of
+JAX's kind of functionality to
+JAX's kind of functionality to
+JAX's kind of functionality to
+train that model across thousands of
+train that model across thousands of
+train that model across thousands of
+GPUs and and really scale the training.
+GPUs and and really scale the training.
+GPUs and and really scale the training.
+Um also AlphaGo. So this is again
+Um also AlphaGo. So this is again
+Um also AlphaGo. So this is again
+DeepMind's algorithm that was able to
+DeepMind's algorithm that was able to
+DeepMind's algorithm that was able to
+play chess and go and other other games
+play chess and go and other other games
+play chess and go and other other games
+uh extremely well and and exceed human
+uh extremely well and and exceed human
+uh extremely well and and exceed human
+performance. This was a a massive kind
+performance. This was a a massive kind
+performance. This was a a massive kind
+of breakthrough um a few years ago.
+of breakthrough um a few years ago.
+of breakthrough um a few years ago.
+So the underlying algorithm behind this
+So the underlying algorithm behind this
+So the underlying algorithm behind this
+is a Monte Carlo tree search algorithm,
+is a Monte Carlo tree search algorithm,
+is a Monte Carlo tree search algorithm,
+which has some kind of learnable
+which has some kind of learnable
+which has some kind of learnable
+components to it. And again, this kind
+components to it. And again, this kind
+components to it. And again, this kind
+of kind of advanced kind of uh search
+of kind of advanced kind of uh search
+of kind of advanced kind of uh search
+algorithm was written is written in JAX
+algorithm was written is written in JAX
+algorithm was written is written in JAX
+and and there's a whole implementation
+and and there's a whole implementation
+and and there's a whole implementation
+that you can look at on GitHub for it.
+JAX has also been used a lot in uh
+JAX has also been used a lot in uh
+JAX has also been used a lot in uh
+scientific computing today. Um so here's
+scientific computing today. Um so here's
+scientific computing today. Um so here's
+just three examples of kind of
+just three examples of kind of
+just three examples of kind of
+state-of-the-art libraries. So we have
+state-of-the-art libraries. So we have
+state-of-the-art libraries. So we have
+another library from Google, which is
+another library from Google, which is
+another library from Google, which is
+AlphaFold. So
+AlphaFold. So
+AlphaFold. So
+everyone's I imagine has heard of this.
+everyone's I imagine has heard of this.
+everyone's I imagine has heard of this.
+This is the model that is able to carry
+This is the model that is able to carry
+This is the model that is able to carry
+out accurate 3D uh prediction of the
+out accurate 3D uh prediction of the
+out accurate 3D uh prediction of the
+structure of proteins.
+structure of proteins.
+structure of proteins.
+Um there's also Brax, which is a library
+Um there's also Brax, which is a library
+Um there's also Brax, which is a library
+which is able to do kind of robotic
+which is able to do kind of robotic
+which is able to do kind of robotic
+like rigid body simulations
+like rigid body simulations
+like rigid body simulations
+for reinforcement learning
+for reinforcement learning
+for reinforcement learning
+typically.
+typically.
+typically.
+Um so this is being heavily developed
+Um so this is being heavily developed
+Um so this is being heavily developed
+and contributed to.
+and contributed to.
+and contributed to.
+And then there's a lot of papers that
+And then there's a lot of papers that
+And then there's a lot of papers that
+are coming out using JAX to to do, you
+are coming out using JAX to to do, you
+are coming out using JAX to to do, you
+know, scalable scientific computing. So
+know, scalable scientific computing. So
+know, scalable scientific computing. So
+this is a a simulation of the ocean
+this is a a simulation of the ocean
+this is a a simulation of the ocean
+surface velocity simulated um
+surface velocity simulated um
+surface velocity simulated um
+in 24 hours across 16 A100 GPUs. So this
+in 24 hours across 16 A100 GPUs. So this
+in 24 hours across 16 A100 GPUs. So this
+is like state-of-the-art GPUs simulation
+is like state-of-the-art GPUs simulation
+is like state-of-the-art GPUs simulation
+of of climate dynamics.
+of of climate dynamics.
+of of climate dynamics.
+And again, this paper used JAX to
+And again, this paper used JAX to
+And again, this paper used JAX to
+implement this model.
+Okay, so that's kind of a a sale I guess
+Okay, so that's kind of a a sale I guess
+Okay, so that's kind of a a sale I guess
+it's a sales pitch for why JAX is useful
+it's a sales pitch for why JAX is useful
+it's a sales pitch for why JAX is useful
+or is being used right now. So
+or is being used right now. So
+or is being used right now. So
+uh
+uh
+uh
+what I want to do is get into the the
+what I want to do is get into the the
+what I want to do is get into the the
+library in a bit more detail and and
+library in a bit more detail and and
+library in a bit more detail and and
+tell you why
+tell you why
+tell you why
+um people are using this to do
+um people are using this to do
+um people are using this to do
+scientific machine learning tasks.
+scientific machine learning tasks.
+scientific machine learning tasks.
+So first I'm just going to talk about
+So first I'm just going to talk about
+So first I'm just going to talk about
+the accelerated array computation. So
+the accelerated array computation. So
+the accelerated array computation. So
+this is something that uh you know,
+this is something that uh you know,
+this is something that uh you know,
+other deep learning libraries, PyTorch,
+other deep learning libraries, PyTorch,
+other deep learning libraries, PyTorch,
+TensorFlow also do very well.
+TensorFlow also do very well.
+TensorFlow also do very well.
+Um but JAX is just the same, so
+Um but JAX is just the same, so
+Um but JAX is just the same, so
+uh what's nice about JAX is that it uh
+uh what's nice about JAX is that it uh
+uh what's nice about JAX is that it uh
+you can in somehow somehow think of it
+you can in somehow somehow think of it
+you can in somehow somehow think of it
+as just NumPy on the CPU and GPU.
+as just NumPy on the CPU and GPU.
+as just NumPy on the CPU and GPU.
+So one of the core libraries inside JAX
+So one of the core libraries inside JAX
+So one of the core libraries inside JAX
+or one of the core modules inside JAX is
+or one of the core modules inside JAX is
+or one of the core modules inside JAX is
+is jax.numpy and you could just think of
+is jax.numpy and you could just think of
+is jax.numpy and you could just think of
+this as basically a a JAX version of
+this as basically a a JAX version of
+this as basically a a JAX version of
+NumPy and the the kind of syntax uh is
+NumPy and the the kind of syntax uh is
+NumPy and the the kind of syntax uh is
+both is is exactly the same or tries to
+both is is exactly the same or tries to
+both is is exactly the same or tries to
+be exactly the same.
+Um so to be able to port NumPy to the
+Um so to be able to port NumPy to the
+Um so to be able to port NumPy to the
+GPU or to basically to run these fast
+GPU or to basically to run these fast
+GPU or to basically to run these fast
+like linear algebra computations of of
+like linear algebra computations of of
+like linear algebra computations of of
+arrays, uh
+arrays, uh
+arrays, uh
+um JAX uses this thing called XLA, which
+um JAX uses this thing called XLA, which
+um JAX uses this thing called XLA, which
+is accelerated linear algebra.
+is accelerated linear algebra.
+is accelerated linear algebra.
+Uh so this is uh this is a
+Uh so this is uh this is a
+Uh so this is uh this is a
+software that compiles the code, the JAX
+software that compiles the code, the JAX
+software that compiles the code, the JAX
+code, and allows it to run very fast on
+code, and allows it to run very fast on
+code, and allows it to run very fast on
+whichever device you're using, whether
+whichever device you're using, whether
+whichever device you're using, whether
+it's a CPU or or GPU.
+Um I'm not going to get into the details
+Um I'm not going to get into the details
+Um I'm not going to get into the details
+of of how XLA works. You can just think
+of of how XLA works. You can just think
+of of how XLA works. You can just think
+of this as the kind of uh
+of this as the kind of uh
+of this as the kind of uh
+core engine that makes makes makes stuff
+core engine that makes makes makes stuff
+core engine that makes makes makes stuff
+fast in JAX.
+Um
+Um
+Um
+And the program transformation. So what
+And the program transformation. So what
+And the program transformation. So what
+is brilliant about JAX is that it allows
+is brilliant about JAX is that it allows
+is brilliant about JAX is that it allows
+you to kind of
+you to kind of
+you to kind of
+uh also carry out auto diff and also
+uh also carry out auto diff and also
+uh also carry out auto diff and also
+automatically parallelize your code and
+automatically parallelize your code and
+automatically parallelize your code and
+and and compile your code as well. And
+and and compile your code as well. And
+and and compile your code as well. And
+all of these things can be thought of as
+all of these things can be thought of as
+all of these things can be thought of as
+a as a transformation of functions.
+a as a transformation of functions.
+a as a transformation of functions.
+Um
+Um
+Um
+and this is what really allows what
+and this is what really allows what
+and this is what really allows what
+makes JAX very powerful for our kind of
+makes JAX very powerful for our kind of
+makes JAX very powerful for our kind of
+scientific computing um
+scientific computing um
+scientific computing um
+methods.
+methods.
+methods.
+So I'll go through each of these in turn
+So I'll go through each of these in turn
+So I'll go through each of these in turn
+uh later.
+So let's just talk about the accelerated
+So let's just talk about the accelerated
+So let's just talk about the accelerated
+array computation to start with.
+So yeah, JAX is simply or can be simply
+So yeah, JAX is simply or can be simply
+So yeah, JAX is simply or can be simply
+thought of as NumPy on the GPU.
+thought of as NumPy on the GPU.
+thought of as NumPy on the GPU.
+So on the left, this is some very
+So on the left, this is some very
+So on the left, this is some very
+standard NumPy code. I'm just defining
+standard NumPy code. I'm just defining
+standard NumPy code. I'm just defining
+it a matrix and then doing a matrix
+it a matrix and then doing a matrix
+it a matrix and then doing a matrix
+multiplication
+multiplication
+multiplication
+and printing the output.
+and printing the output.
+and printing the output.
+And uh
+And uh
+And uh
+hopefully everyone's very familiar with
+hopefully everyone's very familiar with
+hopefully everyone's very familiar with
+NumPy and how how it works and and you
+NumPy and how how it works and and you
+NumPy and how how it works and and you
+can just see when we import jax.numpy
+can just see when we import jax.numpy
+can just see when we import jax.numpy
+the
+the
+the
+the semantics syntax is exactly the
+the semantics syntax is exactly the
+the semantics syntax is exactly the
+same. So we define an array in the same
+same. So we define an array in the same
+same. So we define an array in the same
+way. We can use the same kind of matrix
+way. We can use the same kind of matrix
+way. We can use the same kind of matrix
+multiplication operators and we get
+multiplication operators and we get
+multiplication operators and we get
+obviously the same result.
+Okay, so
+Okay, so
+Okay, so
+uh all the other functionality in NumPy
+uh all the other functionality in NumPy
+uh all the other functionality in NumPy
+like numpy.sum, numpy.arange, all this
+like numpy.sum, numpy.arange, all this
+like numpy.sum, numpy.arange, all this
+stuff is also in jax.numpy
+stuff is also in jax.numpy
+stuff is also in jax.numpy
+and defined defined the same.
+So
+So
+So
+what's interesting though is that the
+what's interesting though is that the
+what's interesting though is that the
+the JAX code will run on a GPU if your
+the JAX code will run on a GPU if your
+the JAX code will run on a GPU if your
+system has a GPU uh device.
+system has a GPU uh device.
+system has a GPU uh device.
+This is this is what makes JAX different
+This is this is what makes JAX different
+This is this is what makes JAX different
+to NumPy because NumPy is just just
+to NumPy because NumPy is just just
+to NumPy because NumPy is just just
+defined for the CPU and highly optimized
+defined for the CPU and highly optimized
+defined for the CPU and highly optimized
+for CPU uh
+for CPU uh
+for CPU uh
+uh devices.
+uh devices.
+uh devices.
+And so what's great is that if this is a
+And so what's great is that if this is a
+And so what's great is that if this is a
+really large matrix matrix multiply, for
+really large matrix matrix multiply, for
+really large matrix matrix multiply, for
+example. So if I do a a matrix matrix
+example. So if I do a a matrix matrix
+example. So if I do a a matrix matrix
+multiply in NumPy, so this is 10,000 by
+multiply in NumPy, so this is 10,000 by
+multiply in NumPy, so this is 10,000 by
+10,000 matrix multiply.
+10,000 matrix multiply.
+10,000 matrix multiply.
+NumPy that takes about 7 seconds just to
+NumPy that takes about 7 seconds just to
+NumPy that takes about 7 seconds just to
+do the to do the matrix multiply um
+do the to do the matrix multiply um
+do the to do the matrix multiply um
+on my uh MacBook computer here.
+on my uh MacBook computer here.
+on my uh MacBook computer here.
+If I do the same thing on a uh
+If I do the same thing on a uh
+If I do the same thing on a uh
+Nvidia GPU using the JAX code, it's 126
+Nvidia GPU using the JAX code, it's 126
+Nvidia GPU using the JAX code, it's 126
+times faster
+times faster
+times faster
+just to do that uh single matrix
+just to do that uh single matrix
+just to do that uh single matrix
+multiply.
+multiply.
+multiply.
+So can anyone tell me why running a
+So can anyone tell me why running a
+So can anyone tell me why running a
+matrix multiply on a GPU is is faster
+matrix multiply on a GPU is is faster
+matrix multiply on a GPU is is faster
+than a CPU?
+Well.
+Well.
+Well.
+It will do all the row and column
+It will do all the row and column
+It will do all the row and column
+products
+products
+products
+Yeah.
+Yeah.
+Yeah.
+Yeah, cuz you can do all the row and
+Yeah, cuz you can do all the row and
+Yeah, cuz you can do all the row and
+column products at the same time. So why
+column products at the same time. So why
+column products at the same time. So why
+exactly? What is it about a GPU that
+exactly? What is it about a GPU that
+exactly? What is it about a GPU that
+lets you kind of parallelize?
+That's how GPUs are built, yeah. Anyone
+That's how GPUs are built, yeah. Anyone
+That's how GPUs are built, yeah. Anyone
+know?
+know?
+know?
+Who knows what the architecture of the
+Who knows what the architecture of the
+Who knows what the architecture of the
+GPU looks like or how does it look
+GPU looks like or how does it look
+GPU looks like or how does it look
+different to a CPU?
+Go on. It has hundreds of little cores.
+Go on. It has hundreds of little cores.
+Go on. It has hundreds of little cores.
+Yeah.
+Yeah.
+Yeah.
+Yeah, so CPUs So, here we go.
+Yeah, so CPUs So, here we go.
+Yeah, so CPUs So, here we go.
+Uh so, I just asked this question. So,
+Uh so, I just asked this question. So,
+Uh so, I just asked this question. So,
+CPUs and GPUs, this is a very high-level
+CPUs and GPUs, this is a very high-level
+CPUs and GPUs, this is a very high-level
+sketch of what uh the actual device
+sketch of what uh the actual device
+sketch of what uh the actual device
+looks like, the hardware looks like.
+looks like, the hardware looks like.
+looks like, the hardware looks like.
+And what CP You can think of CPUs as
+And what CP You can think of CPUs as
+And what CP You can think of CPUs as
+just consisting of a small number of
+just consisting of a small number of
+just consisting of a small number of
+cores.
+cores.
+cores.
+You know, a laptop might have 16 cores
+You know, a laptop might have 16 cores
+You know, a laptop might have 16 cores
+or 32 cores, say.
+or 32 cores, say.
+or 32 cores, say.
+Uh
+Uh
+Uh
+and these cores are designed to be
+and these cores are designed to be
+and these cores are designed to be
+incredibly fast and really, really good
+incredibly fast and really, really good
+incredibly fast and really, really good
+at serial computation.
+at serial computation.
+at serial computation.
+So, that's sequential computation.
+So, that's sequential computation.
+So, that's sequential computation.
+That's computation that depends on its
+That's computation that depends on its
+That's computation that depends on its
+previous inputs.
+previous inputs.
+previous inputs.
+And and these types of computations are
+And and these types of computations are
+And and these types of computations are
+uh the ones that we usually need when
+uh the ones that we usually need when
+uh the ones that we usually need when
+we're running like an operating
+we're running like an operating
+we're running like an operating
+operating system on a computer.
+operating system on a computer.
+operating system on a computer.
+We do lots of tasks in sequence.
+We do lots of tasks in sequence.
+We do lots of tasks in sequence.
+And that's what they're designed for,
+And that's what they're designed for,
+And that's what they're designed for,
+and they have very low latency, and
+and they have very low latency, and
+and they have very low latency, and
+they're they're really good at these
+they're they're really good at these
+they're they're really good at these
+tasks.
+tasks.
+tasks.
+GPU, on the other hand, you can think of
+GPU, on the other hand, you can think of
+GPU, on the other hand, you can think of
+it as having
+it as having
+it as having
+thousands and thousands of cores uh
+thousands and thousands of cores uh
+thousands and thousands of cores uh
+instead of just a few like 10 or
+instead of just a few like 10 or
+instead of just a few like 10 or
+something or 16.
+something or 16.
+something or 16.
+And they are designed for running
+And they are designed for running
+And they are designed for running
+uh computations that are highly
+uh computations that are highly
+uh computations that are highly
+parallel. So, you know, the same
+parallel. So, you know, the same
+parallel. So, you know, the same
+computation that that can be done on
+computation that that can be done on
+computation that that can be done on
+across all the cores, and then that that
+across all the cores, and then that that
+across all the cores, and then that that
+computation can be collected and and uh
+computation can be collected and and uh
+computation can be collected and and uh
+uh output by the GPU.
+uh output by the GPU.
+uh output by the GPU.
+So, they're designed for parallel
+So, they're designed for parallel
+So, they're designed for parallel
+processing, and they're designed for
+processing, and they're designed for
+processing, and they're designed for
+high throughput computations and and,
+high throughput computations and and,
+high throughput computations and and,
+you know, originally Nvidia uh GPUs or
+you know, originally Nvidia uh GPUs or
+you know, originally Nvidia uh GPUs or
+Nvidia's a company was like focused on
+Nvidia's a company was like focused on
+Nvidia's a company was like focused on
+uh game game development and and the
+uh game game development and and the
+uh game game development and and the
+kind of
+kind of
+kind of
+computations that you need to to render
+computations that you need to to render
+computations that you need to to render
+games. But, it just so happens that GPUs
+games. But, it just so happens that GPUs
+games. But, it just so happens that GPUs
+and these kind of parallel uh
+and these kind of parallel uh
+and these kind of parallel uh
+computation is exactly what we need when
+computation is exactly what we need when
+computation is exactly what we need when
+we're doing kind of linear algebra
+we're doing kind of linear algebra
+we're doing kind of linear algebra
+computations.
+computations.
+computations.
+Yeah.
+Uh what do you mean by overhead?
+Yeah.
+Yeah.
+Yeah.
+I actually think the communication's
+I actually think the communication's
+I actually think the communication's
+faster because the cores are you know,
+faster because the cores are you know,
+faster because the cores are you know,
+on this on the device.
+on this on the device.
+on this on the device.
+So, the readout is incredibly incredibly
+So, the readout is incredibly incredibly
+So, the readout is incredibly incredibly
+quick.
+quick.
+quick.
+I think when you have multiple CPUs, it
+I think when you have multiple CPUs, it
+I think when you have multiple CPUs, it
+can if they're on, you know, on
+can if they're on, you know, on
+can if they're on, you know, on
+different nodes, then it can take much
+different nodes, then it can take much
+different nodes, then it can take much
+longer to communicate between them.
+longer to communicate between them.
+longer to communicate between them.
+Um
+Um
+Um
+I mean, it's worth testing. If you if
+I mean, it's worth testing. If you if
+I mean, it's worth testing. If you if
+you But, I I would imagine a GPU would
+you But, I I would imagine a GPU would
+you But, I I would imagine a GPU would
+be a multi-threaded CPU uh for matrix
+be a multi-threaded CPU uh for matrix
+be a multi-threaded CPU uh for matrix
+matrix multiply.
+matrix multiply.
+matrix multiply.
+Given how optimized these these devices
+Given how optimized these these devices
+Given how optimized these these devices
+have become in in in recent years as
+have become in in in recent years as
+have become in in in recent years as
+well.
+well.
+well.
+Yeah.
+Yeah.
+Yeah.
+So,
+So,
+So,
+uh
+uh
+uh
+Yeah, so
+Yeah, so
+Yeah, so
+it turns out pretty much
+it turns out pretty much
+it turns out pretty much
+you know, a huge percentage of the
+you know, a huge percentage of the
+you know, a huge percentage of the
+computations that we do in deep
+computations that we do in deep
+computations that we do in deep
+learning, remember I was talking you
+learning, remember I was talking you
+learning, remember I was talking you
+through auto diff, and it just turns
+through auto diff, and it just turns
+through auto diff, and it just turns
+turns out to be a lot of matrix
+turns out to be a lot of matrix
+turns out to be a lot of matrix
+operations.
+operations.
+operations.
+They are very well suited for running on
+They are very well suited for running on
+They are very well suited for running on
+the GPU. Uh we can we can do those
+the GPU. Uh we can we can do those
+the GPU. Uh we can we can do those
+matrix multiplies in parallel, or at
+matrix multiplies in parallel, or at
+matrix multiplies in parallel, or at
+least all that we can multiply with the
+least all that we can multiply with the
+least all that we can multiply with the
+elements in parallel before they we sum
+elements in parallel before they we sum
+elements in parallel before they we sum
+them.
+them.
+them.
+Yeah.
+Yeah, so JAX knows which device you're
+Yeah, so JAX knows which device you're
+Yeah, so JAX knows which device you're
+running on. Um so, if you have a
+running on. Um so, if you have a
+running on. Um so, if you have a
+CUDA installed, and you install the CUDA
+CUDA installed, and you install the CUDA
+CUDA installed, and you install the CUDA
+version of JAX, then it will
+version of JAX, then it will
+version of JAX, then it will
+automatically look and and use those
+automatically look and and use those
+automatically look and and use those
+devices by default.
+devices by default.
+devices by default.
+So, I don't even have to I know in
+So, I don't even have to I know in
+So, I don't even have to I know in
+PyTorch you kind of have to define which
+PyTorch you kind of have to define which
+PyTorch you kind of have to define which
+device you have. In JAX, you just you
+device you have. In JAX, you just you
+device you have. In JAX, you just you
+don't even have to do that. They just
+don't even have to do that. They just
+don't even have to do that. They just
+uh it just knows which device you have.
+uh it just knows which device you have.
+uh it just knows which device you have.
+Yeah, yeah, you need to install the CUDA
+Yeah, yeah, you need to install the CUDA
+Yeah, yeah, you need to install the CUDA
+CUDA version. Yeah.
+CUDA version. Yeah.
+CUDA version. Yeah.
+Uh it's very simple to do. Yeah.
+Uh it's very simple to do. Yeah.
+Uh it's very simple to do. Yeah.
+Yeah.
+Yes. Yeah, so the question is if you
+Yes. Yeah, so the question is if you
+Yes. Yeah, so the question is if you
+have a sequential program or one that
+have a sequential program or one that
+have a sequential program or one that
+you know, operates on a single
+you know, operates on a single
+you know, operates on a single
+value, like a scalar value, and then
+value, like a scalar value, and then
+value, like a scalar value, and then
+does a lot of sequential Yeah, so then I
+does a lot of sequential Yeah, so then I
+does a lot of sequential Yeah, so then I
+would I would agree with you that uh GPU
+would I would agree with you that uh GPU
+would I would agree with you that uh GPU
+is not ideal for that, and it would
+is not ideal for that, and it would
+is not ideal for that, and it would
+likely be slower.
+likely be slower.
+likely be slower.
+So, you do have to think about the the
+So, you do have to think about the the
+So, you do have to think about the the
+types of tasks that you want to put on
+types of tasks that you want to put on
+types of tasks that you want to put on
+the GPU. So, JAX is also JAX. NumPy also
+the GPU. So, JAX is also JAX. NumPy also
+the GPU. So, JAX is also JAX. NumPy also
+runs very fast on the CPU.
+runs very fast on the CPU.
+runs very fast on the CPU.
+In some cases faster than normal NumPy,
+In some cases faster than normal NumPy,
+In some cases faster than normal NumPy,
+so it may even still be fine to use JAX.
+so it may even still be fine to use JAX.
+so it may even still be fine to use JAX.
+I have an example of that coming up.
+I have an example of that coming up.
+I have an example of that coming up.
+Yeah.
+Yeah.
+Yeah.
+Uh I That's a good question. Um I think
+Uh I That's a good question. Um I think
+Uh I That's a good question. Um I think
+so.
+so.
+so.
+So, XLA, which is the back end, which
+So, XLA, which is the back end, which
+So, XLA, which is the back end, which
+compiles all the code down onto the GPU,
+compiles all the code down onto the GPU,
+compiles all the code down onto the GPU,
+I think it supports quite uh quite many
+I think it supports quite uh quite many
+I think it supports quite uh quite many
+different GPUs, not just Nvidia ones.
+different GPUs, not just Nvidia ones.
+different GPUs, not just Nvidia ones.
+Um for sure, it supports TPUs, which are
+Um for sure, it supports TPUs, which are
+Um for sure, it supports TPUs, which are
+Google's Google's uh
+Google's Google's uh
+Google's Google's uh
+um yeah, accelerator.
+Okay.
+So,
+So,
+So,
+yeah, I want to make the point I want to
+yeah, I want to make the point I want to
+yeah, I want to make the point I want to
+argue the point that a lot of the kind
+argue the point that a lot of the kind
+argue the point that a lot of the kind
+of scientific software that we use does
+of scientific software that we use does
+of scientific software that we use does
+indeed use
+indeed use
+indeed use
+uh you know, matrix multipliers or like
+uh you know, matrix multipliers or like
+uh you know, matrix multipliers or like
+matrix operations
+matrix operations
+matrix operations
+um or tensor operations in general.
+um or tensor operations in general.
+um or tensor operations in general.
+Uh and it's not just our machine
+Uh and it's not just our machine
+Uh and it's not just our machine
+learning workflows, it's like our
+learning workflows, it's like our
+learning workflows, it's like our
+traditional scientific workflows, too.
+traditional scientific workflows, too.
+traditional scientific workflows, too.
+So,
+So,
+So,
+So, this is a finite difference
+So, this is a finite difference
+So, this is a finite difference
+simulation um
+simulation um
+simulation um
+of the wave equation. So, this is a
+of the wave equation. So, this is a
+of the wave equation. So, this is a
+fairly high-frequency uh large kind of
+fairly high-frequency uh large kind of
+fairly high-frequency uh large kind of
+simulation
+simulation
+simulation
+uh of of these waves propagating through
+uh of of these waves propagating through
+uh of of these waves propagating through
+an earth model
+an earth model
+an earth model
+from some source here.
+from some source here.
+from some source here.
+Um
+Um
+Um
+And this is the code uh to actually run
+And this is the code uh to actually run
+And this is the code uh to actually run
+that simulation. So,
+that simulation. So,
+that simulation. So,
+you probably can't see it in detail. It
+you probably can't see it in detail. It
+you probably can't see it in detail. It
+doesn't matter that you can't read it uh
+doesn't matter that you can't read it uh
+doesn't matter that you can't read it uh
+each line for line.
+each line for line.
+each line for line.
+Uh but, what I've got on the right here
+Uh but, what I've got on the right here
+Uh but, what I've got on the right here
+is just a NumPy implementation um
+is just a NumPy implementation um
+is just a NumPy implementation um
+and this is a finite difference scheme.
+and this is a finite difference scheme.
+and this is a finite difference scheme.
+So, what that involves is just, you
+So, what that involves is just, you
+So, what that involves is just, you
+know, starting with a initial wave
+know, starting with a initial wave
+know, starting with a initial wave
+field,
+field,
+field,
+and then doing finite differences on the
+and then doing finite differences on the
+and then doing finite differences on the
+wave field to to numerically solve the
+wave field to to numerically solve the
+wave field to to numerically solve the
+PDE.
+PDE.
+PDE.
+And so, the finite differences do things
+And so, the finite differences do things
+And so, the finite differences do things
+like taking that wave field array, and
+like taking that wave field array, and
+like taking that wave field array, and
+then uh
+then uh
+then uh
+uh
+uh
+uh
+uh
+uh
+subtracting it with itself, but shifted
+subtracting it with itself, but shifted
+subtracting it with itself, but shifted
+by one. I mean, you can That's obviously
+by one. I mean, you can That's obviously
+by one. I mean, you can That's obviously
+a big matrix multiplication that we can
+a big matrix multiplication that we can
+a big matrix multiplication that we can
+do in parallel. That's a kind of
+do in parallel. That's a kind of
+do in parallel. That's a kind of
+element-wise operation.
+element-wise operation.
+element-wise operation.
+Um
+Um
+Um
+uh
+uh
+uh
+uh So, this is kind of what what all
+uh So, this is kind of what what all
+uh So, this is kind of what what all
+this intermediate stuff is doing inside
+this intermediate stuff is doing inside
+this intermediate stuff is doing inside
+this for loop of this finite difference
+this for loop of this finite difference
+this for loop of this finite difference
+scheme.
+Um
+Um
+Um
+So, I can do the same thing in JAX. I
+So, I can do the same thing in JAX. I
+So, I can do the same thing in JAX. I
+can Yeah, so there's a lot of
+can Yeah, so there's a lot of
+can Yeah, so there's a lot of
+element-wise matrix operations. So, you
+element-wise matrix operations. So, you
+element-wise matrix operations. So, you
+could see how this lends itself very
+could see how this lends itself very
+could see how this lends itself very
+well to running on the GPU. A GPU could
+well to running on the GPU. A GPU could
+well to running on the GPU. A GPU could
+do each of these element computations in
+do each of these element computations in
+do each of these element computations in
+parallel on all of those thousands of
+parallel on all of those thousands of
+parallel on all of those thousands of
+cores.
+cores.
+cores.
+So,
+So,
+So,
+what we can do is just um
+what we can do is just um
+what we can do is just um
+rewrite it in JAX. So, we just import
+rewrite it in JAX. So, we just import
+rewrite it in JAX. So, we just import
+jax.numpy instead of import numpy.
+jax.numpy instead of import numpy.
+jax.numpy instead of import numpy.
+And in many cases, it it can just be as
+And in many cases, it it can just be as
+And in many cases, it it can just be as
+simple as that um depending on how
+simple as that um depending on how
+simple as that um depending on how
+you've written your NumPy code.
+you've written your NumPy code.
+you've written your NumPy code.
+Uh
+Uh
+Uh
+the JAX code can look incredibly
+the JAX code can look incredibly
+the JAX code can look incredibly
+similar, if not the same.
+similar, if not the same.
+similar, if not the same.
+Um
+Um
+Um
+So, you can see how how similar this JAX
+So, you can see how how similar this JAX
+So, you can see how how similar this JAX
+version is. Uh we're using again
+version is. Uh we're using again
+version is. Uh we're using again
+jax.numpy looks like numpy, so the
+jax.numpy looks like numpy, so the
+jax.numpy looks like numpy, so the
+padding operations, they have the same
+padding operations, they have the same
+padding operations, they have the same
+inputs and outputs, for example, all the
+inputs and outputs, for example, all the
+inputs and outputs, for example, all the
+other function calls as well.
+other function calls as well.
+other function calls as well.
+Um the only thing that we change is at
+Um the only thing that we change is at
+Um the only thing that we change is at
+the bottom here, instead of doing a for
+the bottom here, instead of doing a for
+the bottom here, instead of doing a for
+loop to kind of update the wave field
+loop to kind of update the wave field
+loop to kind of update the wave field
+through time, we do
+through time, we do
+through time, we do
+a a lower-level lower-level call, which
+a a lower-level lower-level call, which
+a a lower-level lower-level call, which
+is called jax.lax.scan, which which
+is called jax.lax.scan, which which
+is called jax.lax.scan, which which
+essentially implements a for loop that
+essentially implements a for loop that
+essentially implements a for loop that
+uh allows it allows that for loop to be
+uh allows it allows that for loop to be
+uh allows it allows that for loop to be
+compiled and run faster than a kind of a
+compiled and run faster than a kind of a
+compiled and run faster than a kind of a
+native Python for loop.
+native Python for loop.
+native Python for loop.
+Uh So, this is more of a technical
+Uh So, this is more of a technical
+Uh So, this is more of a technical
+detail of JAX. It's important to
+detail of JAX. It's important to
+detail of JAX. It's important to
+understand this, but uh
+understand this, but uh
+understand this, but uh
+but I can tell you more about that later
+but I can tell you more about that later
+but I can tell you more about that later
+if you're if you're interested.
+But, what you need to take away from
+But, what you need to take away from
+But, what you need to take away from
+this slide is it can be just as as
+this slide is it can be just as as
+this slide is it can be just as as
+simple as replacing your input statement
+simple as replacing your input statement
+simple as replacing your input statement
+import statement to to change your code
+import statement to to change your code
+import statement to to change your code
+on into JAX.
+So, once we've done that, we can then
+So, once we've done that, we can then
+So, once we've done that, we can then
+run that wave simulation on the GPU.
+run that wave simulation on the GPU.
+run that wave simulation on the GPU.
+And so, here's the run times of the
+And so, here's the run times of the
+And so, here's the run times of the
+comparison. So, this is NumPy on the
+comparison. So, this is NumPy on the
+comparison. So, this is NumPy on the
+GPU.
+GPU.
+GPU.
+And I've I've tried to fully optimize
+And I've I've tried to fully optimize
+And I've I've tried to fully optimize
+this NumPy code, so it uh NumPy
+this NumPy code, so it uh NumPy
+this NumPy code, so it uh NumPy
+tries to uses
+tries to uses
+tries to uses
+uh kind of vectorized computations. So,
+uh kind of vectorized computations. So,
+uh kind of vectorized computations. So,
+I I tried to remove as many for loops as
+I I tried to remove as many for loops as
+I I tried to remove as many for loops as
+possible. This is what makes uh array
+possible. This is what makes uh array
+possible. This is what makes uh array
+computations slow in in Python.
+computations slow in in Python.
+computations slow in in Python.
+Um so, I I optimized this as much as I
+Um so, I I optimized this as much as I
+Um so, I I optimized this as much as I
+could, and and so this ran on
+could, and and so this ran on
+could, and and so this ran on
+on again on my MacBook uh with 8 seconds
+on again on my MacBook uh with 8 seconds
+on again on my MacBook uh with 8 seconds
+to do a whole simulation.
+to do a whole simulation.
+to do a whole simulation.
+Now, I can take my JAX NumPy code and
+Now, I can take my JAX NumPy code and
+Now, I can take my JAX NumPy code and
+compile it. Um so, this is an extra
+compile it. Um so, this is an extra
+compile it. Um so, this is an extra
+feature that JAX lets us do.
+feature that JAX lets us do.
+feature that JAX lets us do.
+Um and once I've compiled it, this runs
+Um and once I've compiled it, this runs
+Um and once I've compiled it, this runs
+uh 1.5 seconds. So, this is already five
+uh 1.5 seconds. So, this is already five
+uh 1.5 seconds. So, this is already five
+times faster just with a compilation on
+times faster just with a compilation on
+times faster just with a compilation on
+top of the of the NumPy code.
+top of the of the NumPy code.
+top of the of the NumPy code.
+Um so, this kind of answers maybe helps
+Um so, this kind of answers maybe helps
+Um so, this kind of answers maybe helps
+answer your question that it can be
+answer your question that it can be
+answer your question that it can be
+faster on the CPU uh if you do a
+faster on the CPU uh if you do a
+faster on the CPU uh if you do a
+compilation on top.
+compilation on top.
+compilation on top.
+Uh but, the amazing thing is when it
+Uh but, the amazing thing is when it
+Uh but, the amazing thing is when it
+runs on the GPU and it's compiled, uh
+runs on the GPU and it's compiled, uh
+runs on the GPU and it's compiled, uh
+it's 123 times faster. So, we're going
+it's 123 times faster. So, we're going
+it's 123 times faster. So, we're going
+from kind of an 8-second simulation down
+from kind of an 8-second simulation down
+from kind of an 8-second simulation down
+to a 65-millisecond simulation, which is
+to a 65-millisecond simulation, which is
+to a 65-millisecond simulation, which is
+kind of impressive, like given how uh
+kind of impressive, like given how uh
+kind of impressive, like given how uh
+how how high like high-frequency or
+how how high like high-frequency or
+how how high like high-frequency or
+fairly complicated this simulation is.
+Okay.
+So, hopefully I've argued that uh you
+So, hopefully I've argued that uh you
+So, hopefully I've argued that uh you
+know, JAX, but just like other libraries
+know, JAX, but just like other libraries
+know, JAX, but just like other libraries
+like PyTorch and TensorFlow,
+like PyTorch and TensorFlow,
+like PyTorch and TensorFlow,
+uh allows you to run these kind of
+uh allows you to run these kind of
+uh allows you to run these kind of
+linear linear algebra computations on
+linear linear algebra computations on
+linear linear algebra computations on
+the GPU and really accelerate them
+the GPU and really accelerate them
+the GPU and really accelerate them
+beyond what we can do on the CPU.
+Um any questions so far?
+Okay.
+Okay.
+Okay.
+So, the next thing I want to talk about,
+So, the next thing I want to talk about,
+So, the next thing I want to talk about,
+which is the really interesting thing
+which is the really interesting thing
+which is the really interesting thing
+for me, is is JAX's program
+for me, is is JAX's program
+for me, is is JAX's program
+transformation ability.
+transformation ability.
+transformation ability.
+And so, this idea is what allows JAX to
+And so, this idea is what allows JAX to
+And so, this idea is what allows JAX to
+do things like auto differentiation uh
+do things like auto differentiation uh
+do things like auto differentiation uh
+and auto parallelism, uh parallelize
+and auto parallelism, uh parallelize
+and auto parallelism, uh parallelize
+your computation across many inputs
+your computation across many inputs
+your computation across many inputs
+uh without you having to write any more
+uh without you having to write any more
+uh without you having to write any more
+code.
+code.
+code.
+And I this is probably the most powerful
+And I this is probably the most powerful
+And I this is probably the most powerful
+thing about JAX. This is why it's so
+thing about JAX. This is why it's so
+thing about JAX. This is why it's so
+useful for using it in this kind of
+useful for using it in this kind of
+useful for using it in this kind of
+final workflows.
+So hands up who knows what a a program
+So hands up who knows what a a program
+So hands up who knows what a a program
+transformation is or a function
+transformation is or a function
+transformation is or a function
+transformation?
+Okay. So new concept.
+So what is a program transformation? So
+So what is a program transformation? So
+So what is a program transformation? So
+let me just write
+let me just write
+let me just write
+a very simple function here in Python.
+a very simple function here in Python.
+a very simple function here in Python.
+Uh this is just a function that takes X,
+Uh this is just a function that takes X,
+Uh this is just a function that takes X,
+the value of X, and returns X squared.
+the value of X, and returns X squared.
+the value of X, and returns X squared.
+So um
+So um
+So um
+a program transformation or in JAX looks
+a program transformation or in JAX looks
+a program transformation or in JAX looks
+like this.
+like this.
+like this.
+And this is a program transformation
+And this is a program transformation
+And this is a program transformation
+that
+that
+that
+turns that function
+turns that function
+turns that function
+into a new function that instead of
+into a new function that instead of
+into a new function that instead of
+computing
+computing
+computing
+the X squared, it computes the the
+the X squared, it computes the the
+the X squared, it computes the the
+gradient of this function.
+gradient of this function.
+gradient of this function.
+So the gradient of of this function is
+So the gradient of of this function is
+So the gradient of of this function is
+two times X.
+two times X.
+two times X.
+So
+So
+So
+this jax.grad takes in a function as
+this jax.grad takes in a function as
+this jax.grad takes in a function as
+input. This is not a value or anything
+input. This is not a value or anything
+input. This is not a value or anything
+like this. This is a Python a native
+like this. This is a Python a native
+like this. This is a Python a native
+Python function.
+Python function.
+Python function.
+And it
+And it
+And it
+the object that it returns is another
+the object that it returns is another
+the object that it returns is another
+native Python function.
+native Python function.
+native Python function.
+But when you call that function
+But when you call that function
+But when you call that function
+gives you the gradient of the original
+gives you the gradient of the original
+gives you the gradient of the original
+function. So this is a program
+function. So this is a program
+function. So this is a program
+transformation. It takes a program or
+transformation. It takes a program or
+transformation. It takes a program or
+generally a function in Python and
+generally a function in Python and
+generally a function in Python and
+returns a new function.
+Who's with me?
+Who's with me?
+Who's with me?
+Yeah, go on.
+It's an operate it's an operator. Yeah,
+It's an operate it's an operator. Yeah,
+It's an operate it's an operator. Yeah,
+it's an operator. Yeah.
+it's an operator. Yeah.
+it's an operator. Yeah.
+If in a mathematical sense, yeah.
+Did you have a question? That's good.
+Did you have a question? That's good.
+Did you have a question? That's good.
+So let me just
+So let me just
+So let me just
+enumerate that for you.
+enumerate that for you.
+enumerate that for you.
+We just create a an array with a value
+We just create a an array with a value
+We just create a an array with a value
+of X in it here.
+of X in it here.
+of X in it here.
+Uh and if we print the value of we call
+Uh and if we print the value of we call
+Uh and if we print the value of we call
+this function this new transform
+this function this new transform
+this function this new transform
+function, we'll print the value of
+function, we'll print the value of
+function, we'll print the value of
+of the gradient and we get 20. So two
+of the gradient and we get 20. So two
+of the gradient and we get 20. So two
+times X.
+times X.
+times X.
+But what's really nice is we don't we
+But what's really nice is we don't we
+But what's really nice is we don't we
+can then call that we can take that
+can then call that we can take that
+can then call that we can take that
+function and call it with some other
+function and call it with some other
+function and call it with some other
+value and we'll get the gradient for
+value and we'll get the gradient for
+value and we'll get the gradient for
+some other value of X.
+some other value of X.
+some other value of X.
+So how's this different from PyTorch or
+So how's this different from PyTorch or
+So how's this different from PyTorch or
+or TensorFlow 2.0?
+How does PyTorch compute gradients or do
+How does PyTorch compute gradients or do
+How does PyTorch compute gradients or do
+autograd?
+Yeah, go on.
+Uh
+So how would you get the how would you
+So how would you get the how would you
+So how would you get the how would you
+get the gradient of f of x with PyTorch?
+Yes.
+Yeah.
+Yeah.
+Yeah.
+Yeah, so PyTorch doesn't give you this
+Yeah, so PyTorch doesn't give you this
+Yeah, so PyTorch doesn't give you this
+like function that you can evaluate at
+like function that you can evaluate at
+like function that you can evaluate at
+any point in X.
+any point in X.
+any point in X.
+What it does is you define a specific
+What it does is you define a specific
+What it does is you define a specific
+value of X.
+value of X.
+value of X.
+You do a computation on that value.
+You do a computation on that value.
+You do a computation on that value.
+And then you pull autograd back through
+And then you pull autograd back through
+And then you pull autograd back through
+the computational graph to get the
+the computational graph to get the
+the computational graph to get the
+gradient at that value.
+gradient at that value.
+gradient at that value.
+So it's a bit it's slightly different.
+So it's a bit it's slightly different.
+So it's a bit it's slightly different.
+So each time you'll have to create a new
+So each time you'll have to create a new
+So each time you'll have to create a new
+value of X, do a new computation on X,
+value of X, do a new computation on X,
+value of X, do a new computation on X,
+and then pull backprop again.
+and then pull backprop again.
+and then pull backprop again.
+Yeah.
+Yes.
+Yes.
+Yes.
+Uh
+Uh
+Uh
+Yes, it is.
+Yes, it is.
+Yes, it is.
+It is the same, but uh
+It is the same, but uh
+It is the same, but uh
+we can do we can we get the function
+we can do we can we get the function
+we can do we can we get the function
+explicitly. So we can carry it around in
+explicitly. So we can carry it around in
+explicitly. So we can carry it around in
+our code and we can apply it elsewhere.
+our code and we can apply it elsewhere.
+our code and we can apply it elsewhere.
+Which is maybe more powerful than
+Which is maybe more powerful than
+Which is maybe more powerful than
+PyTorch cuz that's like a function that
+PyTorch cuz that's like a function that
+PyTorch cuz that's like a function that
+we can evaluate.
+we can evaluate.
+we can evaluate.
+By the way, JAX I think
+By the way, JAX I think
+By the way, JAX I think
+PyTorch also has this kind of program
+PyTorch also has this kind of program
+PyTorch also has this kind of program
+transformation ability now. This is kind
+transformation ability now. This is kind
+transformation ability now. This is kind
+of a the latest stuff they're working on
+of a the latest stuff they're working on
+of a the latest stuff they're working on
+in PyTorch.
+in PyTorch.
+in PyTorch.
+Um
+Um
+Um
+Uh so that's also something to note as
+Uh so that's also something to note as
+Uh so that's also something to note as
+well.
+Uh
+Uh
+Uh
+so how does it actually do this? So
+so how does it actually do this? So
+so how does it actually do this? So
+what
+what
+what
+this is where
+this is where
+this is where
+JAX is actually in my opinion like a
+JAX is actually in my opinion like a
+JAX is actually in my opinion like a
+technical marvel. How how it actually
+technical marvel. How how it actually
+technical marvel. How how it actually
+does this behind the scenes is very
+does this behind the scenes is very
+does this behind the scenes is very
+impressive.
+impressive.
+impressive.
+And and and what it does is it actually
+And and and what it does is it actually
+And and and what it does is it actually
+takes this native Python function that
+takes this native Python function that
+takes this native Python function that
+we defined.
+we defined.
+we defined.
+And it turns it into a
+And it turns it into a
+And it turns it into a
+simpler more intermediate language,
+simpler more intermediate language,
+simpler more intermediate language,
+which is JAX's own language called JAX
+which is JAX's own language called JAX
+which is JAX's own language called JAX
+PR. So it's kind of a a lower level
+PR. So it's kind of a a lower level
+PR. So it's kind of a a lower level
+representation of this function.
+representation of this function.
+representation of this function.
+Um again, I'm not going to go into the
+Um again, I'm not going to go into the
+Um again, I'm not going to go into the
+details of this language, but you can
+details of this language, but you can
+details of this language, but you can
+see that it's just rewriting this
+see that it's just rewriting this
+see that it's just rewriting this
+function and and turning it into
+function and and turning it into
+function and and turning it into
+something that looks a bit more low
+something that looks a bit more low
+something that looks a bit more low
+level with kind of types defined and
+level with kind of types defined and
+level with kind of types defined and
+other things like this.
+Once it's got that intermediate
+Once it's got that intermediate
+Once it's got that intermediate
+representation
+representation
+representation
+then it applies
+then it applies
+then it applies
+the transformation directly to this this
+the transformation directly to this this
+the transformation directly to this this
+intermediate
+intermediate
+intermediate
+representation.
+representation.
+representation.
+And it will produce a new function. And
+And it will produce a new function. And
+And it will produce a new function. And
+if you look at the like intermediate
+if you look at the like intermediate
+if you look at the like intermediate
+representation of that function, you can
+representation of that function, you can
+representation of that function, you can
+see that that function is
+see that that function is
+see that that function is
+you know, the exact function that
+you know, the exact function that
+you know, the exact function that
+computes the gradient. If you look at
+computes the gradient. If you look at
+computes the gradient. If you look at
+that long enough, you can see it's just
+that long enough, you can see it's just
+that long enough, you can see it's just
+doing kind of two times X.
+doing kind of two times X.
+doing kind of two times X.
+Um
+Um
+Um
+and giving giving you the gradient.
+So yeah, it really is giving you the
+So yeah, it really is giving you the
+So yeah, it really is giving you the
+function that you evaluate to get to get
+function that you evaluate to get to get
+function that you evaluate to get to get
+the gradient, you know, two two X.
+Okay.
+Okay.
+Okay.
+So this is what a program transformation
+So this is what a program transformation
+So this is what a program transformation
+is. It's transforming one program to
+is. It's transforming one program to
+is. It's transforming one program to
+another program.
+another program.
+another program.
+And the way that JAX does it is it
+And the way that JAX does it is it
+And the way that JAX does it is it
+treats the the lines of code here that
+treats the the lines of code here that
+treats the the lines of code here that
+you actually wrote as data.
+you actually wrote as data.
+you actually wrote as data.
+Uh and and and transforms that into a
+Uh and and and transforms that into a
+Uh and and and transforms that into a
+new function. So this is known as kind
+new function. So this is known as kind
+new function. So this is known as kind
+of metaprogramming. It's like programs
+of metaprogramming. It's like programs
+of metaprogramming. It's like programs
+that write new programs.
+that write new programs.
+that write new programs.
+It's not just doing array computation.
+It's not just doing array computation.
+It's not just doing array computation.
+It's like taking in actual lines of code
+It's like taking in actual lines of code
+It's like taking in actual lines of code
+and spitting out new lines of code.
+Everyone now understand what a program
+Everyone now understand what a program
+Everyone now understand what a program
+transformation is?
+transformation is?
+transformation is?
+Okay.
+So this is where JAX gets really
+So this is where JAX gets really
+So this is where JAX gets really
+powerful is that once you've got once
+powerful is that once you've got once
+powerful is that once you've got once
+you've spit out a new function, again
+you've spit out a new function, again
+you've spit out a new function, again
+this is a native Python function. We can
+this is a native Python function. We can
+this is a native Python function. We can
+take that function and then apply it
+take that function and then apply it
+take that function and then apply it
+some other separate transform into it.
+some other separate transform into it.
+some other separate transform into it.
+Uh and do the same process recursively
+Uh and do the same process recursively
+Uh and do the same process recursively
+if we like.
+if we like.
+if we like.
+Uh and so this is
+Uh and so this is
+Uh and so this is
+the power of JAX is that these program
+the power of JAX is that these program
+the power of JAX is that these program
+transformations can be arbitrarily
+transformations can be arbitrarily
+transformations can be arbitrarily
+composed.
+composed.
+composed.
+So a a simple
+So a a simple
+So a a simple
+uh extra transformation we might do is
+uh extra transformation we might do is
+uh extra transformation we might do is
+take this function that
+take this function that
+take this function that
+you know, is just computing two X.
+you know, is just computing two X.
+you know, is just computing two X.
+And we just call
+And we just call
+And we just call
+jax.grad again to get the function
+jax.grad again to get the function
+jax.grad again to get the function
+that computes the gradient of that
+that computes the gradient of that
+that computes the gradient of that
+function, which is just two.
+function, which is just two.
+function, which is just two.
+So
+So
+So
+if we call this new function, again we
+if we call this new function, again we
+if we call this new function, again we
+can query at any point in X,
+can query at any point in X,
+can query at any point in X,
+we'll get we'll get the second order
+we'll get we'll get the second order
+we'll get we'll get the second order
+derivative of the original function.
+derivative of the original function.
+derivative of the original function.
+So this is really really nice.
+So this is really really nice.
+So this is really really nice.
+Um
+Um
+Um
+I would argue a much
+I would argue a much
+I would argue a much
+clearer or kind of explicit way of
+clearer or kind of explicit way of
+clearer or kind of explicit way of
+computing gradients and doing autograd.
+computing gradients and doing autograd.
+computing gradients and doing autograd.
+So this is going to allow us to develop
+So this is going to allow us to develop
+So this is going to allow us to develop
+some very highly sophisticated kind of
+some very highly sophisticated kind of
+some very highly sophisticated kind of
+workflows using using this idea of
+workflows using using this idea of
+workflows using using this idea of
+arbitrary composition of function
+arbitrary composition of function
+arbitrary composition of function
+transformations.
+Does this make sense to everyone how
+Does this make sense to everyone how
+Does this make sense to everyone how
+this works? Yeah.
+No, it doesn't so it's not it doesn't
+No, it doesn't so it's not it doesn't
+No, it doesn't so it's not it doesn't
+use analytic rules or is it
+use analytic rules or is it
+use analytic rules or is it
+it so we talked about auto
+it so we talked about auto
+it so we talked about auto
+differentiation.
+differentiation.
+differentiation.
+And we talked about vector Jacobian
+And we talked about vector Jacobian
+And we talked about vector Jacobian
+products.
+products.
+products.
+And I talked you through the algorithm
+And I talked you through the algorithm
+And I talked you through the algorithm
+that
+that
+that
+computes
+computes
+computes
+vector Jacobian products.
+vector Jacobian products.
+vector Jacobian products.
+Where you basically define the forward
+Where you basically define the forward
+Where you basically define the forward
+forward operation, but for each
+forward operation, but for each
+forward operation, but for each
+primitive operation, you also define the
+primitive operation, you also define the
+primitive operation, you also define the
+vector Jacobian product. And then as you
+vector Jacobian product. And then as you
+vector Jacobian product. And then as you
+as you you do a forward pass and then a
+as you you do a forward pass and then a
+as you you do a forward pass and then a
+backward pass
+backward pass
+backward pass
+and that will give you the gradient.
+and that will give you the gradient.
+and that will give you the gradient.
+And and so this is this is actually
+And and so this is this is actually
+And and so this is this is actually
+exactly what it's doing here. If you
+exactly what it's doing here. If you
+exactly what it's doing here. If you
+look at this transformed function, it's
+look at this transformed function, it's
+look at this transformed function, it's
+doing the vector Jacobian product
+doing the vector Jacobian product
+doing the vector Jacobian product
+computation.
+computation.
+computation.
+So it's it's doing like a
+So it's it's doing like a
+So it's it's doing like a
+a a forward product here and then it's
+a a forward product here and then it's
+a a forward product here and then it's
+doing you know, the backprop through the
+doing you know, the backprop through the
+doing you know, the backprop through the
+vector Jacobian products through that.
+vector Jacobian products through that.
+vector Jacobian products through that.
+So that's that's what grad is actually
+So that's that's what grad is actually
+So that's that's what grad is actually
+doing. It's just writing the whole auto
+doing. It's just writing the whole auto
+doing. It's just writing the whole auto
+the whole autograd
+the whole autograd
+the whole autograd
+computation down as a function.
+Okay.
+Okay.
+Okay.
+So I'm going to do some coding. You can
+So I'm going to do some coding. You can
+So I'm going to do some coding. You can
+have a you can follow the link if you
+have a you can follow the link if you
+have a you can follow the link if you
+like.
+like.
+like.
+Uh
+Uh
+Uh
+Yeah, if you if you want to grab it, you
+Yeah, if you if you want to grab it, you
+Yeah, if you if you want to grab it, you
+can.
+So this is a notebook that you can go
+So this is a notebook that you can go
+So this is a notebook that you can go
+through. It's a very basic introductory
+through. It's a very basic introductory
+through. It's a very basic introductory
+notebook on JAX.
+notebook on JAX.
+notebook on JAX.
+Um
+Let me just change my screen.
+Um so
+Um so
+Um so
+I'm just going to show you some of what
+I'm just going to show you some of what
+I'm just going to show you some of what
+we've already covered just in this in
+we've already covered just in this in
+we've already covered just in this in
+this notebook. So
+this notebook. So
+this notebook. So
+um
+um
+um
+we're just going to import JAX like we
+we're just going to import JAX like we
+we're just going to import JAX like we
+just import any other Python library.
+just import any other Python library.
+just import any other Python library.
+And
+And
+And
+again, this is just an example of doing
+again, this is just an example of doing
+again, this is just an example of doing
+some very basic array computation in
+some very basic array computation in
+some very basic array computation in
+JAX. And like I said, we just create an
+JAX. And like I said, we just create an
+JAX. And like I said, we just create an
+array just like we were doing in NumPy.
+array just like we were doing in NumPy.
+array just like we were doing in NumPy.
+And then just do some basic array
+And then just do some basic array
+And then just do some basic array
+multiplication or element-wise operation
+multiplication or element-wise operation
+multiplication or element-wise operation
+here.
+Um
+Um
+Um
+the other thing that's happening here is
+the other thing that's happening here is
+the other thing that's happening here is
+X is just a
+X is just a
+X is just a
+a one by three array here.
+a one by three array here.
+a one by three array here.
+So who's heard of broadcasting? Who's
+So who's heard of broadcasting? Who's
+So who's heard of broadcasting? Who's
+used broadcasting in NumPy?
+used broadcasting in NumPy?
+used broadcasting in NumPy?
+Yeah, this is where you have like a one
+Yeah, this is where you have like a one
+Yeah, this is where you have like a one
+in if you have a dimension size which is
+in if you have a dimension size which is
+in if you have a dimension size which is
+one,
+one,
+one,
+it can kind of
+it can kind of
+it can kind of
+parallelize that across another
+parallelize that across another
+parallelize that across another
+computation or broadcast it in general.
+computation or broadcast it in general.
+computation or broadcast it in general.
+So that's what it's actually doing here
+So that's what it's actually doing here
+So that's what it's actually doing here
+when it's creating this this array.
+when it's creating this this array.
+when it's creating this this array.
+So all of that kind of
+So all of that kind of
+So all of that kind of
+clever broadcasting stuff in NumPy is
+clever broadcasting stuff in NumPy is
+clever broadcasting stuff in NumPy is
+also in JAX.
+So what we're going to do here is we're
+So what we're going to do here is we're
+So what we're going to do here is we're
+just going to do auto differentiation
+just going to do auto differentiation
+just going to do auto differentiation
+with JAX just like I showed you. So,
+with JAX just like I showed you. So,
+with JAX just like I showed you. So,
+this time I've got tanh. Uh
+this time I've got tanh. Uh
+this time I've got tanh. Uh
+this is my function that I'm going to
+this is my function that I'm going to
+this is my function that I'm going to
+differentiate. So, if I just plot this
+differentiate. So, if I just plot this
+differentiate. So, if I just plot this
+for
+for
+for
+uh I've got a
+uh I've got a
+uh I've got a
+vector here of of X values from -5 to 5.
+vector here of of X values from -5 to 5.
+vector here of of X values from -5 to 5.
+So, this is uh tanh.
+So, this is uh tanh.
+So, this is uh tanh.
+So, what I'm going to do is just use uh
+So, what I'm going to do is just use uh
+So, what I'm going to do is just use uh
+the program transformation to transform
+the program transformation to transform
+the program transformation to transform
+this function into its gradient.
+this function into its gradient.
+this function into its gradient.
+So, it's very simple. We just say uh the
+So, it's very simple. We just say uh the
+So, it's very simple. We just say uh the
+f the x.
+f the x.
+f the x.
+Again, this is a Python function that's
+Again, this is a Python function that's
+Again, this is a Python function that's
+going to be output is jax.grad
+going to be output is jax.grad
+going to be output is jax.grad
+uh of of my function.
+uh of of my function.
+uh of of my function.
+And we also want to compute the second
+And we also want to compute the second
+And we also want to compute the second
+order derivative. So, it's very simple.
+order derivative. So, it's very simple.
+order derivative. So, it's very simple.
+All we do is just call jax.grad again.
+All we do is just call jax.grad again.
+All we do is just call jax.grad again.
+So,
+So,
+So,
+uh on this new function. And again, we
+uh on this new function. And again, we
+uh on this new function. And again, we
+return an a new a new function which
+return an a new a new function which
+return an a new a new function which
+evaluates the second order derivative.
+evaluates the second order derivative.
+evaluates the second order derivative.
+So, we say the f the uh the two f the x
+So, we say the f the uh the two f the x
+So, we say the f the uh the two f the x
+two function
+two function
+two function
+equals jax.grad
+equals jax.grad
+equals jax.grad
+on this guy.
+Uh then we run this.
+Uh then we run this.
+Uh then we run this.
+And then what we're doing here is
+And then what we're doing here is
+And then what we're doing here is
+plotting the result uh across the X
+plotting the result uh across the X
+plotting the result uh across the X
+array and and you see JAX is giving us
+array and and you see JAX is giving us
+array and and you see JAX is giving us
+the gradient and the second order
+the gradient and the second order
+the gradient and the second order
+derivative of tanh.
+derivative of tanh.
+derivative of tanh.
+So, that's just showing you uh you know,
+So, that's just showing you uh you know,
+So, that's just showing you uh you know,
+how easy it is uh to do autograd
+how easy it is uh to do autograd
+how easy it is uh to do autograd
+uh in JAX.
+Okay.
+Okay.
+Okay.
+Yeah.
+Yeah.
+Yeah.
+Is there like auto differentiation
+Is there like auto differentiation
+Is there like auto differentiation
+derivatives? Yeah.
+derivatives? Yeah.
+derivatives? Yeah.
+Yeah. So, so I'm passing over the fact
+Yeah. So, so I'm passing over the fact
+Yeah. So, so I'm passing over the fact
+that jax.grad expects um
+that jax.grad expects um
+that jax.grad expects um
+the output of the function to be scalar.
+the output of the function to be scalar.
+the output of the function to be scalar.
+So, it's the scalar scalar gradient of a
+So, it's the scalar scalar gradient of a
+So, it's the scalar scalar gradient of a
+of a function.
+of a function.
+of a function.
+Or uh it's the gradient of a scalar
+Or uh it's the gradient of a scalar
+Or uh it's the gradient of a scalar
+function. The function can have uh
+function. The function can have uh
+function. The function can have uh
+vector inputs. So, it's doing the vector
+vector inputs. So, it's doing the vector
+vector inputs. So, it's doing the vector
+Jacobian product, but in that case the
+Jacobian product, but in that case the
+Jacobian product, but in that case the
+vector
+vector
+vector
+that we're multiplying the Jacobian by
+that we're multiplying the Jacobian by
+that we're multiplying the Jacobian by
+is just a simple scalar and it's defined
+is just a simple scalar and it's defined
+is just a simple scalar and it's defined
+as one.
+as one.
+as one.
+Uh
+Uh
+Uh
+I'm going to talk about right now uh the
+I'm going to talk about right now uh the
+I'm going to talk about right now uh the
+lower level other JAX
+lower level other JAX
+lower level other JAX
+transformations which can do the VJP in
+transformations which can do the VJP in
+transformations which can do the VJP in
+general and JVP in general. So,
+general and JVP in general. So,
+general and JVP in general. So,
+So, this is why I'm having to do a for
+So, this is why I'm having to do a for
+So, this is why I'm having to do a for
+loop here because I have to make sure
+loop here because I have to make sure
+loop here because I have to make sure
+that the input is scalar the scalar.
+Uh
+Uh
+Uh
+okay.
+Sure.
+Okay. So,
+Okay. So,
+Okay. So,
+um
+Okay.
+Let's check that you can see my screen.
+Okay.
+Okay.
+Okay.
+So, uh
+So, uh
+So, uh
+I just showed you the gradient which
+I just showed you the gradient which
+I just showed you the gradient which
+does the
+does the
+does the
+uh the gradient for a scalar uh
+uh the gradient for a scalar uh
+uh the gradient for a scalar uh
+a function that outputs a scalar.
+a function that outputs a scalar.
+a function that outputs a scalar.
+But in general, JAX can do uh vector
+But in general, JAX can do uh vector
+But in general, JAX can do uh vector
+Jacobian products and Jacobian vector
+Jacobian products and Jacobian vector
+Jacobian products and Jacobian vector
+products as I was describing in the auto
+products as I was describing in the auto
+products as I was describing in the auto
+differentiation lectures.
+differentiation lectures.
+differentiation lectures.
+Um
+Um
+Um
+And uh in fact, all of JAX's auto
+And uh in fact, all of JAX's auto
+And uh in fact, all of JAX's auto
+differentiations
+differentiations
+differentiations
+program transformations are all based on
+program transformations are all based on
+program transformations are all based on
+compositions of the VJP and JVP. They're
+compositions of the VJP and JVP. They're
+compositions of the VJP and JVP. They're
+just uh specializations or compositions
+just uh specializations or compositions
+just uh specializations or compositions
+of these two uh fundamental kind of
+of these two uh fundamental kind of
+of these two uh fundamental kind of
+program transformations.
+program transformations.
+program transformations.
+Um so, we can do things like get the
+Um so, we can do things like get the
+Um so, we can do things like get the
+gradient of f. We can do we can even get
+gradient of f. We can do we can even get
+gradient of f. We can do we can even get
+the Jacobian of f. So, you know, all the
+the Jacobian of f. So, you know, all the
+the Jacobian of f. So, you know, all the
+derivatives of of all the partial
+derivatives of of all the partial
+derivatives of of all the partial
+derivatives of f with respect to its
+derivatives of f with respect to its
+derivatives of f with respect to its
+inputs.
+inputs.
+inputs.
+We can get the Hessian. We can do all
+We can get the Hessian. We can do all
+We can get the Hessian. We can do all
+sorts of really interesting things. And
+sorts of really interesting things. And
+sorts of really interesting things. And
+you can go back and have a look at how
+you can go back and have a look at how
+you can go back and have a look at how
+these uh the inputs and outputs of these
+these uh the inputs and outputs of these
+these uh the inputs and outputs of these
+uh program transformations later.
+Um
+Um
+Um
+So,
+So,
+So,
+uh
+So, yeah.
+So, yeah.
+So, yeah.
+Computing the gradient doing auto diff
+Computing the gradient doing auto diff
+Computing the gradient doing auto diff
+is just one type of program
+is just one type of program
+is just one type of program
+transformation. This is actually a much
+transformation. This is actually a much
+transformation. This is actually a much
+more general idea than just do it using
+more general idea than just do it using
+more general idea than just do it using
+it for auto diff.
+it for auto diff.
+it for auto diff.
+So, can anyone think of any other like
+So, can anyone think of any other like
+So, can anyone think of any other like
+useful transformations we might want to
+useful transformations we might want to
+useful transformations we might want to
+make as some if we define some function
+make as some if we define some function
+make as some if we define some function
+in Python, what what might be a
+in Python, what what might be a
+in Python, what what might be a
+transformation that's useful?
+transformation that's useful?
+transformation that's useful?
+Yeah.
+Yeah.
+Yeah.
+Maybe it's an inverse transformation.
+Maybe it's an inverse transformation.
+Maybe it's an inverse transformation.
+Yeah. Yeah, in that's actually quite a
+Yeah. Yeah, in that's actually quite a
+Yeah. Yeah, in that's actually quite a
+good idea. Yeah, like invert the
+good idea. Yeah, like invert the
+good idea. Yeah, like invert the
+function. So, instead of f of x, it does
+function. So, instead of f of x, it does
+function. So, instead of f of x, it does
+x function of f. Yeah.
+x function of f. Yeah.
+x function of f. Yeah.
+Uh
+Uh
+Uh
+so, JAX doesn't have that, but that
+so, JAX doesn't have that, but that
+so, JAX doesn't have that, but that
+would be interesting. Yeah.
+would be interesting. Yeah.
+would be interesting. Yeah.
+Yeah.
+Yeah.
+Yeah.
+Any basis transformation? Yeah. That's a
+Any basis transformation? Yeah. That's a
+Any basis transformation? Yeah. That's a
+good idea.
+good idea.
+good idea.
+Yeah.
+Yeah.
+Yeah.
+Any others?
+Any others?
+Any others?
+Yeah.
+Yeah.
+Yeah.
+Integration. Yeah, very very good. Yeah.
+Integration. Yeah, very very good. Yeah.
+Integration. Yeah, very very good. Yeah.
+Uh
+Uh
+Uh
+So,
+So,
+So,
+I'm going to talk about um
+I'm going to talk about um
+I'm going to talk about um
+some other ones. So,
+some other ones. So,
+some other ones. So,
+one is just to vectorize the function.
+one is just to vectorize the function.
+one is just to vectorize the function.
+So, this is a very powerful
+So, this is a very powerful
+So, this is a very powerful
+transformation in in JAX.
+transformation in in JAX.
+transformation in in JAX.
+And vectorization
+And vectorization
+And vectorization
+is you can think of it as simply just
+is you can think of it as simply just
+is you can think of it as simply just
+parallelizing the function across many
+parallelizing the function across many
+parallelizing the function across many
+inputs.
+inputs.
+inputs.
+But when I mean that, I don't mean
+But when I mean that, I don't mean
+But when I mean that, I don't mean
+parallelizing it across multiple kind of
+parallelizing it across multiple kind of
+parallelizing it across multiple kind of
+devices, multiple CPUs, and multiple
+devices, multiple CPUs, and multiple
+devices, multiple CPUs, and multiple
+GPUs. I just mean parallelizing it so it
+GPUs. I just mean parallelizing it so it
+GPUs. I just mean parallelizing it so it
+runs uh
+runs uh
+runs uh
+in parallel on the single device. So, on
+in parallel on the single device. So, on
+in parallel on the single device. So, on
+the on the GPU uh in parallel.
+the on the GPU uh in parallel.
+the on the GPU uh in parallel.
+So, what what I mean by that is say say
+So, what what I mean by that is say say
+So, what what I mean by that is say say
+for example, we have this like basic
+for example, we have this like basic
+for example, we have this like basic
+computation here which is just uh uh a
+computation here which is just uh uh a
+computation here which is just uh uh a
+dot product between two vectors.
+dot product between two vectors.
+dot product between two vectors.
+Plus some bias. Yeah,
+Plus some bias. Yeah,
+Plus some bias. Yeah,
+this is a very common operation used in
+this is a very common operation used in
+this is a very common operation used in
+like any layers of neural networks and
+like any layers of neural networks and
+like any layers of neural networks and
+other scientific workflows.
+other scientific workflows.
+other scientific workflows.
+So, say now that I give you many uh
+So, say now that I give you many uh
+So, say now that I give you many uh
+examples of X and I want to times all
+examples of X and I want to times all
+examples of X and I want to times all
+those examples by the same weight value.
+those examples by the same weight value.
+those examples by the same weight value.
+Mathematically, we can just think of
+Mathematically, we can just think of
+Mathematically, we can just think of
+that as a vector times by a matrix
+that as a vector times by a matrix
+that as a vector times by a matrix
+operation instead of a dot product that
+operation instead of a dot product that
+operation instead of a dot product that
+will spit out a vector instead of a
+will spit out a vector instead of a
+will spit out a vector instead of a
+scalar.
+scalar.
+scalar.
+Um
+Um
+Um
+And so,
+And so,
+And so,
+the task here is to take the code the
+the task here is to take the code the
+the task here is to take the code the
+function that just computes a single for
+function that just computes a single for
+function that just computes a single for
+a single example the dot product and
+a single example the dot product and
+a single example the dot product and
+give you a scalar.
+give you a scalar.
+give you a scalar.
+And we might want to vectorize that
+And we might want to vectorize that
+And we might want to vectorize that
+function and say, "Okay, we now want to
+function and say, "Okay, we now want to
+function and say, "Okay, we now want to
+uh instead of just inputting a single X
+uh instead of just inputting a single X
+uh instead of just inputting a single X
+to that, X will now have another
+to that, X will now have another
+to that, X will now have another
+dimension which will contain all the
+dimension which will contain all the
+dimension which will contain all the
+examples all the all the parallel
+examples all the all the parallel
+examples all the all the parallel
+examples we want to run that computation
+examples we want to run that computation
+examples we want to run that computation
+over."
+Everyone follow so far?
+So, if we were just going to write this
+So, if we were just going to write this
+So, if we were just going to write this
+in NumPy, we would have to think about,
+in NumPy, we would have to think about,
+in NumPy, we would have to think about,
+"Okay, X has changed dimensionality.
+"Okay, X has changed dimensionality.
+"Okay, X has changed dimensionality.
+We're going to have to change this dot
+We're going to have to change this dot
+We're going to have to change this dot
+product with a with a matrix multiply or
+product with a with a matrix multiply or
+product with a with a matrix multiply or
+make sure that NumPy understands that
+make sure that NumPy understands that
+make sure that NumPy understands that
+there's an extra dimension to X."
+there's an extra dimension to X."
+there's an extra dimension to X."
+But JAX means that you can forget about
+But JAX means that you can forget about
+But JAX means that you can forget about
+that. You can just write your function
+that. You can just write your function
+that. You can just write your function
+for a single example. And then what you
+for a single example. And then what you
+for a single example. And then what you
+do is you just call jax.vmap. So, this
+do is you just call jax.vmap. So, this
+do is you just call jax.vmap. So, this
+is vectorized map.
+is vectorized map.
+is vectorized map.
+Again, it's another function
+Again, it's another function
+Again, it's another function
+transformation. It it uh my function is
+transformation. It it uh my function is
+transformation. It it uh my function is
+input uh any arbitrary Python function.
+input uh any arbitrary Python function.
+input uh any arbitrary Python function.
+Um
+Um
+Um
+And you tell it
+And you tell it
+And you tell it
+of the three inputs that it have,
+of the three inputs that it have,
+of the three inputs that it have,
+which inputs you want to parallelize
+which inputs you want to parallelize
+which inputs you want to parallelize
+across. And and more specifically, which
+across. And and more specifically, which
+across. And and more specifically, which
+dimension of that input we're going to
+dimension of that input we're going to
+dimension of that input we're going to
+we're going to denote as having all
+we're going to denote as having all
+we're going to denote as having all
+these parallel inputs all these these
+these parallel inputs all these these
+these parallel inputs all these these
+examples uh
+examples uh
+examples uh
+in it.
+in it.
+in it.
+So, what this function f_batch is going
+So, what this function f_batch is going
+So, what this function f_batch is going
+to say is it's it's going to again, it's
+to say is it's it's going to again, it's
+to say is it's it's going to again, it's
+going to take
+going to take
+going to take
+W as input. It's going to take B as
+W as input. It's going to take B as
+W as input. It's going to take B as
+input. But then it's going to take X
+input. But then it's going to take X
+input. But then it's going to take X
+with an extra dimension added on the
+with an extra dimension added on the
+with an extra dimension added on the
+first dimension that contains all the
+first dimension that contains all the
+first dimension that contains all the
+examples that we're going to run in
+examples that we're going to run in
+examples that we're going to run in
+parallel uh
+parallel uh
+parallel uh
+of X.
+So, now if we call if we create X here
+So, now if we call if we create X here
+So, now if we call if we create X here
+with a you know, an extra dimension with
+with a you know, an extra dimension with
+with a you know, an extra dimension with
+all these examples uh of these vectors
+all these examples uh of these vectors
+all these examples uh of these vectors
+that we want to compute.
+that we want to compute.
+that we want to compute.
+And we print the output of f_batch, you
+And we print the output of f_batch, you
+And we print the output of f_batch, you
+can see that it's now giving us a a
+can see that it's now giving us a a
+can see that it's now giving us a a
+vector as output instead of a scalar.
+vector as output instead of a scalar.
+vector as output instead of a scalar.
+So, it's doing all these uh in parallel.
+So, it's doing all these uh in parallel.
+So, it's doing all these uh in parallel.
+Yeah.
+Yeah.
+Yeah.
+Is
+Is
+Is
+it only in sort of vmap vectorized JAX
+it only in sort of vmap vectorized JAX
+it only in sort of vmap vectorized JAX
+NumPy functions? So, like yeah, if-else
+NumPy functions? So, like yeah, if-else
+NumPy functions? So, like yeah, if-else
+statements and there you have to rewrite
+statements and there you have to rewrite
+statements and there you have to rewrite
+it like
+it like
+it like
+Uh
+Uh
+Uh
+Uh
+Uh
+vmap can can handle if-else statements.
+vmap can can handle if-else statements.
+vmap can can handle if-else statements.
+Um
+Um
+Um
+So, that there there's some
+So, that there there's some
+So, that there there's some
+uh
+uh
+uh
+subtleties.
+subtleties.
+subtleties.
+But so, which I don't have time to talk
+But so, which I don't have time to talk
+But so, which I don't have time to talk
+about, but there are there's uh one of
+about, but there are there's uh one of
+about, but there are there's uh one of
+the limitations of JAX is
+the limitations of JAX is
+the limitations of JAX is
+uh that the shape that the shapes of the
+uh that the shape that the shapes of the
+uh that the shape that the shapes of the
+output shouldn't depend on the values of
+output shouldn't depend on the values of
+output shouldn't depend on the values of
+the input.
+the input.
+the input.
+So, what I'm saying is the shape should
+So, what I'm saying is the shape should
+So, what I'm saying is the shape should
+be known statically before you input
+be known statically before you input
+be known statically before you input
+them to the
+them to the
+them to the
+uh given the shapes of the inputs of the
+uh given the shapes of the inputs of the
+uh given the shapes of the inputs of the
+function. If you can if you can do that
+function. If you can if you can do that
+function. If you can if you can do that
+and make sure that it's a static
+and make sure that it's a static
+and make sure that it's a static
+computation, then you can use kind of
+computation, then you can use kind of
+computation, then you can use kind of
+conditional statements and still
+conditional statements and still
+conditional statements and still
+vectorize those those statements.
+vectorize those those statements.
+vectorize those those statements.
+Yeah.
+Yeah.
+Yeah.
+Um
+Yeah.
+Yeah.
+Yeah.
+I think that's true, but uh it's can be
+I think that's true, but uh it's can be
+I think that's true, but uh it's can be
+it depends on the program
+it depends on the program
+it depends on the program
+transformation. That's definitely true
+transformation. That's definitely true
+transformation. That's definitely true
+for compilation. I I think that's true
+for compilation. I I think that's true
+for compilation. I I think that's true
+for vectorization, but I'd have to
+for vectorization, but I'd have to
+for vectorization, but I'd have to
+actually check properly.
+actually check properly.
+actually check properly.
+Um
+Um
+Um
+So, if you look at the kind of again, if
+So, if you look at the kind of again, if
+So, if you look at the kind of again, if
+we look at the intermediate
+we look at the intermediate
+we look at the intermediate
+representation, this is again to to
+representation, this is again to to
+representation, this is again to to
+transform this function, JAX will take
+transform this function, JAX will take
+transform this function, JAX will take
+this intermediate representation and
+this intermediate representation and
+this intermediate representation and
+then treat it as input data as input and
+then treat it as input data as input and
+then treat it as input data as input and
+spit out a new a new function
+spit out a new a new function
+spit out a new a new function
+which is the vectorized form out.
+which is the vectorized form out.
+which is the vectorized form out.
+And if you go into this function and
+And if you go into this function and
+And if you go into this function and
+actually look what it's uh doing, it's
+actually look what it's uh doing, it's
+actually look what it's uh doing, it's
+uh inside here it's got uh
+uh inside here it's got uh
+uh inside here it's got uh
+uh like a a dot product. Uh this
+uh like a a dot product. Uh this
+uh like a a dot product. Uh this
+dot_general here
+dot_general here
+dot_general here
+uh in the original function which is uh
+uh in the original function which is uh
+uh in the original function which is uh
+what numpy.dot is doing. But what's
+what numpy.dot is doing. But what's
+what numpy.dot is doing. But what's
+interesting is that when we vmap'd it,
+interesting is that when we vmap'd it,
+interesting is that when we vmap'd it,
+it's realized that we can still do this
+it's realized that we can still do this
+it's realized that we can still do this
+as a dot product. This is now instead of
+as a dot product. This is now instead of
+as a dot product. This is now instead of
+a
+a
+a
+vector dot product, this is now a matrix
+vector dot product, this is now a matrix
+vector dot product, this is now a matrix
+kind of product instead. And this
+kind of product instead. And this
+kind of product instead. And this
+generalized dot product can handle that.
+generalized dot product can handle that.
+generalized dot product can handle that.
+So, what's cool is that it's not using
+So, what's cool is that it's not using
+So, what's cool is that it's not using
+like a for loop. Like the The way of
+like a for loop. Like the The way of
+like a for loop. Like the The way of
+vectorizing this function would just be
+vectorizing this function would just be
+vectorizing this function would just be
+to say for I in range N, call this
+to say for I in range N, call this
+to say for I in range N, call this
+function with each input each new X as
+function with each input each new X as
+function with each input each new X as
+input.
+input.
+input.
+It's realized that we don't need to we
+It's realized that we don't need to we
+It's realized that we don't need to we
+don't need to do that. We can actually
+don't need to do that. We can actually
+don't need to do that. We can actually
+just write it as a as a matrix product.
+just write it as a as a matrix product.
+just write it as a as a matrix product.
+And this is what when we run that matrix
+And this is what when we run that matrix
+And this is what when we run that matrix
+product on the CPU, it will then use the
+product on the CPU, it will then use the
+product on the CPU, it will then use the
+cores in parallel to do the computation.
+cores in parallel to do the computation.
+cores in parallel to do the computation.
+So this this is
+So this this is
+So this this is
+this vectorized function is much faster
+this vectorized function is much faster
+this vectorized function is much faster
+than just doing like a a native Python
+than just doing like a a native Python
+than just doing like a a native Python
+for loop to to call the function
+for loop to to call the function
+for loop to to call the function
+repeatedly.
+repeatedly.
+repeatedly.
+Uh does that make sense?
+Okay.
+So
+So
+So
+uh
+uh
+uh
+let's go back um
+let's go back um
+let's go back um
+and look at that. So
+uh oh, I do have a couple more examples
+uh oh, I do have a couple more examples
+uh oh, I do have a couple more examples
+about auto diff. So
+about auto diff. So
+about auto diff. So
+uh
+This for example, this is the let's just
+This for example, this is the let's just
+This for example, this is the let's just
+go back to this auto diff example. So
+go back to this auto diff example. So
+go back to this auto diff example. So
+this is doing the tanh function.
+this is doing the tanh function.
+this is doing the tanh function.
+Uh computing tanh.
+Uh computing tanh.
+Uh computing tanh.
+So we can do jax.jacobian. This will
+So we can do jax.jacobian. This will
+So we can do jax.jacobian. This will
+give us the Jacobian of that function.
+give us the Jacobian of that function.
+give us the Jacobian of that function.
+Again, this is a function that we call
+Again, this is a function that we call
+Again, this is a function that we call
+with a value of X and it will spit out
+with a value of X and it will spit out
+with a value of X and it will spit out
+the Jacobian.
+the Jacobian.
+the Jacobian.
+So the Jacobian is a matrix. It's all
+So the Jacobian is a matrix. It's all
+So the Jacobian is a matrix. It's all
+the partial derivatives of of F with
+the partial derivatives of of F with
+the partial derivatives of of F with
+respect to X.
+respect to X.
+respect to X.
+And now X here is a an array that we're
+And now X here is a an array that we're
+And now X here is a an array that we're
+inputting. So it's a X in the range
+inputting. So it's a X in the range
+inputting. So it's a X in the range
+minus five to five.
+minus five to five.
+minus five to five.
+And what it spits out is an array that
+And what it spits out is an array that
+And what it spits out is an array that
+is diagonal. Like a Jacobian is
+is diagonal. Like a Jacobian is
+is diagonal. Like a Jacobian is
+diagonal. So can anyone tell me why this
+diagonal. So can anyone tell me why this
+diagonal. So can anyone tell me why this
+this Jacobian is diagonal?
+this Jacobian is diagonal?
+this Jacobian is diagonal?
+In this case.
+In this case.
+In this case.
+For a function that takes in X and spits
+For a function that takes in X and spits
+For a function that takes in X and spits
+out tanh X.
+Yeah.
+Yeah.
+Yeah.
+Yeah.
+So what when when you call when you call
+So what when when you call when you call
+So what when when you call when you call
+this function with a vector
+this function with a vector
+this function with a vector
+it outputs a vector.
+it outputs a vector.
+it outputs a vector.
+So Jax sees that as like a a vector
+So Jax sees that as like a a vector
+So Jax sees that as like a a vector
+valued function that has a vector input.
+valued function that has a vector input.
+valued function that has a vector input.
+So the Jacobian of that in general would
+So the Jacobian of that in general would
+So the Jacobian of that in general would
+be a matrix.
+be a matrix.
+be a matrix.
+But the important thing is that the each
+But the important thing is that the each
+But the important thing is that the each
+uh output of that function only depends
+uh output of that function only depends
+uh output of that function only depends
+on the the
+on the the
+on the the
+the same element in the input.
+the same element in the input.
+the same element in the input.
+So you know
+So you know
+So you know
+F1 only depends on X1, F2 only depends
+F1 only depends on X1, F2 only depends
+F1 only depends on X1, F2 only depends
+on X2.
+on X2.
+on X2.
+So there's no the gradients of all the
+So there's no the gradients of all the
+So there's no the gradients of all the
+cross derivatives of all the cross
+cross derivatives of all the cross
+cross derivatives of all the cross
+partial derivatives are just zero
+partial derivatives are just zero
+partial derivatives are just zero
+because it's a it's it's an element wise
+because it's a it's it's an element wise
+because it's a it's it's an element wise
+operation.
+operation.
+operation.
+So yeah, the Jacobian in this case is is
+So yeah, the Jacobian in this case is is
+So yeah, the Jacobian in this case is is
+diagonal. So yeah.
+diagonal. So yeah.
+diagonal. So yeah.
+And we can also do
+And we can also do
+And we can also do
+uh you know, vector Jacobian products.
+uh you know, vector Jacobian products.
+uh you know, vector Jacobian products.
+So
+So
+So
+now X is an array.
+now X is an array.
+now X is an array.
+Uh
+Uh
+Uh
+So we do a vector Jacobian product. We
+So we do a vector Jacobian product. We
+So we do a vector Jacobian product. We
+and we define the vector as a uh an
+and we define the vector as a uh an
+and we define the vector as a uh an
+array of ones.
+array of ones.
+array of ones.
+And this will just give us the give us
+And this will just give us the give us
+And this will just give us the give us
+the gradient uh
+the gradient uh
+the gradient uh
+element wise gradient.
+element wise gradient.
+element wise gradient.
+Uh and we do the same thing with a
+Uh and we do the same thing with a
+Uh and we do the same thing with a
+forward forward mode auto diff instead.
+forward forward mode auto diff instead.
+forward forward mode auto diff instead.
+Uh
+Uh
+Uh
+and again, that will give us the the
+and again, that will give us the the
+and again, that will give us the the
+gradient the same gradient. So you can
+gradient the same gradient. So you can
+gradient the same gradient. So you can
+have a go you can look through this
+have a go you can look through this
+have a go you can look through this
+again in your own time and just convince
+again in your own time and just convince
+again in your own time and just convince
+yourself what's happening
+yourself what's happening
+yourself what's happening
+mathematically.
+Okay.
+Okay.
+Okay.
+So that's uh talking about
+So that's uh talking about
+So that's uh talking about
+vectorization. So let's
+vectorization. So let's
+vectorization. So let's
+let's uh
+let's uh
+let's uh
+let's vectorize this function. So now
+let's vectorize this function. So now
+let's vectorize this function. So now
+we're going to uh vectorize not just
+we're going to uh vectorize not just
+we're going to uh vectorize not just
+this kind of
+this kind of
+this kind of
+simple uh dot product.
+simple uh dot product.
+simple uh dot product.
+Or actually this is a this is now a
+Or actually this is a this is now a
+Or actually this is a this is now a
+matrix vector multiply. We're we're
+matrix vector multiply. We're we're
+matrix vector multiply. We're we're
+assuming this is like a layer of a of a
+assuming this is like a layer of a of a
+assuming this is like a layer of a of a
+fully connected network. So we have a
+fully connected network. So we have a
+fully connected network. So we have a
+weight matrix. We have
+weight matrix. We have
+weight matrix. We have
+a single example. X is a vector.
+a single example. X is a vector.
+a single example. X is a vector.
+We're going to add a bias vector and
+We're going to add a bias vector and
+We're going to add a bias vector and
+then we're going to pass it through an
+then we're going to pass it through an
+then we're going to pass it through an
+activation function.
+activation function.
+activation function.
+So we can call vmap on on this entire
+So we can call vmap on on this entire
+So we can call vmap on on this entire
+function
+function
+function
+uh and allow it uh or vectorize it or
+uh and allow it uh or vectorize it or
+uh and allow it uh or vectorize it or
+parallelize it across many examples of
+parallelize it across many examples of
+parallelize it across many examples of
+X.
+Um
+Um
+Um
+So this is just the if I just call the
+So this is just the if I just call the
+So this is just the if I just call the
+function with with some random kind of
+function with with some random kind of
+function with with some random kind of
+weight matrix, 10 by three weight matrix
+weight matrix, 10 by three weight matrix
+weight matrix, 10 by three weight matrix
+and a an X vector that has three
+and a an X vector that has three
+and a an X vector that has three
+elements
+elements
+elements
+then yeah, X is the input size of X is
+then yeah, X is the input size of X is
+then yeah, X is the input size of X is
+just three a vector with three elements.
+just three a vector with three elements.
+just three a vector with three elements.
+The output of the function is a vector
+The output of the function is a vector
+The output of the function is a vector
+with 10 elements. So this would be the
+with 10 elements. So this would be the
+with 10 elements. So this would be the
+hidden state after the after the layer.
+hidden state after the after the layer.
+hidden state after the after the layer.
+But say that I have many examples of X
+But say that I have many examples of X
+But say that I have many examples of X
+instead. So maybe I've got a thousand
+instead. So maybe I've got a thousand
+instead. So maybe I've got a thousand
+examples like a batch of of training
+examples like a batch of of training
+examples like a batch of of training
+examples that I'll be feeding to the
+examples that I'll be feeding to the
+examples that I'll be feeding to the
+network.
+network.
+network.
+So what we do to vectorize this function
+So what we do to vectorize this function
+So what we do to vectorize this function
+is we just do
+is we just do
+is we just do
+uh
+uh
+uh
+we
+we
+we
+uh just call jax.vmap on this top thing.
+uh just call jax.vmap on this top thing.
+uh just call jax.vmap on this top thing.
+Um
+Um
+Um
+So we grab the function
+So we grab the function
+So we grab the function
+and we say which axes
+and we say which axes
+and we say which axes
+uh and which arguments we want to
+uh and which arguments we want to
+uh and which arguments we want to
+parallelize across.
+parallelize across.
+parallelize across.
+So if we don't want to parallelize
+So if we don't want to parallelize
+So if we don't want to parallelize
+across any of the arguments, then we'll
+across any of the arguments, then we'll
+across any of the arguments, then we'll
+just put a none. So just saying that
+just put a none. So just saying that
+just put a none. So just saying that
+we're not going to parallelize.
+we're not going to parallelize.
+we're not going to parallelize.
+For the first two arguments and then for
+For the first two arguments and then for
+For the first two arguments and then for
+the last one
+the last one
+the last one
+we're just going to say the examples are
+we're just going to say the examples are
+we're just going to say the examples are
+in the first dimension of the of the
+in the first dimension of the of the
+in the first dimension of the of the
+input.
+And then again, when we when we run this
+And then again, when we when we run this
+And then again, when we when we run this
+uh function forwards with an with a
+uh function forwards with an with a
+uh function forwards with an with a
+batched example, then we get a batch
+batched example, then we get a batch
+batched example, then we get a batch
+batch of outputs.
+So you can see how this is can become
+So you can see how this is can become
+So you can see how this is can become
+very powerful when we have very
+very powerful when we have very
+very powerful when we have very
+complicated functions. We can vectorize
+complicated functions. We can vectorize
+complicated functions. We can vectorize
+the whole function across all the NumPy
+the whole function across all the NumPy
+the whole function across all the NumPy
+operations that we have in our function.
+Um
+Um
+Um
+Okay.
+So
+So
+So
+uh
+uh
+uh
+let me swap again.
+Okay. So next uh next type of program
+Okay. So next uh next type of program
+Okay. So next uh next type of program
+transformation is a is a compilation.
+transformation is a is a compilation.
+transformation is a is a compilation.
+So
+So
+So
+I'm not going to go into details about
+I'm not going to go into details about
+I'm not going to go into details about
+how Jax is doing compilation. I'll give
+how Jax is doing compilation. I'll give
+how Jax is doing compilation. I'll give
+maybe one example. But at a very high
+maybe one example. But at a very high
+maybe one example. But at a very high
+level, you can just think of this as
+level, you can just think of this as
+level, you can just think of this as
+taking my original Python code and just
+taking my original Python code and just
+taking my original Python code and just
+rewriting it
+rewriting it
+rewriting it
+using this lower level representation
+using this lower level representation
+using this lower level representation
+and also XLA, this accelerated linear
+and also XLA, this accelerated linear
+and also XLA, this accelerated linear
+algebra compiler
+algebra compiler
+algebra compiler
+to make it run faster on the specific
+to make it run faster on the specific
+to make it run faster on the specific
+device that you're using.
+device that you're using.
+device that you're using.
+Um
+Um
+Um
+and
+and
+and
+so this is an example of how
+so this is an example of how
+so this is an example of how
+we might make this code a bit faster.
+we might make this code a bit faster.
+we might make this code a bit faster.
+So this is a function that just computes
+So this is a function that just computes
+So this is a function that just computes
+X plus X squared plus X cubed.
+X plus X squared plus X cubed.
+X plus X squared plus X cubed.
+And uh
+And uh
+And uh
+the way that this function might run uh
+the way that this function might run uh
+the way that this function might run uh
+on the GPU if you just call it this way
+on the GPU if you just call it this way
+on the GPU if you just call it this way
+in Jax
+in Jax
+in Jax
+is there are separate kind of underlying
+is there are separate kind of underlying
+is there are separate kind of underlying
+CUDA kernels.
+CUDA kernels.
+CUDA kernels.
+Uh these are kind of like
+Uh these are kind of like
+Uh these are kind of like
+uh
+uh
+uh
+low level pieces of code that are
+low level pieces of code that are
+low level pieces of code that are
+defined to run like small operations
+defined to run like small operations
+defined to run like small operations
+very fast.
+very fast.
+very fast.
+So there might be a a CUDA kernel that
+So there might be a a CUDA kernel that
+So there might be a a CUDA kernel that
+is defined for like a simple matrix
+is defined for like a simple matrix
+is defined for like a simple matrix
+multiply or an element wise
+multiply or an element wise
+multiply or an element wise
+multiplication like an X squared.
+multiplication like an X squared.
+multiplication like an X squared.
+There might be another kernel which is a
+There might be another kernel which is a
+There might be another kernel which is a
+different implementation that runs X
+different implementation that runs X
+different implementation that runs X
+cubed. And then there might be a final
+cubed. And then there might be a final
+cubed. And then there might be a final
+kernel that is called to to sum all
+kernel that is called to to sum all
+kernel that is called to to sum all
+these these things together.
+And if if the code uses separate
+And if if the code uses separate
+And if if the code uses separate
+kernels, then usually what happens is
+kernels, then usually what happens is
+kernels, then usually what happens is
+that uh each kernel runs independently
+that uh each kernel runs independently
+that uh each kernel runs independently
+as like an independent thread or kind of
+as like an independent thread or kind of
+as like an independent thread or kind of
+job on this on the on the GPU.
+job on this on the on the GPU.
+job on this on the on the GPU.
+Uh it reads from the kind of global
+Uh it reads from the kind of global
+Uh it reads from the kind of global
+memory of the GPU for its inputs and
+memory of the GPU for its inputs and
+memory of the GPU for its inputs and
+then saves those outputs of that
+then saves those outputs of that
+then saves those outputs of that
+individual kernel back to the memory.
+individual kernel back to the memory.
+individual kernel back to the memory.
+Back to the global memory of the GPU. So
+Back to the global memory of the GPU. So
+Back to the global memory of the GPU. So
+this is the kind of shared memory across
+this is the kind of shared memory across
+this is the kind of shared memory across
+all the cores.
+all the cores.
+all the cores.
+So what takes time in in in in this
+So what takes time in in in in this
+So what takes time in in in in this
+whole uh operation is to is the reading
+whole uh operation is to is the reading
+whole uh operation is to is the reading
+and writing to the global memory. This
+and writing to the global memory. This
+and writing to the global memory. This
+this is the kind of bottleneck of these
+this is the kind of bottleneck of these
+this is the kind of bottleneck of these
+of these computations.
+of these computations.
+of these computations.
+What you would
+What you would
+What you would
+when you call
+when you call
+when you call
+Jax compilation, it realizes that uh
+Jax compilation, it realizes that uh
+Jax compilation, it realizes that uh
+these three kernels can actually be
+these three kernels can actually be
+these three kernels can actually be
+fused into a single kernel. So kind of
+fused into a single kernel. So kind of
+fused into a single kernel. So kind of
+writes a kind of custom kernel or a
+writes a kind of custom kernel or a
+writes a kind of custom kernel or a
+fused kernel
+fused kernel
+fused kernel
+that doesn't have to do all these kind
+that doesn't have to do all these kind
+that doesn't have to do all these kind
+of reads and writes to the memory. It
+of reads and writes to the memory. It
+of reads and writes to the memory. It
+just it knows that I can just do one
+just it knows that I can just do one
+just it knows that I can just do one
+read to the memory of X. I can do all
+read to the memory of X. I can do all
+read to the memory of X. I can do all
+these X computations and sum them
+these X computations and sum them
+these X computations and sum them
+together without having to save and
+together without having to save and
+together without having to save and
+rewrite to the memory. So kind of
+rewrite to the memory. So kind of
+rewrite to the memory. So kind of
+minimizes these these uh communication
+minimizes these these uh communication
+minimizes these these uh communication
+steps and gives you a fused kernel when
+steps and gives you a fused kernel when
+steps and gives you a fused kernel when
+you when you compile the code.
+you when you compile the code.
+you when you compile the code.
+So this is just one example of how uh
+So this is just one example of how uh
+So this is just one example of how uh
+this again, this is a function
+this again, this is a function
+this again, this is a function
+transformation. It takes your function
+transformation. It takes your function
+transformation. It takes your function
+and gives you a compiled version of that
+and gives you a compiled version of that
+and gives you a compiled version of that
+function that runs very fast.
+function that runs very fast.
+function that runs very fast.
+This is just one example uh of how Jax
+This is just one example uh of how Jax
+This is just one example uh of how Jax
+optimizes the code. Uh Jax does many
+optimizes the code. Uh Jax does many
+optimizes the code. Uh Jax does many
+other very sophisticated optimizations
+other very sophisticated optimizations
+other very sophisticated optimizations
+with with XLA that I'm not going to talk
+with with XLA that I'm not going to talk
+with with XLA that I'm not going to talk
+about.
+about.
+about.
+Um
+Um
+Um
+Long story short, once you've jitted
+Long story short, once you've jitted
+Long story short, once you've jitted
+your code uh and you've compiled it, it
+your code uh and you've compiled it, it
+your code uh and you've compiled it, it
+often runs much much faster. So for
+often runs much much faster. So for
+often runs much much faster. So for
+example
+example
+example
+when we fuse these operations together,
+when we fuse these operations together,
+when we fuse these operations together,
+we can just get a speed up of eight
+we can just get a speed up of eight
+we can just get a speed up of eight
+times already. So you know, by reducing
+times already. So you know, by reducing
+times already. So you know, by reducing
+the
+the
+the
+uh bottleneck of
+uh bottleneck of
+uh bottleneck of
+uh of read and write to the global
+uh of read and write to the global
+uh of read and write to the global
+memory.
+Um
+Um
+Um
+So yeah, behind the scenes this is using
+So yeah, behind the scenes this is using
+So yeah, behind the scenes this is using
+uh XLA, accelerated linear algebra both
+uh XLA, accelerated linear algebra both
+uh XLA, accelerated linear algebra both
+for the CPU and GPU and I think it works
+for the CPU and GPU and I think it works
+for the CPU and GPU and I think it works
+for other
+for other
+for other
+specialized devices, too.
+specialized devices, too.
+specialized devices, too.
+Like TPUs and and other other devices.
+Like TPUs and and other other devices.
+Like TPUs and and other other devices.
+Um but there is a there is a cost here
+Um but there is a there is a cost here
+Um but there is a there is a cost here
+and the cost is that it takes time to
+and the cost is that it takes time to
+and the cost is that it takes time to
+compile the function. Uh it depends on
+compile the function. Uh it depends on
+compile the function. Uh it depends on
+the function, but sometimes this can
+the function, but sometimes this can
+the function, but sometimes this can
+take seconds or more.
+take seconds or more.
+take seconds or more.
+Uh
+Uh
+Uh
+and this is kind of an up up front cost
+and this is kind of an up up front cost
+and this is kind of an up up front cost
+is to do that compilation. So typically
+is to do that compilation. So typically
+is to do that compilation. So typically
+you're only kind kind of compile
+you're only kind kind of compile
+you're only kind kind of compile
+functions that you know you're going to
+functions that you know you're going to
+functions that you know you're going to
+run hundreds of times so that that
+run hundreds of times so that that
+run hundreds of times so that that
+upfront cost doesn't uh is kind of
+upfront cost doesn't uh is kind of
+upfront cost doesn't uh is kind of
+amortized or is is not important.
+amortized or is is not important.
+amortized or is is not important.
+So if you imagine like training a deep
+So if you imagine like training a deep
+So if you imagine like training a deep
+neural network
+neural network
+neural network
+one function that we call thousands of
+one function that we call thousands of
+one function that we call thousands of
+times is the function that does the
+times is the function that does the
+times is the function that does the
+update of the network's weights. So does
+update of the network's weights. So does
+update of the network's weights. So does
+the gradient descent step.
+the gradient descent step.
+the gradient descent step.
+So when we use Jax compilation in deep
+So when we use Jax compilation in deep
+So when we use Jax compilation in deep
+learning, usually we compile the the
+learning, usually we compile the the
+learning, usually we compile the the
+update step and that takes that's
+update step and that takes that's
+update step and that takes that's
+expensive for the first update, but then
+expensive for the first update, but then
+expensive for the first update, but then
+for the next million updates, it's very
+for the next million updates, it's very
+for the next million updates, it's very
+fast.
+Any questions on this?
+Okay.
+Okay.
+Okay.
+So um I'll just go back to the
+So um I'll just go back to the
+So um I'll just go back to the
+JIT compilation and then we'll take a
+JIT compilation and then we'll take a
+JIT compilation and then we'll take a
+break. Um
+So yeah, here's an example of exactly
+So yeah, here's an example of exactly
+So yeah, here's an example of exactly
+that function. Just to prove to you that
+that function. Just to prove to you that
+that function. Just to prove to you that
+if I compile that function and then I I
+if I compile that function and then I I
+if I compile that function and then I I
+time time how long it takes to run that
+time time how long it takes to run that
+time time how long it takes to run that
+function
+function
+function
+uh for a fairly large array. This is
+uh for a fairly large array. This is
+uh for a fairly large array. This is
+running on my CPU, by the way, so I'm
+running on my CPU, by the way, so I'm
+running on my CPU, by the way, so I'm
+not even on a GPU, but the compilation
+not even on a GPU, but the compilation
+not even on a GPU, but the compilation
+still makes the CPU run uh much faster,
+still makes the CPU run uh much faster,
+still makes the CPU run uh much faster,
+so
+so
+so
+it's going to take
+it's going to take
+it's going to take
+uh
+uh
+uh
+this is about an eight times speed up
+this is about an eight times speed up
+this is about an eight times speed up
+like I was showing in the in the slides.
+like I was showing in the in the slides.
+like I was showing in the in the slides.
+And
+And
+And
+when I'm calling the jit function rather
+when I'm calling the jit function rather
+when I'm calling the jit function rather
+than the the original function.
+Um
+Um
+Um
+Okay, so I'm going to describe
+Okay, so I'm going to describe
+Okay, so I'm going to describe
+I think we'll take a break and then I'll
+I think we'll take a break and then I'll
+I think we'll take a break and then I'll
+and then I'll describe a the final
+and then I'll describe a the final
+and then I'll describe a the final
+example. We're going to put all these
+example. We're going to put all these
+example. We're going to put all these
+ideas together to do some linear
+ideas together to do some linear
+ideas together to do some linear
+regression. So
+regression. So
+regression. So
+Yep.
+Okay, so let's carry on. We're going to
+Okay, so let's carry on. We're going to
+Okay, so let's carry on. We're going to
+put this all together, all these
+put this all together, all these
+put this all together, all these
+concepts that we've learned about
+concepts that we've learned about
+concepts that we've learned about
+program transformations and do uh linear
+program transformations and do uh linear
+program transformations and do uh linear
+regression.
+regression.
+regression.
+And you're going to see that this pass
+And you're going to see that this pass
+And you're going to see that this pass
+is going to uh use all of these
+is going to uh use all of these
+is going to uh use all of these
+transformations. So we're going to use
+transformations. So we're going to use
+transformations. So we're going to use
+the vec vmap, we're going to use uh jit
+the vec vmap, we're going to use uh jit
+the vec vmap, we're going to use uh jit
+compilation, we're going to use the
+compilation, we're going to use the
+compilation, we're going to use the
+graph transformation all together and
+graph transformation all together and
+graph transformation all together and
+compose them together to solve this.
+compose them together to solve this.
+compose them together to solve this.
+Uh so here's our here's our training
+Uh so here's our here's our training
+Uh so here's our here's our training
+data. We just want to fit a straight
+data. We just want to fit a straight
+data. We just want to fit a straight
+line to this data. That's that's what
+line to this data. That's that's what
+line to this data. That's that's what
+we're going to do in one in one
+we're going to do in one in one
+we're going to do in one in one
+dimension.
+dimension.
+dimension.
+Um
+Um
+Um
+So
+So
+So
+first of all, I'm just going to define a
+first of all, I'm just going to define a
+first of all, I'm just going to define a
+function that gives us our initial guess
+function that gives us our initial guess
+function that gives us our initial guess
+of what our weight and our bias value
+of what our weight and our bias value
+of what our weight and our bias value
+is. This is just the the gradient and
+is. This is just the the gradient and
+is. This is just the the gradient and
+the intercept of the line. They're both
+the intercept of the line. They're both
+the intercept of the line. They're both
+scalar values.
+scalar values.
+scalar values.
+So we're going to use gradient descent
+So we're going to use gradient descent
+So we're going to use gradient descent
+to solve linear regression. Obviously,
+to solve linear regression. Obviously,
+to solve linear regression. Obviously,
+we can do it uh at more analytically,
+we can do it uh at more analytically,
+we can do it uh at more analytically,
+but this is just for the purpose of
+but this is just for the purpose of
+but this is just for the purpose of
+demonstration.
+demonstration.
+demonstration.
+Uh so then this is our forward model. Uh
+Uh so then this is our forward model. Uh
+Uh so then this is our forward model. Uh
+like we would do in PyTorch, we would
+like we would do in PyTorch, we would
+like we would do in PyTorch, we would
+define like a forward
+define like a forward
+define like a forward
+uh function.
+uh function.
+uh function.
+So we're just going to grab our uh
+So we're just going to grab our uh
+So we're just going to grab our uh
+weight bias value. We're going to do the
+weight bias value. We're going to do the
+weight bias value. We're going to do the
+matrix multiply of with with X,
+matrix multiply of with with X,
+matrix multiply of with with X,
+which is uh simply just a dot product uh
+which is uh simply just a dot product uh
+which is uh simply just a dot product uh
+or in fact, it's just a single scalar
+or in fact, it's just a single scalar
+or in fact, it's just a single scalar
+times by single scalar in this in this
+times by single scalar in this in this
+times by single scalar in this in this
+case.
+case.
+case.
+Uh plus plus a bias.
+Uh plus plus a bias.
+Uh plus plus a bias.
+And then I've got uh I'm going to vmap
+And then I've got uh I'm going to vmap
+And then I've got uh I'm going to vmap
+my forward batch. So this is written for
+my forward batch. So this is written for
+my forward batch. So this is written for
+a a single example, a single value of X,
+a a single example, a single value of X,
+a a single example, a single value of X,
+a scalar value in this case cuz it's a
+a scalar value in this case cuz it's a
+a scalar value in this case cuz it's a
+1D line.
+1D line.
+1D line.
+Uh and we're going to vmap it so that uh
+Uh and we're going to vmap it so that uh
+Uh and we're going to vmap it so that uh
+it can take in all of these all of these
+it can take in all of these all of these
+it can take in all of these all of these
+examples of X that we have. I don't uh
+examples of X that we have. I don't uh
+examples of X that we have. I don't uh
+we have 100 different uh training points
+we have 100 different uh training points
+we have 100 different uh training points
+here.
+Then we're going to define a a loss
+Then we're going to define a a loss
+Then we're going to define a a loss
+function which takes the batch of X
+function which takes the batch of X
+function which takes the batch of X
+values, the labels of Y, so the X and Y
+values, the labels of Y, so the X and Y
+values, the labels of Y, so the X and Y
+uh coordinates that we have in training
+uh coordinates that we have in training
+uh coordinates that we have in training
+data.
+data.
+data.
+It's going to call this vmap version of
+It's going to call this vmap version of
+It's going to call this vmap version of
+the forward function, so so compute the
+the forward function, so so compute the
+the forward function, so so compute the
+prediction for all of the training
+prediction for all of the training
+prediction for all of the training
+points.
+points.
+points.
+And then our loss function is just uh
+And then our loss function is just uh
+And then our loss function is just uh
+the prediction of the
+the prediction of the
+the prediction of the
+uh of the Y value, uh
+uh of the Y value, uh
+uh of the Y value, uh
+the mean squared error uh between the
+the mean squared error uh between the
+the mean squared error uh between the
+labels and the prediction.
+Everyone follow me so far?
+Everyone follow me so far?
+Everyone follow me so far?
+Right.
+Right.
+Right.
+Then we're going to call this gradient
+Then we're going to call this gradient
+Then we're going to call this gradient
+uh transformation. So value and grad is
+uh transformation. So value and grad is
+uh transformation. So value and grad is
+just a
+just a
+just a
+uh
+uh
+uh
+is a another program transformation that
+is a another program transformation that
+is a another program transformation that
+just spits out the gradient and also the
+just spits out the gradient and also the
+just spits out the gradient and also the
+value of the function at the same time.
+value of the function at the same time.
+value of the function at the same time.
+So it gives us both values.
+So it gives us both values.
+So it gives us both values.
+Um
+Um
+Um
+And we're going to the we're going to
+And we're going to the we're going to
+And we're going to the we're going to
+differentiate loss with respect to the
+differentiate loss with respect to the
+differentiate loss with respect to the
+first argument. So uh this is going to
+first argument. So uh this is going to
+first argument. So uh this is going to
+give us dL by d theta. So this is the
+give us dL by d theta. So this is the
+give us dL by d theta. So this is the
+gradient of the loss with respect to the
+gradient of the loss with respect to the
+gradient of the loss with respect to the
+the weights of the of the model.
+the weights of the of the model.
+the weights of the of the model.
+So with respect to W and B here.
+So then the final thing we need to do is
+So then the final thing we need to do is
+So then the final thing we need to do is
+do a a gradient descent step. We need to
+do a a gradient descent step. We need to
+do a a gradient descent step. We need to
+define
+define
+define
+define uh a function that we're going to
+define uh a function that we're going to
+define uh a function that we're going to
+call many many times in a for loop to do
+call many many times in a for loop to do
+call many many times in a for loop to do
+gradient descent on on the weights.
+gradient descent on on the weights.
+gradient descent on on the weights.
+So that's what I'm going to write.
+So that's what I'm going to write.
+So that's what I'm going to write.
+Um
+Um
+Um
+So
+So
+So
+to
+to
+to
+to do the step, we just need to compute
+to do the step, we just need to compute
+to do the step, we just need to compute
+the gradient and then we need to update
+the gradient and then we need to update
+the gradient and then we need to update
+the weights based on that gradient. So
+the weights based on that gradient. So
+the weights based on that gradient. So
+how do I compute the gradient?
+Yeah.
+Yeah.
+Yeah.
+So we we did that already. We've got
+So we we did that already. We've got
+So we we did that already. We've got
+we've got a function here, grad. This is
+we've got a function here, grad. This is
+we've got a function here, grad. This is
+a a function. This is a program
+a a function. This is a program
+a a function. This is a program
+transformation.
+transformation.
+transformation.
+It takes loss and gives me the gradient
+It takes loss and gives me the gradient
+It takes loss and gives me the gradient
+of the loss.
+of the loss.
+of the loss.
+So all we need to do is just call that
+So all we need to do is just call that
+So all we need to do is just call that
+function. So we just say uh
+function. So we just say uh
+function. So we just say uh
+dL d theta
+dL d theta
+dL d theta
+equals grad.
+equals grad.
+equals grad.
+And then we pass all the arguments of
+And then we pass all the arguments of
+And then we pass all the arguments of
+the of the original function. So we pass
+the of the original function. So we pass
+the of the original function. So we pass
+all these guys
+all these guys
+all these guys
+uh to that.
+uh to that.
+uh to that.
+So like I said, this transformation not
+So like I said, this transformation not
+So like I said, this transformation not
+only gives you the gradient, but also
+only gives you the gradient, but also
+only gives you the gradient, but also
+just gives you the value of the loss. So
+just gives you the value of the loss. So
+just gives you the value of the loss. So
+we just uh we get both when when we call
+we just uh we get both when when we call
+we just uh we get both when when we call
+that function.
+that function.
+that function.
+And so now we need to update theta based
+And so now we need to update theta based
+And so now we need to update theta based
+on the gradient of theta. So
+on the gradient of theta. So
+on the gradient of theta. So
+we say theta
+we say theta
+we say theta
+equals So theta here is actually a
+equals So theta here is actually a
+equals So theta here is actually a
+tuple, it's a Python tuple,
+tuple, it's a Python tuple,
+tuple, it's a Python tuple,
+uh which just contains the weight and
+uh which just contains the weight and
+uh which just contains the weight and
+the bias values.
+the bias values.
+the bias values.
+So I need to go into that tuple and
+So I need to go into that tuple and
+So I need to go into that tuple and
+update the weight. So so the upper here,
+update the weight. So so the upper here,
+update the weight. So so the upper here,
+this dL by d theta is also a tuple,
+this dL by d theta is also a tuple,
+this dL by d theta is also a tuple,
+which has the gradient of both of those
+which has the gradient of both of those
+which has the gradient of both of those
+quantities in it.
+quantities in it.
+quantities in it.
+So I need to go into that tuple and
+So I need to go into that tuple and
+So I need to go into that tuple and
+update the tuple. So JAX has like a a
+update the tuple. So JAX has like a a
+update the tuple. So JAX has like a a
+handy kind of utility function which is
+handy kind of utility function which is
+handy kind of utility function which is
+called jax.tree_map.
+called jax.tree_map.
+called jax.tree_map.
+So what this does is take any kind of
+So what this does is take any kind of
+So what this does is take any kind of
+Python tree. So a tree would be like a
+Python tree. So a tree would be like a
+Python tree. So a tree would be like a
+nested structure like a a dictionary or
+nested structure like a a dictionary or
+nested structure like a a dictionary or
+a dictionary with lists in or that has
+a dictionary with lists in or that has
+a dictionary with lists in or that has
+some sort of leaves at the bottom.
+some sort of leaves at the bottom.
+some sort of leaves at the bottom.
+So this tuple is is also a Python uh a
+So this tuple is is also a Python uh a
+So this tuple is is also a Python uh a
+pytree, which JAX
+pytree, which JAX
+pytree, which JAX
+just applies uh uh some function to to
+just applies uh uh some function to to
+just applies uh uh some function to to
+each of the leaves of that tree. So
+each of the leaves of that tree. So
+each of the leaves of that tree. So
+so the function that we want to do is
+so the function that we want to do is
+so the function that we want to do is
+just the gradient descent step. So we
+just the gradient descent step. So we
+just the gradient descent step. So we
+just we specify what this the function
+just we specify what this the function
+just we specify what this the function
+is.
+is.
+is.
+Um so the function's going to take the
+Um so the function's going to take the
+Um so the function's going to take the
+theta value and the gradient like this
+theta value and the gradient like this
+theta value and the gradient like this
+and it's going to say
+and it's going to say
+and it's going to say
+uh
+uh
+uh
+we're going to do it take a gradient
+we're going to do it take a gradient
+we're going to do it take a gradient
+descent step by times in the gradient by
+descent step by times in the gradient by
+descent step by times in the gradient by
+a by a small value.
+a by a small value.
+a by a small value.
+And then we're going to up map this
+And then we're going to up map this
+And then we're going to up map this
+function to uh
+function to uh
+function to uh
+uh the the theta tree and the gradient
+uh the the theta tree and the gradient
+uh the the theta tree and the gradient
+tree like this.
+So can you see how
+So can you see how
+So can you see how
+what we're just going through here is
+what we're just going through here is
+what we're just going through here is
+we're just going through these tuples
+we're just going through these tuples
+we're just going through these tuples
+and updating the gradients of each of
+and updating the gradients of each of
+and updating the gradients of each of
+the elements of the tuple. That's that's
+the elements of the tuple. That's that's
+the elements of the tuple. That's that's
+what we're doing.
+And then uh
+And then uh
+And then uh
+we just need to return
+we just need to return
+we just need to return
+uh
+uh
+uh
+the theta and the loss value like this.
+So this is performing one gradient
+So this is performing one gradient
+So this is performing one gradient
+descent step and then and then what we
+descent step and then and then what we
+descent step and then and then what we
+have here is just a for loop which is
+have here is just a for loop which is
+have here is just a for loop which is
+going to call uh that that step uh
+going to call uh that that step uh
+going to call uh that that step uh
+function many many times. Before we call
+function many many times. Before we call
+function many many times. Before we call
+it, we're actually going to use jit to
+it, we're actually going to use jit to
+it, we're actually going to use jit to
+compile this function. So this is what I
+compile this function. So this is what I
+compile this function. So this is what I
+was saying, we we typically when we're
+was saying, we we typically when we're
+was saying, we we typically when we're
+training training models, we we compile
+training training models, we we compile
+training training models, we we compile
+the highest highest level function we
+the highest highest level function we
+the highest highest level function we
+can, which in this case is the function
+can, which in this case is the function
+can, which in this case is the function
+that does the gradient descent step.
+Uh
+Uh
+Uh
+Any questions on this before I before I
+Any questions on this before I before I
+Any questions on this before I before I
+run it?
+Okay.
+So if you run it and it does it straight
+So if you run it and it does it straight
+So if you run it and it does it straight
+away.
+away.
+away.
+It's uh
+It's uh
+It's uh
+this is why jit is so powerful. It just
+this is why jit is so powerful. It just
+this is why jit is so powerful. It just
+runs so quickly on these like small
+runs so quickly on these like small
+runs so quickly on these like small
+small operations. So we've we've I just
+small operations. So we've we've I just
+small operations. So we've we've I just
+ran 1,000 gradient descent steps and it
+ran 1,000 gradient descent steps and it
+ran 1,000 gradient descent steps and it
+did it basically instantly on my on my
+did it basically instantly on my on my
+did it basically instantly on my on my
+CPU.
+CPU.
+CPU.
+Um and we fit we fit the line.
+Okay.
+Okay.
+Okay.
+Uh
+Uh
+Uh
+So let's go back to the slides.
+Okay.
+Okay.
+Okay.
+So I talked about uh
+So I talked about uh
+So I talked about uh
+the kind of fundamental
+the kind of fundamental
+the kind of fundamental
+uh
+uh
+uh
+features of JAX, the accelerated array
+features of JAX, the accelerated array
+features of JAX, the accelerated array
+computation and the program
+computation and the program
+computation and the program
+transformation
+transformation
+transformation
+uh in a very general way.
+uh in a very general way.
+uh in a very general way.
+Um
+Um
+Um
+and these things
+and these things
+and these things
+can help us do big machine learning
+can help us do big machine learning
+can help us do big machine learning
+tasks, but there's also a lot of effort
+tasks, but there's also a lot of effort
+tasks, but there's also a lot of effort
+using JAX to for scientific machine
+using JAX to for scientific machine
+using JAX to for scientific machine
+learning tasks.
+learning tasks.
+learning tasks.
+So
+So
+So
+uh doing exactly the types of techniques
+uh doing exactly the types of techniques
+uh doing exactly the types of techniques
+that we've been studying in this course,
+that we've been studying in this course,
+that we've been studying in this course,
+combining machine learning very tightly
+combining machine learning very tightly
+combining machine learning very tightly
+with our scientific computing algorithms
+with our scientific computing algorithms
+with our scientific computing algorithms
+that we have already.
+that we have already.
+that we have already.
+And uh these are just some of the
+And uh these are just some of the
+And uh these are just some of the
+libraries that have been built on top of
+libraries that have been built on top of
+libraries that have been built on top of
+JAX that help us do these kind of sci-ML
+JAX that help us do these kind of sci-ML
+JAX that help us do these kind of sci-ML
+kind of uh type tasks.
+kind of uh type tasks.
+kind of uh type tasks.
+So there's uh
+So there's uh
+So there's uh
+optimization libraries for doing, you
+optimization libraries for doing, you
+optimization libraries for doing, you
+know, gradient descent and higher order
+know, gradient descent and higher order
+know, gradient descent and higher order
+kind of optimization methods. Optax, JAX
+kind of optimization methods. Optax, JAX
+kind of optimization methods. Optax, JAX
+opt, Optimistics. There are many many uh
+opt, Optimistics. There are many many uh
+opt, Optimistics. There are many many uh
+libraries out there.
+libraries out there.
+libraries out there.
+There are also other libraries that
+There are also other libraries that
+There are also other libraries that
+allow you to train neural networks and
+allow you to train neural networks and
+allow you to train neural networks and
+uh define neural network architectures.
+uh define neural network architectures.
+uh define neural network architectures.
+So
+So
+So
+JAX is maybe a bit different to PyTorch
+JAX is maybe a bit different to PyTorch
+JAX is maybe a bit different to PyTorch
+in the sense that JAX doesn't have like
+in the sense that JAX doesn't have like
+in the sense that JAX doesn't have like
+a a built-in module that does neural
+a a built-in module that does neural
+a a built-in module that does neural
+networks. You you you use you have to
+networks. You you you use you have to
+networks. You you you use you have to
+use one of these kind of external
+use one of these kind of external
+use one of these kind of external
+libraries to do that.
+There's uh other Yeah, go on.
+JAX
+Yeah.
+So the question is, can you combine
+So the question is, can you combine
+So the question is, can you combine
+PyTorch and JAX together? Um
+PyTorch and JAX together? Um
+PyTorch and JAX together? Um
+I think it would be difficult because of
+I think it would be difficult because of
+I think it would be difficult because of
+the way they do autograd very
+the way they do autograd very
+the way they do autograd very
+fundamentally different. Where PyTorch
+fundamentally different. Where PyTorch
+fundamentally different. Where PyTorch
+has defined its own version of an array
+has defined its own version of an array
+has defined its own version of an array
+or a a PyTorch tensor, which has this
+or a a PyTorch tensor, which has this
+or a a PyTorch tensor, which has this
+gradient attribute.
+gradient attribute.
+gradient attribute.
+So to convert that to a JAX array would
+So to convert that to a JAX array would
+So to convert that to a JAX array would
+be probably be quite difficult
+be probably be quite difficult
+be probably be quite difficult
+uh
+uh
+uh
+inside of some hybrid autograd code.
+inside of some hybrid autograd code.
+inside of some hybrid autograd code.
+But what you could do
+But what you could do
+But what you could do
+if
+if
+if
+if there's like some preprocessing step
+if there's like some preprocessing step
+if there's like some preprocessing step
+or if there's like some other thing that
+or if there's like some other thing that
+or if there's like some other thing that
+doesn't need PyTorch gradients, it's
+doesn't need PyTorch gradients, it's
+doesn't need PyTorch gradients, it's
+just like a brute force computation, you
+just like a brute force computation, you
+just like a brute force computation, you
+could offload that to a jit compiled JAX
+could offload that to a jit compiled JAX
+could offload that to a jit compiled JAX
+code that spits out an array that then
+code that spits out an array that then
+code that spits out an array that then
+PyTorch can just convert into a PyTorch
+PyTorch can just convert into a PyTorch
+PyTorch can just convert into a PyTorch
+tensor.
+tensor.
+tensor.
+Uh
+Uh
+Uh
+so
+so
+so
+yeah, there's maybe maybe ways, yeah.
+Yeah, I don't know actually if there's a
+Yeah, I don't know actually if there's a
+Yeah, I don't know actually if there's a
+like a library that converts between uh
+like a library that converts between uh
+like a library that converts between uh
+libraries.
+libraries.
+libraries.
+Uh
+Uh
+Uh
+Yeah, I'm not sure.
+Yeah, I'm not sure.
+Yeah, I'm not sure.
+Yeah, yeah. I'm I'm not not sure. Maybe,
+Yeah, yeah. I'm I'm not not sure. Maybe,
+Yeah, yeah. I'm I'm not not sure. Maybe,
+but
+but
+but
+Uh so, these libraries are certainly not
+Uh so, these libraries are certainly not
+Uh so, these libraries are certainly not
+as developed as PyTorch. So, so this
+as developed as PyTorch. So, so this
+as developed as PyTorch. So, so this
+goes back to my your question before my
+goes back to my your question before my
+goes back to my your question before my
+advice about should I use PyTorch or
+advice about should I use PyTorch or
+advice about should I use PyTorch or
+should I use JAX? I think both libraries
+should I use JAX? I think both libraries
+should I use JAX? I think both libraries
+are brilliant. Uh just to learn both
+are brilliant. Uh just to learn both
+are brilliant. Uh just to learn both
+libraries is very useful for you to kind
+libraries is very useful for you to kind
+libraries is very useful for you to kind
+of develop.
+of develop.
+of develop.
+But, yeah, in general I would use
+But, yeah, in general I would use
+But, yeah, in general I would use
+PyTorch to do kind of standard deep
+PyTorch to do kind of standard deep
+PyTorch to do kind of standard deep
+learning tasks where I want to train
+learning tasks where I want to train
+learning tasks where I want to train
+like a standard neural network, but I
+like a standard neural network, but I
+like a standard neural network, but I
+would use JAX if I want to do something
+would use JAX if I want to do something
+would use JAX if I want to do something
+more complicated where I want like more
+more complicated where I want like more
+more complicated where I want like more
+complex derivatives, if I want to
+complex derivatives, if I want to
+complex derivatives, if I want to
+combine forward mode with also uh
+combine forward mode with also uh
+combine forward mode with also uh
+reverse mode auto diff, if I want to do
+reverse mode auto diff, if I want to do
+reverse mode auto diff, if I want to do
+Hessians, if I want to do parallelism
+Hessians, if I want to do parallelism
+Hessians, if I want to do parallelism
+across multiple devices, etc. And and
+across multiple devices, etc. And and
+across multiple devices, etc. And and
+also if I want to compose all this
+also if I want to compose all this
+also if I want to compose all this
+stuff.
+stuff.
+stuff.
+Um
+Um
+Um
+Okay. So, scientific computing. So,
+Okay. So, scientific computing. So,
+Okay. So, scientific computing. So,
+there are there are also libraries that
+there are there are also libraries that
+there are there are also libraries that
+can do, you know, the types of stuff
+can do, you know, the types of stuff
+can do, you know, the types of stuff
+that we need to do in scientific
+that we need to do in scientific
+that we need to do in scientific
+computing. So, things like matrix solves
+computing. So, things like matrix solves
+computing. So, things like matrix solves
+uh or linear algebra computations.
+uh or linear algebra computations.
+uh or linear algebra computations.
+Diffrax is an amazing library that uh
+Diffrax is an amazing library that uh
+Diffrax is an amazing library that uh
+allows you to train neural differential
+allows you to train neural differential
+allows you to train neural differential
+equations. So, to solve ODEs and also
+equations. So, to solve ODEs and also
+equations. So, to solve ODEs and also
+SDEs.
+SDEs.
+SDEs.
+Uh
+Uh
+Uh
+and also define learnable components of
+and also define learnable components of
+and also define learnable components of
+those and and backprop through them just
+those and and backprop through them just
+those and and backprop through them just
+like we were talking about in the neural
+like we were talking about in the neural
+like we were talking about in the neural
+differential equation lectures.
+differential equation lectures.
+differential equation lectures.
+There's JAX.SciPy which does uh tries to
+There's JAX.SciPy which does uh tries to
+There's JAX.SciPy which does uh tries to
+it's not a full set of uh NumPy
+it's not a full set of uh NumPy
+it's not a full set of uh NumPy
+uh of the original SciPy library, but it
+uh of the original SciPy library, but it
+uh of the original SciPy library, but it
+has some of the some of the
+has some of the some of the
+has some of the some of the
+functionality.
+functionality.
+functionality.
+Um and then there are a lot of amazing
+Um and then there are a lot of amazing
+Um and then there are a lot of amazing
+SciML libraries. Some of you might have
+SciML libraries. Some of you might have
+SciML libraries. Some of you might have
+been talking about these before. So, for
+been talking about these before. So, for
+been talking about these before. So, for
+example, uh JAX MD is a a highly
+example, uh JAX MD is a a highly
+example, uh JAX MD is a a highly
+performant library from from molecular
+performant library from from molecular
+performant library from from molecular
+dynamics.
+dynamics.
+dynamics.
+Uh Brax again is this rigid body
+Uh Brax again is this rigid body
+Uh Brax again is this rigid body
+simulation in JAX. NumPyro is a
+simulation in JAX. NumPyro is a
+simulation in JAX. NumPyro is a
+probabilistic programming language. So,
+probabilistic programming language. So,
+probabilistic programming language. So,
+you know, doing like Bayesian inference
+you know, doing like Bayesian inference
+you know, doing like Bayesian inference
+uh using JAX. Super interesting.
+uh using JAX. Super interesting.
+uh using JAX. Super interesting.
+JAX CFD, computational fluid dynamics uh
+JAX CFD, computational fluid dynamics uh
+JAX CFD, computational fluid dynamics uh
+on GPUs. Pretty cool.
+on GPUs. Pretty cool.
+on GPUs. Pretty cool.
+DeepXDE uh is a PINs library or or a
+DeepXDE uh is a PINs library or or a
+DeepXDE uh is a PINs library or or a
+physics-informed machine learning
+physics-informed machine learning
+physics-informed machine learning
+library. So,
+library. So,
+library. So,
+there's a lot of really cool stuff
+there's a lot of really cool stuff
+there's a lot of really cool stuff
+happening in this SciML ecosystem.
+So, the final example that I want to end
+So, the final example that I want to end
+So, the final example that I want to end
+on um
+on um
+on um
+is to show you an example of using
+is to show you an example of using
+is to show you an example of using
+optimization in JAX and using the Optax
+optimization in JAX and using the Optax
+optimization in JAX and using the Optax
+library. So, this is uh
+library. So, this is uh
+library. So, this is uh
+a library that's often used for for
+a library that's often used for for
+a library that's often used for for
+gradient descent in JAX.
+gradient descent in JAX.
+gradient descent in JAX.
+And I just want to show you how it easy
+And I just want to show you how it easy
+And I just want to show you how it easy
+it is to solve a scientific problem. I'm
+it is to solve a scientific problem. I'm
+it is to solve a scientific problem. I'm
+not doing any machine learning here. I'm
+not doing any machine learning here. I'm
+not doing any machine learning here. I'm
+just trying to solve the inverse problem
+just trying to solve the inverse problem
+just trying to solve the inverse problem
+for this wave equation example.
+for this wave equation example.
+for this wave equation example.
+So, what's the inverse problem? It's to
+So, what's the inverse problem? It's to
+So, what's the inverse problem? It's to
+say, if I give you a uh an example of
+say, if I give you a uh an example of
+say, if I give you a uh an example of
+what the wave field is at some time,
+what the wave field is at some time,
+what the wave field is at some time,
+can I guess what the the line velocity
+can I guess what the the line velocity
+can I guess what the the line velocity
+model is that that
+model is that that
+model is that that
+uh that uh
+uh that uh
+uh that uh
+earthquake or or seismic wave propagated
+earthquake or or seismic wave propagated
+earthquake or or seismic wave propagated
+through?
+through?
+through?
+Um and so, we can frame that as an
+Um and so, we can frame that as an
+Um and so, we can frame that as an
+optimization problem. We can start with
+optimization problem. We can start with
+optimization problem. We can start with
+some guess of what the velocity model is
+some guess of what the velocity model is
+some guess of what the velocity model is
+and we would just maybe start with a
+and we would just maybe start with a
+and we would just maybe start with a
+smooth version of what we what we might
+smooth version of what we what we might
+smooth version of what we what we might
+think it is.
+think it is.
+think it is.
+And then we can just run the forward
+And then we can just run the forward
+And then we can just run the forward
+simulator, you know, call the finite
+simulator, you know, call the finite
+simulator, you know, call the finite
+difference simulator to to predict what
+difference simulator to to predict what
+difference simulator to to predict what
+the the estimated wave field is. And
+the the estimated wave field is. And
+the the estimated wave field is. And
+then have a loss function which matches
+then have a loss function which matches
+then have a loss function which matches
+the estimated wave field to the true
+the estimated wave field to the true
+the estimated wave field to the true
+wave field.
+wave field.
+wave field.
+Use JAX's autograd to get the gradient
+Use JAX's autograd to get the gradient
+Use JAX's autograd to get the gradient
+of that loss function with respect to
+of that loss function with respect to
+of that loss function with respect to
+the velocity model and then update that
+the velocity model and then update that
+the velocity model and then update that
+velocity model using gradient descent.
+velocity model using gradient descent.
+velocity model using gradient descent.
+So, it's like a a standard
+So, it's like a a standard
+So, it's like a a standard
+optimization algorithm for this like
+optimization algorithm for this like
+optimization algorithm for this like
+inverse problem.
+inverse problem.
+inverse problem.
+And what's nice, I already showed you
+And what's nice, I already showed you
+And what's nice, I already showed you
+the code for doing the forward
+the code for doing the forward
+the code for doing the forward
+simulation. It was like maybe 50 lines
+simulation. It was like maybe 50 lines
+simulation. It was like maybe 50 lines
+of code and basic NumPy code.
+of code and basic NumPy code.
+of code and basic NumPy code.
+This is all that I need to add to be
+This is all that I need to add to be
+This is all that I need to add to be
+able to solve the inverse problem. I
+able to solve the inverse problem. I
+able to solve the inverse problem. I
+just define the the loss function which
+just define the the loss function which
+just define the the loss function which
+takes in my guess of the velocity and uh
+takes in my guess of the velocity and uh
+takes in my guess of the velocity and uh
+the true wave field measurements there.
+the true wave field measurements there.
+the true wave field measurements there.
+Right, calls the forward function. So,
+Right, calls the forward function. So,
+Right, calls the forward function. So,
+this calls that finite difference solver
+this calls that finite difference solver
+this calls that finite difference solver
+to get the estimated wave field. And
+to get the estimated wave field. And
+to get the estimated wave field. And
+then we just match the estimated wave
+then we just match the estimated wave
+then we just match the estimated wave
+field to the true wave field.
+field to the true wave field.
+field to the true wave field.
+And this is where JAX really kicks in is
+And this is where JAX really kicks in is
+And this is where JAX really kicks in is
+we can then call JAX.grad on on our on
+we can then call JAX.grad on on our on
+we can then call JAX.grad on on our on
+our loss to give us our gradient
+our loss to give us our gradient
+our loss to give us our gradient
+function.
+function.
+function.
+Uh
+Uh
+Uh
+and uh we just define an optimizer in in
+and uh we just define an optimizer in in
+and uh we just define an optimizer in in
+in Optax, uh the Adam optimizer. So,
+in Optax, uh the Adam optimizer. So,
+in Optax, uh the Adam optimizer. So,
+again, we can use kind of modern deep
+again, we can use kind of modern deep
+again, we can use kind of modern deep
+learning optimizers to to solve this
+learning optimizers to to solve this
+learning optimizers to to solve this
+inverse problem.
+inverse problem.
+inverse problem.
+Uh and then update the gradients. Uh we
+Uh and then update the gradients. Uh we
+Uh and then update the gradients. Uh we
+can also compile this. I haven't written
+can also compile this. I haven't written
+can also compile this. I haven't written
+JAX compilation, but we can jit compile
+JAX compilation, but we can jit compile
+JAX compilation, but we can jit compile
+the update function just like we did
+the update function just like we did
+the update function just like we did
+before.
+before.
+before.
+And uh
+And uh
+And uh
+yeah, just with like maybe 10 extra
+yeah, just with like maybe 10 extra
+yeah, just with like maybe 10 extra
+lines of code, we can solve solve this
+lines of code, we can solve solve this
+lines of code, we can solve solve this
+inverse problem. So, super powerful.
+inverse problem. So, super powerful.
+inverse problem. So, super powerful.
+Uh
+Uh
+Uh
+To have written this by hand, to write
+To have written this by hand, to write
+To have written this by hand, to write
+the gradients out by hand would would
+the gradients out by hand would would
+the gradients out by hand would would
+have taken a lot more effort to to do.
+have taken a lot more effort to to do.
+have taken a lot more effort to to do.
+And and this is running
+And and this is running
+And and this is running
+very performant in a very performant
+very performant in a very performant
+very performant in a very performant
+way, very very quickly. Remember, each
+way, very very quickly. Remember, each
+way, very very quickly. Remember, each
+forward simulation here is only taking
+forward simulation here is only taking
+forward simulation here is only taking
+65 milliseconds in my on the GPU.
+Okay.
+Okay.
+Okay.
+Anyone know why uh the estimated
+Anyone know why uh the estimated
+Anyone know why uh the estimated
+velocity is only fills in the the
+velocity is only fills in the the
+velocity is only fills in the the
+circle?
+circle?
+circle?
+Go on.
+Go on.
+Go on.
+That's great.
+That's great.
+That's great.
+Yeah.
+Yeah.
+Yeah.
+Yeah, because the true the true wave
+Yeah, because the true the true wave
+Yeah, because the true the true wave
+field there only propagates to that back
+field there only propagates to that back
+field there only propagates to that back
+point here. Uh
+point here. Uh
+point here. Uh
+And so, there's no information. The the
+And so, there's no information. The the
+And so, there's no information. The the
+waves haven't traveled through this part
+waves haven't traveled through this part
+waves haven't traveled through this part
+of velocity, so we could never
+of velocity, so we could never
+of velocity, so we could never
+understand what the velocity is in this
+understand what the velocity is in this
+understand what the velocity is in this
+part. Yeah, it's just
+part. Yeah, it's just
+part. Yeah, it's just
+problem-specific behavior.
+Okay.
+Okay.
+Okay.
+So, that's my high-level uh
+So, that's my high-level uh
+So, that's my high-level uh
+pitch for JAX. Um there are other great
+pitch for JAX. Um there are other great
+pitch for JAX. Um there are other great
+options. So, another option people
+options. So, another option people
+options. So, another option people
+compare to is Julia. This is Julia is a
+compare to is Julia. This is Julia is a
+compare to is Julia. This is Julia is a
+whole other programming language, but
+whole other programming language, but
+whole other programming language, but
+has kind of other functionality which is
+has kind of other functionality which is
+has kind of other functionality which is
+similar to JAX. I'm just more familiar
+similar to JAX. I'm just more familiar
+similar to JAX. I'm just more familiar
+with JAX, but I encourage you to explore
+with JAX, but I encourage you to explore
+with JAX, but I encourage you to explore
+different languages and different
+different languages and different
+different languages and different
+options for your for your for your tasks
+options for your for your for your tasks
+options for your for your for your tasks
+that you you want to solve.
+that you you want to solve.
+that you you want to solve.
+Um but yeah, JAX is a accelerated array
+Um but yeah, JAX is a accelerated array
+Um but yeah, JAX is a accelerated array
+computation and uh program
+computation and uh program
+computation and uh program
+transformation and auto diff,
+transformation and auto diff,
+transformation and auto diff,
+vectorization, compilation can all be
+vectorization, compilation can all be
+vectorization, compilation can all be
+thought of as program transformations
+thought of as program transformations
+thought of as program transformations
+and and are available available to use
+and and are available available to use
+and and are available available to use
+in JAX.
+in JAX.
+in JAX.
+And JAX really does enable this kind of
+And JAX really does enable this kind of
+And JAX really does enable this kind of
+high-performance large-scale SciML. So,
+high-performance large-scale SciML. So,
+high-performance large-scale SciML. So,
+that's the end of this lecture. Any any
+that's the end of this lecture. Any any
+that's the end of this lecture. Any any
+questions before I'm going to start the
+questions before I'm going to start the
+questions before I'm going to start the
+next one uh now.

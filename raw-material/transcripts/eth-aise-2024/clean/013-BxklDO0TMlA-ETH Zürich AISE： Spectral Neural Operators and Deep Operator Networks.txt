@@ -1,0 +1,3147 @@
+okay let's get going
+okay let's get going
+okay let's get going
+then so welcome to today's lecture and
+then so welcome to today's lecture and
+then so welcome to today's lecture and
+we continue where we have left
+we continue where we have left
+we continue where we have left
+so as in the last several lectures we
+so as in the last several lectures we
+so as in the last several lectures we
+are working with operator learning and
+are working with operator learning and
+are working with operator learning and
+the setup is the same so you have been
+the setup is the same so you have been
+the setup is the same so you have been
+given an abstract PD and associated with
+given an abstract PD and associated with
+given an abstract PD and associated with
+that PD is a solution operator which
+that PD is a solution operator which
+that PD is a solution operator which
+Maps a function space to the function
+Maps a function space to the function
+Maps a function space to the function
+space in other words it takes the inputs
+space in other words it takes the inputs
+space in other words it takes the inputs
+coefficient and forces in this
+coefficient and forces in this
+coefficient and forces in this
+particular case and it returns back the
+particular case and it returns back the
+particular case and it returns back the
+solution so this is as as before and
+solution so this is as as before and
+solution so this is as as before and
+since the problem is essential in infin
+since the problem is essential in infin
+since the problem is essential in infin
+dimensional problem we have to sort of
+dimensional problem we have to sort of
+dimensional problem we have to sort of
+think about how to represent it
+think about how to represent it
+think about how to represent it
+discretly in other words we have to
+discretly in other words we have to
+discretly in other words we have to
+think about what is this continuous
+think about what is this continuous
+think about what is this continuous
+discret this was the key concept that
+discret this was the key concept that
+discret this was the key concept that
+that we wanted to think about and in
+that we wanted to think about and in
+that we wanted to think about and in
+this context we introduced Reno uh
+this context we introduced Reno uh
+this context we introduced Reno uh
+representation equivalent neural
+representation equivalent neural
+representation equivalent neural
+operator and the idea let me repeat it
+operator and the idea let me repeat it
+operator and the idea let me repeat it
+again because it's very important
+again because it's very important
+again because it's very important
+is that uh you will never be able to
+is that uh you will never be able to
+is that uh you will never be able to
+have or work with this operator directly
+have or work with this operator directly
+have or work with this operator directly
+even if you want to learn it so what you
+even if you want to learn it so what you
+even if you want to learn it so what you
+have to do is to have some finite
+have to do is to have some finite
+have to do is to have some finite
+dimensional representations
+dimensional representations
+dimensional representations
+approximations of this operator which is
+approximations of this operator which is
+approximations of this operator which is
+given here and the link between the two
+given here and the link between the two
+given here and the link between the two
+is what really defines operator learning
+is what really defines operator learning
+is what really defines operator learning
+and in particular if this diagram
+and in particular if this diagram
+and in particular if this diagram
+commutes that is uh whether you work
+commutes that is uh whether you work
+commutes that is uh whether you work
+directly at the continuous level or
+directly at the continuous level or
+directly at the continuous level or
+whether you start at the continuous
+whether you start at the continuous
+whether you start at the continuous
+function space go to a grid discrete
+function space go to a grid discrete
+function space go to a grid discrete
+operate at the level of the grid this is
+operate at the level of the grid this is
+operate at the level of the grid this is
+the discrete operation CNN whatever and
+the discrete operation CNN whatever and
+the discrete operation CNN whatever and
+then you go back if this entire thing is
+then you go back if this entire thing is
+then you go back if this entire thing is
+exactly the same this diagram commutes
+exactly the same this diagram commutes
+exactly the same this diagram commutes
+so you have no aliasing error so this is
+so you have no aliasing error so this is
+so you have no aliasing error so this is
+uh the aliasing the difference between
+uh the aliasing the difference between
+uh the aliasing the difference between
+the two is the aliasing error here and
+the two is the aliasing error here and
+the two is the aliasing error here and
+as long as there is no aliasing you can
+as long as there is no aliasing you can
+as long as there is no aliasing you can
+do some genuine Bona Bona operator
+do some genuine Bona Bona operator
+do some genuine Bona Bona operator
+learning right so this is this is the
+learning right so this is this is the
+learning right so this is this is the
+setup that we in and we saw that CNN's
+setup that we in and we saw that CNN's
+setup that we in and we saw that CNN's
+they broke this and in the last lecture
+they broke this and in the last lecture
+they broke this and in the last lecture
+most of the time was spent with fno for
+most of the time was spent with fno for
+most of the time was spent with fno for
+neural operators and let me just uh
+neural operators and let me just uh
+neural operators and let me just uh
+recall what foral operators are so that
+recall what foral operators are so that
+recall what foral operators are so that
+it gets imprinted uh into you so we have
+it gets imprinted uh into you so we have
+it gets imprinted uh into you so we have
+uh some input a here and some output
+uh some input a here and some output
+uh some input a here and some output
+which is U similar to what we had in
+which is U similar to what we had in
+which is U similar to what we had in
+last slide and now what you do is you
+last slide and now what you do is you
+last slide and now what you do is you
+have different layers in particular this
+have different layers in particular this
+have different layers in particular this
+is a lifting right just to recall so
+is a lifting right just to recall so
+is a lifting right just to recall so
+this is lifting where you simply add
+this is lifting where you simply add
+this is lifting where you simply add
+more features add channels so that uh
+more features add channels so that uh
+more features add channels so that uh
+instead of working with physical
+instead of working with physical
+instead of working with physical
+variables density pressure and so on and
+variables density pressure and so on and
+variables density pressure and so on and
+so forth you work with some sort of
+so forth you work with some sort of
+so forth you work with some sort of
+representations some more uh abstract
+representations some more uh abstract
+representations some more uh abstract
+representations of these features and
+representations of these features and
+representations of these features and
+once you have lifted you have added more
+once you have lifted you have added more
+once you have lifted you have added more
+channels you have to also project them
+channels you have to also project them
+channels you have to also project them
+so this is the projection so these two
+so this is the projection so these two
+so this is the projection so these two
+are typically linear layers or you could
+are typically linear layers or you could
+are typically linear layers or you could
+use MLPs here this is the choice is wide
+use MLPs here this is the choice is wide
+use MLPs here this is the choice is wide
+but but all the action takes place in
+but but all the action takes place in
+but but all the action takes place in
+the processing which is done through
+the processing which is done through
+the processing which is done through
+this what are called f LS and this is
+this what are called f LS and this is
+this what are called f LS and this is
+the cartoon of a f LS so you start with
+the cartoon of a f LS so you start with
+the cartoon of a f LS so you start with
+a function you go to Fier Fier transform
+a function you go to Fier Fier transform
+a function you go to Fier Fier transform
+it so if you on a grid then you can do
+it so if you on a grid then you can do
+it so if you on a grid then you can do
+it fast with the fast forier transform
+it fast with the fast forier transform
+it fast with the fast forier transform
+and then you truncate you truncate the
+and then you truncate you truncate the
+and then you truncate you truncate the
+number of fua modes and this is and do
+number of fua modes and this is and do
+number of fua modes and this is and do
+some fua multiplier so this is the
+some fua multiplier so this is the
+some fua multiplier so this is the
+learnable parameter and two things
+learnable parameter and two things
+learnable parameter and two things
+happening first of all you transform the
+happening first of all you transform the
+happening first of all you transform the
+for coefficients in some some way and
+for coefficients in some some way and
+for coefficients in some some way and
+then what you do is you also truncate
+then what you do is you also truncate
+then what you do is you also truncate
+them right so instead of having four you
+them right so instead of having four you
+them right so instead of having four you
+just take two of these harmonics so as
+just take two of these harmonics so as
+just take two of these harmonics so as
+you can see in this picture that's
+you can see in this picture that's
+you can see in this picture that's
+that's a representation you go back to
+that's a representation you go back to
+that's a representation you go back to
+physical space through the inverse fora
+physical space through the inverse fora
+physical space through the inverse fora
+transform also through fft and then
+transform also through fft and then
+transform also through fft and then
+you're going to process it with you keep
+you're going to process it with you keep
+you're going to process it with you keep
+some of the signal so some of the signal
+some of the signal so some of the signal
+some of the signal so some of the signal
+is kept through the what is called the
+is kept through the what is called the
+is kept through the what is called the
+residual connection good for training
+residual connection good for training
+residual connection good for training
+and it has some other retain some
+and it has some other retain some
+and it has some other retain some
+spatial information and so on and then
+spatial information and so on and then
+spatial information and so on and then
+you apply the nonlinearity pointwise and
+you apply the nonlinearity pointwise and
+you apply the nonlinearity pointwise and
+you do it over and over again so this is
+you do it over and over again so this is
+you do it over and over again so this is
+uh f o but as I explained at the end of
+uh f o but as I explained at the end of
+uh f o but as I explained at the end of
+the last
+the last
+the last
+lecture there is an issue with f in the
+lecture there is an issue with f in the
+lecture there is an issue with f in the
+sense that uh there is there is an issue
+sense that uh there is there is an issue
+sense that uh there is there is an issue
+in the sense that activation function
+in the sense that activation function
+in the sense that activation function
+this uh the nonlinearity there that sort
+this uh the nonlinearity there that sort
+this uh the nonlinearity there that sort
+of broke this commutative diagram it
+of broke this commutative diagram it
+of broke this commutative diagram it
+broke this because at the end of the day
+broke this because at the end of the day
+broke this because at the end of the day
+what happens is that there has to be a
+what happens is that there has to be a
+what happens is that there has to be a
+neat correspondence between these spaces
+neat correspondence between these spaces
+neat correspondence between these spaces
+and if you take these as spaces of band
+and if you take these as spaces of band
+and if you take these as spaces of band
+limited functions and you apply a
+limited functions and you apply a
+limited functions and you apply a
+nonlinearity then that equivalence is
+nonlinearity then that equivalence is
+nonlinearity then that equivalence is
+broken and once that equivalence is
+broken and once that equivalence is
+broken and once that equivalence is
+broken then you end up with situations
+broken then you end up with situations
+broken then you end up with situations
+like this the example that I showed you
+like this the example that I showed you
+like this the example that I showed you
+last time of random assignment where you
+last time of random assignment where you
+last time of random assignment where you
+can train on a grid um and you get very
+can train on a grid um and you get very
+can train on a grid um and you get very
+very good results with both CNN and fno
+very good results with both CNN and fno
+very good results with both CNN and fno
+but as soon as you slightly change this
+but as soon as you slightly change this
+but as soon as you slightly change this
+was an extreme example as soon as you
+was an extreme example as soon as you
+was an extreme example as soon as you
+slightly change the let's say the
+slightly change the let's say the
+slightly change the let's say the
+representation the resolution uh even by
+representation the resolution uh even by
+representation the resolution uh even by
+one point then you start getting large
+one point then you start getting large
+one point then you start getting large
+errors right both for CNO and fnn uh fno
+errors right both for CNO and fnn uh fno
+errors right both for CNO and fnn uh fno
+and CNN and uh this is the regime where
+and CNN and uh this is the regime where
+and CNN and uh this is the regime where
+you don't have uh the neist condition
+you don't have uh the neist condition
+you don't have uh the neist condition
+satisfied so you don't expect that this
+satisfied so you don't expect that this
+satisfied so you don't expect that this
+they'll always be Al because there
+they'll always be Al because there
+they'll always be Al because there
+simply not enough uh Point density there
+simply not enough uh Point density there
+simply not enough uh Point density there
+okay so this showed us that we have to
+okay so this showed us that we have to
+okay so this showed us that we have to
+sort of continue the search and this is
+sort of continue the search and this is
+sort of continue the search and this is
+reinforced when you take practical
+reinforced when you take practical
+reinforced when you take practical
+examples realistic examples so this is
+examples realistic examples so this is
+examples realistic examples so this is
+again back to nav Stokes
+again back to nav Stokes
+again back to nav Stokes
+uh which is more or less the main
+uh which is more or less the main
+uh which is more or less the main
+equation that we have in the course and
+equation that we have in the course and
+equation that we have in the course and
+this is the operator it takes a velocity
+this is the operator it takes a velocity
+this is the operator it takes a velocity
+field and it turns out another velocity
+field and it turns out another velocity
+field and it turns out another velocity
+field and we sort of visualize it
+field and we sort of visualize it
+field and we sort of visualize it
+through the verticity so you can see
+through the verticity so you can see
+through the verticity so you can see
+that there is this initial shear and
+that there is this initial shear and
+that there is this initial shear and
+that leads to the shedding of vertices
+that leads to the shedding of vertices
+that leads to the shedding of vertices
+right so this is the this is the picture
+right so this is the this is the picture
+right so this is the this is the picture
+and if you take a fno what happens in
+and if you take a fno what happens in
+and if you take a fno what happens in
+this particular case is that the trading
+this particular case is that the trading
+this particular case is that the trading
+resolution is here and then the test
+resolution is here and then the test
+resolution is here and then the test
+resolution you have uh at different
+resolution you have uh at different
+resolution you have uh at different
+grades so when you increase the
+grades so when you increase the
+grades so when you increase the
+resolution you do get small errors uh
+resolution you do get small errors uh
+resolution you do get small errors uh
+because these high frequencies are
+because these high frequencies are
+because these high frequencies are
+probably small but when you reduce the
+probably small but when you reduce the
+probably small but when you reduce the
+resolution while still keeping within
+resolution while still keeping within
+resolution while still keeping within
+the nequis barrier you get large errors
+the nequis barrier you get large errors
+the nequis barrier you get large errors
+so this is again the fact that it is not
+so this is again the fact that it is not
+so this is again the fact that it is not
+R so there is no representation
+R so there is no representation
+R so there is no representation
+equivalence you end up uh there are aing
+equivalence you end up uh there are aing
+equivalence you end up uh there are aing
+errors and this will affect the quality
+errors and this will affect the quality
+errors and this will affect the quality
+of the solution it depends on the
+of the solution it depends on the
+of the solution it depends on the
+problem sometimes you know the high
+problem sometimes you know the high
+problem sometimes you know the high
+frequencies are really damped out in a
+frequencies are really damped out in a
+frequencies are really damped out in a
+problem in some other cases high
+problem in some other cases high
+problem in some other cases high
+frequencies remain so there is there is
+frequencies remain so there is there is
+frequencies remain so there is there is
+the issue right so the question is we
+the issue right so the question is we
+the issue right so the question is we
+need to challenge the the challenge here
+need to challenge the the challenge here
+need to challenge the the challenge here
+is we need to design an operator a
+is we need to design an operator a
+is we need to design an operator a
+neural operator that Sid steps this
+neural operator that Sid steps this
+neural operator that Sid steps this
+issue that is able to do this processing
+issue that is able to do this processing
+issue that is able to do this processing
+between different grades that can
+between different grades that can
+between different grades that can
+operate at any resolution and so on that
+operate at any resolution and so on that
+operate at any resolution and so on that
+learns the actual operator instead of
+learns the actual operator instead of
+learns the actual operator instead of
+just a map that takes a particular
+just a map that takes a particular
+just a map that takes a particular
+finite dimensional representation and
+finite dimensional representation and
+finite dimensional representation and
+turns out another fin dimensional
+turns out another fin dimensional
+turns out another fin dimensional
+representation so how do we do that so
+representation so how do we do that so
+representation so how do we do that so
+in today's lecture as well as in the
+in today's lecture as well as in the
+in today's lecture as well as in the
+next lecture we will see some examples
+next lecture we will see some examples
+next lecture we will see some examples
+so next lectures we'll see some
+so next lectures we'll see some
+so next lectures we'll see some
+examples and uh for today's lecture we
+examples and uh for today's lecture we
+examples and uh for today's lecture we
+take some inspiration from traditional
+take some inspiration from traditional
+take some inspiration from traditional
+numerical methods so as I said in the
+numerical methods so as I said in the
+numerical methods so as I said in the
+very beginning of the course um perhaps
+very beginning of the course um perhaps
+very beginning of the course um perhaps
+in the second or the third lecture that
+in the second or the third lecture that
+in the second or the third lecture that
+there is a wide sort of menu of uh
+there is a wide sort of menu of uh
+there is a wide sort of menu of uh
+numerical methods they go by different
+numerical methods they go by different
+numerical methods they go by different
+names so you have finite differences you
+names so you have finite differences you
+names so you have finite differences you
+have finite volumes finite elements and
+have finite volumes finite elements and
+have finite volumes finite elements and
+spectral methods and many others some of
+spectral methods and many others some of
+spectral methods and many others some of
+you have seen this methods in your
+you have seen this methods in your
+you have seen this methods in your
+scientific Computing computational
+scientific Computing computational
+scientific Computing computational
+science or numerical analysis courses
+science or numerical analysis courses
+science or numerical analysis courses
+numerical methods courses so there are
+numerical methods courses so there are
+numerical methods courses so there are
+wide variety of these methods and in
+wide variety of these methods and in
+wide variety of these methods and in
+some sense these methods also have to
+some sense these methods also have to
+some sense these methods also have to
+work in the same Paradigm right because
+work in the same Paradigm right because
+work in the same Paradigm right because
+there whether you approximate the
+there whether you approximate the
+there whether you approximate the
+solution operator through machine
+solution operator through machine
+solution operator through machine
+learning or whether you approximate the
+learning or whether you approximate the
+learning or whether you approximate the
+solution operator through numerical
+solution operator through numerical
+solution operator through numerical
+modeling at the end of the day you are
+modeling at the end of the day you are
+modeling at the end of the day you are
+approximating an operator so you are
+approximating an operator so you are
+approximating an operator so you are
+essentially dealing with an infinite
+essentially dealing with an infinite
+essentially dealing with an infinite
+dimensional problem right they're also
+dimensional problem right they're also
+dimensional problem right they're also
+the inputs for instance if I wanted to
+the inputs for instance if I wanted to
+the inputs for instance if I wanted to
+solve this with a spectral method which
+solve this with a spectral method which
+solve this with a spectral method which
+generates the ground truth you can see
+generates the ground truth you can see
+generates the ground truth you can see
+that I start with I have to project it
+that I start with I have to project it
+that I start with I have to project it
+onto some grid onto some basis process
+onto some grid onto some basis process
+onto some grid onto some basis process
+with the basis and then proceed so how
+with the basis and then proceed so how
+with the basis and then proceed so how
+is this
+is this
+is this
+done so here is again the same figure
+done so here is again the same figure
+done so here is again the same figure
+which comes again and again and again
+which comes again and again and again
+which comes again and again and again
+with similar notation with slight slight
+with similar notation with slight slight
+with similar notation with slight slight
+vertion here for a reason as you'll see
+vertion here for a reason as you'll see
+vertion here for a reason as you'll see
+so in fact numerical methods can very
+so in fact numerical methods can very
+so in fact numerical methods can very
+much be represented or interpreted in
+much be represented or interpreted in
+much be represented or interpreted in
+exactly the same Paradigm as the machine
+exactly the same Paradigm as the machine
+exactly the same Paradigm as the machine
+learning methods that I just showed you
+learning methods that I just showed you
+learning methods that I just showed you
+so again you have done operator so I
+so again you have done operator so I
+so again you have done operator so I
+don't know why this is a this an old
+don't know why this is a this an old
+don't know why this is a this an old
+name instead of G I said a to
+name instead of G I said a to
+name instead of G I said a to
+distinguish between learning and
+distinguish between learning and
+distinguish between learning and
+numerical approximation but essentially
+numerical approximation but essentially
+numerical approximation but essentially
+at the end of the day you want to
+at the end of the day you want to
+at the end of the day you want to
+approximate this operator out here
+approximate this operator out here
+approximate this operator out here
+capital G or script g calligraphic g
+capital G or script g calligraphic g
+capital G or script g calligraphic g
+which takes H I'm sorry about um mistake
+which takes H I'm sorry about um mistake
+which takes H I'm sorry about um mistake
+here it's it should be script of course
+here it's it should be script of course
+here it's it should be script of course
+script x x and script y but again what
+script x x and script y but again what
+script x x and script y but again what
+do they do these methods all rely on the
+do they do these methods all rely on the
+do they do these methods all rely on the
+same principle that you start with an
+same principle that you start with an
+same principle that you start with an
+infinite dimensional function space you
+infinite dimensional function space you
+infinite dimensional function space you
+project it down to Something in finite
+project it down to Something in finite
+project it down to Something in finite
+Dimensions you work in finite
+Dimensions you work in finite
+Dimensions you work in finite
+dimensional spaces um time stepping or
+dimensional spaces um time stepping or
+dimensional spaces um time stepping or
+whatever solving inverting a stiffness
+whatever solving inverting a stiffness
+whatever solving inverting a stiffness
+Matrix uh whatever is the necessity and
+Matrix uh whatever is the necessity and
+Matrix uh whatever is the necessity and
+then you go back to infinite Dimensions
+then you go back to infinite Dimensions
+then you go back to infinite Dimensions
+through some interpolation right so if
+through some interpolation right so if
+through some interpolation right so if
+you think of finite differences now
+you think of finite differences now
+you think of finite differences now
+those of you know I think I introduced
+those of you know I think I introduced
+those of you know I think I introduced
+the finite difference methods for
+the finite difference methods for
+the finite difference methods for
+instance quickly if you take the heat
+instance quickly if you take the heat
+instance quickly if you take the heat
+equation so U minus uu XX equal to Z and
+equation so U minus uu XX equal to Z and
+equation so U minus uu XX equal to Z and
+you take a grid in space and
+you take a grid in space and
+you take a grid in space and
+time so something like this and then to
+time so something like this and then to
+time so something like this and then to
+calculate unu n + 1 at some point J this
+calculate unu n + 1 at some point J this
+calculate unu n + 1 at some point J this
+was unu n what was
+the so it was delta T by Delta x² of U
+the so it was delta T by Delta x² of U
+the so it was delta T by Delta x² of U
+and a - 1 + 1 - 2 delta T by Delta x^ 2
+and a - 1 + 1 - 2 delta T by Delta x^ 2
+and a - 1 + 1 - 2 delta T by Delta x^ 2
+of U and J + Delta by Delta x^ 2 of u j
+of U and J + Delta by Delta x^ 2 of u j
+of U and J + Delta by Delta x^ 2 of u j
++
++
++
+1 right so this was the this was the
+1 right so this was the this was the
+1 right so this was the this was the
+picture we had done this in one of the
+picture we had done this in one of the
+picture we had done this in one of the
+lectures so I take these three points
+lectures so I take these three points
+lectures so I take these three points
+and then I evolve to the next time step
+and then I evolve to the next time step
+and then I evolve to the next time step
+and I keep on doing this right so this
+and I keep on doing this right so this
+and I keep on doing this right so this
+bit here which is what I call as
+bit here which is what I call as
+bit here which is what I call as
+approximator this is the numerical
+approximator this is the numerical
+approximator this is the numerical
+scheme we have no learning there but uh
+scheme we have no learning there but uh
+scheme we have no learning there but uh
+uh so this replaces the role of what
+uh so this replaces the role of what
+uh so this replaces the role of what
+where is the picture this replaces the
+where is the picture this replaces the
+where is the picture this replaces the
+role of this guy here this G here okay
+role of this guy here this G here okay
+role of this guy here this G here okay
+it replaces that because it's not based
+it replaces that because it's not based
+it replaces that because it's not based
+on it's based on first principle physics
+on it's based on first principle physics
+on it's based on first principle physics
+you have access to the equation so you
+you have access to the equation so you
+you have access to the equation so you
+can solve it uh similarly and then once
+can solve it uh similarly and then once
+can solve it uh similarly and then once
+you have the point values then you can
+you have the point values then you can
+you have the point values then you can
+always use a polinomial interpol right
+always use a polinomial interpol right
+always use a polinomial interpol right
+some sort of interpolation so this part
+some sort of interpolation so this part
+some sort of interpolation so this part
+is this is the interpolator this is the
+is this is the interpolator this is the
+is this is the interpolator this is the
+encoding which is just point values
+encoding which is just point values
+encoding which is just point values
+point viations and this is some
+point viations and this is some
+point viations and this is some
+processing similarly for find elements
+processing similarly for find elements
+processing similarly for find elements
+for those who know this it's exactly the
+for those who know this it's exactly the
+for those who know this it's exactly the
+same principle now what you do is that
+same principle now what you do is that
+same principle now what you do is that
+you have a basis which is consisting of
+you have a basis which is consisting of
+you have a basis which is consisting of
+finite element functions and then you
+finite element functions and then you
+finite element functions and then you
+take these Point values which are node
+take these Point values which are node
+take these Point values which are node
+values these are the coresponding
+values these are the coresponding
+values these are the coresponding
+coefficients you do some work with them
+coefficients you do some work with them
+coefficients you do some work with them
+for instance invert a mass sorry a
+for instance invert a mass sorry a
+for instance invert a mass sorry a
+stiffness Matrix and then you go back to
+stiffness Matrix and then you go back to
+stiffness Matrix and then you go back to
+infinite Dimensions through the finite
+infinite Dimensions through the finite
+infinite Dimensions through the finite
+element of the Gan basis same principle
+element of the Gan basis same principle
+element of the Gan basis same principle
+for finite volume spectral you do this
+for finite volume spectral you do this
+for finite volume spectral you do this
+for Foria coefficients so what what is
+for Foria coefficients so what what is
+for Foria coefficients so what what is
+the what's the objective or what's the
+the what's the objective or what's the
+the what's the objective or what's the
+bottom line here that when you have an
+bottom line here that when you have an
+bottom line here that when you have an
+infinite dimensional problem you reduce
+infinite dimensional problem you reduce
+infinite dimensional problem you reduce
+it to finite Dimensions this could be
+it to finite Dimensions this could be
+it to finite Dimensions this could be
+coefficients of a basis in the most
+coefficients of a basis in the most
+coefficients of a basis in the most
+General case even Point values are the
+General case even Point values are the
+General case even Point values are the
+coefficients with respect to the sync
+coefficients with respect to the sync
+coefficients with respect to the sync
+bases that I introduced in one of the
+bases that I introduced in one of the
+bases that I introduced in one of the
+last lectures right so all of this is
+last lectures right so all of this is
+last lectures right so all of this is
+essentially so this part here this e is
+essentially so this part here this e is
+essentially so this part here this e is
+some sort of a
+some sort of a
+some sort of a
+basis projection right
+basis projection right
+basis projection right
+and R here the Reconstruction is a
+and R here the Reconstruction is a
+and R here the Reconstruction is a
+basis
+basis
+basis
+reconstruction so if you have been given
+reconstruction so if you have been given
+reconstruction so if you have been given
+a basis whether it is sync or finite
+a basis whether it is sync or finite
+a basis whether it is sync or finite
+element basis or P wise constants or F
+element basis or P wise constants or F
+element basis or P wise constants or F
+Fier is the basis for spectral methods P
+Fier is the basis for spectral methods P
+Fier is the basis for spectral methods P
+wise constants are the basis for find
+wise constants are the basis for find
+wise constants are the basis for find
+element methods find volume methods and
+element methods find volume methods and
+element methods find volume methods and
+so on and so forth right so one you
+so on and so forth right so one you
+so on and so forth right so one you
+project down to a basis and on the other
+project down to a basis and on the other
+project down to a basis and on the other
+side you just take the coefficients and
+side you just take the coefficients and
+side you just take the coefficients and
+then you just form the basis expansion
+then you just form the basis expansion
+then you just form the basis expansion
+that's why it's called a basis
+that's why it's called a basis
+that's why it's called a basis
+reconstruction all numerical methods
+reconstruction all numerical methods
+reconstruction all numerical methods
+somehow fall into this uh let's say this
+somehow fall into this uh let's say this
+somehow fall into this uh let's say this
+scheme right and in between this is
+scheme right and in between this is
+scheme right and in between this is
+where the physics takes place right so
+where the physics takes place right so
+where the physics takes place right so
+you you sort of have a discrete version
+you you sort of have a discrete version
+you you sort of have a discrete version
+of the equation and you are going to
+of the equation and you are going to
+of the equation and you are going to
+propagate the discrete version of the
+propagate the discrete version of the
+propagate the discrete version of the
+equation but all the time you're going
+equation but all the time you're going
+equation but all the time you're going
+to work with these spasis coefficients
+to work with these spasis coefficients
+to work with these spasis coefficients
+right and this is not what we did for
+right and this is not what we did for
+right and this is not what we did for
+instance with f with fno o this was a
+instance with f with fno o this was a
+instance with f with fno o this was a
+little bit more complicated that we
+little bit more complicated that we
+little bit more complicated that we
+where is the fno picture now that we we
+where is the fno picture now that we we
+where is the fno picture now that we we
+did some extraction but at the same time
+did some extraction but at the same time
+did some extraction but at the same time
+we kept some elements of it we were
+we kept some elements of it we were
+we kept some elements of it we were
+learning it as some sort of function to
+learning it as some sort of function to
+learning it as some sort of function to
+function rather than directly working
+function rather than directly working
+function rather than directly working
+with some basis elements and it turns
+with some basis elements and it turns
+with some basis elements and it turns
+out that you can sort of imitate this uh
+out that you can sort of imitate this uh
+out that you can sort of imitate this uh
+scheme this picture that I just
+scheme this picture that I just
+scheme this picture that I just
+presented here and you can end up with a
+presented here and you can end up with a
+presented here and you can end up with a
+class of machine learning or operator
+class of machine learning or operator
+class of machine learning or operator
+learning methods which are introduced in
+learning methods which are introduced in
+learning methods which are introduced in
+the next slide so in some
+the next slide so in some
+the next slide so in some
+generality these methods can be termed
+generality these methods can be termed
+generality these methods can be termed
+as spectral neural operators
+as spectral neural operators
+as spectral neural operators
+this is this is a general name but um
+this is this is a general name but um
+this is this is a general name but um
+it's it's a good name and the idea is
+it's it's a good name and the idea is
+it's it's a good name and the idea is
+exactly as before right so just like in
+exactly as before right so just like in
+exactly as before right so just like in
+numerical methods we drop things down to
+numerical methods we drop things down to
+numerical methods we drop things down to
+a basis and we project them up using the
+a basis and we project them up using the
+a basis and we project them up using the
+basis in between instead of having a
+basis in between instead of having a
+basis in between instead of having a
+numerical method I strictly work with um
+numerical method I strictly work with um
+numerical method I strictly work with um
+some DNN right some sort of a it could
+some DNN right some sort of a it could
+some DNN right some sort of a it could
+be MLPs it could be CNN it does not
+be MLPs it could be CNN it does not
+be MLPs it could be CNN it does not
+really matter mostly these are MLPs
+really matter mostly these are MLPs
+really matter mostly these are MLPs
+because now
+because now
+because now
+they can't be CNN because CNN are based
+they can't be CNN because CNN are based
+they can't be CNN because CNN are based
+on functions or on pixels and so on
+on functions or on pixels and so on
+on functions or on pixels and so on
+these are just based on some sort of
+these are just based on some sort of
+these are just based on some sort of
+MLPs so let me repeat there is some some
+MLPs so let me repeat there is some some
+MLPs so let me repeat there is some some
+math here which is fairly
+math here which is fairly
+math here which is fairly
+straightforward uh in some particular
+straightforward uh in some particular
+straightforward uh in some particular
+example but let me just give you a very
+example but let me just give you a very
+example but let me just give you a very
+simple idea so you have some
+simple idea so you have some
+simple idea so you have some
+input so this input is going to be let's
+input so this input is going to be let's
+input so this input is going to be let's
+say a that is how I express my input I
+say a that is how I express my input I
+say a that is how I express my input I
+express it in terms some some basis
+express it in terms some some basis
+express it in terms some some basis
+AJ SJ right x i is some bases that I'm
+AJ SJ right x i is some bases that I'm
+AJ SJ right x i is some bases that I'm
+going to choose now I have access to the
+going to choose now I have access to the
+going to choose now I have access to the
+vector AJ so this is J from 1 to L and I
+vector AJ so this is J from 1 to L and I
+vector AJ so this is J from 1 to L and I
+take a neural network let me call it as
+take a neural network let me call it as
+take a neural network let me call it as
+l i take this AJ and I churn out some
+l i take this AJ and I churn out some
+l i take this AJ and I churn out some
+UJ u j j from 1 to M it could be the
+UJ u j j from 1 to M it could be the
+UJ u j j from 1 to M it could be the
+number so you directly work with the
+number so you directly work with the
+number so you directly work with the
+bases you you forget all this notion of
+bases you you forget all this notion of
+bases you you forget all this notion of
+space that we have all this notion that
+space that we have all this notion that
+space that we have all this notion that
+these are parts of a function you just
+these are parts of a function you just
+these are parts of a function you just
+just work with these discrete
+just work with these discrete
+just work with these discrete
+coefficients and you process them okay
+coefficients and you process them okay
+coefficients and you process them okay
+by your DNN and finally in the last step
+by your DNN and finally in the last step
+by your DNN and finally in the last step
+you just take your U as an approximation
+you just take your U as an approximation
+you just take your U as an approximation
+of this UJ SJ again let's say that the
+of this UJ SJ again let's say that the
+of this UJ SJ again let's say that the
+basis in the input and output is exactly
+basis in the input and output is exactly
+basis in the input and output is exactly
+the same so this is what is being done
+the same so this is what is being done
+the same so this is what is being done
+in the spectral neural operators okay
+in the spectral neural operators okay
+in the spectral neural operators okay
+and now based on what basis you choose
+and now based on what basis you choose
+and now based on what basis you choose
+you get different classes of functions
+you get different classes of functions
+you get different classes of functions
+remember that FN is not exactly in this
+remember that FN is not exactly in this
+remember that FN is not exactly in this
+framework because it does not
+framework because it does not
+framework because it does not
+necessarily always have this represent
+necessarily always have this represent
+necessarily always have this represent
+presentation you still have a notion of
+presentation you still have a notion of
+presentation you still have a notion of
+space and similarly for CNN you still
+space and similarly for CNN you still
+space and similarly for CNN you still
+have a notion of space here you remove
+have a notion of space here you remove
+have a notion of space here you remove
+that completely you work with these
+that completely you work with these
+that completely you work with these
+objects as discrete objects and you
+objects as discrete objects and you
+objects as discrete objects and you
+expect that somehow this information
+expect that somehow this information
+expect that somehow this information
+that these come from a function is
+that these come from a function is
+that these come from a function is
+represented in the fact that the fio
+represented in the fact that the fio
+represented in the fact that the fio
+coefficients for example are going to
+coefficients for example are going to
+coefficients for example are going to
+Decay right if you have a smooth
+Decay right if you have a smooth
+Decay right if you have a smooth
+function they're going to have a certain
+function they're going to have a certain
+function they're going to have a certain
+Decay okay so is this is the scheme
+Decay okay so is this is the scheme
+Decay okay so is this is the scheme
+clear and see what what is the
+clear and see what what is the
+clear and see what what is the
+difference between what we did before
+difference between what we did before
+difference between what we did before
+before we were sort of processing an
+before we were sort of processing an
+before we were sort of processing an
+entire image or an entire pixel here
+entire image or an entire pixel here
+entire image or an entire pixel here
+we're not doing that we're taking a
+we're not doing that we're taking a
+we're not doing that we're taking a
+function an image and we're taking first
+function an image and we're taking first
+function an image and we're taking first
+24 year coefficients we are sort of
+24 year coefficients we are sort of
+24 year coefficients we are sort of
+processing them into a neural network we
+processing them into a neural network we
+processing them into a neural network we
+are getting another 20 coefficients and
+are getting another 20 coefficients and
+are getting another 20 coefficients and
+then we are coming back okay and that is
+then we are coming back okay and that is
+then we are coming back okay and that is
+dramatically different from what not
+dramatically different from what not
+dramatically different from what not
+dramatically but there is a subtle
+dramatically but there is a subtle
+dramatically but there is a subtle
+difference from what we did before which
+difference from what we did before which
+difference from what we did before which
+was that we operated the image by itself
+was that we operated the image by itself
+was that we operated the image by itself
+and did some processing with it now as
+and did some processing with it now as
+and did some processing with it now as
+long as a particular realization which
+long as a particular realization which
+long as a particular realization which
+was done by the these people here it
+was done by the these people here it
+was done by the these people here it
+takes and you'll see that there is there
+takes and you'll see that there is there
+takes and you'll see that there is there
+are some good things and bad things with
+are some good things and bad things with
+are some good things and bad things with
+is with fora basis that's the simplest
+is with fora basis that's the simplest
+is with fora basis that's the simplest
+that you can think of right so in
+that you can think of right so in
+that you can think of right so in
+particular if your periodic um problems
+particular if your periodic um problems
+particular if your periodic um problems
+periodic problems it's very natural to
+periodic problems it's very natural to
+periodic problems it's very natural to
+express them in terms of science and cos
+express them in terms of science and cos
+express them in terms of science and cos
+signs which is a fora basis so of course
+signs which is a fora basis so of course
+signs which is a fora basis so of course
+you need to work with pan limited
+you need to work with pan limited
+you need to work with pan limited
+functions because otherwise the space is
+functions because otherwise the space is
+functions because otherwise the space is
+too big to carry out this program and
+too big to carry out this program and
+too big to carry out this program and
+then this construction here so because
+then this construction here so because
+then this construction here so because
+we are always with for coefficients I
+we are always with for coefficients I
+we are always with for coefficients I
+take it complex Valu but in practice we
+take it complex Valu but in practice we
+take it complex Valu but in practice we
+take it real value right the imaginary
+take it real value right the imaginary
+take it real value right the imaginary
+parts are going to cancel out so what is
+parts are going to cancel out so what is
+parts are going to cancel out so what is
+the idea it's precisely what I said here
+the idea it's precisely what I said here
+the idea it's precisely what I said here
+so this T of S K and S K Prime is just
+so this T of S K and S K Prime is just
+so this T of S K and S K Prime is just
+operators which tell you that you can
+operators which tell you that you can
+operators which tell you that you can
+drop things down to a basis and
+drop things down to a basis and
+drop things down to a basis and
+reconstruct them up this as simple as
+reconstruct them up this as simple as
+reconstruct them up this as simple as
+that okay but the idea is of course this
+that okay but the idea is of course this
+that okay but the idea is of course this
+is a Reno now because uh here everything
+is a Reno now because uh here everything
+is a Reno now because uh here everything
+is done in a finite dimensional way
+is done in a finite dimensional way
+is done in a finite dimensional way
+means there is no notion so even if you
+means there is no notion so even if you
+means there is no notion so even if you
+have so the simplest way to imagine it
+have so the simplest way to imagine it
+have so the simplest way to imagine it
+is that if you have two different grides
+is that if you have two different grides
+is that if you have two different grides
+okay it does not really matter because I
+okay it does not really matter because I
+okay it does not really matter because I
+take function from one grid and I simply
+take function from one grid and I simply
+take function from one grid and I simply
+project it onto some fixed number of
+project it onto some fixed number of
+project it onto some fixed number of
+foror coefficients and I take function
+foror coefficients and I take function
+foror coefficients and I take function
+from another grid and I project it onto
+from another grid and I project it onto
+from another grid and I project it onto
+the same number of foror coefficients
+the same number of foror coefficients
+the same number of foror coefficients
+and then I do the processing and I do
+and then I do the processing and I do
+and then I do the processing and I do
+the Reconstruction so to me it does not
+the Reconstruction so to me it does not
+the Reconstruction so to me it does not
+really matter whether the function is on
+really matter whether the function is on
+really matter whether the function is on
+a fine grade or a course grid as long as
+a fine grade or a course grid as long as
+a fine grade or a course grid as long as
+I don't change my number of variables
+I don't change my number of variables
+I don't change my number of variables
+right of course the point is just
+right of course the point is just
+right of course the point is just
+imagine that you have a function on a
+imagine that you have a function on a
+imagine that you have a function on a
+COR scrip and you project it onto 204a
+COR scrip and you project it onto 204a
+COR scrip and you project it onto 204a
+coefficients and maybe perhaps this is a
+coefficients and maybe perhaps this is a
+coefficients and maybe perhaps this is a
+good representation of the function on
+good representation of the function on
+good representation of the function on
+the other hand when you have it on a
+the other hand when you have it on a
+the other hand when you have it on a
+finer grid you might want to project it
+finer grid you might want to project it
+finer grid you might want to project it
+into more F coefficients but you don't
+into more F coefficients but you don't
+into more F coefficients but you don't
+have that flexibility here
+yes it is uh not very different in some
+yes it is uh not very different in some
+yes it is uh not very different in some
+sense but here the parameters you'll see
+sense but here the parameters you'll see
+sense but here the parameters you'll see
+in a in a second that you can extend
+in a in a second that you can extend
+in a in a second that you can extend
+this to to cover the non is not strictly
+this to to cover the non is not strictly
+this to to cover the non is not strictly
+parametric because earlier you you did
+parametric because earlier you you did
+parametric because earlier you you did
+not in a way you were sort of constrain
+not in a way you were sort of constrain
+not in a way you were sort of constrain
+to you you could never use a function in
+to you you could never use a function in
+to you you could never use a function in
+some sense right so this this adds one
+some sense right so this this adds one
+some sense right so this this adds one
+additional layer now all that it tells
+additional layer now all that it tells
+additional layer now all that it tells
+you is that you start with a function
+you is that you start with a function
+you is that you start with a function
+and you project it onto some fixed
+and you project it onto some fixed
+and you project it onto some fixed
+number of parameters earlier you were
+number of parameters earlier you were
+number of parameters earlier you were
+directly working with that so you did
+directly working with that so you did
+directly working with that so you did
+not even have this first step here so
+not even have this first step here so
+not even have this first step here so
+this part was redundant you didn't even
+this part was redundant you didn't even
+this part was redundant you didn't even
+need it so you have one additional lay
+need it so you have one additional lay
+need it so you have one additional lay
+but in in some sense you hit the nail on
+but in in some sense you hit the nail on
+but in in some sense you hit the nail on
+the head because It suffers from some of
+the head because It suffers from some of
+the head because It suffers from some of
+the same problems that a parametric
+the same problems that a parametric
+the same problems that a parametric
+representation has right so I'm not
+representation has right so I'm not
+representation has right so I'm not
+saying that all the problems are going
+saying that all the problems are going
+saying that all the problems are going
+to be solved by this but this is one
+to be solved by this but this is one
+to be solved by this but this is one
+particular way where you solve one
+particular way where you solve one
+particular way where you solve one
+problem which is that you have different
+problem which is that you have different
+problem which is that you have different
+information on the grid you don't care
+information on the grid you don't care
+information on the grid you don't care
+because you're projecting on to a finite
+because you're projecting on to a finite
+because you're projecting on to a finite
+basis of course this is very limiting
+basis of course this is very limiting
+basis of course this is very limiting
+because it tells you that this a
+because it tells you that this a
+because it tells you that this a
+straight jacket that we have to wrap
+straight jacket that we have to wrap
+straight jacket that we have to wrap
+around ourselves which is uh which is
+around ourselves which is uh which is
+around ourselves which is uh which is
+not nice so there is a generalization
+not nice so there is a generalization
+not nice so there is a generalization
+which is uh or a variant you could also
+which is uh or a variant you could also
+which is uh or a variant you could also
+I should have used the word
+I should have used the word
+I should have used the word
+generalization and this was one of the
+generalization and this was one of the
+generalization and this was one of the
+first operator learning architectures
+first operator learning architectures
+first operator learning architectures
+that was introduced even though the name
+that was introduced even though the name
+that was introduced even though the name
+was not yet there it is called uh Deets
+was not yet there it is called uh Deets
+was not yet there it is called uh Deets
+uh some of you might have seen that so
+uh some of you might have seen that so
+uh some of you might have seen that so
+this actually comes from the '90s by by
+this actually comes from the '90s by by
+this actually comes from the '90s by by
+two Chinese computer scientists in the
+two Chinese computer scientists in the
+two Chinese computer scientists in the
+'90s but the modern version of it is 3
+'90s but the modern version of it is 3
+'90s but the modern version of it is 3
+four years old like everything else so
+four years old like everything else so
+four years old like everything else so
+the idea here is so here the problem was
+the idea here is so here the problem was
+the idea here is so here the problem was
+that we somehow have to supply the basis
+that we somehow have to supply the basis
+that we somehow have to supply the basis
+right some expert knowledge is required
+right some expert knowledge is required
+right some expert knowledge is required
+we say okay these are periodic functions
+we say okay these are periodic functions
+we say okay these are periodic functions
+so P basis or these are some other
+so P basis or these are some other
+so P basis or these are some other
+structures or chv CH bases or these are
+structures or chv CH bases or these are
+structures or chv CH bases or these are
+on a sphere sperical harmonics mean this
+on a sphere sperical harmonics mean this
+on a sphere sperical harmonics mean this
+is sort of some expert knowledge that we
+is sort of some expert knowledge that we
+is sort of some expert knowledge that we
+are going to use so what these people
+are going to use so what these people
+are going to use so what these people
+argued is that what if we also learn the
+argued is that what if we also learn the
+argued is that what if we also learn the
+basis and not just uh it seems to be a
+basis and not just uh it seems to be a
+basis and not just uh it seems to be a
+smarter thing to do to have that kind of
+smarter thing to do to have that kind of
+smarter thing to do to have that kind of
+a generality to be able to learn the
+a generality to be able to learn the
+a generality to be able to learn the
+basis and this this is what ponet does
+basis and this this is what ponet does
+basis and this this is what ponet does
+let me fairly quickly sort of explain
+let me fairly quickly sort of explain
+let me fairly quickly sort of explain
+that so that you learn some of the
+that so that you learn some of the
+that so that you learn some of the
+history of the topic also you'll see
+history of the topic also you'll see
+history of the topic also you'll see
+that this is it has its problems but uh
+that this is it has its problems but uh
+that this is it has its problems but uh
+you see where it comes from so it's
+you see where it comes from so it's
+you see where it comes from so it's
+exactly the same picture as before maybe
+exactly the same picture as before maybe
+exactly the same picture as before maybe
+I show it in terms of U so there are two
+I show it in terms of U so there are two
+I show it in terms of U so there are two
+things here there are two elements um
+things here there are two elements um
+things here there are two elements um
+one is of course coefficients let me try
+one is of course coefficients let me try
+one is of course coefficients let me try
+to summarize them so these are
+to summarize them so these are
+to summarize them so these are
+coefficients as before
+coefficients as before
+coefficients as before
+okay but this guy here the
+okay but this guy here the
+okay but this guy here the
+t is roughly approximating a basis in
+t is roughly approximating a basis in
+t is roughly approximating a basis in
+fact it has even as a name it's called a
+fact it has even as a name it's called a
+fact it has even as a name it's called a
+trunk
+trunk
+trunk
+net and this on the other hand the
+net and this on the other hand the
+net and this on the other hand the
+coefficients is a branch net so at first
+coefficients is a branch net so at first
+coefficients is a branch net so at first
+side it looks like a very very
+side it looks like a very very
+side it looks like a very very
+complicated construction but in reality
+complicated construction but in reality
+complicated construction but in reality
+it's a fairly simple idea except that
+it's a fairly simple idea except that
+it's a fairly simple idea except that
+you now have a learnable basis so you
+you now have a learnable basis so you
+you now have a learnable basis so you
+first from the data that you have you of
+first from the data that you have you of
+first from the data that you have you of
+course learn learn a basis first or
+course learn learn a basis first or
+course learn learn a basis first or
+together you learn a basis as well as
+together you learn a basis as well as
+together you learn a basis as well as
+you learn the coefficients okay so both
+you learn the coefficients okay so both
+you learn the coefficients okay so both
+things are done simultaneously and of
+things are done simultaneously and of
+things are done simultaneously and of
+course this you can imagine it seems
+course this you can imagine it seems
+course this you can imagine it seems
+like a smart idea but it has its issues
+like a smart idea but it has its issues
+like a smart idea but it has its issues
+because you have to learn probably too
+because you have to learn probably too
+because you have to learn probably too
+much so what is the basic idea let me
+much so what is the basic idea let me
+much so what is the basic idea let me
+explain it in the perhaps in this
+explain it in the perhaps in this
+explain it in the perhaps in this
+picture here so sorry for the confusing
+picture here so sorry for the confusing
+picture here so sorry for the confusing
+notation because I copied the picture
+notation because I copied the picture
+notation because I copied the picture
+from somewhere so this is your input now
+from somewhere so this is your input now
+from somewhere so this is your input now
+it's not called a anymore it's called
+it's not called a anymore it's called
+it's not called a anymore it's called
+you but nevertheless doesn't really
+you but nevertheless doesn't really
+you but nevertheless doesn't really
+matter so the encoding the is given by
+matter so the encoding the is given by
+matter so the encoding the is given by
+Point wise values so this is uh point I
+Point wise values so this is uh point I
+Point wise values so this is uh point I
+think I say it here sensor evaluations
+think I say it here sensor evaluations
+think I say it here sensor evaluations
+so these are Point
+so these are Point
+so these are Point
+values so theistic is that you have some
+values so theistic is that you have some
+values so theistic is that you have some
+temperature let's say this is your input
+temperature let's say this is your input
+temperature let's say this is your input
+temperature and you want to predict the
+temperature and you want to predict the
+temperature and you want to predict the
+temperature after 6 hours right as we do
+temperature after 6 hours right as we do
+temperature after 6 hours right as we do
+in a weather forecast so you're going to
+in a weather forecast so you're going to
+in a weather forecast so you're going to
+observe this temperature by using some
+observe this temperature by using some
+observe this temperature by using some
+sensors which are precisely Point values
+sensors which are precisely Point values
+sensors which are precisely Point values
+of the temperature now these Point
+of the temperature now these Point
+of the temperature now these Point
+values are allowed to in this particular
+values are allowed to in this particular
+values are allowed to in this particular
+case they not even lie on a grid they're
+case they not even lie on a grid they're
+case they not even lie on a grid they're
+even allowed to be random points that's
+even allowed to be random points that's
+even allowed to be random points that's
+not that's not a problem however for
+not that's not a problem however for
+not that's not a problem however for
+different realizations these have to be
+different realizations these have to be
+different realizations these have to be
+the same kind of uh sensors or the same
+the same kind of uh sensors or the same
+the same kind of uh sensors or the same
+points okay so Point evaluation so this
+points okay so Point evaluation so this
+points okay so Point evaluation so this
+extracts so the these coefficients the
+extracts so the these coefficients the
+extracts so the these coefficients the
+input coefficients are extracted just by
+input coefficients are extracted just by
+input coefficients are extracted just by
+Point evaluations like we did with
+Point evaluations like we did with
+Point evaluations like we did with
+convolutions it's exactly the same same
+convolutions it's exactly the same same
+convolutions it's exactly the same same
+principle except here the flexibility is
+principle except here the flexibility is
+principle except here the flexibility is
+that you are allowed to have arbitrary
+that you are allowed to have arbitrary
+that you are allowed to have arbitrary
+collection of points as long as you keep
+collection of points as long as you keep
+collection of points as long as you keep
+the same sensors for every like you
+the same sensors for every like you
+the same sensors for every like you
+measure the temperature now at the same
+measure the temperature now at the same
+measure the temperature now at the same
+sensors in six hours at the same sensors
+sensors in six hours at the same sensors
+sensors in six hours at the same sensors
+then 12 hours at the same sensors and so
+then 12 hours at the same sensors and so
+then 12 hours at the same sensors and so
+on so this is somehow some restriction
+on so this is somehow some restriction
+on so this is somehow some restriction
+here but nevertheless that's the first
+here but nevertheless that's the first
+here but nevertheless that's the first
+thing so and you're going to process
+thing so and you're going to process
+thing so and you're going to process
+this right you're taking these
+this right you're taking these
+this right you're taking these
+coefficients just like we did with
+coefficients just like we did with
+coefficients just like we did with
+spectral neural operators we are going
+spectral neural operators we are going
+spectral neural operators we are going
+to throw them into a neural network and
+to throw them into a neural network and
+to throw them into a neural network and
+this neural network CHS out some output
+this neural network CHS out some output
+this neural network CHS out some output
+coefficients so these are the output
+coefficients so these are the output
+coefficients so these are the output
+coefficient
+exactly as before there is nothing
+exactly as before there is nothing
+exactly as before there is nothing
+nothing special about this right but now
+nothing special about this right but now
+nothing special about this right but now
+what about the basis we also have to
+what about the basis we also have to
+what about the basis we also have to
+learn the bases in which we are going to
+learn the bases in which we are going to
+learn the bases in which we are going to
+represent the function right so the
+represent the function right so the
+represent the function right so the
+bases are these TOS these represent the
+bases are these TOS these represent the
+bases are these TOS these represent the
+bases how are we going to learn them so
+bases how are we going to learn them so
+bases how are we going to learn them so
+remember that the basis is now a
+remember that the basis is now a
+remember that the basis is now a
+function each basis function is a
+function each basis function is a
+function each basis function is a
+function so let me isolate a single one
+function so let me isolate a single one
+function so let me isolate a single one
+of them let me call it a St K so this is
+of them let me call it a St K so this is
+of them let me call it a St K so this is
+a function of y y belongs to D the
+a function of y y belongs to D the
+a function of y y belongs to D the
+domain on which all the action is taking
+domain on which all the action is taking
+domain on which all the action is taking
+in place so of course the input to this
+in place so of course the input to this
+in place so of course the input to this
+function is going to be the coordinate
+function is going to be the coordinate
+function is going to be the coordinate
+at which you're going to evaluate the
+at which you're going to evaluate the
+at which you're going to evaluate the
+function right we are we are going to
+function right we are we are going to
+function right we are we are going to
+form a function so of course the
+form a function so of course the
+form a function so of course the
+function for instance let's do a picture
+function for instance let's do a picture
+function for instance let's do a picture
+here let's say that your domain is 01
+here let's say that your domain is 01
+here let's say that your domain is 01
+this is D 01 and I need to I have a
+this is D 01 and I need to I have a
+this is D 01 and I need to I have a
+function some sort of a function that
+function some sort of a function that
+function some sort of a function that
+I'm going to evaluate so what I do is as
+I'm going to evaluate so what I do is as
+I'm going to evaluate so what I do is as
+input I give any value and as output I
+input I give any value and as output I
+input I give any value and as output I
+extract the value right and you have to
+extract the value right and you have to
+extract the value right and you have to
+do it for M basis functions 10 or 100 or
+do it for M basis functions 10 or 100 or
+do it for M basis functions 10 or 100 or
+whatever depending on the problem that
+whatever depending on the problem that
+whatever depending on the problem that
+you have you do that so you have some
+you have you do that so you have some
+you have you do that so you have some
+basis function and this is going to be a
+basis function and this is going to be a
+basis function and this is going to be a
+general function right this need not be
+general function right this need not be
+general function right this need not be
+a sign or a cosine or a chv polinomial
+a sign or a cosine or a chv polinomial
+a sign or a cosine or a chv polinomial
+or rational function or whatever now
+or rational function or whatever now
+or rational function or whatever now
+this is where the universality of neural
+this is where the universality of neural
+this is where the universality of neural
+networks comes in right so in one of the
+networks comes in right so in one of the
+networks comes in right so in one of the
+lectures you saw that neural networks
+lectures you saw that neural networks
+lectures you saw that neural networks
+are Universal in the sense that any
+are Universal in the sense that any
+are Universal in the sense that any
+continuous function any measurable
+continuous function any measurable
+continuous function any measurable
+function any integrable function can be
+function any integrable function can be
+function any integrable function can be
+approximated by neural networks so the
+approximated by neural networks so the
+approximated by neural networks so the
+idea of these people was okay let's do
+idea of these people was okay let's do
+idea of these people was okay let's do
+these to be neural networks so each of
+these to be neural networks so each of
+these to be neural networks so each of
+these guys are DNN or MLPs let's say so
+these guys are DNN or MLPs let's say so
+these guys are DNN or MLPs let's say so
+each okay it could be more there could
+each okay it could be more there could
+each okay it could be more there could
+be more structure this could be CNN and
+be more structure this could be CNN and
+be more structure this could be CNN and
+so on and so forth but in this case the
+so on and so forth but in this case the
+so on and so forth but in this case the
+simplest is to have it this is an MLP so
+simplest is to have it this is an MLP so
+simplest is to have it this is an MLP so
+this is a multi-layer perceptron so you
+this is a multi-layer perceptron so you
+this is a multi-layer perceptron so you
+have now M neural networks which are
+have now M neural networks which are
+have now M neural networks which are
+going to represent your bases you're
+going to represent your bases you're
+going to represent your bases you're
+going to have n neural net or M neural
+going to have n neural net or M neural
+going to have n neural net or M neural
+networks which are going to represent
+networks which are going to represent
+networks which are going to represent
+your coefficients right and the these
+your coefficients right and the these
+your coefficients right and the these
+are sort of running parallel to each
+are sort of running parallel to each
+are sort of running parallel to each
+other they have different semantics they
+other they have different semantics they
+other they have different semantics they
+have different heuristics there there is
+have different heuristics there there is
+have different heuristics there there is
+a difference between them so this
+a difference between them so this
+a difference between them so this
+approximation now is entirely done in
+approximation now is entirely done in
+approximation now is entirely done in
+terms of the coefficients that we are
+terms of the coefficients that we are
+terms of the coefficients that we are
+extracting here just like we did in SN
+extracting here just like we did in SN
+extracting here just like we did in SN
+and then the Reconstruction is done in
+and then the Reconstruction is done in
+and then the Reconstruction is done in
+terms of these two bases uh of these
+terms of these two bases uh of these
+terms of these two bases uh of these
+bases functions so remember that there
+bases functions so remember that there
+bases functions so remember that there
+are two layers that are happening here
+are two layers that are happening here
+are two layers that are happening here
+so one the coefficient is being
+so one the coefficient is being
+so one the coefficient is being
+approximated but the basis in which it
+approximated but the basis in which it
+approximated but the basis in which it
+is going to be expressed is also being
+is going to be expressed is also being
+is going to be expressed is also being
+learned at the same time from data okay
+learned at the same time from data okay
+learned at the same time from data okay
+so both things uh and this is uh this is
+so both things uh and this is uh this is
+so both things uh and this is uh this is
+a feasible problem it's not an
+a feasible problem it's not an
+a feasible problem it's not an
+infeasible problem that is that is what
+infeasible problem that is that is what
+infeasible problem that is that is what
+is going on right and at the end of the
+is going on right and at the end of the
+is going on right and at the end of the
+day you form the sum it would be an aine
+day you form the sum it would be an aine
+day you form the sum it would be an aine
+sum and then you have at least uh neural
+sum and then you have at least uh neural
+sum and then you have at least uh neural
+operator it's something that takes into
+operator it's something that takes into
+operator it's something that takes into
+account functions so the inputs you take
+account functions so the inputs you take
+account functions so the inputs you take
+the point values you use them in the
+the point values you use them in the
+the point values you use them in the
+coefficients simultaneously you are
+coefficients simultaneously you are
+coefficients simultaneously you are
+learning a basis so for different
+learning a basis so for different
+learning a basis so for different
+problems of course you will have
+problems of course you will have
+problems of course you will have
+different BAS right so seems like a very
+different BAS right so seems like a very
+different BAS right so seems like a very
+smart idea it's it's not very unrelated
+smart idea it's it's not very unrelated
+smart idea it's it's not very unrelated
+to some things if people know some
+to some things if people know some
+to some things if people know some
+statistics the basics of Statistics
+statistics the basics of Statistics
+statistics the basics of Statistics
+there is something called PCA principal
+there is something called PCA principal
+there is something called PCA principal
+component analysis so it is similar so
+component analysis so it is similar so
+component analysis so it is similar so
+in principal component analysis also you
+in principal component analysis also you
+in principal component analysis also you
+learn bases and these bases are based on
+learn bases and these bases are based on
+learn bases and these bases are based on
+the principal components on the
+the principal components on the
+the principal components on the
+statistical structure of the data that
+statistical structure of the data that
+statistical structure of the data that
+you are given so it's a little bit like
+you are given so it's a little bit like
+you are given so it's a little bit like
+that instead of taking the principle
+that instead of taking the principle
+that instead of taking the principle
+components you take neural networks
+components you take neural networks
+components you take neural networks
+because in principle neural networks can
+because in principle neural networks can
+because in principle neural networks can
+approximate anything so the the the
+approximate anything so the the the
+approximate anything so the the the
+construction itself is very neat in that
+construction itself is very neat in that
+construction itself is very neat in that
+sense that you have a learnable basis
+sense that you have a learnable basis
+sense that you have a learnable basis
+and you have learnable coefficients
+and you have learnable coefficients
+and you have learnable coefficients
+where these PES are going to be
+where these PES are going to be
+where these PES are going to be
+expressed are there any questions about
+expressed are there any questions about
+expressed are there any questions about
+this everyone
+yes the there is a difference because uh
+yes the there is a difference because uh
+yes the there is a difference because uh
+pcnet is a more a little bit more in
+pcnet is a more a little bit more in
+pcnet is a more a little bit more in
+this spirit that uh yeah I can also
+this spirit that uh yeah I can also
+this spirit that uh yeah I can also
+describe it quickly so what is PCA PCA
+describe it quickly so what is PCA PCA
+describe it quickly so what is PCA PCA
+is that if you are I'm not going into
+is that if you are I'm not going into
+is that if you are I'm not going into
+too much of detail here right because I
+too much of detail here right because I
+too much of detail here right because I
+need to write down a lot of stuff for
+need to write down a lot of stuff for
+need to write down a lot of stuff for
+that in particular I need to introduce
+that in particular I need to introduce
+that in particular I need to introduce
+what is called the kovarian operator The
+what is called the kovarian operator The
+what is called the kovarian operator The
+kovarian Matrix because the PCA is
+kovarian Matrix because the PCA is
+kovarian Matrix because the PCA is
+nothing but igen functions or I values
+nothing but igen functions or I values
+nothing but igen functions or I values
+of this karian Matrix so think at a very
+of this karian Matrix so think at a very
+of this karian Matrix so think at a very
+abstract level what PCA does is that it
+abstract level what PCA does is that it
+abstract level what PCA does is that it
+looks at the data that you have okay it
+looks at the data that you have okay it
+looks at the data that you have okay it
+just looks at the data that you have and
+just looks at the data that you have and
+just looks at the data that you have and
+it extracts the basis from the structure
+it extracts the basis from the structure
+it extracts the basis from the structure
+of the data it does not do any
+of the data it does not do any
+of the data it does not do any
+processing of the data it extracts the
+processing of the data it extracts the
+processing of the data it extracts the
+basis from the structure of the data and
+basis from the structure of the data and
+basis from the structure of the data and
+this is so you have these inputs here
+this is so you have these inputs here
+this is so you have these inputs here
+UI or AI I don't know how how I express
+UI or AI I don't know how how I express
+UI or AI I don't know how how I express
+them and then there are I don't know
+them and then there are I don't know
+them and then there are I don't know
+thousand data pairs let's say thousand
+thousand data pairs let's say thousand
+thousand data pairs let's say thousand
+uh examples let let's do a concrete
+uh examples let let's do a concrete
+uh examples let let's do a concrete
+example here and then I can explain so
+example here and then I can explain so
+example here and then I can explain so
+let's say thousand examples of these
+let's say thousand examples of these
+let's say thousand examples of these
+guys right these kind of sheer initial
+guys right these kind of sheer initial
+guys right these kind of sheer initial
+sheer um layers and then what you do is
+sheer um layers and then what you do is
+sheer um layers and then what you do is
+that you put them all together and then
+that you put them all together and then
+that you put them all together and then
+you compute their covariant this is a
+you compute their covariant this is a
+you compute their covariant this is a
+this a matrix there are some efficient
+this a matrix there are some efficient
+this a matrix there are some efficient
+algorithms are available on how to
+algorithms are available on how to
+algorithms are available on how to
+extract it values so you EXT and it
+extract it values so you EXT and it
+extract it values so you EXT and it
+vectors and then you rewrite this uh in
+vectors and then you rewrite this uh in
+vectors and then you rewrite this uh in
+terms so any input a is now written in
+terms so any input a is now written in
+terms so any input a is now written in
+terms of some AI or AJ PJ and this PJ is
+terms of some AI or AJ PJ and this PJ is
+terms of some AI or AJ PJ and this PJ is
+this PCA basis for the input okay and
+this PCA basis for the input okay and
+this PCA basis for the input okay and
+you do the same at the level of the
+you do the same at the level of the
+you do the same at the level of the
+output you just look at the data and you
+output you just look at the data and you
+output you just look at the data and you
+are extracting uh the output PCA basis
+are extracting uh the output PCA basis
+are extracting uh the output PCA basis
+also me the these are pre and pro post
+also me the these are pre and pro post
+also me the these are pre and pro post
+or pre-processing in some sense right
+or pre-processing in some sense right
+or pre-processing in some sense right
+you have been given the data and you
+you have been given the data and you
+you have been given the data and you
+form a basis if you get new data there
+form a basis if you get new data there
+form a basis if you get new data there
+are also algorithms on how to augment
+are also algorithms on how to augment
+are also algorithms on how to augment
+this how to augment the bases and so on
+this how to augment the bases and so on
+this how to augment the bases and so on
+and then in between so you have
+and then in between so you have
+and then in between so you have
+similarly for the output you would have
+similarly for the output you would have
+similarly for the output you would have
+uh I don't know let's say U is the
+uh I don't know let's say U is the
+uh I don't know let's say U is the
+output so it's some UJ SJ right and then
+output so it's some UJ SJ right and then
+output so it's some UJ SJ right and then
+you need a link between this AJ and this
+you need a link between this AJ and this
+you need a link between this AJ and this
+UJ
+UJ
+UJ
+and this is provided by a neural network
+and this is provided by a neural network
+and this is provided by a neural network
+okay so in some sense you are also using
+okay so in some sense you are also using
+okay so in some sense you are also using
+learning but you just use statistical
+learning but you just use statistical
+learning but you just use statistical
+learning uh at the input of the output
+learning uh at the input of the output
+learning uh at the input of the output
+and in between you use neuron networks
+and in between you use neuron networks
+and in between you use neuron networks
+so there is a difference here in the
+so there is a difference here in the
+so there is a difference here in the
+sense that you're not simultaneously
+sense that you're not simultaneously
+sense that you're not simultaneously
+learning the basis as well as the and
+learning the basis as well as the and
+learning the basis as well as the and
+now here there's a different basis for
+now here there's a different basis for
+now here there's a different basis for
+the input and output potentially whereas
+the input and output potentially whereas
+the input and output potentially whereas
+with Depon net you're trying to learn
+with Depon net you're trying to learn
+with Depon net you're trying to learn
+the same basis okay so these are somehow
+the same basis okay so these are somehow
+the same basis okay so these are somehow
+intrinsically connected to each other
+intrinsically connected to each other
+intrinsically connected to each other
+because of course I can approximate my
+because of course I can approximate my
+because of course I can approximate my
+PCA functions by neural networks or I
+PCA functions by neural networks or I
+PCA functions by neural networks or I
+can also approximate my new networks by
+can also approximate my new networks by
+can also approximate my new networks by
+PCA function so they they're all somehow
+PCA function so they they're all somehow
+PCA function so they they're all somehow
+close to each other in spirit they are
+close to each other in spirit they are
+close to each other in spirit they are
+sort of as I said Sly different from
+sort of as I said Sly different from
+sort of as I said Sly different from
+what we did before which was that we
+what we did before which was that we
+what we did before which was that we
+directly worked with the image or we
+directly worked with the image or we
+directly worked with the image or we
+directly worked with the function the
+directly worked with the function the
+directly worked with the function the
+sort of the spatial structure of the
+sort of the spatial structure of the
+sort of the spatial structure of the
+function here you just take the function
+function here you just take the function
+function here you just take the function
+you put it into a bag of coefficients
+you put it into a bag of coefficients
+you put it into a bag of coefficients
+and these coefficients they they sort of
+and these coefficients they they sort of
+and these coefficients they they sort of
+implicitly represent the function you
+implicitly represent the function you
+implicitly represent the function you
+process them and you come back okay so
+process them and you come back okay so
+process them and you come back okay so
+you are just doing all the processing at
+you are just doing all the processing at
+you are just doing all the processing at
+a at a very Parallel level in some sense
+a at a very Parallel level in some sense
+a at a very Parallel level in some sense
+so is that clear okay so now what is the
+so is that clear okay so now what is the
+so is that clear okay so now what is the
+good thing about it is that of course
+good thing about it is that of course
+good thing about it is that of course
+you can you can train it like you you
+you can you can train it like you you
+you can you can train it like you you
+trained fno and so on and in fact people
+trained fno and so on and in fact people
+trained fno and so on and in fact people
+have done that that's the good and the
+have done that that's the good and the
+have done that that's the good and the
+good thing is that these are also Renos
+good thing is that these are also Renos
+good thing is that these are also Renos
+because again for the same principle
+because again for the same principle
+because again for the same principle
+because now you are always restricting
+because now you are always restricting
+because now you are always restricting
+things into
+things into
+things into
+some finite dimensional space
+some finite dimensional space
+some finite dimensional space
+irrespective of what grid that you're
+irrespective of what grid that you're
+irrespective of what grid that you're
+looking for because now it's just a
+looking for because now it's just a
+looking for because now it's just a
+fixed set of sensors so of course
+fixed set of sensors so of course
+fixed set of sensors so of course
+there's no issue there and in fact there
+there's no issue there and in fact there
+there's no issue there and in fact there
+are some conditions for instance this
+are some conditions for instance this
+are some conditions for instance this
+even though you are sort of training it
+even though you are sort of training it
+even though you are sort of training it
+as a basis with the PCA there's no
+as a basis with the PCA there's no
+as a basis with the PCA there's no
+ambiguity whatsoever if you have
+ambiguity whatsoever if you have
+ambiguity whatsoever if you have
+infinite number of samples then it will
+infinite number of samples then it will
+infinite number of samples then it will
+be a basis that is a guarantee there
+be a basis that is a guarantee there
+be a basis that is a guarantee there
+here on the other hand there is no such
+here on the other hand there is no such
+here on the other hand there is no such
+guarantee you're just trying to have the
+guarantee you're just trying to have the
+guarantee you're just trying to have the
+semantics of a basis
+semantics of a basis
+semantics of a basis
+and you think that your learning problem
+and you think that your learning problem
+and you think that your learning problem
+is going to provide you a basis it need
+is going to provide you a basis it need
+is going to provide you a basis it need
+not be a basis okay it need not be a
+not be a basis okay it need not be a
+not be a basis okay it need not be a
+basis these functions actually they look
+basis these functions actually they look
+basis these functions actually they look
+nothing like a basis in practice but it
+nothing like a basis in practice but it
+nothing like a basis in practice but it
+did not be a basis and in fact that is
+did not be a basis and in fact that is
+did not be a basis and in fact that is
+not necessary the theory is such that
+not necessary the theory is such that
+not necessary the theory is such that
+it's enough to work with what are called
+it's enough to work with what are called
+it's enough to work with what are called
+frames uh these are not basis functions
+frames uh these are not basis functions
+frames uh these are not basis functions
+but frames and then of course uh because
+but frames and then of course uh because
+but frames and then of course uh because
+you are doing it on non-uniform grids
+you are doing it on non-uniform grids
+you are doing it on non-uniform grids
+random grids and so on there is some
+random grids and so on there is some
+random grids and so on there is some
+aliasing error coming from there you
+aliasing error coming from there you
+aliasing error coming from there you
+know so if you do it on uniform grid
+know so if you do it on uniform grid
+know so if you do it on uniform grid
+there is no aliasing error because the
+there is no aliasing error because the
+there is no aliasing error because the
+newquist conditions are satisfied and as
+newquist conditions are satisfied and as
+newquist conditions are satisfied and as
+I kept on saying that this need not be a
+I kept on saying that this need not be a
+I kept on saying that this need not be a
+basis okay because there is no reason
+basis okay because there is no reason
+basis okay because there is no reason
+why we sort of impose orthogonality and
+why we sort of impose orthogonality and
+why we sort of impose orthogonality and
+so on this is objective but in the
+so on this is objective but in the
+so on this is objective but in the
+training process we are not doing it we
+training process we are not doing it we
+training process we are not doing it we
+could impose it in the training process
+could impose it in the training process
+could impose it in the training process
+we could say that there is some
+we could say that there is some
+we could say that there is some
+orthogonality condition that we are
+orthogonality condition that we are
+orthogonality condition that we are
+going to be impose but that is uh not
+going to be impose but that is uh not
+going to be impose but that is uh not
+fair because you don't know exactly what
+fair because you don't know exactly what
+fair because you don't know exactly what
+nor or what in a product that you're
+nor or what in a product that you're
+nor or what in a product that you're
+going to use right from the data how are
+going to use right from the data how are
+going to use right from the data how are
+you going to know what is the right in a
+you going to know what is the right in a
+you going to know what is the right in a
+product to use so it's it's not is not
+product to use so it's it's not is not
+product to use so it's it's not is not
+that clean in that sense you see so this
+that clean in that sense you see so this
+that clean in that sense you see so this
+is just this is an option that is always
+is just this is an option that is always
+is just this is an option that is always
+available to us and in fact it's a it's
+available to us and in fact it's a it's
+available to us and in fact it's a it's
+a baseline in some
+sense but it has it does what it does in
+sense but it has it does what it does in
+sense but it has it does what it does in
+that in this sense right that it is a
+that in this sense right that it is a
+that in this sense right that it is a
+Reno it is able to represent data from
+Reno it is able to represent data from
+Reno it is able to represent data from
+different grids simply because it
+different grids simply because it
+different grids simply because it
+projects them onto some particular bag
+projects them onto some particular bag
+projects them onto some particular bag
+and then processes them so in that way
+and then processes them so in that way
+and then processes them so in that way
+there is some
+there is some
+there is some
+cheating that is doing uh that is taking
+cheating that is doing uh that is taking
+cheating that is doing uh that is taking
+place but what is the what is the issue
+place but what is the what is the issue
+place but what is the what is the issue
+with this then so is this uh clear what
+with this then so is this uh clear what
+with this then so is this uh clear what
+is the construction here so what's the
+is the construction here so what's the
+is the construction here so what's the
+issue do they work in practice some
+issue do they work in practice some
+issue do they work in practice some
+cases of course uh they work in practice
+cases of course uh they work in practice
+cases of course uh they work in practice
+but however I'll give you a very simple
+but however I'll give you a very simple
+but however I'll give you a very simple
+example where some of the problems of
+example where some of the problems of
+example where some of the problems of
+this approach comes out so the simplest
+this approach comes out so the simplest
+this approach comes out so the simplest
+non linear equation that you PD that you
+non linear equation that you PD that you
+non linear equation that you PD that you
+can think of is what is called the
+can think of is what is called the
+can think of is what is called the
+burgus equation so this is a burgus
+burgus equation so this is a burgus
+burgus equation so this is a burgus
+equation
+equation
+equation
+uh it was invented by Burgers as a model
+uh it was invented by Burgers as a model
+uh it was invented by Burgers as a model
+for Navia
+for Navia
+for Navia
+Stokes didn't turn out to be such a good
+Stokes didn't turn out to be such a good
+Stokes didn't turn out to be such a good
+model but uh it is what it is so the
+model but uh it is what it is so the
+model but uh it is what it is so the
+equation itself is given by this form in
+equation itself is given by this form in
+equation itself is given by this form in
+it's a it's a 1D equation space time
+it's a it's a 1D equation space time
+it's a it's a 1D equation space time
+sometimes people add viscosity but this
+sometimes people add viscosity but this
+sometimes people add viscosity but this
+is not important here let's let's look
+is not important here let's let's look
+is not important here let's let's look
+at the invit form inv visit vergus
+at the invit form inv visit vergus
+at the invit form inv visit vergus
+equation and then you have some initial
+equation and then you have some initial
+equation and then you have some initial
+data which is a of X and that is chosen
+data which is a of X and that is chosen
+data which is a of X and that is chosen
+from some measure mu which is a
+from some measure mu which is a
+from some measure mu which is a
+probability measure on some functions
+probability measure on some functions
+probability measure on some functions
+let's say L1 okay so this is a very very
+let's say L1 okay so this is a very very
+let's say L1 okay so this is a very very
+simple setup and in fact in this
+simple setup and in fact in this
+simple setup and in fact in this
+particular case our initial data was
+particular case our initial data was
+particular case our initial data was
+chosen from what are called gaussian
+chosen from what are called gaussian
+chosen from what are called gaussian
+random Fields So gausian Random fields
+random Fields So gausian Random fields
+random Fields So gausian Random fields
+are a simple generalization to functions
+are a simple generalization to functions
+are a simple generalization to functions
+of Brownian motion for instance or
+of Brownian motion for instance or
+of Brownian motion for instance or
+something which is related to Brownian
+something which is related to Brownian
+something which is related to Brownian
+motion so these are essentially noise so
+motion so these are essentially noise so
+motion so these are essentially noise so
+you start with some sort of colored
+you start with some sort of colored
+you start with some sort of colored
+noise some structure of noise scou and
+noise some structure of noise scou and
+noise some structure of noise scou and
+random Fields but that is just to give
+random Fields but that is just to give
+random Fields but that is just to give
+you a concrete numerical example other
+you a concrete numerical example other
+you a concrete numerical example other
+examples will work equally equally well
+examples will work equally equally well
+examples will work equally equally well
+so you start with gaan random Fields as
+so you start with gaan random Fields as
+so you start with gaan random Fields as
+initial data and then you let the
+initial data and then you let the
+initial data and then you let the
+solution evolve at a later time so let's
+solution evolve at a later time so let's
+solution evolve at a later time so let's
+say that it what happens at t equal to 1
+say that it what happens at t equal to 1
+say that it what happens at t equal to 1
+so typically a function with a gausian
+so typically a function with a gausian
+so typically a function with a gausian
+random field might have the following
+random field might have the following
+random field might have the following
+shape something it would look something
+shape something it would look something
+shape something it would look something
+like this okay that would be a typical
+like this okay that would be a typical
+like this okay that would be a typical
+example of a gausian random field now
+example of a gausian random field now
+example of a gausian random field now
+you put it into the nonlinearity and
+you put it into the nonlinearity and
+you put it into the nonlinearity and
+what the nonlinearity does for those who
+what the nonlinearity does for those who
+what the nonlinearity does for those who
+come from fluid mechanics this is
+come from fluid mechanics this is
+come from fluid mechanics this is
+obvious that this is going to sort of
+obvious that this is going to sort of
+obvious that this is going to sort of
+steepen the steepen the structures so
+steepen the steepen the structures so
+steepen the steepen the structures so
+because of that after a while if you
+because of that after a while if you
+because of that after a while if you
+have a initial data like this these
+have a initial data like this these
+have a initial data like this these
+little noise structures will clear out
+little noise structures will clear out
+little noise structures will clear out
+and you'll get the formation of what are
+and you'll get the formation of what are
+and you'll get the formation of what are
+called Shock waves sharp fronts right so
+called Shock waves sharp fronts right so
+called Shock waves sharp fronts right so
+this is what happens for instance when
+this is what happens for instance when
+this is what happens for instance when
+the aircraft is flying across the Sonic
+the aircraft is flying across the Sonic
+the aircraft is flying across the Sonic
+line faster than the speed of sound the
+line faster than the speed of sound the
+line faster than the speed of sound the
+sound waves that are coming out they
+sound waves that are coming out they
+sound waves that are coming out they
+they sort of breach the sound barrier
+they sort of breach the sound barrier
+they sort of breach the sound barrier
+and create shock waves okay and this is
+and create shock waves okay and this is
+and create shock waves okay and this is
+uh how the solution looks like the
+uh how the solution looks like the
+uh how the solution looks like the
+solution is in Orange as you can see the
+solution is in Orange as you can see the
+solution is in Orange as you can see the
+ground truth which is generated by
+ground truth which is generated by
+ground truth which is generated by
+numerical method but now we use leonet
+numerical method but now we use leonet
+numerical method but now we use leonet
+uh with I don't remember how many
+uh with I don't remember how many
+uh with I don't remember how many
+samples for training maybe around a
+samples for training maybe around a
+samples for training maybe around a
+thousand I really don't remember this
+thousand I really don't remember this
+thousand I really don't remember this
+and then you can start seeing what the
+and then you can start seeing what the
+and then you can start seeing what the
+problem is right so of course it
+problem is right so of course it
+problem is right so of course it
+provides you some answer but several
+provides you some answer but several
+provides you some answer but several
+things are wrong it does not get the
+things are wrong it does not get the
+things are wrong it does not get the
+right uh position of these
+right uh position of these
+right uh position of these
+discontinuities and of course once it
+discontinuities and of course once it
+discontinuities and of course once it
+does not get the right position it does
+does not get the right position it does
+does not get the right position it does
+not get the right amplitud ude and in
+not get the right amplitud ude and in
+not get the right amplitud ude and in
+this particular case the error is very
+this particular case the error is very
+this particular case the error is very
+large it's like 30% the relative error
+large it's like 30% the relative error
+large it's like 30% the relative error
+but it's the the percentage is not as
+but it's the the percentage is not as
+but it's the the percentage is not as
+important as what you see on the picture
+important as what you see on the picture
+important as what you see on the picture
+right where sometimes 30% is acceptable
+right where sometimes 30% is acceptable
+right where sometimes 30% is acceptable
+if the problem is very hard but this is
+if the problem is very hard but this is
+if the problem is very hard but this is
+a very simple problem and this is a lot
+a very simple problem and this is a lot
+a very simple problem and this is a lot
+of Errors so clearly somewhere even
+of Errors so clearly somewhere even
+of Errors so clearly somewhere even
+though all these nice structure
+though all these nice structure
+though all these nice structure
+preserving properties are satisfied
+preserving properties are satisfied
+preserving properties are satisfied
+something is going on otherwise uh we
+something is going on otherwise uh we
+something is going on otherwise uh we
+would have solved the problem and this
+would have solved the problem and this
+would have solved the problem and this
+was somehow answered a little bit
+was somehow answered a little bit
+was somehow answered a little bit
+because now we compare it with fno o
+because now we compare it with fno o
+because now we compare it with fno o
+right because fno o does not have the
+right because fno o does not have the
+right because fno o does not have the
+structure preserving property that
+structure preserving property that
+structure preserving property that
+doesn't mean the structure preservation
+doesn't mean the structure preservation
+doesn't mean the structure preservation
+is bad but it's just one dimension one
+is bad but it's just one dimension one
+is bad but it's just one dimension one
+one metric along which you evaluate
+one metric along which you evaluate
+one metric along which you evaluate
+things so for instance there is some
+things so for instance there is some
+things so for instance there is some
+Theory from my lab what we do is that we
+Theory from my lab what we do is that we
+Theory from my lab what we do is that we
+compare the two theoretically a very
+compare the two theoretically a very
+compare the two theoretically a very
+very simple
+very simple
+very simple
+problem the same can be done for burgers
+problem the same can be done for burgers
+problem the same can be done for burgers
+equation also so if you take linear
+equation also so if you take linear
+equation also so if you take linear
+Direction so this will be UT plus ux c =
+Direction so this will be UT plus ux c =
+Direction so this will be UT plus ux c =
+z and you know what the solution is
+z and you know what the solution is
+z and you know what the solution is
+going to be right so U of is U not the
+going to be right so U of is U not the
+going to be right so U of is U not the
+initial data minus CT right so for
+initial data minus CT right so for
+initial data minus CT right so for
+instance if you start with a bump like
+instance if you start with a bump like
+instance if you start with a bump like
+this you just transport it right and you
+this you just transport it right and you
+this you just transport it right and you
+start with a slightly different bump you
+start with a slightly different bump you
+start with a slightly different bump you
+transport it to the same location but uh
+transport it to the same location but uh
+transport it to the same location but uh
+just the shape is different it depends
+just the shape is different it depends
+just the shape is different it depends
+on the initial data so one could prove
+on the initial data so one could prove
+on the initial data so one could prove
+in this case rigorously mathematically
+in this case rigorously mathematically
+in this case rigorously mathematically
+that in principle assuming that you can
+that in principle assuming that you can
+that in principle assuming that you can
+train perfectly which is never the case
+train perfectly which is never the case
+train perfectly which is never the case
+but even under the assumption that you
+but even under the assumption that you
+but even under the assumption that you
+can train perfectly to get an error of a
+can train perfectly to get an error of a
+can train perfectly to get an error of a
+certain uh magnitude Epsilon in this
+certain uh magnitude Epsilon in this
+certain uh magnitude Epsilon in this
+particular case with a Depot net you
+particular case with a Depot net you
+particular case with a Depot net you
+need uh it's quadratic in the in the
+need uh it's quadratic in the in the
+need uh it's quadratic in the in the
+sort of in the error so to get 1% error
+sort of in the error so to get 1% error
+sort of in the error so to get 1% error
+which is 1 over 100 you need the let's
+which is 1 over 100 you need the let's
+which is 1 over 100 you need the let's
+say the number of parameters the size is
+say the number of parameters the size is
+say the number of parameters the size is
+like 10,000 it's just a rough
+like 10,000 it's just a rough
+like 10,000 it's just a rough
+calculation right it's there are some
+calculation right it's there are some
+calculation right it's there are some
+constants here but say it's of the order
+constants here but say it's of the order
+constants here but say it's of the order
+of 10,000 it's nothing but that that's
+of 10,000 it's nothing but that that's
+of 10,000 it's nothing but that that's
+that's the number but if no for the same
+that's the number but if no for the same
+that's the number but if no for the same
+problem you can prove rigorously that it
+problem you can prove rigorously that it
+problem you can prove rigorously that it
+scales like a logarithm so it is not let
+scales like a logarithm so it is not let
+scales like a logarithm so it is not let
+alone being linear it's it's not like
+alone being linear it's it's not like
+alone being linear it's it's not like
+you need 100 you need 10 you need log of
+you need 100 you need 10 you need log of
+you need 100 you need 10 you need log of
+100 so this is a rigorous proof which
+100 so this is a rigorous proof which
+100 so this is a rigorous proof which
+says that for solving exactly the same
+says that for solving exactly the same
+says that for solving exactly the same
+problem albe it a very academic problem
+problem albe it a very academic problem
+problem albe it a very academic problem
+for fno you need something which is
+for fno you need something which is
+for fno you need something which is
+logarithmic in complexity and for Depon
+logarithmic in complexity and for Depon
+logarithmic in complexity and for Depon
+net you need something which is
+net you need something which is
+net you need something which is
+quadratic in complexity so even if you
+quadratic in complexity so even if you
+quadratic in complexity so even if you
+are trying to learn the basis and so on
+are trying to learn the basis and so on
+are trying to learn the basis and so on
+and so forth it does not really pay off
+and so forth it does not really pay off
+and so forth it does not really pay off
+with respect to accuracy you preserve
+with respect to accuracy you preserve
+with respect to accuracy you preserve
+some structure well and good but it does
+some structure well and good but it does
+some structure well and good but it does
+not pay off in terms of accuracy because
+not pay off in terms of accuracy because
+not pay off in terms of accuracy because
+you are far off from what you want to do
+you are far off from what you want to do
+you are far off from what you want to do
+and this is also shown I think this is
+and this is also shown I think this is
+and this is also shown I think this is
+for advection equation even for this
+for advection equation even for this
+for advection equation even for this
+very simple problem you can see that
+very simple problem you can see that
+very simple problem you can see that
+tonet gives you around 8% error whereas
+tonet gives you around 8% error whereas
+tonet gives you around 8% error whereas
+F gives you one1 of that okay for the
+F gives you one1 of that okay for the
+F gives you one1 of that okay for the
+same size you get one10 lesser of course
+same size you get one10 lesser of course
+same size you get one10 lesser of course
+this theorem is what it is means it's a
+this theorem is what it is means it's a
+this theorem is what it is means it's a
+it's a need theorem there are constants
+it's a need theorem there are constants
+it's a need theorem there are constants
+and it's difficult to evaluate the
+and it's difficult to evaluate the
+and it's difficult to evaluate the
+constants and so this tells you that
+constants and so this tells you that
+constants and so this tells you that
+it's only a part of the story to
+it's only a part of the story to
+it's only a part of the story to
+preserve the structure mean f also has
+preserve the structure mean f also has
+preserve the structure mean f also has
+its own advantages and by sort of
+its own advantages and by sort of
+its own advantages and by sort of
+putting everything into one fixed basis
+putting everything into one fixed basis
+putting everything into one fixed basis
+or un learnable basis you don't really
+or un learnable basis you don't really
+or un learnable basis you don't really
+solve the problem because some of the
+solve the problem because some of the
+solve the problem because some of the
+Vital Information is lost and this is
+Vital Information is lost and this is
+Vital Information is lost and this is
+the reason why DEET actually does very
+the reason why DEET actually does very
+the reason why DEET actually does very
+very poor in practice so here is an
+very poor in practice so here is an
+very poor in practice so here is an
+example of uh
+example of uh
+example of uh
+here the same problem that we have seen
+here the same problem that we have seen
+here the same problem that we have seen
+before so this is the ground truth and
+before so this is the ground truth and
+before so this is the ground truth and
+this is the prediction of fno which is a
+this is the prediction of fno which is a
+this is the prediction of fno which is a
+fairly reasonable prediction there are
+fairly reasonable prediction there are
+fairly reasonable prediction there are
+as you can see there is some
+as you can see there is some
+as you can see there is some
+interference here there is some issue
+interference here there is some issue
+interference here there is some issue
+here so the error I think with fno was
+here so the error I think with fno was
+here so the error I think with fno was
+like 4% I don't remember you'll see it
+like 4% I don't remember you'll see it
+like 4% I don't remember you'll see it
+in the next lecture and uh CNN this is
+in the next lecture and uh CNN this is
+in the next lecture and uh CNN this is
+unet the one that we had seen before you
+unet the one that we had seen before you
+unet the one that we had seen before you
+see that there is this aliasing but it
+see that there is this aliasing but it
+see that there is this aliasing but it
+also did does a reasonable job and look
+also did does a reasonable job and look
+also did does a reasonable job and look
+at what happened to tonet it just
+at what happened to tonet it just
+at what happened to tonet it just
+predicted the average over the entire
+predicted the average over the entire
+predicted the average over the entire
+sample so it simply does not have the
+sample so it simply does not have the
+sample so it simply does not have the
+performance so this is in this
+performance so this is in this
+performance so this is in this
+particular case it's 12 or 15% but it
+particular case it's 12 or 15% but it
+particular case it's 12 or 15% but it
+simply did not work uh in any reasonable
+simply did not work uh in any reasonable
+simply did not work uh in any reasonable
+way and this is primarily because of
+way and this is primarily because of
+way and this is primarily because of
+course there is some theorem which tells
+course there is some theorem which tells
+course there is some theorem which tells
+you what's going wrong but intuitively
+you what's going wrong but intuitively
+you what's going wrong but intuitively
+what is happening is that we are losing
+what is happening is that we are losing
+what is happening is that we are losing
+some structure of the problem by somehow
+some structure of the problem by somehow
+some structure of the problem by somehow
+putting it back into just one fixed set
+putting it back into just one fixed set
+putting it back into just one fixed set
+of parameters which is precisely the
+of parameters which is precisely the
+of parameters which is precisely the
+point that you said right what is the
+point that you said right what is the
+point that you said right what is the
+difference in terms of parameters uh in
+difference in terms of parameters uh in
+difference in terms of parameters uh in
+some sense there is no there is a little
+some sense there is no there is a little
+some sense there is no there is a little
+bit of a difference but morally you're
+bit of a difference but morally you're
+bit of a difference but morally you're
+doing the same you're not really keeping
+doing the same you're not really keeping
+doing the same you're not really keeping
+the sort of infinite dimensional
+the sort of infinite dimensional
+the sort of infinite dimensional
+structure you're solving one problem but
+structure you're solving one problem but
+structure you're solving one problem but
+you are creating another that you lose
+you are creating another that you lose
+you are creating another that you lose
+the expressivity so the challenge very
+the expressivity so the challenge very
+the expressivity so the challenge very
+much remains which is that we need to
+much remains which is that we need to
+much remains which is that we need to
+design something that really works and I
+design something that really works and I
+design something that really works and I
+would say it's still a
+would say it's still a
+would say it's still a
+challenge we have not solved this by any
+challenge we have not solved this by any
+challenge we have not solved this by any
+means but in the next lecture I'll start
+means but in the next lecture I'll start
+means but in the next lecture I'll start
+showing you architectures which go
+showing you architectures which go
+showing you architectures which go
+further in this direction that they
+further in this direction that they
+further in this direction that they
+preserve the structure while at the same
+preserve the structure while at the same
+preserve the structure while at the same
+time they also work but it's also
+time they also work but it's also
+time they also work but it's also
+important to know what are the things
+important to know what are the things
+important to know what are the things
+that are out there and what works and
+that are out there and what works and
+that are out there and what works and
+what doesn't work so this was sort of
+what doesn't work so this was sort of
+what doesn't work so this was sort of
+the main objective today okay so let's
+the main objective today okay so let's
+the main objective today okay so let's
+stop here we are almost on time which is
+stop here we are almost on time which is
+stop here we are almost on time which is
+rity but uh and then we next week we we
+rity but uh and then we next week we we
+rity but uh and then we next week we we
+continue with this this theme further

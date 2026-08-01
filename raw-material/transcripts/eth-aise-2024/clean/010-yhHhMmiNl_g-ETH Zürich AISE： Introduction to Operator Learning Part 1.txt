@@ -1,0 +1,3042 @@
+okay let's uh get started without
+okay let's uh get started without
+okay let's uh get started without
+further Ado so welcome to lecture number
+further Ado so welcome to lecture number
+further Ado so welcome to lecture number
+10 we progressing
+10 we progressing
+10 we progressing
+fast and where what have we learned so
+fast and where what have we learned so
+fast and where what have we learned so
+far just a very quick recapitulation of
+far just a very quick recapitulation of
+far just a very quick recapitulation of
+where we are so in the last I don't know
+where we are so in the last I don't know
+where we are so in the last I don't know
+five six lectures the focus has been on
+five six lectures the focus has been on
+five six lectures the focus has been on
+bins physics and form neural
+bins physics and form neural
+bins physics and form neural
+networks and we have seen that for many
+networks and we have seen that for many
+networks and we have seen that for many
+PDS these are great right especially if
+PDS these are great right especially if
+PDS these are great right especially if
+you don't have a lot of training data
+you don't have a lot of training data
+you don't have a lot of training data
+this is something that I'm going to
+this is something that I'm going to
+this is something that I'm going to
+highlight quite a bit today but as we
+highlight quite a bit today but as we
+highlight quite a bit today but as we
+saw in the last lecture there's several
+saw in the last lecture there's several
+saw in the last lecture there's several
+negatives in in particular the key
+negatives in in particular the key
+negatives in in particular the key
+negative that we found out was training
+negative that we found out was training
+negative that we found out was training
+can be
+can be
+can be
+expensive training is
+difficult and the reason for that is
+difficult and the reason for that is
+difficult and the reason for that is
+this uh sort of intrinsic properties of
+this uh sort of intrinsic properties of
+this uh sort of intrinsic properties of
+physics inform losses where the Herm
+physics inform losses where the Herm
+physics inform losses where the Herm
+Mission squared the condition number of
+Mission squared the condition number of
+Mission squared the condition number of
+the Herm Mission the conditioning of the
+the Herm Mission the conditioning of the
+the Herm Mission the conditioning of the
+Herm mission squar of the differential
+Herm mission squar of the differential
+Herm mission squar of the differential
+operator really matters so from that
+operator really matters so from that
+operator really matters so from that
+perspective and also if you remember
+perspective and also if you remember
+perspective and also if you remember
+that in terms of the PDS themselves what
+that in terms of the PDS themselves what
+that in terms of the PDS themselves what
+we saw is that they were very good for
+we saw is that they were very good for
+we saw is that they were very good for
+certain pdes which are let's say smooth
+certain pdes which are let's say smooth
+certain pdes which are let's say smooth
+Solutions not too difficult Solutions
+Solutions not too difficult Solutions
+Solutions not too difficult Solutions
+but once you are difficult Solutions
+but once you are difficult Solutions
+but once you are difficult Solutions
+once there are lots of frequencies lots
+once there are lots of frequencies lots
+once there are lots of frequencies lots
+of scales which is the case in reality
+of scales which is the case in reality
+of scales which is the case in reality
+then we are at a in trouble right so in
+then we are at a in trouble right so in
+then we are at a in trouble right so in
+that sense we do need Alternatives and
+that sense we do need Alternatives and
+that sense we do need Alternatives and
+especially the Alternatives make a lot
+especially the Alternatives make a lot
+especially the Alternatives make a lot
+lot of sense when more data is available
+lot of sense when more data is available
+lot of sense when more data is available
+and how much of data is more data we are
+and how much of data is more data we are
+and how much of data is more data we are
+going to talk about that quite a lot
+going to talk about that quite a lot
+going to talk about that quite a lot
+during the next several lectures so now
+during the next several lectures so now
+during the next several lectures so now
+let's change perspective and what we're
+let's change perspective and what we're
+let's change perspective and what we're
+going to do is for the next several
+going to do is for the next several
+going to do is for the next several
+lectures what we're going to do is to
+lectures what we're going to do is to
+lectures what we're going to do is to
+look at supervised learning supervised
+look at supervised learning supervised
+look at supervised learning supervised
+learning is essentially leveraging the
+learning is essentially leveraging the
+learning is essentially leveraging the
+data that is available to us right so we
+data that is available to us right so we
+data that is available to us right so we
+start now and till the end of the month
+start now and till the end of the month
+start now and till the end of the month
+at least the month of April that is we
+at least the month of April that is we
+at least the month of April that is we
+will deal with this perhaps even early
+will deal with this perhaps even early
+will deal with this perhaps even early
+me okay so let's let's get started so
+me okay so let's let's get started so
+me okay so let's let's get started so
+before even sort of going towards uh
+before even sort of going towards uh
+before even sort of going towards uh
+data driven Solutions or pdes let me try
+data driven Solutions or pdes let me try
+data driven Solutions or pdes let me try
+to revisit or recapitulate the question
+to revisit or recapitulate the question
+to revisit or recapitulate the question
+of what does it mean to solve a PD right
+of what does it mean to solve a PD right
+of what does it mean to solve a PD right
+so what does it mean to solve APD what
+so what does it mean to solve APD what
+so what does it mean to solve APD what
+do we do when we solve APD and this is
+do we do when we solve APD and this is
+do we do when we solve APD and this is
+going to be important uh for what we're
+going to be important uh for what we're
+going to be important uh for what we're
+going to discuss so let's try to
+going to discuss so let's try to
+going to discuss so let's try to
+understand that through a very simple
+understand that through a very simple
+understand that through a very simple
+example right so this is a very
+example right so this is a very
+example right so this is a very
+important PD it's a prototype type of
+important PD it's a prototype type of
+important PD it's a prototype type of
+what are called elliptic PES this is
+what are called elliptic PES this is
+what are called elliptic PES this is
+what is called
+what is called
+what is called
+elliptic and uh this is modeling various
+elliptic and uh this is modeling various
+elliptic and uh this is modeling various
+things so it depends on what your
+things so it depends on what your
+things so it depends on what your
+quantities of Interest are so for
+quantities of Interest are so for
+quantities of Interest are so for
+instance the youu here this guy here
+instance the youu here this guy here
+instance the youu here this guy here
+this could be the temperature or it
+this could be the temperature or it
+this could be the temperature or it
+could be the pressure or it could be
+could be the pressure or it could be
+could be the pressure or it could be
+some other property let's say that if
+some other property let's say that if
+some other property let's say that if
+the temperature the pressure then
+the temperature the pressure then
+the temperature the pressure then
+depending on the application that we
+depending on the application that we
+depending on the application that we
+have the a here so this is what is
+have the a here so this is what is
+have the a here so this is what is
+called a coefficient
+called a coefficient
+called a coefficient
+for instance if you're modeling heat
+for instance if you're modeling heat
+for instance if you're modeling heat
+conduction then this a is precisely the
+conduction then this a is precisely the
+conduction then this a is precisely the
+conductance or the
+conductance or the
+conductance or the
+conductivity is the same if a for or U
+conductivity is the same if a for or U
+conductivity is the same if a for or U
+is a voltage for instance then this is
+is a voltage for instance then this is
+is a voltage for instance then this is
+electrical conductivity but on the other
+electrical conductivity but on the other
+electrical conductivity but on the other
+hand if it's a pressure of a fluid that
+hand if it's a pressure of a fluid that
+hand if it's a pressure of a fluid that
+is trapped inside on the under the
+is trapped inside on the under the
+is trapped inside on the under the
+ground then this would be the rock
+ground then this would be the rock
+ground then this would be the rock
+permeability the the sort of material
+permeability the the sort of material
+permeability the the sort of material
+properties of the medium itself so this
+properties of the medium itself so this
+properties of the medium itself so this
+is the the point is that it tells you
+is the the point is that it tells you
+is the the point is that it tells you
+something about the material it tells
+something about the material it tells
+something about the material it tells
+you something about the domain but the
+you something about the domain but the
+you something about the domain but the
+action is happening and finally F this
+action is happening and finally F this
+action is happening and finally F this
+is much simpler to understand this is
+is much simpler to understand this is
+is much simpler to understand this is
+just a source term right so just imagine
+just a source term right so just imagine
+just a source term right so just imagine
+that you have a rod which is of made of
+that you have a rod which is of made of
+that you have a rod which is of made of
+of a material that is not uniform and
+of a material that is not uniform and
+of a material that is not uniform and
+then you start heating it then of course
+then you start heating it then of course
+then you start heating it then of course
+the source is the heating Source the
+the source is the heating Source the
+the source is the heating Source the
+material is given by the material
+material is given by the material
+material is given by the material
+properties and U is going to be the
+properties and U is going to be the
+properties and U is going to be the
+temperature and this is modeled by this
+temperature and this is modeled by this
+temperature and this is modeled by this
+elliptic PD which is called the
+elliptic PD which is called the
+elliptic PD which is called the
+diffusion PD or sometimes it's even
+diffusion PD or sometimes it's even
+diffusion PD or sometimes it's even
+called the D C PD particularly in fluid
+called the D C PD particularly in fluid
+called the D C PD particularly in fluid
+d
+d
+d
+so this is the situation with the PD so
+so this is the situation with the PD so
+so this is the situation with the PD so
+what we can think of is we can think of
+what we can think of is we can think of
+what we can think of is we can think of
+the PD itself as a system like any
+the PD itself as a system like any
+the PD itself as a system like any
+system it takes an input or inputs and
+system it takes an input or inputs and
+system it takes an input or inputs and
+it processes them into outputs so what
+it processes them into outputs so what
+it processes them into outputs so what
+are the
+are the
+are the
+inputs so at least for this particular
+inputs so at least for this particular
+inputs so at least for this particular
+PD this is clearly the
+PD this is clearly the
+PD this is clearly the
+coefficient so this is a and it is the
+coefficient so this is a and it is the
+coefficient so this is a and it is the
+source
+source
+source
+term
+term
+term
+f it could also be the boundary
+f it could also be the boundary
+f it could also be the boundary
+conditions the domain and so on but
+conditions the domain and so on but
+conditions the domain and so on but
+let's let's keep things simple let's say
+let's let's keep things simple let's say
+let's let's keep things simple let's say
+that for this particular PD your inputs
+that for this particular PD your inputs
+that for this particular PD your inputs
+are the coefficients and sources and in
+are the coefficients and sources and in
+are the coefficients and sources and in
+particular I could be interested in a
+particular I could be interested in a
+particular I could be interested in a
+situation for instance if I'm drilling
+situation for instance if I'm drilling
+situation for instance if I'm drilling
+under the ground that I fix this so let
+under the ground that I fix this so let
+under the ground that I fix this so let
+us keep this fixed so if I fix the
+us keep this fixed so if I fix the
+us keep this fixed so if I fix the
+source then essentially the task of the
+source then essentially the task of the
+source then essentially the task of the
+PD and I forgotten to write what the
+PD and I forgotten to write what the
+PD and I forgotten to write what the
+outputs are going to be the output is
+outputs are going to be the output is
+outputs are going to be the output is
+just the
+just the
+just the
+solution solution which is given by you
+solution solution which is given by you
+solution solution which is given by you
+here so essenti you can think of the PD
+here so essenti you can think of the PD
+here so essenti you can think of the PD
+as a system that takes an input in this
+as a system that takes an input in this
+as a system that takes an input in this
+particular case the coefficient and the
+particular case the coefficient and the
+particular case the coefficient and the
+source but let's say just the
+source but let's say just the
+source but let's say just the
+coefficient and it turns out an output
+coefficient and it turns out an output
+coefficient and it turns out an output
+which in this particular case is the
+which in this particular case is the
+which in this particular case is the
+solution of the PD in other words it
+solution of the PD in other words it
+solution of the PD in other words it
+takes a coefficient a here as you can
+takes a coefficient a here as you can
+takes a coefficient a here as you can
+see it has some spatial fluctuations and
+see it has some spatial fluctuations and
+see it has some spatial fluctuations and
+then it turns out an output which is
+then it turns out an output which is
+then it turns out an output which is
+given by the solution of a PD as you can
+given by the solution of a PD as you can
+given by the solution of a PD as you can
+see the a does not look remotely like
+see the a does not look remotely like
+see the a does not look remotely like
+the input here the coefficient does not
+the input here the coefficient does not
+the input here the coefficient does not
+look remotely like the output because
+look remotely like the output because
+look remotely like the output because
+what the output tells you is how the
+what the output tells you is how the
+what the output tells you is how the
+fluid is distributed somehow the
+fluid is distributed somehow the
+fluid is distributed somehow the
+pressure of the fluid is going to be
+pressure of the fluid is going to be
+pressure of the fluid is going to be
+distributed right so in other words in
+distributed right so in other words in
+distributed right so in other words in
+this particular case you can sort of say
+this particular case you can sort of say
+this particular case you can sort of say
+that solving a PD is T amount to finding
+that solving a PD is T amount to finding
+that solving a PD is T amount to finding
+out what is called the solution operator
+out what is called the solution operator
+out what is called the solution operator
+the solution operator is this object
+the solution operator is this object
+the solution operator is this object
+which exactly does the systemic
+which exactly does the systemic
+which exactly does the systemic
+transformation it takes a input and it
+transformation it takes a input and it
+transformation it takes a input and it
+produces an output so it takes the input
+produces an output so it takes the input
+produces an output so it takes the input
+a the coefficient here and it produces
+a the coefficient here and it produces
+a the coefficient here and it produces
+an output which is the solution to the
+an output which is the solution to the
+an output which is the solution to the
+PD which is given by this
+PD which is given by this
+PD which is given by this
+okay so remember that this is the way
+okay so remember that this is the way
+okay so remember that this is the way
+you can think of differential equations
+you can think of differential equations
+you can think of differential equations
+that these are transformations that take
+that these are transformations that take
+that these are transformations that take
+inputs to outputs except that there is
+inputs to outputs except that there is
+inputs to outputs except that there is
+something special about this inputs and
+something special about this inputs and
+something special about this inputs and
+outputs unlike a standard function which
+outputs unlike a standard function which
+outputs unlike a standard function which
+takes a finite dimensional input and
+takes a finite dimensional input and
+takes a finite dimensional input and
+provides a finite dimensional output
+provides a finite dimensional output
+provides a finite dimensional output
+here the inputs and outputs and this is
+here the inputs and outputs and this is
+here the inputs and outputs and this is
+this is a these are
+this is a these are
+this is a these are
+functions and these
+functions and these
+functions and these
+sorry I don't know
+some
+reason some reason
+it anyway so the these inputs and
+it anyway so the these inputs and
+it anyway so the these inputs and
+outputs both of them the solution itself
+outputs both of them the solution itself
+outputs both of them the solution itself
+clearly is a
+clearly is a
+clearly is a
+function so what do I mean by it so the
+function so what do I mean by it so the
+function so what do I mean by it so the
+input itself is an infinite dimensional
+input itself is an infinite dimensional
+input itself is an infinite dimensional
+quantity because it's a function it
+quantity because it's a function it
+quantity because it's a function it
+cannot be described in principle by
+cannot be described in principle by
+cannot be described in principle by
+finitely many parameters and so is the
+finitely many parameters and so is the
+finitely many parameters and so is the
+output function which is described in
+output function which is described in
+output function which is described in
+terms of finitely many parameters that's
+terms of finitely many parameters that's
+terms of finitely many parameters that's
+why the transformation that takes the
+why the transformation that takes the
+why the transformation that takes the
+input and turns out the output is an
+input and turns out the output is an
+input and turns out the output is an
+operator because operators are
+operator because operators are
+operator because operators are
+generalizations of functions which takes
+generalizations of functions which takes
+generalizations of functions which takes
+infinite dimensional inputs and turn out
+infinite dimensional inputs and turn out
+infinite dimensional inputs and turn out
+infinite dimensional outputs so this is
+infinite dimensional outputs so this is
+infinite dimensional outputs so this is
+a very important Point here that solving
+a very important Point here that solving
+a very important Point here that solving
+a PD essentially is finding or Computing
+a PD essentially is finding or Computing
+a PD essentially is finding or Computing
+or calculating or approximating the
+or calculating or approximating the
+or calculating or approximating the
+solution operator and this is
+solution operator and this is
+solution operator and this is
+intrinsically object that transforms
+intrinsically object that transforms
+intrinsically object that transforms
+infinite dimensional quantities into
+infinite dimensional quantities into
+infinite dimensional quantities into
+Infinite dimensional quantities and
+Infinite dimensional quantities and
+Infinite dimensional quantities and
+you'll see why this is an issue in a
+you'll see why this is an issue in a
+you'll see why this is an issue in a
+very short time so this is one example
+very short time so this is one example
+very short time so this is one example
+right but is this General enough and the
+right but is this General enough and the
+right but is this General enough and the
+answer is yes indeed if you take another
+answer is yes indeed if you take another
+answer is yes indeed if you take another
+PD for instance it's a Time dependent
+PD for instance it's a Time dependent
+PD for instance it's a Time dependent
+one I just took one for definiteness but
+one I just took one for definiteness but
+one I just took one for definiteness but
+there's nothing special about it so
+there's nothing special about it so
+there's nothing special about it so
+these are the compressible oiler
+these are the compressible oiler
+these are the compressible oiler
+equations of fluid dynamics for instance
+equations of fluid dynamics for instance
+equations of fluid dynamics for instance
+aerodynamics the flow of air just
+aerodynamics the flow of air just
+aerodynamics the flow of air just
+outside this room is going to be
+outside this room is going to be
+outside this room is going to be
+governed by the compressible oiler
+governed by the compressible oiler
+governed by the compressible oiler
+equations and as you can see these are
+equations and as you can see these are
+equations and as you can see these are
+much more complex PDS than this simple
+much more complex PDS than this simple
+much more complex PDS than this simple
+Scala PD right but uh if you're Ed these
+Scala PD right but uh if you're Ed these
+Scala PD right but uh if you're Ed these
+quantities have some meaning row here is
+quantities have some meaning row here is
+quantities have some meaning row here is
+the density of the fluid V is the
+the density of the fluid V is the
+the density of the fluid V is the
+velocity field so in 2D or 3D it's two
+velocity field so in 2D or 3D it's two
+velocity field so in 2D or 3D it's two
+or three components e is the total
+or three components e is the total
+or three components e is the total
+energy B is the pressure and then you
+energy B is the pressure and then you
+energy B is the pressure and then you
+have an equation of State uh there is a
+have an equation of State uh there is a
+have an equation of State uh there is a
+equation of state which relates
+equation of state which relates
+equation of state which relates
+them and usually for an ideal gas the
+them and usually for an ideal gas the
+them and usually for an ideal gas the
+total energy is given by P over gamma -
+total energy is given by P over gamma -
+total energy is given by P over gamma -
+1 + half row v² something like like this
+1 + half row v² something like like this
+1 + half row v² something like like this
+okay so this is a detail that this is a
+okay so this is a detail that this is a
+okay so this is a detail that this is a
+fairly complex PD now here let's say
+fairly complex PD now here let's say
+fairly complex PD now here let's say
+that we fixed the there no sources there
+that we fixed the there no sources there
+that we fixed the there no sources there
+is no forcing there's no coefficient
+is no forcing there's no coefficient
+is no forcing there's no coefficient
+let's say it's a flow of air so there is
+let's say it's a flow of air so there is
+let's say it's a flow of air so there is
+nothing to impede the flow and then we
+nothing to impede the flow and then we
+nothing to impede the flow and then we
+have just um Square domain periodic
+have just um Square domain periodic
+have just um Square domain periodic
+bounding conditions just for Simplicity
+bounding conditions just for Simplicity
+bounding conditions just for Simplicity
+all these can be additional inputs and
+all these can be additional inputs and
+all these can be additional inputs and
+all that we are left with is are the
+all that we are left with is are the
+all that we are left with is are the
+initial conditions here's an example of
+initial conditions here's an example of
+initial conditions here's an example of
+an initial condition a typical initial
+an initial condition a typical initial
+an initial condition a typical initial
+condition that for instance happens when
+condition that for instance happens when
+condition that for instance happens when
+you you look at the clouds uh it's a
+you you look at the clouds uh it's a
+you you look at the clouds uh it's a
+Shear so you have the density and I
+Shear so you have the density and I
+Shear so you have the density and I
+don't know whether you can see this but
+don't know whether you can see this but
+don't know whether you can see this but
+this is a Shear so the velocity goes in
+this is a Shear so the velocity goes in
+this is a Shear so the velocity goes in
+this direction and here it goes in this
+this direction and here it goes in this
+this direction and here it goes in this
+direction okay so there's a she and
+direction okay so there's a she and
+direction okay so there's a she and
+because of that the flow becomes very
+because of that the flow becomes very
+because of that the flow becomes very
+very complicated and at a later time as
+very complicated and at a later time as
+very complicated and at a later time as
+you can see this is a very complex flow
+you can see this is a very complex flow
+you can see this is a very complex flow
+so this is the density what I'm showing
+so this is the density what I'm showing
+so this is the density what I'm showing
+here is a density this is a density but
+here is a density this is a density but
+here is a density this is a density but
+of course every variable changes and you
+of course every variable changes and you
+of course every variable changes and you
+can see that there are lots of complex
+can see that there are lots of complex
+can see that there are lots of complex
+vortices and fingers and so on and so
+vortices and fingers and so on and so
+vortices and fingers and so on and so
+forth so fairly complex solution but
+forth so fairly complex solution but
+forth so fairly complex solution but
+again the idea is so this is a solution
+again the idea is so this is a solution
+again the idea is so this is a solution
+at later time T let's say this is t
+at later time T let's say this is t
+at later time T let's say this is t
+equal to 1 some unit time and some
+equal to 1 some unit time and some
+equal to 1 some unit time and some
+idealized units that we have so what is
+idealized units that we have so what is
+idealized units that we have so what is
+the solution operator in this particular
+the solution operator in this particular
+the solution operator in this particular
+case what is the transformation that
+case what is the transformation that
+case what is the transformation that
+we're interested in the transformation
+we're interested in the transformation
+we're interested in the transformation
+now takes the initial condition and it
+now takes the initial condition and it
+now takes the initial condition and it
+produces the solution at a lat time or
+produces the solution at a lat time or
+produces the solution at a lat time or
+at any given time right this is a
+at any given time right this is a
+at any given time right this is a
+trajectory any given time could be
+trajectory any given time could be
+trajectory any given time could be
+encapsulated in these terms but let's
+encapsulated in these terms but let's
+encapsulated in these terms but let's
+say it's simply the solution at a later
+say it's simply the solution at a later
+say it's simply the solution at a later
+time so again it takes the a here is the
+time so again it takes the a here is the
+time so again it takes the a here is the
+initial condition and U here is the
+initial condition and U here is the
+initial condition and U here is the
+final the solution at a final time which
+final the solution at a final time which
+final the solution at a final time which
+is given in terms of the operator of the
+is given in terms of the operator of the
+is given in terms of the operator of the
+PD so again it takes a function clearly
+PD so again it takes a function clearly
+PD so again it takes a function clearly
+a function it's defined at every single
+a function it's defined at every single
+a function it's defined at every single
+point similarly the output is also going
+point similarly the output is also going
+point similarly the output is also going
+to be a function right so in other words
+to be a function right so in other words
+to be a function right so in other words
+you have an operator which takes a to U
+you have an operator which takes a to U
+you have an operator which takes a to U
+do T the dot here means that it's sort
+do T the dot here means that it's sort
+do T the dot here means that it's sort
+of given at any any any given point in
+of given at any any any given point in
+of given at any any any given point in
+space so again it's the same story that
+space so again it's the same story that
+space so again it's the same story that
+solving the pde is the same as Computing
+solving the pde is the same as Computing
+solving the pde is the same as Computing
+this transformation that takes a
+this transformation that takes a
+this transformation that takes a
+infinite Dimension function input and
+infinite Dimension function input and
+infinite Dimension function input and
+transforms it into a function output
+transforms it into a function output
+transforms it into a function output
+okay so this is what it means and we can
+okay so this is what it means and we can
+okay so this is what it means and we can
+sort of make it abstract so that things
+sort of make it abstract so that things
+sort of make it abstract so that things
+are easier to understand in some sense I
+are easier to understand in some sense I
+are easier to understand in some sense I
+don't have to keep on writing specific
+don't have to keep on writing specific
+don't have to keep on writing specific
+PDS all the time by simply taking a
+PDS all the time by simply taking a
+PDS all the time by simply taking a
+abstract perspective so now remember
+abstract perspective so now remember
+abstract perspective so now remember
+that at the end of the day we have
+functions which get mapped onto
+functions which get mapped onto
+functions which get mapped onto
+functions and this is done by
+functions and this is done by
+functions and this is done by
+operators so any questions about that so
+operators so any questions about that so
+operators so any questions about that so
+this is this is the key setup that we
+this is this is the key setup that we
+this is this is the key setup that we
+are in and we will we will deal with
+are in and we will we will deal with
+are in and we will we will deal with
+this setup okay so now just for
+this setup okay so now just for
+this setup okay so now just for
+Simplicity we take a function because
+Simplicity we take a function because
+Simplicity we take a function because
+our inputs and outputs are functions so
+our inputs and outputs are functions so
+our inputs and outputs are functions so
+what we do is that we take a function
+what we do is that we take a function
+what we do is that we take a function
+space here we take a function space here
+space here we take a function space here
+space here we take a function space here
+and of course uh since we going to take
+and of course uh since we going to take
+and of course uh since we going to take
+data we need some data distribution so
+data we need some data distribution so
+data we need some data distribution so
+this me you can think of it as a data
+this me you can think of it as a data
+this me you can think of it as a data
+distribution but the data is function
+distribution but the data is function
+distribution but the data is function
+valued now each time you're going to
+valued now each time you're going to
+valued now each time you're going to
+pluck uh a point a sample of the data
+pluck uh a point a sample of the data
+pluck uh a point a sample of the data
+you'll get an object like this so just
+you'll get an object like this so just
+you'll get an object like this so just
+think you you have a library of images a
+think you you have a library of images a
+think you you have a library of images a
+library of functions and you choose some
+library of functions and you choose some
+library of functions and you choose some
+at random so that is the thinking of a
+at random so that is the thinking of a
+at random so that is the thinking of a
+data distribution okay and then there is
+data distribution okay and then there is
+data distribution okay and then there is
+some abstract pde so the abstract PD is
+some abstract pde so the abstract PD is
+some abstract pde so the abstract PD is
+clearly given here the same as what we
+clearly given here the same as what we
+clearly given here the same as what we
+did dealt with with pins no change there
+did dealt with with pins no change there
+did dealt with with pins no change there
+and now the important thing is now I put
+and now the important thing is now I put
+and now the important thing is now I put
+both the coefficients as well as the
+both the coefficients as well as the
+both the coefficients as well as the
+sources in one bracket and simply say
+sources in one bracket and simply say
+sources in one bracket and simply say
+that there's a solution operator that
+that there's a solution operator that
+that there's a solution operator that
+Maps X to Y so this here is
+Maps X to Y so this here is
+Maps X to Y so this here is
+G right so this is the abstract setup
+G right so this is the abstract setup
+G right so this is the abstract setup
+that we are going to do and the task
+that we are going to do and the task
+that we are going to do and the task
+here is also very clear because now for
+here is also very clear because now for
+here is also very clear because now for
+every PD we have associated with the PD
+every PD we have associated with the PD
+every PD we have associated with the PD
+as solution operator right for instance
+as solution operator right for instance
+as solution operator right for instance
+which takes the coefficients to the
+which takes the coefficients to the
+which takes the coefficients to the
+solution or it takes the initial
+solution or it takes the initial
+solution or it takes the initial
+conditions to the solution and so on and
+conditions to the solution and so on and
+conditions to the solution and so on and
+so forth and now what we'll be given is
+so forth and now what we'll be given is
+so forth and now what we'll be given is
+data right so this data that is going to
+data right so this data that is going to
+data right so this data that is going to
+come to us that's why I mentioned that
+come to us that's why I mentioned that
+come to us that's why I mentioned that
+there is a measure with respect to it so
+there is a measure with respect to it so
+there is a measure with respect to it so
+what do you do let me choose this so you
+what do you do let me choose this so you
+what do you do let me choose this so you
+choose
+choose
+choose
+AI from this distribution me so remember
+AI from this distribution me so remember
+AI from this distribution me so remember
+that AI is are functions mu is a
+that AI is are functions mu is a
+that AI is are functions mu is a
+distribution on functions so you have to
+distribution on functions so you have to
+distribution on functions so you have to
+choose this and then the data that is
+choose this and then the data that is
+choose this and then the data that is
+given to you is AI and G of AI for
+given to you is AI and G of AI for
+given to you is AI and G of AI for
+Simplicity plus Some Noise Okay so this
+Simplicity plus Some Noise Okay so this
+Simplicity plus Some Noise Okay so this
+is going to be your
+is going to be your
+is going to be your
+data so given this data so a could be a
+data so given this data so a could be a
+data so given this data so a could be a
+large number it could be a small number
+large number it could be a small number
+large number it could be a small number
+it depends on the on the data set that
+it depends on the on the data set that
+it depends on the on the data set that
+you have so for instance if you think of
+you have so for instance if you think of
+you have so for instance if you think of
+weather and climate data this a this
+weather and climate data this a this
+weather and climate data this a this
+number a is typically something like
+number a is typically something like
+number a is typically something like
+60,000 members okay it will have 60,000
+60,000 members okay it will have 60,000
+60,000 members okay it will have 60,000
+members in in the standard weather data
+members in in the standard weather data
+members in in the standard weather data
+sets but for some other applications
+sets but for some other applications
+sets but for some other applications
+this could only be five members so there
+this could only be five members so there
+this could only be five members so there
+is a huge disparity in the size of this
+is a huge disparity in the size of this
+is a huge disparity in the size of this
+data set but it is not in the order of
+data set but it is not in the order of
+data set but it is not in the order of
+the sort of Internet scale data that we
+the sort of Internet scale data that we
+the sort of Internet scale data that we
+have for text and images where there are
+have for text and images where there are
+have for text and images where there are
+billions and billions of data points and
+billions and billions of data points and
+billions and billions of data points and
+some so that this is this is going to be
+some so that this is this is going to be
+some so that this is this is going to be
+a challenge right so given this data the
+a challenge right so given this data the
+a challenge right so given this data the
+task is to learn the operator right so
+task is to learn the operator right so
+task is to learn the operator right so
+learn G so this is what is called
+learn G so this is what is called
+learn G so this is what is called
+operator learning
+operator learning
+operator learning
+and as I said means there is no other
+and as I said means there is no other
+and as I said means there is no other
+solution to this because intrinsically
+solution to this because intrinsically
+solution to this because intrinsically
+your inputs and outputs are infinite
+your inputs and outputs are infinite
+your inputs and outputs are infinite
+dimensional so you have to in know to
+dimensional so you have to in know to
+dimensional so you have to in know to
+solve the PD you have to learn the
+solve the PD you have to learn the
+solve the PD you have to learn the
+operator are there any questions on this
+operator are there any questions on this
+operator are there any questions on this
+because this is a very very important
+because this is a very very important
+because this is a very very important
+point no everyone understands this also
+point no everyone understands this also
+point no everyone understands this also
+on Zoom are there any questions you can
+on Zoom are there any questions you can
+on Zoom are there any questions you can
+always ask questions on the chat box and
+always ask questions on the chat box and
+always ask questions on the chat box and
+so okay yes yes of course
+so okay yes yes of course
+so okay yes yes of course
+[Music]
+yeah you didn't get this part okay I can
+yeah you didn't get this part okay I can
+yeah you didn't get this part okay I can
+explain it to you no problems so shall I
+explain it to you no problems so shall I
+explain it to you no problems so shall I
+explain it to this example first so okay
+explain it to this example first so okay
+explain it to this example first so okay
+let me take you a very simple example
+let me take you a very simple example
+let me take you a very simple example
+right so let's say that uh even even
+right so let's say that uh even even
+right so let's say that uh even even
+simpler so that hopefully this will be
+simpler so that hopefully this will be
+simpler so that hopefully this will be
+much clearer and to everyone else let me
+much clearer and to everyone else let me
+much clearer and to everyone else let me
+give you an example and maybe I don't
+give you an example and maybe I don't
+give you an example and maybe I don't
+want to clutter my writing even more
+want to clutter my writing even more
+want to clutter my writing even more
+let me write it on
+let me write it on
+let me write it on
+some okay let's take a very simple
+some okay let's take a very simple
+some okay let's take a very simple
+example let us say that my domain is 01
+example let us say that my domain is 01
+example let us say that my domain is 01
+cross 0
+cross 0
+cross 0
+t okay doesn't matter if it's 01 cross 0
+t okay doesn't matter if it's 01 cross 0
+t okay doesn't matter if it's 01 cross 0
+t means
+t means
+t means
+um Let me let me erase this cuz now I
+um Let me let me erase this cuz now I
+um Let me let me erase this cuz now I
+have to improvise a little so let's say
+have to improvise a little so let's say
+have to improvise a little so let's say
+that it's R the real line cross zero
+that it's R the real line cross zero
+that it's R the real line cross zero
+just for Simplicity my PD is the section
+just for Simplicity my PD is the section
+just for Simplicity my PD is the section
+equation several of you have seen this
+equation several of you have seen this
+equation several of you have seen this
+I'm
+I'm
+I'm
+sure okay and this rection equation and
+sure okay and this rection equation and
+sure okay and this rection equation and
+this is given by UT plus Au ux equal Z
+this is given by UT plus Au ux equal Z
+this is given by UT plus Au ux equal Z
+and I took the whole line because I
+and I took the whole line because I
+and I took the whole line because I
+didn't want to bother with boundary
+didn't want to bother with boundary
+didn't want to bother with boundary
+conditions okay and now your a here is
+conditions okay and now your a here is
+conditions okay and now your a here is
+so and your initial conditions are U not
+so and your initial conditions are U not
+so and your initial conditions are U not
+of
+of
+of
+X okay so these are functions right you
+X okay so these are functions right you
+X okay so these are functions right you
+of X is a function so now your solution
+of X is a function so now your solution
+of X is a function so now your solution
+operator s of T takes
+operator s of T takes
+operator s of T takes
+U to St of U and who can tell me what is
+U to St of U and who can tell me what is
+U to St of U and who can tell me what is
+the solution of this PD so given
+the solution of this PD so given
+the solution of this PD so given
+U what is U of
+U what is U of
+U what is U of
+XT this is just adicction
+XT this is just adicction
+XT this is just adicction
+yes xus 8 perfect so this is just
+yes xus 8 perfect so this is just
+yes xus 8 perfect so this is just
+advection right so this is the solution
+advection right so this is the solution
+advection right so this is the solution
+of the PD so now as you can see that you
+of the PD so now as you can see that you
+of the PD so now as you can see that you
+start with any function right so let's
+start with any function right so let's
+start with any function right so let's
+start with a function let's say that is
+start with a function let's say that is
+start with a function let's say that is
+sign some form of sign after a while
+sign some form of sign after a while
+sign some form of sign after a while
+what happens is that you get this
+what happens is that you get this
+what happens is that you get this
+sorry you get this transported so it
+sorry you get this transported so it
+sorry you get this transported so it
+becomes something like this things move
+becomes something like this things move
+becomes something like this things move
+right so this is so now what is the
+right so this is so now what is the
+right so this is so now what is the
+input here this is a function s of X is
+input here this is a function s of X is
+input here this is a function s of X is
+a function and the output for instance
+a function and the output for instance
+a function and the output for instance
+sin of x - A is a function now you tell
+sin of x - A is a function now you tell
+sin of x - A is a function now you tell
+me can you describe this function by
+me can you describe this function by
+me can you describe this function by
+a finite dimen in general you can
+a finite dimen in general you can
+a finite dimen in general you can
+approximate it very well with finite
+approximate it very well with finite
+approximate it very well with finite
+dimensional objects but can you describe
+dimensional objects but can you describe
+dimensional objects but can you describe
+them entirely by finite dimensional
+them entirely by finite dimensional
+them entirely by finite dimensional
+objects no right because it's it's a
+objects no right because it's it's a
+objects no right because it's it's a
+function so that's why it's an infinite
+function so that's why it's an infinite
+function so that's why it's an infinite
+dimensional quantity you cannot describe
+dimensional quantity you cannot describe
+dimensional quantity you cannot describe
+it in terms of just one or a vector of
+it in terms of just one or a vector of
+it in terms of just one or a vector of
+finite dimensional quantities and the
+finite dimensional quantities and the
+finite dimensional quantities and the
+output is also going to be infinite
+output is also going to be infinite
+output is also going to be infinite
+dimensional because again it's a
+dimensional because again it's a
+dimensional because again it's a
+function okay that's why it's a mapping
+function okay that's why it's a mapping
+function okay that's why it's a mapping
+between functions and functions we don't
+between functions and functions we don't
+between functions and functions we don't
+need to think in terms of images we can
+need to think in terms of images we can
+need to think in terms of images we can
+just think in terms of analytical
+just think in terms of analytical
+just think in terms of analytical
+expression
+expression
+expression
+that it takes s of X it goes to sin of
+that it takes s of X it goes to sin of
+that it takes s of X it goes to sin of
+xus 80 it can take um I don't know
+xus 80 it can take um I don't know
+xus 80 it can take um I don't know
+exponential of Min - x and it goes to
+exponential of Min - x and it goes to
+exponential of Min - x and it goes to
+exponential of x - 8 so it's a mapping
+exponential of x - 8 so it's a mapping
+exponential of x - 8 so it's a mapping
+which takes any function and it maps to
+which takes any function and it maps to
+which takes any function and it maps to
+any other function or a relevant
+any other function or a relevant
+any other function or a relevant
+function okay you can take another
+function okay you can take another
+function okay you can take another
+mapping 1 -
+mapping 1 -
+mapping 1 -
+x^2 and then it goes to 1 - x - a²
+x^2 and then it goes to 1 - x - a²
+x^2 and then it goes to 1 - x - a²
+something like this you see so it takes
+something like this you see so it takes
+something like this you see so it takes
+functions and it turns out functions is
+functions and it turns out functions is
+functions and it turns out functions is
+that clear to you now good so you can
+that clear to you now good so you can
+that clear to you now good so you can
+always ask questions because then other
+always ask questions because then other
+always ask questions because then other
+people who are afraid of asking or don't
+people who are afraid of asking or don't
+people who are afraid of asking or don't
+want to ask they they also benefit from
+want to ask they they also benefit from
+want to ask they they also benefit from
+that good so now let's go back to my to
+that good so now let's go back to my to
+that good so now let's go back to my to
+my slide here so because we don't have
+my slide here so because we don't have
+my slide here so because we don't have
+to go fast it's more important that you
+to go fast it's more important that you
+to go fast it's more important that you
+learn the concepts so it's good that you
+learn the concepts so it's good that you
+learn the concepts so it's good that you
+ask questions so this as I said is a
+ask questions so this as I said is a
+ask questions so this as I said is a
+core of operator learning that you
+core of operator learning that you
+core of operator learning that you
+really have to learn and this is you'll
+really have to learn and this is you'll
+really have to learn and this is you'll
+see that it's not a huge difference but
+see that it's not a huge difference but
+see that it's not a huge difference but
+a priority it's a big difference from
+a priority it's a big difference from
+a priority it's a big difference from
+sort of what you have seen so far right
+sort of what you have seen so far right
+sort of what you have seen so far right
+because what you've seen so far let's
+because what you've seen so far let's
+because what you've seen so far let's
+say that you want to classify an image
+say that you want to classify an image
+say that you want to classify an image
+an image is always given at least um in
+an image is always given at least um in
+an image is always given at least um in
+terms of what we have in terms of stock
+terms of what we have in terms of stock
+terms of what we have in terms of stock
+images let's say the Mist this is a
+images let's say the Mist this is a
+images let's say the Mist this is a
+standard image classification data set
+standard image classification data set
+standard image classification data set
+these are 32 by 32 images okay they
+these are 32 by 32 images okay they
+these are 32 by 32 images okay they
+they're all 28 by 28 even I keep on
+they're all 28 by 28 even I keep on
+they're all 28 by 28 even I keep on
+forgetting 28 by 28 images so the entire
+forgetting 28 by 28 images so the entire
+forgetting 28 by 28 images so the entire
+image is described in terms of 784
+image is described in terms of 784
+image is described in terms of 784
+pixels and that's it but here as I told
+pixels and that's it but here as I told
+pixels and that's it but here as I told
+you also with this example I don't have
+you also with this example I don't have
+you also with this example I don't have
+that kind of a description so for a
+that kind of a description so for a
+that kind of a description so for a
+traditional sort of a CNN let's say or
+traditional sort of a CNN let's say or
+traditional sort of a CNN let's say or
+any any machine learning task so what
+any any machine learning task so what
+any any machine learning task so what
+you have is a 28x 28 image and the
+you have is a 28x 28 image and the
+you have is a 28x 28 image and the
+output is going to be some classes right
+output is going to be some classes right
+output is going to be some classes right
+so there are 10 classes and you churn
+so there are 10 classes and you churn
+so there are 10 classes and you churn
+out the class probabilities so have a
+out the class probabilities so have a
+out the class probabilities so have a
+784 dimensional input and you have a 10
+784 dimensional input and you have a 10
+784 dimensional input and you have a 10
+dimensional output so it's a map
+dimensional output so it's a map
+dimensional output so it's a map
+between let's say vectors and vectors
+between let's say vectors and vectors
+between let's say vectors and vectors
+maybe of very high Dimensions but
+maybe of very high Dimensions but
+maybe of very high Dimensions but
+vectors and vectors here in just
+vectors and vectors here in just
+vectors and vectors here in just
+conceptually this is the difference
+conceptually this is the difference
+conceptually this is the difference
+because now I cannot describe it I can
+because now I cannot describe it I can
+because now I cannot describe it I can
+approximate it and we have to but I
+approximate it and we have to but I
+approximate it and we have to but I
+cannot describe it in terms of just one
+cannot describe it in terms of just one
+cannot describe it in terms of just one
+or 10 or 100 uh numbers right because
+or 10 or 100 uh numbers right because
+or 10 or 100 uh numbers right because
+these are functions this is a function
+these are functions this is a function
+these are functions this is a function
+this is a function this is a function so
+this is a function this is a function so
+this is a function this is a function so
+intrinsically or implicitly I have to
+intrinsically or implicitly I have to
+intrinsically or implicitly I have to
+work with infinite dimensional inputs
+work with infinite dimensional inputs
+work with infinite dimensional inputs
+and infinite dimensional outputs and
+and infinite dimensional outputs and
+and infinite dimensional outputs and
+this is a stock departure from what you
+this is a stock departure from what you
+this is a stock departure from what you
+have seen before where the dnn's the
+have seen before where the dnn's the
+have seen before where the dnn's the
+Deep neural networks these were mappings
+Deep neural networks these were mappings
+Deep neural networks these were mappings
+from finite dimensional inputs to finite
+from finite dimensional inputs to finite
+from finite dimensional inputs to finite
+dimensional outputs so there is a there
+dimensional outputs so there is a there
+dimensional outputs so there is a there
+is an issue here there's a gulf here and
+is an issue here there's a gulf here and
+is an issue here there's a gulf here and
+for the next several lectures we will
+for the next several lectures we will
+for the next several lectures we will
+see how we bridge this gulf right so is
+see how we bridge this gulf right so is
+see how we bridge this gulf right so is
+that clear so the difference in Paradigm
+that clear so the difference in Paradigm
+that clear so the difference in Paradigm
+the difference in setup is quite Stark
+the difference in setup is quite Stark
+the difference in setup is quite Stark
+okay but how do we we have to deal with
+okay but how do we we have to deal with
+okay but how do we we have to deal with
+this somehow right means after all we do
+this somehow right means after all we do
+this somehow right means after all we do
+make make use of these Frameworks so
+make make use of these Frameworks so
+make make use of these Frameworks so
+what do we do so first option that I
+what do we do so first option that I
+what do we do so first option that I
+give you is we cheat okay so actually
+give you is we cheat okay so actually
+give you is we cheat okay so actually
+this is uh we
+cheat don't get confused but there is at
+cheat don't get confused but there is at
+cheat don't get confused but there is at
+least many many applications you can
+least many many applications you can
+least many many applications you can
+actually cheat your way you don't have
+actually cheat your way you don't have
+actually cheat your way you don't have
+to you don't have to solve this problem
+to you don't have to solve this problem
+to you don't have to solve this problem
+but eventually in the next lecture you
+but eventually in the next lecture you
+but eventually in the next lecture you
+will see that we have to get out of this
+will see that we have to get out of this
+will see that we have to get out of this
+cheating we can't use this trick all the
+cheating we can't use this trick all the
+cheating we can't use this trick all the
+time time and we have to essentially
+time time and we have to essentially
+time time and we have to essentially
+solve the problems so the point is and
+solve the problems so the point is and
+solve the problems so the point is and
+maybe I could have even given you an
+maybe I could have even given you an
+maybe I could have even given you an
+introduction right here so what if my
+introduction right here so what if my
+introduction right here so what if my
+input was
+input was
+input was
+um let's say my in this particular
+um let's say my in this particular
+um let's say my in this particular
+example the cheating is uh can be made
+example the cheating is uh can be made
+example the cheating is uh can be made
+rather explicit that my input
+rather explicit that my input
+rather explicit that my input
+distribution so remember that my input
+distribution so remember that my input
+distribution so remember that my input
+functions un not were drawn from a
+functions un not were drawn from a
+functions un not were drawn from a
+distribution me right what if I said
+distribution me right what if I said
+distribution me right what if I said
+that instead of looking at all possible
+that instead of looking at all possible
+that instead of looking at all possible
+functions which is uh unnecessary in
+functions which is uh unnecessary in
+functions which is uh unnecessary in
+practice my inputs were given like this
+practice my inputs were given like this
+practice my inputs were given like this
+so they were let's say summation of a k
+so they were let's say summation of a k
+so they were let's say summation of a k
+sin K
+sin K
+sin K
+pix okay summation of K AK sin K pix and
+pix okay summation of K AK sin K pix and
+pix okay summation of K AK sin K pix and
+AK was uniformly distributed in minus1
+AK was uniformly distributed in minus1
+AK was uniformly distributed in minus1
+1 okay and K went from 1 to
+1 okay and K went from 1 to
+1 okay and K went from 1 to
+10 okay so in other words so this was my
+10 okay so in other words so this was my
+10 okay so in other words so this was my
+my data set or the task itself is not to
+my data set or the task itself is not to
+my data set or the task itself is not to
+look at arbitrary functions that is
+look at arbitrary functions that is
+look at arbitrary functions that is
+going to I'll give you some concrete
+going to I'll give you some concrete
+going to I'll give you some concrete
+examples it doesn't make any sense in
+examples it doesn't make any sense in
+examples it doesn't make any sense in
+general but uh it is restricted to a
+general but uh it is restricted to a
+general but uh it is restricted to a
+certain class of functions that my class
+certain class of functions that my class
+certain class of functions that my class
+of functions is always given
+of functions is always given
+of functions is always given
+by is always given by these class of
+by is always given by these class of
+by is always given by these class of
+functions so in other words my input is
+functions so in other words my input is
+functions so in other words my input is
+given by these set of
+given by these set of
+given by these set of
+parameters so these are my parameters
+parameters so these are my parameters
+parameters so these are my parameters
+and uh what what I can do is I can work
+and uh what what I can do is I can work
+and uh what what I can do is I can work
+with these parameters so instead of an
+with these parameters so instead of an
+with these parameters so instead of an
+operator learning problem I have a
+operator learning problem I have a
+operator learning problem I have a
+finite dimensional problem because now
+finite dimensional problem because now
+finite dimensional problem because now
+my inputs just by definition are
+my inputs just by definition are
+my inputs just by definition are
+restricted to this class AK remember
+restricted to this class AK remember
+restricted to this class AK remember
+because these are the coefficients of a
+because these are the coefficients of a
+because these are the coefficients of a
+certain basis and the basis is fixed so
+certain basis and the basis is fixed so
+certain basis and the basis is fixed so
+now my my input is going to be finite
+now my my input is going to be finite
+now my my input is going to be finite
+dimensional right and my output is
+dimensional right and my output is
+dimensional right and my output is
+potentially also finite dimensional I
+potentially also finite dimensional I
+potentially also finite dimensional I
+can do that by simply taking AK
+can do that by simply taking AK
+can do that by simply taking AK
+x and t and turning out my solution
+x and t and turning out my solution
+x and t and turning out my solution
+which is going to be U of x a t a in
+which is going to be U of x a t a in
+which is going to be U of x a t a in
+other words I can rewrite my solution in
+other words I can rewrite my solution in
+other words I can rewrite my solution in
+terms of space time and some finite
+terms of space time and some finite
+terms of space time and some finite
+dimensional inputs so this was 10
+dimensional inputs so this was 10
+dimensional inputs so this was 10
+Dimensions this is one dimension one
+Dimensions this is one dimension one
+Dimensions this is one dimension one
+dimension 12 dimensions and a map to
+dimension 12 dimensions and a map to
+dimension 12 dimensions and a map to
+just one number so this is one dimension
+just one number so this is one dimension
+just one number so this is one dimension
+so in other words by restricting the
+so in other words by restricting the
+so in other words by restricting the
+space base of my data set by restricting
+space base of my data set by restricting
+space base of my data set by restricting
+my tasks generality of course you will
+my tasks generality of course you will
+my tasks generality of course you will
+see that you pay a price right but uh
+see that you pay a price right but uh
+see that you pay a price right but uh
+let's let's do this cheating for the
+let's let's do this cheating for the
+let's let's do this cheating for the
+time being what I have done is that
+time being what I have done is that
+time being what I have done is that
+instead of having an infinite Dimensions
+instead of having an infinite Dimensions
+instead of having an infinite Dimensions
+to infinite Dimensions nothing I have
+to infinite Dimensions nothing I have
+to infinite Dimensions nothing I have
+managed to escape by just having
+managed to escape by just having
+managed to escape by just having
+something which goes from 12 Dimension
+something which goes from 12 Dimension
+something which goes from 12 Dimension
+to one dimension and this is what is
+to one dimension and this is what is
+to one dimension and this is what is
+called parametric PDS so remember that
+called parametric PDS so remember that
+called parametric PDS so remember that
+this was my setup this is the setup in
+this was my setup this is the setup in
+this was my setup this is the setup in
+which I
+which I
+which I
+work but the simplified setting that I
+work but the simplified setting that I
+work but the simplified setting that I
+told you is that the data that I'm going
+told you is that the data that I'm going
+told you is that the data that I'm going
+to draw that's why I had this
+to draw that's why I had this
+to draw that's why I had this
+probability measure here this measure
+probability measure here this measure
+probability measure here this measure
+has a finite dimensional
+has a finite dimensional
+has a finite dimensional
+support or it can be described all the
+support or it can be described all the
+support or it can be described all the
+data essentially this is a mathematical
+data essentially this is a mathematical
+data essentially this is a mathematical
+way of saying a precise yes
+way of saying a precise yes
+way of saying a precise yes
+James we to C resolution is that the
+James we to C resolution is that the
+James we to C resolution is that the
+same thing you will see that okay there
+same thing you will see that okay there
+same thing you will see that okay there
+is a there is a there's a connection
+is a there is a there's a connection
+is a there is a there's a connection
+here but at the moment I'm not fixing
+here but at the moment I'm not fixing
+here but at the moment I'm not fixing
+resolutions right I'm simply saying that
+resolutions right I'm simply saying that
+resolutions right I'm simply saying that
+my data itself is not coming from a very
+my data itself is not coming from a very
+my data itself is not coming from a very
+arbitrary class of functions but it's
+arbitrary class of functions but it's
+arbitrary class of functions but it's
+only coming from a class of functions
+only coming from a class of functions
+only coming from a class of functions
+that are given in terms of finitely many
+that are given in terms of finitely many
+that are given in terms of finitely many
+parameters so the number of degrees of
+parameters so the number of degrees of
+parameters so the number of degrees of
+freedom for my input is finite and
+freedom for my input is finite and
+freedom for my input is finite and
+subsequently I can also make the number
+subsequently I can also make the number
+subsequently I can also make the number
+of degrees of freedom for my output
+of degrees of freedom for my output
+of degrees of freedom for my output
+finite that's why I said I'm cheating
+finite that's why I said I'm cheating
+finite that's why I said I'm cheating
+here right because I'm sort of reducing
+here right because I'm sort of reducing
+here right because I'm sort of reducing
+because all sence in some sense is a
+because all sence in some sense is a
+because all sence in some sense is a
+reduction right you reduce what is
+reduction right you reduce what is
+reduction right you reduce what is
+unknown to what is known we know how to
+unknown to what is known we know how to
+unknown to what is known we know how to
+deal with finite dimensional inputs and
+deal with finite dimensional inputs and
+deal with finite dimensional inputs and
+outputs so somehow you have to Project
+outputs so somehow you have to Project
+outputs so somehow you have to Project
+Infinite dimensional inputs and outputs
+Infinite dimensional inputs and outputs
+Infinite dimensional inputs and outputs
+into this finite dimensional setting
+into this finite dimensional setting
+into this finite dimensional setting
+right and I'll give you a concrete
+right and I'll give you a concrete
+right and I'll give you a concrete
+example where this this makes sense so
+example where this this makes sense so
+example where this this makes sense so
+here so this is what is called a
+here so this is what is called a
+here so this is what is called a
+parameterized PD because uh so for
+parameterized PD because uh so for
+parameterized PD because uh so for
+instance in this particular example now
+instance in this particular example now
+instance in this particular example now
+I'm running out of space here I guess
+I'm running out of space here I guess
+I'm running out of space here I guess
+but what you could have done is you
+but what you could have done is you
+but what you could have done is you
+could have looked at a that this would
+could have looked at a that this would
+could have looked at a that this would
+be
+be
+be
+UT plus okay I was okay let's say that
+UT plus okay I was okay let's say that
+UT plus okay I was okay let's say that
+instead of a I would have had C here
+instead of a I would have had C here
+instead of a I would have had C here
+probably because and this U
+probably because and this U
+probably because and this U
+not depended not just on X but on some a
+not depended not just on X but on some a
+not depended not just on X but on some a
+okay this is this summation of vector a
+okay this is this summation of vector a
+okay this is this summation of vector a
+so this is this a k sin K
+so this is this a k sin K
+so this is this a k sin K
+pix so in that case your initial data
+pix so in that case your initial data
+pix so in that case your initial data
+it's this a parametric PD because it
+it's this a parametric PD because it
+it's this a parametric PD because it
+depends the solution itself depends on
+depends the solution itself depends on
+depends the solution itself depends on
+time on space and on the parameter a
+time on space and on the parameter a
+time on space and on the parameter a
+this is this is the basic idea and here
+this is this is the basic idea and here
+this is this is the basic idea and here
+is an example which is much more so I
+is an example which is much more so I
+is an example which is much more so I
+call the parameter y sorry for the
+call the parameter y sorry for the
+call the parameter y sorry for the
+confusion in notation uh so it's called
+confusion in notation uh so it's called
+confusion in notation uh so it's called
+a parameter Y and this is finite
+a parameter Y and this is finite
+a parameter Y and this is finite
+Dimension it belongs to Dy but Dy can be
+Dimension it belongs to Dy but Dy can be
+Dimension it belongs to Dy but Dy can be
+large dimension of Dy can be large so
+large dimension of Dy can be large so
+large dimension of Dy can be large so
+here is a concrete example for this to
+here is a concrete example for this to
+here is a concrete example for this to
+just to illustrate this point so if you
+just to illustrate this point so if you
+just to illustrate this point so if you
+want to design a new aircraft uh the
+want to design a new aircraft uh the
+want to design a new aircraft uh the
+critical design element is what is
+critical design element is what is
+critical design element is what is
+called designing the wi right because uh
+called designing the wi right because uh
+called designing the wi right because uh
+aircraft is flown by the lift that is
+aircraft is flown by the lift that is
+aircraft is flown by the lift that is
+generated by having an aerodynamic Wing
+generated by having an aerodynamic Wing
+generated by having an aerodynamic Wing
+that generates a lot of lift and that
+that generates a lot of lift and that
+that generates a lot of lift and that
+doesn't have a lot of drag so this is
+doesn't have a lot of drag so this is
+doesn't have a lot of drag so this is
+the basic so you cannot have a car which
+the basic so you cannot have a car which
+the basic so you cannot have a car which
+is going to fly but a plane flies
+is going to fly but a plane flies
+is going to fly but a plane flies
+because it has this aerodynamic shape
+because it has this aerodynamic shape
+because it has this aerodynamic shape
+among other things right so then so if
+among other things right so then so if
+among other things right so then so if
+you design the wing so what people do is
+you design the wing so what people do is
+you design the wing so what people do is
+uh in general to do anything in 3D is
+uh in general to do anything in 3D is
+uh in general to do anything in 3D is
+hard so people take cross-sections of
+hard so people take cross-sections of
+hard so people take cross-sections of
+the wing because if you have seen when
+the wing because if you have seen when
+the wing because if you have seen when
+you have flown you have seen an aircraft
+you have flown you have seen an aircraft
+you have flown you have seen an aircraft
+and you see that you can essentially
+and you see that you can essentially
+and you see that you can essentially
+compose it of cross-sections there's not
+compose it of cross-sections there's not
+compose it of cross-sections there's not
+a lot of variation within the shape of
+a lot of variation within the shape of
+a lot of variation within the shape of
+the cross-section only the sort of the
+the cross-section only the sort of the
+the cross-section only the sort of the
+dimensions the the length of the
+dimensions the the length of the
+dimensions the the length of the
+cross-section so along each
+cross-section so along each
+cross-section so along each
+cross-section you get what is called a
+cross-section you get what is called a
+cross-section you get what is called a
+air foil okay so this object here is an
+air foil okay so this object here is an
+air foil okay so this object here is an
+air for why is this not working
+air for why is this not working
+air for why is this not working
+now okay air for so this is like think
+now okay air for so this is like think
+now okay air for so this is like think
+of it as a 2d Wing right but it's of
+of it as a 2d Wing right but it's of
+of it as a 2d Wing right but it's of
+course when you put it together you get
+course when you put it together you get
+course when you put it together you get
+a proper Wing So now in general these
+a proper Wing So now in general these
+a proper Wing So now in general these
+things have to be manufactur these
+things have to be manufactur these
+things have to be manufactur these
+things have described uh and so what
+things have described uh and so what
+things have described uh and so what
+people do is that they they have a
+people do is that they they have a
+people do is that they they have a
+certain base reference aoil so black
+certain base reference aoil so black
+certain base reference aoil so black
+here is a reference okay so this is
+here is a reference okay so this is
+here is a reference okay so this is
+reference and then they of course you
+reference and then they of course you
+reference and then they of course you
+start with a reference air foil which is
+start with a reference air foil which is
+start with a reference air foil which is
+based on the engineers intuition but you
+based on the engineers intuition but you
+based on the engineers intuition but you
+want to see whether you can increase the
+want to see whether you can increase the
+want to see whether you can increase the
+lift or reduce the drag or increase the
+lift or reduce the drag or increase the
+lift or reduce the drag or increase the
+lift to drag ratio and so on so what
+lift to drag ratio and so on so what
+lift to drag ratio and so on so what
+they do is that they start with the
+they do is that they start with the
+they do is that they start with the
+reference air foil so some srf and then
+reference air foil so some srf and then
+reference air foil so some srf and then
+they generate some design space okay so
+they generate some design space okay so
+they generate some design space okay so
+this is some finitely many parameter is
+this is some finitely many parameter is
+this is some finitely many parameter is
+a from 1 to whatever Dy of y
+a from 1 to whatever Dy of y
+a from 1 to whatever Dy of y
+* oh I have some concrete examples later
+* oh I have some concrete examples later
+* oh I have some concrete examples later
+but perhaps it's easier to say that it's
+but perhaps it's easier to say that it's
+but perhaps it's easier to say that it's
+Sy y so in other words you can see here
+Sy y so in other words you can see here
+Sy y so in other words you can see here
+in this design what is called the design
+in this design what is called the design
+in this design what is called the design
+envelope that uh this the Shaded regions
+envelope that uh this the Shaded regions
+envelope that uh this the Shaded regions
+this represent a whole set of shapes
+this represent a whole set of shapes
+this represent a whole set of shapes
+that are mapped by these parameters okay
+that are mapped by these parameters okay
+that are mapped by these parameters okay
+so these parameters they are sometimes
+so these parameters they are sometimes
+so these parameters they are sometimes
+called as hi na parameters in Dynamics
+called as hi na parameters in Dynamics
+called as hi na parameters in Dynamics
+but the details are not important there
+but the details are not important there
+but the details are not important there
+are something between 20 and 50
+are something between 20 and 50
+are something between 20 and 50
+parameters so the entire air foil the
+parameters so the entire air foil the
+parameters so the entire air foil the
+the the design is somehow restricted the
+the the design is somehow restricted the
+the the design is somehow restricted the
+number of degrees of freedom are
+number of degrees of freedom are
+number of degrees of freedom are
+restricted to these 50 parameters up to
+restricted to these 50 parameters up to
+restricted to these 50 parameters up to
+50 usually people use 20 and then what
+50 usually people use 20 and then what
+50 usually people use 20 and then what
+you do is that you compute the whole
+you do is that you compute the whole
+you do is that you compute the whole
+flow field here so here as you can see
+flow field here so here as you can see
+flow field here so here as you can see
+the the inputs are of course the space
+the the inputs are of course the space
+the the inputs are of course the space
+coordinates because this is steady state
+coordinates because this is steady state
+coordinates because this is steady state
+aerodynamics you don't care what happens
+aerodynamics you don't care what happens
+aerodynamics you don't care what happens
+during takeoff and L in terms of fuel
+during takeoff and L in terms of fuel
+during takeoff and L in terms of fuel
+efficiency but you care about what
+efficiency but you care about what
+efficiency but you care about what
+happens during Cruise conditions so it's
+happens during Cruise conditions so it's
+happens during Cruise conditions so it's
+X Y X and this is the Y is the shape
+X Y X and this is the Y is the shape
+X Y X and this is the Y is the shape
+parameters so this is a concrete example
+parameters so this is a concrete example
+parameters so this is a concrete example
+of what I just Illustrated the last time
+of what I just Illustrated the last time
+of what I just Illustrated the last time
+around right and then the output is
+around right and then the output is
+around right and then the output is
+simply the flow parameters the
+simply the flow parameters the
+simply the flow parameters the
+velocities the density and so on so
+velocities the density and so on so
+velocities the density and so on so
+these are functions for instance row of
+these are functions for instance row of
+these are functions for instance row of
+x y and let's say the pressure p of XY
+x y and let's say the pressure p of XY
+x y and let's say the pressure p of XY
+and so on and from these parameters you
+and so on and from these parameters you
+and so on and from these parameters you
+can compute things like drag and lift
+can compute things like drag and lift
+can compute things like drag and lift
+and so body forces which are just
+and so body forces which are just
+and so body forces which are just
+observables okay so these the solution
+observables okay so these the solution
+observables okay so these the solution
+itself is in the form of a field and
+itself is in the form of a field and
+itself is in the form of a field and
+otherwise drag lift these are sort of
+otherwise drag lift these are sort of
+otherwise drag lift these are sort of
+observables so what we do by this
+observables so what we do by this
+observables so what we do by this
+cheating is essentially take an infinite
+cheating is essentially take an infinite
+cheating is essentially take an infinite
+dimensional problem reduce it to finite
+dimensional problem reduce it to finite
+dimensional problem reduce it to finite
+Dimensions simply by restricting the
+Dimensions simply by restricting the
+Dimensions simply by restricting the
+input space and the output space so we
+input space and the output space so we
+input space and the output space so we
+will in some form or the other we have
+will in some form or the other we have
+will in some form or the other we have
+to do it uh in general but this is a
+to do it uh in general but this is a
+to do it uh in general but this is a
+sort of brutal way of doing it right you
+sort of brutal way of doing it right you
+sort of brutal way of doing it right you
+simply say that you look at Finly many
+simply say that you look at Finly many
+simply say that you look at Finly many
+parameters but many many people think of
+parameters but many many people think of
+parameters but many many people think of
+design engineering design as operating
+design engineering design as operating
+design engineering design as operating
+within this space that you finite many
+within this space that you finite many
+within this space that you finite many
+parameters and you're trying to find
+parameters and you're trying to find
+parameters and you're trying to find
+Optimal values within those parameter
+Optimal values within those parameter
+Optimal values within those parameter
+sets Okay how else can we design now
+sets Okay how else can we design now
+sets Okay how else can we design now
+let's assume that this is our problem
+let's assume that this is our problem
+let's assume that this is our problem
+that we have cheated we have projected
+that we have cheated we have projected
+that we have cheated we have projected
+our problem down from infinite
+our problem down from infinite
+our problem down from infinite
+Dimensions to finite Dimensions simply
+Dimensions to finite Dimensions simply
+Dimensions to finite Dimensions simply
+by reducing the measure by reducing the
+by reducing the measure by reducing the
+by reducing the measure by reducing the
+data set that um the diversity of the
+data set that um the diversity of the
+data set that um the diversity of the
+data set that the dimension of the data
+data set that the dimension of the data
+data set that the dimension of the data
+set that we have once we do that it's
+set that we have once we do that it's
+set that we have once we do that it's
+just plain vanilla machine learn right
+just plain vanilla machine learn right
+just plain vanilla machine learn right
+these are the things that you're already
+these are the things that you're already
+these are the things that you're already
+familiar with because now remember that
+familiar with because now remember that
+familiar with because now remember that
+my inputs are this X and Y also T if
+my inputs are this X and Y also T if
+my inputs are this X and Y also T if
+it's a Time dependent be and then all
+it's a Time dependent be and then all
+it's a Time dependent be and then all
+that you do is I I Club it together I
+that you do is I I Club it together I
+that you do is I I Club it together I
+call it as a zed so this is txy these
+call it as a zed so this is txy these
+call it as a zed so this is txy these
+are all the inputs this is time space
+are all the inputs this is time space
+are all the inputs this is time space
+parameter and my solution is given by
+parameter and my solution is given by
+parameter and my solution is given by
+some l l Of Z this could be the field it
+some l l Of Z this could be the field it
+some l l Of Z this could be the field it
+could be an observable a quantity of
+could be an observable a quantity of
+could be an observable a quantity of
+interest but it's a mapping between
+interest but it's a mapping between
+interest but it's a mapping between
+finite dimensions and finite Dimensions
+finite dimensions and finite Dimensions
+finite dimensions and finite Dimensions
+so you could just use your plain vanilla
+so you could just use your plain vanilla
+so you could just use your plain vanilla
+deep neural networks means the usual
+deep neural networks means the usual
+deep neural networks means the usual
+usual things you have these layers you
+usual things you have these layers you
+usual things you have these layers you
+have uh the weights and vies I don't
+have uh the weights and vies I don't
+have uh the weights and vies I don't
+have to tell you this you have some
+have to tell you this you have some
+have to tell you this you have some
+activation function and now since we are
+activation function and now since we are
+activation function and now since we are
+not going to differentiate uh like we
+not going to differentiate uh like we
+not going to differentiate uh like we
+did with pins we can take any activation
+did with pins we can take any activation
+did with pins we can take any activation
+function it could be relu for instance
+function it could be relu for instance
+function it could be relu for instance
+which is the and widely used activation
+which is the and widely used activation
+which is the and widely used activation
+function right and then how do we do how
+function right and then how do we do how
+function right and then how do we do how
+do we have data the UNS that we have the
+do we have data the UNS that we have the
+do we have data the UNS that we have the
+sort of the argument or the hypothesis
+sort of the argument or the hypothesis
+sort of the argument or the hypothesis
+that we have for data usually is that
+that we have for data usually is that
+that we have for data usually is that
+this data is randomly generated right so
+this data is randomly generated right so
+this data is randomly generated right so
+this is this is hypothesis so what you
+this is this is hypothesis so what you
+this is this is hypothesis so what you
+can think of is that now these things
+can think of is that now these things
+can think of is that now these things
+think of them as parameters in space so
+think of them as parameters in space so
+think of them as parameters in space so
+for instance within this um set of
+for instance within this um set of
+for instance within this um set of
+shapes you will randomly generate let's
+shapes you will randomly generate let's
+shapes you will randomly generate let's
+say thousand shapes you'll compute the
+say thousand shapes you'll compute the
+say thousand shapes you'll compute the
+field with respect to a th shapes
+field with respect to a th shapes
+field with respect to a th shapes
+thousand is just a number that I gave
+thousand is just a number that I gave
+thousand is just a number that I gave
+you that would be quite expensive
+you that would be quite expensive
+you that would be quite expensive
+because each of these computations will
+because each of these computations will
+because each of these computations will
+be between one and two minutes me even
+be between one and two minutes me even
+be between one and two minutes me even
+the fastest codes will not be will be of
+the fastest codes will not be will be of
+the fastest codes will not be will be of
+the order of a minute and when I was a
+the order of a minute and when I was a
+the order of a minute and when I was a
+PhD student or a master student like you
+PhD student or a master student like you
+PhD student or a master student like you
+guys this was the order of two hours
+guys this was the order of two hours
+guys this was the order of two hours
+maybe so we have done like at least two
+maybe so we have done like at least two
+maybe so we have done like at least two
+orders of magnitude down uh so things
+orders of magnitude down uh so things
+orders of magnitude down uh so things
+things have improved but it's still of
+things have improved but it's still of
+things have improved but it's still of
+the order of a minute but if you
+the order of a minute but if you
+the order of a minute but if you
+generate a th000 it's ,00 minutes which
+generate a th000 it's ,00 minutes which
+generate a th000 it's ,00 minutes which
+is which is sometime right it's not
+is which is sometime right it's not
+is which is sometime right it's not
+serious time so this is going to provide
+serious time so this is going to provide
+serious time so this is going to provide
+you with the data so L of zi is your
+you with the data so L of zi is your
+you with the data so L of zi is your
+data you can think of this as your
+data you can think of this as your
+data you can think of this as your
+labels so zis are the points at which
+labels so zis are the points at which
+labels so zis are the points at which
+the sampling is taking place there could
+the sampling is taking place there could
+the sampling is taking place there could
+be some noise but I'm operating in a
+be some noise but I'm operating in a
+be some noise but I'm operating in a
+noise free regime just for Simplicity
+noise free regime just for Simplicity
+noise free regime just for Simplicity
+and then you look at the output of the
+and then you look at the output of the
+and then you look at the output of the
+neural network which is given here these
+neural network which is given here these
+neural network which is given here these
+are the
+are the
+are the
+predictions and this is not um this is
+predictions and this is not um this is
+predictions and this is not um this is
+regression problem essentially it's not
+regression problem essentially it's not
+regression problem essentially it's not
+a classification problem so what you do
+a classification problem so what you do
+a classification problem so what you do
+in this particular case is that you just
+in this particular case is that you just
+in this particular case is that you just
+use whatever Sgt adom whatever to
+use whatever Sgt adom whatever to
+use whatever Sgt adom whatever to
+minimize this loss function so the
+minimize this loss function so the
+minimize this loss function so the
+algorithm itself is super simple you
+algorithm itself is super simple you
+algorithm itself is super simple you
+have finitely many parameters you take a
+have finitely many parameters you take a
+have finitely many parameters you take a
+random set of these parameters generate
+random set of these parameters generate
+random set of these parameters generate
+some data and then you learn the
+some data and then you learn the
+some data and then you learn the
+solution Operator by using standard deep
+solution Operator by using standard deep
+solution Operator by using standard deep
+neuron Network explain van netw any
+neuron Network explain van netw any
+neuron Network explain van netw any
+questions on this
+no from people on Zoom no okay so this
+no from people on Zoom no okay so this
+no from people on Zoom no okay so this
+is this is as as easy as it gets the the
+is this is as as easy as it gets the the
+is this is as as easy as it gets the the
+question is is this going to work out
+question is is this going to work out
+question is is this going to work out
+what are the what are the caveats do we
+what are the what are the caveats do we
+what are the what are the caveats do we
+have do we have some issues let's see
+have do we have some issues let's see
+have do we have some issues let's see
+what what happens right so the first
+what what happens right so the first
+what what happens right so the first
+question always at least for a
+question always at least for a
+question always at least for a
+mathematician is that is is this ever
+mathematician is that is is this ever
+mathematician is that is is this ever
+going to work so in particular if you're
+going to work so in particular if you're
+going to work so in particular if you're
+given some tolerance here so this is
+given some tolerance here so this is
+given some tolerance here so this is
+some
+some
+some
+tolerance the question is can we find a
+tolerance the question is can we find a
+tolerance the question is can we find a
+deep neural network can we find a
+deep neural network can we find a
+deep neural network can we find a
+suitable architecture and so on such
+suitable architecture and so on such
+suitable architecture and so on such
+that for the underlying map you can
+that for the underlying map you can
+that for the underlying map you can
+think of it as an operator now but it's
+think of it as an operator now but it's
+think of it as an operator now but it's
+really a map because operator has been
+really a map because operator has been
+really a map because operator has been
+reduced to a function can you find uh
+reduced to a function can you find uh
+reduced to a function can you find uh
+deep new network such that these things
+deep new network such that these things
+deep new network such that these things
+are close to each other and if you
+are close to each other and if you
+are close to each other and if you
+remember the last lecture I had already
+remember the last lecture I had already
+remember the last lecture I had already
+talked about it that we have this
+talked about it that we have this
+talked about it that we have this
+Universal approximation property and
+Universal approximation property and
+Universal approximation property and
+what does the universal approximation
+what does the universal approximation
+what does the universal approximation
+property do it provides you the
+property do it provides you the
+property do it provides you the
+guarantee that yes the always be even a
+guarantee that yes the always be even a
+guarantee that yes the always be even a
+shallow neuron Network even a one layer
+shallow neuron Network even a one layer
+shallow neuron Network even a one layer
+neuron Network such that this is true as
+neuron Network such that this is true as
+neuron Network such that this is true as
+long as this map is continuous and in
+long as this map is continuous and in
+long as this map is continuous and in
+fact um even less than continuous it
+fact um even less than continuous it
+fact um even less than continuous it
+could be integrable it's as long as it's
+could be integrable it's as long as it's
+could be integrable it's as long as it's
+measurable then indeed this can be done
+measurable then indeed this can be done
+measurable then indeed this can be done
+okay so from the in principle this is
+okay so from the in principle this is
+okay so from the in principle this is
+not a hard problem because it's finite
+not a hard problem because it's finite
+not a hard problem because it's finite
+dimensional so you can always solve it
+dimensional so you can always solve it
+dimensional so you can always solve it
+however the point is uh that there is a
+however the point is uh that there is a
+however the point is uh that there is a
+there is a price that one has to pay
+there is a price that one has to pay
+there is a price that one has to pay
+with respect to complexity so the size
+with respect to complexity so the size
+with respect to complexity so the size
+of this neuron Network so let me say m
+of this neuron Network so let me say m
+of this neuron Network so let me say m
+is a number of parameters then there are
+is a number of parameters then there are
+is a number of parameters then there are
+some results which essentially say but
+some results which essentially say but
+some results which essentially say but
+the rate at which this convergence
+the rate at which this convergence
+the rate at which this convergence
+happens in general of course there are
+happens in general of course there are
+happens in general of course there are
+there are problems where it is uh where
+there are problems where it is uh where
+there are problems where it is uh where
+this is the worst case guarantee but in
+this is the worst case guarantee but in
+this is the worst case guarantee but in
+general it scales with two things it
+general it scales with two things it
+general it scales with two things it
+scales with the regularity of your map
+scales with the regularity of your map
+scales with the regularity of your map
+so this s is the number of
+so this s is the number of
+so this s is the number of
+derivatives so if you have a smooth
+derivatives so if you have a smooth
+derivatives so if you have a smooth
+function s is uh large right it could be
+function s is uh large right it could be
+function s is uh large right it could be
+10 100 whatever uh p is some integr
+10 100 whatever uh p is some integr
+10 100 whatever uh p is some integr
+ility think of it as 1 and two and D Bar
+ility think of it as 1 and two and D Bar
+ility think of it as 1 and two and D Bar
+here is the dimension so D Bar is the
+here is the dimension so D Bar is the
+here is the dimension so D Bar is the
+dimension other words it's easier to
+dimension other words it's easier to
+dimension other words it's easier to
+learn smooth Maps than things which are
+learn smooth Maps than things which are
+learn smooth Maps than things which are
+complicated and it's easier to learn in
+complicated and it's easier to learn in
+complicated and it's easier to learn in
+low Dimensions than in high Dimensions
+low Dimensions than in high Dimensions
+low Dimensions than in high Dimensions
+this is sort of the sort of the thinking
+this is sort of the sort of the thinking
+this is sort of the sort of the thinking
+that that happens and the point is that
+that that happens and the point is that
+that that happens and the point is that
+in general this is not good because then
+in general this is not good because then
+in general this is not good because then
+you are hit with a curse of
+you are hit with a curse of
+you are hit with a curse of
+dimensionality that even in sort of low
+dimensionality that even in sort of low
+dimensionality that even in sort of low
+Dimensions um you will end up with very
+Dimensions um you will end up with very
+Dimensions um you will end up with very
+very large Network size so if you do the
+very large Network size so if you do the
+very large Network size so if you do the
+math then already you get into a 100 um
+math then already you get into a 100 um
+math then already you get into a 100 um
+no is it 100 billion or no a trillion
+no is it 100 billion or no a trillion
+no is it 100 billion or no a trillion
+right 10 the 12 is a trillion and this
+right 10 the 12 is a trillion and this
+right 10 the 12 is a trillion and this
+is even chat GPT the the underlying
+is even chat GPT the the underlying
+is even chat GPT the the underlying
+model is not like that so there this
+model is not like that so there this
+model is not like that so there this
+this does not explain anything right
+this does not explain anything right
+this does not explain anything right
+because even with very very low
+because even with very very low
+because even with very very low
+Dimensions you end up with very very
+Dimensions you end up with very very
+Dimensions you end up with very very
+large numbers so there is a curse of
+large numbers so there is a curse of
+large numbers so there is a curse of
+dimensionality which I had already
+dimensionality which I had already
+dimensionality which I had already
+spoken about in the last lecture but it
+spoken about in the last lecture but it
+spoken about in the last lecture but it
+turns out that that is not the case
+turns out that that is not the case
+turns out that that is not the case
+because at the end of the day we are not
+because at the end of the day we are not
+because at the end of the day we are not
+looking at some random mappings here
+looking at some random mappings here
+looking at some random mappings here
+right these mappings or these functions
+right these mappings or these functions
+right these mappings or these functions
+this L here this object this operators
+this L here this object this operators
+this L here this object this operators
+if you want to think of it like that
+if you want to think of it like that
+if you want to think of it like that
+these are much more structure in them
+these are much more structure in them
+these are much more structure in them
+and the structure comes from the fact
+and the structure comes from the fact
+and the structure comes from the fact
+that these are solutions of pdes so
+that these are solutions of pdes so
+that these are solutions of pdes so
+Solutions of pdes could be smooth they
+Solutions of pdes could be smooth they
+Solutions of pdes could be smooth they
+have other forms of regularity
+have other forms of regularity
+have other forms of regularity
+dimensionality reduction and essentially
+dimensionality reduction and essentially
+dimensionality reduction and essentially
+there are lots and lots of results
+there are lots and lots of results
+there are lots and lots of results
+there's there's some detail here is not
+there's there's some detail here is not
+there's there's some detail here is not
+important but there are lots and lots of
+important but there are lots and lots of
+important but there are lots and lots of
+results which essentially tell you that
+results which essentially tell you that
+results which essentially tell you that
+this error the early error which scal
+this error the early error which scal
+this error the early error which scal
+like exponential in dimension it scales
+like exponential in dimension it scales
+like exponential in dimension it scales
+much better than that for because of the
+much better than that for because of the
+much better than that for because of the
+solutions of PDs so this is for all
+solutions of PDs so this is for all
+solutions of PDs so this is for all
+kinds of PDs elliptic hyperbolic
+kinds of PDs elliptic hyperbolic
+kinds of PDs elliptic hyperbolic
+parabolic and so on there lots of
+parabolic and so on there lots of
+parabolic and so on there lots of
+results and this Sigma here which tells
+results and this Sigma here which tells
+results and this Sigma here which tells
+you the rate this can be linear
+you the rate this can be linear
+you the rate this can be linear
+quadratic even logarithmic for some PDS
+quadratic even logarithmic for some PDS
+quadratic even logarithmic for some PDS
+okay so if something scales linear in
+okay so if something scales linear in
+okay so if something scales linear in
+dimension it's not a big deal or
+dimension it's not a big deal or
+dimension it's not a big deal or
+quadratically in dimension it's not such
+quadratically in dimension it's not such
+quadratically in dimension it's not such
+a big deal so this is there is some
+a big deal so this is there is some
+a big deal so this is there is some
+regularity or compressibility of the
+regularity or compressibility of the
+regularity or compressibility of the
+data which tells us that at least in
+data which tells us that at least in
+data which tells us that at least in
+terms of the approximation error the
+terms of the approximation error the
+terms of the approximation error the
+error that we get from in principle
+error that we get from in principle
+error that we get from in principle
+error of approximating this we can we
+error of approximating this we can we
+error of approximating this we can we
+can do rather well right so this is this
+can do rather well right so this is this
+can do rather well right so this is this
+is not such an issue however the main
+is not such an issue however the main
+is not such an issue however the main
+point is that you also have other
+point is that you also have other
+point is that you also have other
+sources of error I think Ben mentioned
+sources of error I think Ben mentioned
+sources of error I think Ben mentioned
+them at the beginning of his lectures
+them at the beginning of his lectures
+them at the beginning of his lectures
+you have optimization error this is our
+you have optimization error this is our
+you have optimization error this is our
+familiar friend training error that we
+familiar friend training error that we
+familiar friend training error that we
+saw a in the last couple of lectures and
+saw a in the last couple of lectures and
+saw a in the last couple of lectures and
+there is some generalization eror and
+there is some generalization eror and
+there is some generalization eror and
+this is the one that I'm going to Target
+this is the one that I'm going to Target
+this is the one that I'm going to Target
+here because once you have random points
+here because once you have random points
+here because once you have random points
+remember that my data was supposed to be
+remember that my data was supposed to be
+remember that my data was supposed to be
+random once you have random points then
+random once you have random points then
+random once you have random points then
+there is a limit to this and the limit
+there is a limit to this and the limit
+there is a limit to this and the limit
+is given by also we saw in the last
+is given by also we saw in the last
+is given by also we saw in the last
+lecture there essentially square root of
+lecture there essentially square root of
+lecture there essentially square root of
+n okay morally square root of n even
+n okay morally square root of n even
+n okay morally square root of n even
+though there is a logarithmic correction
+though there is a logarithmic correction
+though there is a logarithmic correction
+here this always there because things
+here this always there because things
+here this always there because things
+are things are correlated so essentially
+are things are correlated so essentially
+are things are correlated so essentially
+at the end of the day we can say that my
+at the end of the day we can say that my
+at the end of the day we can say that my
+overall error this behaves in the
+overall error this behaves in the
+overall error this behaves in the
+following man and this is important
+following man and this is important
+following man and this is important
+these considerations are important
+these considerations are important
+these considerations are important
+because it depends on the network
+because it depends on the network
+because it depends on the network
+somehow but let's say this this C is
+somehow but let's say this this C is
+somehow but let's say this this C is
+some sometimes called in theoretical
+some sometimes called in theoretical
+some sometimes called in theoretical
+machine learning as a compressibility
+machine learning as a compressibility
+machine learning as a compressibility
+factor compressibility factor some
+factor compressibility factor some
+factor compressibility factor some
+people also call it as Kappa but I I
+people also call it as Kappa but I I
+people also call it as Kappa but I I
+just called it a c okay but essentially
+just called it a c okay but essentially
+just called it a c okay but essentially
+the in terms of sample complexity
+the in terms of sample complexity
+the in terms of sample complexity
+because this is for as an issue this is
+because this is for as an issue this is
+because this is for as an issue this is
+always going like a square root it's
+always going like a square root it's
+always going like a square root it's
+slightly worse than a square root even
+slightly worse than a square root even
+slightly worse than a square root even
+in the the guarantee is slightly worse
+in the the guarantee is slightly worse
+in the the guarantee is slightly worse
+than a square root but it is let's say a
+than a square root but it is let's say a
+than a square root but it is let's say a
+square root and this is again a problem
+square root and this is again a problem
+square root and this is again a problem
+for us because remember that even if
+for us because remember that even if
+for us because remember that even if
+this was order of one let's say it's a
+this was order of one let's say it's a
+this was order of one let's say it's a
+number one and I want an error of 1% so
+number one and I want an error of 1% so
+number one and I want an error of 1% so
+1% is 1 over 100 right assuming that
+1% is 1 over 100 right assuming that
+1% is 1 over 100 right assuming that
+everything is of the order of one so if
+everything is of the order of one so if
+everything is of the order of one so if
+I need 1 over 100 so I have to find the
+I need 1 over 100 so I have to find the
+I need 1 over 100 so I have to find the
+number of samples the square root is 100
+number of samples the square root is 100
+number of samples the square root is 100
+and that is 10,000 so 10,000 is a lot of
+and that is 10,000 so 10,000 is a lot of
+and that is 10,000 so 10,000 is a lot of
+lot of samples because uh just imagine
+lot of samples because uh just imagine
+lot of samples because uh just imagine
+as I said a single simulation takes me
+as I said a single simulation takes me
+as I said a single simulation takes me
+approximately 2 minutes 10,000 samples
+approximately 2 minutes 10,000 samples
+approximately 2 minutes 10,000 samples
+will take me 20,000 minutes and this is
+will take me 20,000 minutes and this is
+will take me 20,000 minutes and this is
+this is too much right in 2D so in 3D
+this is too much right in 2D so in 3D
+this is too much right in 2D so in 3D
+you can imagine nothing runs in one
+you can imagine nothing runs in one
+you can imagine nothing runs in one
+minute 3D a single output of the code
+minute 3D a single output of the code
+minute 3D a single output of the code
+takes you anything from one hour on on a
+takes you anything from one hour on on a
+takes you anything from one hour on on a
+small machine to hundreds or thousands
+small machine to hundreds or thousands
+small machine to hundreds or thousands
+of hours or millions of hours on a
+of hours or millions of hours on a
+of hours or millions of hours on a
+supercomputer so one has to be careful
+supercomputer so one has to be careful
+supercomputer so one has to be careful
+and this is some some sense the big
+and this is some some sense the big
+and this is some some sense the big
+challenge that I'm trying to sort of
+challenge that I'm trying to sort of
+challenge that I'm trying to sort of
+pose here that uh we are dealing with an
+pose here that uh we are dealing with an
+pose here that uh we are dealing with an
+object so this is not like taking an
+object so this is not like taking an
+object so this is not like taking an
+image taking an image is cheap you know
+image taking an image is cheap you know
+image taking an image is cheap you know
+compared to solving a PD or solving
+compared to solving a PD or solving
+compared to solving a PD or solving
+differential equations or just
+differential equations or just
+differential equations or just
+simulating physics so forget about the
+simulating physics so forget about the
+simulating physics so forget about the
+low regularity here this is neither here
+low regularity here this is neither here
+low regularity here this is neither here
+nor there but essentially we are in a
+nor there but essentially we are in a
+nor there but essentially we are in a
+relatively and this is
+relatively and this is
+relatively and this is
+relative because also if you're looking
+relative because also if you're looking
+relative because also if you're looking
+at number of sick people like in medical
+at number of sick people like in medical
+at number of sick people like in medical
+AI it's even less you know so so it's
+AI it's even less you know so so it's
+AI it's even less you know so so it's
+one has to be relative relatively data
+one has to be relative relatively data
+one has to be relative relatively data
+poor regime and this can be to some
+poor regime and this can be to some
+poor regime and this can be to some
+extent at least opped in contrast to the
+extent at least opped in contrast to the
+extent at least opped in contrast to the
+Big Data success of machine learning
+Big Data success of machine learning
+Big Data success of machine learning
+that uh has come up from large data sets
+that uh has come up from large data sets
+that uh has come up from large data sets
+right and towards the end of our course
+right and towards the end of our course
+right and towards the end of our course
+I'll convince you that actually here
+I'll convince you that actually here
+I'll convince you that actually here
+also we need large data sets but for the
+also we need large data sets but for the
+also we need large data sets but for the
+timing let's pretend that we can never
+timing let's pretend that we can never
+timing let's pretend that we can never
+get access to large data sets and we
+get access to large data sets and we
+get access to large data sets and we
+have to work with relatively small data
+have to work with relatively small data
+have to work with relatively small data
+sets perhaps the order of hundred of
+sets perhaps the order of hundred of
+sets perhaps the order of hundred of
+hundreds of samples not tens of
+hundreds of samples not tens of
+hundreds of samples not tens of
+thousands of samples right and how are
+thousands of samples right and how are
+thousands of samples right and how are
+we going to leverage that and how are we
+we going to leverage that and how are we
+we going to leverage that and how are we
+going to use that so there's no point in
+going to use that so there's no point in
+going to use that so there's no point in
+me starting a new topic we will do that
+me starting a new topic we will do that
+me starting a new topic we will do that
+in the next lecture okay so there's only
+in the next lecture okay so there's only
+in the next lecture okay so there's only
+3 minutes left okay so have a nice
+3 minutes left okay so have a nice
+3 minutes left okay so have a nice
+weekend and last next week uh remember
+weekend and last next week uh remember
+weekend and last next week uh remember
+that Friday is Easter Friday Good Friday
+that Friday is Easter Friday Good Friday
+that Friday is Easter Friday Good Friday
+so this this a holiday we have only one
+so this this a holiday we have only one
+so this this a holiday we have only one
+lecture and there we will talk more
+lecture and there we will talk more
+lecture and there we will talk more
+about operator learning and see whether
+about operator learning and see whether
+about operator learning and see whether
+this cheating works so even cheating
+this cheating works so even cheating
+this cheating works so even cheating
+doesn't work here because don't have
+doesn't work here because don't have
+doesn't work here because don't have
+enough data right so and then what
+enough data right so and then what
+enough data right so and then what
+happens when you don't cheat okay next
+happens when you don't cheat okay next
+happens when you don't cheat okay next
+week then so long

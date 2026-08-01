@@ -1,0 +1,4046 @@
+My name is David. I'm a PhD student from
+My name is David. I'm a PhD student from
+My name is David. I'm a PhD student from
+Sat's lab. And uh my background is
+Sat's lab. And uh my background is
+Sat's lab. And uh my background is
+probably a bit different than yours
+probably a bit different than yours
+probably a bit different than yours
+because I studied biology initially and
+because I studied biology initially and
+because I studied biology initially and
+then I went to industry and worked for a
+then I went to industry and worked for a
+then I went to industry and worked for a
+couple of years as a weblab protein
+couple of years as a weblab protein
+couple of years as a weblab protein
+engineer and then I did a second
+engineer and then I did a second
+engineer and then I did a second
+master's degree in data science before I
+master's degree in data science before I
+master's degree in data science before I
+came back to ETH um to join sits lab as
+came back to ETH um to join sits lab as
+came back to ETH um to join sits lab as
+a PhD and I'm mainly working on
+a PhD and I'm mainly working on
+a PhD and I'm mainly working on
+um machine learning for drug discovery
+um machine learning for drug discovery
+um machine learning for drug discovery
+and generative AI for for drug discovery
+and generative AI for for drug discovery
+and generative AI for for drug discovery
+as well.
+as well.
+as well.
+and I will talk today about some
+and I will talk today about some
+and I will talk today about some
+applications of AI in chemistry and
+applications of AI in chemistry and
+applications of AI in chemistry and
+biology. Um, this is a super dynamic
+biology. Um, this is a super dynamic
+biology. Um, this is a super dynamic
+field. It has experienced a couple of
+field. It has experienced a couple of
+field. It has experienced a couple of
+breakthroughs in the recent years. Um,
+breakthroughs in the recent years. Um,
+breakthroughs in the recent years. Um,
+and I will just try to give you an
+and I will just try to give you an
+and I will just try to give you an
+overview over the current state of the
+overview over the current state of the
+overview over the current state of the
+field, what is happening, what are the
+field, what is happening, what are the
+field, what is happening, what are the
+models that are most frequently used.
+models that are most frequently used.
+models that are most frequently used.
+But of course this will be by no means
+But of course this will be by no means
+But of course this will be by no means
+an an exhaustive uh overview over the
+an an exhaustive uh overview over the
+an an exhaustive uh overview over the
+field because it will be focused on
+field because it will be focused on
+field because it will be focused on
+structural biology, protein folding and
+structural biology, protein folding and
+structural biology, protein folding and
+drug discovery uh also drug design but
+drug discovery uh also drug design but
+drug discovery uh also drug design but
+of course that leaves out many
+of course that leaves out many
+of course that leaves out many
+applications. Um, and also if I show you
+applications. Um, and also if I show you
+applications. Um, and also if I show you
+an example for a model, this might not
+an example for a model, this might not
+an example for a model, this might not
+be necessarily because it's the best
+be necessarily because it's the best
+be necessarily because it's the best
+model there is, but maybe because it's
+model there is, but maybe because it's
+model there is, but maybe because it's
+the the most instructive one or maybe
+the the most instructive one or maybe
+the the most instructive one or maybe
+the the first one that um existed of its
+the the first one that um existed of its
+the the first one that um existed of its
+kind. So in these cases, I've usually
+kind. So in these cases, I've usually
+kind. So in these cases, I've usually
+added these beyond today's scope uh
+added these beyond today's scope uh
+added these beyond today's scope uh
+slides that are just for those who are
+slides that are just for those who are
+slides that are just for those who are
+interested. Um pointing to other models
+interested. Um pointing to other models
+interested. Um pointing to other models
+that are maybe um newer, maybe more
+that are maybe um newer, maybe more
+that are maybe um newer, maybe more
+sophisticated, more successful. Um yes,
+sophisticated, more successful. Um yes,
+sophisticated, more successful. Um yes,
+so this is
+so this is
+so this is
+the outline of today. At the beginning I
+the outline of today. At the beginning I
+the outline of today. At the beginning I
+will just give you short introduction to
+will just give you short introduction to
+will just give you short introduction to
+proteins and small molecules that we are
+proteins and small molecules that we are
+proteins and small molecules that we are
+all on the same page and then I will um
+all on the same page and then I will um
+all on the same page and then I will um
+transition to the first kind of machine
+transition to the first kind of machine
+transition to the first kind of machine
+learning model those that are based on
+learning model those that are based on
+learning model those that are based on
+sequence representations of proteins and
+sequence representations of proteins and
+sequence representations of proteins and
+small molecules. Then I would also like
+small molecules. Then I would also like
+small molecules. Then I would also like
+to to speak about structure based models
+to to speak about structure based models
+to to speak about structure based models
+that use uh 3D structures. Uh but before
+that use uh 3D structures. Uh but before
+that use uh 3D structures. Uh but before
+I do that I I will uh introduce
+I do that I I will uh introduce
+I do that I I will uh introduce
+structure prediction models such as
+structure prediction models such as
+structure prediction models such as
+Alpha Fall 2 and DSM and then probably
+Alpha Fall 2 and DSM and then probably
+Alpha Fall 2 and DSM and then probably
+next week I will mention or talk a bit
+next week I will mention or talk a bit
+next week I will mention or talk a bit
+about some challenges of training
+about some challenges of training
+about some challenges of training
+machine learning models on biological
+machine learning models on biological
+machine learning models on biological
+data and then um start the whole chapter
+data and then um start the whole chapter
+data and then um start the whole chapter
+about generative models for um the no
+about generative models for um the no
+about generative models for um the no
+design of proteins and small molecules.
+If you have any questions generally just
+If you have any questions generally just
+If you have any questions generally just
+uh raise your hand or write into the
+uh raise your hand or write into the
+uh raise your hand or write into the
+chat that's no problem. So in the first
+chat that's no problem. So in the first
+chat that's no problem. So in the first
+section of the talk I will just give
+section of the talk I will just give
+section of the talk I will just give
+this short introduction to proteins and
+this short introduction to proteins and
+this short introduction to proteins and
+small molecules because I think many of
+small molecules because I think many of
+small molecules because I think many of
+of you don't have a biology background
+of you don't have a biology background
+of you don't have a biology background
+at all. Um and we need this basics for
+at all. Um and we need this basics for
+at all. Um and we need this basics for
+all the models that come later.
+all the models that come later.
+all the models that come later.
+So small molecules are organic compounds
+So small molecules are organic compounds
+So small molecules are organic compounds
+that have usually less than 100 atoms.
+that have usually less than 100 atoms.
+that have usually less than 100 atoms.
+Um so they are quite small and because
+Um so they are quite small and because
+Um so they are quite small and because
+of this um they can diffuse across cell
+of this um they can diffuse across cell
+of this um they can diffuse across cell
+membranes and they can enter cells. Um
+membranes and they can enter cells. Um
+membranes and they can enter cells. Um
+many organisms produce such small
+many organisms produce such small
+many organisms produce such small
+molecules naturally as metabolites or
+molecules naturally as metabolites or
+molecules naturally as metabolites or
+signaling molecules like this cortisol
+signaling molecules like this cortisol
+signaling molecules like this cortisol
+that you can see here that is a stress
+that you can see here that is a stress
+that you can see here that is a stress
+hormone. And these molecules often
+hormone. And these molecules often
+hormone. And these molecules often
+interact with proteins and influence
+interact with proteins and influence
+interact with proteins and influence
+their function. And that's why most
+their function. And that's why most
+their function. And that's why most
+drugs are small molecules also because
+drugs are small molecules also because
+drugs are small molecules also because
+they can enter the cells through the
+they can enter the cells through the
+they can enter the cells through the
+cell membranes usually um for example
+cell membranes usually um for example
+cell membranes usually um for example
+the the aspirin molecule is also of this
+the the aspirin molecule is also of this
+the the aspirin molecule is also of this
+kind and the structure of these small
+kind and the structure of these small
+kind and the structure of these small
+molecules usually allows them because
+molecules usually allows them because
+molecules usually allows them because
+they are relatively small um allows to
+they are relatively small um allows to
+they are relatively small um allows to
+synthesize them in the chemical lab
+synthesize them in the chemical lab
+synthesize them in the chemical lab
+quite easily.
+quite easily.
+quite easily.
+Then proteins are these uh chain-like
+Then proteins are these uh chain-like
+Then proteins are these uh chain-like
+organic molecules that are much larger
+organic molecules that are much larger
+organic molecules that are much larger
+and they are built of a fixed set of
+and they are built of a fixed set of
+and they are built of a fixed set of
+building blocks. So they are chains that
+building blocks. So they are chains that
+building blocks. So they are chains that
+fold into a defined 3D structure known
+fold into a defined 3D structure known
+fold into a defined 3D structure known
+as this native confirmation. So it might
+as this native confirmation. So it might
+as this native confirmation. So it might
+be a bit hard to see um here in this
+be a bit hard to see um here in this
+be a bit hard to see um here in this
+figure
+figure
+figure
+but this is a chain that just that takes
+but this is a chain that just that takes
+but this is a chain that just that takes
+up this three-dimensional structure in
+up this three-dimensional structure in
+up this three-dimensional structure in
+and then forms this um globular um form
+and then forms this um globular um form
+and then forms this um globular um form
+that you can see here by this uh surface
+that you can see here by this uh surface
+that you can see here by this uh surface
+approximation
+approximation
+approximation
+and
+and
+and
+this um 3D structure of the protein then
+this um 3D structure of the protein then
+this um 3D structure of the protein then
+also defines its function. So these
+also defines its function. So these
+also defines its function. So these
+proteins can be enzymes for example that
+proteins can be enzymes for example that
+proteins can be enzymes for example that
+catalyze some chemical reactions. They
+catalyze some chemical reactions. They
+catalyze some chemical reactions. They
+can be structural component signaling
+can be structural component signaling
+can be structural component signaling
+molecules and generally they are just
+molecules and generally they are just
+molecules and generally they are just
+extremely important and basically
+extremely important and basically
+extremely important and basically
+necessary for every um process um
+necessary for every um process um
+necessary for every um process um
+involved in life basically.
+involved in life basically.
+involved in life basically.
+And as I said, all proteins are made of
+And as I said, all proteins are made of
+And as I said, all proteins are made of
+this fixed set of building blocks that
+this fixed set of building blocks that
+this fixed set of building blocks that
+we call amino acids. And there are 20
+we call amino acids. And there are 20
+we call amino acids. And there are 20
+standard amino acids as you can see here
+standard amino acids as you can see here
+standard amino acids as you can see here
+on the right side. And they are the
+on the right side. And they are the
+on the right side. And they are the
+fundamental building blocks of all
+fundamental building blocks of all
+fundamental building blocks of all
+proteins.
+proteins.
+proteins.
+And they have a backbone in common. So
+And they have a backbone in common. So
+And they have a backbone in common. So
+what you can see in each amino acid is
+what you can see in each amino acid is
+what you can see in each amino acid is
+this triangle of this N, this C atom and
+this triangle of this N, this C atom and
+this triangle of this N, this C atom and
+this C atom here. So these are basically
+this C atom here. So these are basically
+this C atom here. So these are basically
+this amino group and this caroxil group
+this amino group and this caroxil group
+this amino group and this caroxil group
+and they are the links of the chain. So
+and they are the links of the chain. So
+and they are the links of the chain. So
+if we connect these building blocks
+if we connect these building blocks
+if we connect these building blocks
+these amino acids into a protein then
+these amino acids into a protein then
+these amino acids into a protein then
+it's these triangles that connect and
+it's these triangles that connect and
+it's these triangles that connect and
+form this linear chain.
+form this linear chain.
+form this linear chain.
+And what differentiates the amino acids
+And what differentiates the amino acids
+And what differentiates the amino acids
+is just what is ext what is attached to
+is just what is ext what is attached to
+is just what is ext what is attached to
+this atom here the C alpha atom and
+this atom here the C alpha atom and
+this atom here the C alpha atom and
+that's also different for each amino
+that's also different for each amino
+that's also different for each amino
+acid and it's what defines the chemical
+acid and it's what defines the chemical
+acid and it's what defines the chemical
+properties of the amino acids
+and another fact that shows how
+and another fact that shows how
+and another fact that shows how
+important proteins are is that our DNA
+important proteins are is that our DNA
+important proteins are is that our DNA
+um encodes for the precise sequence of
+um encodes for the precise sequence of
+um encodes for the precise sequence of
+proteins of the amino acids in proteins.
+proteins of the amino acids in proteins.
+proteins of the amino acids in proteins.
+So each triplet of DNA nucleotides um
+So each triplet of DNA nucleotides um
+So each triplet of DNA nucleotides um
+encodes for a specific amino acids. So
+encodes for a specific amino acids. So
+encodes for a specific amino acids. So
+when uh this DNA is transcribed to RNA
+when uh this DNA is transcribed to RNA
+when uh this DNA is transcribed to RNA
+and then then it's translated to um to a
+and then then it's translated to um to a
+and then then it's translated to um to a
+chain of amino acids and once this chain
+chain of amino acids and once this chain
+chain of amino acids and once this chain
+here is uh synthesized
+here is uh synthesized
+here is uh synthesized
+um it starts folding um into this more
+um it starts folding um into this more
+um it starts folding um into this more
+ordered three-dimensional structure
+ordered three-dimensional structure
+ordered three-dimensional structure
+which is defined which defines the
+which is defined which defines the
+which is defined which defines the
+protein's biological function
+protein's biological function
+protein's biological function
+afterwards.
+afterwards.
+afterwards.
+And this folded structure is defined by
+And this folded structure is defined by
+And this folded structure is defined by
+the sequence of the amino acids alone.
+the sequence of the amino acids alone.
+the sequence of the amino acids alone.
+So the folding is kind of a spontaneous
+So the folding is kind of a spontaneous
+So the folding is kind of a spontaneous
+uh process of energy minimization that
+uh process of energy minimization that
+uh process of energy minimization that
+is guided by these interactions between
+is guided by these interactions between
+is guided by these interactions between
+the amino acids and their side chains
+the amino acids and their side chains
+the amino acids and their side chains
+such as hydrophobic interactions or
+such as hydrophobic interactions or
+such as hydrophobic interactions or
+hydrogen bonds.
+hydrogen bonds.
+hydrogen bonds.
+And then in a protein structure we have
+And then in a protein structure we have
+And then in a protein structure we have
+these three levels of uh
+these three levels of uh
+these three levels of uh
+three structural levels. The first is
+three structural levels. The first is
+three structural levels. The first is
+just the the primary structure that
+just the the primary structure that
+just the the primary structure that
+refers to the sequence of the amino
+refers to the sequence of the amino
+refers to the sequence of the amino
+acids in in this chain. And then the
+acids in in this chain. And then the
+acids in in this chain. And then the
+secondary structure um describes these
+secondary structure um describes these
+secondary structure um describes these
+regularly repeating local structures
+regularly repeating local structures
+regularly repeating local structures
+that are stabilized by hydrogen bonds.
+that are stabilized by hydrogen bonds.
+that are stabilized by hydrogen bonds.
+Um the most common examples are um these
+Um the most common examples are um these
+Um the most common examples are um these
+alpha helyses and these beta sheets that
+alpha helyses and these beta sheets that
+alpha helyses and these beta sheets that
+appear um really frequently. And then
+appear um really frequently. And then
+appear um really frequently. And then
+the tertiary structure uh refers to the
+the tertiary structure uh refers to the
+the tertiary structure uh refers to the
+spatial relationship of these secondary
+spatial relationship of these secondary
+spatial relationship of these secondary
+structure elements um to each other
+structure elements um to each other
+structure elements um to each other
+then you will really often see yes
+then you will really often see yes
+then you will really often see yes
+&gt;&gt; in the same sequence.
+&gt;&gt; No. So the same sequence cannot um end
+&gt;&gt; No. So the same sequence cannot um end
+&gt;&gt; No. So the same sequence cannot um end
+up in different tertiary structures. Um
+up in different tertiary structures. Um
+up in different tertiary structures. Um
+so it will always have the generally the
+so it will always have the generally the
+so it will always have the generally the
+same fold. But of course proteins are um
+same fold. But of course proteins are um
+same fold. But of course proteins are um
+dynamic. So they don't always uh have
+dynamic. So they don't always uh have
+dynamic. So they don't always uh have
+exactly the same structure. So the the
+exactly the same structure. So the the
+exactly the same structure. So the the
+fold is the same but they are constantly
+fold is the same but they are constantly
+fold is the same but they are constantly
+moving. And there are some proteins that
+moving. And there are some proteins that
+moving. And there are some proteins that
+are more dynamic. They have some loops
+are more dynamic. They have some loops
+are more dynamic. They have some loops
+that can um like change their position.
+that can um like change their position.
+that can um like change their position.
+So that's why there are also MD
+So that's why there are also MD
+So that's why there are also MD
+simulations to simulate the dynamics of
+simulations to simulate the dynamics of
+simulations to simulate the dynamics of
+a protein. So you might see different
+a protein. So you might see different
+a protein. So you might see different
+configurations of the same protein but
+configurations of the same protein but
+configurations of the same protein but
+generally same sequence always results
+generally same sequence always results
+generally same sequence always results
+into the same fold.
+The primary structures determines
+The primary structures determines
+The primary structures determines
+secondary.
+secondary.
+secondary.
+&gt;&gt; Sorry again.
+&gt;&gt; Sorry again.
+&gt;&gt; Sorry again.
+&gt;&gt; So the primary struct structure determs
+&gt;&gt; So the primary struct structure determs
+&gt;&gt; So the primary struct structure determs
+the both the secondary and the
+the both the secondary and the
+the both the secondary and the
+&gt;&gt; Yes. Exactly.
+&gt;&gt; Yes. Exactly.
+&gt;&gt; Yes. Exactly.
+And you will really often see these
+And you will really often see these
+And you will really often see these
+proteins in this cartoon depiction.
+proteins in this cartoon depiction.
+proteins in this cartoon depiction.
+Um and this is just to show the location
+Um and this is just to show the location
+Um and this is just to show the location
+um of the backbone and the these u
+um of the backbone and the these u
+um of the backbone and the these u
+characteristic secondary structure
+characteristic secondary structure
+characteristic secondary structure
+elements. But as I said, it only shows
+elements. But as I said, it only shows
+elements. But as I said, it only shows
+where the backbone is of the protein. So
+where the backbone is of the protein. So
+where the backbone is of the protein. So
+if you would show the side chains of the
+if you would show the side chains of the
+if you would show the side chains of the
+amino acids, so the extensions attached
+amino acids, so the extensions attached
+amino acids, so the extensions attached
+to the tip of all these triangles that
+to the tip of all these triangles that
+to the tip of all these triangles that
+form the chain, then it would look a bit
+form the chain, then it would look a bit
+form the chain, then it would look a bit
+messier. So
+now let's turn our attention to the
+now let's turn our attention to the
+now let's turn our attention to the
+engineering of proteins and small
+engineering of proteins and small
+engineering of proteins and small
+molecules.
+molecules.
+molecules.
+So if we talk about engineering of small
+So if we talk about engineering of small
+So if we talk about engineering of small
+molecules um we have to know that
+molecules um we have to know that
+molecules um we have to know that
+they usually bind to proteins and affect
+they usually bind to proteins and affect
+they usually bind to proteins and affect
+their biological some biological process
+their biological some biological process
+their biological some biological process
+and the chemical structure and the
+and the chemical structure and the
+and the chemical structure and the
+composition of the small molecules
+composition of the small molecules
+composition of the small molecules
+defines its function and also its
+defines its function and also its
+defines its function and also its
+binding preferences.
+binding preferences.
+binding preferences.
+So small molecules are usually
+So small molecules are usually
+So small molecules are usually
+engineered to interact with a specific
+engineered to interact with a specific
+engineered to interact with a specific
+target and then to modulate the
+target and then to modulate the
+target and then to modulate the
+associated disease pathway. So this can
+associated disease pathway. So this can
+associated disease pathway. So this can
+be to inhibit an enzyme or to block a
+be to inhibit an enzyme or to block a
+be to inhibit an enzyme or to block a
+receptor. An example would be this
+receptor. An example would be this
+receptor. An example would be this
+aspirin molecule that binds to the cylo
+aspirin molecule that binds to the cylo
+aspirin molecule that binds to the cylo
+oxygenase enzyme which would otherwise
+oxygenase enzyme which would otherwise
+oxygenase enzyme which would otherwise
+form prostaglandins and cause fever and
+form prostaglandins and cause fever and
+form prostaglandins and cause fever and
+inflammation.
+inflammation.
+inflammation.
+So
+So
+So
+engineering of small molecules is kind
+engineering of small molecules is kind
+engineering of small molecules is kind
+of altering the size and the composition
+of altering the size and the composition
+of altering the size and the composition
+of the organic compound by like adding a
+of the organic compound by like adding a
+of the organic compound by like adding a
+different carbon backbone or change some
+different carbon backbone or change some
+different carbon backbone or change some
+functional group to get desired
+functional group to get desired
+functional group to get desired
+properties and binding preferences
+and the engineering of proteins is all
+and the engineering of proteins is all
+and the engineering of proteins is all
+about changing the amino acid sequence
+about changing the amino acid sequence
+about changing the amino acid sequence
+to achieve a specific function or
+to achieve a specific function or
+to achieve a specific function or
+property. So in the field of
+property. So in the field of
+property. So in the field of
+biocatalysis you could for example say
+biocatalysis you could for example say
+biocatalysis you could for example say
+that um you want to change the amino
+that um you want to change the amino
+that um you want to change the amino
+acid sequence of the protein so that it
+acid sequence of the protein so that it
+acid sequence of the protein so that it
+can it can accept the new substrate. Um
+can it can accept the new substrate. Um
+can it can accept the new substrate. Um
+so for example here if you have this
+so for example here if you have this
+so for example here if you have this
+this protein in cartoon depiction here
+this protein in cartoon depiction here
+this protein in cartoon depiction here
+which is an enzyme and you wanted to to
+which is an enzyme and you wanted to to
+which is an enzyme and you wanted to to
+accommodate this substrate you might uh
+accommodate this substrate you might uh
+accommodate this substrate you might uh
+have to change these uh locations in the
+have to change these uh locations in the
+have to change these uh locations in the
+sequence so that this this process can
+sequence so that this this process can
+sequence so that this this process can
+happen and this small molecule of this
+happen and this small molecule of this
+happen and this small molecule of this
+substrate can be catalyzed.
+substrate can be catalyzed.
+substrate can be catalyzed.
+And then in the context of therapeutics,
+And then in the context of therapeutics,
+And then in the context of therapeutics,
+you could think of an amino acid uh
+you could think of an amino acid uh
+you could think of an amino acid uh
+sequence of an antibbody that you change
+sequence of an antibbody that you change
+sequence of an antibbody that you change
+in some way that it will bind to to
+in some way that it will bind to to
+in some way that it will bind to to
+source cof 2 spike protein for example.
+There's a couple of strategies for
+There's a couple of strategies for
+There's a couple of strategies for
+protein engineering. So there's rational
+protein engineering. So there's rational
+protein engineering. So there's rational
+design and semi-rational design. And
+design and semi-rational design. And
+design and semi-rational design. And
+rational design is just uh that you use
+rational design is just uh that you use
+rational design is just uh that you use
+very detailed knowledge of your protein
+very detailed knowledge of your protein
+very detailed knowledge of your protein
+of your system um to make desired
+of your system um to make desired
+of your system um to make desired
+changes very simple. So
+changes very simple. So
+changes very simple. So
+you might know that um for this enzyme
+you might know that um for this enzyme
+you might know that um for this enzyme
+here to bind the substrate these
+here to bind the substrate these
+here to bind the substrate these
+positions in the chain are probably
+positions in the chain are probably
+positions in the chain are probably
+important. So you might think that this
+important. So you might think that this
+important. So you might think that this
+one here needs some charged amino acid
+one here needs some charged amino acid
+one here needs some charged amino acid
+so that this substrate can bind more
+so that this substrate can bind more
+so that this substrate can bind more
+efficiently
+efficiently
+efficiently
+and that would be rational design. And
+and that would be rational design. And
+and that would be rational design. And
+semi-rational design would be for
+semi-rational design would be for
+semi-rational design would be for
+example that you just introduce sites
+example that you just introduce sites
+example that you just introduce sites
+that are probably important for a
+that are probably important for a
+that are probably important for a
+specific process and then you just
+specific process and then you just
+specific process and then you just
+exchange the amino acids at all these
+exchange the amino acids at all these
+exchange the amino acids at all these
+sites to all possible amino acids
+sites to all possible amino acids
+sites to all possible amino acids
+creating a combinatorial library. Then
+creating a combinatorial library. Then
+creating a combinatorial library. Then
+you try out all all the variants
+you try out all all the variants
+you try out all all the variants
+basically
+and then there's uh the strategy of
+and then there's uh the strategy of
+and then there's uh the strategy of
+directed evolution which is um
+directed evolution which is um
+directed evolution which is um
+quite uh successful in my opinion. It
+quite uh successful in my opinion. It
+quite uh successful in my opinion. It
+also got a Nobel Prize a couple of years
+also got a Nobel Prize a couple of years
+also got a Nobel Prize a couple of years
+ago and it works by introducing random
+ago and it works by introducing random
+ago and it works by introducing random
+mutations. Then you get a pool of
+mutations. Then you get a pool of
+mutations. Then you get a pool of
+mutants and then you test all these
+mutants and then you test all these
+mutants and then you test all these
+mutants. You pick out those that are
+mutants. You pick out those that are
+mutants. You pick out those that are
+most performant and you restart the
+most performant and you restart the
+most performant and you restart the
+whole process. So it's kind of
+whole process. So it's kind of
+whole process. So it's kind of
+accelerated evolution and it's quite
+um successful in making a protein better
+um successful in making a protein better
+um successful in making a protein better
+at the function that it already has. So
+at the function that it already has. So
+at the function that it already has. So
+it require usually requires a protein
+it require usually requires a protein
+it require usually requires a protein
+that is already um working in some way
+that is already um working in some way
+that is already um working in some way
+but you would like to improve it. So you
+but you would like to improve it. So you
+but you would like to improve it. So you
+can do direct evolution and this quite
+can do direct evolution and this quite
+can do direct evolution and this quite
+successful usually but all theseh
+successful usually but all theseh
+successful usually but all theseh
+strategies are quite time consuming and
+strategies are quite time consuming and
+strategies are quite time consuming and
+expensive and are generally only uh
+expensive and are generally only uh
+expensive and are generally only uh
+suited for optimizing existing proteins.
+And the main um difficulty of protein
+And the main um difficulty of protein
+And the main um difficulty of protein
+engineering is this vast size of the of
+engineering is this vast size of the of
+engineering is this vast size of the of
+the search space. So if you um consider
+the search space. So if you um consider
+the search space. So if you um consider
+that there are 20 naturally occurring
+that there are 20 naturally occurring
+that there are 20 naturally occurring
+amino acids um each of which can occupy
+amino acids um each of which can occupy
+amino acids um each of which can occupy
+any position in a protein chain then a
+any position in a protein chain then a
+any position in a protein chain then a
+protein of just 100 amino acids has 20
+protein of just 100 amino acids has 20
+protein of just 100 amino acids has 20
+to the power of 100 possible sequences
+to the power of 100 possible sequences
+to the power of 100 possible sequences
+right and uh natural proteins are
+right and uh natural proteins are
+right and uh natural proteins are
+usually a bit longer than 100 amino
+usually a bit longer than 100 amino
+usually a bit longer than 100 amino
+acids like a couple of hundred or
+acids like a couple of hundred or
+acids like a couple of hundred or
+thousands um
+thousands um
+thousands um
+so that's where like AI and machine
+so that's where like AI and machine
+so that's where like AI and machine
+learning models come in they are
+learning models come in they are
+learning models come in they are
+supposed to help us to to navigate this
+supposed to help us to to navigate this
+supposed to help us to to navigate this
+search space a bit better and to narrow
+search space a bit better and to narrow
+search space a bit better and to narrow
+down the space of possible solutions.
+down the space of possible solutions.
+down the space of possible solutions.
+And
+And
+And
+that brings us to the first um type of
+that brings us to the first um type of
+that brings us to the first um type of
+model which is models that operate on
+model which is models that operate on
+model which is models that operate on
+sequences.
+sequences.
+sequences.
+So I'll just introduce the sequence
+So I'll just introduce the sequence
+So I'll just introduce the sequence
+representations that we use for proteins
+representations that we use for proteins
+representations that we use for proteins
+and small molecules and then I will give
+and small molecules and then I will give
+and small molecules and then I will give
+you some examples of uh machine learning
+you some examples of uh machine learning
+you some examples of uh machine learning
+models.
+Okay, so protein in sequence
+Okay, so protein in sequence
+Okay, so protein in sequence
+representation is quite straightforward.
+representation is quite straightforward.
+representation is quite straightforward.
+It's just um letters representing the
+It's just um letters representing the
+It's just um letters representing the
+amino acids in the chain. So, and then
+amino acids in the chain. So, and then
+amino acids in the chain. So, and then
+for as you can see it here and then for
+for as you can see it here and then for
+for as you can see it here and then for
+machine learning um these amino acid
+machine learning um these amino acid
+machine learning um these amino acid
+sequences are just encoded into some
+sequences are just encoded into some
+sequences are just encoded into some
+numerical representations with maybe one
+numerical representations with maybe one
+numerical representations with maybe one
+hot encoding or some tokenization where
+hot encoding or some tokenization where
+hot encoding or some tokenization where
+each amino acid is is treated as a
+each amino acid is is treated as a
+each amino acid is is treated as a
+separate token like in in text
+separate token like in in text
+separate token like in in text
+processing.
+processing.
+processing.
+And then in small molecules this is a
+And then in small molecules this is a
+And then in small molecules this is a
+bit more complicated. What what people
+bit more complicated. What what people
+bit more complicated. What what people
+often use are these smile strings. So
+often use are these smile strings. So
+often use are these smile strings. So
+it's a linear notation that represents
+it's a linear notation that represents
+it's a linear notation that represents
+the molecular structure of a chem of a
+the molecular structure of a chem of a
+the molecular structure of a chem of a
+small molecular compound using using
+small molecular compound using using
+small molecular compound using using
+characters. So as you can see here atoms
+characters. So as you can see here atoms
+characters. So as you can see here atoms
+are usually represented by their
+are usually represented by their
+are usually represented by their
+chemical symbol. Single bonds are are
+chemical symbol. Single bonds are are
+chemical symbol. Single bonds are are
+omitted but the double bonds are
+omitted but the double bonds are
+omitted but the double bonds are
+depicted by these equal signs
+depicted by these equal signs
+depicted by these equal signs
+and branches are described using these
+and branches are described using these
+and branches are described using these
+parentheses and rings are noted using uh
+parentheses and rings are noted using uh
+parentheses and rings are noted using uh
+the numbers indicating their attend
+the numbers indicating their attend
+the numbers indicating their attend
+their um connection points.
+their um connection points.
+their um connection points.
+And then for machine learning these
+And then for machine learning these
+And then for machine learning these
+smiles codes are also tokenized and
+smiles codes are also tokenized and
+smiles codes are also tokenized and
+fixed to a to a fixed vocabulary.
+fixed to a to a fixed vocabulary.
+fixed to a to a fixed vocabulary.
+Um
+Um
+Um
+you've probably noted already this
+you've probably noted already this
+you've probably noted already this
+sounds like natural language processing
+sounds like natural language processing
+sounds like natural language processing
+and these methods um indeed had like a
+and these methods um indeed had like a
+and these methods um indeed had like a
+big impact on the field because there's
+big impact on the field because there's
+big impact on the field because there's
+this analogy between the building blocks
+this analogy between the building blocks
+this analogy between the building blocks
+of language and those of proteins and
+of language and those of proteins and
+of language and those of proteins and
+small molecules. So like in natural
+small molecules. So like in natural
+small molecules. So like in natural
+language you could think of protein
+language you could think of protein
+language you could think of protein
+sequence having their own kind of
+sequence having their own kind of
+sequence having their own kind of
+grammar and they also contain long range
+grammar and they also contain long range
+grammar and they also contain long range
+dependencies. So for example, amino
+dependencies. So for example, amino
+dependencies. So for example, amino
+acids would would correspond to words,
+acids would would correspond to words,
+acids would would correspond to words,
+sequences of amino acids to um sentences
+sequences of amino acids to um sentences
+sequences of amino acids to um sentences
+and then protein would be an entire text
+and then protein would be an entire text
+and then protein would be an entire text
+paragraph for example.
+paragraph for example.
+paragraph for example.
+And also um in smiles codes for small
+And also um in smiles codes for small
+And also um in smiles codes for small
+molecules, it's it's the same. It's also
+molecules, it's it's the same. It's also
+molecules, it's it's the same. It's also
+linear sequences that consist of a fixed
+linear sequences that consist of a fixed
+linear sequences that consist of a fixed
+vocabulary of symbols and there are
+vocabulary of symbols and there are
+vocabulary of symbols and there are
+patterns and rules to it.
+patterns and rules to it.
+patterns and rules to it.
+So both these representations are
+So both these representations are
+So both these representations are
+compatible with um NLP methods and that
+compatible with um NLP methods and that
+compatible with um NLP methods and that
+are designed to handle such sequences.
+are designed to handle such sequences.
+are designed to handle such sequences.
+So and the first application of uh NLP
+So and the first application of uh NLP
+So and the first application of uh NLP
+to proteins was this evolutionary scale
+to proteins was this evolutionary scale
+to proteins was this evolutionary scale
+modeling the ESM model trained by MEA.
+modeling the ESM model trained by MEA.
+modeling the ESM model trained by MEA.
+Um, and it's a a self-supervised
+Um, and it's a a self-supervised
+Um, and it's a a self-supervised
+language model trained with this masked
+language model trained with this masked
+language model trained with this masked
+language modeling objective
+language modeling objective
+language modeling objective
+um, and trained on 250 million protein
+um, and trained on 250 million protein
+um, and trained on 250 million protein
+sequences. So it works in this way that
+sequences. So it works in this way that
+sequences. So it works in this way that
+you have this native sequence and then
+you have this native sequence and then
+you have this native sequence and then
+you change it by corrupting a small
+you change it by corrupting a small
+you change it by corrupting a small
+fraction of the amino acids with a mask
+fraction of the amino acids with a mask
+fraction of the amino acids with a mask
+and then using this corrupted sequence
+and then using this corrupted sequence
+and then using this corrupted sequence
+you encode it into numerical
+you encode it into numerical
+you encode it into numerical
+representation
+representation
+representation
+and then this ESM model very simplified
+and then this ESM model very simplified
+and then this ESM model very simplified
+here translates this numerical
+here translates this numerical
+here translates this numerical
+representation into some latent space
+representation into some latent space
+representation into some latent space
+representation some hidden state
+representation some hidden state
+representation some hidden state
+representation that allows it to make a
+representation that allows it to make a
+representation that allows it to make a
+prediction for which amino acids have
+prediction for which amino acids have
+prediction for which amino acids have
+been masked in the original sequence.
+been masked in the original sequence.
+been masked in the original sequence.
+And if this prediction is wrong, then
+And if this prediction is wrong, then
+And if this prediction is wrong, then
+the model is improved and that's how it
+the model is improved and that's how it
+the model is improved and that's how it
+is trained.
+is trained.
+is trained.
+And it turns out that
+And it turns out that
+And it turns out that
+um filling gaps in protein sequences is
+um filling gaps in protein sequences is
+um filling gaps in protein sequences is
+a very simple task, but it's not easy at
+a very simple task, but it's not easy at
+a very simple task, but it's not easy at
+all. So you can imagine that you need a
+all. So you can imagine that you need a
+all. So you can imagine that you need a
+lot of knowledge about proteins to be
+lot of knowledge about proteins to be
+lot of knowledge about proteins to be
+able to do that and also knowledge about
+able to do that and also knowledge about
+able to do that and also knowledge about
+how proteins
+how proteins
+how proteins
+like form a 3D shape for example because
+like form a 3D shape for example because
+like form a 3D shape for example because
+at some locations in the 3D structure of
+at some locations in the 3D structure of
+at some locations in the 3D structure of
+the protein some amino acids might have
+the protein some amino acids might have
+the protein some amino acids might have
+space to fit there and some might not.
+space to fit there and some might not.
+space to fit there and some might not.
+So it turned out that knowledge of
+So it turned out that knowledge of
+So it turned out that knowledge of
+intrinsic properties of the proteins
+intrinsic properties of the proteins
+intrinsic properties of the proteins
+emerges in these latent sp lat latent
+emerges in these latent sp lat latent
+emerges in these latent sp lat latent
+space representations without any
+space representations without any
+space representations without any
+supervision. And this knowledge is as I
+supervision. And this knowledge is as I
+supervision. And this knowledge is as I
+said encoded in this hidden state
+said encoded in this hidden state
+said encoded in this hidden state
+representations
+representations
+representations
+and the authors they showed this using
+and the authors they showed this using
+and the authors they showed this using
+ortologist groups of genes. So um genes
+ortologist groups of genes. So um genes
+ortologist groups of genes. So um genes
+that come from the same ancestral
+that come from the same ancestral
+that come from the same ancestral
+protein but maybe in different species.
+protein but maybe in different species.
+protein but maybe in different species.
+So um these orthologist groups they
+So um these orthologist groups they
+So um these orthologist groups they
+usually have a similar function but not
+usually have a similar function but not
+usually have a similar function but not
+necessarily the same sequence.
+necessarily the same sequence.
+necessarily the same sequence.
+So what the authors showed is that the
+So what the authors showed is that the
+So what the authors showed is that the
+untrained transformer if you pass these
+untrained transformer if you pass these
+untrained transformer if you pass these
+sequence where where all an autotologist
+sequence where where all an autotologist
+sequence where where all an autotologist
+group is depicted by some some color um
+group is depicted by some some color um
+group is depicted by some some color um
+and the untrained transformer just
+and the untrained transformer just
+and the untrained transformer just
+doesn't really add a structure to these
+doesn't really add a structure to these
+doesn't really add a structure to these
+sequences right but then the trained
+sequences right but then the trained
+sequences right but then the trained
+transformer is able to group these
+transformer is able to group these
+transformer is able to group these
+orthologist groups into clusters in this
+orthologist groups into clusters in this
+orthologist groups into clusters in this
+uh tney two-dimensional representation
+uh tney two-dimensional representation
+uh tney two-dimensional representation
+here. So um this shows us that the model
+here. So um this shows us that the model
+here. So um this shows us that the model
+kind of learned to um group different
+kind of learned to um group different
+kind of learned to um group different
+sequences together based on
+sequences together based on
+sequences together based on
+their shared common function basically
+and these hidden state representations
+and these hidden state representations
+and these hidden state representations
+of this such a transformer model like
+of this such a transformer model like
+of this such a transformer model like
+ESM um they are used frequently for
+ESM um they are used frequently for
+ESM um they are used frequently for
+transfer learning. So for example,
+transfer learning. So for example,
+transfer learning. So for example,
+people fine-tune these protein language
+people fine-tune these protein language
+people fine-tune these protein language
+models on specific downstream tasks um
+models on specific downstream tasks um
+models on specific downstream tasks um
+even with a potentially quite small
+even with a potentially quite small
+even with a potentially quite small
+labeled data set um for example for the
+labeled data set um for example for the
+labeled data set um for example for the
+applications like protein function
+applications like protein function
+applications like protein function
+prediction or um prediction of
+prediction or um prediction of
+prediction or um prediction of
+mutational effects and also for the
+mutational effects and also for the
+mutational effects and also for the
+prediction of the protein 3D structure
+prediction of the protein 3D structure
+prediction of the protein 3D structure
+as we will see later. Yeah. And these
+as we will see later. Yeah. And these
+as we will see later. Yeah. And these
+pre-trained transformer embeddings they
+pre-trained transformer embeddings they
+pre-trained transformer embeddings they
+are now used in in many downstream
+are now used in in many downstream
+are now used in in many downstream
+applications.
+And
+And
+And
+first slide for those of you who are
+first slide for those of you who are
+first slide for those of you who are
+interested what I haven't been speaking
+interested what I haven't been speaking
+interested what I haven't been speaking
+about now is that there are a lot of uh
+about now is that there are a lot of uh
+about now is that there are a lot of uh
+chemistry language models that work the
+chemistry language models that work the
+chemistry language models that work the
+same way with this mask language model
+same way with this mask language model
+same way with this mask language model
+objective but they are trained on these
+objective but they are trained on these
+objective but they are trained on these
+smile strings representing small
+smile strings representing small
+smile strings representing small
+molecules
+molecules
+molecules
+and they all in some way demonstrate
+and they all in some way demonstrate
+and they all in some way demonstrate
+chemical learning either by just being
+chemical learning either by just being
+chemical learning either by just being
+able to recover the masked smiles tokens
+able to recover the masked smiles tokens
+able to recover the masked smiles tokens
+or by clustering ing molecules by
+or by clustering ing molecules by
+or by clustering ing molecules by
+chemical features in the latence based
+chemical features in the latence based
+chemical features in the latence based
+representations or just by improving
+representations or just by improving
+representations or just by improving
+downstream molecular property prediction
+downstream molecular property prediction
+downstream molecular property prediction
+um performance for example and the
+um performance for example and the
+um performance for example and the
+examples for this would be um this mole
+examples for this would be um this mole
+examples for this would be um this mole
+former model from IBM IBM research or
+former model from IBM IBM research or
+former model from IBM IBM research or
+the cambera model but there are many
+the cambera model but there are many
+the cambera model but there are many
+many more
+so the next section of the talk will
+so the next section of the talk will
+so the next section of the talk will
+focus on a special kind of
+focus on a special kind of
+focus on a special kind of
+sequence-based models uh namely the
+sequence-based models uh namely the
+sequence-based models uh namely the
+protein structure prediction models like
+protein structure prediction models like
+protein structure prediction models like
+uh this includes alpha fold 2 and also
+uh this includes alpha fold 2 and also
+uh this includes alpha fold 2 and also
+second version of this ESM model and
+second version of this ESM model and
+second version of this ESM model and
+then in the end I will also briefly
+then in the end I will also briefly
+then in the end I will also briefly
+touch upon these uh new folding models
+touch upon these uh new folding models
+touch upon these uh new folding models
+that don't just predict the structure of
+that don't just predict the structure of
+that don't just predict the structure of
+a single protein but of entire molecular
+a single protein but of entire molecular
+a single protein but of entire molecular
+assemblies.
+But first um about protein structure.
+But first um about protein structure.
+But first um about protein structure.
+Very simply put, it just refers to the
+Very simply put, it just refers to the
+Very simply put, it just refers to the
+3D coordinates of all atoms of the
+3D coordinates of all atoms of the
+3D coordinates of all atoms of the
+protein in its folded state.
+protein in its folded state.
+protein in its folded state.
+And knowing the protein structure is
+And knowing the protein structure is
+And knowing the protein structure is
+very important because it gives us some
+very important because it gives us some
+very important because it gives us some
+fundamental understanding of a protein
+fundamental understanding of a protein
+fundamental understanding of a protein
+and it gives us also an idea what what
+and it gives us also an idea what what
+and it gives us also an idea what what
+could be its its function because
+could be its its function because
+could be its its function because
+structure of a protein defines its
+structure of a protein defines its
+structure of a protein defines its
+function, right? And then for drug
+function, right? And then for drug
+function, right? And then for drug
+discovery um knowing the protein
+discovery um knowing the protein
+discovery um knowing the protein
+structure might for example help us to
+structure might for example help us to
+structure might for example help us to
+identify some um active sites or
+identify some um active sites or
+identify some um active sites or
+interaction points for potential drug
+interaction points for potential drug
+interaction points for potential drug
+molecules. So you might maybe see this
+molecules. So you might maybe see this
+molecules. So you might maybe see this
+protein here and then detect that there
+protein here and then detect that there
+protein here and then detect that there
+is this groove with some interactive
+is this groove with some interactive
+is this groove with some interactive
+amino acid side chains that you might
+amino acid side chains that you might
+amino acid side chains that you might
+use to attack this protein uh using a
+use to attack this protein uh using a
+use to attack this protein uh using a
+small molecule drug
+small molecule drug
+small molecule drug
+and
+and
+and
+to get protein structures. Um for many
+to get protein structures. Um for many
+to get protein structures. Um for many
+years researchers relied on these very
+years researchers relied on these very
+years researchers relied on these very
+time consuming methods like X-ray
+time consuming methods like X-ray
+time consuming methods like X-ray
+crystalallography or NMR um to get just
+crystalallography or NMR um to get just
+crystalallography or NMR um to get just
+get the structure of a single protein
+get the structure of a single protein
+get the structure of a single protein
+and recently deep learning has kind of
+and recently deep learning has kind of
+and recently deep learning has kind of
+taken over structure prediction and
+taken over structure prediction and
+taken over structure prediction and
+this is quite remarkable because um
+this is quite remarkable because um
+this is quite remarkable because um
+predicting the 3D fold of a protein um
+predicting the 3D fold of a protein um
+predicting the 3D fold of a protein um
+is an extremely difficult and
+is an extremely difficult and
+is an extremely difficult and
+challenging task. And this is because
+challenging task. And this is because
+challenging task. And this is because
+these amino acid residues they can adopt
+these amino acid residues they can adopt
+these amino acid residues they can adopt
+so many configurations due to the
+so many configurations due to the
+so many configurations due to the
+rotations around their backbone bonds
+rotations around their backbone bonds
+rotations around their backbone bonds
+and side chains that even a tiny protein
+and side chains that even a tiny protein
+and side chains that even a tiny protein
+has like an astronomical number of
+has like an astronomical number of
+has like an astronomical number of
+potential configurations.
+potential configurations.
+potential configurations.
+So the folding is also driven by these
+So the folding is also driven by these
+So the folding is also driven by these
+various interactions that are quite
+various interactions that are quite
+various interactions that are quite
+diffic diff difficult to model such as
+diffic diff difficult to model such as
+diffic diff difficult to model such as
+hydrogen bonds and hydrophobic
+hydrogen bonds and hydrophobic
+hydrogen bonds and hydrophobic
+interactions
+interactions
+interactions
+and there are also these long range
+and there are also these long range
+and there are also these long range
+dependencies.
+dependencies.
+dependencies.
+So the folding is influenced by
+So the folding is influenced by
+So the folding is influenced by
+interactions between amino acids that
+interactions between amino acids that
+interactions between amino acids that
+are far apart in the sequence of the
+are far apart in the sequence of the
+are far apart in the sequence of the
+protein but then come into close
+protein but then come into close
+protein but then come into close
+vicinity in the 3D structure.
+vicinity in the 3D structure.
+vicinity in the 3D structure.
+And then last but not least, the
+And then last but not least, the
+And then last but not least, the
+training data is relatively scarce.
+training data is relatively scarce.
+training data is relatively scarce.
+Although thousands of researchers have
+Although thousands of researchers have
+Although thousands of researchers have
+crystallized proteins for decades, um
+crystallized proteins for decades, um
+crystallized proteins for decades, um
+the total number of crystallized protein
+the total number of crystallized protein
+the total number of crystallized protein
+structures is still relatively small
+structures is still relatively small
+structures is still relatively small
+from a deep learning perspective.
+And because this task is so difficult
+And because this task is so difficult
+And because this task is so difficult
+but also so important, there was this uh
+but also so important, there was this uh
+but also so important, there was this uh
+critical assessment of protein structure
+critical assessment of protein structure
+critical assessment of protein structure
+prediction challenge. So it's a an event
+prediction challenge. So it's a an event
+prediction challenge. So it's a an event
+that took place every second year
+that took place every second year
+that took place every second year
+um where research groups were invited to
+um where research groups were invited to
+um where research groups were invited to
+submit their models and then these
+submit their models and then these
+submit their models and then these
+structure prediction models would be
+structure prediction models would be
+structure prediction models would be
+tested on a on a set of uh
+tested on a on a set of uh
+tested on a on a set of uh
+experimentally solved structures that
+experimentally solved structures that
+experimentally solved structures that
+haven't been released or published yet.
+haven't been released or published yet.
+haven't been released or published yet.
+And Alpha 2 um developed by um DeepMind
+And Alpha 2 um developed by um DeepMind
+And Alpha 2 um developed by um DeepMind
+it won the the 14th holding of this
+it won the the 14th holding of this
+it won the the 14th holding of this
+challenge. And as you can see here, it
+challenge. And as you can see here, it
+challenge. And as you can see here, it
+it won with quite a big margin compared
+it won with quite a big margin compared
+it won with quite a big margin compared
+to its competitor models uh that also
+to its competitor models uh that also
+to its competitor models uh that also
+took part in a challenge. And the
+took part in a challenge. And the
+took part in a challenge. And the
+predictions of on this uh unpublished
+predictions of on this uh unpublished
+predictions of on this uh unpublished
+set of um protein structures that were
+set of um protein structures that were
+set of um protein structures that were
+made by alphafold they were really
+made by alphafold they were really
+made by alphafold they were really
+precise. um the deviation of the C alpha
+precise. um the deviation of the C alpha
+precise. um the deviation of the C alpha
+atoms. So the tips of these backbone
+atoms. So the tips of these backbone
+atoms. So the tips of these backbone
+triangles that every amino acid has the
+triangles that every amino acid has the
+triangles that every amino acid has the
+deviation was only about 0.96.
+deviation was only about 0.96.
+deviation was only about 0.96.
+So that is really precise as as
+So that is really precise as as
+So that is really precise as as
+comparison the um size of a carbon atoms
+comparison the um size of a carbon atoms
+comparison the um size of a carbon atoms
+about 1.4 angstroms.
+about 1.4 angstroms.
+about 1.4 angstroms.
+This is was really a breakthrough in the
+This is was really a breakthrough in the
+This is was really a breakthrough in the
+field of structural binomatics
+field of structural binomatics
+field of structural binomatics
+and
+and
+and
+that's why I will now dive a little bit
+that's why I will now dive a little bit
+that's why I will now dive a little bit
+deeper into the architecture of alpha 2
+deeper into the architecture of alpha 2
+deeper into the architecture of alpha 2
+but it will still remain quite quite
+but it will still remain quite quite
+but it will still remain quite quite
+high level because it's a rather
+high level because it's a rather
+high level because it's a rather
+complicated model um but I will give my
+complicated model um but I will give my
+complicated model um but I will give my
+best. So the input to the model is the
+best. So the input to the model is the
+best. So the input to the model is the
+sequence of the protein obviously and
+sequence of the protein obviously and
+sequence of the protein obviously and
+then what the model does is it it
+then what the model does is it it
+then what the model does is it it
+accesses the genetic database looking
+accesses the genetic database looking
+accesses the genetic database looking
+for um similar sequences in other
+for um similar sequences in other
+for um similar sequences in other
+organisms and then it forms this
+organisms and then it forms this
+organisms and then it forms this
+multiple sequence alignment that
+multiple sequence alignment that
+multiple sequence alignment that
+contains a lot of information about um
+contains a lot of information about um
+contains a lot of information about um
+evolutionary con um conservation of
+evolutionary con um conservation of
+evolutionary con um conservation of
+certain sites in the proteins
+certain sites in the proteins
+certain sites in the proteins
+And
+And
+And
+then it also uh uses a structure
+then it also uh uses a structure
+then it also uh uses a structure
+database search to look for um
+database search to look for um
+database search to look for um
+structures of similar proteins that
+structures of similar proteins that
+structures of similar proteins that
+might already exist. And based on this
+might already exist. And based on this
+might already exist. And based on this
+uh it makes a first guess of the pair
+uh it makes a first guess of the pair
+uh it makes a first guess of the pair
+wise distances of the amino acids in
+wise distances of the amino acids in
+wise distances of the amino acids in
+this protein.
+And then this MSA representation based
+And then this MSA representation based
+And then this MSA representation based
+on the multiple sequence alignment and
+on the multiple sequence alignment and
+on the multiple sequence alignment and
+this pair representation.
+this pair representation.
+this pair representation.
+um they are passed into this uh
+um they are passed into this uh
+um they are passed into this uh
+evoiformer model that is the core of the
+evoiformer model that is the core of the
+evoiformer model that is the core of the
+architecture of alpha fold and this
+architecture of alpha fold and this
+architecture of alpha fold and this
+updates the two representations through
+updates the two representations through
+updates the two representations through
+some tension mechanisms and convolution
+some tension mechanisms and convolution
+some tension mechanisms and convolution
+like operations.
+like operations.
+like operations.
+Um and then these updated
+Um and then these updated
+Um and then these updated
+representations they are passed into
+representations they are passed into
+representations they are passed into
+this structure module that just converts
+this structure module that just converts
+this structure module that just converts
+this um into spatial coordinates. So it
+this um into spatial coordinates. So it
+this um into spatial coordinates. So it
+predicts the makes a final prediction on
+predicts the makes a final prediction on
+predicts the makes a final prediction on
+the pair-wise distances between the res
+the pair-wise distances between the res
+the pair-wise distances between the res
+residue pairs and also the angles of the
+residue pairs and also the angles of the
+residue pairs and also the angles of the
+bonds in the protein and generally just
+bonds in the protein and generally just
+bonds in the protein and generally just
+constructs a 3D model of the protein
+and it also applies this interesting
+and it also applies this interesting
+and it also applies this interesting
+concept of recycling. So that's this
+concept of recycling. So that's this
+concept of recycling. So that's this
+iterative refinement process where the
+iterative refinement process where the
+iterative refinement process where the
+output of the structure module here is
+output of the structure module here is
+output of the structure module here is
+passed back multiple times into this
+passed back multiple times into this
+passed back multiple times into this
+evoformer.
+evoformer.
+evoformer.
+Um and apparently this helps to refine
+Um and apparently this helps to refine
+Um and apparently this helps to refine
+the predictions by allowing the network
+the predictions by allowing the network
+the predictions by allowing the network
+kind of to to reconsider its earlier
+kind of to to reconsider its earlier
+kind of to to reconsider its earlier
+outputs.
+outputs.
+outputs.
+So apparently the model benefits from
+So apparently the model benefits from
+So apparently the model benefits from
+this additional contextual information
+this additional contextual information
+this additional contextual information
+that it gets from subsequent layers.
+that it gets from subsequent layers.
+that it gets from subsequent layers.
+training of alpha fold works with a a
+training of alpha fold works with a a
+training of alpha fold works with a a
+structure objective obviously so just
+structure objective obviously so just
+structure objective obviously so just
+the deviation from the true structure is
+the deviation from the true structure is
+the deviation from the true structure is
+is penalized and then there's a a
+is penalized and then there's a a
+is penalized and then there's a a
+secondary birth objective that operates
+secondary birth objective that operates
+secondary birth objective that operates
+on the MSA on the multiple sequence
+on the MSA on the multiple sequence
+on the MSA on the multiple sequence
+alignment and the network is required to
+alignment and the network is required to
+alignment and the network is required to
+reconstruct some masked regions of this
+reconstruct some masked regions of this
+reconstruct some masked regions of this
+multiple sequence alignment
+multiple sequence alignment
+multiple sequence alignment
+representation
+representation
+representation
+and then training also involves this uh
+and then training also involves this uh
+and then training also involves this uh
+self distillation uh princip principle
+self distillation uh princip principle
+self distillation uh princip principle
+that I find quite interesting. So how
+that I find quite interesting. So how
+that I find quite interesting. So how
+this works is that there's this phase of
+this works is that there's this phase of
+this works is that there's this phase of
+initial supervised training that you
+initial supervised training that you
+initial supervised training that you
+just train on the data set of known
+just train on the data set of known
+just train on the data set of known
+experimentally solved protein structures
+experimentally solved protein structures
+experimentally solved protein structures
+uh using conventional supervised machine
+uh using conventional supervised machine
+uh using conventional supervised machine
+learning with these objectives that I
+learning with these objectives that I
+learning with these objectives that I
+showed above and then once the model has
+showed above and then once the model has
+showed above and then once the model has
+achieved a certain level you use it to
+achieved a certain level you use it to
+achieved a certain level you use it to
+make predictions for the structures of
+make predictions for the structures of
+make predictions for the structures of
+350,000
+350,000
+350,000
+additional sequences for which no
+additional sequences for which no
+additional sequences for which no
+structure exists yet. And then they
+structure exists yet. And then they
+structure exists yet. And then they
+mixed these experimental structures and
+mixed these experimental structures and
+mixed these experimental structures and
+the predictions of this preliminary
+the predictions of this preliminary
+the predictions of this preliminary
+model and trained the model from scratch
+model and trained the model from scratch
+model and trained the model from scratch
+using this mix of data. And apparently
+using this mix of data. And apparently
+using this mix of data. And apparently
+that makes such effective use of
+that makes such effective use of
+that makes such effective use of
+unlabeled sequences and makes the
+unlabeled sequences and makes the
+unlabeled sequences and makes the
+training data set so much more diverse
+training data set so much more diverse
+training data set so much more diverse
+that this overall improves the accuracy
+that this overall improves the accuracy
+that this overall improves the accuracy
+of the model which I find quite quite
+of the model which I find quite quite
+of the model which I find quite quite
+interesting.
+interesting.
+interesting.
+Is it okay if we take a break now? Then
+Is it okay if we take a break now? Then
+Is it okay if we take a break now? Then
+continue with the next model after the
+continue with the next model after the
+continue with the next model after the
+break. Okay.
+break. Okay.
+break. Okay.
+So, are you ready to continue?
+So, are you ready to continue?
+So, are you ready to continue?
+Now, I would like to remind you of this
+Now, I would like to remind you of this
+Now, I would like to remind you of this
+model that I showed you earlier, this
+model that I showed you earlier, this
+model that I showed you earlier, this
+ESM model, the self-supervised
+ESM model, the self-supervised
+ESM model, the self-supervised
+transformer language model trained on
+transformer language model trained on
+transformer language model trained on
+these 250 million protein sequences.
+these 250 million protein sequences.
+these 250 million protein sequences.
+Um
+Um
+Um
+and as we said the a lot of knowledge
+and as we said the a lot of knowledge
+and as we said the a lot of knowledge
+about protein properties is embedded in
+about protein properties is embedded in
+about protein properties is embedded in
+this hidden state representation
+this hidden state representation
+this hidden state representation
+and the authors also showed that um
+and the authors also showed that um
+and the authors also showed that um
+while this model cannot observe the
+while this model cannot observe the
+while this model cannot observe the
+protein structure directly
+protein structure directly
+protein structure directly
+um and the the structure is kind of like
+um and the the structure is kind of like
+um and the the structure is kind of like
+a hidden variable that influences the
+a hidden variable that influences the
+a hidden variable that influences the
+pattern that the model sees in the
+pattern that the model sees in the
+pattern that the model sees in the
+sequences. So they showed that this
+sequences. So they showed that this
+sequences. So they showed that this
+unsupervised pre-training also encodes
+unsupervised pre-training also encodes
+unsupervised pre-training also encodes
+some secondary structure into the
+some secondary structure into the
+some secondary structure into the
+representation
+representation
+representation
+and they did this very easily. They just
+and they did this very easily. They just
+and they did this very easily. They just
+u took a data set of proteins with a
+u took a data set of proteins with a
+u took a data set of proteins with a
+known structure and added labels to each
+known structure and added labels to each
+known structure and added labels to each
+amino acid um indicating whether they
+amino acid um indicating whether they
+amino acid um indicating whether they
+are part of a helix or a strand or a
+are part of a helix or a strand or a
+are part of a helix or a strand or a
+coil. Here you can see this in the
+coil. Here you can see this in the
+coil. Here you can see this in the
+corresponding colors.
+corresponding colors.
+corresponding colors.
+And then they just derived this
+And then they just derived this
+And then they just derived this
+transformer latent space representation
+transformer latent space representation
+transformer latent space representation
+for each of these proteins or for each
+for each of these proteins or for each
+for each of these proteins or for each
+amino acid of these proteins. And then
+amino acid of these proteins. And then
+amino acid of these proteins. And then
+they fit a logistic regression
+they fit a logistic regression
+they fit a logistic regression
+classifier to predict the secondary
+classifier to predict the secondary
+classifier to predict the secondary
+structure membership um from this hidden
+structure membership um from this hidden
+structure membership um from this hidden
+state representation. And they get a
+state representation. And they get a
+state representation. And they get a
+high accuracy from this showing that um
+high accuracy from this showing that um
+high accuracy from this showing that um
+this self-supervised training indeed um
+this self-supervised training indeed um
+this self-supervised training indeed um
+generates and embed structural knowledge
+generates and embed structural knowledge
+generates and embed structural knowledge
+in this transformer representation.
+in this transformer representation.
+in this transformer representation.
+And that's why in a in a second version
+And that's why in a in a second version
+And that's why in a in a second version
+of the model um the ESM model is
+of the model um the ESM model is
+of the model um the ESM model is
+extended with a folding head to predict
+extended with a folding head to predict
+extended with a folding head to predict
+atomic coordinates and they use this
+atomic coordinates and they use this
+atomic coordinates and they use this
+pre-trained ESM model based on the
+pre-trained ESM model based on the
+pre-trained ESM model based on the
+machine uh the masked language model
+machine uh the masked language model
+machine uh the masked language model
+objective and just add this folding hat
+objective and just add this folding hat
+objective and just add this folding hat
+that extracts uh atomic coordinates from
+that extracts uh atomic coordinates from
+that extracts uh atomic coordinates from
+this hidden state representations and
+this hidden state representations and
+this hidden state representations and
+then they train this and they fine-tune
+then they train this and they fine-tune
+then they train this and they fine-tune
+it end to end on about the same training
+it end to end on about the same training
+it end to end on about the same training
+data that alpha fold
+data that alpha fold
+data that alpha fold
+and um like all the experimentally
+and um like all the experimentally
+and um like all the experimentally
+determined structures from the protein
+determined structures from the protein
+determined structures from the protein
+data bank. And then with this they
+data bank. And then with this they
+data bank. And then with this they
+achieved the structure prediction
+achieved the structure prediction
+achieved the structure prediction
+accuracy quite similar to alpha fold
+accuracy quite similar to alpha fold
+accuracy quite similar to alpha fold
+and this is remarkable um because this
+and this is remarkable um because this
+and this is remarkable um because this
+strategy kind of removes the most costly
+strategy kind of removes the most costly
+strategy kind of removes the most costly
+aspects of alpha fold. Uh so for example
+aspects of alpha fold. Uh so for example
+aspects of alpha fold. Uh so for example
+this multiple sequence alignment and
+this multiple sequence alignment and
+this multiple sequence alignment and
+that speeds it up about 60fold
+that speeds it up about 60fold
+that speeds it up about 60fold
+uh according to the authors and it's
+uh according to the authors and it's
+uh according to the authors and it's
+also completely standalone so it doesn't
+also completely standalone so it doesn't
+also completely standalone so it doesn't
+need to access databases of known
+need to access databases of known
+need to access databases of known
+structures or um evolutionary databases
+structures or um evolutionary databases
+structures or um evolutionary databases
+with related sequences. Um so it just
+with related sequences. Um so it just
+with related sequences. Um so it just
+takes a protein sequences and then
+takes a protein sequences and then
+takes a protein sequences and then
+outputs the structure of it.
+And then if you wonder what kind of
+And then if you wonder what kind of
+And then if you wonder what kind of
+model um that you want to use for your
+model um that you want to use for your
+model um that you want to use for your
+protein uh structure prediction, you can
+protein uh structure prediction, you can
+protein uh structure prediction, you can
+see like an example comparison here
+see like an example comparison here
+see like an example comparison here
+between crystal structure and ESM
+between crystal structure and ESM
+between crystal structure and ESM
+prediction and an alpha fold prediction.
+prediction and an alpha fold prediction.
+prediction and an alpha fold prediction.
+And we have to split this evaluation in
+And we have to split this evaluation in
+And we have to split this evaluation in
+backbone atoms. So those the triangles
+backbone atoms. So those the triangles
+backbone atoms. So those the triangles
+that are the links of the chain and side
+that are the links of the chain and side
+that are the links of the chain and side
+chain atoms because the the backbone
+chain atoms because the the backbone
+chain atoms because the the backbone
+atoms are generally um easier to to
+atoms are generally um easier to to
+atoms are generally um easier to to
+find. So both models perform well but
+find. So both models perform well but
+find. So both models perform well but
+alpha fold is often still leading a bit
+alpha fold is often still leading a bit
+alpha fold is often still leading a bit
+in direct comparisons.
+in direct comparisons.
+in direct comparisons.
+And then if we um talk about side chain
+And then if we um talk about side chain
+And then if we um talk about side chain
+atoms, the precision of both models
+atoms, the precision of both models
+atoms, the precision of both models
+drops a bit because um these side chains
+drops a bit because um these side chains
+drops a bit because um these side chains
+are very flexible and therefore harder
+are very flexible and therefore harder
+are very flexible and therefore harder
+to predict. But alpha fold generally
+to predict. But alpha fold generally
+to predict. But alpha fold generally
+performs a bit better in modeling the
+performs a bit better in modeling the
+performs a bit better in modeling the
+positions of these side chains. Uh so if
+positions of these side chains. Uh so if
+positions of these side chains. Uh so if
+you have some application where high
+you have some application where high
+you have some application where high
+accuracy in backbone and side chains is
+accuracy in backbone and side chains is
+accuracy in backbone and side chains is
+crucial then you would probably use
+crucial then you would probably use
+crucial then you would probably use
+alpha fold. Um but ESM fold is um
+alpha fold. Um but ESM fold is um
+alpha fold. Um but ESM fold is um
+nevertheless super valuable especially
+nevertheless super valuable especially
+nevertheless super valuable especially
+if you need quick predictions um maybe
+if you need quick predictions um maybe
+if you need quick predictions um maybe
+for a vast number of protein sequences
+for a vast number of protein sequences
+for a vast number of protein sequences
+but generally um protein structures are
+but generally um protein structures are
+but generally um protein structures are
+now much easier to obtain. I would like
+now much easier to obtain. I would like
+now much easier to obtain. I would like
+to um
+to um
+to um
+demonstrate that uh briefly.
+demonstrate that uh briefly.
+demonstrate that uh briefly.
+So the the authors of the ESM paper um
+So the the authors of the ESM paper um
+So the the authors of the ESM paper um
+they have just decided to bold 770
+they have just decided to bold 770
+they have just decided to bold 770
+million proteins even proteins that um
+million proteins even proteins that um
+million proteins even proteins that um
+maybe not don't even exist in reality.
+maybe not don't even exist in reality.
+maybe not don't even exist in reality.
+So they made this metagenomic atlas
+So they made this metagenomic atlas
+So they made this metagenomic atlas
+where you have all these proteins in
+where you have all these proteins in
+where you have all these proteins in
+this two-dimensional representation.
+this two-dimensional representation.
+this two-dimensional representation.
+Then you can explore this here. And
+Then you can explore this here. And
+Then you can explore this here. And
+every point in this uh
+every point in this uh
+every point in this uh
+um cluster represents a protein and the
+um cluster represents a protein and the
+um cluster represents a protein and the
+yellow ones are proteins that are were
+yellow ones are proteins that are were
+yellow ones are proteins that are were
+previously unknown and the blue ones are
+previously unknown and the blue ones are
+previously unknown and the blue ones are
+proteins that were maybe already
+proteins that were maybe already
+proteins that were maybe already
+characterized a bit earlier. Um but this
+characterized a bit earlier. Um but this
+characterized a bit earlier. Um but this
+is very impressive that they just uh the
+is very impressive that they just uh the
+is very impressive that they just uh the
+model they just used it to predict 770
+model they just used it to predict 770
+model they just used it to predict 770
+million protein structures and you can
+million protein structures and you can
+million protein structures and you can
+look at each of them and download the
+look at each of them and download the
+look at each of them and download the
+the PDB file and structure file for it.
+the PDB file and structure file for it.
+the PDB file and structure file for it.
+Now that we have covered the like two
+Now that we have covered the like two
+Now that we have covered the like two
+protein folding models uh I would like
+protein folding models uh I would like
+protein folding models uh I would like
+to move on to some uh
+to move on to some uh
+to move on to some uh
+recent development of the co-folding
+recent development of the co-folding
+recent development of the co-folding
+models. So models that don't just um
+models. So models that don't just um
+models. So models that don't just um
+predict the structure of a single
+predict the structure of a single
+predict the structure of a single
+protein but predict an the structure of
+protein but predict an the structure of
+protein but predict an the structure of
+an entire assembly. Um so this could be
+an entire assembly. Um so this could be
+an entire assembly. Um so this could be
+could look um like this for example.
+could look um like this for example.
+could look um like this for example.
+So as you know proteins they they rarely
+So as you know proteins they they rarely
+So as you know proteins they they rarely
+act alone. Um they usually form
+act alone. Um they usually form
+act alone. Um they usually form
+complexes with other proteins or small
+complexes with other proteins or small
+complexes with other proteins or small
+molecules DNA and RNA. And recent
+molecules DNA and RNA. And recent
+molecules DNA and RNA. And recent
+folding models, they also include these
+folding models, they also include these
+folding models, they also include these
+biomolelecules, these others um and form
+biomolelecules, these others um and form
+biomolelecules, these others um and form
+kind of an unified structure prediction
+kind of an unified structure prediction
+kind of an unified structure prediction
+tool that predicts this entire assembly
+tool that predicts this entire assembly
+tool that predicts this entire assembly
+with nucleic acids or metal ions or also
+with nucleic acids or metal ions or also
+with nucleic acids or metal ions or also
+small molecules.
+small molecules.
+small molecules.
+So examples for this would be Rosetta
+So examples for this would be Rosetta
+So examples for this would be Rosetta
+fold all atom and alpha fold 3. So this
+fold all atom and alpha fold 3. So this
+fold all atom and alpha fold 3. So this
+Rosetta fold all atom is this threetrack
+Rosetta fold all atom is this threetrack
+Rosetta fold all atom is this threetrack
+neural network um developed by the the
+neural network um developed by the the
+neural network um developed by the the
+Baker lab in University of Washington
+Baker lab in University of Washington
+Baker lab in University of Washington
+that predicts these structures of of of
+that predicts these structures of of of
+that predicts these structures of of of
+biomolecular assemblies. So it's trained
+biomolecular assemblies. So it's trained
+biomolecular assemblies. So it's trained
+now on a on a mixed data set of of
+now on a on a mixed data set of of
+now on a on a mixed data set of of
+biomolelecules including also protein
+biomolelecules including also protein
+biomolelecules including also protein
+small molecule interactions or protein
+small molecule interactions or protein
+small molecule interactions or protein
+metal complexes
+metal complexes
+metal complexes
+um or even protein DNA interactions.
+um or even protein DNA interactions.
+um or even protein DNA interactions.
+Right? So the input to this model is not
+Right? So the input to this model is not
+Right? So the input to this model is not
+just the protein sequence anymore but
+just the protein sequence anymore but
+just the protein sequence anymore but
+also a potential um DNA sequence some
+also a potential um DNA sequence some
+also a potential um DNA sequence some
+some graph representations of of small
+some graph representations of of small
+some graph representations of of small
+molecules or also the chemical element
+molecules or also the chemical element
+molecules or also the chemical element
+type of non-polymer atom and then this
+type of non-polymer atom and then this
+type of non-polymer atom and then this
+um network fuses all this information
+um network fuses all this information
+um network fuses all this information
+and outputs some um potential structure
+and outputs some um potential structure
+and outputs some um potential structure
+of this interaction between the entities
+of this interaction between the entities
+of this interaction between the entities
+that you added to the input
+that you added to the input
+that you added to the input
+And alpha fold does a similar thing and
+And alpha fold does a similar thing and
+And alpha fold does a similar thing and
+it claims to have a bit higher accuracy
+it claims to have a bit higher accuracy
+it claims to have a bit higher accuracy
+than rosetta fold all atom. Um and the
+than rosetta fold all atom. Um and the
+than rosetta fold all atom. Um and the
+differences to the alphafold 2
+differences to the alphafold 2
+differences to the alphafold 2
+architecture that I've showed you before
+architecture that I've showed you before
+architecture that I've showed you before
+is that the input of course now includes
+is that the input of course now includes
+is that the input of course now includes
+lians and nucleic acids and met ions. Um
+lians and nucleic acids and met ions. Um
+lians and nucleic acids and met ions. Um
+but this multiple sequence alignment uh
+but this multiple sequence alignment uh
+but this multiple sequence alignment uh
+path is is quite deemphasized.
+path is is quite deemphasized.
+path is is quite deemphasized.
+So it's a much smaller MSA module. And
+So it's a much smaller MSA module. And
+So it's a much smaller MSA module. And
+then importantly this structure module
+then importantly this structure module
+then importantly this structure module
+of alpha fold 2 is replaced by by
+of alpha fold 2 is replaced by by
+of alpha fold 2 is replaced by by
+diffusion uh model. So the diffusion
+diffusion uh model. So the diffusion
+diffusion uh model. So the diffusion
+module now predicts the atom coordinates
+module now predicts the atom coordinates
+module now predicts the atom coordinates
+from from this pair signal and this
+from from this pair signal and this
+from from this pair signal and this
+input representation here.
+Okay. And here as well um for those who
+Okay. And here as well um for those who
+Okay. And here as well um for those who
+are interested um there are a lot of
+are interested um there are a lot of
+are interested um there are a lot of
+these co-folding models developed at the
+these co-folding models developed at the
+these co-folding models developed at the
+moment. So these volts models are quite
+moment. So these volts models are quite
+moment. So these volts models are quite
+famous developed by researchers at MIT
+famous developed by researchers at MIT
+famous developed by researchers at MIT
+together with recursion. They are also
+together with recursion. They are also
+together with recursion. They are also
+diffusion based as is uh this chai one
+diffusion based as is uh this chai one
+diffusion based as is uh this chai one
+model also predicts molecular complexes.
+model also predicts molecular complexes.
+model also predicts molecular complexes.
+And then there's also the open fold
+And then there's also the open fold
+And then there's also the open fold
+consortium which is quite interesting
+consortium which is quite interesting
+consortium which is quite interesting
+because it's a nonprofit AI research and
+because it's a nonprofit AI research and
+because it's a nonprofit AI research and
+development consortium that aims to
+development consortium that aims to
+development consortium that aims to
+develop like an open uh open ecosystem
+develop like an open uh open ecosystem
+develop like an open uh open ecosystem
+of AI tools for for biology and and drug
+of AI tools for for biology and and drug
+of AI tools for for biology and and drug
+discovery. They also have this open fold
+discovery. They also have this open fold
+discovery. They also have this open fold
+three um co-folding model.
+Now that we have discussed the structure
+Now that we have discussed the structure
+Now that we have discussed the structure
+prediction tools, we can transition to
+prediction tools, we can transition to
+prediction tools, we can transition to
+models that leverage these structures as
+models that leverage these structures as
+models that leverage these structures as
+as input data. And in this context, I
+as input data. And in this context, I
+as input data. And in this context, I
+will briefly mention 3D CNN's, 3D
+will briefly mention 3D CNN's, 3D
+will briefly mention 3D CNN's, 3D
+convolutional neural networks and then
+convolutional neural networks and then
+convolutional neural networks and then
+uh also GNN models. But before I can
+uh also GNN models. But before I can
+uh also GNN models. But before I can
+talk about the GNN models, um I was
+talk about the GNN models, um I was
+talk about the GNN models, um I was
+asked to give an introduction to to
+asked to give an introduction to to
+asked to give an introduction to to
+graphs and graph neural networks. So
+graphs and graph neural networks. So
+graphs and graph neural networks. So
+that's what I will do um before we touch
+that's what I will do um before we touch
+that's what I will do um before we touch
+upon the the GNN models.
+upon the the GNN models.
+upon the the GNN models.
+So but first um the importance of
+So but first um the importance of
+So but first um the importance of
+structure. So as you know the structure
+structure. So as you know the structure
+structure. So as you know the structure
+of a protein determines its function. Uh
+of a protein determines its function. Uh
+of a protein determines its function. Uh
+so the proteins they fold into these
+so the proteins they fold into these
+so the proteins they fold into these
+complex shapes and interact specifically
+complex shapes and interact specifically
+complex shapes and interact specifically
+with other molecules. So a protein
+with other molecules. So a protein
+with other molecules. So a protein
+sequence alone doesn't provide
+sequence alone doesn't provide
+sequence alone doesn't provide
+information about the actual spatial
+information about the actual spatial
+information about the actual spatial
+arrangement of the atoms in 3D space. So
+arrangement of the atoms in 3D space. So
+arrangement of the atoms in 3D space. So
+consider you have a task that requires
+consider you have a task that requires
+consider you have a task that requires
+an understanding of the physical
+an understanding of the physical
+an understanding of the physical
+placement of residues. Then models that
+placement of residues. Then models that
+placement of residues. Then models that
+incorporate this structure information
+incorporate this structure information
+incorporate this structure information
+should actually be superior. So for
+should actually be superior. So for
+should actually be superior. So for
+example in in interaction prediction or
+example in in interaction prediction or
+example in in interaction prediction or
+enzyme activity prediction and I guess
+enzyme activity prediction and I guess
+enzyme activity prediction and I guess
+you all agree with me that if you want
+you all agree with me that if you want
+you all agree with me that if you want
+to make a prediction on whether this
+to make a prediction on whether this
+to make a prediction on whether this
+enzyme can bind or maybe catalyze this
+enzyme can bind or maybe catalyze this
+enzyme can bind or maybe catalyze this
+substrate here um the 3D placement of
+substrate here um the 3D placement of
+substrate here um the 3D placement of
+all these protein residues in this
+all these protein residues in this
+all these protein residues in this
+pocket should be quite important or
+pocket should be quite important or
+pocket should be quite important or
+quite useful at least for the prediction
+quite useful at least for the prediction
+quite useful at least for the prediction
+of this model.
+of this model.
+of this model.
+But there are also a lot of challenges
+But there are also a lot of challenges
+But there are also a lot of challenges
+in the use of sculptural data. So it's
+in the use of sculptural data. So it's
+in the use of sculptural data. So it's
+uh it's availability is generally much
+uh it's availability is generally much
+uh it's availability is generally much
+lower and the sequence-based methods
+lower and the sequence-based methods
+lower and the sequence-based methods
+are usually simpler and more
+are usually simpler and more
+are usually simpler and more
+computationally efficient. Right?
+And as I said I will briefly explain the
+And as I said I will briefly explain the
+And as I said I will briefly explain the
+3D CNN's. So how these models usually
+3D CNN's. So how these models usually
+3D CNN's. So how these models usually
+work is that they take for example a
+work is that they take for example a
+work is that they take for example a
+protein structure like here and they
+protein structure like here and they
+protein structure like here and they
+convert these atomic coordinates uh in a
+convert these atomic coordinates uh in a
+convert these atomic coordinates uh in a
+format suitable for for 3D CNN's. So the
+format suitable for for 3D CNN's. So the
+format suitable for for 3D CNN's. So the
+space around the protein is just divided
+space around the protein is just divided
+space around the protein is just divided
+into a grid of so-called voxels and then
+into a grid of so-called voxels and then
+into a grid of so-called voxels and then
+different atomic properties of the
+different atomic properties of the
+different atomic properties of the
+underlying atoms they can be used to
+underlying atoms they can be used to
+underlying atoms they can be used to
+define multiple channels in the input
+define multiple channels in the input
+define multiple channels in the input
+data. For example, um the atom types of
+data. For example, um the atom types of
+data. For example, um the atom types of
+charges. In this example here, you have
+charges. In this example here, you have
+charges. In this example here, you have
+a carbon channel here and an oxygen
+a carbon channel here and an oxygen
+a carbon channel here and an oxygen
+channel and nitrogen channel. And then
+channel and nitrogen channel. And then
+channel and nitrogen channel. And then
+you have this convolution and ruling
+you have this convolution and ruling
+you have this convolution and ruling
+layers to extract um the relevant
+layers to extract um the relevant
+layers to extract um the relevant
+features and reduce the the spatial
+features and reduce the the spatial
+features and reduce the the spatial
+dimension of the input. And then in the
+dimension of the input. And then in the
+dimension of the input. And then in the
+end you have you have a fully connected
+end you have you have a fully connected
+end you have you have a fully connected
+layer that deres your prediction
+layer that deres your prediction
+layer that deres your prediction
+whatever that would be. And this 3D CNN
+whatever that would be. And this 3D CNN
+whatever that would be. And this 3D CNN
+they have shown to perform quite well in
+they have shown to perform quite well in
+they have shown to perform quite well in
+tasks such as protein uh the stability
+tasks such as protein uh the stability
+tasks such as protein uh the stability
+prediction and also in protein liant
+prediction and also in protein liant
+prediction and also in protein liant
+binding affinity. So this is about um
+binding affinity. So this is about um
+binding affinity. So this is about um
+when you have a complex of a protein and
+when you have a complex of a protein and
+when you have a complex of a protein and
+the small molecule you want to predict
+the small molecule you want to predict
+the small molecule you want to predict
+the interaction strength. So basically
+the interaction strength. So basically
+the interaction strength. So basically
+which is called the binding affinity and
+which is called the binding affinity and
+which is called the binding affinity and
+the 3D CNN's they do this by by
+the 3D CNN's they do this by by
+the 3D CNN's they do this by by
+centering a grid around the geometric
+centering a grid around the geometric
+centering a grid around the geometric
+center of the liant and then they um
+center of the liant and then they um
+center of the liant and then they um
+each position of of of the atoms within
+each position of of of the atoms within
+each position of of of the atoms within
+the binding pocket uh is kind of mapped
+the binding pocket uh is kind of mapped
+the binding pocket uh is kind of mapped
+to one of these voxels and the chemical
+to one of these voxels and the chemical
+to one of these voxels and the chemical
+properties are then used to define
+properties are then used to define
+properties are then used to define
+additional channels. So this model here
+additional channels. So this model here
+additional channels. So this model here
+seems to have a a channel for aromatic
+seems to have a a channel for aromatic
+seems to have a a channel for aromatic
+rings for example and then one for
+rings for example and then one for
+rings for example and then one for
+hydrogen donors and some some other one.
+hydrogen donors and some some other one.
+hydrogen donors and some some other one.
+And then again like convolutional neural
+And then again like convolutional neural
+And then again like convolutional neural
+network reduces this 3D grid uh into a
+network reduces this 3D grid uh into a
+network reduces this 3D grid uh into a
+single PKD value that represents a
+single PKD value that represents a
+single PKD value that represents a
+binding affinity. And in this task, the
+binding affinity. And in this task, the
+binding affinity. And in this task, the
+3D CNN's were the first structure-based
+3D CNN's were the first structure-based
+3D CNN's were the first structure-based
+models that were shown to outperform
+models that were shown to outperform
+models that were shown to outperform
+sequence-based affinity models.
+But there there are couple of drawbacks
+But there there are couple of drawbacks
+But there there are couple of drawbacks
+on using these 3D CNNs. So the model
+on using these 3D CNNs. So the model
+on using these 3D CNNs. So the model
+size um they are usually
+size um they are usually
+size um they are usually
+um larger than 2D CNN's because the
+um larger than 2D CNN's because the
+um larger than 2D CNN's because the
+parameters they grow cubically with uh
+parameters they grow cubically with uh
+parameters they grow cubically with uh
+the resolution of the grid and uh the
+the resolution of the grid and uh the
+the resolution of the grid and uh the
+sparsity is also an issue um because
+sparsity is also an issue um because
+sparsity is also an issue um because
+these grits that you put around proteins
+these grits that you put around proteins
+these grits that you put around proteins
+they they very often contain a
+they they very often contain a
+they they very often contain a
+significant portion of of voxels that um
+significant portion of of voxels that um
+significant portion of of voxels that um
+contain only empty or homogeneous
+contain only empty or homogeneous
+contain only empty or homogeneous
+regions of of the complex that does not
+regions of of the complex that does not
+regions of of the complex that does not
+contribute ute any meaningful
+contribute ute any meaningful
+contribute ute any meaningful
+information and there the inefficiency
+information and there the inefficiency
+information and there the inefficiency
+arises because all these
+arises because all these
+arises because all these
+meaningless uh grid points are still
+meaningless uh grid points are still
+meaningless uh grid points are still
+processed by the model and then there's
+processed by the model and then there's
+processed by the model and then there's
+the problem of the rotational invariance
+the problem of the rotational invariance
+the problem of the rotational invariance
+um as in 2D CNN's if you want to achieve
+um as in 2D CNN's if you want to achieve
+um as in 2D CNN's if you want to achieve
+invariant predictions uh regardless of
+invariant predictions uh regardless of
+invariant predictions uh regardless of
+the orientation of the input structure
+the orientation of the input structure
+the orientation of the input structure
+in the input data then you need to
+in the input data then you need to
+in the input data then you need to
+present that object in in several
+present that object in in several
+present that object in in several
+rotations.
+rotations.
+rotations.
+So 3D CNN's usually require um larger
+So 3D CNN's usually require um larger
+So 3D CNN's usually require um larger
+training data sets um to work well and
+training data sets um to work well and
+training data sets um to work well and
+avoid overfitting and training and
+avoid overfitting and training and
+avoid overfitting and training and
+inference usually require a lot of
+inference usually require a lot of
+inference usually require a lot of
+memory and processing power. So the
+memory and processing power. So the
+memory and processing power. So the
+application of the 3D CNN's to very
+application of the 3D CNN's to very
+application of the 3D CNN's to very
+large data sets uh is limited. For
+large data sets uh is limited. For
+large data sets uh is limited. For
+example, if you have a molecular dynamic
+example, if you have a molecular dynamic
+example, if you have a molecular dynamic
+simulation and you would like to process
+simulation and you would like to process
+simulation and you would like to process
+each frame of that simulation, then you
+each frame of that simulation, then you
+each frame of that simulation, then you
+might profit from something that is a
+might profit from something that is a
+might profit from something that is a
+bit more efficient.
+bit more efficient.
+bit more efficient.
+And with this in mind, I would like to
+And with this in mind, I would like to
+And with this in mind, I would like to
+transition to the introduction about
+transition to the introduction about
+transition to the introduction about
+graphs and graph neural networks. and um
+graphs and graph neural networks. and um
+graphs and graph neural networks. and um
+because these uh can solve most of these
+because these uh can solve most of these
+because these uh can solve most of these
+drawbacks of the 3D CNN.
+So I will start at the very basics. Um
+So I will start at the very basics. Um
+So I will start at the very basics. Um
+the graphs describe just a set of
+the graphs describe just a set of
+the graphs describe just a set of
+objects that we call nodes and the
+objects that we call nodes and the
+objects that we call nodes and the
+connections between them that we call
+connections between them that we call
+connections between them that we call
+edges. This would be an example here.
+edges. This would be an example here.
+edges. This would be an example here.
+And then you can store information in in
+And then you can store information in in
+And then you can store information in in
+the nodes of the graph or also in the
+the nodes of the graph or also in the
+the nodes of the graph or also in the
+edges of the graph. And then you might
+edges of the graph. And then you might
+edges of the graph. And then you might
+also have some global information
+also have some global information
+also have some global information
+attached to to this entire graph. And
+attached to to this entire graph. And
+attached to to this entire graph. And
+this is quite a powerful representation
+this is quite a powerful representation
+this is quite a powerful representation
+of data especially for um naturally like
+of data especially for um naturally like
+of data especially for um naturally like
+non- ukidian and unordered data. So if
+non- ukidian and unordered data. So if
+non- ukidian and unordered data. So if
+you think of a social network with
+you think of a social network with
+you think of a social network with
+friendships or citation networks or also
+friendships or citation networks or also
+friendships or citation networks or also
+like atoms in a molecule and graph
+like atoms in a molecule and graph
+like atoms in a molecule and graph
+neural networks they can process such
+neural networks they can process such
+neural networks they can process such
+unordered graph structures.
+So as I said we have these four types of
+So as I said we have these four types of
+So as I said we have these four types of
+information that we want to uh use to
+information that we want to uh use to
+information that we want to uh use to
+make predictions on this graph. So we
+make predictions on this graph. So we
+make predictions on this graph. So we
+have the connectivity that contains a
+have the connectivity that contains a
+have the connectivity that contains a
+lot of information by itself and then
+lot of information by itself and then
+lot of information by itself and then
+the features in nodes edges and uh also
+the features in nodes edges and uh also
+the features in nodes edges and uh also
+some graph level features
+some graph level features
+some graph level features
+and molecules um are quite convenient to
+and molecules um are quite convenient to
+and molecules um are quite convenient to
+model as graphs. It's it's a natural
+model as graphs. It's it's a natural
+model as graphs. It's it's a natural
+abstraction where the the atoms of the
+abstraction where the the atoms of the
+abstraction where the the atoms of the
+molecules are translated to nodes and
+molecules are translated to nodes and
+molecules are translated to nodes and
+the bonds of the molecule are translated
+the bonds of the molecule are translated
+the bonds of the molecule are translated
+to edges of the graph. And then it also
+to edges of the graph. And then it also
+to edges of the graph. And then it also
+allows for integration of um chemical
+allows for integration of um chemical
+allows for integration of um chemical
+properties into the node edge and global
+properties into the node edge and global
+properties into the node edge and global
+features. So you could take this
+features. So you could take this
+features. So you could take this
+caffeine molecule here and model it as a
+caffeine molecule here and model it as a
+caffeine molecule here and model it as a
+graph like this. And then you can for
+graph like this. And then you can for
+graph like this. And then you can for
+example add some uh chemical atom
+example add some uh chemical atom
+example add some uh chemical atom
+properties into the node features
+properties into the node features
+properties into the node features
+because the nodes represent the atoms of
+because the nodes represent the atoms of
+because the nodes represent the atoms of
+the molecule. And then you can add
+the molecule. And then you can add
+the molecule. And then you can add
+information up about the chemical bonds
+information up about the chemical bonds
+information up about the chemical bonds
+to the edges. And then in the global
+to the edges. And then in the global
+to the edges. And then in the global
+context you could also have whatever
+context you could also have whatever
+context you could also have whatever
+information you have about this
+information you have about this
+information you have about this
+molecule. Yeah.
+molecule. Yeah.
+molecule. Yeah.
+And then what kind of tasks can we or
+And then what kind of tasks can we or
+And then what kind of tasks can we or
+do we maybe want to solve using using
+do we maybe want to solve using using
+do we maybe want to solve using using
+using graphs. So there's a graph level
+using graphs. So there's a graph level
+using graphs. So there's a graph level
+tasks obviously that you just predict a
+tasks obviously that you just predict a
+tasks obviously that you just predict a
+single property for an entire graph. So
+single property for an entire graph. So
+single property for an entire graph. So
+for example you have this molecule you
+for example you have this molecule you
+for example you have this molecule you
+model it as a graph and you want to know
+model it as a graph and you want to know
+model it as a graph and you want to know
+um is this molecule an antibiotic. That
+um is this molecule an antibiotic. That
+um is this molecule an antibiotic. That
+would be a graph level task.
+would be a graph level task.
+would be a graph level task.
+And then there's a node level tasks
+And then there's a node level tasks
+And then there's a node level tasks
+where you predict some property for each
+where you predict some property for each
+where you predict some property for each
+node in the graph. What I show here is
+node in the graph. What I show here is
+node in the graph. What I show here is
+just this uh famous toy data set where
+just this uh famous toy data set where
+just this uh famous toy data set where
+you have this karate club and the two
+you have this karate club and the two
+you have this karate club and the two
+instructures they they have an argument
+instructures they they have an argument
+instructures they they have an argument
+and then the edges they represent the
+and then the edges they represent the
+and then the edges they represent the
+social interactions between the members
+social interactions between the members
+social interactions between the members
+of the club and the task is in this toy
+of the club and the task is in this toy
+of the club and the task is in this toy
+data set to predict which of the members
+data set to predict which of the members
+data set to predict which of the members
+stays loyal to what which instructor and
+stays loyal to what which instructor and
+stays loyal to what which instructor and
+um this is a node level task because we
+um this is a node level task because we
+um this is a node level task because we
+predict one property for each um node in
+predict one property for each um node in
+predict one property for each um node in
+this graph
+this graph
+this graph
+And then there's also the edge level
+And then there's also the edge level
+And then there's also the edge level
+tasks where we predict uh the property
+tasks where we predict uh the property
+tasks where we predict uh the property
+or the presence of an edge in the graph.
+or the presence of an edge in the graph.
+or the presence of an edge in the graph.
+And an example for this would be the
+And an example for this would be the
+And an example for this would be the
+friendship suggestions on Facebook for
+friendship suggestions on Facebook for
+friendship suggestions on Facebook for
+example.
+example.
+example.
+And
+And
+And
+the GNN is basically a an optimizable
+the GNN is basically a an optimizable
+the GNN is basically a an optimizable
+transformation on all these attributes
+transformation on all these attributes
+transformation on all these attributes
+of the graph. So on the no nodes edges
+of the graph. So on the no nodes edges
+of the graph. So on the no nodes edges
+and this global context but it preserves
+and this global context but it preserves
+and this global context but it preserves
+the graph connectivity right. So they
+the graph connectivity right. So they
+the graph connectivity right. So they
+usually adopt this um graph in graph out
+usually adopt this um graph in graph out
+usually adopt this um graph in graph out
+architecture. They accept the graph as
+architecture. They accept the graph as
+architecture. They accept the graph as
+input with uh information loaded into
+input with uh information loaded into
+input with uh information loaded into
+its notes edges and maybe global context
+its notes edges and maybe global context
+its notes edges and maybe global context
+and then they progressively transform
+and then they progressively transform
+and then they progressively transform
+these um embeddings
+these um embeddings
+these um embeddings
+without changing the connectivity of
+without changing the connectivity of
+without changing the connectivity of
+this input graph.
+And to update these graph features in
+And to update these graph features in
+And to update these graph features in
+the nodes and edges, they usually apply
+the nodes and edges, they usually apply
+the nodes and edges, they usually apply
+this message passing neural network
+this message passing neural network
+this message passing neural network
+framework where um neighboring nodes and
+framework where um neighboring nodes and
+framework where um neighboring nodes and
+edges exchange information to influence
+edges exchange information to influence
+edges exchange information to influence
+each other's updated embeddings. So this
+each other's updated embeddings. So this
+each other's updated embeddings. So this
+makes the learned embeddings kind of
+makes the learned embeddings kind of
+makes the learned embeddings kind of
+aware of the structure of the graph and
+aware of the structure of the graph and
+aware of the structure of the graph and
+of the neighborhood of an of a note. for
+of the neighborhood of an of a note. for
+of the neighborhood of an of a note. for
+example.
+example.
+example.
+And this message passing works um in a
+And this message passing works um in a
+And this message passing works um in a
+way that for each node in a graph, we
+way that for each node in a graph, we
+way that for each node in a graph, we
+try gather all the neighboring node
+try gather all the neighboring node
+try gather all the neighboring node
+embeddings or messages like here and
+embeddings or messages like here and
+embeddings or messages like here and
+then we aggregate all these messages
+then we aggregate all these messages
+then we aggregate all these messages
+using aggregation function. In this
+using aggregation function. In this
+using aggregation function. In this
+example, it's just summing them up um
+example, it's just summing them up um
+example, it's just summing them up um
+but it could be other ways and we also
+but it could be other ways and we also
+but it could be other ways and we also
+include the embedding of the node
+include the embedding of the node
+include the embedding of the node
+itself. And then we pass these pulled
+itself. And then we pass these pulled
+itself. And then we pass these pulled
+messages through an update function
+messages through an update function
+messages through an update function
+which is usually a learned neural
+which is usually a learned neural
+which is usually a learned neural
+network and then we obtain um the
+network and then we obtain um the
+network and then we obtain um the
+updated embedding of this node. So from
+updated embedding of this node. So from
+updated embedding of this node. So from
+this perspect from the perspective of
+this perspect from the perspective of
+this perspect from the perspective of
+this single node we aggregate we collect
+this single node we aggregate we collect
+this single node we aggregate we collect
+all these node embeddings of these
+all these node embeddings of these
+all these node embeddings of these
+neighbors it's connected to we aggregate
+neighbors it's connected to we aggregate
+neighbors it's connected to we aggregate
+them pass them through this learnable
+them pass them through this learnable
+them pass them through this learnable
+weight matrix and then uh we have this
+weight matrix and then uh we have this
+weight matrix and then uh we have this
+updated node embedding and we do this
+updated node embedding and we do this
+updated node embedding and we do this
+simultaneously for all nodes in the
+simultaneously for all nodes in the
+simultaneously for all nodes in the
+graph.
+So and then if we want to take
+So and then if we want to take
+So and then if we want to take
+predictions then uh for example for a
+predictions then uh for example for a
+predictions then uh for example for a
+node level then we just take all the
+node level then we just take all the
+node level then we just take all the
+node embeddings and pass them through
+node embeddings and pass them through
+node embeddings and pass them through
+through a fully connected neural network
+through a fully connected neural network
+through a fully connected neural network
+to get some predictions for each nodes
+to get some predictions for each nodes
+to get some predictions for each nodes
+and same for edges. And if we um want to
+and same for edges. And if we um want to
+and same for edges. And if we um want to
+do a graph level prediction, so for
+do a graph level prediction, so for
+do a graph level prediction, so for
+example, is it is the molecule
+example, is it is the molecule
+example, is it is the molecule
+antibiotic or not? Then we can use
+antibiotic or not? Then we can use
+antibiotic or not? Then we can use
+global pooling for example to to um pool
+global pooling for example to to um pool
+global pooling for example to to um pool
+all node embeddings into one single
+all node embeddings into one single
+all node embeddings into one single
+representation and then pass them
+representation and then pass them
+representation and then pass them
+through a neural network and then makes
+through a neural network and then makes
+through a neural network and then makes
+a prediction or we can just process the
+a prediction or we can just process the
+a prediction or we can just process the
+transformed global features of of the
+transformed global features of of the
+transformed global features of of the
+graph.
+So this has a lot in common with the
+So this has a lot in common with the
+So this has a lot in common with the
+image convolution. Um both are
+image convolution. Um both are
+image convolution. Um both are
+operations that aggregate and process
+operations that aggregate and process
+operations that aggregate and process
+the information of an element's
+the information of an element's
+the information of an element's
+neighbors to update the elements own
+neighbors to update the elements own
+neighbors to update the elements own
+values. So in graphs these elements are
+values. So in graphs these elements are
+values. So in graphs these elements are
+just nodes and in images they are they
+just nodes and in images they are they
+just nodes and in images they are they
+are pixels. And um if you consider a a
+are pixels. And um if you consider a a
+are pixels. And um if you consider a a
+graph where um
+graph where um
+graph where um
+each node is connected to its
+each node is connected to its
+each node is connected to its
+neighboring nodes and it's arranged in
+neighboring nodes and it's arranged in
+neighboring nodes and it's arranged in
+this 2D array then it would be quite
+this 2D array then it would be quite
+this 2D array then it would be quite
+similar to um image convolution.
+similar to um image convolution.
+similar to um image convolution.
+But in uh in graphs generally the number
+But in uh in graphs generally the number
+But in uh in graphs generally the number
+of uh nodes in the graph is the number
+of uh nodes in the graph is the number
+of uh nodes in the graph is the number
+of neighboring nodes is is quite
+of neighboring nodes is is quite
+of neighboring nodes is is quite
+variable and also um
+variable and also um
+variable and also um
+the structure is of course not adhered
+the structure is of course not adhered
+the structure is of course not adhered
+to. folders uh they can be very
+to. folders uh they can be very
+to. folders uh they can be very
+unordered right
+unordered right
+unordered right
+and that's why because of this analogy
+and that's why because of this analogy
+and that's why because of this analogy
+the the message passing process in these
+the the message passing process in these
+the the message passing process in these
+uh GNN is also called graph convolution
+uh GNN is also called graph convolution
+uh GNN is also called graph convolution
+and then as in 2D um 2D CNN's with
+and then as in 2D um 2D CNN's with
+and then as in 2D um 2D CNN's with
+images for example we can also stack
+images for example we can also stack
+images for example we can also stack
+graph convolutional layers and then if
+graph convolutional layers and then if
+graph convolutional layers and then if
+we have three convolutional layers all
+we have three convolutional layers all
+we have three convolutional layers all
+doing message passing then every node
+doing message passing then every node
+doing message passing then every node
+will contain ain information about every
+will contain ain information about every
+will contain ain information about every
+node that is up to three steps away from
+node that is up to three steps away from
+node that is up to three steps away from
+itself.
+Then there are a couple of uh or quite
+Then there are a couple of uh or quite
+Then there are a couple of uh or quite
+many different convolutional operators.
+many different convolutional operators.
+many different convolutional operators.
+So
+So
+So
+um one of the most common and most
+um one of the most common and most
+um one of the most common and most
+easiest is this GCN conf where you just
+easiest is this GCN conf where you just
+easiest is this GCN conf where you just
+uh you want to find the updated
+uh you want to find the updated
+uh you want to find the updated
+embedding of this node I in the in the
+embedding of this node I in the in the
+embedding of this node I in the in the
+next layer. And for this you go through
+next layer. And for this you go through
+next layer. And for this you go through
+all the neighbors of this node I. You
+all the neighbors of this node I. You
+all the neighbors of this node I. You
+take um
+take um
+take um
+their node embeddings. you uh pass them
+their node embeddings. you uh pass them
+their node embeddings. you uh pass them
+through through a learnable weight
+through through a learnable weight
+through through a learnable weight
+matrix and you normalize by the degrees
+matrix and you normalize by the degrees
+matrix and you normalize by the degrees
+of the nodes. Then you sum this up to
+of the nodes. Then you sum this up to
+of the nodes. Then you sum this up to
+get the new embedding of this node I.
+get the new embedding of this node I.
+get the new embedding of this node I.
+And in this attention version, it works
+And in this attention version, it works
+And in this attention version, it works
+quite similarly. You also um take all
+quite similarly. You also um take all
+quite similarly. You also um take all
+the neighbors of this node I, their
+the neighbors of this node I, their
+the neighbors of this node I, their
+embeddings, you multiply them with this
+embeddings, you multiply them with this
+embeddings, you multiply them with this
+weight matrix and then also an attention
+weight matrix and then also an attention
+weight matrix and then also an attention
+uh attention score. And this is computed
+uh attention score. And this is computed
+uh attention score. And this is computed
+based on um the embeddings of the two
+based on um the embeddings of the two
+based on um the embeddings of the two
+nodes and the edge between them. So from
+nodes and the edge between them. So from
+nodes and the edge between them. So from
+the perspective of a single node you
+the perspective of a single node you
+the perspective of a single node you
+would kind of assign importance values
+would kind of assign importance values
+would kind of assign importance values
+or weights to all these nodes neighbors
+and this is then uh taken into account
+and this is then uh taken into account
+and this is then uh taken into account
+in in this aggregation function.
+So now that we have established these
+So now that we have established these
+So now that we have established these
+GNN basics, uh we can proceed to this
+GNN basics, uh we can proceed to this
+GNN basics, uh we can proceed to this
+examples of GNN models
+examples of GNN models
+examples of GNN models
+um they were mainly for drug discovery.
+um they were mainly for drug discovery.
+um they were mainly for drug discovery.
+And
+And
+And
+the first very cool model is this GNN
+the first very cool model is this GNN
+the first very cool model is this GNN
+that is capable of capable of predicting
+that is capable of capable of predicting
+that is capable of capable of predicting
+molecules with antibacteridal
+molecules with antibacteridal
+molecules with antibacteridal
+um antibacterial activity
+um antibacterial activity
+um antibacterial activity
+and this is a graph binary
+and this is a graph binary
+and this is a graph binary
+classification problem. So you have a a
+classification problem. So you have a a
+classification problem. So you have a a
+molecule, you model it as a graph, you
+molecule, you model it as a graph, you
+molecule, you model it as a graph, you
+want to take get one prediction for the
+want to take get one prediction for the
+want to take get one prediction for the
+entire graph. The training set for this
+entire graph. The training set for this
+entire graph. The training set for this
+model was only about 2 and a half
+model was only about 2 and a half
+model was only about 2 and a half
+thousand drug molecules and among them
+thousand drug molecules and among them
+thousand drug molecules and among them
+120 of them um are known antibiotics
+120 of them um are known antibiotics
+120 of them um are known antibiotics
+and then they generate these graphs of
+and then they generate these graphs of
+and then they generate these graphs of
+the molecules and they include a lot of
+the molecules and they include a lot of
+the molecules and they include a lot of
+chemical properties into the nodes and
+chemical properties into the nodes and
+chemical properties into the nodes and
+also into the edges of the graph and
+also into the edges of the graph and
+also into the edges of the graph and
+then they do a couple of layers of this
+then they do a couple of layers of this
+then they do a couple of layers of this
+uh convolutional layer. So growth graph
+uh convolutional layer. So growth graph
+uh convolutional layer. So growth graph
+convolution
+convolution
+convolution
+followed by global ad pooling and then
+followed by global ad pooling and then
+followed by global ad pooling and then
+they have a feed forward neural network
+they have a feed forward neural network
+they have a feed forward neural network
+that just outputs a probability of
+that just outputs a probability of
+that just outputs a probability of
+growth inhibition of E.coli so of
+growth inhibition of E.coli so of
+growth inhibition of E.coli so of
+antibacterial activity
+antibacterial activity
+antibacterial activity
+and this model is quite simple
+and this model is quite simple
+and this model is quite simple
+but they then used it to make
+but they then used it to make
+but they then used it to make
+predictions. So inference on a large um
+predictions. So inference on a large um
+predictions. So inference on a large um
+collection of uh of on the drug
+collection of uh of on the drug
+collection of uh of on the drug
+repurposing hub a large collection of
+repurposing hub a large collection of
+repurposing hub a large collection of
+small molecules and then um they saw
+small molecules and then um they saw
+small molecules and then um they saw
+this really nice enrichment that among
+this really nice enrichment that among
+this really nice enrichment that among
+the 99 molecules with the highest model
+the 99 molecules with the highest model
+the 99 molecules with the highest model
+prediction
+prediction
+prediction
+uh 51 of them actually displayed growth
+uh 51 of them actually displayed growth
+uh 51 of them actually displayed growth
+inhibition and among the the bottom 63
+inhibition and among the the bottom 63
+inhibition and among the the bottom 63
+they only had two molecules that
+they only had two molecules that
+they only had two molecules that
+displayed growth inhibition.
+displayed growth inhibition.
+displayed growth inhibition.
+So you can see that here if you have a
+So you can see that here if you have a
+So you can see that here if you have a
+certain concentration of bacteria and
+certain concentration of bacteria and
+certain concentration of bacteria and
+then you add this helicin the new
+then you add this helicin the new
+then you add this helicin the new
+antibiotic that they discovered you add
+antibiotic that they discovered you add
+antibiotic that they discovered you add
+this to to to the mix and then these
+this to to to the mix and then these
+this to to to the mix and then these
+bacteria start to to die.
+bacteria start to to die.
+bacteria start to to die.
+So they also showed that they pre-treat
+So they also showed that they pre-treat
+So they also showed that they pre-treat
+the bacteria with uh what was it um
+the bacteria with uh what was it um
+the bacteria with uh what was it um
+quite an old antibiotic that doesn't
+quite an old antibiotic that doesn't
+quite an old antibiotic that doesn't
+work that well anymore. they um can even
+work that well anymore. they um can even
+work that well anymore. they um can even
+kill the persisters. So though that the
+kill the persisters. So though that the
+kill the persisters. So though that the
+bacteria that uh resisted to the
+bacteria that uh resisted to the
+bacteria that uh resisted to the
+ampitine
+and then they also saw that this new
+and then they also saw that this new
+and then they also saw that this new
+antibiotic had quite a low structural
+antibiotic had quite a low structural
+antibiotic had quite a low structural
+similarity to its nearest neighbor
+similarity to its nearest neighbor
+similarity to its nearest neighbor
+antibiotic. So they concluded that the
+antibiotic. So they concluded that the
+antibiotic. So they concluded that the
+model was kind of able to generalize and
+model was kind of able to generalize and
+model was kind of able to generalize and
+access some some new antibiotic
+access some some new antibiotic
+access some some new antibiotic
+chemistry which I think is uh quite
+chemistry which I think is uh quite
+chemistry which I think is uh quite
+remarkable for this uh model.
+And then another example of graph neural
+And then another example of graph neural
+And then another example of graph neural
+networks um they are really often used
+networks um they are really often used
+networks um they are really often used
+for this uh prediction of binding
+for this uh prediction of binding
+for this uh prediction of binding
+affinity. So the interaction strength
+affinity. So the interaction strength
+affinity. So the interaction strength
+between a small molecule and the protein
+between a small molecule and the protein
+between a small molecule and the protein
+um using the 3D structure of this
+um using the 3D structure of this
+um using the 3D structure of this
+interaction as an input. So this is
+interaction as an input. So this is
+interaction as an input. So this is
+really important for for drug design
+really important for for drug design
+really important for for drug design
+because you want this small molecule to
+because you want this small molecule to
+because you want this small molecule to
+bind with a really high affinity to very
+bind with a really high affinity to very
+bind with a really high affinity to very
+specific protein so that it can be a
+specific protein so that it can be a
+specific protein so that it can be a
+useful drug. And the models that take
+useful drug. And the models that take
+useful drug. And the models that take
+such a structure and uh assign a binding
+such a structure and uh assign a binding
+such a structure and uh assign a binding
+affinity they are referred to as scoring
+affinity they are referred to as scoring
+affinity they are referred to as scoring
+functions.
+functions.
+functions.
+And classically these were um force
+And classically these were um force
+And classically these were um force
+fieldbased or empirical or knowledge
+fieldbased or empirical or knowledge
+fieldbased or empirical or knowledge
+based uh models. But unfortunately they
+based uh models. But unfortunately they
+based uh models. But unfortunately they
+show quite limited accuracy in binding
+show quite limited accuracy in binding
+show quite limited accuracy in binding
+affinity prediction and AI models are
+affinity prediction and AI models are
+affinity prediction and AI models are
+now supposed to improve that.
+now supposed to improve that.
+now supposed to improve that.
+And
+And
+And
+an example for a model is this GEMS
+an example for a model is this GEMS
+an example for a model is this GEMS
+model. It's quite simple and uh uh easy
+model. It's quite simple and uh uh easy
+model. It's quite simple and uh uh easy
+to understand. It's also a graph
+to understand. It's also a graph
+to understand. It's also a graph
+convolutional neural network for
+convolutional neural network for
+convolutional neural network for
+predicting these binding affinities and
+predicting these binding affinities and
+predicting these binding affinities and
+it's trained on PDB bind which is a
+it's trained on PDB bind which is a
+it's trained on PDB bind which is a
+collection of um experimentally solved
+collection of um experimentally solved
+collection of um experimentally solved
+protein liant complexes that have
+protein liant complexes that have
+protein liant complexes that have
+binding affinity labels.
+binding affinity labels.
+binding affinity labels.
+So if you have this interaction here of
+So if you have this interaction here of
+So if you have this interaction here of
+this small molecule with this protein,
+this small molecule with this protein,
+this small molecule with this protein,
+then the small molecule is included as
+then the small molecule is included as
+then the small molecule is included as
+an atom level graph of this of this
+an atom level graph of this of this
+an atom level graph of this of this
+liant as we've seen before. And then the
+liant as we've seen before. And then the
+liant as we've seen before. And then the
+surrounding amino acids of this protein
+surrounding amino acids of this protein
+surrounding amino acids of this protein
+or included as additional nodes. And
+or included as additional nodes. And
+or included as additional nodes. And
+then in this model specifically um the
+then in this model specifically um the
+then in this model specifically um the
+node features of the graph were
+node features of the graph were
+node features of the graph were
+initialized using protein language model
+initialized using protein language model
+initialized using protein language model
+embeddings.
+embeddings.
+embeddings.
+And the architecture is quite simple. As
+And the architecture is quite simple. As
+And the architecture is quite simple. As
+an input, you have these node features,
+an input, you have these node features,
+an input, you have these node features,
+the edge features, and some global
+the edge features, and some global
+the edge features, and some global
+features. And of course, the
+features. And of course, the
+features. And of course, the
+connectivity. And then there's an after
+connectivity. And then there's an after
+connectivity. And then there's an after
+an initial feature transformation, you
+an initial feature transformation, you
+an initial feature transformation, you
+have this alternating sequence of um
+have this alternating sequence of um
+have this alternating sequence of um
+node feature updates and edge feature
+node feature updates and edge feature
+node feature updates and edge feature
+updates. So the nodes are updated based
+updates. So the nodes are updated based
+updates. So the nodes are updated based
+on their neighbors, including the
+on their neighbors, including the
+on their neighbors, including the
+embeddings of the edges that connect
+embeddings of the edges that connect
+embeddings of the edges that connect
+them to these neighbors. And then the
+them to these neighbors. And then the
+them to these neighbors. And then the
+edges are updated based on their on the
+edges are updated based on their on the
+edges are updated based on their on the
+nodes that they connect. And this
+nodes that they connect. And this
+nodes that they connect. And this
+happens like twice. And after every um
+happens like twice. And after every um
+happens like twice. And after every um
+node update, we have this uh global
+node update, we have this uh global
+node update, we have this uh global
+pooling that updates the the global
+pooling that updates the the global
+pooling that updates the the global
+features
+features
+features
+like the global context matrix. And then
+like the global context matrix. And then
+like the global context matrix. And then
+in the end uh we have this simple uh
+in the end uh we have this simple uh
+in the end uh we have this simple uh
+feed forward neural network that um
+feed forward neural network that um
+feed forward neural network that um
+reduces this uh to a final prediction to
+reduces this uh to a final prediction to
+reduces this uh to a final prediction to
+a scalar value that represents the
+a scalar value that represents the
+a scalar value that represents the
+binding affinity. um prediction
+binding affinity. um prediction
+binding affinity. um prediction
+and the prediction of this model um was
+and the prediction of this model um was
+and the prediction of this model um was
+quite more accurate than the classical
+quite more accurate than the classical
+quite more accurate than the classical
+scoring function I mentioned and uh
+scoring function I mentioned and uh
+scoring function I mentioned and uh
+it also showed that if you add these
+it also showed that if you add these
+it also showed that if you add these
+embeddings of the protein language
+embeddings of the protein language
+embeddings of the protein language
+models to the note features and this
+models to the note features and this
+models to the note features and this
+boosts performance and also if you add
+boosts performance and also if you add
+boosts performance and also if you add
+embeddings of several protein language
+embeddings of several protein language
+embeddings of several protein language
+models this kind of has a synergistic um
+models this kind of has a synergistic um
+models this kind of has a synergistic um
+performance improvement.
+performance improvement.
+performance improvement.
+Yeah. which is quite interesting and
+Yeah. which is quite interesting and
+Yeah. which is quite interesting and
+also shows how these protein language
+also shows how these protein language
+also shows how these protein language
+model latent space representations can
+model latent space representations can
+model latent space representations can
+be useful for downstream tasks. Right?
+be useful for downstream tasks. Right?
+be useful for downstream tasks. Right?
+So
+So
+So
+we are at the conclusion for graph
+we are at the conclusion for graph
+we are at the conclusion for graph
+neural network section. So they are uh
+neural network section. So they are uh
+neural network section. So they are uh
+the GNN's they offer a lot of advantages
+the GNN's they offer a lot of advantages
+the GNN's they offer a lot of advantages
+for modeling and processing these 3D
+for modeling and processing these 3D
+for modeling and processing these 3D
+objects.
+objects.
+objects.
+um they can handle the data that is
+um they can handle the data that is
+um they can handle the data that is
+defined in this irregular domains
+defined in this irregular domains
+defined in this irregular domains
+without mapping them to a grid and they
+without mapping them to a grid and they
+without mapping them to a grid and they
+are naturally invariant to uh
+are naturally invariant to uh
+are naturally invariant to uh
+translation and rotation
+translation and rotation
+translation and rotation
+and they are also much sparse
+and they are also much sparse
+and they are also much sparse
+representation of a protein or a
+representation of a protein or a
+representation of a protein or a
+molecule than uh the this 3D
+molecule than uh the this 3D
+molecule than uh the this 3D
+representations in in the CNN's
+representations in in the CNN's
+representations in in the CNN's
+there's also many possibilities for um
+there's also many possibilities for um
+there's also many possibilities for um
+data integration and this efficient
+data integration and this efficient
+data integration and this efficient
+update mechanism with graph convolution
+update mechanism with graph convolution
+update mechanism with graph convolution
+that also uses weight sharing.
+that also uses weight sharing.
+that also uses weight sharing.
+And so GCN's they usually perform quite
+And so GCN's they usually perform quite
+And so GCN's they usually perform quite
+well in tasks where an understanding of
+well in tasks where an understanding of
+well in tasks where an understanding of
+the structure on and the
+the structure on and the
+the structure on and the
+interconnectivity of the data is
+interconnectivity of the data is
+interconnectivity of the data is
+important and they also usually um
+important and they also usually um
+important and they also usually um
+perform quite well with a relatively um
+perform quite well with a relatively um
+perform quite well with a relatively um
+low amount low number of parameters.
+Yes. Do you have any questions? Next
+Yes. Do you have any questions? Next
+Yes. Do you have any questions? Next
+week we will um first talk shortly about
+week we will um first talk shortly about
+week we will um first talk shortly about
+some challenges in in training models on
+some challenges in in training models on
+some challenges in in training models on
+biological data and then dive into the
+biological data and then dive into the
+biological data and then dive into the
+the topic of generative AI for the
+the topic of generative AI for the
+the topic of generative AI for the
+design of such small molecules and
+design of such small molecules and
+design of such small molecules and
+proteins.
+proteins.
+proteins.
+Thank you for your attention.

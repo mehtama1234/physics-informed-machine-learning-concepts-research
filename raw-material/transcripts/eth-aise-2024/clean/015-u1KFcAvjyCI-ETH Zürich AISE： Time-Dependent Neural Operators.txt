@@ -1,0 +1,3240 @@
+okay
+okay
+okay
+so good afternoon everyone let's get
+so good afternoon everyone let's get
+so good afternoon everyone let's get
+going so we have lecture number 15 of
+going so we have lecture number 15 of
+going so we have lecture number 15 of
+the
+the
+the
+course and as is customary with me let's
+course and as is customary with me let's
+course and as is customary with me let's
+do a very short intro of what we have
+do a very short intro of what we have
+do a very short intro of what we have
+learn so far so again we are with the
+learn so far so again we are with the
+learn so far so again we are with the
+problem of operator learning so this is
+problem of operator learning so this is
+problem of operator learning so this is
+the abstract
+the abstract
+the abstract
+pde and this is the solution operator
+pde and this is the solution operator
+pde and this is the solution operator
+which is given here which takes as input
+which is given here which takes as input
+which is given here which takes as input
+uh coefficients a and sources F and
+uh coefficients a and sources F and
+uh coefficients a and sources F and
+turns out the solution here and we know
+turns out the solution here and we know
+turns out the solution here and we know
+that because the inputs and outputs of
+that because the inputs and outputs of
+that because the inputs and outputs of
+functions we have to work with this
+functions we have to work with this
+functions we have to work with this
+notion of continuous discrete
+notion of continuous discrete
+notion of continuous discrete
+equivalence otherwise we will not be
+equivalence otherwise we will not be
+equivalence otherwise we will not be
+learning the actual mapping that takes
+learning the actual mapping that takes
+learning the actual mapping that takes
+functions to functions we'll only be
+functions to functions we'll only be
+functions to functions we'll only be
+learning a certain F dimensional
+learning a certain F dimensional
+learning a certain F dimensional
+representation and again I repeat this
+representation and again I repeat this
+representation and again I repeat this
+notion of Reno or representation
+notion of Reno or representation
+notion of Reno or representation
+equivalent neural operator which is that
+equivalent neural operator which is that
+equivalent neural operator which is that
+you have an operator that Works between
+you have an operator that Works between
+you have an operator that Works between
+functions and functions and the way you
+functions and functions and the way you
+functions and functions and the way you
+go is you go down to some grid by a
+go is you go down to some grid by a
+go is you go down to some grid by a
+suitable encoding Point values for
+suitable encoding Point values for
+suitable encoding Point values for
+instance if you have band limited
+instance if you have band limited
+instance if you have band limited
+functions you do your processing there
+functions you do your processing there
+functions you do your processing there
+and then you come back through some
+and then you come back through some
+and then you come back through some
+reconstruction this is some form of
+reconstruction this is some form of
+reconstruction this is some form of
+interpolation because from point values
+interpolation because from point values
+interpolation because from point values
+you have to read back the function and
+you have to read back the function and
+you have to read back the function and
+as long as this diagram commutes then we
+as long as this diagram commutes then we
+as long as this diagram commutes then we
+are we are okay right and while using
+are we are okay right and while using
+are we are okay right and while using
+this perspective we did some analysis
+this perspective we did some analysis
+this perspective we did some analysis
+and we found that
+and we found that
+and we found that
+some of them are not Renos some of them
+some of them are not Renos some of them
+some of them are not Renos some of them
+are Renos and so on and in the last
+are Renos and so on and in the last
+are Renos and so on and in the last
+lecture we focused almost exclusively on
+lecture we focused almost exclusively on
+lecture we focused almost exclusively on
+CNO on relution neural operator and we
+CNO on relution neural operator and we
+CNO on relution neural operator and we
+discovered that it has some desirable
+discovered that it has some desirable
+discovered that it has some desirable
+theoretical properties and it also works
+theoretical properties and it also works
+theoretical properties and it also works
+well in practice right so let me just
+well in practice right so let me just
+well in practice right so let me just
+start with that and try
+start with that and try
+start with that and try
+to so remember that this is your CNO and
+to so remember that this is your CNO and
+to so remember that this is your CNO and
+the essential bits of CNO where the two
+the essential bits of CNO where the two
+the essential bits of CNO where the two
+operators convolution and nonlinearity
+operators convolution and nonlinearity
+operators convolution and nonlinearity
+and both of them had this nice feature
+and both of them had this nice feature
+and both of them had this nice feature
+that they were Ros so you have this is
+that they were Ros so you have this is
+that they were Ros so you have this is
+the this the convolution K here which is
+the this the convolution K here which is
+the this the convolution K here which is
+the and then you have the nonlinearity
+the and then you have the nonlinearity
+the and then you have the nonlinearity
+which is given here so in particular you
+which is given here so in particular you
+which is given here so in particular you
+have to use this upsampling and down
+have to use this upsampling and down
+have to use this upsampling and down
+sampling operations in order to in order
+sampling operations in order to in order
+sampling operations in order to in order
+to preserve the band limits in order to
+to preserve the band limits in order to
+to preserve the band limits in order to
+have this reeno properties and so on and
+have this reeno properties and so on and
+have this reeno properties and so on and
+in practice what we ended up was with a
+in practice what we ended up was with a
+in practice what we ended up was with a
+operator unit which had this look or
+operator unit which had this look or
+operator unit which had this look or
+this sort of a multiscale information
+this sort of a multiscale information
+this sort of a multiscale information
+processing so you took in information um
+processing so you took in information um
+processing so you took in information um
+lifted it then sort of reduce the
+lifted it then sort of reduce the
+lifted it then sort of reduce the
+resolution increase the number of
+resolution increase the number of
+resolution increase the number of
+channels kept on doing that in this sort
+channels kept on doing that in this sort
+channels kept on doing that in this sort
+of structure preserving manner in the
+of structure preserving manner in the
+of structure preserving manner in the
+encoder part so this was roughly the
+encoder part so this was roughly the
+encoder part so this was roughly the
+encoder and there is also a decoder
+encoder and there is also a decoder
+encoder and there is also a decoder
+which is on the other side and we will
+which is on the other side and we will
+which is on the other side and we will
+see also more and more all sort of uh
+see also more and more all sort of uh
+see also more and more all sort of uh
+Vision State ofth art Vision processes
+Vision State ofth art Vision processes
+Vision State ofth art Vision processes
+machine learning algorithms they have
+machine learning algorithms they have
+machine learning algorithms they have
+this sort of multiscale feature this is
+this sort of multiscale feature this is
+this sort of multiscale feature this is
+an important part of the whole thing
+an important part of the whole thing
+an important part of the whole thing
+because it allows for multiscale
+because it allows for multiscale
+because it allows for multiscale
+information
+information
+information
+processing and uh we showed uh through
+processing and uh we showed uh through
+processing and uh we showed uh through
+various examples that it is it has it is
+various examples that it is it has it is
+various examples that it is it has it is
+also good
+also good
+also good
+performance some cases it doesn't do
+performance some cases it doesn't do
+performance some cases it doesn't do
+better than this is what I did not point
+better than this is what I did not point
+better than this is what I did not point
+out in the last lectures for instance if
+out in the last lectures for instance if
+out in the last lectures for instance if
+you take alen K equation which is a
+you take alen K equation which is a
+you take alen K equation which is a
+nonlinear parabolic equation UT is
+nonlinear parabolic equation UT is
+nonlinear parabolic equation UT is
+roughly U1 - U ^ 2 plus some Kion of U
+roughly U1 - U ^ 2 plus some Kion of U
+roughly U1 - U ^ 2 plus some Kion of U
+so you have some reaction which is given
+so you have some reaction which is given
+so you have some reaction which is given
+by these terms here or 1 minus U I
+by these terms here or 1 minus U I
+by these terms here or 1 minus U I
+forgot the exact form of the
+forgot the exact form of the
+forgot the exact form of the
+nonlinearity and you have some diffusion
+nonlinearity and you have some diffusion
+nonlinearity and you have some diffusion
+which is given by this term here here
+which is given by this term here here
+which is given by this term here here
+for instance okay the errors were small
+for instance okay the errors were small
+for instance okay the errors were small
+but f o was still
+but f o was still
+but f o was still
+competitive remember so this was this
+competitive remember so this was this
+competitive remember so this was this
+was one example in general there were
+was one example in general there were
+was one example in general there were
+both these approaches are fairly
+both these approaches are fairly
+both these approaches are fairly
+competitive and what we should remember
+competitive and what we should remember
+competitive and what we should remember
+is that the main differentiation between
+is that the main differentiation between
+is that the main differentiation between
+them to some extent comes from the fact
+them to some extent comes from the fact
+them to some extent comes from the fact
+that one is a Reno so if you had error
+that one is a Reno so if you had error
+that one is a Reno so if you had error
+versus Grid so in one case you more or
+versus Grid so in one case you more or
+versus Grid so in one case you more or
+less got a flat one and the other case
+less got a flat one and the other case
+less got a flat one and the other case
+you got a something like this so this
+you got a something like this so this
+you got a something like this so this
+was sort of the behavior that they had
+was sort of the behavior that they had
+was sort of the behavior that they had
+and this was sort of the major
+and this was sort of the major
+and this was sort of the major
+differentiator between them otherwise
+differentiator between them otherwise
+differentiator between them otherwise
+they are sort of roughly comparable to
+they are sort of roughly comparable to
+they are sort of roughly comparable to
+each other and one depending on the
+each other and one depending on the
+each other and one depending on the
+problem that you have one might do
+problem that you have one might do
+problem that you have one might do
+better on a fixed grid and the other
+better on a fixed grid and the other
+better on a fixed grid and the other
+might do better on another grid okay so
+might do better on another grid okay so
+might do better on another grid okay so
+now what is so this is uh so far so good
+now what is so this is uh so far so good
+now what is so this is uh so far so good
+now the starting point of my lecture
+now the starting point of my lecture
+now the starting point of my lecture
+today is to point out some of the
+today is to point out some of the
+today is to point out some of the
+obvious limitations with these
+obvious limitations with these
+obvious limitations with these
+approaches okay and to that extent I
+approaches okay and to that extent I
+approaches okay and to that extent I
+have identified three issues that we are
+have identified three issues that we are
+have identified three issues that we are
+going to discuss in some detail today
+going to discuss in some detail today
+going to discuss in some detail today
+the week after and the week after so
+the week after and the week after so
+the week after and the week after so
+that you get a comprehensive
+that you get a comprehensive
+that you get a comprehensive
+understanding of where things then for
+understanding of where things then for
+understanding of where things then for
+the first point uh which you could have
+the first point uh which you could have
+the first point uh which you could have
+guessed and I think I said it is that
+guessed and I think I said it is that
+guessed and I think I said it is that
+both fno and CNO and many of other
+both fno and CNO and many of other
+both fno and CNO and many of other
+algorithms that I mentioned some of the
+algorithms that I mentioned some of the
+algorithms that I mentioned some of the
+other algorithms that I mentioned they
+other algorithms that I mentioned they
+other algorithms that I mentioned they
+there sort of principle even though they
+there sort of principle even though they
+there sort of principle even though they
+don't need it but their principal mode
+don't need it but their principal mode
+don't need it but their principal mode
+of operation is always on regular okay
+of operation is always on regular okay
+of operation is always on regular okay
+so in other words uh the
+so in other words uh the
+so in other words uh the
+data the inputs and outputs and the
+data the inputs and outputs and the
+data the inputs and outputs and the
+processing always happens on a regular
+processing always happens on a regular
+processing always happens on a regular
+something like this right so this is
+something like this right so this is
+something like this right so this is
+sort of the so this is what uh you allow
+sort of the so this is what uh you allow
+sort of the so this is what uh you allow
+for which is okay right in many problems
+for which is okay right in many problems
+for which is okay right in many problems
+we have that structure certainly if you
+we have that structure certainly if you
+we have that structure certainly if you
+have images images are always in the
+have images images are always in the
+have images images are always in the
+form of squares or rectangles so it's
+form of squares or rectangles so it's
+form of squares or rectangles so it's
+it's no problem but in reality we in
+it's no problem but in reality we in
+it's no problem but in reality we in
+scientific Computing in particular
+scientific Computing in particular
+scientific Computing in particular
+remember that we even had the the
+remember that we even had the the
+remember that we even had the the
+example of the air foil right so we had
+example of the air foil right so we had
+example of the air foil right so we had
+the example of the air foil so certainly
+the example of the air foil so certainly
+the example of the air foil so certainly
+the domain there is not a rectangle even
+the domain there is not a rectangle even
+the domain there is not a rectangle even
+though we reduced it by some masking if
+though we reduced it by some masking if
+though we reduced it by some masking if
+you remember in the last lecture I had
+you remember in the last lecture I had
+you remember in the last lecture I had
+pointed it out right so but this can be
+pointed it out right so but this can be
+pointed it out right so but this can be
+an issue if you have very very
+an issue if you have very very
+an issue if you have very very
+complicated grids so at the moment uh at
+complicated grids so at the moment uh at
+complicated grids so at the moment uh at
+least the way we have have learned it
+least the way we have have learned it
+least the way we have have learned it
+fno CNO fno for instance you can do it
+fno CNO fno for instance you can do it
+fno CNO fno for instance you can do it
+on General grids but then you don't have
+on General grids but then you don't have
+on General grids but then you don't have
+the efficiency of the fast FIA transform
+the efficiency of the fast FIA transform
+the efficiency of the fast FIA transform
+remember the fast FIA transform was the
+remember the fast FIA transform was the
+remember the fast FIA transform was the
+key because we had to transform things
+key because we had to transform things
+key because we had to transform things
+in fua domain right so fno or CNO they
+in fua domain right so fno or CNO they
+in fua domain right so fno or CNO they
+in out of out of the box they don't
+in out of out of the box they don't
+in out of out of the box they don't
+allow for let's say irregular grds for
+allow for let's say irregular grds for
+allow for let's say irregular grds for
+instance this a lactus which is tensor
+instance this a lactus which is tensor
+instance this a lactus which is tensor
+product of two sort of regular grids in
+product of two sort of regular grids in
+product of two sort of regular grids in
+each Dimension and these are random
+each Dimension and these are random
+each Dimension and these are random
+points for instance if you have random
+points for instance if you have random
+points for instance if you have random
+sensor locations so in order to operate
+sensor locations so in order to operate
+sensor locations so in order to operate
+with this you have to do some form of
+with this you have to do some form of
+with this you have to do some form of
+interpolation in other words you have to
+interpolation in other words you have to
+interpolation in other words you have to
+take data here get back here take data
+take data here get back here take data
+take data here get back here take data
+here get back here which is what we did
+here get back here which is what we did
+here get back here which is what we did
+with this masking strategy right so we
+with this masking strategy right so we
+with this masking strategy right so we
+had data which was generated on points
+had data which was generated on points
+had data which was generated on points
+in this domain and then what we did is
+in this domain and then what we did is
+in this domain and then what we did is
+that we interpolated it onto a regular
+that we interpolated it onto a regular
+that we interpolated it onto a regular
+Grid or we just projected it onto a
+Grid or we just projected it onto a
+Grid or we just projected it onto a
+regular grid and put a mask you know to
+regular grid and put a mask you know to
+regular grid and put a mask you know to
+denote the boundary
+denote the boundary
+denote the boundary
+so there are some work arounds and I
+so there are some work arounds and I
+so there are some work arounds and I
+think if I get time so in a couple of
+think if I get time so in a couple of
+think if I get time so in a couple of
+weeks I'll probably revisit this topic
+weeks I'll probably revisit this topic
+weeks I'll probably revisit this topic
+but this is this is this could be an
+but this is this is this could be an
+but this is this is this could be an
+issue the second problem and the third
+issue the second problem and the third
+issue the second problem and the third
+problem they're actually related to each
+problem they're actually related to each
+problem they're actually related to each
+other to some extent and I will deal
+other to some extent and I will deal
+other to some extent and I will deal
+with them in some detail so the second
+with them in some detail so the second
+with them in some detail so the second
+problem is that of time dependent PDS
+problem is that of time dependent PDS
+problem is that of time dependent PDS
+okay so what are time dependent PDS so
+okay so what are time dependent PDS so
+okay so what are time dependent PDS so
+if you remember in the last lecture for
+if you remember in the last lecture for
+if you remember in the last lecture for
+instance we had this example from the sh
+instance we had this example from the sh
+instance we had this example from the sh
+so the idea there was that that we
+so the idea there was that that we
+so the idea there was that that we
+started with some initial data you will
+started with some initial data you will
+started with some initial data you will
+see some examples uh later today we
+see some examples uh later today we
+see some examples uh later today we
+started with some initial data and then
+started with some initial data and then
+started with some initial data and then
+the operator simply predicted the
+the operator simply predicted the
+the operator simply predicted the
+solution at a later time step right so
+solution at a later time step right so
+solution at a later time step right so
+you had some vertices which were shed so
+you had some vertices which were shed so
+you had some vertices which were shed so
+this was at a later time step in other
+this was at a later time step in other
+this was at a later time step in other
+words you started with u0 and you
+words you started with u0 and you
+words you started with u0 and you
+finished at U but remember the time
+finished at U but remember the time
+finished at U but remember the time
+dependent problems they have some
+dependent problems they have some
+dependent problems they have some
+natural sort of a data availability or
+natural sort of a data availability or
+natural sort of a data availability or
+data the natural form of them is really
+data the natural form of them is really
+data the natural form of them is really
+in the form of a video you can think of
+in the form of a video you can think of
+in the form of a video you can think of
+it as a video you can think of it as a
+it as a video you can think of it as a
+it as a video you can think of it as a
+trajectory you can think of it as a
+trajectory you can think of it as a
+trajectory you can think of it as a
+sequence of images so there is some
+sequence of images so there is some
+sequence of images so there is some
+information on time right so this is
+information on time right so this is
+information on time right so this is
+what we we will look at in some detail
+what we we will look at in some detail
+what we we will look at in some detail
+today and somehow intimately related and
+today and somehow intimately related and
+today and somehow intimately related and
+even more important is the issue of
+even more important is the issue of
+even more important is the issue of
+scaling with data so let me try to just
+scaling with data so let me try to just
+scaling with data so let me try to just
+explain it a little bit and we are going
+explain it a little bit and we are going
+explain it a little bit and we are going
+to talk at some length about this today
+to talk at some length about this today
+to talk at some length about this today
+and next week we're going to focus on
+and next week we're going to focus on
+and next week we're going to focus on
+this issue quite a lot so this is
+this issue quite a lot so this is
+this issue quite a lot so this is
+exactly the same problem as before
+exactly the same problem as before
+exactly the same problem as before
+remember this uh nav Stokes sheer layer
+remember this uh nav Stokes sheer layer
+remember this uh nav Stokes sheer layer
+problem so the task is to just predict
+problem so the task is to just predict
+problem so the task is to just predict
+the solution at time t equal to 1 given
+the solution at time t equal to 1 given
+the solution at time t equal to 1 given
+the initial data so I'm taking out the
+the initial data so I'm taking out the
+the initial data so I'm taking out the
+time information completely I'm saying
+time information completely I'm saying
+time information completely I'm saying
+okay you give me an initial condition
+okay you give me an initial condition
+okay you give me an initial condition
+and I'll will churn out the solution at
+and I'll will churn out the solution at
+and I'll will churn out the solution at
+a certain time this is the setup right
+a certain time this is the setup right
+a certain time this is the setup right
+now what I did here is that we took
+now what I did here is that we took
+now what I did here is that we took
+three modeles uh CNO fno the number of
+three modeles uh CNO fno the number of
+three modeles uh CNO fno the number of
+parameters are sort of comparable one is
+parameters are sort of comparable one is
+parameters are sort of comparable one is
+more than the other but shouldn't this
+more than the other but shouldn't this
+more than the other but shouldn't this
+not a big issue here and we also took
+not a big issue here and we also took
+not a big issue here and we also took
+some Transformer model can transform
+some Transformer model can transform
+some Transformer model can transform
+something some of the early attempts of
+something some of the early attempts of
+something some of the early attempts of
+using Transformers in this domain and
+using Transformers in this domain and
+using Transformers in this domain and
+the questions that we asked are very
+the questions that we asked are very
+the questions that we asked are very
+simple that we train the model with X
+simple that we train the model with X
+simple that we train the model with X
+number of training samples what is the
+number of training samples what is the
+number of training samples what is the
+training sample here this is this pair
+training sample here this is this pair
+training sample here this is this pair
+here right so you start with some
+here right so you start with some
+here right so you start with some
+initial data you start with some initial
+initial data you start with some initial
+initial data you start with some initial
+data and you go to the final solution so
+data and you go to the final solution so
+data and you go to the final solution so
+this is uh so we start with so we have
+this is uh so we start with so we have
+this is uh so we start with so we have
+for here means we have 2 ,000 4,000
+for here means we have 2 ,000 4,000
+for here means we have 2 ,000 4,000
+6,000 8,000 and so on WE increase the
+6,000 8,000 and so on WE increase the
+6,000 8,000 and so on WE increase the
+number of training samples and we want
+number of training samples and we want
+number of training samples and we want
+to see how the error decays so the idea
+to see how the error decays so the idea
+to see how the error decays so the idea
+is as you give more data you should get
+is as you give more data you should get
+is as you give more data you should get
+better results right so this is roughly
+better results right so this is roughly
+better results right so this is roughly
+the idea that we operate with and you
+the idea that we operate with and you
+the idea that we operate with and you
+see that this is actually happening
+see that this is actually happening
+see that this is actually happening
+there is very little Theory regarding
+there is very little Theory regarding
+there is very little Theory regarding
+this you know this is what people
+this you know this is what people
+this you know this is what people
+believe there is very in fact I was the
+believe there is very in fact I was the
+believe there is very in fact I was the
+only one with some results in this
+only one with some results in this
+only one with some results in this
+direction I maybe I get some time to
+direction I maybe I get some time to
+direction I maybe I get some time to
+describe them in next week but uh
+describe them in next week but uh
+describe them in next week but uh
+there's very little Theory but what we
+there's very little Theory but what we
+there's very little Theory but what we
+observe is that there is some what is
+observe is that there is some what is
+observe is that there is some what is
+called scaling right so this is this is
+called scaling right so this is this is
+called scaling right so this is this is
+a key issue in machine learning so you
+a key issue in machine learning so you
+a key issue in machine learning so you
+have some scaling what do I mean by that
+have some scaling what do I mean by that
+have some scaling what do I mean by that
+the best way is to look at a log log
+the best way is to look at a log log
+the best way is to look at a log log
+plot so here you have the log of the
+plot so here you have the log of the
+plot so here you have the log of the
+number of training
+number of training
+number of training
+samples and here we have the log of the
+samples and here we have the log of the
+samples and here we have the log of the
+we have the errors so it's a semi logog
+we have the errors so it's a semi logog
+we have the errors so it's a semi logog
+right so as you can see now what we do
+right so as you can see now what we do
+right so as you can see now what we do
+is that we increase the number of
+is that we increase the number of
+is that we increase the number of
+samples it goes all the way from 512 no
+samples it goes all the way from 512 no
+samples it goes all the way from 512 no
+256 5
+256 5
+256 5
+12,24 248 496
+12,24 248 496
+12,24 248 496
+8,192 you see that in all the cases we
+8,192 you see that in all the cases we
+8,192 you see that in all the cases we
+have some scaling right in other words
+have some scaling right in other words
+have some scaling right in other words
+as you increase the number of samples
+as you increase the number of samples
+as you increase the number of samples
+the total amount of data that the system
+the total amount of data that the system
+the total amount of data that the system
+is ingesting you see that the
+is ingesting you see that the
+is ingesting you see that the
+performance in terms of the error gets
+performance in terms of the error gets
+performance in terms of the error gets
+better and better and better some more
+better and better and better some more
+better and better and better some more
+samples there there are some bottlenecks
+samples there there are some bottlenecks
+samples there there are some bottlenecks
+here and the bottle size is going to be
+here and the bottle size is going to be
+here and the bottle size is going to be
+a bottleneck we'll talk about that later
+a bottleneck we'll talk about that later
+a bottleneck we'll talk about that later
+but assuming that we have a model that
+but assuming that we have a model that
+but assuming that we have a model that
+trains you see that this is the test
+trains you see that this is the test
+trains you see that this is the test
+error and the test error goes down in a
+error and the test error goes down in a
+error and the test error goes down in a
+predictable manner right it goes down in
+predictable manner right it goes down in
+predictable manner right it goes down in
+a predictable manner in this case the
+a predictable manner in this case the
+a predictable manner in this case the
+rate is roughly
+rate is roughly
+rate is roughly
+1/3 so if you have eight orders of
+1/3 so if you have eight orders of
+1/3 so if you have eight orders of
+magnitude more samples which is eight is
+magnitude more samples which is eight is
+magnitude more samples which is eight is
+difficult to say because I don't have
+difficult to say because I don't have
+difficult to say because I don't have
+eight orders of magnitude here but five
+eight orders of magnitude here but five
+eight orders of magnitude here but five
+orders of magnitude you can see that it
+orders of magnitude you can see that it
+orders of magnitude you can see that it
+goes from 8 to 13 and the error goes
+goes from 8 to 13 and the error goes
+goes from 8 to 13 and the error goes
+from like 4 and 1 half% to approximately
+from like 4 and 1 half% to approximately
+from like 4 and 1 half% to approximately
+1% so the it's some between 0.33 and 0.5
+1% so the it's some between 0.33 and 0.5
+1% so the it's some between 0.33 and 0.5
+right because uh if it would have
+right because uh if it would have
+right because uh if it would have
+reduced by 2 and a half times you would
+reduced by 2 and a half times you would
+reduced by 2 and a half times you would
+have seen that it would be 0.5 but it
+have seen that it would be 0.5 but it
+have seen that it would be 0.5 but it
+did not so it's it's roughly in that
+did not so it's it's roughly in that
+did not so it's it's roughly in that
+ballp so there are some predictable
+ballp so there are some predictable
+ballp so there are some predictable
+scaling laws of course in this
+scaling laws of course in this
+scaling laws of course in this
+particular case we see that uh somehow
+particular case we see that uh somehow
+particular case we see that uh somehow
+CNO does better than it we also saw that
+CNO does better than it we also saw that
+CNO does better than it we also saw that
+with a fixed number of samples but it
+with a fixed number of samples but it
+with a fixed number of samples but it
+does better than the other models fno
+does better than the other models fno
+does better than the other models fno
+and the galin Transformer these are very
+and the galin Transformer these are very
+and the galin Transformer these are very
+very comparable to each other but this
+very comparable to each other but this
+very comparable to each other but this
+one is better even double is better
+one is better even double is better
+one is better even double is better
+right so as you can see here it's
+right so as you can see here it's
+right so as you can see here it's
+roughly 1% and this is like 2% 1% and 2%
+roughly 1% and this is like 2% 1% and 2%
+roughly 1% and this is like 2% 1% and 2%
+but what is interesting is that you see
+but what is interesting is that you see
+but what is interesting is that you see
+the amount of data that is necessary
+the amount of data that is necessary
+the amount of data that is necessary
+right because uh okay this is not the
+right because uh okay this is not the
+right because uh okay this is not the
+hardest problem on Earth but even to get
+hardest problem on Earth but even to get
+hardest problem on Earth but even to get
+1% error here whatever 1% means some
+1% error here whatever 1% means some
+1% error here whatever 1% means some
+number that we fix some desired level of
+number that we fix some desired level of
+number that we fix some desired level of
+accuracy you see that we need about
+accuracy you see that we need about
+accuracy you see that we need about
+8,000 samples and this is expensive
+8,000 samples and this is expensive
+8,000 samples and this is expensive
+right each of this is a CFT simulation
+right each of this is a CFT simulation
+right each of this is a CFT simulation
+uh it takes some time we have very fast
+uh it takes some time we have very fast
+uh it takes some time we have very fast
+code so this can be done fast but in
+code so this can be done fast but in
+code so this can be done fast but in
+general in reality you don't have that
+general in reality you don't have that
+general in reality you don't have that
+Advantage right so each simulation can
+Advantage right so each simulation can
+Advantage right so each simulation can
+take let's say 10 minutes in 2D and then
+take let's say 10 minutes in 2D and then
+take let's say 10 minutes in 2D and then
+you have 8,000 of these that's that's
+you have 8,000 of these that's that's
+you have 8,000 of these that's that's
+too much so it's already the the fact
+too much so it's already the the fact
+too much so it's already the the fact
+that you need data there is scaling with
+that you need data there is scaling with
+that you need data there is scaling with
+data but it tells you that if you give
+data but it tells you that if you give
+data but it tells you that if you give
+more and more data you get better and
+more and more data you get better and
+more and more data you get better and
+better results but how much of data is
+better results but how much of data is
+better results but how much of data is
+enough and what kind constraints you
+enough and what kind constraints you
+enough and what kind constraints you
+have with data because the difference in
+have with data because the difference in
+have with data because the difference in
+scientific Computing and imaging is
+scientific Computing and imaging is
+scientific Computing and imaging is
+different right we see in images you
+different right we see in images you
+different right we see in images you
+just Cote the internet and you try to
+just Cote the internet and you try to
+just Cote the internet and you try to
+take all the stock images and but here
+take all the stock images and but here
+take all the stock images and but here
+we don't have that we don't have that uh
+we don't have that we don't have that uh
+we don't have that we don't have that uh
+Advantage so one has to think a little
+Advantage so one has to think a little
+Advantage so one has to think a little
+bit about data and so this is intimately
+bit about data and so this is intimately
+bit about data and so this is intimately
+related in time dependent problems
+related in time dependent problems
+related in time dependent problems
+because how do things scale with data
+because how do things scale with data
+because how do things scale with data
+because as you can see in time dependent
+because as you can see in time dependent
+because as you can see in time dependent
+problems we'll have some more data than
+problems we'll have some more data than
+problems we'll have some more data than
+we expected in in some sense this is
+we expected in in some sense this is
+we expected in in some sense this is
+what I'm going to teach you but but is
+what I'm going to teach you but but is
+what I'm going to teach you but but is
+the issue of scaling clear that this is
+the issue of scaling clear that this is
+the issue of scaling clear that this is
+an important consideration arguably the
+an important consideration arguably the
+an important consideration arguably the
+most important consideration and this is
+most important consideration and this is
+most important consideration and this is
+what I will really focus on in the next
+what I will really focus on in the next
+what I will really focus on in the next
+next lecture but today let's focus on
+next lecture but today let's focus on
+next lecture but today let's focus on
+the time dependent problems that's
+the time dependent problems that's
+the time dependent problems that's
+that's that's the main content so now
+that's that's the main content so now
+that's that's the main content so now
+let me start with some abstract form
+let me start with some abstract form
+let me start with some abstract form
+because then notation becomes easier so
+because then notation becomes easier so
+because then notation becomes easier so
+you start with
+you start with
+you start with
+U this is the abstract form of the PD I
+U this is the abstract form of the PD I
+U this is the abstract form of the PD I
+have taken a first derivative but you
+have taken a first derivative but you
+have taken a first derivative but you
+know that first derivative time here but
+know that first derivative time here but
+know that first derivative time here but
+you know that second derivative is no
+you know that second derivative is no
+you know that second derivative is no
+problem because you can always reduce a
+problem because you can always reduce a
+problem because you can always reduce a
+second derivative into a first
+second derivative into a first
+second derivative into a first
+derivative or third derivative into
+derivative or third derivative into
+derivative or third derivative into
+first derivative by considering systems
+first derivative by considering systems
+first derivative by considering systems
+okay uh this this L here is your
+okay uh this this L here is your
+okay uh this this L here is your
+differential
+differential
+differential
+operator this is a differential
+operator this is a differential
+operator this is a differential
+operator and if you want to think of a
+operator and if you want to think of a
+operator and if you want to think of a
+concrete model you can think of UT minus
+concrete model you can think of UT minus
+concrete model you can think of UT minus
+some of U equal to Z the heat equation
+some of U equal to Z the heat equation
+some of U equal to Z the heat equation
+right and the initial condition tion is
+right and the initial condition tion is
+right and the initial condition tion is
+of course uar some function so the idea
+of course uar some function so the idea
+of course uar some function so the idea
+is that we are what we interested is in
+is that we are what we interested is in
+is that we are what we interested is in
+the solution operator so this is heat
+the solution operator so this is heat
+the solution operator so this is heat
+equation a Strokes compressible oil
+equation a Strokes compressible oil
+equation a Strokes compressible oil
+equations Salen wave equation whatever
+equations Salen wave equation whatever
+equations Salen wave equation whatever
+you want is in this format question no
+you want is in this format question no
+you want is in this format question no
+sorry okay so then what is the what is
+sorry okay so then what is the what is
+sorry okay so then what is the what is
+the target here what do we want to learn
+the target here what do we want to learn
+the target here what do we want to learn
+is a solution operator s and how is it
+is a solution operator s and how is it
+is a solution operator s and how is it
+defined so now you have the initial
+defined so now you have the initial
+defined so now you have the initial
+conditions because this determine the
+conditions because this determine the
+conditions because this determine the
+the trajectory this determine the the
+the trajectory this determine the the
+the trajectory this determine the the
+evolution but you also have the time
+evolution but you also have the time
+evolution but you also have the time
+right the time is a continuous variable
+right the time is a continuous variable
+right the time is a continuous variable
+so what you do is that you supply the
+so what you do is that you supply the
+so what you do is that you supply the
+time you supply the initial conditions
+time you supply the initial conditions
+time you supply the initial conditions
+and you know what is a PD then you know
+and you know what is a PD then you know
+and you know what is a PD then you know
+the solution at a later time right so
+the solution at a later time right so
+the solution at a later time right so
+it's a it's a causal problem you can
+it's a it's a causal problem you can
+it's a it's a causal problem you can
+always March forward and drive okay
+always March forward and drive okay
+always March forward and drive okay
+backward and drive is not always
+backward and drive is not always
+backward and drive is not always
+Possible only in reversible systems so
+Possible only in reversible systems so
+Possible only in reversible systems so
+now in particular what we know is that
+now in particular what we know is that
+now in particular what we know is that
+we can substitute this this solution
+we can substitute this this solution
+we can substitute this this solution
+operator is having something called a
+operator is having something called a
+operator is having something called a
+semigroup
+semigroup
+semigroup
+property
+property
+property
+semigroup and the idea is that if you so
+semigroup and the idea is that if you so
+semigroup and the idea is that if you so
+let's say that you have done the
+let's say that you have done the
+let's say that you have done the
+evolution and you can start at a
+evolution and you can start at a
+evolution and you can start at a
+different time and you move further and
+different time and you move further and
+different time and you move further and
+you get back the same solution so this
+you get back the same solution so this
+you get back the same solution so this
+is what causality is and what it means
+is what causality is and what it means
+is what causality is and what it means
+is that you can also put in the time
+is that you can also put in the time
+is that you can also put in the time
+increment here so let's say that you're
+increment here so let's say that you're
+increment here so let's say that you're
+starting at perhaps it's good to do some
+starting at perhaps it's good to do some
+starting at perhaps it's good to do some
+geometry so let's say that you have a
+geometry so let's say that you have a
+geometry so let's say that you have a
+solution trajectory I'll just show it in
+solution trajectory I'll just show it in
+solution trajectory I'll just show it in
+1D mean not as a video but let's say
+1D mean not as a video but let's say
+1D mean not as a video but let's say
+that this is a solution trajectory
+that this is a solution trajectory
+that this is a solution trajectory
+something like this for instance a
+something like this for instance a
+something like this for instance a
+solution of an OD right and this is your
+solution of an OD right and this is your
+solution of an OD right and this is your
+U this is your U so if you start at u0
+U this is your U so if you start at u0
+U this is your U so if you start at u0
+and you supply t plus delta T you will
+and you supply t plus delta T you will
+and you supply t plus delta T you will
+reach this point here or you start at UT
+reach this point here or you start at UT
+reach this point here or you start at UT
+and you ask what is the increment in
+and you ask what is the increment in
+and you ask what is the increment in
+delta T you'll also reach the same point
+delta T you'll also reach the same point
+delta T you'll also reach the same point
+right so this is a cality that whether I
+right so this is a cality that whether I
+right so this is a cality that whether I
+start at the beginning and go towards
+start at the beginning and go towards
+start at the beginning and go towards
+the end time or whether I start very
+the end time or whether I start very
+the end time or whether I start very
+close to the end time and GL to a same
+close to the end time and GL to a same
+close to the end time and GL to a same
+time provided that the time increment is
+time provided that the time increment is
+time provided that the time increment is
+given as a as one of the parameters then
+given as a as one of the parameters then
+given as a as one of the parameters then
+we know that the solution can be
+we know that the solution can be
+we know that the solution can be
+generated and is unique so this is this
+generated and is unique so this is this
+generated and is unique so this is this
+is causality this means that because it
+is causality this means that because it
+is causality this means that because it
+is causal and we are going to exploit
+is causal and we are going to exploit
+is causal and we are going to exploit
+that in a in some manner what happens is
+that in a in some manner what happens is
+that in a in some manner what happens is
+that the data that you generate or the
+that the data that you generate or the
+that the data that you generate or the
+data that you record the data that you
+data that you record the data that you
+data that you record the data that you
+observe is often in the form of
+observe is often in the form of
+observe is often in the form of
+trajectories so what is a trajectory
+trajectories so what is a trajectory
+trajectories so what is a trajectory
+what is the meaning of a trajectory
+what is the meaning of a trajectory
+what is the meaning of a trajectory
+trajectory is not just the value at one
+trajectory is not just the value at one
+trajectory is not just the value at one
+particular time but it's like a video so
+particular time but it's like a video so
+particular time but it's like a video so
+you in principle you could have the
+you in principle you could have the
+you in principle you could have the
+value at all possible times but of
+value at all possible times but of
+value at all possible times but of
+course that would be continuous we can't
+course that would be continuous we can't
+course that would be continuous we can't
+store continuous things on a computer so
+store continuous things on a computer so
+store continuous things on a computer so
+you have to put some sampling so it's a
+you have to put some sampling so it's a
+you have to put some sampling so it's a
+collection of time snapshots with the
+collection of time snapshots with the
+collection of time snapshots with the
+causal Arrow being there me in the sense
+causal Arrow being there me in the sense
+causal Arrow being there me in the sense
+that at time t equal to 1 then time t
+that at time t equal to 1 then time t
+that at time t equal to 1 then time t
+equal to 2 time t equal to 3 and so on
+equal to 2 time t equal to 3 and so on
+equal to 2 time t equal to 3 and so on
+so in other words you have been given so
+so in other words you have been given so
+so in other words you have been given so
+again I need to draw some pictures here
+again I need to draw some pictures here
+again I need to draw some pictures here
+so this is time and just imagine at each
+so this is time and just imagine at each
+so this is time and just imagine at each
+time you'll get an image right or a
+time you'll get an image right or a
+time you'll get an image right or a
+video in general so then you just choose
+video in general so then you just choose
+video in general so then you just choose
+certain sampling points in time so this
+certain sampling points in time so this
+certain sampling points in time so this
+is t0 T1 T2 T TK in general right and
+is t0 T1 T2 T TK in general right and
+is t0 T1 T2 T TK in general right and
+then T capital K is equal to capital T
+then T capital K is equal to capital T
+then T capital K is equal to capital T
+this need not be uniformly spaced okay
+this need not be uniformly spaced okay
+this need not be uniformly spaced okay
+this can be whatever your recording
+this can be whatever your recording
+this can be whatever your recording
+instrument your camera or your numerical
+instrument your camera or your numerical
+instrument your camera or your numerical
+simulation whatever this need not be
+simulation whatever this need not be
+simulation whatever this need not be
+equally spaced of course the equally
+equally spaced of course the equally
+equally spaced of course the equally
+spaced one is the easiest one so what
+spaced one is the easiest one so what
+spaced one is the easiest one so what
+you get are this entire set of values so
+you get are this entire set of values so
+you get are this entire set of values so
+just imagine that you have all these
+just imagine that you have all these
+just imagine that you have all these
+images in the form of a video and this
+images in the form of a video and this
+images in the form of a video and this
+has a certain sampling rate right so
+has a certain sampling rate right so
+has a certain sampling rate right so
+this is the way you can think of it and
+this is the way you can think of it and
+this is the way you can think of it and
+this is of course Given In terms it's
+this is of course Given In terms it's
+this is of course Given In terms it's
+all determined by the initial condition
+all determined by the initial condition
+all determined by the initial condition
+so given the initial condition and given
+so given the initial condition and given
+so given the initial condition and given
+these lead times T1 T2 and so on in
+these lead times T1 T2 and so on in
+these lead times T1 T2 and so on in
+principle we should be able to generate
+principle we should be able to generate
+principle we should be able to generate
+them so the data that is given there is
+them so the data that is given there is
+them so the data that is given there is
+uh having this particular format right
+uh having this particular format right
+uh having this particular format right
+you could also generated using
+you could also generated using
+you could also generated using
+increments but that is a that so for
+increments but that is a that so for
+increments but that is a that so for
+instance you can go from u0 you can go
+instance you can go from u0 you can go
+instance you can go from u0 you can go
+to U1 and then from U1 you go to U2 then
+to U1 and then from U1 you go to U2 then
+to U1 and then from U1 you go to U2 then
+you go to u3 go to T4 and so on and so
+you go to u3 go to T4 and so on and so
+you go to u3 go to T4 and so on and so
+forth and when you do numerical
+forth and when you do numerical
+forth and when you do numerical
+simulations yes go ahead we have
+already signal
+already signal
+already signal
+this because starts from zero forward
+this because starts from zero forward
+this because starts from zero forward
+that right only if you have time
+that right only if you have time
+that right only if you have time
+dependent if you have a signal that is
+dependent if you have a signal that is
+dependent if you have a signal that is
+static but it's a function of space then
+static but it's a function of space then
+static but it's a function of space then
+there is no causality so the specificity
+there is no causality so the specificity
+there is no causality so the specificity
+here is the fact that time provides you
+here is the fact that time provides you
+here is the fact that time provides you
+a direction if you don't have the
+a direction if you don't have the
+a direction if you don't have the
+direction there is no reason why you
+direction there is no reason why you
+direction there is no reason why you
+can't go just imagine that in this room
+can't go just imagine that in this room
+can't go just imagine that in this room
+I can always walk from here to there
+I can always walk from here to there
+I can always walk from here to there
+there to here and come back but I can't
+there to here and come back but I can't
+there to here and come back but I can't
+go to 10 minutes later and come back so
+go to 10 minutes later and come back so
+go to 10 minutes later and come back so
+this is where the causality is is the
+this is where the causality is is the
+this is where the causality is is the
+key so time has this causal property
+key so time has this causal property
+key so time has this causal property
+forces causality and one has to one has
+forces causality and one has to one has
+forces causality and one has to one has
+to Recon with it okay so now remember
+to Recon with it okay so now remember
+to Recon with it okay so now remember
+that the data is always in the form of
+that the data is always in the form of
+that the data is always in the form of
+trajectories let's imagine that we
+trajectories let's imagine that we
+trajectories let's imagine that we
+trying to generate data we want to go
+trying to generate data we want to go
+trying to generate data we want to go
+and do a numerical simulation we take
+and do a numerical simulation we take
+and do a numerical simulation we take
+the initial conditions and we do a
+the initial conditions and we do a
+the initial conditions and we do a
+numerical simulation right the numerical
+numerical simulation right the numerical
+numerical simulation right the numerical
+simulation automatically as a Time
+simulation automatically as a Time
+simulation automatically as a Time
+stepping so you generate um a delta T to
+stepping so you generate um a delta T to
+stepping so you generate um a delta T to
+delta T and so on and so forth you don't
+delta T and so on and so forth you don't
+delta T and so on and so forth you don't
+want to store all of it because
+want to store all of it because
+want to store all of it because
+otherwise it will be too big you have to
+otherwise it will be too big you have to
+otherwise it will be too big you have to
+sample so let's say that you store at
+sample so let's say that you store at
+sample so let's say that you store at
+tal to 0 tal to 0.1 0 two and so on and
+tal to 0 tal to 0.1 0 two and so on and
+tal to 0 tal to 0.1 0 two and so on and
+so forth so out of a numerical
+so forth so out of a numerical
+so forth so out of a numerical
+simulation you will get a trajectory
+simulation you will get a trajectory
+simulation you will get a trajectory
+this trajectory would have some sampling
+this trajectory would have some sampling
+this trajectory would have some sampling
+frequency let's say that there are K
+frequency let's say that there are K
+frequency let's say that there are K
+samples in it or your video has a
+samples in it or your video has a
+samples in it or your video has a
+resolution of one over K so you have k k
+resolution of one over K so you have k k
+resolution of one over K so you have k k
+frames in the video right so this is
+frames in the video right so this is
+frames in the video right so this is
+these are the two ways you can think
+these are the two ways you can think
+these are the two ways you can think
+about it and this is the data set always
+about it and this is the data set always
+about it and this is the data set always
+contains that you have to store it of
+contains that you have to store it of
+contains that you have to store it of
+course the computational cost is exactly
+course the computational cost is exactly
+course the computational cost is exactly
+the same because in order to compute
+the same because in order to compute
+the same because in order to compute
+later you have to compute in the
+later you have to compute in the
+later you have to compute in the
+beginning all these uh numerical methods
+beginning all these uh numerical methods
+beginning all these uh numerical methods
+that we also talked about these are Time
+that we also talked about these are Time
+that we also talked about these are Time
+marching methods so there's no choice
+marching methods so there's no choice
+marching methods so there's no choice
+but you have this information and you
+but you have this information and you
+but you have this information and you
+put them together you store them so
+put them together you store them so
+put them together you store them so
+there is a cost of storage but you
+there is a cost of storage but you
+there is a cost of storage but you
+always have information in the form of
+always have information in the form of
+always have information in the form of
+trajectories if you this is the language
+trajectories if you this is the language
+trajectories if you this is the language
+of physics in the language of computer
+of physics in the language of computer
+of physics in the language of computer
+science this will be videos okay so you
+science this will be videos okay so you
+science this will be videos okay so you
+have trajectories and you have videos so
+have trajectories and you have videos so
+have trajectories and you have videos so
+what is the learning task for a Time
+what is the learning task for a Time
+what is the learning task for a Time
+Depend and this is very important right
+Depend and this is very important right
+Depend and this is very important right
+because in a Time dependent problem it
+because in a Time dependent problem it
+because in a Time dependent problem it
+is not just given an initial condition
+is not just given an initial condition
+is not just given an initial condition
+and you read of the solution at a final
+and you read of the solution at a final
+and you read of the solution at a final
+time because the data that is used to
+time because the data that is used to
+time because the data that is used to
+generate this probably has information
+generate this probably has information
+generate this probably has information
+about the trajectories and this is
+about the trajectories and this is
+about the trajectories and this is
+something that we we need to leverage
+something that we we need to leverage
+something that we we need to leverage
+because remember more data is better why
+because remember more data is better why
+because remember more data is better why
+is that remember this particular graph
+is that remember this particular graph
+is that remember this particular graph
+right so more data is always better is
+right so more data is always better is
+right so more data is always better is
+the somehow the principle of machine
+the somehow the principle of machine
+the somehow the principle of machine
+learning so what is the what is the
+learning so what is the what is the
+learning so what is the what is the
+learning task learning task which I
+learning task learning task which I
+learning task learning task which I
+wrote in text here is very simple given
+wrote in text here is very simple given
+wrote in text here is very simple given
+the initial conditions and the boundary
+the initial conditions and the boundary
+the initial conditions and the boundary
+conditions domain efficients and so on
+conditions domain efficients and so on
+conditions domain efficients and so on
+all the other material properties of the
+all the other material properties of the
+all the other material properties of the
+medium you have to generate the whole
+medium you have to generate the whole
+medium you have to generate the whole
+ideally because this is what a numerical
+ideally because this is what a numerical
+ideally because this is what a numerical
+simulation does you have to generate the
+simulation does you have to generate the
+simulation does you have to generate the
+solution trajectory for all times okay
+solution trajectory for all times okay
+solution trajectory for all times okay
+at least for uh the times that you want
+at least for uh the times that you want
+at least for uh the times that you want
+to sample you should be able to generate
+to sample you should be able to generate
+to sample you should be able to generate
+that so in a way this is a hard T you
+that so in a way this is a hard T you
+that so in a way this is a hard T you
+have data but our task is also hard so
+have data but our task is also hard so
+have data but our task is also hard so
+what I'm asking now is that if I given
+what I'm asking now is that if I given
+what I'm asking now is that if I given
+the initial conditions if I'm given the
+the initial conditions if I'm given the
+the initial conditions if I'm given the
+boundary conditions the domain and so on
+boundary conditions the domain and so on
+boundary conditions the domain and so on
+I should be able to predict the solution
+I should be able to predict the solution
+I should be able to predict the solution
+for all times in the future because that
+for all times in the future because that
+for all times in the future because that
+is what the solution of the PD does so
+is what the solution of the PD does so
+is what the solution of the PD does so
+this is harder than what we had seen
+this is harder than what we had seen
+this is harder than what we had seen
+before which was given the initial
+before which was given the initial
+before which was given the initial
+conditions I wanted a solution at a
+conditions I wanted a solution at a
+conditions I wanted a solution at a
+certain time now I'm asking something
+certain time now I'm asking something
+certain time now I'm asking something
+which is a harder question that I also
+which is a harder question that I also
+which is a harder question that I also
+need some continuity in time in the
+need some continuity in time in the
+need some continuity in time in the
+sense that I time itself is going to be
+sense that I time itself is going to be
+sense that I time itself is going to be
+a continum now often this issue and this
+a continum now often this issue and this
+a continum now often this issue and this
+is important to make a remark here that
+is important to make a remark here that
+is important to make a remark here that
+this issue is when people come from
+this issue is when people come from
+this issue is when people come from
+computer science and try to do these
+computer science and try to do these
+computer science and try to do these
+simulations they they don't necessarily
+simulations they they don't necessarily
+simulations they they don't necessarily
+operate within this framework they say
+operate within this framework they say
+operate within this framework they say
+no no give me 20 TR 20 values of the
+no no give me 20 TR 20 values of the
+no no give me 20 TR 20 values of the
+trajectory and then I'll predict the
+trajectory and then I'll predict the
+trajectory and then I'll predict the
+next value and so they always assume
+next value and so they always assume
+next value and so they always assume
+that there is some stream of data that
+that there is some stream of data that
+that there is some stream of data that
+is coming in and they have to keep on
+is coming in and they have to keep on
+is coming in and they have to keep on
+completing the stream you see so for
+completing the stream you see so for
+completing the stream you see so for
+instance just imagine the weather data
+instance just imagine the weather data
+instance just imagine the weather data
+in principle I have access to the
+in principle I have access to the
+in principle I have access to the
+weather 6 hours before 12 hours before
+weather 6 hours before 12 hours before
+weather 6 hours before 12 hours before
+18 hours before 24 hours before and so
+18 hours before 24 hours before and so
+18 hours before 24 hours before and so
+on and I could use these guys to make
+on and I could use these guys to make
+on and I could use these guys to make
+the prediction for the next six hours
+the prediction for the next six hours
+the prediction for the next six hours
+this is this is always possible but this
+this is this is always possible but this
+this is this is always possible but this
+is very special and it's only possible
+is very special and it's only possible
+is very special and it's only possible
+for uh like weather data data weather is
+for uh like weather data data weather is
+for uh like weather data data weather is
+streaming happening in general this is
+streaming happening in general this is
+streaming happening in general this is
+not the situation that we are going to
+not the situation that we are going to
+not the situation that we are going to
+work with because in general when you
+work with because in general when you
+work with because in general when you
+have to generate data for a Time
+have to generate data for a Time
+have to generate data for a Time
+dependent problem you have to generate
+dependent problem you have to generate
+dependent problem you have to generate
+it from the initial conditions like a
+it from the initial conditions like a
+it from the initial conditions like a
+numerical simulation does you know so
+numerical simulation does you know so
+numerical simulation does you know so
+what is the point of having a numerical
+what is the point of having a numerical
+what is the point of having a numerical
+solver for the first 50 times steps and
+solver for the first 50 times steps and
+solver for the first 50 times steps and
+then making the 51st or the 52nd time
+then making the 51st or the 52nd time
+then making the 51st or the 52nd time
+this is uh there many people do that I
+this is uh there many people do that I
+this is uh there many people do that I
+think % or 90% of the papers that are
+think % or 90% of the papers that are
+think % or 90% of the papers that are
+written in this field they assume that
+written in this field they assume that
+written in this field they assume that
+there is trajectory data because they're
+there is trajectory data because they're
+there is trajectory data because they're
+basing everything on the weather but
+basing everything on the weather but
+basing everything on the weather but
+this is a very very specific domain in
+this is a very very specific domain in
+this is a very very specific domain in
+general you don't have access to that
+general you don't have access to that
+general you don't have access to that
+right you are going to design something
+right you are going to design something
+right you are going to design something
+you have to set up your numerical solver
+you have to set up your numerical solver
+you have to set up your numerical solver
+and that setup costs are very very large
+and that setup costs are very very large
+and that setup costs are very very large
+so what you would ideally want is that
+so what you would ideally want is that
+so what you would ideally want is that
+you give me the car and I should read
+you give me the car and I should read
+you give me the car and I should read
+off the flow field you see or give me
+off the flow field you see or give me
+off the flow field you see or give me
+the material and I should read off how
+the material and I should read off how
+the material and I should read off how
+the temperature field spreads so you
+the temperature field spreads so you
+the temperature field spreads so you
+should always remember that there is
+should always remember that there is
+should always remember that there is
+this distinction here which is very very
+this distinction here which is very very
+this distinction here which is very very
+important so for us we are going to be
+important so for us we are going to be
+important so for us we are going to be
+in the exact situation as a numerical
+in the exact situation as a numerical
+in the exact situation as a numerical
+solver which is if you're given the
+solver which is if you're given the
+solver which is if you're given the
+domain you're given all the coefficients
+domain you're given all the coefficients
+domain you're given all the coefficients
+you're given the boundary conditions
+you're given the boundary conditions
+you're given the boundary conditions
+given the initial conditions you march
+given the initial conditions you march
+given the initial conditions you march
+forward in time okay and so we want to
+forward in time okay and so we want to
+forward in time okay and so we want to
+replicate exactly this problem is this
+replicate exactly this problem is this
+replicate exactly this problem is this
+clear the difference between streaming
+clear the difference between streaming
+clear the difference between streaming
+data and the sort of learning task that
+data and the sort of learning task that
+data and the sort of learning task that
+I have set here which is harder because
+I have set here which is harder because
+I have set here which is harder because
+you don't have access you only have
+you don't have access you only have
+you don't have access you only have
+access to initial conditions and then
+access to initial conditions and then
+access to initial conditions and then
+you have to learn okay so this is an
+you have to learn okay so this is an
+you have to learn okay so this is an
+important point that I wanted to mention
+important point that I wanted to mention
+important point that I wanted to mention
+now how how do you do that right so now
+now how how do you do that right so now
+now how how do you do that right so now
+we have this and how does neural
+we have this and how does neural
+we have this and how does neural
+operators what do they do for instance
+operators what do they do for instance
+operators what do they do for instance
+what you have learned so far with fno
+what you have learned so far with fno
+what you have learned so far with fno
+and CNO how how is this done right well
+and CNO how how is this done right well
+and CNO how how is this done right well
+it can't be done because the way fno CNO
+it can't be done because the way fno CNO
+it can't be done because the way fno CNO
+the way I have introduced them for
+the way I have introduced them for
+the way I have introduced them for
+you you don't have that you so so far
+you you don't have that you so so far
+you you don't have that you so so far
+what we have is that you have a new
+what we have is that you have a new
+what we have is that you have a new
+operator it can n it could be CNO fno
+operator it can n it could be CNO fno
+operator it can n it could be CNO fno
+whatever it takes let's say the initial
+whatever it takes let's say the initial
+whatever it takes let's say the initial
+conditions and it produces a solution at
+conditions and it produces a solution at
+conditions and it produces a solution at
+a later time and to train it you are
+a later time and to train it you are
+a later time and to train it you are
+exactly using the same kind of initial
+exactly using the same kind of initial
+exactly using the same kind of initial
+conditions right you always give an
+conditions right you always give an
+conditions right you always give an
+image and then you produce the solution
+image and then you produce the solution
+image and then you produce the solution
+at a later time so of course uh no one
+at a later time so of course uh no one
+at a later time so of course uh no one
+stops me from predicting the solution so
+stops me from predicting the solution so
+stops me from predicting the solution so
+what one could do is I could take the K
+what one could do is I could take the K
+what one could do is I could take the K
+neural operator actually some people
+neural operator actually some people
+neural operator actually some people
+even do that I can take the K neural
+even do that I can take the K neural
+even do that I can take the K neural
+operator and its task is given the
+operator and its task is given the
+operator and its task is given the
+initial conditions I produce a solution
+initial conditions I produce a solution
+initial conditions I produce a solution
+at the K time level so the ne operator
+at the K time level so the ne operator
+at the K time level so the ne operator
+one will produce it at the first time
+one will produce it at the first time
+one will produce it at the first time
+level you'll operate a two will'll do it
+level you'll operate a two will'll do it
+level you'll operate a two will'll do it
+at the second time level third time
+at the second time level third time
+at the second time level third time
+level and so on and so forth then you
+level and so on and so forth then you
+level and so on and so forth then you
+can use whatever we have right because
+can use whatever we have right because
+can use whatever we have right because
+okay it's just a fixed time prediction I
+okay it's just a fixed time prediction I
+okay it's just a fixed time prediction I
+just have what I have and I just plug it
+just have what I have and I just plug it
+just have what I have and I just plug it
+in now what is the issue with that as
+in now what is the issue with that as
+in now what is the issue with that as
+you can see then we have too many models
+you can see then we have too many models
+you can see then we have too many models
+right we have to run capital K different
+right we have to run capital K different
+right we have to run capital K different
+neural operators and and this is not not
+neural operators and and this is not not
+neural operators and and this is not not
+the best uh computational investment
+the best uh computational investment
+the best uh computational investment
+particularly if you want a continuous
+particularly if you want a continuous
+particularly if you want a continuous
+evaluation right because then in that
+evaluation right because then in that
+evaluation right because then in that
+case maybe we need 100 neural operators
+case maybe we need 100 neural operators
+case maybe we need 100 neural operators
+to be able to represent the temporal
+to be able to represent the temporal
+to be able to represent the temporal
+variation so this by itself is not going
+variation so this by itself is not going
+variation so this by itself is not going
+to be enough for sure and in particular
+to be enough for sure and in particular
+to be enough for sure and in particular
+as I said it only gives you discrete
+as I said it only gives you discrete
+as I said it only gives you discrete
+time levels it's very expensive and it
+time levels it's very expensive and it
+time levels it's very expensive and it
+does not give you some data advantages
+does not give you some data advantages
+does not give you some data advantages
+in the sense that uh I just let's say I
+in the sense that uh I just let's say I
+in the sense that uh I just let's say I
+I have the trajectory but I'm not using
+I have the trajectory but I'm not using
+I have the trajectory but I'm not using
+the trajectory I'm simply using the fact
+the trajectory I'm simply using the fact
+the trajectory I'm simply using the fact
+so I'm not using the fact that it's a
+so I'm not using the fact that it's a
+so I'm not using the fact that it's a
+Time Evolution at all I'm using I'm
+Time Evolution at all I'm using I'm
+Time Evolution at all I'm using I'm
+taking my initial condition and
+taking my initial condition and
+taking my initial condition and
+producing the solution at time one and
+producing the solution at time one and
+producing the solution at time one and
+this is completely unrelated to taking
+this is completely unrelated to taking
+this is completely unrelated to taking
+my initial condition and producing the
+my initial condition and producing the
+my initial condition and producing the
+solution at time two I could have used
+solution at time two I could have used
+solution at time two I could have used
+the solution at time one to predict the
+the solution at time one to predict the
+the solution at time one to predict the
+solution at time two this is not being
+solution at time two this is not being
+solution at time two this is not being
+done in this naive approach right so if
+done in this naive approach right so if
+done in this naive approach right so if
+you want to take something out of the
+you want to take something out of the
+you want to take something out of the
+box apply fno o this is a way to go but
+box apply fno o this is a way to go but
+box apply fno o this is a way to go but
+this is very very inefficient and no one
+this is very very inefficient and no one
+this is very very inefficient and no one
+does it right so this is just out of the
+does it right so this is just out of the
+does it right so this is just out of the
+means out of the starting point the
+means out of the starting point the
+means out of the starting point the
+starting block itself this can be thrown
+starting block itself this can be thrown
+starting block itself this can be thrown
+out but this is the so we have to
+out but this is the so we have to
+out but this is the so we have to
+somehow introduce time into the scheme
+somehow introduce time into the scheme
+somehow introduce time into the scheme
+otherwise it does not work so what
+otherwise it does not work so what
+otherwise it does not work so what
+people do is what I say next that they
+people do is what I say next that they
+people do is what I say next that they
+use what is called an auto regressive
+use what is called an auto regressive
+use what is called an auto regressive
+maybe you have seen this before Auto
+maybe you have seen this before Auto
+maybe you have seen this before Auto
+regressive evaluation what does it mean
+regressive evaluation what does it mean
+regressive evaluation what does it mean
+means okay this is a
+means okay this is a
+means okay this is a
+simplification it's a reasonable simplif
+simplification it's a reasonable simplif
+simplification it's a reasonable simplif
+well actually you need it in this
+well actually you need it in this
+well actually you need it in this
+particular case so the main assumption
+particular case so the main assumption
+particular case so the main assumption
+here is that you have uniformly spaced
+here is that you have uniformly spaced
+here is that you have uniformly spaced
+time
+time
+time
+points okay let's say that we have that
+points okay let's say that we have that
+points okay let's say that we have that
+just like we had regular grids we could
+just like we had regular grids we could
+just like we had regular grids we could
+have uniformly spaced time points and
+have uniformly spaced time points and
+have uniformly spaced time points and
+then the data is given at this uniformly
+then the data is given at this uniformly
+then the data is given at this uniformly
+spaced time points let me draw a picture
+spaced time points let me draw a picture
+spaced time points let me draw a picture
+so you have the initial condition you
+so you have the initial condition you
+so you have the initial condition you
+have the next time point the next time
+have the next time point the next time
+have the next time point the next time
+point the next time point the next time
+point the next time point the next time
+point the next time point the next time
+point and so on right so what is uh what
+point and so on right so what is uh what
+point and so on right so what is uh what
+does it do so what the neural operator
+does it do so what the neural operator
+does it do so what the neural operator
+does and as I said many many what you
+does and as I said many many what you
+does and as I said many many what you
+can give if o c whatever the what what
+can give if o c whatever the what what
+can give if o c whatever the what what
+do what do you do or CNN whatever you
+do what do you do or CNN whatever you
+do what do you do or CNN whatever you
+have is that you give it you make it
+have is that you give it you make it
+have is that you give it you make it
+predict the next frame so this in
+predict the next frame so this in
+predict the next frame so this in
+computer science this is called Next
+computer science this is called Next
+computer science this is called Next
+frame
+prediction because now the delta T is
+prediction because now the delta T is
+prediction because now the delta T is
+fixed right I I know what the Delta is
+fixed right I I know what the Delta is
+fixed right I I know what the Delta is
+the delta T is not in so the delta T is
+the delta T is not in so the delta T is
+the delta T is not in so the delta T is
+the direction here so what I'm going to
+the direction here so what I'm going to
+the direction here so what I'm going to
+do is that I have um I I just predict
+do is that I have um I I just predict
+do is that I have um I I just predict
+I'm able to predict the next frame
+I'm able to predict the next frame
+I'm able to predict the next frame
+similarly from here to here I can
+similarly from here to here I can
+similarly from here to here I can
+predict the next frame from here to here
+predict the next frame from here to here
+predict the next frame from here to here
+I can predict the next frame from here
+I can predict the next frame from here
+I can predict the next frame from here
+to here I can predict the next frame so
+to here I can predict the next frame so
+to here I can predict the next frame so
+given the initial conditions if I want
+given the initial conditions if I want
+given the initial conditions if I want
+to come to this point what am I going to
+to come to this point what am I going to
+to come to this point what am I going to
+do at inference is I start with my with
+do at inference is I start with my with
+do at inference is I start with my with
+my neural operator I predict the next
+my neural operator I predict the next
+my neural operator I predict the next
+frame first so I go from here to here
+frame first so I go from here to here
+frame first so I go from here to here
+that's a neural operator then I use that
+that's a neural operator then I use that
+that's a neural operator then I use that
+predict the next frame so it's like a
+predict the next frame so it's like a
+predict the next frame so it's like a
+marching scheme then I use that further
+marching scheme then I use that further
+marching scheme then I use that further
+I predict the next frame use that
+I predict the next frame use that
+I predict the next frame use that
+further I predict the next frame so by
+further I predict the next frame so by
+further I predict the next frame so by
+using it four times this is what is auto
+using it four times this is what is auto
+using it four times this is what is auto
+regressively so also in language when
+regressively so also in language when
+regressively so also in language when
+people model text for instance they
+people model text for instance they
+people model text for instance they
+model a token by token roughly word by
+model a token by token roughly word by
+model a token by token roughly word by
+word right so they say I then there's I
+word right so they say I then there's I
+word right so they say I then there's I
+am then something else and something
+am then something else and something
+am then something else and something
+else so it uses that context right so
+else so it uses that context right so
+else so it uses that context right so
+this is common in language it's also in
+this is common in language it's also in
+this is common in language it's also in
+scientific Computing it's a very very
+scientific Computing it's a very very
+scientific Computing it's a very very
+easy way so all that you're doing is
+easy way so all that you're doing is
+easy way so all that you're doing is
+that you're predicting the increment of
+that you're predicting the increment of
+that you're predicting the increment of
+the solution to the next time step okay
+the solution to the next time step okay
+the solution to the next time step okay
+and uh so this is so this is exactly
+and uh so this is so this is exactly
+and uh so this is so this is exactly
+what I what I just said in formulas this
+what I what I just said in formulas this
+what I what I just said in formulas this
+is exactly this that if you want to
+is exactly this that if you want to
+is exactly this that if you want to
+predict a Time TK so what you have to do
+predict a Time TK so what you have to do
+predict a Time TK so what you have to do
+is to apply it one time then two times
+is to apply it one time then two times
+is to apply it one time then two times
+and you have to do this K times so if
+and you have to do this K times so if
+and you have to do this K times so if
+you do it tively then you have able to
+you do it tively then you have able to
+you do it tively then you have able to
+evaluate okay is this clear now so the
+evaluate okay is this clear now so the
+evaluate okay is this clear now so the
+this kind of Auto regressive evaluation
+this kind of Auto regressive evaluation
+this kind of Auto regressive evaluation
+you just keep on feeding the neural
+you just keep on feeding the neural
+you just keep on feeding the neural
+operator again and again and again okay
+operator again and again and again okay
+operator again and again and again okay
+so this seems like a very attractive uh
+so this seems like a very attractive uh
+so this seems like a very attractive uh
+we will see some numerical examples
+we will see some numerical examples
+we will see some numerical examples
+later this seems like a very attractive
+later this seems like a very attractive
+later this seems like a very attractive
+way of doing it uh unfortunately and
+way of doing it uh unfortunately and
+way of doing it uh unfortunately and
+many many people do it so this is the
+many many people do it so this is the
+many many people do it so this is the
+most common way in which neural networks
+most common way in which neural networks
+most common way in which neural networks
+are trained and uh for time dependent
+are trained and uh for time dependent
+are trained and uh for time dependent
+problems but there are several caveats
+problems but there are several caveats
+problems but there are several caveats
+here right so first of all you need some
+here right so first of all you need some
+here right so first of all you need some
+uniform spacing because it is agnostic
+uniform spacing because it is agnostic
+uniform spacing because it is agnostic
+to the value of the increment right it
+to the value of the increment right it
+to the value of the increment right it
+says that there are equal increments so
+says that there are equal increments so
+says that there are equal increments so
+you learn something second is that you
+you learn something second is that you
+you learn something second is that you
+always have and this this process here
+always have and this this process here
+always have and this this process here
+is called a roll out right roll out is
+is called a roll out right roll out is
+is called a roll out right roll out is
+simply I have a trained neural operator
+simply I have a trained neural operator
+simply I have a trained neural operator
+which has learned to predict the next
+which has learned to predict the next
+which has learned to predict the next
+frame or the next time step so I just
+frame or the next time step so I just
+frame or the next time step so I just
+give the solution the initial condition
+give the solution the initial condition
+give the solution the initial condition
+and I roll it out I take I apply it once
+and I roll it out I take I apply it once
+and I roll it out I take I apply it once
+it'll give you a value I apply it twice
+it'll give you a value I apply it twice
+it'll give you a value I apply it twice
+it'll give a value and so on and so
+it'll give a value and so on and so
+it'll give a value and so on and so
+forth uh but when you do long rollouts
+forth uh but when you do long rollouts
+forth uh but when you do long rollouts
+particularly training remember at the
+particularly training remember at the
+particularly training remember at the
+end of the day we have to train these
+end of the day we have to train these
+end of the day we have to train these
+objects also right so the back
+objects also right so the back
+objects also right so the back
+propagation algorithm has to take you
+propagation algorithm has to take you
+propagation algorithm has to take you
+back to the initial time otherwise how
+back to the initial time otherwise how
+back to the initial time otherwise how
+else are we going to do the computation
+else are we going to do the computation
+else are we going to do the computation
+so while you do back propagation this is
+so while you do back propagation this is
+so while you do back propagation this is
+called back propagation through time
+called back propagation through time
+called back propagation through time
+bptt uh if you have lots lots of roll
+bptt uh if you have lots lots of roll
+bptt uh if you have lots lots of roll
+outs then the gradient you know that
+outs then the gradient you know that
+outs then the gradient you know that
+each step the gradient changes so if the
+each step the gradient changes so if the
+each step the gradient changes so if the
+gradient is less than one if you do it
+gradient is less than one if you do it
+gradient is less than one if you do it
+50 times you know you can get zero
+50 times you know you can get zero
+50 times you know you can get zero
+gradient and if you it's a gradient is
+gradient and if you it's a gradient is
+gradient and if you it's a gradient is
+is greater than one then it flows up so
+is greater than one then it flows up so
+is greater than one then it flows up so
+it's sort of you end up with these
+it's sort of you end up with these
+it's sort of you end up with these
+problems that you have due to exploding
+problems that you have due to exploding
+problems that you have due to exploding
+and Vanishing radient so this is an
+and Vanishing radient so this is an
+and Vanishing radient so this is an
+important element that's why this you
+important element that's why this you
+important element that's why this you
+can't sort of do long roll outs during
+can't sort of do long roll outs during
+can't sort of do long roll outs during
+training so during training necessarily
+training so during training necessarily
+training so during training necessarily
+you have to do this a whole field how to
+you have to do this a whole field how to
+you have to do this a whole field how to
+do this efficiently I don't have the
+do this efficiently I don't have the
+do this efficiently I don't have the
+time to go into the details but
+time to go into the details but
+time to go into the details but
+essentially what you do is that you can
+essentially what you do is that you can
+essentially what you do is that you can
+only train for shorter rollouts in the
+only train for shorter rollouts in the
+only train for shorter rollouts in the
+sense that you take three roll outs and
+sense that you take three roll outs and
+sense that you take three roll outs and
+try to match the solution or you take
+try to match the solution or you take
+try to match the solution or you take
+four roll outs and you try to match the
+four roll outs and you try to match the
+four roll outs and you try to match the
+solution the problem is at inference you
+solution the problem is at inference you
+solution the problem is at inference you
+might need to do it 50 times and this is
+might need to do it 50 times and this is
+might need to do it 50 times and this is
+where this could be an issue but the of
+where this could be an issue but the of
+where this could be an issue but the of
+course it's also evaluation only at the
+course it's also evaluation only at the
+course it's also evaluation only at the
+discrete time levels we cannot predict
+discrete time levels we cannot predict
+discrete time levels we cannot predict
+continuously in time but the biggest
+continuously in time but the biggest
+continuously in time but the biggest
+issue here is error accumulation and
+issue here is error accumulation and
+issue here is error accumulation and
+what is the meaning of
+what is the meaning of
+what is the meaning of
+that so let me without writing in
+that so let me without writing in
+that so let me without writing in
+formulas let me try to explain it in
+formulas let me try to explain it in
+formulas let me try to explain it in
+words what error accumulation is so
+words what error accumulation is so
+words what error accumulation is so
+remember that we are trying to solve a
+remember that we are trying to solve a
+remember that we are trying to solve a
+Time dependent problem okay so of course
+Time dependent problem okay so of course
+Time dependent problem okay so of course
+uh we start with the initial conditions
+uh we start with the initial conditions
+uh we start with the initial conditions
+and the solution at a later time is
+and the solution at a later time is
+and the solution at a later time is
+going to be very different from the
+going to be very different from the
+going to be very different from the
+initial conditions provided that you
+initial conditions provided that you
+initial conditions provided that you
+wait long enough right for longer times
+wait long enough right for longer times
+wait long enough right for longer times
+just imagine the weather now and the
+just imagine the weather now and the
+just imagine the weather now and the
+weather it was in Monday for instance
+weather it was in Monday for instance
+weather it was in Monday for instance
+the Sunday Sunday was 28° and today is
+the Sunday Sunday was 28° and today is
+the Sunday Sunday was 28° and today is
+2° right so as we waited long we saw
+2° right so as we waited long we saw
+2° right so as we waited long we saw
+that there was a huge change but of
+that there was a huge change but of
+that there was a huge change but of
+course if you would have taken the
+course if you would have taken the
+course if you would have taken the
+weather at on Sunday and predicted to
+weather at on Sunday and predicted to
+weather at on Sunday and predicted to
+6:00 a.m. on Monday then this would
+6:00 a.m. on Monday then this would
+6:00 a.m. on Monday then this would
+would have been a much easier prediction
+would have been a much easier prediction
+would have been a much easier prediction
+because there is some continuity there
+because there is some continuity there
+because there is some continuity there
+right so now just imagine that you have
+right so now just imagine that you have
+right so now just imagine that you have
+learned only this is this a cartoon of
+learned only this is this a cartoon of
+learned only this is this a cartoon of
+course but you have learned only sort
+course but you have learned only sort
+course but you have learned only sort
+let's say summer weather and uh so you
+let's say summer weather and uh so you
+let's say summer weather and uh so you
+have made the small predictions it's
+have made the small predictions it's
+have made the small predictions it's
+okay when you do short-term predictions
+okay when you do short-term predictions
+okay when you do short-term predictions
+and now you have to compose it again and
+and now you have to compose it again and
+and now you have to compose it again and
+again and again just imagine that if you
+again and again just imagine that if you
+again and again just imagine that if you
+had have used weather till for from last
+had have used weather till for from last
+had have used weather till for from last
+week because last week was very warm you
+week because last week was very warm you
+week because last week was very warm you
+would have managed to predict the
+would have managed to predict the
+would have managed to predict the
+weather quite accurately on Monday but
+weather quite accurately on Monday but
+weather quite accurately on Monday but
+then if you kept on using the same
+then if you kept on using the same
+then if you kept on using the same
+operator again and again and again of
+operator again and again and again of
+operator again and again and again of
+course uh there is a obvious uh mismatch
+course uh there is a obvious uh mismatch
+course uh there is a obvious uh mismatch
+here right there is an obvious error so
+here right there is an obvious error so
+here right there is an obvious error so
+as you try to predict for longer you are
+as you try to predict for longer you are
+as you try to predict for longer you are
+going to get error accumulation because
+going to get error accumulation because
+going to get error accumulation because
+you're making the same operator run
+you're making the same operator run
+you're making the same operator run
+again and again and again of course you
+again and again and again of course you
+again and again and again of course you
+could have avoided it by during the
+could have avoided it by during the
+could have avoided it by during the
+training process having this but then
+training process having this but then
+training process having this but then
+you have the issue with the long
+you have the issue with the long
+you have the issue with the long
+rollouts that the training is half so
+rollouts that the training is half so
+rollouts that the training is half so
+this is as I said means this is a very
+this is as I said means this is a very
+this is as I said means this is a very
+very common strategy people use use it
+very common strategy people use use it
+very common strategy people use use it
+all the time but it has its uh let's say
+all the time but it has its uh let's say
+all the time but it has its uh let's say
+its drawbacks right it has this these
+its drawbacks right it has this these
+its drawbacks right it has this these
+kind of issues so you'll see that this
+kind of issues so you'll see that this
+kind of issues so you'll see that this
+is not exactly this error accumulation
+is not exactly this error accumulation
+is not exactly this error accumulation
+is what makes this um basically
+is what makes this um basically
+is what makes this um basically
+unfeasible so we need we need to come up
+unfeasible so we need we need to come up
+unfeasible so we need we need to come up
+with an alternative and this is uh what
+with an alternative and this is uh what
+with an alternative and this is uh what
+I'm going to describe very quickly and
+I'm going to describe very quickly and
+I'm going to describe very quickly and
+also in the next lecture I'll give you
+also in the next lecture I'll give you
+also in the next lecture I'll give you
+some more details which is called and
+some more details which is called and
+some more details which is called and
+it's not the only issue it's not just an
+it's not the only issue it's not just an
+it's not the only issue it's not just an
+accumulation we also wanted a continuous
+accumulation we also wanted a continuous
+accumulation we also wanted a continuous
+output right we wanted to be able to
+output right we wanted to be able to
+output right we wanted to be able to
+evaluate uh the solution operator
+evaluate uh the solution operator
+evaluate uh the solution operator
+probate at any point so what do we do
+probate at any point so what do we do
+probate at any point so what do we do
+it's called time conditioning means it's
+it's called time conditioning means it's
+it's called time conditioning means it's
+it's uh it's it's fairly recent but
+it's uh it's it's fairly recent but
+it's uh it's it's fairly recent but
+there are some couple of papers
+there are some couple of papers
+there are some couple of papers
+including ours in this direction so let
+including ours in this direction so let
+including ours in this direction so let
+me
+me
+me
+describe and for instance when I taught
+describe and for instance when I taught
+describe and for instance when I taught
+it last year we did not have this so
+it last year we did not have this so
+it last year we did not have this so
+this it's a very fast moving field so
+this it's a very fast moving field so
+this it's a very fast moving field so
+the idea is very simple that we should
+the idea is very simple that we should
+the idea is very simple that we should
+evaluate and also in terms of data if
+evaluate and also in terms of data if
+evaluate and also in terms of data if
+you remember that the amount of data
+you remember that the amount of data
+you remember that the amount of data
+that you have you you are restricted by
+that you have you you are restricted by
+that you have you you are restricted by
+the fact that now you exactly have K
+the fact that now you exactly have K
+the fact that now you exactly have K
+frames right because you're predicting
+frames right because you're predicting
+frames right because you're predicting
+the next frames so you're predicting the
+the next frames so you're predicting the
+the next frames so you're predicting the
+next frame so you have exactly K frames
+next frame so you have exactly K frames
+next frame so you have exactly K frames
+in some sense and then what we do in
+in some sense and then what we do in
+in some sense and then what we do in
+this lead time conditioning or time
+this lead time conditioning or time
+this lead time conditioning or time
+conditioning is time itself just like in
+conditioning is time itself just like in
+conditioning is time itself just like in
+the solution operator time itself should
+the solution operator time itself should
+the solution operator time itself should
+be in the input right so it should be an
+be in the input right so it should be an
+be in the input right so it should be an
+additional Channel it should be in the
+additional Channel it should be in the
+additional Channel it should be in the
+input that's already some advantage
+input that's already some advantage
+input that's already some advantage
+because then it allows you to have
+because then it allows you to have
+because then it allows you to have
+continuous in time outputs so you take
+continuous in time outputs so you take
+continuous in time outputs so you take
+CNO for instance or fno for that matter
+CNO for instance or fno for that matter
+CNO for instance or fno for that matter
+it does not really matter this is
+it does not really matter this is
+it does not really matter this is
+agnostic to the model so what you could
+agnostic to the model so what you could
+agnostic to the model so what you could
+do the first element is that you could
+do the first element is that you could
+do the first element is that you could
+give the time lead time as it is called
+give the time lead time as it is called
+give the time lead time as it is called
+the time to focus you can give it as an
+the time to focus you can give it as an
+the time to focus you can give it as an
+input in other words Your solution
+input in other words Your solution
+input in other words Your solution
+operator takes time and it takes the
+operator takes time and it takes the
+operator takes time and it takes the
+initial conditions of the previous image
+initial conditions of the previous image
+initial conditions of the previous image
+and it turns out the solution at a later
+and it turns out the solution at a later
+and it turns out the solution at a later
+time okay and this is usually added it
+time okay and this is usually added it
+time okay and this is usually added it
+as an additional Channel because
+as an additional Channel because
+as an additional Channel because
+remember that I have already temperature
+remember that I have already temperature
+remember that I have already temperature
+pressure velocity whatever so I can
+pressure velocity whatever so I can
+pressure velocity whatever so I can
+always add time as an additional Channel
+always add time as an additional Channel
+always add time as an additional Channel
+and then after that so this in some
+and then after that so this in some
+and then after that so this in some
+cases this is sufficient because now you
+cases this is sufficient because now you
+cases this is sufficient because now you
+have access to a richer amount of data
+have access to a richer amount of data
+have access to a richer amount of data
+because in principle you can say that I
+because in principle you can say that I
+because in principle you can say that I
+can start with the initial conditions
+can start with the initial conditions
+can start with the initial conditions
+and predict up to 0.1 I have the data
+and predict up to 0.1 I have the data
+and predict up to 0.1 I have the data
+for that I can start with the initial
+for that I can start with the initial
+for that I can start with the initial
+conditions and I can predict up to 0.2 I
+conditions and I can predict up to 0.2 I
+conditions and I can predict up to 0.2 I
+have data for that and so on and so
+have data for that and so on and so
+have data for that and so on and so
+forth but in this form it does not
+forth but in this form it does not
+forth but in this form it does not
+really work because uh this is too
+really work because uh this is too
+really work because uh this is too
+little an input because what happens is
+little an input because what happens is
+little an input because what happens is
+these networks have lots of layers right
+these networks have lots of layers right
+these networks have lots of layers right
+and by the time you go to the 10th layer
+and by the time you go to the 10th layer
+and by the time you go to the 10th layer
+the fact that you time as an initial
+the fact that you time as an initial
+the fact that you time as an initial
+layer or as an initial input is
+layer or as an initial input is
+layer or as an initial input is
+forgotten you know because you have to
+forgotten you know because you have to
+forgotten you know because you have to
+somehow process the time you have to
+somehow process the time you have to
+somehow process the time you have to
+keep it uh as a as a running input
+keep it uh as a as a running input
+keep it uh as a as a running input
+somehow right and this is done by using
+somehow right and this is done by using
+somehow right and this is done by using
+what are called conditional
+what are called conditional
+what are called conditional
+normalizations so let me explain this
+normalizations so let me explain this
+normalizations so let me explain this
+and maybe in the next lecture I give you
+and maybe in the next lecture I give you
+and maybe in the next lecture I give you
+a little bit more detail because we are
+a little bit more detail because we are
+a little bit more detail because we are
+and you're running out of time so what
+and you're running out of time so what
+and you're running out of time so what
+are conditional
+are conditional
+are conditional
+normalizations so remember that in
+normalizations so remember that in
+normalizations so remember that in
+machine learning and this you have
+machine learning and this you have
+machine learning and this you have
+learned also in your practicals in your
+learned also in your practicals in your
+learned also in your practicals in your
+tutorials that you need normalizations
+tutorials that you need normalizations
+tutorials that you need normalizations
+there are batch normalizations instance
+there are batch normalizations instance
+there are batch normalizations instance
+normalizations layer normalizations and
+normalizations layer normalizations and
+normalizations layer normalizations and
+so on and the idea is very simple that
+so on and the idea is very simple that
+so on and the idea is very simple that
+before you do the processing so you take
+before you do the processing so you take
+before you do the processing so you take
+the let's let's take a concrete example
+the let's let's take a concrete example
+the let's let's take a concrete example
+here let's take CNO for instance so
+here let's take CNO for instance so
+here let's take CNO for instance so
+let's say that you do the processing
+let's say that you do the processing
+let's say that you do the processing
+here you get a out outut let's say the
+here you get a out outut let's say the
+here you get a out outut let's say the
+output is W another image right so what
+output is W another image right so what
+output is W another image right so what
+you do is you normalize W because also
+you do is you normalize W because also
+you do is you normalize W because also
+the inputs are normalized because
+the inputs are normalized because
+the inputs are normalized because
+otherwise machine learning doesn't work
+otherwise machine learning doesn't work
+otherwise machine learning doesn't work
+the gradients will have very different
+the gradients will have very different
+the gradients will have very different
+scales and you can't frame so you
+scales and you can't frame so you
+scales and you can't frame so you
+normalize the way in which normalization
+normalize the way in which normalization
+normalize the way in which normalization
+works in general is that you take
+works in general is that you take
+works in general is that you take
+some normalization means that you take
+some normalization means that you take
+some normalization means that you take
+your current input to the
+your current input to the
+your current input to the
+layer you take some uh mean some
+layer you take some uh mean some
+layer you take some uh mean some
+expected value this could be over the
+expected value this could be over the
+expected value this could be over the
+batch
+batch
+batch
+it could be over the layer means all the
+it could be over the layer means all the
+it could be over the layer means all the
+outputs to the layer it could be over
+outputs to the layer it could be over
+outputs to the layer it could be over
+the instance and so on there are
+the instance and so on there are
+the instance and so on there are
+different kinds of normalizations I will
+different kinds of normalizations I will
+different kinds of normalizations I will
+tell the bo Victor and ban to talk about
+tell the bo Victor and ban to talk about
+tell the bo Victor and ban to talk about
+it perhaps in one of the tutorials
+it perhaps in one of the tutorials
+it perhaps in one of the tutorials
+there's no time for the details here but
+there's no time for the details here but
+there's no time for the details here but
+it's essentially some form of
+it's essentially some form of
+it's essentially some form of
+normalization right so once you do the
+normalization right so once you do the
+normalization right so once you do the
+normalization of course you take out the
+normalization of course you take out the
+normalization of course you take out the
+you take out the you take out the mean
+you take out the you take out the mean
+you take out the you take out the mean
+and then you sort of divide by the
+and then you sort of divide by the
+and then you sort of divide by the
+variance or divide by the standard a so
+variance or divide by the standard a so
+variance or divide by the standard a so
+you want to get things back within minus
+you want to get things back within minus
+you want to get things back within minus
+one one or 01 minus one one in this
+one one or 01 minus one one in this
+one one or 01 minus one one in this
+particular case right just and this was
+particular case right just and this was
+particular case right just and this was
+the key trick by which machine learning
+the key trick by which machine learning
+the key trick by which machine learning
+deep learning architectures work because
+deep learning architectures work because
+deep learning architectures work because
+without batch normalization and layer
+without batch normalization and layer
+without batch normalization and layer
+normalization they were simply not
+normalization they were simply not
+normalization they were simply not
+working so you anyway have to do this
+working so you anyway have to do this
+working so you anyway have to do this
+depending on the architecture that you
+depending on the architecture that you
+depending on the architecture that you
+have like for CNO you use batch
+have like for CNO you use batch
+have like for CNO you use batch
+normalization for Transformers it's
+normalization for Transformers it's
+normalization for Transformers it's
+layer normalization and so on so there
+layer normalization and so on so there
+layer normalization and so on so there
+is this normalization that happens for
+is this normalization that happens for
+is this normalization that happens for
+the input to each layer okay first you
+the input to each layer okay first you
+the input to each layer okay first you
+process normalize process normalize
+process normalize process normalize
+process normalize process normalize
+process and so on and the idea behind
+process and so on and the idea behind
+process and so on and the idea behind
+this is why don't we leverage the fact
+this is why don't we leverage the fact
+this is why don't we leverage the fact
+that we have these normalizations to
+that we have these normalizations to
+that we have these normalizations to
+keep on giving time as an input okay
+keep on giving time as an input okay
+keep on giving time as an input okay
+because so that the effect of time is
+because so that the effect of time is
+because so that the effect of time is
+not forgotten so instead of just giving
+not forgotten so instead of just giving
+not forgotten so instead of just giving
+time once here you also give time here
+time once here you also give time here
+time once here you also give time here
+you give time here you give time here
+you give time here you give time here
+you give time here you give time here
+here here here everywhere so roughly
+here here here everywhere so roughly
+here here here everywhere so roughly
+that is the idea and what you what we do
+that is the idea and what you what we do
+that is the idea and what you what we do
+is that we just modify the
+is that we just modify the
+is that we just modify the
+normalizations we simply introduce um
+normalizations we simply introduce um
+normalizations we simply introduce um
+learnable functions so this could be
+learnable functions so this could be
+learnable functions so this could be
+neural networks but in general these are
+neural networks but in general these are
+neural networks but in general these are
+really so GN of T is typically some
+really so GN of T is typically some
+really so GN of T is typically some
+Matrix GN t plus some G hat and some
+Matrix GN t plus some G hat and some
+Matrix GN t plus some G hat and some
+Vector okay so this is a a fine function
+Vector okay so this is a a fine function
+Vector okay so this is a a fine function
+but it could be MLP some small Neal
+but it could be MLP some small Neal
+but it could be MLP some small Neal
+Network and what you do is that this
+Network and what you do is that this
+Network and what you do is that this
+gives the effect of time as I said here
+gives the effect of time as I said here
+gives the effect of time as I said here
+it gives the effect of time at every
+it gives the effect of time at every
+it gives the effect of time at every
+input more or less so every layers
+input more or less so every layers
+input more or less so every layers
+remember
+remember
+remember
+that it is doing something for this
+that it is doing something for this
+that it is doing something for this
+particular time step or for this
+particular time step or for this
+particular time step or for this
+particular time instant okay and it's
+particular time instant okay and it's
+particular time instant okay and it's
+obvious how you normalize it because how
+obvious how you normalize it because how
+obvious how you normalize it because how
+you initialize it because this guy
+you initialize it because this guy
+you initialize it because this guy
+should be close to one and this guy
+should be close to one and this guy
+should be close to one and this guy
+should be zero at initialization but of
+should be zero at initialization but of
+should be zero at initialization but of
+course these are learnable mappings so
+course these are learnable mappings so
+course these are learnable mappings so
+they are going to learn what is the
+they are going to learn what is the
+they are going to learn what is the
+effect of the time for this particular
+effect of the time for this particular
+effect of the time for this particular
+layer at uh this particular input right
+layer at uh this particular input right
+layer at uh this particular input right
+so this is roughly what what what the
+so this is roughly what what what the
+so this is roughly what what what the
+idea is so you have to give time as some
+idea is so you have to give time as some
+idea is so you have to give time as some
+sort of a conditioner so that you
+sort of a conditioner so that you
+sort of a conditioner so that you
+condition your the output of your model
+condition your the output of your model
+condition your the output of your model
+on the time okay so is this uh the the
+on the time okay so is this uh the the
+on the time okay so is this uh the the
+details about how I take the expected
+details about how I take the expected
+details about how I take the expected
+value is not important here okay so this
+value is not important here okay so this
+value is not important here okay so this
+this could be that now all the neurons
+this could be that now all the neurons
+this could be that now all the neurons
+in that given layer produce some outputs
+in that given layer produce some outputs
+in that given layer produce some outputs
+and you could just average over them or
+and you could just average over them or
+and you could just average over them or
+it could be some other kind of some sort
+it could be some other kind of some sort
+it could be some other kind of some sort
+of an average okay think of this as some
+of an average okay think of this as some
+of an average okay think of this as some
+sort of an average so that you normalize
+sort of an average so that you normalize
+sort of an average so that you normalize
+between minus and one one and one
+between minus and one one and one
+between minus and one one and one
+and then you're going to modulate this
+and then you're going to modulate this
+and then you're going to modulate this
+average by this time dependent functions
+average by this time dependent functions
+average by this time dependent functions
+so theistic that you should remember is
+so theistic that you should remember is
+so theistic that you should remember is
+that in addition to feeding it as the
+that in addition to feeding it as the
+that in addition to feeding it as the
+input value I'm also going to feed it uh
+input value I'm also going to feed it uh
+input value I'm also going to feed it uh
+during all all layers so this is sort of
+during all all layers so this is sort of
+during all all layers so this is sort of
+the basic humanistic of this lead time
+the basic humanistic of this lead time
+the basic humanistic of this lead time
+conditioning and I've really run out of
+conditioning and I've really run out of
+conditioning and I've really run out of
+time today I was slower than usual but
+time today I was slower than usual but
+time today I was slower than usual but
+in on Wednesday what I'm going to do is
+in on Wednesday what I'm going to do is
+in on Wednesday what I'm going to do is
+that okay so now we have this uh so the
+that okay so now we have this uh so the
+that okay so now we have this uh so the
+time dependent C know what does it do it
+time dependent C know what does it do it
+time dependent C know what does it do it
+has this additional layers additional
+has this additional layers additional
+has this additional layers additional
+inputs and additional layers and the
+inputs and additional layers and the
+inputs and additional layers and the
+same with FN means all all architectures
+same with FN means all all architectures
+same with FN means all all architectures
+can be modified because all of them use
+can be modified because all of them use
+can be modified because all of them use
+some form of normalization so you give
+some form of normalization so you give
+some form of normalization so you give
+the input in the input Channel time and
+the input in the input Channel time and
+the input in the input Channel time and
+you give this within each layer so now
+you give this within each layer so now
+you give this within each layer so now
+we have this let's a new architecture
+we have this let's a new architecture
+we have this let's a new architecture
+how are we going to train it how we
+how are we going to train it how we
+how are we going to train it how we
+going to leverage the data and so on and
+going to leverage the data and so on and
+going to leverage the data and so on and
+this is going to be the task of the next
+this is going to be the task of the next
+this is going to be the task of the next
+lecture because if I start the next
+lecture because if I start the next
+lecture because if I start the next
+slide I will not be able to finish it so
+slide I will not be able to finish it so
+slide I will not be able to finish it so
+I don't want to rush it okay so on
+I don't want to rush it okay so on
+I don't want to rush it okay so on
+Wednesday we start with this and then we
+Wednesday we start with this and then we
+Wednesday we start with this and then we
+go towards the issue of scaling and
+go towards the issue of scaling and
+go towards the issue of scaling and
+Transformers okay so let's let's stop
+Transformers okay so let's let's stop
+Transformers okay so let's let's stop
+here

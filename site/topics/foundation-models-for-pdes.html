@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Foundation Models For PDEs</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<nav class="topbar">
+  <a href="../index.html">Physics-Informed ML</a>
+  <a href="../transcripts.html">Transcripts</a>
+  <a href="../concept-atlas.html">Concept Atlas</a>
+  <a href="../theme-map.html">Themes</a>
+  <a href="../evidence-ledger.html">Evidence</a>
+</nav>
+<main>
+
+<h1>Foundation Models For PDEs</h1>
+<h2>Common Problem This Solves</h2>
+<p>one trained model may be asked to handle many related equations, grids, parameters, or physical settings</p>
+<h2>Big Picture Plain Summary</h2>
+<p><strong>Domain:</strong> broad families of PDE problems and scientific fields</p>
+<p><strong>Why it matters:</strong> a broad model could reduce repeated training cost if it keeps the physical features that matter across tasks</p>
+<p><strong>What it keeps:</strong> shared structure across many scientific problem instances</p>
+<p><strong>What it leaves out:</strong> certainty that shared training structure covers the new scientific case</p>
+<h2>Everyday Anchor</h2>
+<p>Start with the observed object, name what must be predicted, then test the claim on a changed case.</p>
+<h2>First-Principles Walkthrough</h2>
+<ol>
+  <li><strong>Start with what is observed:</strong> many PDE problem instances across equations, grids, parameters, or physical settings.</li>
+  <li><strong>Name what is hidden:</strong> which shared structure carries from one scientific task to another.</li>
+  <li><strong>Make the smallest mathematical move:</strong> train one broad model to reuse structure across many related field-prediction tasks.</li>
+  <li><strong>Read the shape:</strong> many PDE tasks -&gt; shared learned representation -&gt; new task prediction.</li>
+  <li><strong>Say what it means:</strong> breadth is useful only if the new task shares the structure the model actually learned.</li>
+</ol>
+<h2>Deeper Mathematical Why</h2>
+<p>The mathematical point is to decide what information is allowed to carry the scientific claim. If the carried information is too small, the model misses the behavior that matters. If it is too broad, the page may claim more than the evidence supports. The useful middle is a named object, a named scientific job, and a changed case that can reject the claim.</p>
+<h2>Reader Test</h2>
+<p>A reader understands this concept only if they can say what is observed, what is hidden, what is kept, what is ignored, and why this changed-case test matters: hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver.</p>
+<h2>Failure Boundary</h2>
+<p>the model can look broad while missing rare regimes, new boundary conditions, or quantities not represented in training</p>
+<h2>What The Transcript Does Not Prove</h2>
+<p>The transcript evidence shows where the course introduces or uses this concept. It does not prove the concept works for every equation, data set, solver, material, geometry, or scientific task. That wider claim needs explicit validation evidence.</p>
+<h2>Transcript Evidence</h2>
+<ul><li><a href="https://www.youtube.com/watch?v=u1KFcAvjyCI&amp;list=PLJkYEExhe7rYFkBIB2U5pf_RWzYnFLj7r">ETH Zürich AISE: Time-Dependent Neural Operators</a>: of going so we have lecture number of the the the course and as is customary with me let&#x27;s course and as is customary with me let&#x27;s course and as is customary with me let&#x27;s do a very short intro of what we have</li><li><a href="https://www.youtube.com/watch?v=FPXW9MxjV48&amp;list=PLJkYEExhe7rYFkBIB2U5pf_RWzYnFLj7r">ETH Zürich AISE: Large-Scale Neural Operators</a>: the last lecture so we&#x27;re still working with operator learning so which working with operator learning so which working with operator learning so which means that we have a abstract PD of this means that we have a abstract PD of this means that</li><li><a href="https://www.youtube.com/watch?v=YtJhReM5bHY&amp;list=PLJkYEExhe7rYFkBIB2U5pf_RWzYnFLj7r">ETH Zürich AISE: Windowed Attention and Scaling Laws</a>: on today so yeah so we focus on Transformers and the idea is to use Transformers and the idea is to use Transformers and the idea is to use Transformers for learning Solutions of Transformers for learning Solutions of Transformers for learning Solutions of</li><li><a href="https://www.youtube.com/watch?v=0JsPcm_Vl1g&amp;list=PLJkYEExhe7rYFkBIB2U5pf_RWzYnFLj7r">ETH Zürich AISE: Introduction to JAX</a>: a library that I&#x27;m using a lot now in my research and I think a lot of now in my research and I think a lot of now in my research and I think a lot of people who are carrying out scientific people</li><li><a href="https://www.youtube.com/watch?v=9ETsTc5dhM8&amp;list=PLJkYEExhe7rYBo2KBwsirSF-B0R3Q0nt7">ETH Zürich AISE 2025: Lecture 10 Operator Learning - GAOT</a>: welcome everyone to lecture number We are towards the very last number We are towards the very last number We are towards the very last part of the course So let&#x27;s just resume where we stopped So let&#x27;s just resume where we stopped So</li><li><a href="https://www.youtube.com/watch?v=ZhAxfuewf6s&amp;list=PLJkYEExhe7rYBo2KBwsirSF-B0R3Q0nt7">ETH Zürich AISE 2025: Lecture 12 Foundation Models for PDEs - Poseidon</a>: Okay So welcome everyone to the th Okay So welcome everyone to the th Okay So welcome everyone to the th lecture of the course which also happens lecture of the course which also happens lecture of the course which also happens to be</li></ul>
+
+</main>
+</body>
+</html>

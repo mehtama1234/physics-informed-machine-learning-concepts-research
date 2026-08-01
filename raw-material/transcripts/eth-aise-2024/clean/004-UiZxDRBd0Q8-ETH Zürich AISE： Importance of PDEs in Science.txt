@@ -1,0 +1,3358 @@
+can you guys hear me okay perfect so
+can you guys hear me okay perfect so
+can you guys hear me okay perfect so
+let's get started uh welcome to lecture
+let's get started uh welcome to lecture
+let's get started uh welcome to lecture
+number four of the AI in the science and
+number four of the AI in the science and
+number four of the AI in the science and
+engineering course Ben has been teaching
+engineering course Ben has been teaching
+engineering course Ben has been teaching
+you till now and I teach today and then
+you till now and I teach today and then
+you till now and I teach today and then
+he comes back and then I come back in
+he comes back and then I come back in
+he comes back and then I come back in
+two weeks time and that's how and after
+two weeks time and that's how and after
+two weeks time and that's how and after
+that I teach for quite a quite a while
+that I teach for quite a quite a while
+that I teach for quite a quite a while
+okay so what have you learned so far so
+okay so what have you learned so far so
+okay so what have you learned so far so
+essentially in the last couple of
+essentially in the last couple of
+essentially in the last couple of
+lectures or the lecture before that what
+lectures or the lecture before that what
+lectures or the lecture before that what
+Ben has done as I've seen the slides
+Ben has done as I've seen the slides
+Ben has done as I've seen the slides
+myself in the recording is that has
+myself in the recording is that has
+myself in the recording is that has
+given you a very suent introduction to
+given you a very suent introduction to
+given you a very suent introduction to
+deep learning so let me use some
+deep learning so let me use some
+deep learning so let me use some
+highlighting color
+highlighting color
+highlighting color
+so you can see this when I highlight
+so you can see this when I highlight
+so you can see this when I highlight
+okay perfect so what is deep learning he
+okay perfect so what is deep learning he
+okay perfect so what is deep learning he
+has introduced deep neural networks and
+has introduced deep neural networks and
+has introduced deep neural networks and
+somehow the basis of deep learning today
+somehow the basis of deep learning today
+somehow the basis of deep learning today
+are several things the first is of
+are several things the first is of
+are several things the first is of
+course data so you have large data large
+course data so you have large data large
+course data so you have large data large
+data this is very very important you'll
+data this is very very important you'll
+data this is very very important you'll
+see that in the sort of uh the context
+see that in the sort of uh the context
+see that in the sort of uh the context
+of the course this might not be as large
+of the course this might not be as large
+of the course this might not be as large
+as you'd like but we'll get to that and
+as you'd like but we'll get to that and
+as you'd like but we'll get to that and
+then you have neural networks and you
+then you have neural networks and you
+then you have neural networks and you
+have good uh gr and decent
+have good uh gr and decent
+have good uh gr and decent
+algorithms and what is often a key
+algorithms and what is often a key
+algorithms and what is often a key
+towards um making machine learning work
+towards um making machine learning work
+towards um making machine learning work
+is the ability to generalize okay and
+is the ability to generalize okay and
+is the ability to generalize okay and
+you'll see repeatedly this word come in
+you'll see repeatedly this word come in
+you'll see repeatedly this word come in
+during at least my lectures so now after
+during at least my lectures so now after
+during at least my lectures so now after
+having this crash course on machine
+having this crash course on machine
+having this crash course on machine
+learning what we're going to do for for
+learning what we're going to do for for
+learning what we're going to do for for
+several lectures is to apply it in some
+several lectures is to apply it in some
+several lectures is to apply it in some
+scientific context and this scientific
+scientific context and this scientific
+scientific context and this scientific
+context would be in the beginning
+context would be in the beginning
+context would be in the beginning
+physics based and towards the end of the
+physics based and towards the end of the
+physics based and towards the end of the
+lecture lectures towards the end of the
+lecture lectures towards the end of the
+lecture lectures towards the end of the
+course chemistry and biology but uh in
+course chemistry and biology but uh in
+course chemistry and biology but uh in
+the realm of physics what we are going
+the realm of physics what we are going
+the realm of physics what we are going
+to focus on is uh those physical models
+to focus on is uh those physical models
+to focus on is uh those physical models
+that are governed by PD partial
+that are governed by PD partial
+that are governed by PD partial
+differential equations so let me start
+differential equations so let me start
+differential equations so let me start
+with that and today my objective is to
+with that and today my objective is to
+with that and today my objective is to
+give you a very brief introduction to
+give you a very brief introduction to
+give you a very brief introduction to
+pdes and also to say what are the
+pdes and also to say what are the
+pdes and also to say what are the
+challenges
+challenges
+challenges
+why you need to do something which is
+why you need to do something which is
+why you need to do something which is
+different from what we need to do how
+different from what we need to do how
+different from what we need to do how
+does machine learning come in and what's
+does machine learning come in and what's
+does machine learning come in and what's
+the scope what's the what's the goal
+the scope what's the what's the goal
+the scope what's the what's the goal
+here so let me let me get started with
+here so let me let me get started with
+here so let me let me get started with
+that so what are PS right many of you
+that so what are PS right many of you
+that so what are PS right many of you
+might have seen them before particularly
+might have seen them before particularly
+might have seen them before particularly
+those were students of physics
+those were students of physics
+those were students of physics
+engineering chemistry and so on because
+engineering chemistry and so on because
+engineering chemistry and so on because
+uh but essentially to sort of introduce
+uh but essentially to sort of introduce
+uh but essentially to sort of introduce
+the concept to introduce the Paradigm
+the concept to introduce the Paradigm
+the concept to introduce the Paradigm
+let me tell you or give you a quote from
+let me tell you or give you a quote from
+let me tell you or give you a quote from
+her Simon hbert Simon was a Nobel
+her Simon hbert Simon was a Nobel
+her Simon hbert Simon was a Nobel
+laurate he won the Nobel prize in
+laurate he won the Nobel prize in
+laurate he won the Nobel prize in
+economics in 1978 and he did many
+economics in 1978 and he did many
+economics in 1978 and he did many
+interesting things about um Behavior
+interesting things about um Behavior
+interesting things about um Behavior
+complex systems he also wrote a paper
+complex systems he also wrote a paper
+complex systems he also wrote a paper
+called what is complexity and from this
+called what is complexity and from this
+called what is complexity and from this
+paper I have taken out this quote okay
+paper I have taken out this quote okay
+paper I have taken out this quote okay
+and let me quote him so given a
+and let me quote him so given a
+and let me quote him so given a
+blueprint to find the corresponding
+blueprint to find the corresponding
+blueprint to find the corresponding
+recipe so this is his sort of context
+recipe so this is his sort of context
+recipe so this is his sort of context
+much of the activity in science is an
+much of the activity in science is an
+much of the activity in science is an
+application of this Paradigm given the
+application of this Paradigm given the
+application of this Paradigm given the
+description of some some natural
+description of some some natural
+description of some some natural
+phenomena so this is the keyword here so
+phenomena so this is the keyword here so
+phenomena so this is the keyword here so
+given the description of some natural
+given the description of some natural
+given the description of some natural
+phenomena the phenomena could be how the
+phenomena the phenomena could be how the
+phenomena the phenomena could be how the
+weather evolves or something as simple
+weather evolves or something as simple
+weather evolves or something as simple
+as when I'm speaking how does the sound
+as when I'm speaking how does the sound
+as when I'm speaking how does the sound
+waves that I'm producing reach you right
+waves that I'm producing reach you right
+waves that I'm producing reach you right
+how do these waves or how does the sound
+how do these waves or how does the sound
+how do these waves or how does the sound
+that I'm making propagate this could be
+that I'm making propagate this could be
+that I'm making propagate this could be
+as simple as that then what Herbert
+as simple as that then what Herbert
+as simple as that then what Herbert
+Simon Says and this is the recipe for
+Simon Says and this is the recipe for
+Simon Says and this is the recipe for
+science is that you find the
+science is that you find the
+science is that you find the
+differential equations so now of course
+differential equations so now of course
+differential equations so now of course
+it doesn't seem to work so find the
+it doesn't seem to work so find the
+it doesn't seem to work so find the
+differential equations that of the
+differential equations that of the
+differential equations that of the
+process right that is going to produce a
+process right that is going to produce a
+process right that is going to produce a
+phenomena or what is he saying he's
+phenomena or what is he saying he's
+phenomena or what is he saying he's
+saying that if you have any physical
+saying that if you have any physical
+saying that if you have any physical
+phenomenon of Interest could be the
+phenomenon of Interest could be the
+phenomenon of Interest could be the
+weather it could be the propagation of
+weather it could be the propagation of
+weather it could be the propagation of
+sound waves it could be what happens
+sound waves it could be what happens
+sound waves it could be what happens
+when I heat up one part of the room when
+when I heat up one part of the room when
+when I heat up one part of the room when
+someone starts a fire unintentionally in
+someone starts a fire unintentionally in
+someone starts a fire unintentionally in
+all these problems there is a process
+all these problems there is a process
+all these problems there is a process
+there are some phenomena and what we
+there are some phenomena and what we
+there are some phenomena and what we
+need to do in order to describe this
+need to do in order to describe this
+need to do in order to describe this
+phenomena scientifically is to write
+phenomena scientifically is to write
+phenomena scientifically is to write
+down the differential equations that
+down the differential equations that
+down the differential equations that
+govern them right so this is sort of the
+govern them right so this is sort of the
+govern them right so this is sort of the
+key key point in other words uh my
+key key point in other words uh my
+key key point in other words uh my
+paraphrasing of it which is written here
+paraphrasing of it which is written here
+paraphrasing of it which is written here
+is that if you have a scientific problem
+is that if you have a scientific problem
+is that if you have a scientific problem
+give me a second if you have a
+give me a second if you have a
+give me a second if you have a
+scientific problem essentially you find
+scientific problem essentially you find
+scientific problem essentially you find
+a differential equation but in general
+a differential equation but in general
+a differential equation but in general
+you find a partial differential equation
+you find a partial differential equation
+you find a partial differential equation
+that is going to describe right so this
+that is going to describe right so this
+that is going to describe right so this
+is somehow the Paradigm that we are
+is somehow the Paradigm that we are
+is somehow the Paradigm that we are
+going to operate and you might have seen
+going to operate and you might have seen
+going to operate and you might have seen
+it in your courses you might have seen
+it in your courses you might have seen
+it in your courses you might have seen
+it in your projects that this is sort of
+it in your projects that this is sort of
+it in your projects that this is sort of
+ubiquitous so you take any kind of
+ubiquitous so you take any kind of
+ubiquitous so you take any kind of
+phenomena and the first thing that we do
+phenomena and the first thing that we do
+phenomena and the first thing that we do
+in order to write down a mathematic iCal
+in order to write down a mathematic iCal
+in order to write down a mathematic iCal
+model is that we write down a
+model is that we write down a
+model is that we write down a
+differential equation so what are these
+differential equation so what are these
+differential equation so what are these
+partial differential equations that we
+partial differential equations that we
+partial differential equations that we
+are going to study we're going to see
+are going to study we're going to see
+are going to study we're going to see
+intimately in the last uh sever in the
+intimately in the last uh sever in the
+intimately in the last uh sever in the
+next several lectures so essentially
+next several lectures so essentially
+next several lectures so essentially
+this is let me let me draw a cartoon a
+this is let me let me draw a cartoon a
+this is let me let me draw a cartoon a
+sketch so what you do is uh let's say
+sketch so what you do is uh let's say
+sketch so what you do is uh let's say
+that you are having a open set domain D
+that you are having a open set domain D
+that you are having a open set domain D
+here and uh this is the let's say this
+here and uh this is the let's say this
+here and uh this is the let's say this
+room here the room that we are sitting
+room here the room that we are sitting
+room here the room that we are sitting
+in and standing in so this is going to
+in and standing in so this is going to
+in and standing in so this is going to
+be your domain D so this is the the
+be your domain D so this is the the
+be your domain D so this is the the
+thing here D is your dimension of your
+thing here D is your dimension of your
+thing here D is your dimension of your
+space for us it's threedimensional but
+space for us it's threedimensional but
+space for us it's threedimensional but
+it could be one dimension it could be
+it could be one dimension it could be
+it could be one dimension it could be
+two dimensions in some problems it could
+two dimensions in some problems it could
+two dimensions in some problems it could
+be thousands of Dimensions you'll also
+be thousands of Dimensions you'll also
+be thousands of Dimensions you'll also
+see that during the progression of this
+see that during the progression of this
+see that during the progression of this
+course so you have open Set uh the room
+course so you have open Set uh the room
+course so you have open Set uh the room
+as I can see here and then you have to
+as I can see here and then you have to
+as I can see here and then you have to
+take some quantity of Interest so let me
+take some quantity of Interest so let me
+take some quantity of Interest so let me
+quickly write down so you have a
+quickly write down so you have a
+quickly write down so you have a
+quantity of
+quantity of
+quantity of
+interest and this is what we denote as U
+interest and this is what we denote as U
+interest and this is what we denote as U
+okay so this quantity of Interest could
+okay so this quantity of Interest could
+okay so this quantity of Interest could
+be anything let's take a very simple one
+be anything let's take a very simple one
+be anything let's take a very simple one
+let's say it's the
+temperature so of course the temperature
+temperature so of course the temperature
+temperature so of course the temperature
+is at any point in space and at any time
+is at any point in space and at any time
+is at any point in space and at any time
+step any point in time right so the
+step any point in time right so the
+step any point in time right so the
+temperature for instance in this room is
+temperature for instance in this room is
+temperature for instance in this room is
+going to change uh it's high during the
+going to change uh it's high during the
+going to change uh it's high during the
+day it's relatively low during the night
+day it's relatively low during the night
+day it's relatively low during the night
+and so on and so forth and also it
+and so on and so forth and also it
+and so on and so forth and also it
+changes in this room it doesn't really
+changes in this room it doesn't really
+changes in this room it doesn't really
+change but if you look at the city of
+change but if you look at the city of
+change but if you look at the city of
+Zurich for sure it changes as we as we
+Zurich for sure it changes as we as we
+Zurich for sure it changes as we as we
+move along as we it's different at the
+move along as we it's different at the
+move along as we it's different at the
+lake than it's on the top of uber for
+lake than it's on the top of uber for
+lake than it's on the top of uber for
+instance right so you have a dynamic
+instance right so you have a dynamic
+instance right so you have a dynamic
+phenomena you have a quantity of
+phenomena you have a quantity of
+phenomena you have a quantity of
+interest and you have physical laws and
+interest and you have physical laws and
+interest and you have physical laws and
+this is important to State here so you
+this is important to State here so you
+this is important to State here so you
+have some physical laws so and these
+have some physical laws so and these
+have some physical laws so and these
+physical laws for instance for the
+physical laws for instance for the
+physical laws for instance for the
+spread of temperature it is called Fier
+spread of temperature it is called Fier
+spread of temperature it is called Fier
+law it could be Newton's law of gravity
+law it could be Newton's law of gravity
+law it could be Newton's law of gravity
+it could be whatever and these physical
+it could be whatever and these physical
+it could be whatever and these physical
+laws are quot ified in terms of a
+laws are quot ified in terms of a
+laws are quot ified in terms of a
+mathematical object which looks like
+mathematical object which looks like
+mathematical object which looks like
+this so it's a complicated nonlinear
+this so it's a complicated nonlinear
+this so it's a complicated nonlinear
+relationship as you can see this is the
+relationship as you can see this is the
+relationship as you can see this is the
+nonlinearity here it's a complicated
+nonlinearity here it's a complicated
+nonlinearity here it's a complicated
+nonlinear relationship which takes the
+nonlinear relationship which takes the
+nonlinear relationship which takes the
+quantity and relates it for instance to
+quantity and relates it for instance to
+quantity and relates it for instance to
+the gradient so what is the gradient
+the gradient so what is the gradient
+the gradient so what is the gradient
+just for notation gradient of U is U X1
+just for notation gradient of U is U X1
+just for notation gradient of U is U X1
+the vector ux1 ux2
+the vector ux1 ux2
+the vector ux1 ux2
+ux3 and similarly you have the time
+ux3 and similarly you have the time
+ux3 and similarly you have the time
+derivative you have the second
+derivative you have the second
+derivative you have the second
+derivative which is just the Matrix
+derivative which is just the Matrix
+derivative which is just the Matrix
+thean Matrix which puts all these things
+thean Matrix which puts all these things
+thean Matrix which puts all these things
+together so essentially what the
+together so essentially what the
+together so essentially what the
+physical law says is that you have a
+physical law says is that you have a
+physical law says is that you have a
+relationship a very complicated
+relationship a very complicated
+relationship a very complicated
+nonlinear relationship I emphasize
+nonlinear relationship I emphasize
+nonlinear relationship I emphasize
+between the quantity of interest and its
+between the quantity of interest and its
+between the quantity of interest and its
+derivatives because these derivatives
+derivatives because these derivatives
+derivatives because these derivatives
+for instance tell you how things change
+for instance tell you how things change
+for instance tell you how things change
+right how things change in time is given
+right how things change in time is given
+right how things change in time is given
+by the temporal derivative how things
+by the temporal derivative how things
+by the temporal derivative how things
+change in space is given by the spatial
+change in space is given by the spatial
+change in space is given by the spatial
+derivatives the spatial second
+derivatives the spatial second
+derivatives the spatial second
+derivatives and so on and you put them
+derivatives and so on and you put them
+derivatives and so on and you put them
+in a bin and this complicated non lar
+in a bin and this complicated non lar
+in a bin and this complicated non lar
+relation gives you a PD so I'm sure that
+relation gives you a PD so I'm sure that
+relation gives you a PD so I'm sure that
+all of you have seen these kind of PDs
+all of you have seen these kind of PDs
+all of you have seen these kind of PDs
+before if in some form or the other and
+before if in some form or the other and
+before if in some form or the other and
+this is sort of a very generic form of
+this is sort of a very generic form of
+this is sort of a very generic form of
+it of course in practice we deal with
+it of course in practice we deal with
+it of course in practice we deal with
+much s concrete examples of this and
+much s concrete examples of this and
+much s concrete examples of this and
+this is what I'm going to give you in
+this is what I'm going to give you in
+this is what I'm going to give you in
+the next two or 3 minutes so these are
+the next two or 3 minutes so these are
+the next two or 3 minutes so these are
+different examples of PDs and just to
+different examples of PDs and just to
+different examples of PDs and just to
+illustrate the sort of differ scales at
+illustrate the sort of differ scales at
+illustrate the sort of differ scales at
+which we can operate so you can start
+which we can operate so you can start
+which we can operate so you can start
+right from the scale of atoms or even
+right from the scale of atoms or even
+right from the scale of atoms or even
+Elementary particles that that
+Elementary particles that that
+Elementary particles that that
+constitute atoms so this here is sort of
+constitute atoms so this here is sort of
+constitute atoms so this here is sort of
+a molecule as you can see and the PD
+a molecule as you can see and the PD
+a molecule as you can see and the PD
+that comes in here uh let me write it
+that comes in here uh let me write it
+that comes in here uh let me write it
+down is shorting this
+down is shorting this
+down is shorting this
+equation shorting this
+equation shorting this
+equation shorting this
+equation again this is the fundamental
+equation again this is the fundamental
+equation again this is the fundamental
+equation of chemistry and atomic physics
+equation of chemistry and atomic physics
+equation of chemistry and atomic physics
+or molecular physics and the equation is
+or molecular physics and the equation is
+or molecular physics and the equation is
+something like uh let me write it down
+something like uh let me write it down
+something like uh let me write it down
+laian of s plus some potential V okay so
+laian of s plus some potential V okay so
+laian of s plus some potential V okay so
+this is s is what is called the wave
+this is s is what is called the wave
+this is s is what is called the wave
+function oh
+sorry how many of you have in this class
+sorry how many of you have in this class
+sorry how many of you have in this class
+have seen the rting this equation
+before so more than half you haven't
+before so more than half you haven't
+before so more than half you haven't
+seen the shingus equation
+seen the shingus equation
+seen the shingus equation
+okay I'm bit surprised if you go to
+okay I'm bit surprised if you go to
+okay I'm bit surprised if you go to
+Wikipedia you can easily read very
+Wikipedia you can easily read very
+Wikipedia you can easily read very
+quickly what it is so this is what is
+quickly what it is so this is what is
+quickly what it is so this is what is
+called a wave function it tells us what
+called a wave function it tells us what
+called a wave function it tells us what
+is the probability let's say that we
+is the probability let's say that we
+is the probability let's say that we
+have a single electron which is moving
+have a single electron which is moving
+have a single electron which is moving
+around uh the nucleus it tells you the
+around uh the nucleus it tells you the
+around uh the nucleus it tells you the
+probability of finding that electron at
+probability of finding that electron at
+probability of finding that electron at
+a certain position and at certain
+a certain position and at certain
+a certain position and at certain
+momentum for instance this is a typical
+momentum for instance this is a typical
+momentum for instance this is a typical
+example this laian this is the complex
+example this laian this is the complex
+example this laian this is the complex
+imaginary complex number the the unit
+imaginary complex number the the unit
+imaginary complex number the the unit
+imaginary number I and laian is the
+imaginary number I and laian is the
+imaginary number I and laian is the
+trace of the hian okay so this is the
+trace of the hian okay so this is the
+trace of the hian okay so this is the
+trace of the Hessian just in case gradi
+trace of the Hessian just in case gradi
+trace of the Hessian just in case gradi
+secondary you and this is some sort of a
+secondary you and this is some sort of a
+secondary you and this is some sort of a
+potential so this tells you the kinetic
+potential so this tells you the kinetic
+potential so this tells you the kinetic
+energy this term here and this tells you
+energy this term here and this tells you
+energy this term here and this tells you
+the potential energy so all of us in
+the potential energy so all of us in
+the potential energy so all of us in
+some sense are walking representations
+some sense are walking representations
+some sense are walking representations
+of the shorting equation because at the
+of the shorting equation because at the
+of the shorting equation because at the
+end of the day we are made up of atoms
+end of the day we are made up of atoms
+end of the day we are made up of atoms
+and electrons and so on and so forth and
+and electrons and so on and so forth and
+and electrons and so on and so forth and
+if you put all of them together we'll
+if you put all of them together we'll
+if you put all of them together we'll
+have a very very very high dimensional
+have a very very very high dimensional
+have a very very very high dimensional
+strting equation so the fundamental
+strting equation so the fundamental
+strting equation so the fundamental
+equation of chemistry and atomic physics
+equation of chemistry and atomic physics
+equation of chemistry and atomic physics
+is the stringers
+is the stringers
+is the stringers
+equation uh which is a partial
+equation uh which is a partial
+equation uh which is a partial
+differential equation right and in order
+differential equation right and in order
+differential equation right and in order
+to do these kind of things like nano
+to do these kind of things like nano
+to do these kind of things like nano
+technology to design some n nanom
+technology to design some n nanom
+technology to design some n nanom
+material for instance you need to solve
+material for instance you need to solve
+material for instance you need to solve
+the shingus equation in some form or the
+the shingus equation in some form or the
+the shingus equation in some form or the
+other otherwise you can't design it
+other otherwise you can't design it
+other otherwise you can't design it
+here's another example this is of course
+here's another example this is of course
+here's another example this is of course
+was in the news in the last 3 four years
+was in the news in the last 3 four years
+was in the news in the last 3 four years
+which is uh detection of gravitational
+which is uh detection of gravitational
+which is uh detection of gravitational
+waves as you can see these are two black
+waves as you can see these are two black
+waves as you can see these are two black
+holes which are coming towards each
+holes which are coming towards each
+holes which are coming towards each
+other and in the Collision they generate
+other and in the Collision they generate
+other and in the Collision they generate
+a lot of gravitational waves and these
+a lot of gravitational waves and these
+a lot of gravitational waves and these
+were the waves that were detected by by
+were the waves that were detected by by
+were the waves that were detected by by
+the by the gravitational Observatory
+the by the gravitational Observatory
+the by the gravitational Observatory
+back in the US right so this is uh and
+back in the US right so this is uh and
+back in the US right so this is uh and
+what are the equations that govern these
+what are the equations that govern these
+what are the equations that govern these
+kind
+kind
+kind
+of phenomena who can tell me so if you
+of phenomena who can tell me so if you
+of phenomena who can tell me so if you
+have the Coalition of black holes and
+have the Coalition of black holes and
+have the Coalition of black holes and
+generation of gravitational waves
+generation of gravitational waves
+generation of gravitational waves
+yes of what kind
+yes of what kind
+yes of what kind
+of
+of
+of
+Einstein okay so these are the Einstein
+Einstein okay so these are the Einstein
+Einstein okay so these are the Einstein
+field equations this I don't even dare
+field equations this I don't even dare
+field equations this I don't even dare
+to write down because I won't be able to
+to write down because I won't be able to
+to write down because I won't be able to
+finish but let me just write the name
+finish but let me just write the name
+finish but let me just write the name
+here so okay what happened here so
+here so okay what happened here so
+here so okay what happened here so
+thanks so these are the Einstein
+equations and Einstein of course is the
+equations and Einstein of course is the
+equations and Einstein of course is the
+most famous alumnus of eth so and it's
+most famous alumnus of eth so and it's
+most famous alumnus of eth so and it's
+just fitting that his equations these
+just fitting that his equations these
+just fitting that his equations these
+are a very complicated set of partial
+are a very complicated set of partial
+are a very complicated set of partial
+differential
+differential
+differential
+equations so you can write them in
+equations so you can write them in
+equations so you can write them in
+different forms different guyses but uh
+different forms different guyses but uh
+different forms different guyses but uh
+these These are partial differential
+these These are partial differential
+these These are partial differential
+equations and so you started at the
+equations and so you started at the
+equations and so you started at the
+scale of an electron which is a highy
+scale of an electron which is a highy
+scale of an electron which is a highy
+subatomic particle and this is really at
+subatomic particle and this is really at
+subatomic particle and this is really at
+the scale like a universal scale right
+the scale like a universal scale right
+the scale like a universal scale right
+so you have like 30 40 50 orders of
+so you have like 30 40 50 orders of
+so you have like 30 40 50 orders of
+magnitude difference in the scales that
+magnitude difference in the scales that
+magnitude difference in the scales that
+we are looking for but all these
+we are looking for but all these
+we are looking for but all these
+phenomena needless to say are modeled by
+phenomena needless to say are modeled by
+phenomena needless to say are modeled by
+partial differential equations and this
+partial differential equations and this
+partial differential equations and this
+is of course an example of the average
+is of course an example of the average
+is of course an example of the average
+temperature so Global Climate very much
+temperature so Global Climate very much
+temperature so Global Climate very much
+in the news and the global as you'll see
+in the news and the global as you'll see
+in the news and the global as you'll see
+later on in the course we have some
+later on in the course we have some
+later on in the course we have some
+details about it global climate is also
+details about it global climate is also
+details about it global climate is also
+modeled by systems of
+modeled by systems of
+modeled by systems of
+pdes and if you look at it so global
+pdes and if you look at it so global
+pdes and if you look at it so global
+climate is a very complex interplay
+climate is a very complex interplay
+climate is a very complex interplay
+between different physical processes so
+between different physical processes so
+between different physical processes so
+you have fluid motion right so this is
+you have fluid motion right so this is
+you have fluid motion right so this is
+in the atmosphere and the ocean you have
+in the atmosphere and the ocean you have
+in the atmosphere and the ocean you have
+fluid motion and the equations that
+fluid motion and the equations that
+fluid motion and the equations that
+govern fluid flow are what are called
+govern fluid flow are what are called
+govern fluid flow are what are called
+the Navia Stokes equations so you have
+the Navia Stokes equations so you have
+the Navia Stokes equations so you have
+Navia
+Navia
+Navia
+Stokes again we will see that in quite
+Stokes again we will see that in quite
+Stokes again we will see that in quite
+some detail in later lectures so that is
+some detail in later lectures so that is
+some detail in later lectures so that is
+the fundamental sort of block here fluid
+the fundamental sort of block here fluid
+the fundamental sort of block here fluid
+flow equations of course it is supp
+flow equations of course it is supp
+flow equations of course it is supp
+mented or augmented by things like
+mented or augmented by things like
+mented or augmented by things like
+radiation so again another thing that we
+radiation so again another thing that we
+radiation so again another thing that we
+are going to see radiative transfer
+are going to see radiative transfer
+are going to see radiative transfer
+equations uh these are also pdes
+equations uh these are also pdes
+equations uh these are also pdes
+radiative
+radiative
+radiative
+transfer and there are other other pdes
+transfer and there are other other pdes
+transfer and there are other other pdes
+that come in in the global climate
+that come in in the global climate
+that come in in the global climate
+systems so there are bunch of PDs couple
+systems so there are bunch of PDs couple
+systems so there are bunch of PDs couple
+PDS which sort of govern the evolution
+PDS which sort of govern the evolution
+PDS which sort of govern the evolution
+of the of of our climate and needless to
+of the of of our climate and needless to
+of the of of our climate and needless to
+say so this is again at a large scale at
+say so this is again at a large scale at
+say so this is again at a large scale at
+the scale of the Earth but even at the
+the scale of the Earth but even at the
+the scale of the Earth but even at the
+scale of a human being or biological
+scale of a human being or biological
+scale of a human being or biological
+organism for instance this is this is a
+organism for instance this is this is a
+organism for instance this is this is a
+fly Wing So the fly is the fruit fly
+fly Wing So the fly is the fruit fly
+fly Wing So the fly is the fruit fly
+that we the common fruit fly of which is
+that we the common fruit fly of which is
+that we the common fruit fly of which is
+used in biology labs and the equations
+used in biology labs and the equations
+used in biology labs and the equations
+that govern it are what are called
+that govern it are what are called
+that govern it are what are called
+reaction diffusion equations again some
+reaction diffusion equations again some
+reaction diffusion equations again some
+things that we are going
+things that we are going
+things that we are going
+to we are going to see reaction
+to we are going to see reaction
+to we are going to see reaction
+diffusion
+diffusion
+diffusion
+equations and the reason why I put this
+equations and the reason why I put this
+equations and the reason why I put this
+particular picture here of how a
+particular picture here of how a
+particular picture here of how a
+flywing evolves really when it's uh you
+flywing evolves really when it's uh you
+flywing evolves really when it's uh you
+know when it's in an embrionic stage is
+know when it's in an embrionic stage is
+know when it's in an embrionic stage is
+because I myself wrote down these
+because I myself wrote down these
+because I myself wrote down these
+equations so that's why it's my
+equations so that's why it's my
+equations so that's why it's my
+equations they're not not comparable to
+equations they're not not comparable to
+equations they're not not comparable to
+Einstein's equations but I wrote them so
+Einstein's equations but I wrote them so
+Einstein's equations but I wrote them so
+it's uh something I'm proud of uh anyway
+it's uh something I'm proud of uh anyway
+it's uh something I'm proud of uh anyway
+so this are as you can see again
+so this are as you can see again
+so this are as you can see again
+different kinds of phenomena you started
+different kinds of phenomena you started
+different kinds of phenomena you started
+with materials went all the way to the
+with materials went all the way to the
+with materials went all the way to the
+universal scales then you went down to
+universal scales then you went down to
+universal scales then you went down to
+the Earth and then at the level of an
+the Earth and then at the level of an
+the Earth and then at the level of an
+organism biology chemistry physics
+organism biology chemistry physics
+organism biology chemistry physics
+climate science all these things all
+climate science all these things all
+climate science all these things all
+these different scientific domains but
+these different scientific domains but
+these different scientific domains but
+the common language in which we express
+the common language in which we express
+the common language in which we express
+them are given by these mathematical
+them are given by these mathematical
+them are given by these mathematical
+objects right so this is the sort of the
+objects right so this is the sort of the
+objects right so this is the sort of the
+beauty of the thing that even very very
+beauty of the thing that even very very
+beauty of the thing that even very very
+different phenomena and I personally
+different phenomena and I personally
+different phenomena and I personally
+have studied almost all of them but from
+have studied almost all of them but from
+have studied almost all of them but from
+this vantage point because it allows you
+this vantage point because it allows you
+this vantage point because it allows you
+to express very very different things
+to express very very different things
+to express very very different things
+very very different physical systems and
+very very different physical systems and
+very very different physical systems and
+express them in one particular
+express them in one particular
+express them in one particular
+mathematical language which is the
+mathematical language which is the
+mathematical language which is the
+language of Aral differential equations
+language of Aral differential equations
+language of Aral differential equations
+that's why they are very very important
+that's why they are very very important
+that's why they are very very important
+and the con Institute the bulk of at
+and the con Institute the bulk of at
+and the con Institute the bulk of at
+least this course where we are going to
+least this course where we are going to
+least this course where we are going to
+use machine learning uh machine learning
+use machine learning uh machine learning
+use machine learning uh machine learning
+to sort of uh solve this partial
+to sort of uh solve this partial
+to sort of uh solve this partial
+differential equations okay and as I
+differential equations okay and as I
+differential equations okay and as I
+said you'll see many many examples
+said you'll see many many examples
+said you'll see many many examples
+during concrete examples during this
+during concrete examples during this
+during concrete examples during this
+course how many of you can uh know the
+course how many of you can uh know the
+course how many of you can uh know the
+Navia Stokes equations how many of you
+Navia Stokes equations how many of you
+Navia Stokes equations how many of you
+have seen the Navia Stokes equations
+have seen the Navia Stokes equations
+have seen the Navia Stokes equations
+just to have a ballp
+just to have a ballp
+just to have a ballp
+part okay others will find out right so
+part okay others will find out right so
+part okay others will find out right so
+that's good
+that's good
+that's good
+okay so now once you have these
+okay so now once you have these
+okay so now once you have these
+equations whether it's a string equation
+equations whether it's a string equation
+equations whether it's a string equation
+NAIA Stokes equations Einstein's
+NAIA Stokes equations Einstein's
+NAIA Stokes equations Einstein's
+equations even Einstein himself he was
+equations even Einstein himself he was
+equations even Einstein himself he was
+only able to solve his own equations in
+only able to solve his own equations in
+only able to solve his own equations in
+a very very special case he's barely
+a very very special case he's barely
+a very very special case he's barely
+able to solve it he wrote down the
+able to solve it he wrote down the
+able to solve it he wrote down the
+equations um in
+equations um in
+equations um in
+1915 and even today you you don't have a
+1915 and even today you you don't have a
+1915 and even today you you don't have a
+formula to solve these equations right
+formula to solve these equations right
+formula to solve these equations right
+you know that very well that even simple
+you know that very well that even simple
+you know that very well that even simple
+algebraic equations cannot be solved let
+algebraic equations cannot be solved let
+algebraic equations cannot be solved let
+alone this kind of differential
+alone this kind of differential
+alone this kind of differential
+equations the point is is that U we
+equations the point is is that U we
+equations the point is is that U we
+cannot use pen and paper to solve these
+cannot use pen and paper to solve these
+cannot use pen and paper to solve these
+equations because uh there is no way we
+equations because uh there is no way we
+equations because uh there is no way we
+can we can find formulas right except in
+can we can find formulas right except in
+can we can find formulas right except in
+very very special cases none of these
+very very special cases none of these
+very very special cases none of these
+equations that I wrote down you can find
+equations that I wrote down you can find
+equations that I wrote down you can find
+formulas except in special cases so what
+formulas except in special cases so what
+formulas except in special cases so what
+do we do in that case so in absence of
+do we do in that case so in absence of
+do we do in that case so in absence of
+formulas how do we solve these equations
+formulas how do we solve these equations
+formulas how do we solve these equations
+so what we do is uh essentially can be
+so what we do is uh essentially can be
+so what we do is uh essentially can be
+summed up by one word which is
+summed up by one word which is
+summed up by one word which is
+approximation so we don't solve these
+approximation so we don't solve these
+approximation so we don't solve these
+equations exactly because we can't uh
+equations exactly because we can't uh
+equations exactly because we can't uh
+simply unable to but we can approximate
+simply unable to but we can approximate
+simply unable to but we can approximate
+them so instead of saying that the
+them so instead of saying that the
+them so instead of saying that the
+temperature in this room is exactly that
+temperature in this room is exactly that
+temperature in this room is exactly that
+can be more or less exactly solved if
+can be more or less exactly solved if
+can be more or less exactly solved if
+you know the boundary conditions and so
+you know the boundary conditions and so
+you know the boundary conditions and so
+on but nevertheless we do an
+on but nevertheless we do an
+on but nevertheless we do an
+approximation and this is what is done
+approximation and this is what is done
+approximation and this is what is done
+by what are called traditional numerical
+by what are called traditional numerical
+by what are called traditional numerical
+methods means um so here are the let me
+methods means um so here are the let me
+methods means um so here are the let me
+highlight this so traditional numerical
+highlight this so traditional numerical
+highlight this so traditional numerical
+methods so you have a PD and people have
+methods so you have a PD and people have
+methods so you have a PD and people have
+been writing down does anyone know who
+been writing down does anyone know who
+been writing down does anyone know who
+wrote down the first partial
+wrote down the first partial
+wrote down the first partial
+differential equ so who wrote down the
+differential equ so who wrote down the
+differential equ so who wrote down the
+first differential equation let's do a
+first differential equation let's do a
+first differential equation let's do a
+pop quiz here who who do you think wrote
+pop quiz here who who do you think wrote
+pop quiz here who who do you think wrote
+down the first differential
+down the first differential
+down the first differential
+equation someone else
+equation someone else
+equation someone else
+yes a differential equation it could be
+yes a differential equation it could be
+yes a differential equation it could be
+an ordinary differential equation also
+an ordinary differential equation also
+an ordinary differential equation also
+not a partial differential equation yes
+not a partial differential equation yes
+not a partial differential equation yes
+Newton actually Newton did
+Newton actually Newton did
+Newton actually Newton did
+so Newton saw the first uh he wrote down
+so Newton saw the first uh he wrote down
+so Newton saw the first uh he wrote down
+because he wrote down his Laws of Motion
+because he wrote down his Laws of Motion
+because he wrote down his Laws of Motion
+through that's why he more or less had
+through that's why he more or less had
+through that's why he more or less had
+to invent calculus right because he
+to invent calculus right because he
+to invent calculus right because he
+could he could discover or he could
+could he could discover or he could
+could he could discover or he could
+write down the equations but the first
+write down the equations but the first
+write down the equations but the first
+partial differential equation as you
+partial differential equation as you
+partial differential equation as you
+said was actually written down by Oiler
+said was actually written down by Oiler
+said was actually written down by Oiler
+who is probably the most famous Swiss
+who is probably the most famous Swiss
+who is probably the most famous Swiss
+scientist and he wrote down what is
+scientist and he wrote down what is
+scientist and he wrote down what is
+called Oilers equations and the Oilers
+called Oilers equations and the Oilers
+called Oilers equations and the Oilers
+equations let me just write down so
+equations let me just write down so
+equations let me just write down so
+these were Oilers equations so this C
+these were Oilers equations so this C
+these were Oilers equations so this C
+the flow of a what is called an ideal
+the flow of a what is called an ideal
+the flow of a what is called an ideal
+fluid what Navi and Stokes realized is
+fluid what Navi and Stokes realized is
+fluid what Navi and Stokes realized is
+that no fluid is ideal so you have to
+that no fluid is ideal so you have to
+that no fluid is ideal so you have to
+make some approximation and that's how
+make some approximation and that's how
+make some approximation and that's how
+they came up with the Navia Stokes
+they came up with the Navia Stokes
+they came up with the Navia Stokes
+equations and this equation was written
+equations and this equation was written
+equations and this equation was written
+down more or less in the form that we
+down more or less in the form that we
+down more or less in the form that we
+still use it today in
+still use it today in
+still use it today in
+1757 so that is the year in which the in
+1757 so that is the year in which the in
+1757 so that is the year in which the in
+which Oiler wrote down is oiless
+which Oiler wrote down is oiless
+which Oiler wrote down is oiless
+equations and let me tell you even today
+equations and let me tell you even today
+equations and let me tell you even today
+uh there are thousands or tens of
+uh there are thousands or tens of
+uh there are thousands or tens of
+thousands of people who study the Oilers
+thousands of people who study the Oilers
+thousands of people who study the Oilers
+equation because we still don't
+equation because we still don't
+equation because we still don't
+understand everything about them so it's
+understand everything about them so it's
+understand everything about them so it's
+it's sort of remarkable but from 1757 to
+it's sort of remarkable but from 1757 to
+it's sort of remarkable but from 1757 to
+let's say I don't don't know me
+let's say I don't don't know me
+let's say I don't don't know me
+1928 I think was the year till then from
+1928 I think was the year till then from
+1928 I think was the year till then from
+almost um almost 200 years 175 years how
+almost um almost 200 years 175 years how
+almost um almost 200 years 175 years how
+people solved equations was by writing
+people solved equations was by writing
+people solved equations was by writing
+formulas you see they tried to find out
+formulas you see they tried to find out
+formulas you see they tried to find out
+some special situation how you can solve
+some special situation how you can solve
+some special situation how you can solve
+it for instance Oiler himself and many
+it for instance Oiler himself and many
+it for instance Oiler himself and many
+others they did
+others they did
+others they did
+this and they also used what are called
+this and they also used what are called
+this and they also used what are called
+ASM totic expansions they would expand
+ASM totic expansions they would expand
+ASM totic expansions they would expand
+things in tailor expansions and then
+things in tailor expansions and then
+things in tailor expansions and then
+they will try to match coefficients and
+they will try to match coefficients and
+they will try to match coefficients and
+so on but in 1928 around 19 late 1920s
+so on but in 1928 around 19 late 1920s
+so on but in 1928 around 19 late 1920s
+there was a revolution because there was
+there was a revolution because there was
+there was a revolution because there was
+a first person his name is Richardson he
+a first person his name is Richardson he
+a first person his name is Richardson he
+was a physicist in
+was a physicist in
+was a physicist in
+Cambridge so what Richardson came up
+Cambridge so what Richardson came up
+Cambridge so what Richardson came up
+with is an idea to use computers at that
+with is an idea to use computers at that
+with is an idea to use computers at that
+time analog computers to solve by using
+time analog computers to solve by using
+time analog computers to solve by using
+what are called numerical methods so
+what are called numerical methods so
+what are called numerical methods so
+these are ways in which you take a
+these are ways in which you take a
+these are ways in which you take a
+partial differential equation and you
+partial differential equation and you
+partial differential equation and you
+discretize it I'm just telling you the
+discretize it I'm just telling you the
+discretize it I'm just telling you the
+words discretize it and uh this started
+words discretize it and uh this started
+words discretize it and uh this started
+the field of modern numerical approxim
+the field of modern numerical approxim
+the field of modern numerical approxim
+of differential equations both ordinary
+of differential equations both ordinary
+of differential equations both ordinary
+and partial differential equations and
+and partial differential equations and
+and partial differential equations and
+the reason why Richardson even started
+the reason why Richardson even started
+the reason why Richardson even started
+this process is because he wanted to
+this process is because he wanted to
+this process is because he wanted to
+predict the weather and it is and today
+predict the weather and it is and today
+predict the weather and it is and today
+the weather is predicted by solving
+the weather is predicted by solving
+the weather is predicted by solving
+these equations so in a way his program
+these equations so in a way his program
+these equations so in a way his program
+succeeded Beyond uh you know the weather
+succeeded Beyond uh you know the weather
+succeeded Beyond uh you know the weather
+is very very accurately predicted so
+is very very accurately predicted so
+is very very accurately predicted so
+that's so what what he realized and what
+that's so what what he realized and what
+that's so what what he realized and what
+many other people contributed for noyman
+many other people contributed for noyman
+many other people contributed for noyman
+in particular is another name that
+in particular is another name that
+in particular is another name that
+stands out another alumnus of eth
+stands out another alumnus of eth
+stands out another alumnus of eth
+who contributed significantly and this
+who contributed significantly and this
+who contributed significantly and this
+is during the Manhattan Project so from
+is during the Manhattan Project so from
+is during the Manhattan Project so from
+1940 to
+1940 to
+1940 to
+1945 uh during the second world war he
+1945 uh during the second world war he
+1945 uh during the second world war he
+realized that you can't build a nuclear
+realized that you can't build a nuclear
+realized that you can't build a nuclear
+bomb without simulating it without
+bomb without simulating it without
+bomb without simulating it without
+without finding out how how it behaves
+without finding out how how it behaves
+without finding out how how it behaves
+and for that he and his group derived a
+and for that he and his group derived a
+and for that he and his group derived a
+lot of interesting numerical methods so
+lot of interesting numerical methods so
+lot of interesting numerical methods so
+of course to do this course you don't
+of course to do this course you don't
+of course to do this course you don't
+need to know what numerical methods are
+need to know what numerical methods are
+need to know what numerical methods are
+but you need to know that this is going
+but you need to know that this is going
+but you need to know that this is going
+to be the primary form in which we are
+to be the primary form in which we are
+to be the primary form in which we are
+going to derive data you know the our
+going to derive data you know the our
+going to derive data you know the our
+data is mostly going to come from
+data is mostly going to come from
+data is mostly going to come from
+numerical methods and there are a wide
+numerical methods and there are a wide
+numerical methods and there are a wide
+variety of them as you can see this is
+variety of them as you can see this is
+variety of them as you can see this is
+almost 100 year old subject so there is
+almost 100 year old subject so there is
+almost 100 year old subject so there is
+lot of lot of activity lot of research
+lot of lot of activity lot of research
+lot of lot of activity lot of research
+lot of ideas lot of code and so on and
+lot of ideas lot of code and so on and
+lot of ideas lot of code and so on and
+maybe I'll try to give you a very very
+maybe I'll try to give you a very very
+maybe I'll try to give you a very very
+brief glimpse of what it is the most
+brief glimpse of what it is the most
+brief glimpse of what it is the most
+popular methods are what are called
+popular methods are what are called
+popular methods are what are called
+finite difference methods finite volume
+finite difference methods finite volume
+finite difference methods finite volume
+methods finite element methods
+methods finite element methods
+methods finite element methods
+collocation spectral methods let's got
+collocation spectral methods let's got
+collocation spectral methods let's got
+spectral methods and so on and so forth
+spectral methods and so on and so forth
+spectral methods and so on and so forth
+and just again as a pop quiz here just
+and just again as a pop quiz here just
+and just again as a pop quiz here just
+to get an idea of what I'm dealing with
+to get an idea of what I'm dealing with
+to get an idea of what I'm dealing with
+in this class how many of you have um
+in this class how many of you have um
+in this class how many of you have um
+seen a finite difference method for
+seen a finite difference method for
+seen a finite difference method for
+instance so yeah many people but not
+instance so yeah many people but not
+instance so yeah many people but not
+everyone okay but doesn't matter so I
+everyone okay but doesn't matter so I
+everyone okay but doesn't matter so I
+presume that the infinite elements how
+presume that the infinite elements how
+presume that the infinite elements how
+many have seen is the same even less
+many have seen is the same even less
+many have seen is the same even less
+finite elements okay fair enough so then
+finite elements okay fair enough so then
+finite elements okay fair enough so then
+we have to we have to do something but
+we have to we have to do something but
+we have to we have to do something but
+these are sort of the current Paradigm
+these are sort of the current Paradigm
+these are sort of the current Paradigm
+for numerical methods and for those who
+for numerical methods and for those who
+for numerical methods and for those who
+haven't seen this let me just
+haven't seen this let me just
+haven't seen this let me just
+recapitulate the simplest numerical
+recapitulate the simplest numerical
+recapitulate the simplest numerical
+method that you can imagine so I take a
+method that you can imagine so I take a
+method that you can imagine so I take a
+pde so this is the heat equation so here
+pde so this is the heat equation so here
+pde so this is the heat equation so here
+is the heat equation I take it in one
+is the heat equation I take it in one
+is the heat equation I take it in one
+space Dimension so now I realize I don't
+space Dimension so now I realize I don't
+space Dimension so now I realize I don't
+know how big this is yeah so I realize
+know how big this is yeah so I realize
+know how big this is yeah so I realize
+that uh at least to me I don't see see
+that uh at least to me I don't see see
+that uh at least to me I don't see see
+my see my grid so I'll just expand it a
+my see my grid so I'll just expand it a
+my see my grid so I'll just expand it a
+little bit here
+little bit here
+little bit here
+yeah so what is the idea so this is the
+yeah so what is the idea so this is the
+yeah so what is the idea so this is the
+heat equation uh U so U is the
+temperature so you have the temperature
+temperature so you have the temperature
+temperature so you have the temperature
+for instance in this room but of course
+for instance in this room but of course
+for instance in this room but of course
+the room is not one dimensional so I
+the room is not one dimensional so I
+the room is not one dimensional so I
+kept things simple and the domain that
+kept things simple and the domain that
+kept things simple and the domain that
+you're looking at is here 0 to 1 right
+you're looking at is here 0 to 1 right
+you're looking at is here 0 to 1 right
+in space so the space is from 0 to 1 and
+in space so the space is from 0 to 1 and
+in space so the space is from 0 to 1 and
+time is from 0 to capital T okay so this
+time is from 0 to capital T okay so this
+time is from 0 to capital T okay so this
+is your your domain and uh this equation
+is your your domain and uh this equation
+is your your domain and uh this equation
+is not enough you need to give what are
+is not enough you need to give what are
+is not enough you need to give what are
+called initial conditions so what is the
+called initial conditions so what is the
+called initial conditions so what is the
+temperature now and then we can predict
+temperature now and then we can predict
+temperature now and then we can predict
+the temperature in the future so these
+the temperature in the future so these
+the temperature in the future so these
+are the initial conditions that are
+are the initial conditions that are
+are the initial conditions that are
+given here and we also need some
+given here and we also need some
+given here and we also need some
+boundary conditions so just for
+boundary conditions so just for
+boundary conditions so just for
+Simplicity so boundary conditions for
+Simplicity so boundary conditions for
+Simplicity so boundary conditions for
+instance would what would be the
+instance would what would be the
+instance would what would be the
+temperature on all the walls here right
+temperature on all the walls here right
+temperature on all the walls here right
+so for Simplicity I just put zero so
+so for Simplicity I just put zero so
+so for Simplicity I just put zero so
+along these uh here and here it will all
+along these uh here and here it will all
+along these uh here and here it will all
+be zero okay just imagine that you have
+be zero okay just imagine that you have
+be zero okay just imagine that you have
+ice blocks and then you heat up
+ice blocks and then you heat up
+ice blocks and then you heat up
+something okay so this is the heat
+something okay so this is the heat
+something okay so this is the heat
+equation as you can see and uh this
+equation as you can see and uh this
+equation as you can see and uh this
+particular equation we can actually
+particular equation we can actually
+particular equation we can actually
+solve it by hand there are solution
+solve it by hand there are solution
+solve it by hand there are solution
+formulas which are based on Green's
+formulas which are based on Green's
+formulas which are based on Green's
+function to solve these equations but we
+function to solve these equations but we
+function to solve these equations but we
+can also easily simulate it approximate
+can also easily simulate it approximate
+can also easily simulate it approximate
+it on a computer and the way we do it is
+it on a computer and the way we do it is
+it on a computer and the way we do it is
+very simple so first we have the domain
+very simple so first we have the domain
+very simple so first we have the domain
+which is uh A Spacetime domain this box
+which is uh A Spacetime domain this box
+which is uh A Spacetime domain this box
+as you can see so let me write it down
+as you can see so let me write it down
+as you can see so let me write it down
+so it's um 01 so the okay DT this is the
+so it's um 01 so the okay DT this is the
+so it's um 01 so the okay DT this is the
+domain let's say 01 * 0
+domain let's say 01 * 0
+domain let's say 01 * 0
+t and this domain as you can see instead
+t and this domain as you can see instead
+t and this domain as you can see instead
+of having it's it's a sort of a
+of having it's it's a sort of a
+of having it's it's a sort of a
+continuous object it's a instead of a
+continuous object it's a instead of a
+continuous object it's a instead of a
+Continuum object instead of that I have
+Continuum object instead of that I have
+Continuum object instead of that I have
+discretized it so I broken it down into
+discretized it so I broken it down into
+discretized it so I broken it down into
+these tiny points and at each of these
+these tiny points and at each of these
+these tiny points and at each of these
+points so the way I have done it is that
+points so the way I have done it is that
+points so the way I have done it is that
+I have um I have a Delta X so this is
+I have um I have a Delta X so this is
+I have um I have a Delta X so this is
+what is called a mesh
+what is called a mesh
+what is called a mesh
+size and similarly I have a in time I
+size and similarly I have a in time I
+size and similarly I have a in time I
+have a delta T as as you can see so
+have a delta T as as you can see so
+have a delta T as as you can see so
+delta T this is a Time
+delta T this is a Time
+delta T this is a Time
+step and then I have broken down
+step and then I have broken down
+step and then I have broken down
+everything this entire domain just into
+everything this entire domain just into
+everything this entire domain just into
+a collection of points so this domain
+a collection of points so this domain
+a collection of points so this domain
+here becomes a collection of points XJ
+here becomes a collection of points XJ
+here becomes a collection of points XJ
+TN XJ as you can see is J * Delta X and
+TN XJ as you can see is J * Delta X and
+TN XJ as you can see is J * Delta X and
+TN is n * delta T so instead of having a
+TN is n * delta T so instead of having a
+TN is n * delta T so instead of having a
+continuous domain I just have a lattice
+continuous domain I just have a lattice
+continuous domain I just have a lattice
+or a mesh or cloud cloud of points in
+or a mesh or cloud cloud of points in
+or a mesh or cloud cloud of points in
+this particular case it's going to be a
+this particular case it's going to be a
+this particular case it's going to be a
+mesh so that's the first thing because
+mesh so that's the first thing because
+mesh so that's the first thing because
+we cannot put continuous quantities on
+we cannot put continuous quantities on
+we cannot put continuous quantities on
+the computer so we have to put some
+the computer so we have to put some
+the computer so we have to put some
+discrete quantities digital quantities
+discrete quantities digital quantities
+discrete quantities digital quantities
+so we we did this right this is this is
+so we we did this right this is this is
+so we we did this right this is this is
+an elementary step but that's not enough
+an elementary step but that's not enough
+an elementary step but that's not enough
+because we also have the differential
+because we also have the differential
+because we also have the differential
+equation right so this was just taking
+equation right so this was just taking
+equation right so this was just taking
+so what we're going to do is we're going
+so what we're going to do is we're going
+so what we're going to do is we're going
+to approximate the solution U at X jtn
+to approximate the solution U at X jtn
+to approximate the solution U at X jtn
+at these points by some discrete object
+at these points by some discrete object
+at these points by some discrete object
+which we are going to call as VJ okay as
+which we are going to call as VJ okay as
+which we are going to call as VJ okay as
+you can see maybe in the picture also it
+you can see maybe in the picture also it
+you can see maybe in the picture also it
+is here the vng and and it's not enough
+is here the vng and and it's not enough
+is here the vng and and it's not enough
+because we also have this derivatives so
+because we also have this derivatives so
+because we also have this derivatives so
+you have UT the time derivative you have
+you have UT the time derivative you have
+you have UT the time derivative you have
+XX uxx the second derivative in space so
+XX uxx the second derivative in space so
+XX uxx the second derivative in space so
+what we are going to do is we're going
+what we are going to do is we're going
+what we are going to do is we're going
+to approximate these derivatives by
+to approximate these derivatives by
+to approximate these derivatives by
+finite differences so here is a finite
+finite differences so here is a finite
+finite differences so here is a finite
+difference right this is a finite
+difference right this is a finite
+difference right this is a finite
+difference and this is the simplest
+difference and this is the simplest
+difference and this is the simplest
+possible finite difference so if you
+possible finite difference so if you
+possible finite difference so if you
+take a derivative this is what we
+take a derivative this is what we
+take a derivative this is what we
+learned in calculus we take a derivative
+learned in calculus we take a derivative
+learned in calculus we take a derivative
+and we replace it with a for difference
+and we replace it with a for difference
+and we replace it with a for difference
+and we take the second derivative and we
+and we take the second derivative and we
+and we take the second derivative and we
+replace it with the central difference
+replace it with the central difference
+replace it with the central difference
+okay so it's as simple as that so in
+okay so it's as simple as that so in
+okay so it's as simple as that so in
+principle any differential operator
+principle any differential operator
+principle any differential operator
+which is derivatives locally right so
+which is derivatives locally right so
+which is derivatives locally right so
+what you can do is that you can do
+what you can do is that you can do
+what you can do is that you can do
+tailor expansions and you can
+tailor expansions and you can
+tailor expansions and you can
+approximate it in terms of these kind of
+approximate it in terms of these kind of
+approximate it in terms of these kind of
+finite differences uh of course we are
+finite differences uh of course we are
+finite differences uh of course we are
+on a regular or uniform grid so it is
+on a regular or uniform grid so it is
+on a regular or uniform grid so it is
+very simple uh you can do that and then
+very simple uh you can do that and then
+very simple uh you can do that and then
+when you just take these two together
+when you just take these two together
+when you just take these two together
+you know that this so we say that this
+you know that this so we say that this
+you know that this so we say that this
+finite difference equals to this finite
+finite difference equals to this finite
+finite difference equals to this finite
+difference so when you do that you end
+difference so when you do that you end
+difference so when you do that you end
+up with the numerical method so the
+up with the numerical method so the
+up with the numerical method so the
+numerical method tells you so this is a
+numerical method tells you so this is a
+numerical method tells you so this is a
+Lambda some some parameter that I have
+Lambda some some parameter that I have
+Lambda some some parameter that I have
+defined here which is the ratio of the
+defined here which is the ratio of the
+defined here which is the ratio of the
+time step to the square of the M size
+time step to the square of the M size
+time step to the square of the M size
+but in general what does it tell me so
+but in general what does it tell me so
+but in general what does it tell me so
+if you look at this picture what it
+if you look at this picture what it
+if you look at this picture what it
+tells me is that I can March in time so
+tells me is that I can March in time so
+tells me is that I can March in time so
+given the solution here I can predict
+given the solution here I can predict
+given the solution here I can predict
+the solution at the next time step
+the solution at the next time step
+the solution at the next time step
+because all that I need are the values
+because all that I need are the values
+because all that I need are the values
+here the values here and the values here
+here the values here and the values here
+here the values here and the values here
+similarly if I want to go here I need
+similarly if I want to go here I need
+similarly if I want to go here I need
+the values here the values here and the
+the values here the values here and the
+the values here the values here and the
+values here which is supplied to me by
+values here which is supplied to me by
+values here which is supplied to me by
+the boundary right so it's a Time
+the boundary right so it's a Time
+the boundary right so it's a Time
+marching process I start initially go to
+marching process I start initially go to
+marching process I start initially go to
+the first time step I have all the
+the first time step I have all the
+the first time step I have all the
+values the first time step go to the
+values the first time step go to the
+values the first time step go to the
+next time step go to the next time step
+next time step go to the next time step
+next time step go to the next time step
+and so on and this is very easy to code
+and so on and this is very easy to code
+and so on and this is very easy to code
+up on Modern computers and as a
+up on Modern computers and as a
+up on Modern computers and as a
+consequence you can also see and show
+consequence you can also see and show
+consequence you can also see and show
+that this is indeed a solution or an
+that this is indeed a solution or an
+that this is indeed a solution or an
+approximation to the solution of the
+approximation to the solution of the
+approximation to the solution of the
+heat equation so this is a finite
+heat equation so this is a finite
+heat equation so this is a finite
+different scheme and finite different
+different scheme and finite different
+different scheme and finite different
+schemes are very easy when you have like
+schemes are very easy when you have like
+schemes are very easy when you have like
+cartisian domains and so on when you
+cartisian domains and so on when you
+cartisian domains and so on when you
+have complicated domains like for
+have complicated domains like for
+have complicated domains like for
+instance uh this this is a aircraft so
+instance uh this this is a aircraft so
+instance uh this this is a aircraft so
+this is just the nose section of an
+this is just the nose section of an
+this is just the nose section of an
+aircraft and you want to simulate flow
+aircraft and you want to simulate flow
+aircraft and you want to simulate flow
+around it so here for instance then you
+around it so here for instance then you
+around it so here for instance then you
+need uh more complicated uh measures you
+need uh more complicated uh measures you
+need uh more complicated uh measures you
+cannot use cartisian grids anymore and
+cannot use cartisian grids anymore and
+cannot use cartisian grids anymore and
+you need more complicated methods like
+you need more complicated methods like
+you need more complicated methods like
+finite volume methods and finite element
+finite volume methods and finite element
+finite volume methods and finite element
+methods and so on but these are these
+methods and so on but these are these
+methods and so on but these are these
+are details and this is not the
+are details and this is not the
+are details and this is not the
+objective of this course
+objective of this course
+objective of this course
+right so you have a finite difference or
+right so you have a finite difference or
+right so you have a finite difference or
+a finite element finite volume spectal
+methods and this will give you an
+methods and this will give you an
+methods and this will give you an
+approximation of the exact solution and
+approximation of the exact solution and
+approximation of the exact solution and
+this works very very well means as I
+this works very very well means as I
+this works very very well means as I
+said this is something which is 100
+said this is something which is 100
+said this is something which is 100
+years
+years
+years
+old and even in my lab we have all kinds
+old and even in my lab we have all kinds
+old and even in my lab we have all kinds
+of examples of exotic phenomena that are
+of examples of exotic phenomena that are
+of examples of exotic phenomena that are
+solved using numerical methods so as you
+solved using numerical methods so as you
+solved using numerical methods so as you
+can see here let me give you a quick
+can see here let me give you a quick
+can see here let me give you a quick
+quick to so this is the core collapse of
+quick to so this is the core collapse of
+quick to so this is the core collapse of
+a supernova supernova is a massive star
+a supernova supernova is a massive star
+a supernova supernova is a massive star
+it's dying and how is the Dynamics and
+it's dying and how is the Dynamics and
+it's dying and how is the Dynamics and
+you can see that there's some very
+you can see that there's some very
+you can see that there's some very
+complex physics in 3D which has been
+complex physics in 3D which has been
+complex physics in 3D which has been
+simulated with this nuclear with this
+simulated with this nuclear with this
+simulated with this nuclear with this
+kind of numerical methods this one was
+kind of numerical methods this one was
+kind of numerical methods this one was
+with a
+with a
+with a
+finite uh finite volume method I think
+finite uh finite volume method I think
+finite uh finite volume method I think
+yeah finite volume method this one is
+yeah finite volume method this one is
+yeah finite volume method this one is
+more with the finite difference method
+more with the finite difference method
+more with the finite difference method
+uh this is clouds so you you start with
+uh this is clouds so you you start with
+uh this is clouds so you you start with
+dynamics of clouds start cumulus clouds
+dynamics of clouds start cumulus clouds
+dynamics of clouds start cumulus clouds
+again done with a finite difference
+again done with a finite difference
+again done with a finite difference
+method
+method
+method
+here and uh this is the propagation so
+here and uh this is the propagation so
+here and uh this is the propagation so
+this a landslide and the landslide hits
+this a landslide and the landslide hits
+this a landslide and the landslide hits
+the lake or in this case a particular
+the lake or in this case a particular
+the lake or in this case a particular
+Bay excites a tsunami again can be
+Bay excites a tsunami again can be
+Bay excites a tsunami again can be
+modeled by some shallow water equations
+modeled by some shallow water equations
+modeled by some shallow water equations
+and then you solve them with some finite
+and then you solve them with some finite
+and then you solve them with some finite
+volume method and this is the flow past
+volume method and this is the flow past
+volume method and this is the flow past
+an aircraft or rocket and this is done
+an aircraft or rocket and this is done
+an aircraft or rocket and this is done
+with a finite element so all this is
+with a finite element so all this is
+with a finite element so all this is
+done in my lab for instance and you know
+done in my lab for instance and you know
+done in my lab for instance and you know
+that there are all kinds of success ful
+that there are all kinds of success ful
+that there are all kinds of success ful
+examples of these methods so they work
+examples of these methods so they work
+examples of these methods so they work
+they they're very good and they work but
+they they're very good and they work but
+they they're very good and they work but
+what we say or what we argue today and
+what we say or what we argue today and
+what we say or what we argue today and
+what we going to sort of try and address
+what we going to sort of try and address
+what we going to sort of try and address
+during the course of these lectures is
+during the course of these lectures is
+during the course of these lectures is
+even though these methods work very well
+even though these methods work very well
+even though these methods work very well
+they are time tested for 100 years now
+they are time tested for 100 years now
+they are time tested for 100 years now
+there are some issues with them and this
+there are some issues with them and this
+there are some issues with them and this
+is why I wanted to briefly describe what
+is why I wanted to briefly describe what
+is why I wanted to briefly describe what
+these issues are as quickly as I can so
+these issues are as quickly as I can so
+these issues are as quickly as I can so
+what's the caveat right why do we care
+what's the caveat right why do we care
+what's the caveat right why do we care
+anymore the caveat is that you'll see in
+anymore the caveat is that you'll see in
+anymore the caveat is that you'll see in
+a second that these method so if you
+a second that these method so if you
+a second that these method so if you
+look at the method for the heat equation
+look at the method for the heat equation
+look at the method for the heat equation
+so the one that I just showed
+so the one that I just showed
+so the one that I just showed
+you so if you remember that I had a mesh
+you so if you remember that I had a mesh
+you so if you remember that I had a mesh
+size and a Time step right so it turns
+size and a Time step right so it turns
+size and a Time step right so it turns
+out that for different stability reasons
+out that for different stability reasons
+out that for different stability reasons
+your time step has to scale in a certain
+your time step has to scale in a certain
+your time step has to scale in a certain
+manner it is to scale as a square of the
+manner it is to scale as a square of the
+manner it is to scale as a square of the
+mes size because after all this was the
+mes size because after all this was the
+mes size because after all this was the
+quantity that came in right delta T over
+quantity that came in right delta T over
+quantity that came in right delta T over
+Delta X
+Delta X
+Delta X
+squ and the error the amount of error
+squ and the error the amount of error
+squ and the error the amount of error
+that we make because we had critizing
+that we make because we had critizing
+that we make because we had critizing
+that also scales in terms of the square
+that also scales in terms of the square
+that also scales in terms of the square
+of the meas size you can you can show
+of the meas size you can you can show
+of the meas size you can you can show
+that for this particular example for the
+that for this particular example for the
+that for this particular example for the
+finite difference method so this is
+finite difference method so this is
+finite difference method so this is
+going to be the error but what is a
+going to be the error but what is a
+going to be the error but what is a
+compute what is the computational cost
+compute what is the computational cost
+compute what is the computational cost
+to get certain amount of error so that
+to get certain amount of error so that
+to get certain amount of error so that
+depends on the number of mesh points so
+depends on the number of mesh points so
+depends on the number of mesh points so
+in 1D it is very simple it is 1 / Delta
+in 1D it is very simple it is 1 / Delta
+in 1D it is very simple it is 1 / Delta
+X right but in 2D you just have 1 /
+X right but in 2D you just have 1 /
+X right but in 2D you just have 1 /
+Delta X in each Direction so it is 1 /
+Delta X in each Direction so it is 1 /
+Delta X in each Direction so it is 1 /
+Delta x s in 3D it's 1/ Delta X cubed
+Delta x s in 3D it's 1/ Delta X cubed
+Delta x s in 3D it's 1/ Delta X cubed
+and so on so the points they scale in
+and so on so the points they scale in
+and so on so the points they scale in
+terms of this a negative sign me for
+terms of this a negative sign me for
+terms of this a negative sign me for
+some reason I forgot to put a negative
+some reason I forgot to put a negative
+some reason I forgot to put a negative
+sign so scale exponentially in the
+sign so scale exponentially in the
+sign so scale exponentially in the
+dimension in some sense right the time
+dimension in some sense right the time
+dimension in some sense right the time
+step the number of time steps is
+step the number of time steps is
+step the number of time steps is
+essentially one over 1 / delta T sorry
+essentially one over 1 / delta T sorry
+essentially one over 1 / delta T sorry
+so it is Delta x^ s so now the compute
+so it is Delta x^ s so now the compute
+so it is Delta x^ s so now the compute
+is the computational cost of this is the
+is the computational cost of this is the
+is the computational cost of this is the
+total number of proportional because per
+total number of proportional because per
+total number of proportional because per
+m point per time step you do a certain
+m point per time step you do a certain
+m point per time step you do a certain
+amount of arithmetic operations so it is
+amount of arithmetic operations so it is
+amount of arithmetic operations so it is
+proportional to this um to the product
+proportional to this um to the product
+proportional to this um to the product
+of these guys so this is the scaling
+of these guys so this is the scaling
+of these guys so this is the scaling
+it's a very simple scaling so if you
+it's a very simple scaling so if you
+it's a very simple scaling so if you
+look at the computational complexity
+look at the computational complexity
+look at the computational complexity
+this is I just take this equation here
+this is I just take this equation here
+this is I just take this equation here
+this equation here and I substitute and
+this equation here and I substitute and
+this equation here and I substitute and
+I get a relationship which is like this
+I get a relationship which is like this
+I get a relationship which is like this
+okay and the scaling means the scale
+okay and the scaling means the scale
+okay and the scaling means the scale
+factor could be 10 it could be 100 it
+factor could be 10 it could be 100 it
+factor could be 10 it could be 100 it
+could be whatever but it's a finite
+could be whatever but it's a finite
+could be whatever but it's a finite
+scale factor and now if you start
+scale factor and now if you start
+scale factor and now if you start
+putting in let's say in three Di
+putting in let's say in three Di
+putting in let's say in three Di
+mentions it is 3 5 over2 right 5 over
+mentions it is 3 5 over2 right 5 over
+mentions it is 3 5 over2 right 5 over
+two and if you want an error of 1 1%
+two and if you want an error of 1 1%
+two and if you want an error of 1 1%
+that is 1 over 100 right and uh so this
+that is 1 over 100 right and uh so this
+that is 1 over 100 right and uh so this
+is 100 to the^ 5/ 2 square root of
+is 100 to the^ 5/ 2 square root of
+is 100 to the^ 5/ 2 square root of
+100,000 but that's not enough because
+100,000 but that's not enough because
+100,000 but that's not enough because
+you also have a scale factor which is
+you also have a scale factor which is
+you also have a scale factor which is
+like 100 so you can see that the
+like 100 so you can see that the
+like 100 so you can see that the
+computational cost it's going it's going
+computational cost it's going it's going
+computational cost it's going it's going
+to be large okay so even if we have good
+to be large okay so even if we have good
+to be large okay so even if we have good
+methods the the point is that the
+methods the the point is that the
+methods the the point is that the
+compute is always going to grow
+compute is always going to grow
+compute is always going to grow
+exponentially with Dimension so in
+exponentially with Dimension so in
+exponentially with Dimension so in
+particular this is what this formula
+particular this is what this formula
+particular this is what this formula
+shows us right in particular in 3D you
+shows us right in particular in 3D you
+shows us right in particular in 3D you
+will have difficulties with the
+will have difficulties with the
+will have difficulties with the
+numerical methods I'll give you an
+numerical methods I'll give you an
+numerical methods I'll give you an
+example but is this point clear that
+example but is this point clear that
+example but is this point clear that
+just from very very basic Elementary
+just from very very basic Elementary
+just from very very basic Elementary
+scaling we know that in order to get a
+scaling we know that in order to get a
+scaling we know that in order to get a
+certain amount of error the compute has
+certain amount of error the compute has
+certain amount of error the compute has
+to scale exponentially somehow and
+to scale exponentially somehow and
+to scale exponentially somehow and
+because of that the computational volume
+because of that the computational volume
+because of that the computational volume
+is going to be very very large okay and
+is going to be very very large okay and
+is going to be very very large okay and
+this leads to issues right in particular
+this leads to issues right in particular
+this leads to issues right in particular
+there are some other issues also so the
+there are some other issues also so the
+there are some other issues also so the
+the most important issue is
+the most important issue is
+the most important issue is
+computational cost that's why I want to
+computational cost that's why I want to
+computational cost that's why I want to
+write it here but there are other issues
+write it here but there are other issues
+write it here but there are other issues
+for instance to generate a grid is not
+for instance to generate a grid is not
+for instance to generate a grid is not
+easy um you have multiscale multi
+easy um you have multiscale multi
+easy um you have multiscale multi
+physics problems High dimensional
+physics problems High dimensional
+physics problems High dimensional
+problems all these cases because
+problems all these cases because
+problems all these cases because
+remember that the compute scales
+remember that the compute scales
+remember that the compute scales
+exponentially Dimension so if you want
+exponentially Dimension so if you want
+exponentially Dimension so if you want
+to solve a 100 dimensional problem or a
+to solve a 100 dimensional problem or a
+to solve a 100 dimensional problem or a
+10 dimensional problem already this is
+10 dimensional problem already this is
+10 dimensional problem already this is
+uh the compute sces as a factor of six
+uh the compute sces as a factor of six
+uh the compute sces as a factor of six
+which is power of six
+which is power of six
+which is power of six
+which is just insanely large right 100
+which is just insanely large right 100
+which is just insanely large right 100
+to the^ 6 is a very very high number so
+to the^ 6 is a very very high number so
+to the^ 6 is a very very high number so
+it's a lot of compute and because of
+it's a lot of compute and because of
+it's a lot of compute and because of
+that there are many many problems which
+that there are many many problems which
+that there are many many problems which
+are interesting for instance boltzman
+are interesting for instance boltzman
+are interesting for instance boltzman
+equation or shingus equation shingus
+equation or shingus equation shingus
+equation or shingus equation shingus
+equation the number of Dimensions
+equation the number of Dimensions
+equation the number of Dimensions
+depends on the number of particles that
+depends on the number of particles that
+depends on the number of particles that
+you're Elementary particles that you're
+you're Elementary particles that you're
+you're Elementary particles that you're
+looking at so even for um very very
+looking at so even for um very very
+looking at so even for um very very
+simple atoms you are out you know like
+simple atoms you are out you know like
+simple atoms you are out you know like
+carbon for instance you have many
+carbon for instance you have many
+carbon for instance you have many
+electrons and many states and this
+electrons and many states and this
+electrons and many states and this
+becomes easily a 100 dimensional
+becomes easily a 100 dimensional
+becomes easily a 100 dimensional
+thousand dimensional problem so you
+thousand dimensional problem so you
+thousand dimensional problem so you
+cannot solve them or if you solve them
+cannot solve them or if you solve them
+cannot solve them or if you solve them
+with a numerical method this is going to
+with a numerical method this is going to
+with a numerical method this is going to
+be very very expensive so that is one
+be very very expensive so that is one
+be very very expensive so that is one
+one computational challenge another
+one computational challenge another
+one computational challenge another
+computational challenge is what are
+computational challenge is what are
+computational challenge is what are
+called um many query problems so what
+called um many query problems so what
+called um many query problems so what
+are these many query problems uh these
+are these many query problems uh these
+are these many query problems uh these
+are multiple calls to a PD
+are multiple calls to a PD
+are multiple calls to a PD
+solver multiple calls through a PD
+solver multiple calls through a PD
+solver multiple calls through a PD
+solver sometimes they can be
+solver sometimes they can be
+solver sometimes they can be
+parallelized but often they are
+parallelized but often they are
+parallelized but often they are
+sequential and then it becomes each call
+sequential and then it becomes each call
+sequential and then it becomes each call
+is very expensive then if you have to do
+is very expensive then if you have to do
+is very expensive then if you have to do
+it 100 times it just grows very very
+it 100 times it just grows very very
+it 100 times it just grows very very
+expensive let me give you an example so
+expensive let me give you an example so
+expensive let me give you an example so
+this is um an air foil it's um a section
+this is um an air foil it's um a section
+this is um an air foil it's um a section
+of the wing so when you design the wing
+of the wing so when you design the wing
+of the wing so when you design the wing
+of an aircraft uh the first step is to
+of an aircraft uh the first step is to
+of an aircraft uh the first step is to
+First design each cross-section right so
+First design each cross-section right so
+First design each cross-section right so
+the cross-section is an air foil it has
+the cross-section is an air foil it has
+the cross-section is an air foil it has
+this typical tear drop shape for
+this typical tear drop shape for
+this typical tear drop shape for
+aerodynamic um sort of reasons right so
+aerodynamic um sort of reasons right so
+aerodynamic um sort of reasons right so
+to reduce the drag to the lift and so on
+to reduce the drag to the lift and so on
+to reduce the drag to the lift and so on
+and the way this design is done whether
+and the way this design is done whether
+and the way this design is done whether
+it's by boing or Airbus or any aircraft
+it's by boing or Airbus or any aircraft
+it's by boing or Airbus or any aircraft
+design company is very simple so what
+design company is very simple so what
+design company is very simple so what
+you do is that you take a starting point
+you do is that you take a starting point
+you do is that you take a starting point
+so this is uh the black here is a
+so this is uh the black here is a
+so this is uh the black here is a
+starting point of the of the wing of the
+starting point of the of the wing of the
+starting point of the of the wing of the
+air foil and then you solve the
+air foil and then you solve the
+air foil and then you solve the
+equations these are either depending on
+equations these are either depending on
+equations these are either depending on
+the regime either the oiler or the Navia
+the regime either the oiler or the Navia
+the regime either the oiler or the Navia
+Stokes equations the same equations
+Stokes equations the same equations
+Stokes equations the same equations
+which have been around for more than 200
+which have been around for more than 200
+which have been around for more than 200
+years and then you see if the then you
+years and then you see if the then you
+years and then you see if the then you
+do a gradient descent and see how to
+do a gradient descent and see how to
+do a gradient descent and see how to
+reduce the lift or not to reduce the
+reduce the lift or not to reduce the
+reduce the lift or not to reduce the
+lift but to keep the lift constant and
+lift but to keep the lift constant and
+lift but to keep the lift constant and
+keep on reducing the drag so you you you
+keep on reducing the drag so you you you
+keep on reducing the drag so you you you
+compute a gradient and then you move
+compute a gradient and then you move
+compute a gradient and then you move
+step by step in order to reduce the lift
+step by step in order to reduce the lift
+step by step in order to reduce the lift
+in the drag but the point is this might
+in the drag but the point is this might
+in the drag but the point is this might
+take you easily 100 or thousand
+take you easily 100 or thousand
+take you easily 100 or thousand
+iterations but for each iteration you
+iterations but for each iteration you
+iterations but for each iteration you
+have to do this kind of a forward solve
+have to do this kind of a forward solve
+have to do this kind of a forward solve
+you have to solve the PD numerically
+you have to solve the PD numerically
+you have to solve the PD numerically
+which is done here by using in this
+which is done here by using in this
+which is done here by using in this
+particular case a finite volume method
+particular case a finite volume method
+particular case a finite volume method
+but here it's not like you're solving
+but here it's not like you're solving
+but here it's not like you're solving
+the PD once you're solving it a thousand
+the PD once you're solving it a thousand
+the PD once you're solving it a thousand
+times and you cannot do it parallell
+times and you cannot do it parallell
+times and you cannot do it parallell
+right because you need a previous value
+right because you need a previous value
+right because you need a previous value
+in order to go to the next value and
+in order to go to the next value and
+in order to go to the next value and
+then to the next value and so on so
+then to the next value and so on so
+then to the next value and so on so
+that's why this is a computationally
+that's why this is a computationally
+that's why this is a computationally
+very expensive problem for instance
+very expensive problem for instance
+very expensive problem for instance
+boing they spend I know this from their
+boing they spend I know this from their
+boing they spend I know this from their
+Chief technology officer that they spend
+Chief technology officer that they spend
+Chief technology officer that they spend
+approximately $2 billion a year 2
+approximately $2 billion a year 2
+approximately $2 billion a year 2
+billion on their compute budget which is
+billion on their compute budget which is
+billion on their compute budget which is
+a lot of it goes towards of course they
+a lot of it goes towards of course they
+a lot of it goes towards of course they
+have not spent enough otherwise their
+have not spent enough otherwise their
+have not spent enough otherwise their
+windows will not crash out and and so on
+windows will not crash out and and so on
+windows will not crash out and and so on
+they probably need to spend 5 billion
+they probably need to spend 5 billion
+they probably need to spend 5 billion
+but you can imagine that this this is
+but you can imagine that this this is
+but you can imagine that this this is
+expensive and you'll see why in a second
+expensive and you'll see why in a second
+expensive and you'll see why in a second
+this is expensive because you have to do
+this is expensive because you have to do
+this is expensive because you have to do
+multiple multiple calls you have to do
+multiple multiple calls you have to do
+multiple multiple calls you have to do
+multiple multiple trials because this is
+multiple multiple trials because this is
+multiple multiple trials because this is
+what design is all about right but the
+what design is all about right but the
+what design is all about right but the
+point is multiple calls here so this is
+point is multiple calls here so this is
+point is multiple calls here so this is
+another example this is what is called
+another example this is what is called
+another example this is what is called
+an inverse problem uh let me look at the
+an inverse problem uh let me look at the
+an inverse problem uh let me look at the
+time I have to be
+time I have to be
+time I have to be
+quick so this is to detect the the
+quick so this is to detect the the
+quick so this is to detect the the
+geology of the earth underneath NE so
+geology of the earth underneath NE so
+geology of the earth underneath NE so
+how is this done suppose you want to
+how is this done suppose you want to
+how is this done suppose you want to
+find out what are what are the
+find out what are what are the
+find out what are what are the
+geophysical properties of the soil in
+geophysical properties of the soil in
+geophysical properties of the soil in
+jich for instance or the rock formation
+jich for instance or the rock formation
+jich for instance or the rock formation
+in jich so what people do is that they
+in jich so what people do is that they
+in jich so what people do is that they
+they have a they have a set of
+they have a they have a set of
+they have a they have a set of
+sensors which are located here they have
+sensors which are located here they have
+sensors which are located here they have
+a truck uh on land it's typically a
+a truck uh on land it's typically a
+a truck uh on land it's typically a
+truck on on water it's a ship and this
+truck on on water it's a ship and this
+truck on on water it's a ship and this
+has a this has a wave generator so it is
+has a this has a wave generator so it is
+has a this has a wave generator so it is
+generating W waves which it is sending
+generating W waves which it is sending
+generating W waves which it is sending
+into the sub soft surface so the wave
+into the sub soft surface so the wave
+into the sub soft surface so the wave
+equation which is utt minus c² of X of U
+equation which is utt minus c² of X of U
+equation which is utt minus c² of X of U
+this is what is being solved this is a
+this is what is being solved this is a
+this is what is being solved this is a
+wave
+wave
+wave
+equation and then what what happens is
+equation and then what what happens is
+equation and then what what happens is
+that these waves get reflected right so
+that these waves get reflected right so
+that these waves get reflected right so
+these waves get reflected they're
+these waves get reflected they're
+these waves get reflected they're
+captured by sensors and they're captured
+captured by sensors and they're captured
+captured by sensors and they're captured
+in time right they're observed in time
+in time right they're observed in time
+in time right they're observed in time
+so what you get is uh sort of a
+so what you get is uh sort of a
+so what you get is uh sort of a
+measurement field which looks like this
+measurement field which looks like this
+measurement field which looks like this
+very noisy um you know this kind of time
+very noisy um you know this kind of time
+very noisy um you know this kind of time
+snap shots these are for different
+snap shots these are for different
+snap shots these are for different
+sensors uh you get you get a measurement
+sensors uh you get you get a measurement
+sensors uh you get you get a measurement
+field like that and what you have to
+field like that and what you have to
+field like that and what you have to
+solve is an inverse problem because here
+solve is an inverse problem because here
+solve is an inverse problem because here
+you know the solution in some sense but
+you know the solution in some sense but
+you know the solution in some sense but
+you don't know the coefficient this this
+you don't know the coefficient this this
+you don't know the coefficient this this
+guy here because this tells us the
+guy here because this tells us the
+guy here because this tells us the
+geological properties of the the soil so
+geological properties of the the soil so
+geological properties of the the soil so
+this is the c² of X and then you have to
+this is the c² of X and then you have to
+this is the c² of X and then you have to
+invert then it is going to look
+invert then it is going to look
+invert then it is going to look
+something like this okay so here it's an
+something like this okay so here it's an
+something like this okay so here it's an
+inverse problem again it is solved in
+inverse problem again it is solved in
+inverse problem again it is solved in
+iterative manner so you start with a
+iterative manner so you start with a
+iterative manner so you start with a
+guess then you solve the forward problem
+guess then you solve the forward problem
+guess then you solve the forward problem
+see if things match and then move in the
+see if things match and then move in the
+see if things match and then move in the
+direction of the gradient so again it
+direction of the gradient so again it
+direction of the gradient so again it
+takes um 100 to a th iterations in order
+takes um 100 to a th iterations in order
+takes um 100 to a th iterations in order
+to get anything acceptable and these 100
+to get anything acceptable and these 100
+to get anything acceptable and these 100
+to th000 iterations or 10,000 iterations
+to th000 iterations or 10,000 iterations
+to th000 iterations or 10,000 iterations
+are PS to the PD solver which make this
+are PS to the PD solver which make this
+are PS to the PD solver which make this
+very difficult we will we will look at
+very difficult we will we will look at
+very difficult we will we will look at
+this problem later in the course in some
+this problem later in the course in some
+this problem later in the course in some
+detail okay so this was another example
+detail okay so this was another example
+detail okay so this was another example
+uncertainty quantification so if you
+uncertainty quantification so if you
+uncertainty quantification so if you
+have a turbulent fluid flow it doesn't
+have a turbulent fluid flow it doesn't
+have a turbulent fluid flow it doesn't
+make any sense to to essentially do
+make any sense to to essentially do
+make any sense to to essentially do
+point wise measurements or because you
+point wise measurements or because you
+point wise measurements or because you
+can see that this flow becomes very very
+can see that this flow becomes very very
+can see that this flow becomes very very
+turbulent so what you need to do is to
+turbulent so what you need to do is to
+turbulent so what you need to do is to
+compute statistics mean variance and so
+compute statistics mean variance and so
+compute statistics mean variance and so
+on which are much more stable but
+on which are much more stable but
+on which are much more stable but
+statistics we know is over 100 samples
+statistics we know is over 100 samples
+statistics we know is over 100 samples
+thousand samples 10,000 samples and this
+thousand samples 10,000 samples and this
+thousand samples 10,000 samples and this
+makes it very very expensive right and
+makes it very very expensive right and
+makes it very very expensive right and
+how expensive I'll just give you an idea
+how expensive I'll just give you an idea
+how expensive I'll just give you an idea
+so this is why I said what is the
+so this is why I said what is the
+so this is why I said what is the
+computational cost for doing these
+computational cost for doing these
+computational cost for doing these
+things right so I know the cost here
+things right so I know the cost here
+things right so I know the cost here
+because I have to pay it in some form or
+because I have to pay it in some form or
+because I have to pay it in some form or
+the other so here is an example so this
+the other so here is an example so this
+the other so here is an example so this
+is a fluid flow so this is an obious
+is a fluid flow so this is an obious
+is a fluid flow so this is an obious
+Stokes
+Stokes
+Stokes
+equation this is an academic test case
+equation this is an academic test case
+equation this is an academic test case
+but you get an idea and this is the
+but you get an idea and this is the
+but you get an idea and this is the
+initial condition and this is the final
+initial condition and this is the final
+initial condition and this is the final
+solution and as you can see this is a
+solution and as you can see this is a
+solution and as you can see this is a
+very very rich solution right me you can
+very very rich solution right me you can
+very very rich solution right me you can
+see that there are all these vertices
+see that there are all these vertices
+see that there are all these vertices
+and worlds and uh things move around and
+and worlds and uh things move around and
+and worlds and uh things move around and
+so on so this is a very complex Solution
+so on so this is a very complex Solution
+so on so this is a very complex Solution
+that's why you need to compute things
+that's why you need to compute things
+that's why you need to compute things
+like the mean which is here the variance
+like the mean which is here the variance
+like the mean which is here the variance
+which is here and this requires so this
+which is here and this requires so this
+which is here and this requires so this
+is a very high resolution simulation and
+is a very high resolution simulation and
+is a very high resolution simulation and
+this requires approximately 1,24
+this requires approximately 1,24
+this requires approximately 1,24
+samples not enough but this is what we
+samples not enough but this is what we
+samples not enough but this is what we
+could afford and we go to the biggest
+could afford and we go to the biggest
+could afford and we go to the biggest
+supercomputer in Switzerland which is p
+supercomputer in Switzerland which is p
+supercomputer in Switzerland which is p
+Dain we have a highly optimized code
+Dain we have a highly optimized code
+Dain we have a highly optimized code
+which is developed in my lab and for a
+which is developed in my lab and for a
+which is developed in my lab and for a
+single sample even in uh for this
+single sample even in uh for this
+single sample even in uh for this
+problem it requires about 100 node hours
+problem it requires about 100 node hours
+problem it requires about 100 node hours
+right but we need I think it was even
+right but we need I think it was even
+right but we need I think it was even
+samples no maybe 1,24 samples so this
+samples no maybe 1,24 samples so this
+samples no maybe 1,24 samples so this
+requires 100,000 node hours but of
+requires 100,000 node hours but of
+requires 100,000 node hours but of
+course this is not cheap right because
+course this is not cheap right because
+course this is not cheap right because
+uh this machine has to someone has to
+uh this machine has to someone has to
+uh this machine has to someone has to
+buy the machine they have to power it
+buy the machine they have to power it
+buy the machine they have to power it
+there are people who are actually in the
+there are people who are actually in the
+there are people who are actually in the
+audience who are employed by the by cscs
+audience who are employed by the by cscs
+audience who are employed by the by cscs
+the super Computing Center here so all
+the super Computing Center here so all
+the super Computing Center here so all
+these things are necessary this these
+these things are necessary this these
+these things are necessary this these
+are cost of course we we get some grants
+are cost of course we we get some grants
+are cost of course we we get some grants
+but if you had to pay like a private
+but if you had to pay like a private
+but if you had to pay like a private
+person then just for this simulation we
+person then just for this simulation we
+person then just for this simulation we
+would have to pay half a million sh
+would have to pay half a million sh
+would have to pay half a million sh
+pranks okay now you can imagine why the
+pranks okay now you can imagine why the
+pranks okay now you can imagine why the
+budget of boing is 2 billion right when
+budget of boing is 2 billion right when
+budget of boing is 2 billion right when
+for a single simulation I have to pay
+for a single simulation I have to pay
+for a single simulation I have to pay
+half a million Swiss FRS so this is uh
+half a million Swiss FRS so this is uh
+half a million Swiss FRS so this is uh
+this is the thing that it's um even if
+this is the thing that it's um even if
+this is the thing that it's um even if
+these methods are there and they work
+these methods are there and they work
+these methods are there and they work
+well the computational cost is just
+well the computational cost is just
+well the computational cost is just
+prohibitively expensive but that's not
+prohibitively expensive but that's not
+prohibitively expensive but that's not
+the only thing this is the last point I
+the only thing this is the last point I
+the only thing this is the last point I
+want to make and it's a very important
+want to make and it's a very important
+want to make and it's a very important
+point because uh you know the Dynamics
+point because uh you know the Dynamics
+point because uh you know the Dynamics
+of the atmosphere they follow the nav
+of the atmosphere they follow the nav
+of the atmosphere they follow the nav
+stockes equation this is not hard to
+stockes equation this is not hard to
+stockes equation this is not hard to
+argue if you go to a fluid dynamics 10
+argue if you go to a fluid dynamics 10
+argue if you go to a fluid dynamics 10
+one course you can easily learn this but
+one course you can easily learn this but
+one course you can easily learn this but
+there's a lot of lot of interesting
+there's a lot of lot of interesting
+there's a lot of lot of interesting
+phenomena where the physics is much more
+phenomena where the physics is much more
+phenomena where the physics is much more
+let's say flaky missing or uncertain for
+let's say flaky missing or uncertain for
+let's say flaky missing or uncertain for
+instance even in a earth System model
+instance even in a earth System model
+instance even in a earth System model
+like the one that we have the fluid
+like the one that we have the fluid
+like the one that we have the fluid
+dynamics the equations are known the
+dynamics the equations are known the
+dynamics the equations are known the
+thermodynamics the equations are known
+thermodynamics the equations are known
+thermodynamics the equations are known
+radiation the equations are known but
+radiation the equations are known but
+radiation the equations are known but
+you also have the role of vegetation for
+you also have the role of vegetation for
+you also have the role of vegetation for
+instance you know forests they
+instance you know forests they
+instance you know forests they
+contribute to how how for instance our
+contribute to how how for instance our
+contribute to how how for instance our
+climate is going to change if you take
+climate is going to change if you take
+climate is going to change if you take
+all the forests for instance then of
+all the forests for instance then of
+all the forests for instance then of
+course the temperature is going to be
+course the temperature is going to be
+course the temperature is going to be
+very different than we had forests but
+very different than we had forests but
+very different than we had forests but
+now what is the evolution equation for a
+now what is the evolution equation for a
+now what is the evolution equation for a
+tree right this is essentially what it
+tree right this is essentially what it
+tree right this is essentially what it
+boils down to similarly land right how
+boils down to similarly land right how
+boils down to similarly land right how
+land absorbs the quality of soil how it
+land absorbs the quality of soil how it
+land absorbs the quality of soil how it
+absorbs how it reflects this also tells
+absorbs how it reflects this also tells
+absorbs how it reflects this also tells
+you something about the Earth system
+you something about the Earth system
+you something about the Earth system
+again we don't have any sort of first
+again we don't have any sort of first
+again we don't have any sort of first
+principles physics to tell us how this
+principles physics to tell us how this
+principles physics to tell us how this
+is done so for instance in a climate
+is done so for instance in a climate
+is done so for instance in a climate
+model quite a bit of it is based on
+model quite a bit of it is based on
+model quite a bit of it is based on
+sound physics quite a bit of it is based
+sound physics quite a bit of it is based
+sound physics quite a bit of it is based
+on missing physics right so this is not
+on missing physics right so this is not
+on missing physics right so this is not
+just about missing missing parameters
+just about missing missing parameters
+just about missing missing parameters
+but really missing physics another
+but really missing physics another
+but really missing physics another
+example that I really like to show is
+example that I really like to show is
+example that I really like to show is
+because again I'm involved jointly with
+because again I'm involved jointly with
+because again I'm involved jointly with
+some startup here from eth and they try
+some startup here from eth and they try
+some startup here from eth and they try
+to model the traffic in JX so you can
+to model the traffic in JX so you can
+to model the traffic in JX so you can
+see that this is the lake this is the
+see that this is the lake this is the
+see that this is the lake this is the
+big bridge at BW and the itth is
+big bridge at BW and the itth is
+big bridge at BW and the itth is
+somewhere up here so you have uh the
+somewhere up here so you have uh the
+somewhere up here so you have uh the
+traffic in JC so you can make some
+traffic in JC so you can make some
+traffic in JC so you can make some
+assumptions and you can can write down
+assumptions and you can can write down
+assumptions and you can can write down
+some equations to govern because traffic
+some equations to govern because traffic
+some equations to govern because traffic
+is also thought of as a flow things flow
+is also thought of as a flow things flow
+is also thought of as a flow things flow
+so you can write down some Navia Stokes
+so you can write down some Navia Stokes
+so you can write down some Navia Stokes
+like equations but there is no the you
+like equations but there is no the you
+like equations but there is no the you
+know there is no sort of in principle
+know there is no sort of in principle
+know there is no sort of in principle
+abinal derivation of these equations so
+abinal derivation of these equations so
+abinal derivation of these equations so
+again I would say that the physics is
+again I would say that the physics is
+again I would say that the physics is
+going to be missing but what we have is
+going to be missing but what we have is
+going to be missing but what we have is
+lots of data right so we have lots of
+lots of data right so we have lots of
+lots of data right so we have lots of
+data but the physics is going to be
+data but the physics is going to be
+data but the physics is going to be
+missing similarly if you want to this is
+missing similarly if you want to this is
+missing similarly if you want to this is
+an example of flow in our brain uh again
+an example of flow in our brain uh again
+an example of flow in our brain uh again
+the same same kind of phenomena comes in
+the same same kind of phenomena comes in
+the same same kind of phenomena comes in
+that a lot of physics is actually
+that a lot of physics is actually
+that a lot of physics is actually
+missing we don't really know how the
+missing we don't really know how the
+missing we don't really know how the
+biological circuits how they are
+biological circuits how they are
+biological circuits how they are
+contributing to affect this fluid flow
+contributing to affect this fluid flow
+contributing to affect this fluid flow
+the point is that even though even if
+the point is that even though even if
+the point is that even though even if
+the physics uh is known it can be
+the physics uh is known it can be
+the physics uh is known it can be
+expensive to simulate and there are many
+expensive to simulate and there are many
+expensive to simulate and there are many
+many problems where the physics is even
+many problems where the physics is even
+many problems where the physics is even
+unknown okay so these are the problems
+unknown okay so these are the problems
+unknown okay so these are the problems
+physical systems that we have to deal
+physical systems that we have to deal
+physical systems that we have to deal
+with and what we are going to do is as I
+with and what we are going to do is as I
+with and what we are going to do is as I
+said that uh they're either expensive
+said that uh they're either expensive
+said that uh they're either expensive
+like in many query problems or high
+like in many query problems or high
+like in many query problems or high
+dimensional problems or with systems
+dimensional problems or with systems
+dimensional problems or with systems
+within complete physics yet they have
+within complete physics yet they have
+within complete physics yet they have
+lots of data so what we're going to do
+lots of data so what we're going to do
+lots of data so what we're going to do
+in the rest of the course is to address
+in the rest of the course is to address
+in the rest of the course is to address
+these kind of problems can we reduce the
+these kind of problems can we reduce the
+these kind of problems can we reduce the
+cost when the methods are feasible can
+cost when the methods are feasible can
+cost when the methods are feasible can
+we make it feasible when things are INF
+we make it feasible when things are INF
+we make it feasible when things are INF
+feasible and can we for instance augment
+feasible and can we for instance augment
+feasible and can we for instance augment
+our physics or fill in the missing
+our physics or fill in the missing
+our physics or fill in the missing
+physics with data so this is what is
+physics with data so this is what is
+physics with data so this is what is
+going to be the content of several
+going to be the content of several
+going to be the content of several
+lectures now um quite a few weeks where
+lectures now um quite a few weeks where
+lectures now um quite a few weeks where
+we're going to find alternative
+we're going to find alternative
+we're going to find alternative
+strategies and these alternative
+strategies and these alternative
+strategies and these alternative
+strategies will combine physics and data
+strategies will combine physics and data
+strategies will combine physics and data
+in order to be able to use deep learning
+in order to be able to use deep learning
+in order to be able to use deep learning
+okay and that will be the content so I
+okay and that will be the content so I
+okay and that will be the content so I
+think in the next lecture uh just to
+think in the next lecture uh just to
+think in the next lecture uh just to
+give you a preview so Ben is going to be
+give you a preview so Ben is going to be
+give you a preview so Ben is going to be
+back and he's going to teach you
+back and he's going to teach you
+back and he's going to teach you
+something called physics
+something called physics
+something called physics
+in neural networks uh something called
+in neural networks uh something called
+in neural networks uh something called
+pins NE networks of pins and the idea
+pins NE networks of pins and the idea
+pins NE networks of pins and the idea
+would be that uh we would use neural
+would be that uh we would use neural
+would be that uh we would use neural
+network to completely replace the
+network to completely replace the
+network to completely replace the
+existing numerical solver which is
+existing numerical solver which is
+existing numerical solver which is
+essentially so if you remember the heat
+essentially so if you remember the heat
+essentially so if you remember the heat
+equation so instead of using this we'll
+equation so instead of using this we'll
+equation so instead of using this we'll
+just solve this problem using neuron
+just solve this problem using neuron
+just solve this problem using neuron
+networks but that is what uh Ben is
+networks but that is what uh Ben is
+networks but that is what uh Ben is
+going to talk about okay so if there are
+going to talk about okay so if there are
+going to talk about okay so if there are
+no further questions I will stop here
+no further questions I will stop here
+no further questions I will stop here
+and I look forward to seeing you guys in
+and I look forward to seeing you guys in
+and I look forward to seeing you guys in
+two weeks okay byebye

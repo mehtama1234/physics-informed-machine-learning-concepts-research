@@ -1,0 +1,5349 @@
+Okay, so in this lecture we're going to
+Okay, so in this lecture we're going to
+Okay, so in this lecture we're going to
+talk about neural differential
+talk about neural differential
+talk about neural differential
+equations.
+equations.
+equations.
+So this is a super popular field of
+So this is a super popular field of
+So this is a super popular field of
+scientific machine learning.
+scientific machine learning.
+scientific machine learning.
+And again, the idea is to kind of put
+And again, the idea is to kind of put
+And again, the idea is to kind of put
+neural networks into our traditional
+neural networks into our traditional
+neural networks into our traditional
+scientific workflows.
+scientific workflows.
+scientific workflows.
+And you're going to see that uh
+And you're going to see that uh
+And you're going to see that uh
+these are very related to these hybrid
+these are very related to these hybrid
+these are very related to these hybrid
+scientific machine learning workflows
+scientific machine learning workflows
+scientific machine learning workflows
+that we've been talking about in the in
+that we've been talking about in the in
+that we've been talking about in the in
+the previous few lectures.
+Um so
+Um so
+Um so
+I'm going to skip over this cuz we just
+I'm going to skip over this cuz we just
+I'm going to skip over this cuz we just
+we just covered this whole example.
+Um
+Um
+Um
+Yeah, so we just have this one lecture
+Yeah, so we just have this one lecture
+Yeah, so we just have this one lecture
+on neural differential equations and
+on neural differential equations and
+on neural differential equations and
+then I'm going to move on to a an
+then I'm going to move on to a an
+then I'm going to move on to a an
+introduction to JAX, which will be the
+introduction to JAX, which will be the
+introduction to JAX, which will be the
+the next lecture.
+the next lecture.
+the next lecture.
+Uh and then we have symbolic regression
+Uh and then we have symbolic regression
+Uh and then we have symbolic regression
+model discovery, course summary, and
+model discovery, course summary, and
+model discovery, course summary, and
+then and then the final two lectures,
+then and then the final two lectures,
+then and then the final two lectures,
+which are guest lectures on machine
+which are guest lectures on machine
+which are guest lectures on machine
+learning for biology and chemistry.
+So this is what this lecture's going to
+So this is what this lecture's going to
+So this is what this lecture's going to
+look like. We're going to Well, first of
+look like. We're going to Well, first of
+look like. We're going to Well, first of
+all, I'm going to tell you what a neural
+all, I'm going to tell you what a neural
+all, I'm going to tell you what a neural
+differential equation is. Uh
+differential equation is. Uh
+differential equation is. Uh
+hands up, who's heard of this term
+hands up, who's heard of this term
+hands up, who's heard of this term
+before or even has used neural
+before or even has used neural
+before or even has used neural
+differential equations? Anyone?
+differential equations? Anyone?
+differential equations? Anyone?
+One. Yeah.
+One. Yeah.
+One. Yeah.
+Okay, brilliant. So it's a new topic.
+Okay, brilliant. So it's a new topic.
+Okay, brilliant. So it's a new topic.
+That's that's good.
+That's that's good.
+That's that's good.
+What I'm going to do is tell you the
+What I'm going to do is tell you the
+What I'm going to do is tell you the
+link between neural differential
+link between neural differential
+link between neural differential
+equations and neural network
+equations and neural network
+equations and neural network
+architectures. This is really
+architectures. This is really
+architectures. This is really
+interesting and provides a bridge
+interesting and provides a bridge
+interesting and provides a bridge
+between kind of our world of
+between kind of our world of
+between kind of our world of
+PDEs and and the world of neural
+PDEs and and the world of neural
+PDEs and and the world of neural
+networks. Um
+networks. Um
+networks. Um
+And then I'm going to tell you about
+And then I'm going to tell you about
+And then I'm going to tell you about
+state-of-the-art neural differential
+state-of-the-art neural differential
+state-of-the-art neural differential
+equations. And I have two examples of
+equations. And I have two examples of
+equations. And I have two examples of
+models. One is a coupled oscillatory RNN
+models. One is a coupled oscillatory RNN
+models. One is a coupled oscillatory RNN
+and another are diffusion models, which
+and another are diffusion models, which
+and another are diffusion models, which
+you can think of as neural differential
+you can think of as neural differential
+you can think of as neural differential
+equations. So
+equations. So
+equations. So
+I'll explain all of this as I get to it.
+So by the end of the lecture, you'll be
+So by the end of the lecture, you'll be
+So by the end of the lecture, you'll be
+able to define what a neural
+able to define what a neural
+able to define what a neural
+differential equation is. You'll be able
+differential equation is. You'll be able
+differential equation is. You'll be able
+to understand this connection between uh
+to understand this connection between uh
+to understand this connection between uh
+PDE solvers and neural network
+PDE solvers and neural network
+PDE solvers and neural network
+architectures and
+architectures and
+architectures and
+be more aware of some of the
+be more aware of some of the
+be more aware of some of the
+state-of-the-art applications of these
+state-of-the-art applications of these
+state-of-the-art applications of these
+types of models.
+Um
+Um
+Um
+So
+So
+So
+what I'm going to talk about is this
+what I'm going to talk about is this
+what I'm going to talk about is this
+Lotka-Volterra
+Lotka-Volterra
+Lotka-Volterra
+system. So who has seen this this
+system. So who has seen this this
+system. So who has seen this this
+uh dynamical model before?
+uh dynamical model before?
+uh dynamical model before?
+Okay, yeah. It's
+Okay, yeah. It's
+Okay, yeah. It's
+it's often used or often studied as
+it's often used or often studied as
+it's often used or often studied as
+well. It's very famous, actually.
+well. It's very famous, actually.
+well. It's very famous, actually.
+Uh so this is
+Uh so this is
+Uh so this is
+an ordinary differential equation.
+an ordinary differential equation.
+an ordinary differential equation.
+It's a dynamical system
+It's a dynamical system
+It's a dynamical system
+and it's heavily used in in
+and it's heavily used in in
+and it's heavily used in in
+biology to to model kind of
+biology to to model kind of
+biology to to model kind of
+predator-prey
+predator-prey
+predator-prey
+dynamics.
+dynamics.
+dynamics.
+And so what we're modeling is two
+And so what we're modeling is two
+And so what we're modeling is two
+variables, the
+variables, the
+variables, the
+X and X and Y here in the equations.
+X and X and Y here in the equations.
+X and X and Y here in the equations.
+Uh which just model the population of of
+Uh which just model the population of of
+Uh which just model the population of of
+a predator population and the prey prey
+a predator population and the prey prey
+a predator population and the prey prey
+distribution.
+distribution.
+distribution.
+A prey a prey population.
+A prey a prey population.
+A prey a prey population.
+And if you solve this differential
+And if you solve this differential
+And if you solve this differential
+equation or ordinary differential
+equation or ordinary differential
+equation or ordinary differential
+equation,
+equation,
+equation,
+which is coupled, so we have a equation
+which is coupled, so we have a equation
+which is coupled, so we have a equation
+for the the population of the prey and
+for the the population of the prey and
+for the the population of the prey and
+the population of the of the predator.
+the population of the of the predator.
+the population of the of the predator.
+Uh the types of solutions you get are
+Uh the types of solutions you get are
+Uh the types of solutions you get are
+are these uh solutions where the you
+are these uh solutions where the you
+are these uh solutions where the you
+know, the the prey starts to eat uh the
+know, the the prey starts to eat uh the
+know, the the prey starts to eat uh the
+predator starts to eat the prey and so
+predator starts to eat the prey and so
+predator starts to eat the prey and so
+the the uh
+the the uh
+the the uh
+uh the prey populations go down and then
+uh the prey populations go down and then
+uh the prey populations go down and then
+the predator
+the predator
+the predator
+populations go down after that because
+populations go down after that because
+populations go down after that because
+there's less prey. So you have kind of a
+there's less prey. So you have kind of a
+there's less prey. So you have kind of a
+light system. And you also have an
+light system. And you also have an
+light system. And you also have an
+oscillatory system. So you see the
+oscillatory system. So you see the
+oscillatory system. So you see the
+dynamics oscillate through time.
+dynamics oscillate through time.
+dynamics oscillate through time.
+And of course, the kind of
+And of course, the kind of
+And of course, the kind of
+the characteristics of these
+the characteristics of these
+the characteristics of these
+oscillations, like the frequency and uh
+oscillations, like the frequency and uh
+oscillations, like the frequency and uh
+the height and etc. etc. all just depend
+the height and etc. etc. all just depend
+the height and etc. etc. all just depend
+on these kind of constants that we
+on these kind of constants that we
+on these kind of constants that we
+choose in our underlying differential
+choose in our underlying differential
+choose in our underlying differential
+equation.
+equation.
+equation.
+And then things like the maximum prey
+And then things like the maximum prey
+And then things like the maximum prey
+birth rate, the effect of the predators
+birth rate, the effect of the predators
+birth rate, the effect of the predators
+on the prey, etc. etc.
+Who's with me? Does that make sense?
+Who's with me? Does that make sense?
+Who's with me? Does that make sense?
+Yeah.
+Yeah.
+Yeah.
+Okay, so
+first question, how do we solve or how
+first question, how do we solve or how
+first question, how do we solve or how
+would you solve this ordinary
+would you solve this ordinary
+would you solve this ordinary
+differential equation? If I if I gave
+differential equation? If I if I gave
+differential equation? If I if I gave
+you this ODE
+you this ODE
+you this ODE
+and maybe I gave you the starting
+and maybe I gave you the starting
+and maybe I gave you the starting
+populations of the prey and the
+populations of the prey and the
+populations of the prey and the
+predator,
+predator,
+predator,
+what would be a like traditional way of
+what would be a like traditional way of
+what would be a like traditional way of
+solving solving this this ODE?
+solving solving this this ODE?
+solving solving this this ODE?
+Uh yeah, go on.
+Yeah.
+Yeah.
+Yeah.
+Numerical methods, yeah. So can you be
+Numerical methods, yeah. So can you be
+Numerical methods, yeah. So can you be
+more precise? What what
+Yeah. A Runge-Kutta would be a really
+Yeah. A Runge-Kutta would be a really
+Yeah. A Runge-Kutta would be a really
+good like higher order maybe would be a
+good like higher order maybe would be a
+good like higher order maybe would be a
+good option.
+good option.
+good option.
+Um
+Um
+Um
+So for the purpose of explaining what
+So for the purpose of explaining what
+So for the purpose of explaining what
+ODEs are, I'm going to tell you how you
+ODEs are, I'm going to tell you how you
+ODEs are, I'm going to tell you how you
+would solve it with an Euler method,
+would solve it with an Euler method,
+would solve it with an Euler method,
+which is the simplest possible
+which is the simplest possible
+which is the simplest possible
+way of solving it. This this is a stiff
+way of solving it. This this is a stiff
+way of solving it. This this is a stiff
+problem, so it probably would give
+problem, so it probably would give
+problem, so it probably would give
+not very accurate solution, but it's for
+not very accurate solution, but it's for
+not very accurate solution, but it's for
+the purpose of demonstration, I think
+the purpose of demonstration, I think
+the purpose of demonstration, I think
+that's what we're going to use.
+that's what we're going to use.
+that's what we're going to use.
+So
+So
+So
+to solve this with the Euler method,
+to solve this with the Euler method,
+to solve this with the Euler method,
+we would simply discretize the the
+we would simply discretize the the
+we would simply discretize the the
+the derivatives here on the left-hand
+the derivatives here on the left-hand
+the derivatives here on the left-hand
+side with our numerical approximations,
+side with our numerical approximations,
+side with our numerical approximations,
+very simple.
+very simple.
+very simple.
+Um and then if you just rearrange this,
+Um and then if you just rearrange this,
+Um and then if you just rearrange this,
+you just end up with a super simple kind
+you just end up with a super simple kind
+you just end up with a super simple kind
+of time stepping algorithm for for the
+of time stepping algorithm for for the
+of time stepping algorithm for for the
+population dynamics and the prey
+population dynamics and the prey
+population dynamics and the prey
+dynamics for the population dynamics
+dynamics for the population dynamics
+dynamics for the population dynamics
+through time.
+Okay, so
+now let's get to the interesting bit. So
+now let's get to the interesting bit. So
+now let's get to the interesting bit. So
+when we when we create this model,
+when we when we create this model,
+when we when we create this model,
+you know, this is all models are
+you know, this is all models are
+you know, this is all models are
+approximate.
+approximate.
+approximate.
+And we made a lot of assumptions when we
+And we made a lot of assumptions when we
+And we made a lot of assumptions when we
+when we designed this
+when we designed this
+when we designed this
+ordinary differential equation. So
+ordinary differential equation. So
+ordinary differential equation. So
+I've just listed a few. There are
+I've just listed a few. There are
+I've just listed a few. There are
+actually many many of assumptions from
+actually many many of assumptions from
+actually many many of assumptions from
+the of the system. So
+the of the system. So
+the of the system. So
+some of them are that the prey
+some of them are that the prey
+some of them are that the prey
+population always finds ample food.
+population always finds ample food.
+population always finds ample food.
+The food supply of the predator
+The food supply of the predator
+The food supply of the predator
+population depends entirely on the on
+population depends entirely on the on
+population depends entirely on the on
+the size of the prey population.
+the size of the prey population.
+the size of the prey population.
+The rate of change of the population is
+The rate of change of the population is
+The rate of change of the population is
+proportional to its size. Predators have
+proportional to its size. Predators have
+proportional to its size. Predators have
+limitless limitless appetites.
+limitless limitless appetites.
+limitless limitless appetites.
+Who here sees that there is like
+Who here sees that there is like
+Who here sees that there is like
+actually a lot of kind of assumptions
+actually a lot of kind of assumptions
+actually a lot of kind of assumptions
+that are baked into these kind of rate
+that are baked into these kind of rate
+that are baked into these kind of rate
+of change equations?
+of change equations?
+of change equations?
+Yeah.
+Oh, you just you just hand up, yeah.
+Oh, you just you just hand up, yeah.
+Oh, you just you just hand up, yeah.
+Yeah, that was all I needed.
+Yeah, that was all I needed.
+Yeah, that was all I needed.
+So
+So
+So
+what you can see is there's a lot of
+what you can see is there's a lot of
+what you can see is there's a lot of
+assumptions, right?
+assumptions, right?
+assumptions, right?
+And this might not reflect like a a real
+And this might not reflect like a a real
+And this might not reflect like a a real
+biological system. In fact, it probably
+biological system. In fact, it probably
+biological system. In fact, it probably
+doesn't because there are so many
+doesn't because there are so many
+doesn't because there are so many
+complicated factors that affect
+complicated factors that affect
+complicated factors that affect
+populations and external factors, etc.
+Um
+Um
+Um
+So what we're going to try and do is
+So what we're going to try and do is
+So what we're going to try and do is
+learn the right-hand side of this
+learn the right-hand side of this
+learn the right-hand side of this
+equation
+equation
+equation
+instead of just saying that we know what
+instead of just saying that we know what
+instead of just saying that we know what
+these coefficients are. We're actually
+these coefficients are. We're actually
+these coefficients are. We're actually
+going to try and learn learn what this
+going to try and learn learn what this
+going to try and learn learn what this
+differential equation is.
+differential equation is.
+differential equation is.
+So that this is the setup that we're
+So that this is the setup that we're
+So that this is the setup that we're
+going to assume. So just imagine that we
+going to assume. So just imagine that we
+going to assume. So just imagine that we
+have some observations of of the of the
+have some observations of of the of the
+have some observations of of the of the
+predator and the prey's populations
+predator and the prey's populations
+predator and the prey's populations
+through time.
+through time.
+through time.
+So imagine we have these black dots here
+So imagine we have these black dots here
+So imagine we have these black dots here
+that we've we've gone out into the field
+that we've we've gone out into the field
+that we've we've gone out into the field
+and recorded these these populations.
+and recorded these these populations.
+and recorded these these populations.
+So can anyone kind of give me an idea
+So can anyone kind of give me an idea
+So can anyone kind of give me an idea
+about how you would try and
+about how you would try and
+about how you would try and
+make this more flexible or maybe try and
+make this more flexible or maybe try and
+make this more flexible or maybe try and
+learn kind of the the right-hand side of
+learn kind of the the right-hand side of
+learn kind of the the right-hand side of
+these equations?
+these equations?
+these equations?
+Yeah.
+Yeah.
+Yeah.
+Kind of do it in a similar way to like
+Kind of do it in a similar way to like
+Kind of do it in a similar way to like
+the last lecture, where you
+the last lecture, where you
+the last lecture, where you
+Yeah.
+Yeah.
+Yeah.
+parameters now that you can learn Yeah.
+parameters now that you can learn Yeah.
+parameters now that you can learn Yeah.
+start off with with some of them
+start off with with some of them
+start off with with some of them
+uh Yeah.
+uh Yeah.
+uh Yeah.
+Yeah.
+Yeah.
+Yeah.
+Very nice. Yeah. So what parameters
+Very nice. Yeah. So what parameters
+Very nice. Yeah. So what parameters
+would you try and learn?
+would you try and learn?
+would you try and learn?
+Maybe like just the coefficients. Yeah.
+Maybe like just the coefficients. Yeah.
+Maybe like just the coefficients. Yeah.
+I mean, that doesn't really solve the
+I mean, that doesn't really solve the
+I mean, that doesn't really solve the
+problem with like all the assumptions we
+problem with like all the assumptions we
+problem with like all the assumptions we
+have. Yeah. Um
+have. Yeah. Um
+have. Yeah. Um
+so maybe like direction counts or
+so maybe like direction counts or
+so maybe like direction counts or
+something. Yeah, okay. Good. So So what
+something. Yeah, okay. Good. So So what
+something. Yeah, okay. Good. So So what
+you're suggesting is like treating
+you're suggesting is like treating
+you're suggesting is like treating
+alpha, beta,
+alpha, beta,
+alpha, beta,
+delta, gamma as as like learnable
+delta, gamma as as like learnable
+delta, gamma as as like learnable
+values.
+values.
+values.
+And then what you also said is to have
+And then what you also said is to have
+And then what you also said is to have
+like a numerical solver that solves that
+like a numerical solver that solves that
+like a numerical solver that solves that
+system given those learnable values and
+system given those learnable values and
+system given those learnable values and
+then differentiates through it to learn
+then differentiates through it to learn
+then differentiates through it to learn
+the the values, yeah. Yeah, very good.
+the the values, yeah. Yeah, very good.
+the the values, yeah. Yeah, very good.
+So
+So
+So
+can anyone think of any other ways? So
+can anyone think of any other ways? So
+can anyone think of any other ways? So
+that's that's a really good way.
+that's that's a really good way.
+that's that's a really good way.
+Anyone have any other thoughts?
+Anyone have any other thoughts?
+Anyone have any other thoughts?
+Okay.
+Okay.
+Okay.
+So
+So
+So
+um
+um
+um
+what neural differential equations do or
+what neural differential equations do or
+what neural differential equations do or
+or what we're going to do in this
+or what we're going to do in this
+or what we're going to do in this
+problem is we're going to say
+problem is we're going to say
+problem is we're going to say
+yeah, we're going to treat some of these
+yeah, we're going to treat some of these
+yeah, we're going to treat some of these
+coefficients as learnable, but actually
+coefficients as learnable, but actually
+coefficients as learnable, but actually
+we're going to take a step further than
+we're going to take a step further than
+we're going to take a step further than
+that. We're going to say
+that. We're going to say
+that. We're going to say
+not only that some of the coefficients
+not only that some of the coefficients
+not only that some of the coefficients
+learnable, but actually some of the
+learnable, but actually some of the
+learnable, but actually some of the
+functions itself are learnable.
+functions itself are learnable.
+functions itself are learnable.
+So in in the previous example, we had
+So in in the previous example, we had
+So in in the previous example, we had
+this beta equals X times Y. This is an
+this beta equals X times Y. This is an
+this beta equals X times Y. This is an
+assumption about the the
+assumption about the the
+assumption about the the
+prey dynamics.
+prey dynamics.
+prey dynamics.
+Uh where it depends this is the factor
+Uh where it depends this is the factor
+Uh where it depends this is the factor
+that
+that
+that
+modulates the prey dynamics based on the
+modulates the prey dynamics based on the
+modulates the prey dynamics based on the
+the predator's population.
+the predator's population.
+the predator's population.
+So we might not That's quite a strong
+So we might not That's quite a strong
+So we might not That's quite a strong
+assumption to say it's like a
+assumption to say it's like a
+assumption to say it's like a
+multiplication.
+multiplication.
+multiplication.
+Uh so we might say actually it might be
+Uh so we might say actually it might be
+Uh so we might say actually it might be
+a more complicated function than just a
+a more complicated function than just a
+a more complicated function than just a
+multiplication function that is the kind
+multiplication function that is the kind
+multiplication function that is the kind
+of
+of
+of
+that does the crossover between the two
+that does the crossover between the two
+that does the crossover between the two
+populations.
+populations.
+populations.
+And so we don't know what that is. Maybe
+And so we don't know what that is. Maybe
+And so we don't know what that is. Maybe
+we're just going to approximate that
+we're just going to approximate that
+we're just going to approximate that
+with some learnable function, which
+with some learnable function, which
+with some learnable function, which
+we're just going to learn with a neural
+we're just going to learn with a neural
+we're just going to learn with a neural
+network. So the network itself is going
+network. So the network itself is going
+network. So the network itself is going
+to take in the the prey dynamics and the
+to take in the the prey dynamics and the
+to take in the the prey dynamics and the
+population dynamics and then produce
+population dynamics and then produce
+population dynamics and then produce
+some some
+some some
+some some
+some rate of change contribution to this
+some rate of change contribution to this
+some rate of change contribution to this
+ODE.
+ODE.
+ODE.
+Can do the same for the for the prey for
+Can do the same for the for the prey for
+Can do the same for the for the prey for
+the predator's dynamics as well.
+the predator's dynamics as well.
+the predator's dynamics as well.
+Or and maybe for the other term here, we
+Or and maybe for the other term here, we
+Or and maybe for the other term here, we
+might be sure that it just depends on Y,
+might be sure that it just depends on Y,
+might be sure that it just depends on Y,
+but maybe we just don't know what the
+but maybe we just don't know what the
+but maybe we just don't know what the
+coefficient is. So So we can kind of mix
+coefficient is. So So we can kind of mix
+coefficient is. So So we can kind of mix
+and match how flexible you want these
+and match how flexible you want these
+and match how flexible you want these
+these right-hand side terms of the
+these right-hand side terms of the
+these right-hand side terms of the
+equation to be.
+So what we actually
+So what we actually
+So what we actually
+call this when we have a
+call this when we have a
+call this when we have a
+differential equation
+differential equation
+differential equation
+and also partial differential equation
+and also partial differential equation
+and also partial differential equation
+can can also be.
+can can also be.
+can can also be.
+Um when we have a differential equation
+Um when we have a differential equation
+Um when we have a differential equation
+which has a neural network inside of it,
+which has a neural network inside of it,
+which has a neural network inside of it,
+we just call this whole thing a neural
+we just call this whole thing a neural
+we just call this whole thing a neural
+differential equation. That's what we
+differential equation. That's what we
+differential equation. That's what we
+define as an NDE.
+define as an NDE.
+define as an NDE.
+Make sense to everyone?
+Make sense to everyone?
+Make sense to everyone?
+Okay.
+Okay.
+Okay.
+So I think we'll take a break and then
+So I think we'll take a break and then
+So I think we'll take a break and then
+we'll talk about how we're going to
+we'll talk about how we're going to
+we'll talk about how we're going to
+train this
+train this
+train this
+afterwards. So let's take 10 10-15
+afterwards. So let's take 10 10-15
+afterwards. So let's take 10 10-15
+minutes.
+Let's get back into this.
+Let's get back into this.
+Let's get back into this.
+So a neural differential equation is
+So a neural differential equation is
+So a neural differential equation is
+very simple or defined very simply. It's
+very simple or defined very simply. It's
+very simple or defined very simply. It's
+just to say
+just to say
+just to say
+it's a differential equation. Can be an
+it's a differential equation. Can be an
+it's a differential equation. Can be an
+ODE, can be a partial differential
+ODE, can be a partial differential
+ODE, can be a partial differential
+equation more generally.
+equation more generally.
+equation more generally.
+Uh
+Uh
+Uh
+where some of the terms of the
+where some of the terms of the
+where some of the terms of the
+differential equation are are neural
+differential equation are are neural
+differential equation are are neural
+networks.
+networks.
+networks.
+So someone asked in the break, what's
+So someone asked in the break, what's
+So someone asked in the break, what's
+the difference between neural
+the difference between neural
+the difference between neural
+differential equations and PINNs?
+differential equations and PINNs?
+differential equations and PINNs?
+Can anyone tell me the difference? How
+Can anyone tell me the difference? How
+Can anyone tell me the difference? How
+is a PINN different?
+Yeah. You are approximating two uh
+Yeah. You are approximating two uh
+Yeah. You are approximating two uh
+variables, so to say X and Y.
+variables, so to say X and Y.
+variables, so to say X and Y.
+Yeah. Which is one. Yeah.
+Yeah. Which is one. Yeah.
+Yeah. Which is one. Yeah.
+Yeah.
+Yeah.
+Yeah.
+And
+And
+And
+and then
+and then
+and then
+Yeah. E 6 times over S. Yeah. Neural.
+Yeah. E 6 times over S. Yeah. Neural.
+Yeah. E 6 times over S. Yeah. Neural.
+Yeah.
+Yeah.
+Yeah.
+Neural on the solvers. Yeah. In space.
+Neural on the solvers. Yeah. In space.
+Neural on the solvers. Yeah. In space.
+Yeah. Yeah, you got it.
+Yeah. Yeah, you got it.
+Yeah. Yeah, you got it.
+You got it. Yeah. So a PD a PINN,
+You got it. Yeah. So a PD a PINN,
+You got it. Yeah. So a PD a PINN,
+physics-informed neural network.
+physics-informed neural network.
+physics-informed neural network.
+Remember we write for a physics-informed
+Remember we write for a physics-informed
+Remember we write for a physics-informed
+network, we say the solution to the
+network, we say the solution to the
+network, we say the solution to the
+differential equation is approximated by
+differential equation is approximated by
+differential equation is approximated by
+a neural network.
+a neural network.
+a neural network.
+So in this case we would for a a PINN
+So in this case we would for a a PINN
+So in this case we would for a a PINN
+would say X and Y here is is
+would say X and Y here is is
+would say X and Y here is is
+approximated by a some neural network as
+approximated by a some neural network as
+approximated by a some neural network as
+a function of of time.
+a function of of time.
+a function of of time.
+And the PINN offers a way to solve the
+And the PINN offers a way to solve the
+And the PINN offers a way to solve the
+differential equation.
+differential equation.
+differential equation.
+Here the the neural network is not
+Here the the neural network is not
+Here the the neural network is not
+solving the differential equation, it's
+solving the differential equation, it's
+solving the differential equation, it's
+just part of the differential equation
+just part of the differential equation
+just part of the differential equation
+itself. So it's a bit different.
+So
+So
+So
+uh yeah, how do we solve
+uh yeah, how do we solve
+uh yeah, how do we solve
+this system of ODEs numerically?
+this system of ODEs numerically?
+this system of ODEs numerically?
+So now that we've replaced the terms
+So now that we've replaced the terms
+So now that we've replaced the terms
+with a with a neural network, who would
+with a with a neural network, who would
+with a with a neural network, who would
+How how could we solve this?
+How how could we solve this?
+How how could we solve this?
+A Any Anyone else?
+A Any Anyone else?
+A Any Anyone else?
+Who hasn't answered yet?
+Can anyone guess?
+Yeah, please. Yeah.
+Exactly. Yeah. So we we can use uh the
+Exactly. Yeah. So we we can use uh the
+Exactly. Yeah. So we we can use uh the
+same method to solve this. Even though
+same method to solve this. Even though
+same method to solve this. Even though
+this is a neural network, this is just a
+this is a neural network, this is just a
+this is a neural network, this is just a
+mathematical function at the end of the
+mathematical function at the end of the
+mathematical function at the end of the
+day which is analytical.
+day which is analytical.
+day which is analytical.
+Um
+Um
+Um
+so we do the same thing. We just uh
+so we do the same thing. We just uh
+so we do the same thing. We just uh
+discretize the the derivatives just like
+discretize the the derivatives just like
+discretize the the derivatives just like
+we did before.
+we did before.
+we did before.
+And
+And
+And
+now we just call the neural network
+now we just call the neural network
+now we just call the neural network
+every time we do the time step uh just
+every time we do the time step uh just
+every time we do the time step uh just
+like we would call the X times Y
+like we would call the X times Y
+like we would call the X times Y
+function when we when we do the standard
+function when we when we do the standard
+function when we when we do the standard
+Euler solver.
+Euler solver.
+Euler solver.
+So
+So
+So
+we just end up with a very similar time
+we just end up with a very similar time
+we just end up with a very similar time
+stepping algorithm where now inside this
+stepping algorithm where now inside this
+stepping algorithm where now inside this
+time stepping algorithm we just have
+time stepping algorithm we just have
+time stepping algorithm we just have
+some neural networks that are that are
+some neural networks that are that are
+some neural networks that are that are
+called every every time step.
+So what I can do is just
+So what I can do is just
+So what I can do is just
+again, write this as some pseudo code.
+again, write this as some pseudo code.
+again, write this as some pseudo code.
+So we just have some some function which
+So we just have some some function which
+So we just have some some function which
+takes our
+takes our
+takes our
+initial values of the of the populations
+initial values of the of the populations
+initial values of the of the populations
+here and the time step and
+here and the time step and
+here and the time step and
+now we also input the the parameters of
+now we also input the the parameters of
+now we also input the the parameters of
+the neural network.
+the neural network.
+the neural network.
+And then we just carry our we just do
+And then we just carry our we just do
+And then we just carry our we just do
+our Euler Euler algorithm. So we just do
+our Euler Euler algorithm. So we just do
+our Euler Euler algorithm. So we just do
+our very simple time stepping, just
+our very simple time stepping, just
+our very simple time stepping, just
+rewriting these equations into the code.
+rewriting these equations into the code.
+rewriting these equations into the code.
+And inside this for algorithm we again
+And inside this for algorithm we again
+And inside this for algorithm we again
+we have a a neural network that we're
+we have a a neural network that we're
+we have a a neural network that we're
+calling.
+calling.
+calling.
+So who thinks this looks similar to
+So who thinks this looks similar to
+So who thinks this looks similar to
+these kind of to the solver in the loop
+these kind of to the solver in the loop
+these kind of to the solver in the loop
+hybrid method and also that inverse that
+hybrid method and also that inverse that
+hybrid method and also that inverse that
+method that I just talked about?
+method that I just talked about?
+method that I just talked about?
+Looks similar?
+Looks similar?
+Looks similar?
+If you just think a bit from a code
+If you just think a bit from a code
+If you just think a bit from a code
+perspective, like again we have is a
+perspective, like again we have is a
+perspective, like again we have is a
+function, we have a for loop, and inside
+function, we have a for loop, and inside
+function, we have a for loop, and inside
+the for loop a neural network is being
+the for loop a neural network is being
+the for loop a neural network is being
+called.
+called.
+called.
+This is like algorithmically very sim
+This is like algorithmically very sim
+This is like algorithmically very sim
+even though it's a completely different
+even though it's a completely different
+even though it's a completely different
+task, algorithmically it's exactly the
+task, algorithmically it's exactly the
+task, algorithmically it's exactly the
+same as this these hybrid methods that
+same as this these hybrid methods that
+same as this these hybrid methods that
+we've been talking about.
+Um so this is an example this is an
+Um so this is an example this is an
+Um so this is an example this is an
+example of a
+example of a
+example of a
+this is an example of a hybrid
+this is an example of a hybrid
+this is an example of a hybrid
+simulation workflow. It's just another
+simulation workflow. It's just another
+simulation workflow. It's just another
+way to think of it.
+way to think of it.
+way to think of it.
+Okay, so now the final question we have
+Okay, so now the final question we have
+Okay, so now the final question we have
+to ask is how are we going to train
+to ask is how are we going to train
+to ask is how are we going to train
+these neural networks? So suppose I give
+these neural networks? So suppose I give
+these neural networks? So suppose I give
+you these these population measurements
+you these these population measurements
+you these these population measurements
+from some unknown dynamics.
+from some unknown dynamics.
+from some unknown dynamics.
+Uh these points here, how are we going
+Uh these points here, how are we going
+Uh these points here, how are we going
+to train the neural network based on
+to train the neural network based on
+to train the neural network based on
+this on this data to learn these these
+this on this data to learn these these
+this on this data to learn these these
+neural network terms?
+neural network terms?
+neural network terms?
+Can anyone tell me a loss a loss
+Can anyone tell me a loss a loss
+Can anyone tell me a loss a loss
+function?
+Yeah. Constants.
+Yeah. Constants.
+Yeah. Constants.
+Yeah.
+Yeah.
+Yeah.
+Bias function.
+Bias function.
+Bias function.
+Yeah.
+Yeah.
+Yeah.
+Good. Yeah. I think you're starting to
+Good. Yeah. I think you're starting to
+Good. Yeah. I think you're starting to
+get it now. So yeah, it's again, we just
+get it now. So yeah, it's again, we just
+get it now. So yeah, it's again, we just
+think about what what the inputs and
+think about what what the inputs and
+think about what what the inputs and
+what the outputs of this of this
+what the outputs of this of this
+what the outputs of this of this
+function.
+function.
+function.
+So we just start with our initial
+So we just start with our initial
+So we just start with our initial
+initial values which we which we're told
+initial values which we which we're told
+initial values which we which we're told
+from our data.
+from our data.
+from our data.
+And the outputs are the final the final
+And the outputs are the final the final
+And the outputs are the final the final
+populations. We can also output the the
+populations. We can also output the the
+populations. We can also output the the
+the whole population as a function of
+the whole population as a function of
+the whole population as a function of
+time from the solver.
+time from the solver.
+time from the solver.
+And so we can just say the loss function
+And so we can just say the loss function
+And so we can just say the loss function
+is you know, the outputs of the Euler
+is you know, the outputs of the Euler
+is you know, the outputs of the Euler
+solver, this function that we're calling
+solver, this function that we're calling
+solver, this function that we're calling
+uh and the difference between that and
+uh and the difference between that and
+uh and the difference between that and
+the observed data that we have.
+the observed data that we have.
+the observed data that we have.
+So whatever we have a data observed data
+So whatever we have a data observed data
+So whatever we have a data observed data
+point, we just spit out that data point
+point, we just spit out that data point
+point, we just spit out that data point
+um from the from the solver and we just
+um from the from the solver and we just
+um from the from the solver and we just
+create a loss function to match it. It's
+create a loss function to match it. It's
+create a loss function to match it. It's
+very simple.
+Again, auto diff super powerful
+Again, auto diff super powerful
+Again, auto diff super powerful
+technique, it's now allowing us to solve
+technique, it's now allowing us to solve
+technique, it's now allowing us to solve
+or train neural differential equations
+or train neural differential equations
+or train neural differential equations
+as well as PINNs as well as hybrid
+as well as PINNs as well as hybrid
+as well as PINNs as well as hybrid
+workflows as well as neural operators,
+workflows as well as neural operators,
+workflows as well as neural operators,
+you know.
+So uh yeah, this paper called Universal
+So uh yeah, this paper called Universal
+So uh yeah, this paper called Universal
+Differential Equations, they they did
+Differential Equations, they they did
+Differential Equations, they they did
+they studied using neural differential
+they studied using neural differential
+they studied using neural differential
+equations to solve this uh
+equations to solve this uh
+equations to solve this uh
+Lotka-Volterra system. And they did
+Lotka-Volterra system. And they did
+Lotka-Volterra system. And they did
+exactly this. So they had they assumed
+exactly this. So they had they assumed
+exactly this. So they had they assumed
+that their PDE had this structure with
+that their PDE had this structure with
+that their PDE had this structure with
+some learnable components in these in
+some learnable components in these in
+some learnable components in these in
+these neural networks.
+these neural networks.
+these neural networks.
+And uh this is a plot from the paper and
+And uh this is a plot from the paper and
+And uh this is a plot from the paper and
+and so what they're showing here is the
+and so what they're showing here is the
+and so what they're showing here is the
+data that they trained the the NDE on.
+data that they trained the the NDE on.
+data that they trained the the NDE on.
+Um and uh the
+Um and uh the
+Um and uh the
+once once the network had been trained,
+once once the network had been trained,
+once once the network had been trained,
+this is they're also plotting the the
+this is they're also plotting the the
+this is they're also plotting the the
+solution
+solution
+solution
+you know, the the population dynamics as
+you know, the the population dynamics as
+you know, the the population dynamics as
+a function of time output by the solver.
+a function of time output by the solver.
+a function of time output by the solver.
+And basically they were able to exact
+And basically they were able to exact
+And basically they were able to exact
+exactly match this data. This is
+exactly match this data. This is
+exactly match this data. This is
+actually a fairly simple kind of
+actually a fairly simple kind of
+actually a fairly simple kind of
+learning task.
+Uh
+Uh
+Uh
+so once we've got once we've trained the
+so once we've got once we've trained the
+so once we've got once we've trained the
+neural networks, kind of the next
+neural networks, kind of the next
+neural networks, kind of the next
+question is
+question is
+question is
+can we
+can we
+can we
+can we learn anything about the physics?
+can we learn anything about the physics?
+can we learn anything about the physics?
+So these are kind of still kind of black
+So these are kind of still kind of black
+So these are kind of still kind of black
+box functions. They've learned some
+box functions. They've learned some
+box functions. They've learned some
+function that we're not sure about.
+function that we're not sure about.
+function that we're not sure about.
+So how how could you kind of learn
+So how how could you kind of learn
+So how how could you kind of learn
+something about the physics once you
+something about the physics once you
+something about the physics once you
+train these networks? Can anyone think
+train these networks? Can anyone think
+train these networks? Can anyone think
+of what you might do?
+Okay, so I'll tell you cuz it's not not
+Okay, so I'll tell you cuz it's not not
+Okay, so I'll tell you cuz it's not not
+immediately obvious.
+immediately obvious.
+immediately obvious.
+But
+But
+But
+what you can do is just plot the the
+what you can do is just plot the the
+what you can do is just plot the the
+neural network as a function of its
+neural network as a function of its
+neural network as a function of its
+inputs. The network here is just a
+inputs. The network here is just a
+inputs. The network here is just a
+function of X and Y.
+function of X and Y.
+function of X and Y.
+So I can this is just a 2D uh
+So I can this is just a 2D uh
+So I can this is just a 2D uh
+you know, a scalar value as a function
+you know, a scalar value as a function
+you know, a scalar value as a function
+of 2D. So it just looks like an image.
+of 2D. So it just looks like an image.
+of 2D. So it just looks like an image.
+So I can just plot this as a function of
+So I can just plot this as a function of
+So I can just plot this as a function of
+X and Y.
+X and Y.
+X and Y.
+And depending on the data and the
+And depending on the data and the
+And depending on the data and the
+underlying dynamics, uh
+underlying dynamics, uh
+underlying dynamics, uh
+you can just sometimes just do symbolic
+you can just sometimes just do symbolic
+you can just sometimes just do symbolic
+regression on this function.
+regression on this function.
+regression on this function.
+Or just even look at it like it manual
+Or just even look at it like it manual
+Or just even look at it like it manual
+inspection
+inspection
+inspection
+and see that this is just X times Y. So
+and see that this is just X times Y. So
+and see that this is just X times Y. So
+so what people people often do once
+so what people people often do once
+so what people people often do once
+they've trained these neural
+they've trained these neural
+they've trained these neural
+differential equations is is do a extra
+differential equations is is do a extra
+differential equations is is do a extra
+step on top which is symbolic regression
+step on top which is symbolic regression
+step on top which is symbolic regression
+of these trained networks to try and
+of these trained networks to try and
+of these trained networks to try and
+discover the the underlying symbolic
+discover the the underlying symbolic
+discover the the underlying symbolic
+form of the of the expression.
+form of the of the expression.
+form of the of the expression.
+So I mean it's not always possible
+So I mean it's not always possible
+So I mean it's not always possible
+depending on how complicated the
+depending on how complicated the
+depending on how complicated the
+dynamics are, but in this case
+dynamics are, but in this case
+dynamics are, but in this case
+they did assume that it was just a
+they did assume that it was just a
+they did assume that it was just a
+simple underlying XY kind of curve to to
+simple underlying XY kind of curve to to
+simple underlying XY kind of curve to to
+learn.
+learn.
+learn.
+Yeah. Is it possible to learn
+Yeah. Is it possible to learn
+Yeah. Is it possible to learn
+which
+Uh
+I
+I
+I
+um
+um
+um
+condition
+condition
+condition
+Yeah, I it's it's in the data that we're
+Yeah, I it's it's in the data that we're
+Yeah, I it's it's in the data that we're
+training. So
+I'm just imagining if you if you didn't
+I'm just imagining if you if you didn't
+I'm just imagining if you if you didn't
+have the initial condition, I guess you
+have the initial condition, I guess you
+have the initial condition, I guess you
+could treat these these inputs as
+could treat these these inputs as
+could treat these these inputs as
+learnable values.
+learnable values.
+learnable values.
+I I think that's possible cuz this would
+I I think that's possible cuz this would
+I I think that's possible cuz this would
+just be a part of theta and we would
+just be a part of theta and we would
+just be a part of theta and we would
+just take it just two learnable values.
+just take it just two learnable values.
+just take it just two learnable values.
+And then it would become some kind of
+And then it would become some kind of
+And then it would become some kind of
+weird hybrid where we're kind of like
+weird hybrid where we're kind of like
+weird hybrid where we're kind of like
+learning
+learning
+learning
+the initial conditions but also the PDE
+the initial conditions but also the PDE
+the initial conditions but also the PDE
+at the same time. But yeah, I think I
+at the same time. But yeah, I think I
+at the same time. But yeah, I think I
+think it's possible. Yeah.
+think it's possible. Yeah.
+think it's possible. Yeah.
+But yeah, we just as Ralph said, we just
+But yeah, we just as Ralph said, we just
+But yeah, we just as Ralph said, we just
+the it's just in the data for now. Yeah.
+Okay.
+So what's really cool is that I can take
+So what's really cool is that I can take
+So what's really cool is that I can take
+this learned
+this learned
+this learned
+PDE and just carry out this hybrid
+PDE and just carry out this hybrid
+PDE and just carry out this hybrid
+solver for longer time steps. Like I
+solver for longer time steps. Like I
+solver for longer time steps. Like I
+don't just have to simulate
+don't just have to simulate
+don't just have to simulate
+uh
+uh
+uh
+for the the length of the data. Like
+for the the length of the data. Like
+for the the length of the data. Like
+once I train this different neural
+once I train this different neural
+once I train this different neural
+differential equation, I can just carry
+differential equation, I can just carry
+differential equation, I can just carry
+on simulating, just calling the the
+on simulating, just calling the the
+on simulating, just calling the the
+solver longer and longer.
+solver longer and longer.
+solver longer and longer.
+And what's really nice is that we see
+And what's really nice is that we see
+And what's really nice is that we see
+that this model kind of generalizes
+that this model kind of generalizes
+that this model kind of generalizes
+well. So it's actually learned that the
+well. So it's actually learned that the
+well. So it's actually learned that the
+process is oscillatory and and gives us
+process is oscillatory and and gives us
+process is oscillatory and and gives us
+a stable prediction of the of the
+a stable prediction of the of the
+a stable prediction of the of the
+dynamics for very long time values.
+dynamics for very long time values.
+dynamics for very long time values.
+Yeah.
+Yeah.
+Yeah.
+It's it's also connecting to the
+It's it's also connecting to the
+It's it's also connecting to the
+previous example. Yeah.
+previous example. Yeah.
+previous example. Yeah.
+Yeah. What if you have in your
+Yeah. What if you have in your
+Yeah. What if you have in your
+loops
+loops
+loops
+some if statements, some adaptive step
+some if statements, some adaptive step
+some if statements, some adaptive step
+size or termination criteria? Yeah. Can
+size or termination criteria? Yeah. Can
+size or termination criteria? Yeah. Can
+you explain to this auto
+you explain to this auto
+you explain to this auto
+differentiation? Yeah, so it So it
+differentiation? Yeah, so it So it
+differentiation? Yeah, so it So it
+depends on the package. So some packages
+depends on the package. So some packages
+depends on the package. So some packages
+can do kind of dynamic auto
+can do kind of dynamic auto
+can do kind of dynamic auto
+differentiation.
+differentiation.
+differentiation.
+Uh so for example, PyTorch can
+Uh so for example, PyTorch can
+Uh so for example, PyTorch can
+dynamically like differentiate through
+dynamically like differentiate through
+dynamically like differentiate through
+dynamic graphs.
+dynamic graphs.
+dynamic graphs.
+Um
+Um
+Um
+so
+so
+so
+and and the way that it does it is just
+and and the way that it does it is just
+and and the way that it does it is just
+every iteration you just redraw the
+every iteration you just redraw the
+every iteration you just redraw the
+computational graph. So each iteration
+computational graph. So each iteration
+computational graph. So each iteration
+the graph is actually fixed and then you
+the graph is actually fixed and then you
+the graph is actually fixed and then you
+can get a gradient.
+can get a gradient.
+can get a gradient.
+But the issue is that uh you know,
+But the issue is that uh you know,
+But the issue is that uh you know,
+that's a highly dynamic code, so it
+that's a highly dynamic code, so it
+that's a highly dynamic code, so it
+might be quite hard to learn. Like the
+might be quite hard to learn. Like the
+might be quite hard to learn. Like the
+actual kind of learning learning task is
+actual kind of learning learning task is
+actual kind of learning learning task is
+might be difficult.
+might be difficult.
+might be difficult.
+But
+But
+But
+But But people have done things like
+But But people have done things like
+But But people have done things like
+kind of learn adaptive meshing, for
+kind of learn adaptive meshing, for
+kind of learn adaptive meshing, for
+example. Like that is possible. Uh you
+example. Like that is possible. Uh you
+example. Like that is possible. Uh you
+just have to be able to frame frame the
+just have to be able to frame frame the
+just have to be able to frame frame the
+kind of algorithm in the right way.
+kind of algorithm in the right way.
+kind of algorithm in the right way.
+But yeah, so
+But yeah, so
+But yeah, so
+it's a good idea, I think.
+Uh okay, so
+Uh okay, so
+Uh okay, so
+so this when we roll this out, um it
+so this when we roll this out, um it
+so this when we roll this out, um it
+generalizes really well. So
+generalizes really well. So
+generalizes really well. So
+let's just think about comparing this to
+let's just think about comparing this to
+let's just think about comparing this to
+a a naive way of trying to
+a a naive way of trying to
+a a naive way of trying to
+um predict this data set. So
+um predict this data set. So
+um predict this data set. So
+what what I'm doing here is
+what what I'm doing here is
+what what I'm doing here is
+let's just imagine that we're having it
+let's just imagine that we're having it
+let's just imagine that we're having it
+we're going to predict the data set by
+we're going to predict the data set by
+we're going to predict the data set by
+just saying that a neural network which
+just saying that a neural network which
+just saying that a neural network which
+takes in the time coordinate and tries
+takes in the time coordinate and tries
+takes in the time coordinate and tries
+to predict what the population is.
+to predict what the population is.
+to predict what the population is.
+So, we're just going to forget that we
+So, we're just going to forget that we
+So, we're just going to forget that we
+even know about this PDE and just say we
+even know about this PDE and just say we
+even know about this PDE and just say we
+have some data and we're going to match
+have some data and we're going to match
+have some data and we're going to match
+our observed data to the prediction of
+our observed data to the prediction of
+our observed data to the prediction of
+the of the network at each time step.
+the of the network at each time step.
+the of the network at each time step.
+And we'll train it with a super very
+And we'll train it with a super very
+And we'll train it with a super very
+similar loss function using our observed
+similar loss function using our observed
+similar loss function using our observed
+data here.
+data here.
+data here.
+And what I've plotted here is the
+And what I've plotted here is the
+And what I've plotted here is the
+What
+What
+What
+the paper didn't actually train this
+the paper didn't actually train this
+the paper didn't actually train this
+network, but I've plotted what I can
+network, but I've plotted what I can
+network, but I've plotted what I can
+guarantee you would be the the result of
+guarantee you would be the the result of
+guarantee you would be the the result of
+this if you train such a network.
+this if you train such a network.
+this if you train such a network.
+And this would be the result where you
+And this would be the result where you
+And this would be the result where you
+the network
+the network
+the network
+uh
+uh
+uh
+is able to match where it has where it
+is able to match where it has where it
+is able to match where it has where it
+has streaming data and give you a good
+has streaming data and give you a good
+has streaming data and give you a good
+prediction.
+prediction.
+prediction.
+But as soon as I query this this naive
+But as soon as I query this this naive
+But as soon as I query this this naive
+network for a time value that it hasn't
+network for a time value that it hasn't
+network for a time value that it hasn't
+seen in its training data, it's just
+seen in its training data, it's just
+seen in its training data, it's just
+going to give you a really bad
+going to give you a really bad
+going to give you a really bad
+prediction.
+prediction.
+prediction.
+This is just a generalization error of
+This is just a generalization error of
+This is just a generalization error of
+of neural network showing up here.
+of neural network showing up here.
+of neural network showing up here.
+So, my question is this like why why is
+So, my question is this like why why is
+So, my question is this like why why is
+this left-hand side approach? Why is the
+this left-hand side approach? Why is the
+this left-hand side approach? Why is the
+neural differential equation so much
+neural differential equation so much
+neural differential equation so much
+better than just training like a naive
+better than just training like a naive
+better than just training like a naive
+network in this situation in this
+network in this situation in this
+network in this situation in this
+situation?
+situation?
+situation?
+Who knows the answer?
+Yeah, go on.
+Yeah, go on.
+Yeah, go on.
+Are you not sure? Yeah.
+Are you not sure? Yeah.
+Are you not sure? Yeah.
+Well, well, it's it's going to be
+Well, well, it's it's going to be
+Well, well, it's it's going to be
+because we're learning the problem,
+because we're learning the problem,
+because we're learning the problem,
+right? Yeah. And and not the solution.
+right? Yeah. And and not the solution.
+right? Yeah. And and not the solution.
+So, like
+It makes sense that we generalize if if
+It makes sense that we generalize if if
+It makes sense that we generalize if if
+we
+we
+we
+Yeah.
+Yeah.
+Yeah.
+You're you're halfway there. Yeah,
+You're you're halfway there. Yeah,
+You're you're halfway there. Yeah,
+you're
+Yeah. Somehow it has to learn the
+Yeah. Somehow it has to learn the
+Yeah. Somehow it has to learn the
+underlying distributions and when it
+underlying distributions and when it
+underlying distributions and when it
+sees values distributions that it Yeah.
+sees values distributions that it Yeah.
+sees values distributions that it Yeah.
+recognizes that with um
+recognizes that with um
+recognizes that with um
+regular MLP
+regular MLP
+regular MLP
+Yeah.
+Yeah.
+Yeah.
+learn the underlying distributions.
+learn the underlying distributions.
+learn the underlying distributions.
+Yeah.
+Yeah.
+Yeah.
+Yeah.
+Yeah.
+Yeah, go on. Somehow here
+Yeah, go on. Somehow here
+Yeah, go on. Somehow here
+it picks the size
+it picks the size
+it picks the size
+Yeah. All right, you can define the size
+Yeah. All right, you can define the size
+Yeah. All right, you can define the size
+of the step.
+of the step.
+of the step.
+Yes. Probably failed.
+Yes. Probably failed.
+Yes. Probably failed.
+Yeah. Some start going to reach
+Yeah. Some start going to reach
+Yeah. Some start going to reach
+Yeah.
+Yeah.
+Yeah.
+That's that's the key insight here is is
+That's that's the key insight here is is
+That's that's the key insight here is is
+think about the inputs to these two
+think about the inputs to these two
+think about the inputs to these two
+different neural networks.
+different neural networks.
+different neural networks.
+This neural network here or both these
+This neural network here or both these
+This neural network here or both these
+networks take in X and Y as their
+networks take in X and Y as their
+networks take in X and Y as their
+inputs. They don't take in the time
+inputs. They don't take in the time
+inputs. They don't take in the time
+value as an input. There's no
+value as an input. There's no
+value as an input. There's no
+time dependence of these of these
+time dependence of these of these
+time dependence of these of these
+functions they're learning.
+functions they're learning.
+functions they're learning.
+Whereas this function only takes the
+Whereas this function only takes the
+Whereas this function only takes the
+time value.
+time value.
+time value.
+And when we query this for later times,
+And when we query this for later times,
+And when we query this for later times,
+this doesn't have examples
+this doesn't have examples
+this doesn't have examples
+uh at later times.
+uh at later times.
+uh at later times.
+But what you can observe is the dynamics
+But what you can observe is the dynamics
+But what you can observe is the dynamics
+here are bounded. So, there's this
+here are bounded. So, there's this
+here are bounded. So, there's this
+so-called phase space of the system,
+so-called phase space of the system,
+so-called phase space of the system,
+right? Where you can plot X and Y as a
+right? Where you can plot X and Y as a
+right? Where you can plot X and Y as a
+function uh together.
+function uh together.
+function uh together.
+And the X and Y values only range
+And the X and Y values only range
+And the X and Y values only range
+between say 0 and and 10 here.
+between say 0 and and 10 here.
+between say 0 and and 10 here.
+So, during training what
+So, during training what
+So, during training what
+as long as we make sure that the NDE is
+as long as we make sure that the NDE is
+as long as we make sure that the NDE is
+trained on one full cycle, the whole
+trained on one full cycle, the whole
+trained on one full cycle, the whole
+range of the XY values, you can be
+range of the XY values, you can be
+range of the XY values, you can be
+pretty sure that this network's going to
+pretty sure that this network's going to
+pretty sure that this network's going to
+be in in distribution whenever it's
+be in in distribution whenever it's
+be in in distribution whenever it's
+queried at later times.
+queried at later times.
+queried at later times.
+Another way of saying this is very
+Another way of saying this is very
+Another way of saying this is very
+simply that the NDE has a lot of
+simply that the NDE has a lot of
+simply that the NDE has a lot of
+structure to it.
+structure to it.
+structure to it.
+Like with as well as these networks,
+Like with as well as these networks,
+Like with as well as these networks,
+we're assuming a really rigid structure
+we're assuming a really rigid structure
+we're assuming a really rigid structure
+of the underlying dynamics. Like with
+of the underlying dynamics. Like with
+of the underlying dynamics. Like with
+the
+the
+the
+assuming it's a first-order system rate
+assuming it's a first-order system rate
+assuming it's a first-order system rate
+of change equation.
+of change equation.
+of change equation.
+This also just adds a lot of kind of
+This also just adds a lot of kind of
+This also just adds a lot of kind of
+physics constraints into the into the
+physics constraints into the into the
+physics constraints into the into the
+prediction that it produces.
+prediction that it produces.
+prediction that it produces.
+So, yeah, this this model generalizes
+So, yeah, this this model generalizes
+So, yeah, this this model generalizes
+well because it the network sees the
+well because it the network sees the
+well because it the network sees the
+entire phase space during its training.
+entire phase space during its training.
+entire phase space during its training.
+So, a nice way of plotting these kind of
+So, a nice way of plotting these kind of
+So, a nice way of plotting these kind of
+systems is to plot X as a function of Y
+systems is to plot X as a function of Y
+systems is to plot X as a function of Y
+and you can just see
+and you can just see
+and you can just see
+as the system evolves in time, it just
+as the system evolves in time, it just
+as the system evolves in time, it just
+goes around this kind of circle.
+goes around this kind of circle.
+goes around this kind of circle.
+You've probably all seen these kind of
+You've probably all seen these kind of
+You've probably all seen these kind of
+phase diagrams before.
+phase diagrams before.
+phase diagrams before.
+Yeah. Okay.
+Yeah. Okay.
+Yeah. Okay.
+Does that make sense to everyone?
+Does that make sense to everyone?
+Does that make sense to everyone?
+How it generalizes?
+How it generalizes?
+How it generalizes?
+So, I mean
+So, I mean
+So, I mean
+maybe it depends on your definition of
+maybe it depends on your definition of
+maybe it depends on your definition of
+generalizing. This network is just
+generalizing. This network is just
+generalizing. This network is just
+seeing inputs that it's already seen
+seeing inputs that it's already seen
+seeing inputs that it's already seen
+during training, but it's kind of
+during training, but it's kind of
+during training, but it's kind of
+generalizing in time when you solve the
+generalizing in time when you solve the
+generalizing in time when you solve the
+differential equation.
+Cool. So, uh
+Cool. So, uh
+Cool. So, uh
+summary of neural differential
+summary of neural differential
+summary of neural differential
+equations. So, this is the key idea. Use
+equations. So, this is the key idea. Use
+equations. So, this is the key idea. Use
+the neural network to represent parts of
+the neural network to represent parts of
+the neural network to represent parts of
+the the differential equations we don't
+the the differential equations we don't
+the the differential equations we don't
+know. This is the definition of a neural
+know. This is the definition of a neural
+know. This is the definition of a neural
+differential equation.
+differential equation.
+differential equation.
+And then as I've shown you in that
+And then as I've shown you in that
+And then as I've shown you in that
+example, we can solve NDEs using
+example, we can solve NDEs using
+example, we can solve NDEs using
+numerical methods.
+numerical methods.
+numerical methods.
+Just like we do with traditional uh
+Just like we do with traditional uh
+Just like we do with traditional uh
+differential equations.
+differential equations.
+differential equations.
+We can train NDEs with auto diff just
+We can train NDEs with auto diff just
+We can train NDEs with auto diff just
+matching the outputs of the simulator
+matching the outputs of the simulator
+matching the outputs of the simulator
+with respect to
+with respect to
+with respect to
+but just matching the outputs of the
+but just matching the outputs of the
+but just matching the outputs of the
+simulator with some training data.
+simulator with some training data.
+simulator with some training data.
+They can be used to discover the
+They can be used to discover the
+They can be used to discover the
+underlying dynamics. That's exactly what
+underlying dynamics. That's exactly what
+underlying dynamics. That's exactly what
+the neural network's trying to do.
+the neural network's trying to do.
+the neural network's trying to do.
+And they can also just be thought of as
+And they can also just be thought of as
+And they can also just be thought of as
+a hybrid technique that you know, we're
+a hybrid technique that you know, we're
+a hybrid technique that you know, we're
+just using auto grad to differentiate
+just using auto grad to differentiate
+just using auto grad to differentiate
+through a a solver basically.
+Okay. So, I've covered the kind of
+Okay. So, I've covered the kind of
+Okay. So, I've covered the kind of
+uh
+uh
+uh
+first part of the lecture which is what
+first part of the lecture which is what
+first part of the lecture which is what
+is a neural differential equation.
+is a neural differential equation.
+is a neural differential equation.
+So, now we're going to go into this
+So, now we're going to go into this
+So, now we're going to go into this
+super fascinating link between kind of
+super fascinating link between kind of
+super fascinating link between kind of
+neural differential equations and and
+neural differential equations and and
+neural differential equations and and
+neural networks themselves. And
+neural networks themselves. And
+neural networks themselves. And
+this is a really kind of interesting
+this is a really kind of interesting
+this is a really kind of interesting
+bridge between the field of machine
+bridge between the field of machine
+bridge between the field of machine
+learning and PDEs and it's really
+learning and PDEs and it's really
+learning and PDEs and it's really
+interesting to learn. So,
+interesting to learn. So,
+interesting to learn. So,
+we'll cover this and then and then I
+we'll cover this and then and then I
+we'll cover this and then and then I
+think uh next lecture we'll probably get
+think uh next lecture we'll probably get
+think uh next lecture we'll probably get
+on to the state-of-the-art applications
+on to the state-of-the-art applications
+on to the state-of-the-art applications
+of these of these models.
+So, we can define more generally uh
+So, we can define more generally uh
+So, we can define more generally uh
+a neural ordinary differential equation.
+a neural ordinary differential equation.
+a neural ordinary differential equation.
+Um and so we can just take that kind of
+Um and so we can just take that kind of
+Um and so we can just take that kind of
+uh look look to look to Volterra system
+uh look look to look to Volterra system
+uh look look to look to Volterra system
+and just
+and just
+and just
+abstract it to just a just any ordinary
+abstract it to just a just any ordinary
+abstract it to just a just any ordinary
+differential equation which we can write
+differential equation which we can write
+differential equation which we can write
+like this.
+like this.
+like this.
+Where we just have some vector that
+Where we just have some vector that
+Where we just have some vector that
+depends on a single variable T.
+depends on a single variable T.
+depends on a single variable T.
+Uh and its rate of change just depends
+Uh and its rate of change just depends
+Uh and its rate of change just depends
+is a some vector-valued function
+is a some vector-valued function
+is a some vector-valued function
+uh here.
+uh here.
+uh here.
+And so we can just say this whole
+And so we can just say this whole
+And so we can just say this whole
+right-hand side of our ODE is just a
+right-hand side of our ODE is just a
+right-hand side of our ODE is just a
+learnable function. So,
+learnable function. So,
+learnable function. So,
+it's probably a neural network, but it
+it's probably a neural network, but it
+it's probably a neural network, but it
+could also be
+could also be
+could also be
+a combination of kind of mathematical
+a combination of kind of mathematical
+a combination of kind of mathematical
+expressions with a neural network or
+expressions with a neural network or
+expressions with a neural network or
+whatever you whatever you want.
+Okay.
+Okay.
+Okay.
+So, we can solve this using a whole
+So, we can solve this using a whole
+So, we can solve this using a whole
+library of different ODE solvers. Um
+library of different ODE solvers. Um
+library of different ODE solvers. Um
+again, I'm just showing you the Euler
+again, I'm just showing you the Euler
+again, I'm just showing you the Euler
+method, but of course there are much
+method, but of course there are much
+method, but of course there are much
+better options depending on the actual
+better options depending on the actual
+better options depending on the actual
+difficulty of the of the problem.
+difficulty of the of the problem.
+difficulty of the of the problem.
+But if we solve this with a with an
+But if we solve this with a with an
+But if we solve this with a with an
+Euler method again, we just
+Euler method again, we just
+Euler method again, we just
+approximate the left-hand side with its
+approximate the left-hand side with its
+approximate the left-hand side with its
+numerical derivative and rearrange it a
+numerical derivative and rearrange it a
+numerical derivative and rearrange it a
+little bit and we just get an an
+little bit and we just get an an
+little bit and we just get an an
+expression for the solution
+expression for the solution
+expression for the solution
+at each time step.
+at each time step.
+at each time step.
+And to evaluate the the solution at each
+And to evaluate the the solution at each
+And to evaluate the the solution at each
+time step, we just we inside of that
+time step, we just we inside of that
+time step, we just we inside of that
+evaluation is some
+evaluation is some
+evaluation is some
+evaluation of the neural network.
+evaluation of the neural network.
+evaluation of the neural network.
+Everyone with me so far?
+Everyone with me so far?
+Everyone with me so far?
+Okay.
+So, what's what's super useful is to
+So, what's what's super useful is to
+So, what's what's super useful is to
+actually just draw this out as a
+actually just draw this out as a
+actually just draw this out as a
+diagram.
+diagram.
+diagram.
+Um and then you can start seeing
+Um and then you can start seeing
+Um and then you can start seeing
+connections. So,
+connections. So,
+connections. So,
+if I just
+if I just
+if I just
+write this workflow out as a as a
+write this workflow out as a as a
+write this workflow out as a as a
+graphical diagram here. So, so at the
+graphical diagram here. So, so at the
+graphical diagram here. So, so at the
+bottom here is the the current time
+bottom here is the the current time
+bottom here is the the current time
+step, the value of X.
+step, the value of X.
+step, the value of X.
+And then we're just going to evaluate
+And then we're just going to evaluate
+And then we're just going to evaluate
+the neural network and we're just going
+the neural network and we're just going
+the neural network and we're just going
+to add that to X and and also times it
+to add that to X and and also times it
+to add that to X and and also times it
+by the the time step here.
+by the the time step here.
+by the the time step here.
+So, as a as a as a kind of graph
+So, as a as a as a kind of graph
+So, as a as a as a kind of graph
+diagram,
+diagram,
+diagram,
+what does this remind you of?
+Anyone Anyone
+Anyone Anyone
+Anyone Anyone
+think that this looks familiar somehow?
+Yeah, go on.
+Residual connection.
+Residual connection.
+Residual connection.
+Yeah, absolutely.
+Yeah, absolutely.
+Yeah, absolutely.
+This is exactly the diagram for a
+This is exactly the diagram for a
+This is exactly the diagram for a
+residual connection in a in a neural
+residual connection in a in a neural
+residual connection in a in a neural
+network.
+network.
+network.
+Remember a residual connection just
+Remember a residual connection just
+Remember a residual connection just
+takes X X here in a neural network
+takes X X here in a neural network
+takes X X here in a neural network
+would be like the hidden state of the
+would be like the hidden state of the
+would be like the hidden state of the
+network or just some input.
+network or just some input.
+network or just some input.
+And we pass it through some neural
+And we pass it through some neural
+And we pass it through some neural
+network layer. It could be like a
+network layer. It could be like a
+network layer. It could be like a
+convolutional layer or fully connected
+convolutional layer or fully connected
+convolutional layer or fully connected
+layer or whatever.
+layer or whatever.
+layer or whatever.
+And then we just add a skip connection.
+And then we just add a skip connection.
+And then we just add a skip connection.
+So, we just add that the hidden state
+So, we just add that the hidden state
+So, we just add that the hidden state
+back to the to the output of the neural
+back to the to the output of the neural
+back to the to the output of the neural
+network.
+So, what you should immediately start
+So, what you should immediately start
+So, what you should immediately start
+realizing is that
+realizing is that
+realizing is that
+this discretized version of the ordinary
+this discretized version of the ordinary
+this discretized version of the ordinary
+differential equation
+differential equation
+differential equation
+is doing a residual step or at least
+is doing a residual step or at least
+is doing a residual step or at least
+each step is doing a
+each step is doing a
+each step is doing a
+each
+each
+each
+time step here is is a residual residual
+time step here is is a residual residual
+time step here is is a residual residual
+network.
+So, yeah, this is the kind of key
+So, yeah, this is the kind of key
+So, yeah, this is the kind of key
+insight here.
+So, what I can do is I can just draw out
+So, what I can do is I can just draw out
+So, what I can do is I can just draw out
+This is now just a drawing of a ResNet.
+This is now just a drawing of a ResNet.
+This is now just a drawing of a ResNet.
+You know, what we do with ResNets is we
+You know, what we do with ResNets is we
+You know, what we do with ResNets is we
+stack these residual layers together and
+stack these residual layers together and
+stack these residual layers together and
+have like 10-layer ResNets, 50-layer
+have like 10-layer ResNets, 50-layer
+have like 10-layer ResNets, 50-layer
+ResNets.
+ResNets.
+ResNets.
+And what you can see in the
+And what you can see in the
+And what you can see in the
+the ResNets are actually just Euler ODE
+the ResNets are actually just Euler ODE
+the ResNets are actually just Euler ODE
+solvers. Like
+solvers. Like
+solvers. Like
+each ResNet layer here is just doing it
+each ResNet layer here is just doing it
+each ResNet layer here is just doing it
+one step of a of an Euler solver.
+one step of a of an Euler solver.
+one step of a of an Euler solver.
+And kind of in the limit of an infinite
+And kind of in the limit of an infinite
+And kind of in the limit of an infinite
+number of layers, so as like our time
+number of layers, so as like our time
+number of layers, so as like our time
+step goes to zero,
+step goes to zero,
+step goes to zero,
+mathematically ResNets just solve this
+mathematically ResNets just solve this
+mathematically ResNets just solve this
+ordinary differential equation here.
+ordinary differential equation here.
+ordinary differential equation here.
+So, yeah, training a ResNet is
+So, yeah, training a ResNet is
+So, yeah, training a ResNet is
+also just the same when we're learning
+also just the same when we're learning
+also just the same when we're learning
+these weights of the ResNet here, it's
+these weights of the ResNet here, it's
+these weights of the ResNet here, it's
+also just the same as learning the
+also just the same as learning the
+also just the same as learning the
+right-hand side of the of the ODE.
+I'll just let that sink in cuz that's
+I'll just let that sink in cuz that's
+I'll just let that sink in cuz that's
+like quite a
+like quite a
+like quite a
+important connection to try and relate
+important connection to try and relate
+important connection to try and relate
+the two fields.
+So, this was uh
+So, this was uh
+So, this was uh
+this kind of link was just kind of
+this kind of link was just kind of
+this kind of link was just kind of
+talked about and interpreted in this
+talked about and interpreted in this
+talked about and interpreted in this
+paper. This is a really
+paper. This is a really
+paper. This is a really
+really famous paper. It's definitely
+really famous paper. It's definitely
+really famous paper. It's definitely
+worth reading Neural Ordinary
+worth reading Neural Ordinary
+worth reading Neural Ordinary
+Differential Equations.
+Differential Equations.
+Differential Equations.
+Um and yeah, it's it's simply this.
+Um and yeah, it's it's simply this.
+Um and yeah, it's it's simply this.
+ResNets are Euler ODE solvers in the
+ResNets are Euler ODE solvers in the
+ResNets are Euler ODE solvers in the
+limit.
+Okay. So,
+we define the neural ordinary
+we define the neural ordinary
+we define the neural ordinary
+differential equation as this.
+differential equation as this.
+differential equation as this.
+Um
+Um
+Um
+and we have this learnable function
+and we have this learnable function
+and we have this learnable function
+here. But as we've been talking about
+here. But as we've been talking about
+here. But as we've been talking about
+when
+when
+when
+we just assume that we use an Euler
+we just assume that we use an Euler
+we just assume that we use an Euler
+solver. And when we use that Euler
+solver. And when we use that Euler
+solver. And when we use that Euler
+solver, we saw that it it gives us a
+solver, we saw that it it gives us a
+solver, we saw that it it gives us a
+residual connection or looks like a res
+residual connection or looks like a res
+residual connection or looks like a res
+net.
+net.
+net.
+Who else could we use? If if we know
+Who else could we use? If if we know
+Who else could we use? If if we know
+that this is like a stiff problem to
+that this is like a stiff problem to
+that this is like a stiff problem to
+solve as we were talking about before.
+solve as we were talking about before.
+solve as we were talking about before.
+There are many other numerical solvers,
+There are many other numerical solvers,
+There are many other numerical solvers,
+right?
+right?
+right?
+Yeah.
+Yeah.
+Yeah.
+Well, as I can point to the explicit
+Well, as I can point to the explicit
+Well, as I can point to the explicit
+Euler for stiff problems, you might
+Euler for stiff problems, you might
+Euler for stiff problems, you might
+consider implicit. Implicit methods,
+consider implicit. Implicit methods,
+consider implicit. Implicit methods,
+yeah. Any other Any other options? There
+yeah. Any other Any other options? There
+yeah. Any other Any other options? There
+there are many, obviously.
+Yeah, so you mentioned Runge-Kutta.
+Yeah, so you mentioned Runge-Kutta.
+Yeah, so you mentioned Runge-Kutta.
+So
+So
+So
+we could we could use that, for example.
+we could we could use that, for example.
+we could we could use that, for example.
+Um so I'm not going to go into how this
+Um so I'm not going to go into how this
+Um so I'm not going to go into how this
+is method is derived, but you can there
+is method is derived, but you can there
+is method is derived, but you can there
+are many class classes you can you can
+are many class classes you can you can
+are many class classes you can you can
+take on this.
+take on this.
+take on this.
+Uh but this is the this is the time
+Uh but this is the this is the time
+Uh but this is the this is the time
+stepping algorithm that you would use
+stepping algorithm that you would use
+stepping algorithm that you would use
+and it um it's just a more complex
+and it um it's just a more complex
+and it um it's just a more complex
+computation at the end of the day.
+computation at the end of the day.
+computation at the end of the day.
+Uh where we computing these intermediate
+Uh where we computing these intermediate
+Uh where we computing these intermediate
+vectors, these K1, K2, K3, K4.
+vectors, these K1, K2, K3, K4.
+vectors, these K1, K2, K3, K4.
+Uh which just have these expressions
+Uh which just have these expressions
+Uh which just have these expressions
+here. And
+here. And
+here. And
+all of these are just calling the neural
+all of these are just calling the neural
+all of these are just calling the neural
+network in in kind of a more complex
+network in in kind of a more complex
+network in in kind of a more complex
+mathematical function.
+mathematical function.
+mathematical function.
+But it's the same deal. We just we start
+But it's the same deal. We just we start
+But it's the same deal. We just we start
+with a time step, we get an output time
+with a time step, we get an output time
+with a time step, we get an output time
+step, and it just depends on the neural
+step, and it just depends on the neural
+step, and it just depends on the neural
+network. And so what I can draw here is
+network. And so what I can draw here is
+network. And so what I can draw here is
+that kind of computational graph of all
+that kind of computational graph of all
+that kind of computational graph of all
+those kind of calls of the neural
+those kind of calls of the neural
+those kind of calls of the neural
+network and how they're added together
+network and how they're added together
+network and how they're added together
+and connected together.
+So
+So
+So
+now that we already know that that we
+now that we already know that that we
+now that we already know that that we
+can interpret these neural differential
+can interpret these neural differential
+can interpret these neural differential
+equation solvers as neural network
+equation solvers as neural network
+equation solvers as neural network
+architectures, right? The Euler solver
+architectures, right? The Euler solver
+architectures, right? The Euler solver
+was a res net.
+was a res net.
+was a res net.
+We can just interpret this as like a
+We can just interpret this as like a
+We can just interpret this as like a
+custom neural network architecture.
+custom neural network architecture.
+custom neural network architecture.
+This is like a custom residual block
+This is like a custom residual block
+This is like a custom residual block
+that's just more complicated than just a
+that's just more complicated than just a
+that's just more complicated than just a
+simple skip connection. It's got a bunch
+simple skip connection. It's got a bunch
+simple skip connection. It's got a bunch
+of other stuff going on.
+of other stuff going on.
+of other stuff going on.
+But you could think of creating a neural
+But you could think of creating a neural
+But you could think of creating a neural
+network which is just composed of all of
+network which is just composed of all of
+network which is just composed of all of
+these residual blocks and then just
+these residual blocks and then just
+these residual blocks and then just
+training that to do any machine learning
+training that to do any machine learning
+training that to do any machine learning
+task like we would like we would do a
+task like we would like we would do a
+task like we would like we would do a
+res net.
+So this is the next insight is that kind
+So this is the next insight is that kind
+So this is the next insight is that kind
+of other solvers define other neural
+of other solvers define other neural
+of other solvers define other neural
+network architectures. So
+network architectures. So
+network architectures. So
+uh you can have the same PDE, but the
+uh you can have the same PDE, but the
+uh you can have the same PDE, but the
+way that you discretize it might change
+way that you discretize it might change
+way that you discretize it might change
+the the architecture that falls out.
+Um so I have a slide here that's very
+Um so I have a slide here that's very
+Um so I have a slide here that's very
+dense. Uh I don't have the time to to go
+dense. Uh I don't have the time to to go
+dense. Uh I don't have the time to to go
+through it, but
+through it, but
+through it, but
+if you're interested, have a look at
+if you're interested, have a look at
+if you're interested, have a look at
+at the slide later.
+at the slide later.
+at the slide later.
+Um but what what I'm showing here is a
+Um but what what I'm showing here is a
+Um but what what I'm showing here is a
+that if you just think of a
+that if you just think of a
+that if you just think of a
+convolutional neural network, a CNN, in
+convolutional neural network, a CNN, in
+convolutional neural network, a CNN, in
+in particular just a a 1D convolutional
+in particular just a a 1D convolutional
+in particular just a a 1D convolutional
+layer with with just three weights in
+layer with with just three weights in
+layer with with just three weights in
+the filter.
+the filter.
+the filter.
+You can actually derive the kind of
+You can actually derive the kind of
+You can actually derive the kind of
+underlying PDE that that network solves
+underlying PDE that that network solves
+underlying PDE that that network solves
+in the limit of like a a
+in the limit of like a a
+in the limit of like a a
+an infinite number of CNN layers.
+an infinite number of CNN layers.
+an infinite number of CNN layers.
+So yeah, the question I'm asking here
+So yeah, the question I'm asking here
+So yeah, the question I'm asking here
+is, okay, so what if we know that neural
+is, okay, so what if we know that neural
+is, okay, so what if we know that neural
+network architectures
+network architectures
+network architectures
+in the limit solve differential
+in the limit solve differential
+in the limit solve differential
+equations, what differential equation
+equations, what differential equation
+equations, what differential equation
+does a CNN solve?
+does a CNN solve?
+does a CNN solve?
+And it turns out this this CNN solves
+And it turns out this this CNN solves
+And it turns out this this CNN solves
+this this underlying PDE here.
+this this underlying PDE here.
+this this underlying PDE here.
+So it's it's super interesting to kind
+So it's it's super interesting to kind
+So it's it's super interesting to kind
+of
+of
+of
+reinterpret neural network architectures
+reinterpret neural network architectures
+reinterpret neural network architectures
+as solving differential equations. And
+as solving differential equations. And
+as solving differential equations. And
+And this is kind of the
+And this is kind of the
+And this is kind of the
+the key key link here is that we can
+the key key link here is that we can
+the key key link here is that we can
+interpret neural network as as
+interpret neural network as as
+interpret neural network as as
+discretized differential equation
+discretized differential equation
+discretized differential equation
+solvers.
+solvers.
+solvers.
+And once we've formed that bridge, we've
+And once we've formed that bridge, we've
+And once we've formed that bridge, we've
+got some really interesting things we
+got some really interesting things we
+got some really interesting things we
+can learn. So we can take, for example,
+can learn. So we can take, for example,
+can learn. So we can take, for example,
+all of our understanding of PDEs and and
+all of our understanding of PDEs and and
+all of our understanding of PDEs and and
+their solutions and how hard they are to
+their solutions and how hard they are to
+their solutions and how hard they are to
+solve and all these interesting things
+solve and all these interesting things
+solve and all these interesting things
+we know about PDEs.
+we know about PDEs.
+we know about PDEs.
+And we can help feed that into
+And we can help feed that into
+And we can help feed that into
+understanding understanding which
+understanding understanding which
+understanding understanding which
+architectures to use to design neural
+architectures to use to design neural
+architectures to use to design neural
+networks to have certain properties.
+networks to have certain properties.
+networks to have certain properties.
+Also to help us understand how to train
+Also to help us understand how to train
+Also to help us understand how to train
+those neural network architectures,
+those neural network architectures,
+those neural network architectures,
+right?
+right?
+right?
+The link also goes the other way. We can
+The link also goes the other way. We can
+The link also goes the other way. We can
+take some of our best architectures that
+take some of our best architectures that
+take some of our best architectures that
+we know from machine learning, things
+we know from machine learning, things
+we know from machine learning, things
+like transformers or, you know, residual
+like transformers or, you know, residual
+like transformers or, you know, residual
+networks and such and and help us maybe
+networks and such and and help us maybe
+networks and such and and help us maybe
+solve PDEs or or think about framing
+solve PDEs or or think about framing
+solve PDEs or or think about framing
+PDEs in a different way.
+PDEs in a different way.
+PDEs in a different way.
+So
+So
+So
+this is a super cool link. and indeed it
+this is a super cool link. and indeed it
+this is a super cool link. and indeed it
+can help us kind of interpret the the
+can help us kind of interpret the the
+can help us kind of interpret the the
+dynamics of of of neural network
+dynamics of of of neural network
+dynamics of of of neural network
+architectures.
+architectures.
+architectures.
+Okay.
+Okay.
+Okay.
+So I hope everyone understands that
+So I hope everyone understands that
+So I hope everyone understands that
+link. Have you got any questions on this
+link. Have you got any questions on this
+link. Have you got any questions on this
+before? I I do have time to move on, I
+before? I I do have time to move on, I
+before? I I do have time to move on, I
+think, to the next part. So
+Everyone see the link?
+Okay.
+Okay.
+Okay.
+Good.
+So yeah, um I'll talk about uh
+So yeah, um I'll talk about uh
+So yeah, um I'll talk about uh
+I'll start talking about these coupled
+I'll start talking about these coupled
+I'll start talking about these coupled
+oscillatory ODEs. So So what I want to
+oscillatory ODEs. So So what I want to
+oscillatory ODEs. So So what I want to
+show you now are some kind of
+show you now are some kind of
+show you now are some kind of
+applications of neural differential
+applications of neural differential
+applications of neural differential
+equations that are that are interesting.
+And uh
+there's um
+there's um
+there's um
+a kind of realization here that
+a kind of realization here that
+a kind of realization here that
+in in that very first example that I
+in in that very first example that I
+in in that very first example that I
+showed you where we were using a neural
+showed you where we were using a neural
+showed you where we were using a neural
+differential equation to learn like a
+differential equation to learn like a
+differential equation to learn like a
+physical system, that the the
+physical system, that the the
+physical system, that the the
+Lotka-Volterra dynamics.
+Lotka-Volterra dynamics.
+Lotka-Volterra dynamics.
+Uh yeah, in that case we we we actually
+Uh yeah, in that case we we we actually
+Uh yeah, in that case we we we actually
+wanted to learn like the dynamics of the
+wanted to learn like the dynamics of the
+wanted to learn like the dynamics of the
+system, but what I've just showed you is
+system, but what I've just showed you is
+system, but what I've just showed you is
+that uh neural differential equation
+that uh neural differential equation
+that uh neural differential equation
+solvers can be thought can be used as
+solvers can be thought can be used as
+solvers can be thought can be used as
+just neural network architectures. And
+just neural network architectures. And
+just neural network architectures. And
+And in that way
+And in that way
+And in that way
+we can actually just use neural
+we can actually just use neural
+we can actually just use neural
+differential equations to solve machine
+differential equations to solve machine
+differential equations to solve machine
+learning tasks rather than just to learn
+learning tasks rather than just to learn
+learning tasks rather than just to learn
+these underlying dynamics.
+these underlying dynamics.
+these underlying dynamics.
+We can just think of this NDE solver as
+We can just think of this NDE solver as
+We can just think of this NDE solver as
+just some
+just some
+just some
+new custom neural network architecture
+new custom neural network architecture
+new custom neural network architecture
+with some learnable parameters.
+with some learnable parameters.
+with some learnable parameters.
+And it just takes some inputs and
+And it just takes some inputs and
+And it just takes some inputs and
+produces some outputs and we're just
+produces some outputs and we're just
+produces some outputs and we're just
+going to use that as a machine learning
+going to use that as a machine learning
+going to use that as a machine learning
+model.
+model.
+model.
+We can train these NDEs on like machine
+We can train these NDEs on like machine
+We can train these NDEs on like machine
+learning type tasks. So we can take We
+learning type tasks. So we can take We
+learning type tasks. So we can take We
+can say the input here instead of it
+can say the input here instead of it
+can say the input here instead of it
+being something physically
+being something physically
+being something physically
+understandable like the initial prey or
+understandable like the initial prey or
+understandable like the initial prey or
+pop population dynamics.
+pop population dynamics.
+pop population dynamics.
+Instead it's going to be some machine
+Instead it's going to be some machine
+Instead it's going to be some machine
+learning input like a image that we want
+learning input like a image that we want
+learning input like a image that we want
+to classify. And And the output of the
+to classify. And And the output of the
+to classify. And And the output of the
+of the solver
+of the solver
+of the solver
+might be like a a classification of the
+might be like a a classification of the
+might be like a a classification of the
+class of that image. And And when we
+class of that image. And And when we
+class of that image. And And when we
+train when we train the NDE, we're just
+train when we train the NDE, we're just
+train when we train the NDE, we're just
+going to try and learn this kind of
+going to try and learn this kind of
+going to try and learn this kind of
+non-linear non-linear mapping.
+So yeah, this is the key The next key
+So yeah, this is the key The next key
+So yeah, this is the key The next key
+idea is uh
+idea is uh
+idea is uh
+discretized NDE solvers can be thought
+discretized NDE solvers can be thought
+discretized NDE solvers can be thought
+of as custom architectures. Why not use
+of as custom architectures. Why not use
+of as custom architectures. Why not use
+an NDE to model any any data set and not
+an NDE to model any any data set and not
+an NDE to model any any data set and not
+just a physical system?
+just a physical system?
+just a physical system?
+Yeah. So is the NDE kind of in a way
+Yeah. So is the NDE kind of in a way
+Yeah. So is the NDE kind of in a way
+discovering the equation solving it?
+discovering the equation solving it?
+discovering the equation solving it?
+Yeah.
+Yeah.
+Yeah.
+I mean it is, for sure, because this is
+I mean it is, for sure, because this is
+I mean it is, for sure, because this is
+we're assuming we're discretizing a
+we're assuming we're discretizing a
+we're assuming we're discretizing a
+underlying differential equation. So
+underlying differential equation. So
+underlying differential equation. So
+which is really interesting because you
+which is really interesting because you
+which is really interesting because you
+can Not only can you just learn a a good
+can Not only can you just learn a a good
+can Not only can you just learn a a good
+function that solves this task with high
+function that solves this task with high
+function that solves this task with high
+accuracy, you can then look at that PDE
+accuracy, you can then look at that PDE
+accuracy, you can then look at that PDE
+that is actually learned underneath and
+that is actually learned underneath and
+that is actually learned underneath and
+use that to help interpret the the
+use that to help interpret the the
+use that to help interpret the the
+neural network.
+neural network.
+neural network.
+And that might tell you something
+And that might tell you something
+And that might tell you something
+interesting about the the types of
+interesting about the the types of
+interesting about the the types of
+functions that it's learning. So
+functions that it's learning. So
+functions that it's learning. So
+this is why this link is so interesting
+this is why this link is so interesting
+this is why this link is so interesting
+cuz these neural differential equations
+cuz these neural differential equations
+cuz these neural differential equations
+help us interpret the kind of dynamics
+help us interpret the kind of dynamics
+help us interpret the kind of dynamics
+of the neural network.
+So you could look, for example, at how
+So you could look, for example, at how
+So you could look, for example, at how
+that this hidden state of the network
+that this hidden state of the network
+that this hidden state of the network
+evolves over time and and see how it
+evolves over time and and see how it
+evolves over time and and see how it
+changes the input to the output, for
+changes the input to the output, for
+changes the input to the output, for
+example.
+Okay.
+Uh so this paper that uh talked
+Uh so this paper that uh talked
+Uh so this paper that uh talked
+introduced neural ordinary differential
+introduced neural ordinary differential
+introduced neural ordinary differential
+equations did exactly this. They they
+equations did exactly this. They they
+equations did exactly this. They they
+looked at them from a machine learning
+looked at them from a machine learning
+looked at them from a machine learning
+perspective and they trained these
+perspective and they trained these
+perspective and they trained these
+neural differential equations on machine
+neural differential equations on machine
+neural differential equations on machine
+learning tasks.
+learning tasks.
+learning tasks.
+So the first thing they tried was just
+So the first thing they tried was just
+So the first thing they tried was just
+simple classification on MNIST. This is
+simple classification on MNIST. This is
+simple classification on MNIST. This is
+like one of our most basic benchmarks in
+like one of our most basic benchmarks in
+like one of our most basic benchmarks in
+machine learning.
+machine learning.
+machine learning.
+And it does a does a good job of
+And it does a does a good job of
+And it does a does a good job of
+of of modeling this modeling this data
+of of modeling this modeling this data
+of of modeling this modeling this data
+set.
+set.
+set.
+So they compared like a the res net,
+So they compared like a the res net,
+So they compared like a the res net,
+which we can think of as just a Euler
+which we can think of as just a Euler
+which we can think of as just a Euler
+solver,
+solver,
+solver,
+to this ARK net. So this is discretizing
+to this ARK net. So this is discretizing
+to this ARK net. So this is discretizing
+the the solver in a
+the the solver in a
+the the solver in a
+uh in a higher order way.
+uh in a higher order way.
+uh in a higher order way.
+And it For this problem, because it's
+And it For this problem, because it's
+And it For this problem, because it's
+such a simple task, they both perform
+such a simple task, they both perform
+such a simple task, they both perform
+kind of similarly. But in general, there
+kind of similarly. But in general, there
+kind of similarly. But in general, there
+are kind of differences between the
+are kind of differences between the
+are kind of differences between the
+solver that you the discretized solver
+solver that you the discretized solver
+solver that you the discretized solver
+that you choose and the kind of
+that you choose and the kind of
+that you choose and the kind of
+performance.
+So we're going to talk about some more
+So we're going to talk about some more
+So we're going to talk about some more
+advanced applications of using NDEs to
+advanced applications of using NDEs to
+advanced applications of using NDEs to
+solve more more complex kind of machine
+solve more more complex kind of machine
+solve more more complex kind of machine
+machine learning tasks.
+So the next task we're going to think
+So the next task we're going to think
+So the next task we're going to think
+about is this this task. This is a
+about is this this task. This is a
+about is this this task. This is a
+really
+really
+really
+important task in machine learning. A
+important task in machine learning. A
+important task in machine learning. A
+lot of people work on this and this is
+lot of people work on this and this is
+lot of people work on this and this is
+kind of
+kind of
+kind of
+carrying out human activity recognition.
+carrying out human activity recognition.
+carrying out human activity recognition.
+So this is like we have our smart smart
+So this is like we have our smart smart
+So this is like we have our smart smart
+watches and those smart watches have
+watches and those smart watches have
+watches and those smart watches have
+accelerometers in them and they record,
+accelerometers in them and they record,
+accelerometers in them and they record,
+you know, the X, Y, and Z acceleration
+you know, the X, Y, and Z acceleration
+you know, the X, Y, and Z acceleration
+as a function of time.
+as a function of time.
+as a function of time.
+And so the task of kind of human
+And so the task of kind of human
+And so the task of kind of human
+activity recognition is to given these
+activity recognition is to given these
+activity recognition is to given these
+time series of the acceleration, can I
+time series of the acceleration, can I
+time series of the acceleration, can I
+actually classify what the human what
+actually classify what the human what
+actually classify what the human what
+the human is doing at that point in
+the human is doing at that point in
+the human is doing at that point in
+time?
+time?
+time?
+So in this case, the the human is is uh
+So in this case, the the human is is uh
+So in this case, the the human is is uh
+walking up the stairs. And so you would
+walking up the stairs. And so you would
+walking up the stairs. And so you would
+hope that there's enough kind of
+hope that there's enough kind of
+hope that there's enough kind of
+information or characteristics in these
+information or characteristics in these
+information or characteristics in these
+signals that we can kind of uniquely
+signals that we can kind of uniquely
+signals that we can kind of uniquely
+determine what what that activity is.
+But this is this is prime for a machine
+But this is this is prime for a machine
+But this is this is prime for a machine
+learning algorithm. Like we don't really
+learning algorithm. Like we don't really
+learning algorithm. Like we don't really
+know the the the the map between the
+know the the the the map between the
+know the the the the map between the
+acceleration and the and the the actual
+acceleration and the and the the actual
+acceleration and the and the the actual
+activity.
+activity.
+activity.
+And and we want to learn that learn that
+And and we want to learn that learn that
+And and we want to learn that learn that
+that function or that map.
+So how do you think we normally What How
+So how do you think we normally What How
+So how do you think we normally What How
+do you think like would be a baseline
+do you think like would be a baseline
+do you think like would be a baseline
+approach to do this? What What would be
+approach to do this? What What would be
+approach to do this? What What would be
+a reasonable machine learning
+a reasonable machine learning
+a reasonable machine learning
+or neural network to to do this this
+or neural network to to do this this
+or neural network to to do this this
+prediction?
+Anyone know how how it's been done
+Anyone know how how it's been done
+Anyone know how how it's been done
+before?
+So that that this is the task. You're
+So that that this is the task. You're
+So that that this is the task. You're
+given this time series of these three
+given this time series of these three
+given this time series of these three
+components and you want to produce the
+components and you want to produce the
+components and you want to produce the
+class of the of the activity.
+class of the of the activity.
+class of the of the activity.
+What type of network could you use?
+Anyone know of any neural networks that
+Anyone know of any neural networks that
+Anyone know of any neural networks that
+deal with time series data very well?
+deal with time series data very well?
+deal with time series data very well?
+Yeah. Like kind of
+Yeah. Like kind of
+Yeah. Like kind of
+LSTM. LSTM, yeah.
+LSTM. LSTM, yeah.
+LSTM. LSTM, yeah.
+Or more simply, just a
+GRU, yeah. So
+GRU, yeah. So
+GRU, yeah. So
+these are examples of of recurrent
+these are examples of of recurrent
+these are examples of of recurrent
+neural networks.
+neural networks.
+neural networks.
+So, RNNs.
+So, RNNs.
+So, RNNs.
+Uh who's heard of RNNs before? Just
+Uh who's heard of RNNs before? Just
+Uh who's heard of RNNs before? Just
+checking.
+checking.
+checking.
+Yeah, most of you. Okay, good.
+Yeah, most of you. Okay, good.
+Yeah, most of you. Okay, good.
+So, this is what an an RNN would do, a
+So, this is what an an RNN would do, a
+So, this is what an an RNN would do, a
+recursive neural network.
+recursive neural network.
+recursive neural network.
+Uh they have a
+Uh they have a
+Uh they have a
+neural network architecture that looks
+neural network architecture that looks
+neural network architecture that looks
+like this.
+like this.
+like this.
+Uh
+Uh
+Uh
+and what it is is just a neural network
+and what it is is just a neural network
+and what it is is just a neural network
+uh that takes in
+uh that takes in
+uh that takes in
+the the input at each time step. So, in
+the the input at each time step. So, in
+the the input at each time step. So, in
+this case, it the network would take in
+this case, it the network would take in
+this case, it the network would take in
+the acceleration XYZ value at each time
+the acceleration XYZ value at each time
+the acceleration XYZ value at each time
+step.
+step.
+step.
+You That would be one input to the
+You That would be one input to the
+You That would be one input to the
+network. Another input would be what we
+network. Another input would be what we
+network. Another input would be what we
+call the hidden state of the of the RNN.
+call the hidden state of the of the RNN.
+call the hidden state of the of the RNN.
+This is just another vector
+This is just another vector
+This is just another vector
+which you can think of as holding some
+which you can think of as holding some
+which you can think of as holding some
+sort of memory or kind of yeah,
+sort of memory or kind of yeah,
+sort of memory or kind of yeah,
+persistent kind of representation of the
+persistent kind of representation of the
+persistent kind of representation of the
+problem.
+problem.
+problem.
+Um
+Um
+Um
+you pass those inputs and the network
+you pass those inputs and the network
+you pass those inputs and the network
+produces a new hidden state based on
+produces a new hidden state based on
+produces a new hidden state based on
+those or updates the hidden state based
+those or updates the hidden state based
+those or updates the hidden state based
+on those inputs.
+on those inputs.
+on those inputs.
+And then we just recursively
+And then we just recursively
+And then we just recursively
+do that uh for every time step. So, then
+do that uh for every time step. So, then
+do that uh for every time step. So, then
+we feed in the next acceleration value,
+we feed in the next acceleration value,
+we feed in the next acceleration value,
+then we then we call the network again
+then we then we call the network again
+then we then we call the network again
+and just unroll for as many time steps
+and just unroll for as many time steps
+and just unroll for as many time steps
+as we have.
+as we have.
+as we have.
+Um and typically, this neural network
+Um and typically, this neural network
+Um and typically, this neural network
+here is is uh the same neural network.
+here is is uh the same neural network.
+here is is uh the same neural network.
+So, it has it shares its weights across
+So, it has it shares its weights across
+So, it has it shares its weights across
+each time step. So, we don't we don't
+each time step. So, we don't we don't
+each time step. So, we don't we don't
+have separate neural networks in each
+have separate neural networks in each
+have separate neural networks in each
+box.
+Uh and then once you've absorbed all of
+Uh and then once you've absorbed all of
+Uh and then once you've absorbed all of
+the or processed all of these inputs,
+the or processed all of these inputs,
+the or processed all of these inputs,
+all of these time series values,
+all of these time series values,
+all of these time series values,
+then you're
+then you're
+then you're
+uh you might have an an extra network on
+uh you might have an an extra network on
+uh you might have an an extra network on
+top uh that or a head a so-called head
+top uh that or a head a so-called head
+top uh that or a head a so-called head
+of the RNN
+of the RNN
+of the RNN
+which just produces some classes classes
+which just produces some classes classes
+which just produces some classes classes
+the output. So, decodes the the hidden
+the output. So, decodes the the hidden
+the output. So, decodes the the hidden
+state into a class.
+state into a class.
+state into a class.
+And then you train this with like a
+And then you train this with like a
+And then you train this with like a
+cross entropy like a standard standard
+cross entropy like a standard standard
+cross entropy like a standard standard
+uh classification loss for the network.
+uh classification loss for the network.
+uh classification loss for the network.
+Everyone understand this so far?
+Everyone understand this so far?
+Everyone understand this so far?
+Okay.
+Okay.
+Okay.
+So, this is how we would do it and these
+So, this is how we would do it and these
+So, this is how we would do it and these
+RNNs or or variants of RNNs, for
+RNNs or or variants of RNNs, for
+RNNs or or variants of RNNs, for
+example, like LSTMs or GRUs or or
+example, like LSTMs or GRUs or or
+example, like LSTMs or GRUs or or
+whatever more advanced
+whatever more advanced
+whatever more advanced
+uh recursive networks,
+uh recursive networks,
+uh recursive networks,
+they perform well for sure. They can get
+they perform well for sure. They can get
+they perform well for sure. They can get
+high accuracy on the task.
+high accuracy on the task.
+high accuracy on the task.
+Uh but what we
+Uh but what we
+Uh but what we
+struggle with or what what I would argue
+struggle with or what what I would argue
+struggle with or what what I would argue
+we've been doing a lot in machine
+we've been doing a lot in machine
+we've been doing a lot in machine
+learning research is just to try and
+learning research is just to try and
+learning research is just to try and
+figure out what the right architecture
+figure out what the right architecture
+figure out what the right architecture
+of of this
+of of this
+of of this
+uh RNN cell is. Like, what what what
+uh RNN cell is. Like, what what what
+uh RNN cell is. Like, what what what
+architecture should we use?
+architecture should we use?
+architecture should we use?
+Should we use a MLP like a fully
+Should we use a MLP like a fully
+Should we use a MLP like a fully
+connected network or a CNN or should we
+connected network or a CNN or should we
+connected network or a CNN or should we
+use a LSTM cell like something more
+use a LSTM cell like something more
+use a LSTM cell like something more
+advanced?
+advanced?
+advanced?
+But I think that's not obvious when we
+But I think that's not obvious when we
+But I think that's not obvious when we
+when we're training these kind types of
+when we're training these kind types of
+when we're training these kind types of
+ML problems.
+ML problems.
+ML problems.
+So,
+So,
+So,
+what we're going to try and do is use
+what we're going to try and do is use
+what we're going to try and do is use
+physics or neural differential equations
+physics or neural differential equations
+physics or neural differential equations
+to try and help us design a neural
+to try and help us design a neural
+to try and help us design a neural
+network architecture that has some kind
+network architecture that has some kind
+network architecture that has some kind
+of physics principle in it. As a maybe a
+of physics principle in it. As a maybe a
+of physics principle in it. As a maybe a
+more principled way of designing this
+more principled way of designing this
+more principled way of designing this
+RNN.
+RNN.
+RNN.
+So, what we're eventually going to end
+So, what we're eventually going to end
+So, what we're eventually going to end
+up with is like a RNN cell which has
+up with is like a RNN cell which has
+up with is like a RNN cell which has
+like a physics constraint in it that we
+like a physics constraint in it that we
+like a physics constraint in it that we
+think is suitable for this data set.
+think is suitable for this data set.
+think is suitable for this data set.
+And what the what the physics constraint
+And what the what the physics constraint
+And what the what the physics constraint
+is that we're going to say is well, what
+is that we're going to say is well, what
+is that we're going to say is well, what
+is this this data looks oscillatory. I
+is this this data looks oscillatory. I
+is this this data looks oscillatory. I
+think that's fair to say.
+think that's fair to say.
+think that's fair to say.
+The the the person is kind of walking up
+The the the person is kind of walking up
+The the the person is kind of walking up
+the stairs. This is an oscillatory
+the stairs. This is an oscillatory
+the stairs. This is an oscillatory
+problem if you look at the the
+problem if you look at the the
+problem if you look at the the
+acceleration values. It's got kind of
+acceleration values. It's got kind of
+acceleration values. It's got kind of
+a set frequency to the spikes as the
+a set frequency to the spikes as the
+a set frequency to the spikes as the
+person walks up the stairs.
+person walks up the stairs.
+person walks up the stairs.
+So, this is kind of a general concept
+So, this is kind of a general concept
+So, this is kind of a general concept
+that we're just going to try and put
+that we're just going to try and put
+that we're just going to try and put
+into this
+into this
+into this
+uh
+uh
+uh
+uh architecture that we're designing.
+Okay.
+So, we're going to use a neural
+So, we're going to use a neural
+So, we're going to use a neural
+differential equation. That means that
+differential equation. That means that
+differential equation. That means that
+we have to
+we have to
+we have to
+use a differential equation to solve or
+use a differential equation to solve or
+use a differential equation to solve or
+to represent this problem somehow.
+to represent this problem somehow.
+to represent this problem somehow.
+So, we have to pick a an appropriate
+So, we have to pick a an appropriate
+So, we have to pick a an appropriate
+differential equation to start to start
+differential equation to start to start
+differential equation to start to start
+using.
+using.
+using.
+Uh or to help us design this neural
+Uh or to help us design this neural
+Uh or to help us design this neural
+network architecture.
+network architecture.
+network architecture.
+So, the differential equation we're
+So, the differential equation we're
+So, the differential equation we're
+going to look at is the one that
+going to look at is the one that
+going to look at is the one that
+describes uh coupled harmonic
+describes uh coupled harmonic
+describes uh coupled harmonic
+oscillators.
+oscillators.
+oscillators.
+So, what is a coupled hot harmonic
+So, what is a coupled hot harmonic
+So, what is a coupled hot harmonic
+oscillator? Well,
+oscillator? Well,
+oscillator? Well,
+uh this just describes in the simplest
+uh this just describes in the simplest
+uh this just describes in the simplest
+case like a a mass on a spring.
+case like a a mass on a spring.
+case like a a mass on a spring.
+Uh
+Uh
+Uh
+you know,
+you know,
+you know,
+uh just the oscillatory uh displacement
+uh just the oscillatory uh displacement
+uh just the oscillatory uh displacement
+of that mass.
+of that mass.
+of that mass.
+But what makes it coupled is that we
+But what makes it coupled is that we
+But what makes it coupled is that we
+don't just have one mass, we actually
+don't just have one mass, we actually
+don't just have one mass, we actually
+have multiple masses connected together
+have multiple masses connected together
+have multiple masses connected together
+with with multiple springs and and then
+with with multiple springs and and then
+with with multiple springs and and then
+you get uh kind of coupled dynamics of
+you get uh kind of coupled dynamics of
+you get uh kind of coupled dynamics of
+or coupled oscillations of the of the
+or coupled oscillations of the of the
+or coupled oscillations of the of the
+masses.
+masses.
+masses.
+So, who's seen this before in like your
+So, who's seen this before in like your
+So, who's seen this before in like your
+physics lectures or chemistry lectures?
+physics lectures or chemistry lectures?
+physics lectures or chemistry lectures?
+Like, yeah.
+Like, yeah.
+Like, yeah.
+Everything is an oscillatory process.
+Everything is an oscillatory process.
+Everything is an oscillatory process.
+That's what I learned in physics.
+That's what I learned in physics.
+That's what I learned in physics.
+Uh
+Uh
+Uh
+so, can can anyone give me specific
+so, can can anyone give me specific
+so, can can anyone give me specific
+examples of like where these are used in
+examples of like where these are used in
+examples of like where these are used in
+in science?
+in science?
+in science?
+Where do you see these?
+So, what sys- what physics systems or
+So, what sys- what physics systems or
+So, what sys- what physics systems or
+chemistry systems can be described as
+chemistry systems can be described as
+chemistry systems can be described as
+coupled oscillators?
+Go on.
+Go on.
+Go on.
+Yeah, sure.
+Yeah.
+Yeah.
+Yeah.
+Yeah, yeah. So, one example might be
+Yeah, yeah. So, one example might be
+Yeah, yeah. So, one example might be
+molecules, for example.
+molecules, for example.
+molecules, for example.
+We can like a if you imagine like a CO2
+We can like a if you imagine like a CO2
+We can like a if you imagine like a CO2
+molecule, we often we can describe that
+molecule, we often we can describe that
+molecule, we often we can describe that
+as a coupled oscillator between
+as a coupled oscillator between
+as a coupled oscillator between
+between
+between
+between
+the the atoms.
+the the atoms.
+the the atoms.
+There are there are other examples of
+There are there are other examples of
+There are there are other examples of
+these couple of systems that we can
+these couple of systems that we can
+these couple of systems that we can
+model with coupled oscillators. So,
+model with coupled oscillators. So,
+model with coupled oscillators. So,
+yeah, see molecules are example of one.
+yeah, see molecules are example of one.
+yeah, see molecules are example of one.
+Another are just
+Another are just
+Another are just
+uh these uh suspension bridges, for
+uh these uh suspension bridges, for
+uh these uh suspension bridges, for
+example, in engineering.
+example, in engineering.
+example, in engineering.
+So, this is a really famous bridge that
+So, this is a really famous bridge that
+So, this is a really famous bridge that
+uh
+uh
+uh
+uh broke in half because they didn't
+uh broke in half because they didn't
+uh broke in half because they didn't
+design the bridge well enough to deal
+design the bridge well enough to deal
+design the bridge well enough to deal
+with the wind blowing over the over the
+with the wind blowing over the over the
+with the wind blowing over the over the
+bridge and this caused the bridge to
+bridge and this caused the bridge to
+bridge and this caused the bridge to
+oscillate really really strong
+oscillate really really strong
+oscillate really really strong
+and eventually break.
+and eventually break.
+and eventually break.
+Um we also see or we can you can also
+Um we also see or we can you can also
+Um we also see or we can you can also
+think of neurons or neural activity as
+think of neurons or neural activity as
+think of neurons or neural activity as
+coupled oscillators.
+coupled oscillators.
+coupled oscillators.
+So, this is a this is a plot of uh of uh
+So, this is a this is a plot of uh of uh
+So, this is a this is a plot of uh of uh
+of of the
+of of the
+of of the
+uh dynamics of of neurons.
+uh dynamics of of neurons.
+uh dynamics of of neurons.
+Uh
+Uh
+Uh
+yeah, and you can think of these as
+yeah, and you can think of these as
+yeah, and you can think of these as
+oscillatory processes that might have
+oscillatory processes that might have
+oscillatory processes that might have
+some coupling between.
+So, what we're going to do is uh
+So, what we're going to do is uh
+So, what we're going to do is uh
+use this kind of PDE or
+use this kind of PDE or
+use this kind of PDE or
+uh yeah, uh
+uh yeah, uh
+uh yeah, uh
+actually some ODE to to to
+actually some ODE to to to
+actually some ODE to to to
+design a neural network architecture to
+design a neural network architecture to
+design a neural network architecture to
+help us solve this activity recognition
+help us solve this activity recognition
+help us solve this activity recognition
+problem.
+problem.
+problem.
+Uh so,
+Uh so,
+Uh so,
+so, this is the 1D damped harmonic
+so, this is the 1D damped harmonic
+so, this is the 1D damped harmonic
+oscillator. So, this is not coupled.
+oscillator. So, this is not coupled.
+oscillator. So, this is not coupled.
+This is just a single oscillator and
+This is just a single oscillator and
+This is just a single oscillator and
+this is the example that we already
+this is the example that we already
+this is the example that we already
+talked about a lot when I introduced
+talked about a lot when I introduced
+talked about a lot when I introduced
+physics-informed neural networks.
+physics-informed neural networks.
+physics-informed neural networks.
+So, you guys should already know this
+So, you guys should already know this
+So, you guys should already know this
+underlying second-order differential
+underlying second-order differential
+underlying second-order differential
+equation. Uh
+equation. Uh
+equation. Uh
+X here is the displacement of the
+X here is the displacement of the
+X here is the displacement of the
+oscillator.
+oscillator.
+oscillator.
+M is the mass of the oscillator. Mu is
+M is the mass of the oscillator. Mu is
+M is the mass of the oscillator. Mu is
+the coefficient of friction. K is
+the coefficient of friction. K is
+the coefficient of friction. K is
+uh the spring constant and F is some
+uh the spring constant and F is some
+uh the spring constant and F is some
+external driving force that we can also
+external driving force that we can also
+external driving force that we can also
+add to the oscillator.
+add to the oscillator.
+add to the oscillator.
+So, force that we that we move the
+So, force that we that we move the
+So, force that we that we move the
+oscillator by here, for example.
+Um so, what determines the frequency of
+Um so, what determines the frequency of
+Um so, what determines the frequency of
+of the oscillator? Anyone know?
+of the oscillator? Anyone know?
+of the oscillator? Anyone know?
+Which which uh coefficients?
+Yeah.
+Yeah, primarily. I I think actually the
+Yeah, primarily. I I think actually the
+Yeah, primarily. I I think actually the
+the coefficient of friction also turns
+the coefficient of friction also turns
+the coefficient of friction also turns
+up uh as well when it's damped, but
+up uh as well when it's damped, but
+up uh as well when it's damped, but
+yeah, primarily the spring constant and
+yeah, primarily the spring constant and
+yeah, primarily the spring constant and
+the mass, yeah.
+Uh and the the coefficient of friction
+Uh and the the coefficient of friction
+Uh and the the coefficient of friction
+just tells us how quickly this this
+just tells us how quickly this this
+just tells us how quickly this this
+oscillator just decays.
+oscillator just decays.
+oscillator just decays.
+But you can imagine if we have some
+But you can imagine if we have some
+But you can imagine if we have some
+driving force, then the energy might
+driving force, then the energy might
+driving force, then the energy might
+increase. It might actually
+increase. It might actually
+increase. It might actually
+get higher.
+get higher.
+get higher.
+Okay, so,
+Okay, so,
+Okay, so,
+this is the equivalent equation for the
+this is the equivalent equation for the
+this is the equivalent equation for the
+for a coupled uh harmonic oscillator.
+for a coupled uh harmonic oscillator.
+for a coupled uh harmonic oscillator.
+Uh
+Uh
+Uh
+but there's quite a few changes. So, I'm
+but there's quite a few changes. So, I'm
+but there's quite a few changes. So, I'm
+going to I'm going to tell you what
+going to I'm going to tell you what
+going to I'm going to tell you what
+these changes are.
+these changes are.
+these changes are.
+Uh so, the first change is now we're
+Uh so, the first change is now we're
+Uh so, the first change is now we're
+modeling
+modeling
+modeling
+not just the displacement of one
+not just the displacement of one
+not just the displacement of one
+oscillator, but the oscillate the
+oscillator, but the oscillate the
+oscillator, but the oscillate the
+displacement of n oscillators in
+displacement of n oscillators in
+displacement of n oscillators in
+general.
+general.
+general.
+So, now X here, instead of being a
+So, now X here, instead of being a
+So, now X here, instead of being a
+scalar, is now going to be a vector.
+scalar, is now going to be a vector.
+scalar, is now going to be a vector.
+So, what this becomes is instead of just
+So, what this becomes is instead of just
+So, what this becomes is instead of just
+a single uh ordinary differential
+a single uh ordinary differential
+a single uh ordinary differential
+equation, now this is a coupled set of
+equation, now this is a coupled set of
+equation, now this is a coupled set of
+ordinary differential equations.
+ordinary differential equations.
+ordinary differential equations.
+Um
+Um
+Um
+and so,
+and so,
+and so,
+what also happens is instead of these
+what also happens is instead of these
+what also happens is instead of these
+mass and uh coefficient of friction and
+mass and uh coefficient of friction and
+mass and uh coefficient of friction and
+spring constants as being scalar
+spring constants as being scalar
+spring constants as being scalar
+quantities, in general, they can now
+quantities, in general, they can now
+quantities, in general, they can now
+become uh matrices
+become uh matrices
+become uh matrices
+which we times so, we write this write
+which we times so, we write this write
+which we times so, we write this write
+this uh ODE system like this.
+this uh ODE system like this.
+this uh ODE system like this.
+And the mass matrix is just going to be
+And the mass matrix is just going to be
+And the mass matrix is just going to be
+diagonal matrix uh
+diagonal matrix uh
+diagonal matrix uh
+which just pulls out the mass of each
+which just pulls out the mass of each
+which just pulls out the mass of each
+oscillator.
+oscillator.
+oscillator.
+But these W and V matrices here,
+But these W and V matrices here,
+But these W and V matrices here,
+in general, if if if these oscillators
+in general, if if if these oscillators
+in general, if if if these oscillators
+weren't uh coupled, if they were
+weren't uh coupled, if they were
+weren't uh coupled, if they were
+completely independent, the W and V
+completely independent, the W and V
+completely independent, the W and V
+matrices would also be diagonal.
+matrices would also be diagonal.
+matrices would also be diagonal.
+But when we have some coupling, when we
+But when we have some coupling, when we
+But when we have some coupling, when we
+have like springs connecting these
+have like springs connecting these
+have like springs connecting these
+together, then these these uh these
+together, then these these uh these
+together, then these these uh these
+matrices have
+matrices have
+matrices have
+elements in their off-diagonal. So,
+elements in their off-diagonal. So,
+elements in their off-diagonal. So,
+that's what introduces these kind of
+that's what introduces these kind of
+that's what introduces these kind of
+coupling between these between these
+coupling between these between these
+coupling between these between these
+variables.
+Um the last thing that
+Um the last thing that
+Um the last thing that
+we've assumed here is we've wrapped this
+we've assumed here is we've wrapped this
+we've assumed here is we've wrapped this
+whole thing with a tanh.
+whole thing with a tanh.
+whole thing with a tanh.
+So, what that is doing is is is
+So, what that is doing is is is
+So, what that is doing is is is
+introducing a non-linearity into the
+introducing a non-linearity into the
+introducing a non-linearity into the
+into the equation.
+into the equation.
+into the equation.
+So, what physically do you think that
+So, what physically do you think that
+So, what physically do you think that
+tanh does?
+tanh does?
+tanh does?
+What is it saying?
+Anyone know?
+So, the left-hand side here is a is a
+So, the left-hand side here is a is a
+So, the left-hand side here is a is a
+force term, right? It's the force it's
+force term, right? It's the force it's
+force term, right? It's the force it's
+the acceleration mass times acceleration
+the acceleration mass times acceleration
+the acceleration mass times acceleration
+is a force.
+is a force.
+is a force.
+So, we're just saying the four the
+So, we're just saying the four the
+So, we're just saying the four the
+maximum force in the oscillator is like
+maximum force in the oscillator is like
+maximum force in the oscillator is like
+bounded. It can't go to infinity.
+bounded. It can't go to infinity.
+bounded. It can't go to infinity.
+So, it's kind of a weird weird
+So, it's kind of a weird weird
+So, it's kind of a weird weird
+approximation to make, but why we do
+approximation to make, but why we do
+approximation to make, but why we do
+that and will will be obvious later.
+that and will will be obvious later.
+that and will will be obvious later.
+Um
+Um
+Um
+but yeah, we're just saying this is now
+but yeah, we're just saying this is now
+but yeah, we're just saying this is now
+a non-linear version of the of the
+a non-linear version of the of the
+a non-linear version of the of the
+oscillator.
+oscillator.
+oscillator.
+So, can everyone see how we've kind of
+So, can everyone see how we've kind of
+So, can everyone see how we've kind of
+generalized from a 1D oscillator to a
+generalized from a 1D oscillator to a
+generalized from a 1D oscillator to a
+coupled system where we have these
+coupled system where we have these
+coupled system where we have these
+matrices that tell us how they're
+matrices that tell us how they're
+matrices that tell us how they're
+coupled
+coupled
+coupled
+in general.
+in general.
+in general.
+Again, I'm trying to explain this at the
+Again, I'm trying to explain this at the
+Again, I'm trying to explain this at the
+highest level possible for you just to
+highest level possible for you just to
+highest level possible for you just to
+get the idea but not to go into the
+get the idea but not to go into the
+get the idea but not to go into the
+dynamics too much.
+Okay, cool.
+So,
+So,
+So,
+uh we're just going to talk about
+uh we're just going to talk about
+uh we're just going to talk about
+solving this and then next lecture I'll
+solving this and then next lecture I'll
+solving this and then next lecture I'll
+talk about the actual way we use this to
+talk about the actual way we use this to
+talk about the actual way we use this to
+solve that uh activity recognition task.
+solve that uh activity recognition task.
+solve that uh activity recognition task.
+So, yeah, question to you, how how would
+So, yeah, question to you, how how would
+So, yeah, question to you, how how would
+you solve this system of ODEs?
+you solve this system of ODEs?
+you solve this system of ODEs?
+This is quite a hard question to ask,
+This is quite a hard question to ask,
+This is quite a hard question to ask,
+but can anyone have like a general
+but can anyone have like a general
+but can anyone have like a general
+starting point? How would you how would
+starting point? How would you how would
+starting point? How would you how would
+you solve this?
+you solve this?
+you solve this?
+And just assume that this mass this is
+And just assume that this mass this is
+And just assume that this mass this is
+just one, so every every oscillator has
+just one, so every every oscillator has
+just one, so every every oscillator has
+a mass of one.
+Yeah? There are
+Yeah? There are
+Yeah? There are
+numerical ODE solvers built for like
+numerical ODE solvers built for like
+numerical ODE solvers built for like
+Yeah. oscillating systems. Yeah. Which
+Yeah. oscillating systems. Yeah. Which
+Yeah. oscillating systems. Yeah. Which
+probably good for this. Sure, yeah.
+probably good for this. Sure, yeah.
+probably good for this. Sure, yeah.
+Yeah, I guess I How would
+Yeah, I guess I How would
+Yeah, I guess I How would
+what underlying algorithm would they use
+what underlying algorithm would they use
+what underlying algorithm would they use
+then?
+then?
+then?
+Uh
+Uh
+Uh
+I mean, it's still you know,
+I mean, it's still you know,
+I mean, it's still you know,
+often the system will be from
+often the system will be from
+often the system will be from
+Yeah. from something.
+Yeah. from something.
+Yeah. from something.
+Sure, yeah.
+Sure, yeah.
+Sure, yeah.
+Yeah.
+Yeah.
+Yeah.
+Anyone think about the simplest possible
+Anyone think about the simplest possible
+Anyone think about the simplest possible
+approach?
+Okay, yeah, it's it's hard. So, this is
+Okay, yeah, it's it's hard. So, this is
+Okay, yeah, it's it's hard. So, this is
+how you would how you would do it uh
+how you would how you would do it uh
+how you would how you would do it uh
+or one way you would do it, the simplest
+or one way you would do it, the simplest
+or one way you would do it, the simplest
+way maybe,
+way maybe,
+way maybe,
+um is you would introduce a velocity
+um is you would introduce a velocity
+um is you would introduce a velocity
+variable, so you just, you know, this is
+variable, so you just, you know, this is
+variable, so you just, you know, this is
+the velocity of the oscillators.
+the velocity of the oscillators.
+the velocity of the oscillators.
+And plug that into this uh underlying
+And plug that into this uh underlying
+And plug that into this uh underlying
+ODE.
+ODE.
+ODE.
+Uh and then you end up with a
+Uh and then you end up with a
+Uh and then you end up with a
+first-order ODE just in terms of the
+first-order ODE just in terms of the
+first-order ODE just in terms of the
+velocity of the oscillator.
+velocity of the oscillator.
+velocity of the oscillator.
+Um and and the the X value as well, and
+Um and and the the X value as well, and
+Um and and the the X value as well, and
+then you can just uh discretize this
+then you can just uh discretize this
+then you can just uh discretize this
+this differential
+this differential
+this differential
+uh this dV by dT, so the acceleration,
+uh this dV by dT, so the acceleration,
+uh this dV by dT, so the acceleration,
+numerically, and then that just ends up
+numerically, and then that just ends up
+numerically, and then that just ends up
+with two two expressions for for X uh by
+with two two expressions for for X uh by
+with two two expressions for for X uh by
+discretizing this,
+discretizing this,
+discretizing this,
+uh and for V by discretizing this.
+uh and for V by discretizing this.
+uh and for V by discretizing this.
+So, again, this is the simplest possible
+So, again, this is the simplest possible
+So, again, this is the simplest possible
+approach. It may not be a good approach
+approach. It may not be a good approach
+approach. It may not be a good approach
+if you want a very accurate Yeah, rapid
+if you want a very accurate Yeah, rapid
+if you want a very accurate Yeah, rapid
+shaking his head, I know it.
+shaking his head, I know it.
+shaking his head, I know it.
+I'm aware of of of that, so. But just
+I'm aware of of of that, so. But just
+I'm aware of of of that, so. But just
+for the purpose of
+for the purpose of
+for the purpose of
+of this NDE example, uh this is uh
+of this NDE example, uh this is uh
+of this NDE example, uh this is uh
+this is how we might do it.
+this is how we might do it.
+this is how we might do it.
+Actually, this is an interesting
+Actually, this is an interesting
+Actually, this is an interesting
+question, like um like on like
+question, like um like on like
+question, like um like on like
+seriously, uh
+seriously, uh
+seriously, uh
+when you're solving neural differential
+when you're solving neural differential
+when you're solving neural differential
+equations, should you really care about
+equations, should you really care about
+equations, should you really care about
+the solution being accurate, like the
+the solution being accurate, like the
+the solution being accurate, like the
+solver giving you an accurate solution?
+solver giving you an accurate solution?
+solver giving you an accurate solution?
+Uh especially when you're training them
+Uh especially when you're training them
+Uh especially when you're training them
+to do the these like um machine learning
+to do the these like um machine learning
+to do the these like um machine learning
+tasks, like what we actually care about
+tasks, like what we actually care about
+tasks, like what we actually care about
+at the end of the day is that the that
+at the end of the day is that the that
+at the end of the day is that the that
+the NDE learns the inputs and outputs of
+the NDE learns the inputs and outputs of
+the NDE learns the inputs and outputs of
+the task rather than maybe solving the
+the task rather than maybe solving the
+the task rather than maybe solving the
+underlying PDE. But I think it That's a
+underlying PDE. But I think it That's a
+underlying PDE. But I think it That's a
+kind of controversial topic. You You
+kind of controversial topic. You You
+kind of controversial topic. You You
+kind of have to think about what what
+kind of have to think about what what
+kind of have to think about what what
+your end goal is, but yeah.
+Okay, so
+Okay, so
+Okay, so
+yeah, we discretize in time we do this.
+yeah, we discretize in time we do this.
+yeah, we discretize in time we do this.
+Okay, so
+Okay, so
+Okay, so
+let me draw this out as a as a graph
+let me draw this out as a as a graph
+let me draw this out as a as a graph
+again.
+again.
+again.
+Um
+Um
+Um
+and
+and
+and
+uh
+uh
+uh
+again, this is just the graph is just
+again, this is just the graph is just
+again, this is just the graph is just
+showing given the kind of initial
+showing given the kind of initial
+showing given the kind of initial
+location initial position and the
+location initial position and the
+location initial position and the
+initial velocity or the velocity at time
+initial velocity or the velocity at time
+initial velocity or the velocity at time
+t, the position at time t.
+t, the position at time t.
+t, the position at time t.
+Uh this is the graph that computes the
+Uh this is the graph that computes the
+Uh this is the graph that computes the
+the displacement at time t plus one and
+the displacement at time t plus one and
+the displacement at time t plus one and
+the velocity at time t plus one.
+the velocity at time t plus one.
+the velocity at time t plus one.
+And
+And
+And
+uh it does a bunch of
+uh it does a bunch of
+uh it does a bunch of
+really complicated operations, passes X
+really complicated operations, passes X
+really complicated operations, passes X
+through this tanH function,
+through this tanH function,
+through this tanH function,
+does a bunch of weights times by the the
+does a bunch of weights times by the the
+does a bunch of weights times by the the
+the the V values,
+the the V values,
+the the V values,
+adds it together, does some other stuff,
+adds it together, does some other stuff,
+adds it together, does some other stuff,
+and and it also takes in the the force,
+and and it also takes in the the force,
+and and it also takes in the the force,
+the external force that we're applying
+the external force that we're applying
+the external force that we're applying
+to the system as an an an additional
+to the system as an an an additional
+to the system as an an an additional
+input to the
+input to the
+input to the
+to this cell.
+So, now that
+So, now that
+So, now that
+I hope I hopefully you're starting to
+I hope I hopefully you're starting to
+I hope I hopefully you're starting to
+realize that drawing out these
+realize that drawing out these
+realize that drawing out these
+time-stepping algorithms as graphs is
+time-stepping algorithms as graphs is
+time-stepping algorithms as graphs is
+very useful. It helps us interpret them.
+very useful. It helps us interpret them.
+very useful. It helps us interpret them.
+So, so what does this look like to you
+So, so what does this look like to you
+So, so what does this look like to you
+now?
+If you think back to that um RNN that I
+If you think back to that um RNN that I
+If you think back to that um RNN that I
+just talked about,
+can anyone draw like any analogies to an
+can anyone draw like any analogies to an
+can anyone draw like any analogies to an
+RNN in this case?
+So, if you just forget about all the
+So, if you just forget about all the
+So, if you just forget about all the
+operations in here,
+operations in here,
+operations in here,
+and you just draw this you just have a
+and you just draw this you just have a
+and you just draw this you just have a
+box here, a black box that takes in some
+box here, a black box that takes in some
+box here, a black box that takes in some
+uh state here,
+uh state here,
+uh state here,
+takes in another input and then produces
+takes in another input and then produces
+takes in another input and then produces
+an update of the state.
+an update of the state.
+an update of the state.
+Isn't that just what I described an RNN
+Isn't that just what I described an RNN
+Isn't that just what I described an RNN
+as?
+as?
+as?
+Doesn't an RNN take like a a hidden
+Doesn't an RNN take like a a hidden
+Doesn't an RNN take like a a hidden
+state here,
+state here,
+state here,
+take in some input and then update the
+take in some input and then update the
+take in some input and then update the
+hidden state?
+Some people are nodding their heads.
+Some people are nodding their heads.
+Some people are nodding their heads.
+So, hopefully I can convince you that
+So, hopefully I can convince you that
+So, hopefully I can convince you that
+we can actually just think of this this
+we can actually just think of this this
+we can actually just think of this this
+thing as an
+thing as an
+thing as an
+a recurrent neural network.
+a recurrent neural network.
+a recurrent neural network.
+It's taking a hidden state, it's it
+It's taking a hidden state, it's it
+It's taking a hidden state, it's it
+takes an input to update the hidden
+takes an input to update the hidden
+takes an input to update the hidden
+state, and then produces an output uh
+state, and then produces an output uh
+state, and then produces an output uh
+output hidden state.
+So, instead of this being like a fully
+So, instead of this being like a fully
+So, instead of this being like a fully
+connected network like we would use in
+connected network like we would use in
+connected network like we would use in
+an RNN or maybe a CNN uh
+an RNN or maybe a CNN uh
+an RNN or maybe a CNN uh
+cell or an LSTM cell or a GRU cell,
+cell or an LSTM cell or a GRU cell,
+cell or an LSTM cell or a GRU cell,
+what we've defined here is like a a
+what we've defined here is like a a
+what we've defined here is like a a
+custom physics cell inside of our RNN.
+custom physics cell inside of our RNN.
+custom physics cell inside of our RNN.
+So,
+So,
+So,
+we can use exactly if if we're going to
+we can use exactly if if we're going to
+we can use exactly if if we're going to
+still think about this human activity
+still think about this human activity
+still think about this human activity
+recognition task,
+recognition task,
+recognition task,
+we can just swap out whatever we had in
+we can just swap out whatever we had in
+we can just swap out whatever we had in
+here before in our RNN with this custom
+here before in our RNN with this custom
+here before in our RNN with this custom
+physics cell.
+physics cell.
+physics cell.
+And and the question is that we then ask
+And and the question is that we then ask
+And and the question is that we then ask
+is, okay, so what what are we actually
+is, okay, so what what are we actually
+is, okay, so what what are we actually
+going to learn?
+going to learn?
+going to learn?
+What are the what is the learnable
+What are the what is the learnable
+What are the what is the learnable
+components of this RNN of this RNN cell?
+components of this RNN of this RNN cell?
+components of this RNN of this RNN cell?
+And uh
+And uh
+And uh
+one option is to learn these weight
+one option is to learn these weight
+one option is to learn these weight
+uh weight and W and V matrices here,
+uh weight and W and V matrices here,
+uh weight and W and V matrices here,
+which we then just reinterpret as the
+which we then just reinterpret as the
+which we then just reinterpret as the
+weights of the weights of the RNN cell.
+And now it makes kind of more sense why
+And now it makes kind of more sense why
+And now it makes kind of more sense why
+I put that tanH into the PDE. It's just
+I put that tanH into the PDE. It's just
+I put that tanH into the PDE. It's just
+it gives it like a non-linear
+it gives it like a non-linear
+it gives it like a non-linear
+non-linearity or like an activation
+non-linearity or like an activation
+non-linearity or like an activation
+function of this uh
+function of this uh
+function of this uh
+of this hidden state computation.
+Who follows me?
+Who follows me?
+Who follows me?
+Or who's confused?
+Any questions?
+So, we're taking it a We're taking We're
+So, we're taking it a We're taking We're
+So, we're taking it a We're taking We're
+doing the same thing. We're We're
+doing the same thing. We're We're
+doing the same thing. We're We're
+defining a
+defining a
+defining a
+uh a differential equation,
+uh a differential equation,
+uh a differential equation,
+we're discretizing the differential
+we're discretizing the differential
+we're discretizing the differential
+equation,
+equation,
+equation,
+and interpreting interpreting that as a
+and interpreting interpreting that as a
+and interpreting interpreting that as a
+as a neural network.
+as a neural network.
+as a neural network.
+And in this case, we can interpret this
+And in this case, we can interpret this
+And in this case, we can interpret this
+as like a an RNN.
+as like a an RNN.
+as like a an RNN.
+Where these W and V matrices, which if
+Where these W and V matrices, which if
+Where these W and V matrices, which if
+you go back to the underlying
+you go back to the underlying
+you go back to the underlying
+differential
+differential
+differential
+underlying differential equation,
+underlying differential equation,
+underlying differential equation,
+the W and V matrices here are are the uh
+the W and V matrices here are are the uh
+the W and V matrices here are are the uh
+the damping coefficients in this and the
+the damping coefficients in this and the
+the damping coefficients in this and the
+spring constants of the different
+spring constants of the different
+spring constants of the different
+oscillators.
+oscillators.
+oscillators.
+So, we're going to learn them. We're
+So, we're going to learn them. We're
+So, we're going to learn them. We're
+going to say we don't understand what
+going to say we don't understand what
+going to say we don't understand what
+these what the spring constant is and
+these what the spring constant is and
+these what the spring constant is and
+what the damping coefficient is,
+what the damping coefficient is,
+what the damping coefficient is,
+but given examples of the of the outputs
+but given examples of the of the outputs
+but given examples of the of the outputs
+of the system, can we try and learn
+of the system, can we try and learn
+of the system, can we try and learn
+those underlying coefficients?
+those underlying coefficients?
+those underlying coefficients?
+That's what we're doing.
+Um
+Um
+Um
+So, I think I'll stop there and we'll
+So, I think I'll stop there and we'll
+So, I think I'll stop there and we'll
+talk about the performance of this next
+talk about the performance of this next
+talk about the performance of this next
+next lecture. So,
+next lecture. So,
+next lecture. So,
+yeah, thanks thanks for coming. See you
+yeah, thanks thanks for coming. See you
+yeah, thanks thanks for coming. See you
+see you on Friday.
+So, yeah, we train it just like we would
+So, yeah, we train it just like we would
+So, yeah, we train it just like we would
+train a a standard RNN, same training
+train a a standard RNN, same training
+train a a standard RNN, same training
+data. Training data All the data you
+data. Training data All the data you
+data. Training data All the data you
+need is just examples of these
+need is just examples of these
+need is just examples of these
+accelerometer uh time series and and the
+accelerometer uh time series and and the
+accelerometer uh time series and and the
+class uh of whatever the person was
+class uh of whatever the person was
+class uh of whatever the person was
+doing at that point in time.
+doing at that point in time.
+doing at that point in time.
+Uh so, typically uh to create a single
+Uh so, typically uh to create a single
+Uh so, typically uh to create a single
+class prediction, you'll just take like
+class prediction, you'll just take like
+class prediction, you'll just take like
+a a single window of time time values,
+a a single window of time time values,
+a a single window of time time values,
+maybe 10 seconds or something.
+maybe 10 seconds or something.
+maybe 10 seconds or something.
+And uh
+And uh
+And uh
+what this paper did, this is uh a paper
+what this paper did, this is uh a paper
+what this paper did, this is uh a paper
+from our our lab at ETH, um
+from our our lab at ETH, um
+from our our lab at ETH, um
+so who who who proposed this kind of
+so who who who proposed this kind of
+so who who who proposed this kind of
+architecture, this discretization of
+architecture, this discretization of
+architecture, this discretization of
+these coupled oscillators and and the
+these coupled oscillators and and the
+these coupled oscillators and and the
+interpretation of that as an RNN.
+interpretation of that as an RNN.
+interpretation of that as an RNN.
+And they uh
+And they uh
+And they uh
+yeah, they compared this uh co-RNN, so
+yeah, they compared this uh co-RNN, so
+yeah, they compared this uh co-RNN, so
+it's called a coupled oscillatory RNN, a
+it's called a coupled oscillatory RNN, a
+it's called a coupled oscillatory RNN, a
+co-RNN,
+co-RNN,
+co-RNN,
+compared this architecture to many other
+compared this architecture to many other
+compared this architecture to many other
+kind of state-of-the-art uh
+kind of state-of-the-art uh
+kind of state-of-the-art uh
+recurrent neural networks and like LSTMs
+recurrent neural networks and like LSTMs
+recurrent neural networks and like LSTMs
+and GRUs and other more uh
+and GRUs and other more uh
+and GRUs and other more uh
+advanced variants of those.
+advanced variants of those.
+advanced variants of those.
+And at least for this uh task of human
+And at least for this uh task of human
+And at least for this uh task of human
+activity recognition, they performed
+activity recognition, they performed
+activity recognition, they performed
+very very well, very competitive with
+very very well, very competitive with
+very very well, very competitive with
+these other other methods.
+these other other methods.
+these other other methods.
+So, what kind of was really interesting
+So, what kind of was really interesting
+So, what kind of was really interesting
+for me when I was reading this paper was
+for me when I was reading this paper was
+for me when I was reading this paper was
+yeah, this
+yeah, this
+yeah, this
+for me, it's intuitive that such a model
+for me, it's intuitive that such a model
+for me, it's intuitive that such a model
+with like oscillatory dynamics would
+with like oscillatory dynamics would
+with like oscillatory dynamics would
+perform well when the data is
+perform well when the data is
+perform well when the data is
+oscillatory. But actually, these models,
+oscillatory. But actually, these models,
+oscillatory. But actually, these models,
+these coupled oscillatory RNNs, also
+these coupled oscillatory RNNs, also
+these coupled oscillatory RNNs, also
+work well for other tasks where it
+work well for other tasks where it
+work well for other tasks where it
+doesn't seem oscillatory.
+doesn't seem oscillatory.
+doesn't seem oscillatory.
+So, this is the kind of accuracy on
+So, this is the kind of accuracy on
+So, this is the kind of accuracy on
+IMDb.
+IMDb.
+IMDb.
+Anyone heard of this data set?
+Anyone heard of this data set?
+Anyone heard of this data set?
+This is a uh movie data set, and I think
+This is a uh movie data set, and I think
+This is a uh movie data set, and I think
+it's uh to do with sentiment on the
+it's uh to do with sentiment on the
+it's uh to do with sentiment on the
+movies or or something like this. So, it
+movies or or something like this. So, it
+movies or or something like this. So, it
+doesn't I don't think that's what I
+doesn't I don't think that's what I
+doesn't I don't think that's what I
+mean, maybe it is, but uh it's really
+mean, maybe it is, but uh it's really
+mean, maybe it is, but uh it's really
+interesting that these models perform
+interesting that these models perform
+interesting that these models perform
+well on on that data as well.
+well on on that data as well.
+well on on that data as well.
+Yeah. So, this model, this co-RNN, is a
+Yeah. So, this model, this co-RNN, is a
+Yeah. So, this model, this co-RNN, is a
+simple one, just the Euler
+simple one, just the Euler
+simple one, just the Euler
+Yes, uh
+Yes, uh
+Yes, uh
+they proposed a few different
+they proposed a few different
+they proposed a few different
+discretizations. They have an implicit
+discretizations. They have an implicit
+discretizations. They have an implicit
+version as well.
+version as well.
+version as well.
+Um
+Um
+Um
+and I'm not sure exactly which one they
+and I'm not sure exactly which one they
+and I'm not sure exactly which one they
+which one they chose, but yeah.
+which one they chose, but yeah.
+which one they chose, but yeah.
+Um
+Um
+Um
+and
+and
+and
+so, this is really highlighting the
+so, this is really highlighting the
+so, this is really highlighting the
+point that even though we're using a PDE
+point that even though we're using a PDE
+point that even though we're using a PDE
+to define a network architecture, we're
+to define a network architecture, we're
+to define a network architecture, we're
+kind of moving away from
+kind of moving away from
+kind of moving away from
+the fundamental system that it's uh
+the fundamental system that it's uh
+the fundamental system that it's uh
+uh used to model and just using it for
+uh used to model and just using it for
+uh used to model and just using it for
+some other other machine learning task.
+some other other machine learning task.
+some other other machine learning task.
+It's kind of interesting.
+Yeah. Was the accuracy measured
+Yeah. Was the accuracy measured
+Yeah. Was the accuracy measured
+according to the data you have, or was
+according to the data you have, or was
+according to the data you have, or was
+it measured to the actual observation
+it measured to the actual observation
+it measured to the actual observation
+of the body experience.
+of the body experience.
+of the body experience.
+Uh so I think it's all real data.
+Uh so I think it's all real data.
+Uh so I think it's all real data.
+I think they just did a a lab experiment
+I think they just did a a lab experiment
+I think they just did a a lab experiment
+of people walking and labeling.
+of people walking and labeling.
+of people walking and labeling.
+Um and I think it's just test what it is
+Um and I think it's just test what it is
+Um and I think it's just test what it is
+test test accuracy. So it's not an about
+test test accuracy. So it's not an about
+test test accuracy. So it's not an about
+distribution test.
+Okay, so you can imagine you could come
+Okay, so you can imagine you could come
+Okay, so you can imagine you could come
+up with your own PDE. It doesn't have to
+up with your own PDE. It doesn't have to
+up with your own PDE. It doesn't have to
+be a coupled oscillator. It could be
+be a coupled oscillator. It could be
+be a coupled oscillator. It could be
+like a non-linear pendulum or a
+like a non-linear pendulum or a
+like a non-linear pendulum or a
+reaction-diffusion equation. You can
+reaction-diffusion equation. You can
+reaction-diffusion equation. You can
+just take your pick and discretize it
+just take your pick and discretize it
+just take your pick and discretize it
+and train it as a new model and and it's
+and train it as a new model and and it's
+and train it as a new model and and it's
+kind of interesting to interpret.
+kind of interesting to interpret.
+kind of interesting to interpret.
+So that they did a
+So that they did a
+So that they did a
+uh One other thing which is very
+uh One other thing which is very
+uh One other thing which is very
+interesting is you can plot. So remember
+interesting is you can plot. So remember
+interesting is you can plot. So remember
+the hidden state of this RNN
+the hidden state of this RNN
+the hidden state of this RNN
+uh of this coupled oscillatory RNN
+uh of this coupled oscillatory RNN
+uh of this coupled oscillatory RNN
+is is exactly just telling you how these
+is is exactly just telling you how these
+is is exactly just telling you how these
+oscillators uh their displacement
+oscillators uh their displacement
+oscillators uh their displacement
+evolves over time.
+evolves over time.
+evolves over time.
+Cuz that's that's the hidden state,
+Cuz that's that's the hidden state,
+Cuz that's that's the hidden state,
+right? It's telling you the displacement
+right? It's telling you the displacement
+right? It's telling you the displacement
+and velocity of those oscillators.
+and velocity of those oscillators.
+and velocity of those oscillators.
+So you can actually just plot the hidden
+So you can actually just plot the hidden
+So you can actually just plot the hidden
+state as it as a function of uh
+state as it as a function of uh
+state as it as a function of uh
+time. Basically, you know, the hidden
+time. Basically, you know, the hidden
+time. Basically, you know, the hidden
+state
+state
+state
+the hidden state at each time step here.
+the hidden state at each time step here.
+the hidden state at each time step here.
+And what you see is yeah, the it looks
+And what you see is yeah, the it looks
+And what you see is yeah, the it looks
+very much like a coupled oscillator. It
+very much like a coupled oscillator. It
+very much like a coupled oscillator. It
+oscillates. The hidden state is evolving
+oscillates. The hidden state is evolving
+oscillates. The hidden state is evolving
+with lots of oscillations that are all
+with lots of oscillations that are all
+with lots of oscillations that are all
+coupled together.
+coupled together.
+coupled together.
+So that's really cool. It gives us kind
+So that's really cool. It gives us kind
+So that's really cool. It gives us kind
+of a way to interpret how the hidden
+of a way to interpret how the hidden
+of a way to interpret how the hidden
+state is like evolving.
+state is like evolving.
+state is like evolving.
+Um what's even more interesting is and
+Um what's even more interesting is and
+Um what's even more interesting is and
+in the paper they show this and you can
+in the paper they show this and you can
+in the paper they show this and you can
+see see it the paper for the proof.
+see see it the paper for the proof.
+see see it the paper for the proof.
+Um if you just think about these coupled
+Um if you just think about these coupled
+Um if you just think about these coupled
+oscillators as they're moving around, if
+oscillators as they're moving around, if
+oscillators as they're moving around, if
+I don't have any force put into the
+I don't have any force put into the
+I don't have any force put into the
+system, then the system just obeys
+system, then the system just obeys
+system, then the system just obeys
+conservation of energy, right? There's
+conservation of energy, right? There's
+conservation of energy, right? There's
+no energy no energy put into the system.
+no energy no energy put into the system.
+no energy no energy put into the system.
+It just keeps keeps if there's no
+It just keeps keeps if there's no
+It just keeps keeps if there's no
+dampening that it just keeps the same.
+dampening that it just keeps the same.
+dampening that it just keeps the same.
+And so what that does is just
+And so what that does is just
+And so what that does is just
+places a bound on the maximum amplitude
+places a bound on the maximum amplitude
+places a bound on the maximum amplitude
+of a single oscillator. Like it can't go
+of a single oscillator. Like it can't go
+of a single oscillator. Like it can't go
+above a certain amplitude.
+above a certain amplitude.
+above a certain amplitude.
+Uh and so that's really nice because
+Uh and so that's really nice because
+Uh and so that's really nice because
+that actually leads to the result that
+that actually leads to the result that
+that actually leads to the result that
+inside the hidden state these these
+inside the hidden state these these
+inside the hidden state these these
+co-RNNs won't explode. Like the value's
+co-RNNs won't explode. Like the value's
+co-RNNs won't explode. Like the value's
+not it's not going to explode and that
+not it's not going to explode and that
+not it's not going to explode and that
+means that the if you think about back
+means that the if you think about back
+means that the if you think about back
+propagating through it that you're not
+propagating through it that you're not
+propagating through it that you're not
+going to have a problem of exploding
+going to have a problem of exploding
+going to have a problem of exploding
+gradients in these in these models.
+gradients in these in these models.
+gradients in these in these models.
+So they show this more mathematically,
+So they show this more mathematically,
+So they show this more mathematically,
+but this is a really desirable property
+but this is a really desirable property
+but this is a really desirable property
+of RNNs. This is one of the limitations
+of RNNs. This is one of the limitations
+of RNNs. This is one of the limitations
+of standard RNNs is this so-called like
+of standard RNNs is this so-called like
+of standard RNNs is this so-called like
+vanishing gradient or exploding gradient
+vanishing gradient or exploding gradient
+vanishing gradient or exploding gradient
+issue.
+issue.
+issue.
+So a really nice kind of
+So a really nice kind of
+So a really nice kind of
+uh
+uh
+uh
+interpretation of of of this type of
+interpretation of of of this type of
+interpretation of of of this type of
+model.
+model.
+model.
+And again, this is because we've used a
+And again, this is because we've used a
+And again, this is because we've used a
+PDE which we know a lot about to kind of
+PDE which we know a lot about to kind of
+PDE which we know a lot about to kind of
+build this model instead of just kind of
+build this model instead of just kind of
+build this model instead of just kind of
+guessing what the model structure should
+guessing what the model structure should
+guessing what the model structure should
+be.
+Okay.
+Any questions on this? Otherwise, I'm
+Any questions on this? Otherwise, I'm
+Any questions on this? Otherwise, I'm
+going to move on to something different.
+Okay.
