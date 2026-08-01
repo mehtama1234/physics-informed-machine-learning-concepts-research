@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fast Fluid Field Surrogate</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<nav class="topbar">
+  <a href="../index.html">Physics-Informed ML</a>
+  <a href="../transcripts.html">Transcripts</a>
+  <a href="../concept-atlas.html">Concept Atlas</a>
+  <a href="../families.html">Families</a>
+  <a href="../comparisons.html">Comparisons</a>
+  <a href="../worked-examples.html">Examples</a>
+  <a href="../theme-map.html">Themes</a>
+  <a href="../evidence-ledger.html">Evidence</a>
+</nav>
+<main>
+
+<h1>Fast Fluid Field Surrogate</h1>
+<h2>Scientific Job</h2>
+<p><strong>Domain:</strong> air or liquid flow around shapes</p>
+<p><strong>Question:</strong> How can engineers test many shapes without running a full simulation every time?</p>
+<h2>Observed And Hidden</h2>
+<p><strong>Observed:</strong> many prior simulations connecting shape, conditions, and resulting velocity or pressure fields</p>
+<p><strong>Hidden:</strong> the flow field for a new shape or new condition</p>
+<h2>Method Route</h2>
+<ul><li><a href="../topics/surrogate-modeling.html">Surrogate Modeling</a></li><li><a href="../topics/operator-learning.html">Operator Learning</a></li><li><a href="../topics/attention-for-scientific-fields.html">Attention For Scientific Fields</a></li></ul>
+<h2>Plain Steps</h2>
+<div class="route"><div class="route-step">1. Name the range of shapes and flow conditions.</div><div class="route-step">2. Train a model on full fields from trusted simulations.</div><div class="route-step">3. Predict a new field quickly.</div><div class="route-step">4. Reject the shortcut if it misses boundary behavior, vortices, or pressure forces that matter.</div></div>
+<h2>Why This Example Teaches The Field</h2>
+<p>It shows why speed is not the same as trust. The useful claim is a fast answer inside a tested design family.</p>
+<h2>Claim Boundary</h2>
+<p>The example supports a method only inside the named scientific job. A wider claim needs a new test, not stronger wording.</p>
+
+</main>
+</body>
+</html>

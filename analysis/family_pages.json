@@ -1,0 +1,86 @@
+[
+  {
+    "slug": "physics-constraints-family",
+    "title": "Physics Constraints Family",
+    "central_problem": "You have some observations, but the answer must also obey a rule scientists already trust.",
+    "domain": "heat flow, fluids, waves, elasticity, reaction systems, and other systems described by differential equations",
+    "concepts": [
+      "partial-differential-equations",
+      "physics-informed-neural-networks",
+      "optimization-for-learning",
+      "uncertainty-and-generalization"
+    ],
+    "plain_route": [
+      "Start with a quantity that changes across space or time.",
+      "Write the rule that says how the quantity is allowed to change.",
+      "Fit the unknown field to the measured values.",
+      "Also check whether the fitted field breaks the rule between measured values.",
+      "Test a changed boundary, changed source, or changed scale before trusting the result."
+    ],
+    "what_the_math_buys": "The equation turns empty space between measurements into a checkable demand. The model cannot claim success only by touching the measured points.",
+    "failure_boundary": "This family fails when the written equation is incomplete, the boundary information is wrong, or the training process avoids the hard regions where the rule matters most."
+  },
+  {
+    "slug": "neural-operators-family",
+    "title": "Neural Operators Family",
+    "central_problem": "One solved simulation is not enough; the scientific job needs the map from many inputs to many full fields.",
+    "domain": "repeated PDE solves, design sweeps, weather-like fields, fluids, materials, and parameter studies",
+    "concepts": [
+      "operator-learning",
+      "surrogate-modeling",
+      "attention-for-scientific-fields",
+      "foundation-models-for-pdes"
+    ],
+    "plain_route": [
+      "Start with many examples of input fields and output fields.",
+      "Name the family: which equations, boundaries, geometries, grids, and parameter ranges are included.",
+      "Learn the map from a new input field to a new output field.",
+      "Use structure such as frequency, graph connections, or attention when the field needs it.",
+      "Reject broad claims unless the model survives new cases from the intended family."
+    ],
+    "what_the_math_buys": "The object being learned is a map between functions. That matters because a field is not a single row of numbers; it is a whole spatial object.",
+    "failure_boundary": "This family fails when the new query is outside the learned family, when resolution changes reveal hidden errors, or when the output looks smooth but breaks the physical claim."
+  },
+  {
+    "slug": "model-discovery-family",
+    "title": "Model Discovery Family",
+    "central_problem": "Prediction alone is not enough when the scientist needs a readable law or missing change rule.",
+    "domain": "mechanism discovery, dynamics, lab measurements, simplified physical laws, and interpretable scientific modeling",
+    "concepts": [
+      "symbolic-regression",
+      "neural-differential-equations",
+      "scientific-machine-learning",
+      "optimization-for-learning"
+    ],
+    "plain_route": [
+      "Start with measurements of a system changing.",
+      "Decide which quantities could explain that change.",
+      "Search for a short rule or learn the missing rate rule.",
+      "Check whether the rule predicts a changed experiment.",
+      "Keep the rule only if it is both useful and honest about what was not measured."
+    ],
+    "what_the_math_buys": "A compact equation is easier to inspect, criticize, and reuse than a large fitted object. The math turns a fit into a candidate explanation.",
+    "failure_boundary": "This family fails when the needed variable was not measured, the experiment did not excite the important behavior, or the search space cannot express the true rule."
+  },
+  {
+    "slug": "scientific-surrogates-family",
+    "title": "Scientific Surrogates Family",
+    "central_problem": "The trusted simulator is too slow for repeated decisions, but a fast answer is dangerous if nobody states where it is valid.",
+    "domain": "engineering design, uncertainty sweeps, control loops, inverse problems, and expensive simulation workflows",
+    "concepts": [
+      "surrogate-modeling",
+      "deep-learning",
+      "operator-learning",
+      "uncertainty-and-generalization"
+    ],
+    "plain_route": [
+      "Start with an expensive solver or experiment.",
+      "Name the repeated questions people need to ask.",
+      "Train a cheaper stand-in only for those questions.",
+      "Compare against the trusted source near the edge of intended use.",
+      "Report the use range with the answer, not after the answer."
+    ],
+    "what_the_math_buys": "The approximation becomes useful only after the input family, output quantity, error measure, and rejected cases are named.",
+    "failure_boundary": "This family fails when speed hides missing physics, when users ask new questions the surrogate was not trained for, or when uncertainty is treated as decoration."
+  }
+]

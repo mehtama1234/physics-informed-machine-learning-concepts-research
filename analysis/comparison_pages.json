@@ -1,0 +1,46 @@
+[
+  {
+    "slug": "pinns-vs-neural-operators",
+    "title": "PINNs vs Neural Operators",
+    "left": "Physics-informed neural networks",
+    "right": "Neural operators",
+    "shared_problem": "Both try to predict scientific fields without ignoring the physics that makes those fields meaningful.",
+    "left_when": "Use this side when you have one problem instance, sparse data, and a known equation you want the fitted field to obey.",
+    "right_when": "Use this side when you have many solved examples and need a fast map from new problem inputs to full solution fields.",
+    "key_difference": "A PINN usually learns one field while being punished for breaking an equation. A neural operator learns the input-to-solution map for a named family of fields.",
+    "wrong_turn": "Do not use either word as a badge of trust. Ask what changed case was tested."
+  },
+  {
+    "slug": "solvers-vs-learned-surrogates",
+    "title": "Solvers vs Learned Surrogates",
+    "left": "Trusted numerical solvers",
+    "right": "Learned surrogates",
+    "shared_problem": "Both produce answers for scientific or engineering questions.",
+    "left_when": "Use this side when correctness, conservation, and known numerical behavior matter more than speed.",
+    "right_when": "Use this side when many repeated queries make the full solver too costly and the query family is narrow enough to test.",
+    "key_difference": "A solver follows the written equations step by step. A surrogate imitates the solver's input-output behavior inside a tested use range.",
+    "wrong_turn": "A fast surrogate is not a replacement for the solver outside the cases where it was checked."
+  },
+  {
+    "slug": "symbolic-regression-vs-large-fitted-prediction",
+    "title": "Symbolic Regression vs Large Fitted Prediction",
+    "left": "Symbolic regression",
+    "right": "Large fitted prediction",
+    "shared_problem": "Both use data to make future or unseen cases easier to understand.",
+    "left_when": "Use this side when the user needs a short equation that can be inspected and argued over.",
+    "right_when": "Use this side when predictive accuracy on a complex pattern matters more than a compact human-readable rule.",
+    "key_difference": "Symbolic regression searches for a small formula. Large fitted prediction can carry more detail but usually gives less direct explanation.",
+    "wrong_turn": "A neat formula is not automatically true; it must survive changed data and missing-variable checks."
+  },
+  {
+    "slug": "data-only-vs-physics-informed-learning",
+    "title": "Data-Only vs Physics-Informed Learning",
+    "left": "Data-only learning",
+    "right": "Physics-informed learning",
+    "shared_problem": "Both try to turn examples into predictions.",
+    "left_when": "Use this side when examples are abundant, the use range is narrow, and there is no trusted rule to add.",
+    "right_when": "Use this side when a known equation, boundary condition, conservation law, unit, or symmetry should constrain the answer.",
+    "key_difference": "Data-only learning listens to examples. Physics-informed learning also listens to rules about what answers are allowed.",
+    "wrong_turn": "Adding physics language does not help if the added rule is wrong, too weak, or never tested against the claim."
+  }
+]

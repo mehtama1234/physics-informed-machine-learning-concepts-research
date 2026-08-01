@@ -8,6 +8,9 @@
 - missing_transcripts: 0
 - concept_count: 14
 - theme_count: 7
+- family_count: 4
+- comparison_count: 4
+- worked_example_count: 3
 
 ## Concepts
 ### Deep Learning
@@ -93,4 +96,72 @@
 - Domain: large scientific fields where distant parts may interact
 - Why: it gives the model a way to move information across a field without treating every location as isolated
 - Failure: windowing or scaling choices can miss long-range effects that matter for the scientific quantity being predicted
+
+
+## Paper Family Routes
+### Physics Constraints Family
+- Problem: You have some observations, but the answer must also obey a rule scientists already trust.
+- Domain: heat flow, fluids, waves, elasticity, reaction systems, and other systems described by differential equations
+- What the math buys: The equation turns empty space between measurements into a checkable demand. The model cannot claim success only by touching the measured points.
+- Failure boundary: This family fails when the written equation is incomplete, the boundary information is wrong, or the training process avoids the hard regions where the rule matters most.
+
+### Neural Operators Family
+- Problem: One solved simulation is not enough; the scientific job needs the map from many inputs to many full fields.
+- Domain: repeated PDE solves, design sweeps, weather-like fields, fluids, materials, and parameter studies
+- What the math buys: The object being learned is a map between functions. That matters because a field is not a single row of numbers; it is a whole spatial object.
+- Failure boundary: This family fails when the new query is outside the learned family, when resolution changes reveal hidden errors, or when the output looks smooth but breaks the physical claim.
+
+### Model Discovery Family
+- Problem: Prediction alone is not enough when the scientist needs a readable law or missing change rule.
+- Domain: mechanism discovery, dynamics, lab measurements, simplified physical laws, and interpretable scientific modeling
+- What the math buys: A compact equation is easier to inspect, criticize, and reuse than a large fitted object. The math turns a fit into a candidate explanation.
+- Failure boundary: This family fails when the needed variable was not measured, the experiment did not excite the important behavior, or the search space cannot express the true rule.
+
+### Scientific Surrogates Family
+- Problem: The trusted simulator is too slow for repeated decisions, but a fast answer is dangerous if nobody states where it is valid.
+- Domain: engineering design, uncertainty sweeps, control loops, inverse problems, and expensive simulation workflows
+- What the math buys: The approximation becomes useful only after the input family, output quantity, error measure, and rejected cases are named.
+- Failure boundary: This family fails when speed hides missing physics, when users ask new questions the surrogate was not trained for, or when uncertainty is treated as decoration.
+
+
+## Comparisons
+### PINNs vs Neural Operators
+- Shared problem: Both try to predict scientific fields without ignoring the physics that makes those fields meaningful.
+- Key difference: A PINN usually learns one field while being punished for breaking an equation. A neural operator learns the input-to-solution map for a named family of fields.
+- Wrong turn: Do not use either word as a badge of trust. Ask what changed case was tested.
+
+### Solvers vs Learned Surrogates
+- Shared problem: Both produce answers for scientific or engineering questions.
+- Key difference: A solver follows the written equations step by step. A surrogate imitates the solver's input-output behavior inside a tested use range.
+- Wrong turn: A fast surrogate is not a replacement for the solver outside the cases where it was checked.
+
+### Symbolic Regression vs Large Fitted Prediction
+- Shared problem: Both use data to make future or unseen cases easier to understand.
+- Key difference: Symbolic regression searches for a small formula. Large fitted prediction can carry more detail but usually gives less direct explanation.
+- Wrong turn: A neat formula is not automatically true; it must survive changed data and missing-variable checks.
+
+### Data-Only vs Physics-Informed Learning
+- Shared problem: Both try to turn examples into predictions.
+- Key difference: Data-only learning listens to examples. Physics-informed learning also listens to rules about what answers are allowed.
+- Wrong turn: Adding physics language does not help if the added rule is wrong, too weak, or never tested against the claim.
+
+
+## Worked Examples
+### Heat Equation From Few Measurements
+- Domain: heat moving through a rod, wall, chip, or material sample
+- Question: What is the temperature everywhere if sensors only report a few places?
+- Observed: sensor readings, starting temperature, boundary temperature, and the rule that heat flows from hot regions toward cold regions
+- Hidden: temperature at every unsensed point and later time
+
+### Fast Fluid Field Surrogate
+- Domain: air or liquid flow around shapes
+- Question: How can engineers test many shapes without running a full simulation every time?
+- Observed: many prior simulations connecting shape, conditions, and resulting velocity or pressure fields
+- Hidden: the flow field for a new shape or new condition
+
+### Discovering A Small Law From Motion
+- Domain: a measured system changing over time
+- Question: Can data reveal a short rule for how the system moves?
+- Observed: measurements of position, speed, concentration, or another changing quantity
+- Hidden: the rate rule that causes the next moment
 

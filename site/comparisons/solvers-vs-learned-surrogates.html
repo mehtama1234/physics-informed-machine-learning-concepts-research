@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Solvers vs Learned Surrogates</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<nav class="topbar">
+  <a href="../index.html">Physics-Informed ML</a>
+  <a href="../transcripts.html">Transcripts</a>
+  <a href="../concept-atlas.html">Concept Atlas</a>
+  <a href="../families.html">Families</a>
+  <a href="../comparisons.html">Comparisons</a>
+  <a href="../worked-examples.html">Examples</a>
+  <a href="../theme-map.html">Themes</a>
+  <a href="../evidence-ledger.html">Evidence</a>
+</nav>
+<main>
+
+<h1>Solvers vs Learned Surrogates</h1>
+<h2>Shared Problem</h2>
+<p>Both produce answers for scientific or engineering questions.</p>
+<div class="compare-grid">
+  <article class="card">
+    <h3>Trusted numerical solvers</h3>
+    <p>Use this side when correctness, conservation, and known numerical behavior matter more than speed.</p>
+  </article>
+  <article class="card">
+    <h3>Learned surrogates</h3>
+    <p>Use this side when many repeated queries make the full solver too costly and the query family is narrow enough to test.</p>
+  </article>
+</div>
+<h2>Key Difference</h2>
+<p>A solver follows the written equations step by step. A surrogate imitates the solver&#x27;s input-output behavior inside a tested use range.</p>
+<h2>Common Wrong Turn</h2>
+<p>A fast surrogate is not a replacement for the solver outside the cases where it was checked.</p>
+<h2>First-Principles Test</h2>
+<p>Before choosing a side, name the scientific quantity, the available evidence, the use range, and the changed case that would expose a bad answer.</p>
+
+</main>
+</body>
+</html>

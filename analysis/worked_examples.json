@@ -1,0 +1,62 @@
+[
+  {
+    "slug": "heat-equation-from-few-measurements",
+    "title": "Heat Equation From Few Measurements",
+    "domain": "heat moving through a rod, wall, chip, or material sample",
+    "question": "What is the temperature everywhere if sensors only report a few places?",
+    "observed": "sensor readings, starting temperature, boundary temperature, and the rule that heat flows from hot regions toward cold regions",
+    "hidden": "temperature at every unsensed point and later time",
+    "method_route": [
+      "partial-differential-equations",
+      "physics-informed-neural-networks",
+      "uncertainty-and-generalization"
+    ],
+    "plain_steps": [
+      "Draw the unknown temperature as a field, not as one number.",
+      "Use the measured points as anchors.",
+      "Use the heat rule as a check between anchors.",
+      "Compare with held-out sensors or a trusted solve."
+    ],
+    "why_it_teaches": "This is the cleanest entry point for PINNs because the physical rule is familiar: heat smooths out unless a source keeps adding energy."
+  },
+  {
+    "slug": "fast-fluid-field-surrogate",
+    "title": "Fast Fluid Field Surrogate",
+    "domain": "air or liquid flow around shapes",
+    "question": "How can engineers test many shapes without running a full simulation every time?",
+    "observed": "many prior simulations connecting shape, conditions, and resulting velocity or pressure fields",
+    "hidden": "the flow field for a new shape or new condition",
+    "method_route": [
+      "surrogate-modeling",
+      "operator-learning",
+      "attention-for-scientific-fields"
+    ],
+    "plain_steps": [
+      "Name the range of shapes and flow conditions.",
+      "Train a model on full fields from trusted simulations.",
+      "Predict a new field quickly.",
+      "Reject the shortcut if it misses boundary behavior, vortices, or pressure forces that matter."
+    ],
+    "why_it_teaches": "It shows why speed is not the same as trust. The useful claim is a fast answer inside a tested design family."
+  },
+  {
+    "slug": "discovering-a-small-law-from-motion",
+    "title": "Discovering A Small Law From Motion",
+    "domain": "a measured system changing over time",
+    "question": "Can data reveal a short rule for how the system moves?",
+    "observed": "measurements of position, speed, concentration, or another changing quantity",
+    "hidden": "the rate rule that causes the next moment",
+    "method_route": [
+      "symbolic-regression",
+      "neural-differential-equations",
+      "optimization-for-learning"
+    ],
+    "plain_steps": [
+      "Measure the variables that might matter.",
+      "Estimate how they change from moment to moment.",
+      "Search for a short rule or learn the missing rate.",
+      "Test on a new experiment, not only the original trace."
+    ],
+    "why_it_teaches": "It separates prediction from explanation. A readable rule becomes valuable only when it survives a changed experiment."
+  }
+]

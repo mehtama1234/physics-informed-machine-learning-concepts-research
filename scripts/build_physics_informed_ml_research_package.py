@@ -5,6 +5,7 @@ import argparse
 import html
 import json
 import re
+import shutil
 import subprocess
 from collections import Counter, defaultdict
 from dataclasses import dataclass
@@ -233,6 +234,174 @@ THEMES = [
         "name": "Broad Models For Many Scientific Tasks",
         "problem": "The newest lectures ask whether one model can carry shared structure across many PDE or scientific tasks.",
         "concepts": ["foundation-models-for-pdes", "operator-learning", "uncertainty-and-generalization"],
+    },
+]
+
+
+FAMILY_PAGES = [
+    {
+        "slug": "physics-constraints-family",
+        "title": "Physics Constraints Family",
+        "central_problem": "You have some observations, but the answer must also obey a rule scientists already trust.",
+        "domain": "heat flow, fluids, waves, elasticity, reaction systems, and other systems described by differential equations",
+        "concepts": ["partial-differential-equations", "physics-informed-neural-networks", "optimization-for-learning", "uncertainty-and-generalization"],
+        "plain_route": [
+            "Start with a quantity that changes across space or time.",
+            "Write the rule that says how the quantity is allowed to change.",
+            "Fit the unknown field to the measured values.",
+            "Also check whether the fitted field breaks the rule between measured values.",
+            "Test a changed boundary, changed source, or changed scale before trusting the result.",
+        ],
+        "what_the_math_buys": "The equation turns empty space between measurements into a checkable demand. The model cannot claim success only by touching the measured points.",
+        "failure_boundary": "This family fails when the written equation is incomplete, the boundary information is wrong, or the training process avoids the hard regions where the rule matters most.",
+    },
+    {
+        "slug": "neural-operators-family",
+        "title": "Neural Operators Family",
+        "central_problem": "One solved simulation is not enough; the scientific job needs the map from many inputs to many full fields.",
+        "domain": "repeated PDE solves, design sweeps, weather-like fields, fluids, materials, and parameter studies",
+        "concepts": ["operator-learning", "surrogate-modeling", "attention-for-scientific-fields", "foundation-models-for-pdes"],
+        "plain_route": [
+            "Start with many examples of input fields and output fields.",
+            "Name the family: which equations, boundaries, geometries, grids, and parameter ranges are included.",
+            "Learn the map from a new input field to a new output field.",
+            "Use structure such as frequency, graph connections, or attention when the field needs it.",
+            "Reject broad claims unless the model survives new cases from the intended family.",
+        ],
+        "what_the_math_buys": "The object being learned is a map between functions. That matters because a field is not a single row of numbers; it is a whole spatial object.",
+        "failure_boundary": "This family fails when the new query is outside the learned family, when resolution changes reveal hidden errors, or when the output looks smooth but breaks the physical claim.",
+    },
+    {
+        "slug": "model-discovery-family",
+        "title": "Model Discovery Family",
+        "central_problem": "Prediction alone is not enough when the scientist needs a readable law or missing change rule.",
+        "domain": "mechanism discovery, dynamics, lab measurements, simplified physical laws, and interpretable scientific modeling",
+        "concepts": ["symbolic-regression", "neural-differential-equations", "scientific-machine-learning", "optimization-for-learning"],
+        "plain_route": [
+            "Start with measurements of a system changing.",
+            "Decide which quantities could explain that change.",
+            "Search for a short rule or learn the missing rate rule.",
+            "Check whether the rule predicts a changed experiment.",
+            "Keep the rule only if it is both useful and honest about what was not measured.",
+        ],
+        "what_the_math_buys": "A compact equation is easier to inspect, criticize, and reuse than a large fitted object. The math turns a fit into a candidate explanation.",
+        "failure_boundary": "This family fails when the needed variable was not measured, the experiment did not excite the important behavior, or the search space cannot express the true rule.",
+    },
+    {
+        "slug": "scientific-surrogates-family",
+        "title": "Scientific Surrogates Family",
+        "central_problem": "The trusted simulator is too slow for repeated decisions, but a fast answer is dangerous if nobody states where it is valid.",
+        "domain": "engineering design, uncertainty sweeps, control loops, inverse problems, and expensive simulation workflows",
+        "concepts": ["surrogate-modeling", "deep-learning", "operator-learning", "uncertainty-and-generalization"],
+        "plain_route": [
+            "Start with an expensive solver or experiment.",
+            "Name the repeated questions people need to ask.",
+            "Train a cheaper stand-in only for those questions.",
+            "Compare against the trusted source near the edge of intended use.",
+            "Report the use range with the answer, not after the answer.",
+        ],
+        "what_the_math_buys": "The approximation becomes useful only after the input family, output quantity, error measure, and rejected cases are named.",
+        "failure_boundary": "This family fails when speed hides missing physics, when users ask new questions the surrogate was not trained for, or when uncertainty is treated as decoration.",
+    },
+]
+
+
+COMPARISON_PAGES = [
+    {
+        "slug": "pinns-vs-neural-operators",
+        "title": "PINNs vs Neural Operators",
+        "left": "Physics-informed neural networks",
+        "right": "Neural operators",
+        "shared_problem": "Both try to predict scientific fields without ignoring the physics that makes those fields meaningful.",
+        "left_when": "Use this side when you have one problem instance, sparse data, and a known equation you want the fitted field to obey.",
+        "right_when": "Use this side when you have many solved examples and need a fast map from new problem inputs to full solution fields.",
+        "key_difference": "A PINN usually learns one field while being punished for breaking an equation. A neural operator learns the input-to-solution map for a named family of fields.",
+        "wrong_turn": "Do not use either word as a badge of trust. Ask what changed case was tested.",
+    },
+    {
+        "slug": "solvers-vs-learned-surrogates",
+        "title": "Solvers vs Learned Surrogates",
+        "left": "Trusted numerical solvers",
+        "right": "Learned surrogates",
+        "shared_problem": "Both produce answers for scientific or engineering questions.",
+        "left_when": "Use this side when correctness, conservation, and known numerical behavior matter more than speed.",
+        "right_when": "Use this side when many repeated queries make the full solver too costly and the query family is narrow enough to test.",
+        "key_difference": "A solver follows the written equations step by step. A surrogate imitates the solver's input-output behavior inside a tested use range.",
+        "wrong_turn": "A fast surrogate is not a replacement for the solver outside the cases where it was checked.",
+    },
+    {
+        "slug": "symbolic-regression-vs-large-fitted-prediction",
+        "title": "Symbolic Regression vs Large Fitted Prediction",
+        "left": "Symbolic regression",
+        "right": "Large fitted prediction",
+        "shared_problem": "Both use data to make future or unseen cases easier to understand.",
+        "left_when": "Use this side when the user needs a short equation that can be inspected and argued over.",
+        "right_when": "Use this side when predictive accuracy on a complex pattern matters more than a compact human-readable rule.",
+        "key_difference": "Symbolic regression searches for a small formula. Large fitted prediction can carry more detail but usually gives less direct explanation.",
+        "wrong_turn": "A neat formula is not automatically true; it must survive changed data and missing-variable checks.",
+    },
+    {
+        "slug": "data-only-vs-physics-informed-learning",
+        "title": "Data-Only vs Physics-Informed Learning",
+        "left": "Data-only learning",
+        "right": "Physics-informed learning",
+        "shared_problem": "Both try to turn examples into predictions.",
+        "left_when": "Use this side when examples are abundant, the use range is narrow, and there is no trusted rule to add.",
+        "right_when": "Use this side when a known equation, boundary condition, conservation law, unit, or symmetry should constrain the answer.",
+        "key_difference": "Data-only learning listens to examples. Physics-informed learning also listens to rules about what answers are allowed.",
+        "wrong_turn": "Adding physics language does not help if the added rule is wrong, too weak, or never tested against the claim.",
+    },
+]
+
+
+WORKED_EXAMPLES = [
+    {
+        "slug": "heat-equation-from-few-measurements",
+        "title": "Heat Equation From Few Measurements",
+        "domain": "heat moving through a rod, wall, chip, or material sample",
+        "question": "What is the temperature everywhere if sensors only report a few places?",
+        "observed": "sensor readings, starting temperature, boundary temperature, and the rule that heat flows from hot regions toward cold regions",
+        "hidden": "temperature at every unsensed point and later time",
+        "method_route": ["partial-differential-equations", "physics-informed-neural-networks", "uncertainty-and-generalization"],
+        "plain_steps": [
+            "Draw the unknown temperature as a field, not as one number.",
+            "Use the measured points as anchors.",
+            "Use the heat rule as a check between anchors.",
+            "Compare with held-out sensors or a trusted solve.",
+        ],
+        "why_it_teaches": "This is the cleanest entry point for PINNs because the physical rule is familiar: heat smooths out unless a source keeps adding energy.",
+    },
+    {
+        "slug": "fast-fluid-field-surrogate",
+        "title": "Fast Fluid Field Surrogate",
+        "domain": "air or liquid flow around shapes",
+        "question": "How can engineers test many shapes without running a full simulation every time?",
+        "observed": "many prior simulations connecting shape, conditions, and resulting velocity or pressure fields",
+        "hidden": "the flow field for a new shape or new condition",
+        "method_route": ["surrogate-modeling", "operator-learning", "attention-for-scientific-fields"],
+        "plain_steps": [
+            "Name the range of shapes and flow conditions.",
+            "Train a model on full fields from trusted simulations.",
+            "Predict a new field quickly.",
+            "Reject the shortcut if it misses boundary behavior, vortices, or pressure forces that matter.",
+        ],
+        "why_it_teaches": "It shows why speed is not the same as trust. The useful claim is a fast answer inside a tested design family.",
+    },
+    {
+        "slug": "discovering-a-small-law-from-motion",
+        "title": "Discovering A Small Law From Motion",
+        "domain": "a measured system changing over time",
+        "question": "Can data reveal a short rule for how the system moves?",
+        "observed": "measurements of position, speed, concentration, or another changing quantity",
+        "hidden": "the rate rule that causes the next moment",
+        "method_route": ["symbolic-regression", "neural-differential-equations", "optimization-for-learning"],
+        "plain_steps": [
+            "Measure the variables that might matter.",
+            "Estimate how they change from moment to moment.",
+            "Search for a short rule or learn the missing rate.",
+            "Test on a new experiment, not only the original trace.",
+        ],
+        "why_it_teaches": "It separates prediction from explanation. A readable rule becomes valuable only when it survives a changed experiment.",
     },
 ]
 
@@ -530,12 +699,18 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
             "missing_transcripts": sum(1 for row in records if row.transcript_status != "available"),
             "concept_count": len(concept_atlas),
             "theme_count": len(theme_map),
+            "family_count": len(FAMILY_PAGES),
+            "comparison_count": len(COMPARISON_PAGES),
+            "worked_example_count": len(WORKED_EXAMPLES),
         },
         "transcript_index": [record_to_dict(record) for record in records],
         "concept_atlas": concept_atlas,
         "theme_map": theme_map,
         "evidence_ledger": evidence_ledger,
         "topic_treatments": topic_treatments,
+        "family_pages": FAMILY_PAGES,
+        "comparison_pages": COMPARISON_PAGES,
+        "worked_examples": WORKED_EXAMPLES,
     }
     for name, value in data.items():
         if name == "summary":
@@ -602,6 +777,15 @@ h3 { margin-top: 0; }
 p, li { max-width: 900px; }
 .meta { color: var(--muted); font-size: .95rem; }
 .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; align-items: start; }
+.route { display: grid; gap: 10px; max-width: 920px; }
+.route-step {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-left: 5px solid var(--accent);
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+.compare-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
 .card {
   background: var(--card);
   border: 1px solid var(--line);
@@ -638,6 +822,9 @@ def html_page(title: str, body: str, root_prefix: str = "") -> str:
   <a href="{root_prefix}index.html">Physics-Informed ML</a>
   <a href="{root_prefix}transcripts.html">Transcripts</a>
   <a href="{root_prefix}concept-atlas.html">Concept Atlas</a>
+  <a href="{root_prefix}families.html">Families</a>
+  <a href="{root_prefix}comparisons.html">Comparisons</a>
+  <a href="{root_prefix}worked-examples.html">Examples</a>
   <a href="{root_prefix}theme-map.html">Themes</a>
   <a href="{root_prefix}evidence-ledger.html">Evidence</a>
 </nav>
@@ -654,13 +841,31 @@ def card(title: str, text: str, href: str = "") -> str:
     return f'<article class="card">{heading}<p>{html.escape(text)}</p></article>'
 
 
+def concept_links(slugs: list[str], root_prefix: str = "") -> str:
+    items = []
+    concept_names = {str(item["slug"]): str(item["name"]) for item in CONCEPTS}
+    for slug in slugs:
+        name = concept_names.get(slug, slug.replace("-", " "))
+        items.append(f'<li><a href="{root_prefix}topics/{html.escape(slug)}.html">{html.escape(name)}</a></li>')
+    return "<ul>" + "".join(items) + "</ul>"
+
+
 def write_site(data: dict[str, object]) -> None:
     SITE.mkdir(parents=True, exist_ok=True)
     write_style()
     topic_dir = SITE / "topics"
     video_dir = SITE / "videos"
+    family_dir = SITE / "families"
+    comparison_dir = SITE / "comparisons"
+    example_dir = SITE / "worked-examples"
+    for generated_dir in (family_dir, comparison_dir, example_dir):
+        if generated_dir.exists():
+            shutil.rmtree(generated_dir)
     topic_dir.mkdir(exist_ok=True)
     video_dir.mkdir(exist_ok=True)
+    family_dir.mkdir(exist_ok=True)
+    comparison_dir.mkdir(exist_ok=True)
+    example_dir.mkdir(exist_ok=True)
 
     summary = data["summary"]
     concept_atlas = data["concept_atlas"]
@@ -668,6 +873,9 @@ def write_site(data: dict[str, object]) -> None:
     topics = data["topic_treatments"]
     themes = data["theme_map"]
     evidence = data["evidence_ledger"]
+    family_pages = data["family_pages"]
+    comparison_pages = data["comparison_pages"]
+    worked_examples = data["worked_examples"]
 
     index_body = f"""
 <h1>Physics-Informed Machine Learning Concepts Research</h1>
@@ -675,6 +883,9 @@ def write_site(data: dict[str, object]) -> None:
 <div class="grid">
 {card("Videos", f"{summary['video_count']} source videos across two playlists, with {summary['available_transcripts']} available transcripts.", "transcripts.html")}
 {card("Concepts", f"{summary['concept_count']} concepts extracted into plain-language topic treatments.", "concept-atlas.html")}
+{card("Paper Families", f"{summary['family_count']} routes through related concept families.", "families.html")}
+{card("Comparisons", f"{summary['comparison_count']} plain-language method comparisons.", "comparisons.html")}
+{card("Worked Examples", f"{summary['worked_example_count']} concrete scientific examples.", "worked-examples.html")}
 {card("Themes", f"{summary['theme_count']} recurring research pressures across the course family.", "theme-map.html")}
 {card("Evidence", "Each major claim links back to transcript or metadata evidence and states its limit.", "evidence-ledger.html")}
 </div>
@@ -716,6 +927,36 @@ def write_site(data: dict[str, object]) -> None:
     )
     for topic in topics:
         write_topic_page(topic_dir / f"{topic['slug']}.html", topic)
+
+    family_cards = []
+    for family in family_pages:
+        href = f"families/{family['slug']}.html"
+        family_cards.append(card(str(family["title"]), str(family["central_problem"]), href))
+        write_family_page(family_dir / f"{family['slug']}.html", family)
+    (SITE / "families.html").write_text(
+        html_page("Physics-Informed ML Paper Families", f"<h1>Paper Family Routes</h1><p>These pages group related concepts by the real scientific problem they try to solve. Read them as routes through the field, not as labels.</p><div class=\"grid\">{''.join(family_cards)}</div>"),
+        encoding="utf-8",
+    )
+
+    comparison_cards = []
+    for comparison in comparison_pages:
+        href = f"comparisons/{comparison['slug']}.html"
+        comparison_cards.append(card(str(comparison["title"]), str(comparison["shared_problem"]), href))
+        write_comparison_page(comparison_dir / f"{comparison['slug']}.html", comparison)
+    (SITE / "comparisons.html").write_text(
+        html_page("Physics-Informed ML Comparisons", f"<h1>Comparison Pages</h1><p>These pages separate nearby ideas by the job they are built for, the evidence they need, and the failure case that matters.</p><div class=\"grid\">{''.join(comparison_cards)}</div>"),
+        encoding="utf-8",
+    )
+
+    example_cards = []
+    for example in worked_examples:
+        href = f"worked-examples/{example['slug']}.html"
+        example_cards.append(card(str(example["title"]), str(example["question"]), href))
+        write_worked_example_page(example_dir / f"{example['slug']}.html", example)
+    (SITE / "worked-examples.html").write_text(
+        html_page("Physics-Informed ML Worked Examples", f"<h1>Worked Examples</h1><p>These pages anchor the math in concrete scientific jobs. Each example names the observed evidence, the hidden quantity, the method route, and the test that keeps the claim honest.</p><div class=\"grid\">{''.join(example_cards)}</div>"),
+        encoding="utf-8",
+    )
 
     theme_cards = []
     for theme in themes:
@@ -936,6 +1177,75 @@ def write_topic_page(path: Path, topic: dict[str, object]) -> None:
     path.write_text(html_page(str(topic["title"]), body, root_prefix="../"), encoding="utf-8")
 
 
+def write_family_page(path: Path, family: dict[str, object]) -> None:
+    steps = "".join(f"<div class=\"route-step\">{idx}. {html.escape(step)}</div>" for idx, step in enumerate(family["plain_route"], start=1))
+    body = f"""
+<h1>{html.escape(str(family['title']))}</h1>
+<h2>Problem This Family Solves</h2>
+<p>{html.escape(str(family['central_problem']))}</p>
+<h2>Where It Shows Up</h2>
+<p>{html.escape(str(family['domain']))}</p>
+<h2>Route Through The Ideas</h2>
+<div class="route">{steps}</div>
+<h2>Concepts In This Family</h2>
+{concept_links(list(family['concepts']), root_prefix="../")}
+<h2>What The Math Buys</h2>
+<p>{html.escape(str(family['what_the_math_buys']))}</p>
+<h2>Failure Boundary</h2>
+<p>{html.escape(str(family['failure_boundary']))}</p>
+<h2>Reader Check</h2>
+<p>You understand this family when you can say the scientific job, the input family, the output quantity, the rule or structure being kept, and the changed case that would make the claim fail.</p>
+"""
+    path.write_text(html_page(str(family["title"]), body, root_prefix="../"), encoding="utf-8")
+
+
+def write_comparison_page(path: Path, comparison: dict[str, object]) -> None:
+    body = f"""
+<h1>{html.escape(str(comparison['title']))}</h1>
+<h2>Shared Problem</h2>
+<p>{html.escape(str(comparison['shared_problem']))}</p>
+<div class="compare-grid">
+  <article class="card">
+    <h3>{html.escape(str(comparison['left']))}</h3>
+    <p>{html.escape(str(comparison['left_when']))}</p>
+  </article>
+  <article class="card">
+    <h3>{html.escape(str(comparison['right']))}</h3>
+    <p>{html.escape(str(comparison['right_when']))}</p>
+  </article>
+</div>
+<h2>Key Difference</h2>
+<p>{html.escape(str(comparison['key_difference']))}</p>
+<h2>Common Wrong Turn</h2>
+<p>{html.escape(str(comparison['wrong_turn']))}</p>
+<h2>First-Principles Test</h2>
+<p>Before choosing a side, name the scientific quantity, the available evidence, the use range, and the changed case that would expose a bad answer.</p>
+"""
+    path.write_text(html_page(str(comparison["title"]), body, root_prefix="../"), encoding="utf-8")
+
+
+def write_worked_example_page(path: Path, example: dict[str, object]) -> None:
+    steps = "".join(f"<div class=\"route-step\">{idx}. {html.escape(step)}</div>" for idx, step in enumerate(example["plain_steps"], start=1))
+    body = f"""
+<h1>{html.escape(str(example['title']))}</h1>
+<h2>Scientific Job</h2>
+<p><strong>Domain:</strong> {html.escape(str(example['domain']))}</p>
+<p><strong>Question:</strong> {html.escape(str(example['question']))}</p>
+<h2>Observed And Hidden</h2>
+<p><strong>Observed:</strong> {html.escape(str(example['observed']))}</p>
+<p><strong>Hidden:</strong> {html.escape(str(example['hidden']))}</p>
+<h2>Method Route</h2>
+{concept_links(list(example['method_route']), root_prefix="../")}
+<h2>Plain Steps</h2>
+<div class="route">{steps}</div>
+<h2>Why This Example Teaches The Field</h2>
+<p>{html.escape(str(example['why_it_teaches']))}</p>
+<h2>Claim Boundary</h2>
+<p>The example supports a method only inside the named scientific job. A wider claim needs a new test, not stronger wording.</p>
+"""
+    path.write_text(html_page(str(example["title"]), body, root_prefix="../"), encoding="utf-8")
+
+
 def write_markdown_export(data: dict[str, object]) -> None:
     lines = ["# Physics-Informed Machine Learning Concepts Research", ""]
     lines.append("## Summary")
@@ -950,6 +1260,41 @@ def write_markdown_export(data: dict[str, object]) -> None:
                 f"- Domain: {concept['domain']}",
                 f"- Why: {concept['why']}",
                 f"- Failure: {concept['failure']}",
+                "",
+            ]
+        )
+    lines.extend(["", "## Paper Family Routes"])
+    for family in data["family_pages"]:
+        lines.extend(
+            [
+                f"### {family['title']}",
+                f"- Problem: {family['central_problem']}",
+                f"- Domain: {family['domain']}",
+                f"- What the math buys: {family['what_the_math_buys']}",
+                f"- Failure boundary: {family['failure_boundary']}",
+                "",
+            ]
+        )
+    lines.extend(["", "## Comparisons"])
+    for comparison in data["comparison_pages"]:
+        lines.extend(
+            [
+                f"### {comparison['title']}",
+                f"- Shared problem: {comparison['shared_problem']}",
+                f"- Key difference: {comparison['key_difference']}",
+                f"- Wrong turn: {comparison['wrong_turn']}",
+                "",
+            ]
+        )
+    lines.extend(["", "## Worked Examples"])
+    for example in data["worked_examples"]:
+        lines.extend(
+            [
+                f"### {example['title']}",
+                f"- Domain: {example['domain']}",
+                f"- Question: {example['question']}",
+                f"- Observed: {example['observed']}",
+                f"- Hidden: {example['hidden']}",
                 "",
             ]
         )
@@ -987,9 +1332,27 @@ def validate(data: dict[str, object] | None = None) -> None:
         for field in required_fields:
             if not concept.get(field):
                 raise SystemExit(f"concept missing {field}: {concept.get('name')}")
-    for path in (SITE / "index.html", SITE / "transcripts.html", SITE / "concept-atlas.html", SITE / "theme-map.html", SITE / "evidence-ledger.html"):
+    for path in (
+        SITE / "index.html",
+        SITE / "transcripts.html",
+        SITE / "concept-atlas.html",
+        SITE / "families.html",
+        SITE / "comparisons.html",
+        SITE / "worked-examples.html",
+        SITE / "theme-map.html",
+        SITE / "evidence-ledger.html",
+    ):
         if not path.exists():
             raise SystemExit(f"missing site page: {path}")
+    for family in FAMILY_PAGES:
+        if not (SITE / "families" / f"{family['slug']}.html").exists():
+            raise SystemExit(f"missing family page: {family['title']}")
+    for comparison in COMPARISON_PAGES:
+        if not (SITE / "comparisons" / f"{comparison['slug']}.html").exists():
+            raise SystemExit(f"missing comparison page: {comparison['title']}")
+    for example in WORKED_EXAMPLES:
+        if not (SITE / "worked-examples" / f"{example['slug']}.html").exists():
+            raise SystemExit(f"missing worked example page: {example['title']}")
     manifest_path = SITE / "page-manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     missing = [item for item in manifest if not (ROOT / item).exists()]
