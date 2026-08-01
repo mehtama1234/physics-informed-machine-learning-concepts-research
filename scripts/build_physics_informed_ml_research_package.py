@@ -4047,6 +4047,22 @@ def topic_worked_examples_html(slug: str) -> str:
 """
 
 
+def topic_acceptance_sentence_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
+    sentence = (
+        f"This concept exists because scientists need an answer in a case where {topic['common_problem']}. "
+        f"The available evidence is {derivation['observed']}. "
+        f"The hidden thing is {derivation['hidden']}. "
+        f"The math does {derivation['move']} because {derivation['meaning']}. "
+        f"It matters in {topic['domain']} because {topic['why_it_matters']}. "
+        f"It fails when {topic['failure_boundary']}. "
+        f"I would test it by changing the case this way: {derivation['test']}."
+    )
+    return f"""
+<h2>Acceptance Sentence Filled</h2>
+<p>{html.escape(sentence)}</p>
+"""
+
+
 def write_topic_page(path: Path, topic: dict[str, object]) -> None:
     evidence = topic.get("evidence", [])
     evidence_items = []
@@ -4064,6 +4080,7 @@ def write_topic_page(path: Path, topic: dict[str, object]) -> None:
     formula_terms = topic_formula_terms_html(derivation)
     wrong_use = topic_wrong_use_html(topic)
     worked_examples = topic_worked_examples_html(str(topic["slug"]))
+    acceptance_sentence = topic_acceptance_sentence_html(topic, derivation)
     body = f"""
 <h1>{html.escape(str(topic['title']))}</h1>
 <h2>Common Problem This Solves</h2>
@@ -4091,6 +4108,7 @@ def write_topic_page(path: Path, topic: dict[str, object]) -> None:
 {derivation_link}
 {worked_examples}
 {wrong_use}
+{acceptance_sentence}
 <h2>Deeper Mathematical Why</h2>
 <p>The mathematical point is to decide what information is allowed to carry the scientific claim. If the carried information is too small, the model misses the behavior that matters. If it is too broad, the page may claim more than the evidence supports. The useful middle is a named object, a named scientific job, and a changed case that can reject the claim.</p>
 {reader_check}
@@ -5389,7 +5407,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         if not topic_path.exists():
             raise SystemExit(f"deep dive missing topic page: {slug}")
         topic_text = topic_path.read_text(encoding="utf-8")
-        if "First-Principles Essay" not in topic_text or "What A Strong Explanation Must Say" not in topic_text or "Plain Formula Term By Term" not in topic_text or "What It Carries" not in topic_text or "Concrete Worked Example" not in topic_text or "Concrete Wrong-Use Example" not in topic_text or "Test That Catches It" not in topic_text or "Core Idea In One Sentence" not in topic_text or "Mathematical Shape Without Jargon" not in topic_text:
+        if "First-Principles Essay" not in topic_text or "What A Strong Explanation Must Say" not in topic_text or "Plain Formula Term By Term" not in topic_text or "What It Carries" not in topic_text or "Concrete Worked Example" not in topic_text or "Concrete Wrong-Use Example" not in topic_text or "Test That Catches It" not in topic_text or "Acceptance Sentence Filled" not in topic_text or "I would test it by changing" not in topic_text or "Core Idea In One Sentence" not in topic_text or "Mathematical Shape Without Jargon" not in topic_text:
             raise SystemExit(f"deep dive not rendered on topic page: {slug}")
     worked_example_slugs = {str(slug) for example in WORKED_EXAMPLES for slug in example["method_route"]}
     concepts_without_examples = sorted(concept_slugs - worked_example_slugs)
