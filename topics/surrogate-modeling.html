@@ -37,6 +37,25 @@
   <li><strong>Read the shape:</strong> query -&gt; fast stand-in -&gt; approximate answer.</li>
   <li><strong>Say what it means:</strong> speed is useful only inside the query family where the stand-in was checked.</li>
 </ol>
+
+<h2>Core Idea In One Sentence</h2>
+<p>A surrogate is a faster stand-in for a slower trusted process.</p>
+<h2>Where This Is Useful</h2>
+<p>Use it when repeated simulation, design, or uncertainty questions would be too slow with the full solver.</p>
+<h2>Where This Breaks</h2>
+<p>Do not use it outside the query family where it has been compared against the trusted source.</p>
+<h2>Concrete Domain Story</h2>
+<p>If every wing-shape test takes hours, a checked stand-in can screen many shapes before the expensive solver is used again.</p>
+<h2>Mathematical Shape Without Jargon</h2>
+<div class="route"><div class="route-step">1. Name the expensive source of truth.</div><div class="route-step">2. Name the inputs people will vary.</div><div class="route-step">3. Name the output quantity needed for decisions.</div><div class="route-step">4. Fit the cheap stand-in on trusted examples.</div><div class="route-step">5. Measure error near the edge of intended use.</div></div>
+<p><strong>Plain formula:</strong> new query -&gt; fast stand-in -&gt; approximate answer with a stated use range</p>
+<h2>Why This Matters</h2>
+<p>Speed changes what questions scientists and engineers can afford to ask.</p>
+<h2>Red Flags</h2>
+<ul><li>The surrogate is described without its use range.</li><li>The edge cases are not tested.</li><li>The output metric ignores the decision people actually make.</li><li>The full solver is never used again for spot checks.</li></ul>
+<h2>Connects To</h2>
+<ul><li><a href="../topics/operator-learning.html">Operator Learning</a></li><li><a href="../topics/deep-learning.html">Deep Learning</a></li><li><a href="../topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></li></ul>
+
 <h2>Deeper Mathematical Why</h2>
 <p>The mathematical point is to decide what information is allowed to carry the scientific claim. If the carried information is too small, the model misses the behavior that matters. If it is too broad, the page may claim more than the evidence supports. The useful middle is a named object, a named scientific job, and a changed case that can reject the claim.</p>
 <h2>Reader Test</h2>

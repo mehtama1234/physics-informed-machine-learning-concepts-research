@@ -37,6 +37,25 @@
   <li><strong>Read the shape:</strong> many PDE tasks -&gt; shared learned representation -&gt; new task prediction.</li>
   <li><strong>Say what it means:</strong> breadth is useful only if the new task shares the structure the model actually learned.</li>
 </ol>
+
+<h2>Core Idea In One Sentence</h2>
+<p>A PDE foundation model tries to reuse structure across many related field-prediction tasks.</p>
+<h2>Where This Is Useful</h2>
+<p>Use it when many PDE tasks share enough structure that one broad model may reduce repeated training.</p>
+<h2>Where This Breaks</h2>
+<p>Do not confuse broad training with proof that a new scientific regime is covered.</p>
+<h2>Concrete Domain Story</h2>
+<p>A model trained across many simulated fields may help on a new field task, but only if the new task shares the structure it learned.</p>
+<h2>Mathematical Shape Without Jargon</h2>
+<div class="route"><div class="route-step">1. Gather many field-prediction tasks.</div><div class="route-step">2. Train one model to keep shared structure across those tasks.</div><div class="route-step">3. Adapt or query it on a new task.</div><div class="route-step">4. Compare against trusted solves or measurements.</div><div class="route-step">5. Hold out whole task families, not just random examples.</div></div>
+<p><strong>Plain formula:</strong> many PDE tasks -&gt; shared learned structure -&gt; new task prediction</p>
+<h2>Why This Matters</h2>
+<p>If it works, broad training could reduce repeated model-building for related scientific problems.</p>
+<h2>Red Flags</h2>
+<ul><li>The held-out test is too similar to training.</li><li>Rare regimes are missing.</li><li>New boundaries or quantities are assumed rather than tested.</li><li>Scale is treated as a substitute for scientific validation.</li></ul>
+<h2>Connects To</h2>
+<ul><li><a href="../topics/operator-learning.html">Operator Learning</a></li><li><a href="../topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></li><li><a href="../topics/attention-for-scientific-fields.html">Attention For Scientific Fields</a></li></ul>
+
 <h2>Deeper Mathematical Why</h2>
 <p>The mathematical point is to decide what information is allowed to carry the scientific claim. If the carried information is too small, the model misses the behavior that matters. If it is too broad, the page may claim more than the evidence supports. The useful middle is a named object, a named scientific job, and a changed case that can reject the claim.</p>
 <h2>Reader Test</h2>
