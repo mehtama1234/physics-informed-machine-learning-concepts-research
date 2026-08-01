@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Physics-Informed ML Decision Guide</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav class="topbar">
+  <a href="index.html">Physics-Informed ML</a>
+  <a href="transcripts.html">Transcripts</a>
+  <a href="concept-atlas.html">Concept Atlas</a>
+  <a href="families.html">Families</a>
+  <a href="comparisons.html">Comparisons</a>
+  <a href="worked-examples.html">Examples</a>
+  <a href="diagrams.html">Diagrams</a>
+  <a href="learning-path.html">Path</a>
+  <a href="glossary.html">Glossary</a>
+  <a href="domains.html">Domains</a>
+  <a href="reader-checks.html">Checks</a>
+  <a href="decision-guide.html">Decide</a>
+  <a href="theme-map.html">Themes</a>
+  <a href="evidence-ledger.html">Evidence</a>
+</nav>
+<main>
+<h1>Decision Guide</h1><p>Start from the scientific situation, not the method name. Each case names when a method fits, when to avoid it, and what evidence would make the choice defensible.</p><div class="grid">
+<article class="card">
+  <h3><a href="decision-guide/sparse-data-known-equation.html">Sparse Data, Known Equation</a></h3>
+  <p>You have few measurements, but a trusted equation and boundary or starting information exist.</p>
+  <p><strong>Start with:</strong> Physics-informed neural networks</p>
+</article>
+
+<article class="card">
+  <h3><a href="decision-guide/many-related-simulations.html">Many Related Simulations</a></h3>
+  <p>You have many solved examples and need fast answers for new inputs from the same family.</p>
+  <p><strong>Start with:</strong> Operator learning</p>
+</article>
+
+<article class="card">
+  <h3><a href="decision-guide/expensive-repeated-decisions.html">Expensive Repeated Decisions</a></h3>
+  <p>A trusted solver or experiment is too slow for design, search, control, or uncertainty sweeps.</p>
+  <p><strong>Start with:</strong> Surrogate modeling</p>
+</article>
+
+<article class="card">
+  <h3><a href="decision-guide/need-readable-law.html">Need A Readable Law</a></h3>
+  <p>Prediction is not enough; the output should be a formula or mechanism people can inspect.</p>
+  <p><strong>Start with:</strong> Symbolic regression or neural differential equations</p>
+</article>
+
+<article class="card">
+  <h3><a href="decision-guide/new-setting-risk.html">New Setting Risk</a></h3>
+  <p>A model trained in one setting is being used in another setting.</p>
+  <p><strong>Start with:</strong> Uncertainty and generalization checks</p>
+</article>
+
+<article class="card">
+  <h3><a href="decision-guide/broad-pde-coverage.html">Broad PDE Coverage</a></h3>
+  <p>One model is proposed for many equations, grids, parameters, or scientific tasks.</p>
+  <p><strong>Start with:</strong> Foundation models for PDEs</p>
+</article>
+</div>
+</main>
+</body>
+</html>

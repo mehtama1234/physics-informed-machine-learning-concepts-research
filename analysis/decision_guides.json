@@ -1,0 +1,140 @@
+[
+  {
+    "slug": "sparse-data-known-equation",
+    "title": "Sparse Data, Known Equation",
+    "situation": "You have few measurements, but a trusted equation and boundary or starting information exist.",
+    "best_start": "Physics-informed neural networks",
+    "why": "The equation can check the fitted field where measurements are missing.",
+    "use_if": [
+      "the equation is trusted",
+      "the scientific job is one specific field or case",
+      "boundary or starting information can be stated"
+    ],
+    "avoid_if": [
+      "the equation is incomplete",
+      "the hard regions are not checked",
+      "the claim needs many different input fields"
+    ],
+    "evidence_needed": "held-out measurements, boundary checks, equation residual checks, and comparison against a trusted solve when possible",
+    "links": [
+      "topics/physics-informed-neural-networks.html",
+      "diagrams/physics-informed-learning-flow.html",
+      "reader-checks/pinns-check.html"
+    ]
+  },
+  {
+    "slug": "many-related-simulations",
+    "title": "Many Related Simulations",
+    "situation": "You have many solved examples and need fast answers for new inputs from the same family.",
+    "best_start": "Operator learning",
+    "why": "The useful object is the map from input fields to output fields, not one solved field.",
+    "use_if": [
+      "the input family can be named",
+      "many trusted input-output field pairs exist",
+      "new queries stay inside the tested family"
+    ],
+    "avoid_if": [
+      "only one problem instance exists",
+      "the training family is vague",
+      "new boundaries or grids are assumed rather than tested"
+    ],
+    "evidence_needed": "held-out fields, changed resolution tests, boundary tests, and checks on the scientific output quantity",
+    "links": [
+      "topics/operator-learning.html",
+      "diagrams/operator-learning-flow.html",
+      "reader-checks/operator-learning-check.html"
+    ]
+  },
+  {
+    "slug": "expensive-repeated-decisions",
+    "title": "Expensive Repeated Decisions",
+    "situation": "A trusted solver or experiment is too slow for design, search, control, or uncertainty sweeps.",
+    "best_start": "Surrogate modeling",
+    "why": "A fast stand-in can answer repeated questions if its use range is stated and checked.",
+    "use_if": [
+      "the slow trusted source is named",
+      "the repeated query family is narrow enough to test",
+      "the decision quantity is explicit"
+    ],
+    "avoid_if": [
+      "speed is the only evidence",
+      "the query family keeps changing",
+      "edge cases are not compared against the trusted source"
+    ],
+    "evidence_needed": "full-solver comparisons near the edge of use, decision-metric error, and a stated use range",
+    "links": [
+      "topics/surrogate-modeling.html",
+      "diagrams/surrogate-validation-flow.html",
+      "reader-checks/surrogate-check.html"
+    ]
+  },
+  {
+    "slug": "need-readable-law",
+    "title": "Need A Readable Law",
+    "situation": "Prediction is not enough; the output should be a formula or mechanism people can inspect.",
+    "best_start": "Symbolic regression or neural differential equations",
+    "why": "The scientific product is a candidate rule, not only a number returned by a fitted model.",
+    "use_if": [
+      "important variables are measured",
+      "a changed experiment is available",
+      "a compact rule would be useful for science"
+    ],
+    "avoid_if": [
+      "key variables are missing",
+      "the formula is selected only on original data",
+      "the system is too complex for the allowed ingredients"
+    ],
+    "evidence_needed": "changed-experiment tests, missing-variable checks, noise checks, and scientific inspection of the selected rule",
+    "links": [
+      "topics/symbolic-regression.html",
+      "topics/neural-differential-equations.html",
+      "reader-checks/symbolic-regression-check.html"
+    ]
+  },
+  {
+    "slug": "new-setting-risk",
+    "title": "New Setting Risk",
+    "situation": "A model trained in one setting is being used in another setting.",
+    "best_start": "Uncertainty and generalization checks",
+    "why": "The main question is whether the prediction should be believed under the change.",
+    "use_if": [
+      "the changed condition can be named",
+      "the decision cost of being wrong matters",
+      "held-out or shifted tests can be built"
+    ],
+    "avoid_if": [
+      "only familiar tests are available",
+      "the error measure does not match the decision",
+      "confidence is reported without a use range"
+    ],
+    "evidence_needed": "changed-case tests, use-range statements, error on the decision quantity, and first-failure examples",
+    "links": [
+      "topics/uncertainty-and-generalization.html",
+      "reader-checks/uncertainty-check.html",
+      "domains/many-pde-tasks.html"
+    ]
+  },
+  {
+    "slug": "broad-pde-coverage",
+    "title": "Broad PDE Coverage",
+    "situation": "One model is proposed for many equations, grids, parameters, or scientific tasks.",
+    "best_start": "Foundation models for PDEs",
+    "why": "The claim is about shared structure across tasks, so whole task families must be tested.",
+    "use_if": [
+      "many task families exist",
+      "shared structure is plausible",
+      "whole families can be held out"
+    ],
+    "avoid_if": [
+      "the new task is only assumed to be covered",
+      "rare regimes are missing",
+      "scale is treated as proof of scientific trust"
+    ],
+    "evidence_needed": "held-out task-family tests, trusted-solver comparisons, boundary and scale tests, and failure reports",
+    "links": [
+      "topics/foundation-models-for-pdes.html",
+      "reader-checks/foundation-pde-check.html",
+      "domains/many-pde-tasks.html"
+    ]
+  }
+]

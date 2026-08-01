@@ -22,6 +22,7 @@ The purpose is not to summarize lectures. The purpose is to explain physics-info
 - `site/glossary.html`: plain-language glossary for core terms
 - `site/domains.html`: domain guides for real scientific settings
 - `site/reader-checks.html`: self-check prompts for core ideas
+- `site/decision-guide.html`: method choice guide from scientific situations
 - `site/theme-map.html`: recurring theme map
 - `site/evidence-ledger.html`: transcript-backed evidence ledger
 - `site/topics/`: first-principles concept pages
@@ -74,6 +75,7 @@ http://127.0.0.1:8022/index.html
 - plain-language glossary
 - domain guides
 - reader self-checks
+- decision guide
 - deep dives for core topics
 - theme map
 - evidence ledger

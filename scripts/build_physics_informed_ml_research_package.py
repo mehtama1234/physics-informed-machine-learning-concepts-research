@@ -1026,6 +1026,76 @@ READER_CHECKS = [
 ]
 
 
+DECISION_GUIDES = [
+    {
+        "slug": "sparse-data-known-equation",
+        "title": "Sparse Data, Known Equation",
+        "situation": "You have few measurements, but a trusted equation and boundary or starting information exist.",
+        "best_start": "Physics-informed neural networks",
+        "why": "The equation can check the fitted field where measurements are missing.",
+        "use_if": ["the equation is trusted", "the scientific job is one specific field or case", "boundary or starting information can be stated"],
+        "avoid_if": ["the equation is incomplete", "the hard regions are not checked", "the claim needs many different input fields"],
+        "evidence_needed": "held-out measurements, boundary checks, equation residual checks, and comparison against a trusted solve when possible",
+        "links": ["topics/physics-informed-neural-networks.html", "diagrams/physics-informed-learning-flow.html", "reader-checks/pinns-check.html"],
+    },
+    {
+        "slug": "many-related-simulations",
+        "title": "Many Related Simulations",
+        "situation": "You have many solved examples and need fast answers for new inputs from the same family.",
+        "best_start": "Operator learning",
+        "why": "The useful object is the map from input fields to output fields, not one solved field.",
+        "use_if": ["the input family can be named", "many trusted input-output field pairs exist", "new queries stay inside the tested family"],
+        "avoid_if": ["only one problem instance exists", "the training family is vague", "new boundaries or grids are assumed rather than tested"],
+        "evidence_needed": "held-out fields, changed resolution tests, boundary tests, and checks on the scientific output quantity",
+        "links": ["topics/operator-learning.html", "diagrams/operator-learning-flow.html", "reader-checks/operator-learning-check.html"],
+    },
+    {
+        "slug": "expensive-repeated-decisions",
+        "title": "Expensive Repeated Decisions",
+        "situation": "A trusted solver or experiment is too slow for design, search, control, or uncertainty sweeps.",
+        "best_start": "Surrogate modeling",
+        "why": "A fast stand-in can answer repeated questions if its use range is stated and checked.",
+        "use_if": ["the slow trusted source is named", "the repeated query family is narrow enough to test", "the decision quantity is explicit"],
+        "avoid_if": ["speed is the only evidence", "the query family keeps changing", "edge cases are not compared against the trusted source"],
+        "evidence_needed": "full-solver comparisons near the edge of use, decision-metric error, and a stated use range",
+        "links": ["topics/surrogate-modeling.html", "diagrams/surrogate-validation-flow.html", "reader-checks/surrogate-check.html"],
+    },
+    {
+        "slug": "need-readable-law",
+        "title": "Need A Readable Law",
+        "situation": "Prediction is not enough; the output should be a formula or mechanism people can inspect.",
+        "best_start": "Symbolic regression or neural differential equations",
+        "why": "The scientific product is a candidate rule, not only a number returned by a fitted model.",
+        "use_if": ["important variables are measured", "a changed experiment is available", "a compact rule would be useful for science"],
+        "avoid_if": ["key variables are missing", "the formula is selected only on original data", "the system is too complex for the allowed ingredients"],
+        "evidence_needed": "changed-experiment tests, missing-variable checks, noise checks, and scientific inspection of the selected rule",
+        "links": ["topics/symbolic-regression.html", "topics/neural-differential-equations.html", "reader-checks/symbolic-regression-check.html"],
+    },
+    {
+        "slug": "new-setting-risk",
+        "title": "New Setting Risk",
+        "situation": "A model trained in one setting is being used in another setting.",
+        "best_start": "Uncertainty and generalization checks",
+        "why": "The main question is whether the prediction should be believed under the change.",
+        "use_if": ["the changed condition can be named", "the decision cost of being wrong matters", "held-out or shifted tests can be built"],
+        "avoid_if": ["only familiar tests are available", "the error measure does not match the decision", "confidence is reported without a use range"],
+        "evidence_needed": "changed-case tests, use-range statements, error on the decision quantity, and first-failure examples",
+        "links": ["topics/uncertainty-and-generalization.html", "reader-checks/uncertainty-check.html", "domains/many-pde-tasks.html"],
+    },
+    {
+        "slug": "broad-pde-coverage",
+        "title": "Broad PDE Coverage",
+        "situation": "One model is proposed for many equations, grids, parameters, or scientific tasks.",
+        "best_start": "Foundation models for PDEs",
+        "why": "The claim is about shared structure across tasks, so whole task families must be tested.",
+        "use_if": ["many task families exist", "shared structure is plausible", "whole families can be held out"],
+        "avoid_if": ["the new task is only assumed to be covered", "rare regimes are missing", "scale is treated as proof of scientific trust"],
+        "evidence_needed": "held-out task-family tests, trusted-solver comparisons, boundary and scale tests, and failure reports",
+        "links": ["topics/foundation-models-for-pdes.html", "reader-checks/foundation-pde-check.html", "domains/many-pde-tasks.html"],
+    },
+]
+
+
 @dataclass
 class TranscriptRecord:
     video_id: str
@@ -1328,6 +1398,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
             "glossary_term_count": len(GLOSSARY),
             "domain_guide_count": len(DOMAIN_GUIDES),
             "reader_check_count": len(READER_CHECKS),
+            "decision_guide_count": len(DECISION_GUIDES),
         },
         "transcript_index": [record_to_dict(record) for record in records],
         "concept_atlas": concept_atlas,
@@ -1343,6 +1414,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
         "glossary": GLOSSARY,
         "domain_guides": DOMAIN_GUIDES,
         "reader_checks": READER_CHECKS,
+        "decision_guides": DECISION_GUIDES,
     }
     for name, value in data.items():
         if name == "summary":
@@ -1485,6 +1557,7 @@ def html_page(title: str, body: str, root_prefix: str = "") -> str:
   <a href="{root_prefix}glossary.html">Glossary</a>
   <a href="{root_prefix}domains.html">Domains</a>
   <a href="{root_prefix}reader-checks.html">Checks</a>
+  <a href="{root_prefix}decision-guide.html">Decide</a>
   <a href="{root_prefix}theme-map.html">Themes</a>
   <a href="{root_prefix}evidence-ledger.html">Evidence</a>
 </nav>
@@ -1583,6 +1656,16 @@ def reader_check_card(check: dict[str, object], href_prefix: str = "") -> str:
 """
 
 
+def decision_card(decision: dict[str, object], href_prefix: str = "") -> str:
+    return f"""
+<article class="card">
+  <h3><a href="{href_prefix}decision-guide/{html.escape(str(decision['slug']))}.html">{html.escape(str(decision['title']))}</a></h3>
+  <p>{html.escape(str(decision['situation']))}</p>
+  <p><strong>Start with:</strong> {html.escape(str(decision['best_start']))}</p>
+</article>
+"""
+
+
 def topic_reader_check_html(slug: str) -> str:
     checks = [check for check in READER_CHECKS if check["topic_slug"] == slug]
     if not checks:
@@ -1603,7 +1686,8 @@ def write_site(data: dict[str, object]) -> None:
     glossary_dir = SITE / "glossary"
     domain_dir = SITE / "domains"
     check_dir = SITE / "reader-checks"
-    for generated_dir in (family_dir, comparison_dir, example_dir, diagram_dir, learning_dir, glossary_dir, domain_dir, check_dir):
+    decision_dir = SITE / "decision-guide"
+    for generated_dir in (family_dir, comparison_dir, example_dir, diagram_dir, learning_dir, glossary_dir, domain_dir, check_dir, decision_dir):
         if generated_dir.exists():
             shutil.rmtree(generated_dir)
     topic_dir.mkdir(exist_ok=True)
@@ -1616,6 +1700,7 @@ def write_site(data: dict[str, object]) -> None:
     glossary_dir.mkdir(exist_ok=True)
     domain_dir.mkdir(exist_ok=True)
     check_dir.mkdir(exist_ok=True)
+    decision_dir.mkdir(exist_ok=True)
 
     summary = data["summary"]
     concept_atlas = data["concept_atlas"]
@@ -1631,6 +1716,7 @@ def write_site(data: dict[str, object]) -> None:
     glossary = data["glossary"]
     domain_guides = data["domain_guides"]
     reader_checks = data["reader_checks"]
+    decision_guides = data["decision_guides"]
 
     index_body = f"""
 <h1>Physics-Informed Machine Learning Concepts Research</h1>
@@ -1646,6 +1732,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Glossary", f"{summary['glossary_term_count']} field terms translated into everyday language.", "glossary.html")}
 {card("Domains", f"{summary['domain_guide_count']} domain guides that ground concepts in real scientific work.", "domains.html")}
 {card("Reader Checks", f"{summary['reader_check_count']} self-check prompts for core ideas.", "reader-checks.html")}
+{card("Decision Guide", f"{summary['decision_guide_count']} method choices from concrete scientific situations.", "decision-guide.html")}
 {card("Themes", f"{summary['theme_count']} recurring research pressures across the course family.", "theme-map.html")}
 {card("Evidence", "Each major claim links back to transcript or metadata evidence and states its limit.", "evidence-ledger.html")}
 </div>
@@ -1763,6 +1850,15 @@ def write_site(data: dict[str, object]) -> None:
         write_reader_check_page(check_dir / f"{check['slug']}.html", check)
     (SITE / "reader-checks.html").write_text(
         html_page("Physics-Informed ML Reader Checks", f"<h1>Reader Checks</h1><p>These prompts test whether a reader can name the observed evidence, hidden quantity, method, failure case, and domain claim without hiding behind method names.</p><div class=\"grid\">{''.join(check_cards)}</div>"),
+        encoding="utf-8",
+    )
+
+    decision_cards = []
+    for decision in decision_guides:
+        decision_cards.append(decision_card(decision))
+        write_decision_page(decision_dir / f"{decision['slug']}.html", decision)
+    (SITE / "decision-guide.html").write_text(
+        html_page("Physics-Informed ML Decision Guide", f"<h1>Decision Guide</h1><p>Start from the scientific situation, not the method name. Each case names when a method fits, when to avoid it, and what evidence would make the choice defensible.</p><div class=\"grid\">{''.join(decision_cards)}</div>"),
         encoding="utf-8",
     )
 
@@ -2085,6 +2181,30 @@ def write_reader_check_page(path: Path, check: dict[str, object]) -> None:
     path.write_text(html_page(str(check["title"]), body, root_prefix="../"), encoding="utf-8")
 
 
+def write_decision_page(path: Path, decision: dict[str, object]) -> None:
+    use_if = "".join(f"<li>{html.escape(str(item))}</li>" for item in decision["use_if"])
+    avoid_if = "".join(f"<li>{html.escape(str(item))}</li>" for item in decision["avoid_if"])
+    links = "".join(f"<li><a href=\"../{html.escape(str(href))}\">{html.escape(str(href))}</a></li>" for href in decision["links"])
+    body = f"""
+<h1>{html.escape(str(decision['title']))}</h1>
+<h2>Situation</h2>
+<p>{html.escape(str(decision['situation']))}</p>
+<h2>Best Starting Point</h2>
+<p>{html.escape(str(decision['best_start']))}</p>
+<h2>Why This Fits</h2>
+<p>{html.escape(str(decision['why']))}</p>
+<h2>Use If</h2>
+<ul>{use_if}</ul>
+<h2>Avoid If</h2>
+<ul>{avoid_if}</ul>
+<h2>Evidence Needed</h2>
+<p>{html.escape(str(decision['evidence_needed']))}</p>
+<h2>Related Pages</h2>
+<ul>{links}</ul>
+"""
+    path.write_text(html_page(str(decision["title"]), body, root_prefix="../"), encoding="utf-8")
+
+
 def write_family_page(path: Path, family: dict[str, object]) -> None:
     steps = "".join(f"<div class=\"route-step\">{idx}. {html.escape(step)}</div>" for idx, step in enumerate(family["plain_route"], start=1))
     body = f"""
@@ -2277,6 +2397,18 @@ def write_markdown_export(data: dict[str, object]) -> None:
                 "",
             ]
         )
+    lines.extend(["", "## Decision Guide"])
+    for decision in data["decision_guides"]:
+        lines.extend(
+            [
+                f"### {decision['title']}",
+                f"- Situation: {decision['situation']}",
+                f"- Start with: {decision['best_start']}",
+                f"- Why: {decision['why']}",
+                f"- Evidence needed: {decision['evidence_needed']}",
+                "",
+            ]
+        )
     (EXPORTS / "research-package.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
@@ -2334,6 +2466,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         SITE / "glossary.html",
         SITE / "domains.html",
         SITE / "reader-checks.html",
+        SITE / "decision-guide.html",
         SITE / "theme-map.html",
         SITE / "evidence-ledger.html",
     ):
@@ -2406,6 +2539,16 @@ def validate(data: dict[str, object] | None = None) -> None:
         for href in check["related"]:
             if not (SITE / str(href)).exists():
                 raise SystemExit(f"reader check related page missing: {check['title']} -> {href}")
+    for decision in DECISION_GUIDES:
+        decision_path = SITE / "decision-guide" / f"{decision['slug']}.html"
+        if not decision_path.exists():
+            raise SystemExit(f"missing decision guide page: {decision['title']}")
+        decision_text = decision_path.read_text(encoding="utf-8")
+        if "Best Starting Point" not in decision_text or "Evidence Needed" not in decision_text:
+            raise SystemExit(f"decision guide not rendered correctly: {decision['title']}")
+        for href in decision["links"]:
+            if not (SITE / str(href)).exists():
+                raise SystemExit(f"decision guide link missing: {decision['title']} -> {href}")
     manifest_path = SITE / "page-manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     missing = [item for item in manifest if not (ROOT / item).exists()]

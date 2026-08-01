@@ -17,6 +17,7 @@
 - glossary_term_count: 10
 - domain_guide_count: 5
 - reader_check_count: 6
+- decision_guide_count: 6
 
 ## Concepts
 ### Deep Learning
@@ -430,4 +431,42 @@
 - Setup: One broad model is trained across many PDE tasks.
 - Strong answer: The answer names included and held-out task families, the shared structure being claimed, and a trusted solver or measurement for checking. It rejects broad claims when new equations, boundaries, scales, or rare regimes were not tested.
 - Weak answer warning: A weak answer treats broad training size as proof of broad scientific trust.
+
+
+## Decision Guide
+### Sparse Data, Known Equation
+- Situation: You have few measurements, but a trusted equation and boundary or starting information exist.
+- Start with: Physics-informed neural networks
+- Why: The equation can check the fitted field where measurements are missing.
+- Evidence needed: held-out measurements, boundary checks, equation residual checks, and comparison against a trusted solve when possible
+
+### Many Related Simulations
+- Situation: You have many solved examples and need fast answers for new inputs from the same family.
+- Start with: Operator learning
+- Why: The useful object is the map from input fields to output fields, not one solved field.
+- Evidence needed: held-out fields, changed resolution tests, boundary tests, and checks on the scientific output quantity
+
+### Expensive Repeated Decisions
+- Situation: A trusted solver or experiment is too slow for design, search, control, or uncertainty sweeps.
+- Start with: Surrogate modeling
+- Why: A fast stand-in can answer repeated questions if its use range is stated and checked.
+- Evidence needed: full-solver comparisons near the edge of use, decision-metric error, and a stated use range
+
+### Need A Readable Law
+- Situation: Prediction is not enough; the output should be a formula or mechanism people can inspect.
+- Start with: Symbolic regression or neural differential equations
+- Why: The scientific product is a candidate rule, not only a number returned by a fitted model.
+- Evidence needed: changed-experiment tests, missing-variable checks, noise checks, and scientific inspection of the selected rule
+
+### New Setting Risk
+- Situation: A model trained in one setting is being used in another setting.
+- Start with: Uncertainty and generalization checks
+- Why: The main question is whether the prediction should be believed under the change.
+- Evidence needed: changed-case tests, use-range statements, error on the decision quantity, and first-failure examples
+
+### Broad PDE Coverage
+- Situation: One model is proposed for many equations, grids, parameters, or scientific tasks.
+- Start with: Foundation models for PDEs
+- Why: The claim is about shared structure across tasks, so whole task families must be tested.
+- Evidence needed: held-out task-family tests, trusted-solver comparisons, boundary and scale tests, and failure reports
 
