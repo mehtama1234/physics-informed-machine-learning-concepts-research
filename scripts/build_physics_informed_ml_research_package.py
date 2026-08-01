@@ -3005,6 +3005,49 @@ def formula_parts(formula: str) -> list[str]:
     return [formula.strip()]
 
 
+def formula_part_role(part: str, derivation: dict[str, object]) -> str:
+    cleaned = part.strip()
+    lowered = cleaned.lower()
+    if "input" in lowered or "query" in lowered or "current state" in lowered or "random seed" in lowered or "candidate" in lowered or "observed" in lowered:
+        return f"This is the evidence or starting object: {derivation['observed']}."
+    if "output" in lowered or "prediction" in lowered or "answer" in lowered or "next state" in lowered or "selected formula" in lowered or "future" in lowered:
+        return f"This points at the hidden target: {derivation['hidden']}."
+    if "error" in lowered or "check" in lowered or "range" in lowered or "test" in lowered:
+        return f"This is a check on whether the answer earns trust: {derivation['test']}."
+    if "map" in lowered or "model" in lowered or "sampler" in lowered or "rate" in lowered or "representation" in lowered or "calculation" in lowered or "update" in lowered:
+        return f"This is the mathematical move: {derivation['move']}."
+    return f"This part carries one piece of the formula shape: {derivation['meaning']}."
+
+
+def topic_formula_terms_html(derivation: dict[str, object]) -> str:
+    parts = formula_parts(str(derivation["form"]))
+    rows = []
+    for part in parts:
+        rows.append(
+            f"""
+<tr>
+  <td><code>{html.escape(part)}</code></td>
+  <td>{html.escape(formula_part_role(part, derivation))}</td>
+  <td>{html.escape(str(derivation['test']))}</td>
+</tr>
+"""
+        )
+    return f"""
+<h2>Plain Formula Term By Term</h2>
+<p>The formula is not decoration. Each part says what information is being carried from the observed evidence toward the hidden quantity, and what must be checked before the claim is trusted.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Formula Part</th>
+      <th>What It Carries</th>
+      <th>What To Check</th>
+    </tr>
+  </thead>
+  <tbody>{''.join(rows)}</tbody>
+</table>
+"""
+
+
 def build_formula_guide(core_derivations: list[dict[str, object]]) -> list[dict[str, object]]:
     rows = []
     for derivation in core_derivations:
@@ -4018,6 +4061,7 @@ def write_topic_page(path: Path, topic: dict[str, object]) -> None:
     derivation_link = topic_derivation_link_html(str(topic["slug"]))
     source_anchors = source_anchor_cards(str(topic["slug"]), list(evidence) if isinstance(evidence, list) else [], root_prefix="../")
     first_principles_essay = topic_first_principles_essay_html(topic, derivation)
+    formula_terms = topic_formula_terms_html(derivation)
     wrong_use = topic_wrong_use_html(topic)
     worked_examples = topic_worked_examples_html(str(topic["slug"]))
     body = f"""
@@ -4040,6 +4084,7 @@ def write_topic_page(path: Path, topic: dict[str, object]) -> None:
   <li><strong>Read the shape:</strong> {html.escape(str(derivation['form']))}.</li>
   <li><strong>Say what it means:</strong> {html.escape(str(derivation['meaning']))}.</li>
 </ol>
+{formula_terms}
 {deep_dive}
 {sketches}
 {diagrams}
@@ -5344,7 +5389,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         if not topic_path.exists():
             raise SystemExit(f"deep dive missing topic page: {slug}")
         topic_text = topic_path.read_text(encoding="utf-8")
-        if "First-Principles Essay" not in topic_text or "What A Strong Explanation Must Say" not in topic_text or "Concrete Worked Example" not in topic_text or "Concrete Wrong-Use Example" not in topic_text or "Test That Catches It" not in topic_text or "Core Idea In One Sentence" not in topic_text or "Mathematical Shape Without Jargon" not in topic_text:
+        if "First-Principles Essay" not in topic_text or "What A Strong Explanation Must Say" not in topic_text or "Plain Formula Term By Term" not in topic_text or "What It Carries" not in topic_text or "Concrete Worked Example" not in topic_text or "Concrete Wrong-Use Example" not in topic_text or "Test That Catches It" not in topic_text or "Core Idea In One Sentence" not in topic_text or "Mathematical Shape Without Jargon" not in topic_text:
             raise SystemExit(f"deep dive not rendered on topic page: {slug}")
     worked_example_slugs = {str(slug) for example in WORKED_EXAMPLES for slug in example["method_route"]}
     concepts_without_examples = sorted(concept_slugs - worked_example_slugs)

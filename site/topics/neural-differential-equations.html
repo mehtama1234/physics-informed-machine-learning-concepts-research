@@ -76,6 +76,38 @@
   <li><strong>Say what it means:</strong> learning supplies the unknown change rule while the time update carries the idea of continuous motion.</li>
 </ol>
 
+<h2>Plain Formula Term By Term</h2>
+<p>The formula is not decoration. Each part says what information is being carried from the observed evidence toward the hidden quantity, and what must be checked before the claim is trusted.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Formula Part</th>
+      <th>What It Carries</th>
+      <th>What To Check</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+  <td><code>current state</code></td>
+  <td>This is the evidence or starting object: measurements of a system changing over time.</td>
+  <td>run longer than the training window and check whether small rate errors accumulate into drift</td>
+</tr>
+
+<tr>
+  <td><code>learned rate</code></td>
+  <td>This is the mathematical move: learn the missing rate rule and place it inside a time-evolution calculation.</td>
+  <td>run longer than the training window and check whether small rate errors accumulate into drift</td>
+</tr>
+
+<tr>
+  <td><code>next state</code></td>
+  <td>This points at the hidden target: the rate rule that moves the present value into the future.</td>
+  <td>run longer than the training window and check whether small rate errors accumulate into drift</td>
+</tr>
+</tbody>
+</table>
+
+
 <h2>Core Idea In One Sentence</h2>
 <p>A neural differential equation learns the missing rule for how a system changes.</p>
 <h2>Where This Is Useful</h2>
