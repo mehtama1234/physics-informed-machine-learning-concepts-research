@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Physics-Informed ML Plain Formula Guide</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav class="topbar">
+  <a href="index.html">Physics-Informed ML</a>
+  <a href="transcripts.html">Transcripts</a>
+  <a href="concept-atlas.html">Concept Atlas</a>
+  <a href="families.html">Families</a>
+  <a href="comparisons.html">Comparisons</a>
+  <a href="worked-examples.html">Examples</a>
+  <a href="diagrams.html">Diagrams</a>
+  <a href="derivations.html">Derivations</a>
+  <a href="formula-guide.html">Formulas</a>
+  <a href="learning-path.html">Path</a>
+  <a href="glossary.html">Glossary</a>
+  <a href="domains.html">Domains</a>
+  <a href="reader-checks.html">Checks</a>
+  <a href="decision-guide.html">Decide</a>
+  <a href="provenance.html">Provenance</a>
+  <a href="coverage.html">Coverage</a>
+  <a href="concept-ladder.html">Ladder</a>
+  <a href="evidence-packets.html">Packets</a>
+  <a href="quality.html">Quality</a>
+  <a href="synthesis.html">Synthesis</a>
+  <a href="review-entrypoints.html">Review Map</a>
+  <a href="completion-audit.html">Audit</a>
+  <a href="handoff.html">Handoff</a>
+  <a href="theme-map.html">Themes</a>
+  <a href="evidence-ledger.html">Evidence</a>
+</nav>
+<main>
+
+<h1>Plain Formula Guide</h1>
+<p>This page translates the recurring formula shapes into everyday meaning. The goal is not to teach notation first. The goal is to show what information each formula carries, what it asks the model to do, and what test keeps the claim honest.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Concept</th>
+      <th>Formula Shape</th>
+      <th>Parts</th>
+      <th>Everyday Reading</th>
+      <th>What To Check</th>
+      <th>Common Misread</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+  <td>Physics-Informed Neural Networks<br><a href="topics/physics-informed-neural-networks.html">topic</a> · <a href="derivations/physics-informed-neural-networks.html">derivation</a></td>
+  <td><code>total error = data error + equation error + boundary error</code></td>
+  <td><ul><li>total error</li><li>data error</li><li>equation error</li><li>boundary error</li></ul></td>
+  <td>The equation gives the model a reason not to invent impossible behavior between data points.</td>
+  <td>move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements</td>
+  <td>Do not read the formula as proof. Read it as a compact map of what information is being carried and what must be tested.</td>
+</tr>
+
+<tr>
+  <td>Partial Differential Equations<br><a href="topics/partial-differential-equations.html">topic</a> · <a href="derivations/partial-differential-equations.html">derivation</a></td>
+  <td><code>change over time = movement through space + sources + boundary effects</code></td>
+  <td><ul><li>change over time</li><li>movement through space</li><li>sources</li><li>boundary effects</li></ul></td>
+  <td>Most physics-informed machine learning borrows its scientific burden from PDEs.</td>
+  <td>change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error</td>
+  <td>Do not read the formula as proof. Read it as a compact map of what information is being carried and what must be tested.</td>
+</tr>
+
+<tr>
+  <td>Operator Learning<br><a href="topics/operator-learning.html">topic</a> · <a href="derivations/operator-learning.html">derivation</a></td>
+  <td><code>input field -&gt; learned field-to-field map -&gt; output field</code></td>
+  <td><ul><li>input field</li><li>learned field-to-field map</li><li>output field</li></ul></td>
+  <td>It targets repeated simulation work, where the valuable object is the whole input-output map.</td>
+  <td>change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed</td>
+  <td>Do not read the formula as proof. Read it as a compact map of what information is being carried and what must be tested.</td>
+</tr>
+
+<tr>
+  <td>Surrogate Modeling<br><a href="topics/surrogate-modeling.html">topic</a> · <a href="derivations/surrogate-modeling.html">derivation</a></td>
+  <td><code>new query -&gt; fast stand-in -&gt; approximate answer with a stated use range</code></td>
+  <td><ul><li>new query</li><li>fast stand-in</li><li>approximate answer with a stated use range</li></ul></td>
+  <td>Speed changes what questions scientists and engineers can afford to ask.</td>
+  <td>compare against the full solver on new cases near the edge of the intended use</td>
+  <td>Do not read the formula as proof. Read it as a compact map of what information is being carried and what must be tested.</td>
+</tr>
+
+<tr>
+  <td>Uncertainty And Generalization<br><a href="topics/uncertainty-and-generalization.html">topic</a> · <a href="derivations/uncertainty-and-generalization.html">derivation</a></td>
+  <td><code>prediction + tested use range + failure evidence</code></td>
+  <td><ul><li>prediction</li><li>tested use range</li><li>failure evidence</li></ul></td>
+  <td>A scientific model is dangerous when it is most confident exactly where it has the least evidence.</td>
+  <td>move one important condition outside the training range and measure the first failure</td>
+  <td>Do not read the formula as proof. Read it as a compact map of what information is being carried and what must be tested.</td>
+</tr>
+
+<tr>
+  <td>Neural Differential Equations<br><a href="topics/neural-differential-equations.html">topic</a> · <a href="derivations/neural-differential-equations.html">derivation</a></td>
+  <td><code>current state -&gt; learned change rate -&gt; next state</code></td>
+  <td><ul><li>current state</li><li>learned change rate</li><li>next state</li></ul></td>
+  <td>It keeps the idea of continuous motion while admitting that part of the motion rule is unknown.</td>
+  <td>run longer than the training window and check whether small rate errors accumulate into drift</td>
+  <td>Do not read the formula as proof. Read it as a compact map of what information is being carried and what must be tested.</td>
+</tr>
+
+<tr>
+  <td>Symbolic Regression And Model Discovery<br><a href="topics/symbolic-regression.html">topic</a> · <a href="derivations/symbolic-regression.html">derivation</a></td>
+  <td><code>candidate ingredients -&gt; searched formulas -&gt; tested small law</code></td>
+  <td><ul><li>candidate ingredients</li><li>searched formulas</li><li>tested small law</li></ul></td>
+  <td>A compact equation can be criticized and reused in ways a large fitted object cannot.</td>
+  <td>remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts</td>
+  <td>Do not read the formula as proof. Read it as a compact map of what information is being carried and what must be tested.</td>
+</tr>
+
+<tr>
+  <td>Foundation Models For PDEs<br><a href="topics/foundation-models-for-pdes.html">topic</a> · <a href="derivations/foundation-models-for-pdes.html">derivation</a></td>
+  <td><code>many PDE tasks -&gt; shared learned structure -&gt; new task prediction</code></td>
+  <td><ul><li>many PDE tasks</li><li>shared learned structure</li><li>new task prediction</li></ul></td>
+  <td>If it works, broad training could reduce repeated model-building for related scientific problems.</td>
+  <td>hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver</td>
+  <td>Do not read the formula as proof. Read it as a compact map of what information is being carried and what must be tested.</td>
+</tr>
+</tbody>
+</table>
+
+</main>
+</body>
+</html>
