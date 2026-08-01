@@ -167,6 +167,23 @@ def check_restricted_words(paths: list[Path]) -> list[str]:
     return errors
 
 
+def check_source_anchor_coverage() -> list[str]:
+    errors: list[str] = []
+    concepts_path = ANALYSIS / "concept_atlas.json"
+    concepts = json.loads(concepts_path.read_text(encoding="utf-8"))
+    for concept in concepts:
+        slug = str(concept["slug"])
+        for rel_path in (f"site/topics/{slug}.html", f"site/evidence-packets/{slug}.html"):
+            path = ROOT / rel_path
+            if not path.exists():
+                errors.append(f"missing source-anchor page: {rel_path}")
+                continue
+            text = path.read_text(encoding="utf-8")
+            if "Selected Source Anchors" not in text or text.count("Claim Anchored") < 2:
+                errors.append(f"{rel_path}: expected at least two selected source anchors")
+    return errors
+
+
 def validate() -> None:
     manifest_path = SITE / "page-manifest.json"
     if not manifest_path.exists():
@@ -198,6 +215,7 @@ def validate() -> None:
 
     errors.extend(check_internal_links(manifest))
     errors.extend(check_required_sections())
+    errors.extend(check_source_anchor_coverage())
 
     scan_paths = [ROOT / "README.md", ROOT / "exports/research-package.md"]
     scan_paths.extend((ROOT / item) for item in manifest)

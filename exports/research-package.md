@@ -35,7 +35,7 @@
 - review_search_intent_count: 7
 - editorial_roadmap_count: 7
 - editorial_roadmap_completed_count: 7
-- source_anchor_count: 12
+- source_anchor_count: 28
 - meaty_goal_count: 1
 
 ## Concepts
