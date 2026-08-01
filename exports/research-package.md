@@ -20,6 +20,7 @@
 - decision_guide_count: 6
 - provenance_guide_count: 5
 - coverage_row_count: 14
+- quality_rubric_count: 6
 
 ## Concepts
 ### Deep Learning
@@ -598,4 +599,42 @@
 - Diagram: yes
 - Reader check: no
 - Evidence items: 6
+
+
+## Editorial Quality Rubric
+### First Principles
+- Standard: The page starts from the real problem, observed evidence, hidden quantity, and scientific job before naming a method.
+- Strong page: A reader can say what exists in the world, what is measured, what is missing, and why the method is needed.
+- Weak page: The page starts by naming a method and assumes the reader already knows why it matters.
+- Check: Look for sections that name the common problem, domain, observed quantity, hidden quantity, and changed-case test.
+
+### Plain Language
+- Standard: The page translates technical terms into everyday meaning without hiding the mathematical idea.
+- Strong page: Terms such as field, residual, operator, loss, and generalization are tied to concrete jobs.
+- Weak page: The page uses method names, benchmark language, or vague praise instead of explaining the idea.
+- Check: Look for glossary links, everyday anchors, concrete domain stories, and plain formulas.
+
+### Domain Grounding
+- Standard: The page says where the concept matters in science or engineering and what quantity is being predicted or explained.
+- Strong page: The domain, real quantity, and domain-specific failure test are visible.
+- Weak page: The page describes a general model but never says what scientific object or quantity it serves.
+- Check: Look for domain guide links, worked examples, and concrete anchor pages.
+
+### Failure Boundary
+- Standard: The page states what the concept does not prove and what changed case could reject the claim.
+- Strong page: A reader sees the use range, red flags, and first failure test.
+- Weak page: The page says the method works without stating where it breaks.
+- Check: Look for failure boundary, red flags, reader checks, and decision guide evidence requirements.
+
+### Evidence Discipline
+- Standard: The page separates transcript support from scientific proof.
+- Strong page: Transcript evidence is shown as support that a concept appears, while validation claims require explicit tests.
+- Weak page: The page treats a lecture mention as proof that a method works broadly.
+- Check: Look for transcript evidence, support type, and explicit evidence limits.
+
+### Connected Map
+- Standard: The page connects the concept to nearby concepts, families, diagrams, decisions, or checks.
+- Strong page: A reader can move from the concept to a route, comparison, diagram, or decision case.
+- Weak page: The page is isolated and does not show how the idea fits into the field.
+- Check: Look for concept links, families, comparisons, visual maps, and coverage matrix entries.
 
