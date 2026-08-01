@@ -37,6 +37,25 @@
   <li><strong>Read the shape:</strong> prediction error + equation error + boundary error.</li>
   <li><strong>Say what it means:</strong> the model is not allowed to match points while freely breaking the equation between those points.</li>
 </ol>
+
+<h2>Core Idea In One Sentence</h2>
+<p>A PINN is a fitted field that must answer to both measured values and a known physical rule.</p>
+<h2>Where This Is Useful</h2>
+<p>Use it when measurements are sparse, the equation is trusted, and the scientific job is one specific field or parameter case.</p>
+<h2>Where This Breaks</h2>
+<p>Do not treat it as magic for hard PDEs; if boundary data, scales, or sharp regions are poorly handled, the equation penalty can mislead.</p>
+<h2>Concrete Domain Story</h2>
+<p>Imagine estimating temperature inside a wall from a few sensors. The sensor readings anchor the answer, while the heat equation checks the empty places between sensors.</p>
+<h2>Mathematical Shape Without Jargon</h2>
+<div class="route"><div class="route-step">1. Choose a neural network to represent the unknown field.</div><div class="route-step">2. Compare the field with measured data where measurements exist.</div><div class="route-step">3. Differentiate the field and check whether it breaks the equation.</div><div class="route-step">4. Also check boundary or starting values.</div><div class="route-step">5. Train by reducing all of those errors together.</div></div>
+<p><strong>Plain formula:</strong> total error = data error + equation error + boundary error</p>
+<h2>Why This Matters</h2>
+<p>The equation gives the model a reason not to invent impossible behavior between data points.</p>
+<h2>Red Flags</h2>
+<ul><li>The page reports only training error.</li><li>The hard region has few check points.</li><li>The equation is known to be incomplete for the experiment.</li><li>No comparison is made against held-out measurements or a trusted solver.</li></ul>
+<h2>Connects To</h2>
+<ul><li><a href="../topics/partial-differential-equations.html">Partial Differential Equations</a></li><li><a href="../topics/optimization-for-learning.html">Optimization For Learning</a></li><li><a href="../topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></li></ul>
+
 <h2>Deeper Mathematical Why</h2>
 <p>The mathematical point is to decide what information is allowed to carry the scientific claim. If the carried information is too small, the model misses the behavior that matters. If it is too broad, the page may claim more than the evidence supports. The useful middle is a named object, a named scientific job, and a changed case that can reject the claim.</p>
 <h2>Reader Test</h2>

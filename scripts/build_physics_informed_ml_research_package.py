@@ -406,6 +406,186 @@ WORKED_EXAMPLES = [
 ]
 
 
+TOPIC_DEEP_DIVES = {
+    "physics-informed-neural-networks": {
+        "one_sentence": "A PINN is a fitted field that must answer to both measured values and a known physical rule.",
+        "use_when": "Use it when measurements are sparse, the equation is trusted, and the scientific job is one specific field or parameter case.",
+        "do_not_use_when": "Do not treat it as magic for hard PDEs; if boundary data, scales, or sharp regions are poorly handled, the equation penalty can mislead.",
+        "domain_story": "Imagine estimating temperature inside a wall from a few sensors. The sensor readings anchor the answer, while the heat equation checks the empty places between sensors.",
+        "math_shape": [
+            "Choose a neural network to represent the unknown field.",
+            "Compare the field with measured data where measurements exist.",
+            "Differentiate the field and check whether it breaks the equation.",
+            "Also check boundary or starting values.",
+            "Train by reducing all of those errors together.",
+        ],
+        "plain_formula": "total error = data error + equation error + boundary error",
+        "important_because": "The equation gives the model a reason not to invent impossible behavior between data points.",
+        "red_flags": [
+            "The page reports only training error.",
+            "The hard region has few check points.",
+            "The equation is known to be incomplete for the experiment.",
+            "No comparison is made against held-out measurements or a trusted solver.",
+        ],
+        "connects_to": ["partial-differential-equations", "optimization-for-learning", "uncertainty-and-generalization"],
+    },
+    "partial-differential-equations": {
+        "one_sentence": "A PDE is a rule for how a whole field changes across space and time.",
+        "use_when": "Use it when one value is not enough because neighbors, boundaries, and time all matter.",
+        "do_not_use_when": "Do not reduce the problem to independent points if movement, flow, stress, diffusion, or waves connect those points.",
+        "domain_story": "Weather, temperature, pressure, and fluid velocity are fields. A value at one location matters partly because of the values around it.",
+        "math_shape": [
+            "Name the field, such as temperature or velocity.",
+            "Name the rates of change across space and time.",
+            "Add sources, forces, material parameters, and boundaries.",
+            "Use the rule to connect local change to nearby values.",
+            "Check conservation, stability, and boundary behavior.",
+        ],
+        "plain_formula": "change over time = movement through space + sources + boundary effects",
+        "important_because": "Most physics-informed machine learning borrows its scientific burden from PDEs.",
+        "red_flags": [
+            "The boundary condition is vague.",
+            "The learned answer ignores conservation.",
+            "The grid or resolution changes the conclusion.",
+            "Small visual error hides a large error in the quantity people care about.",
+        ],
+        "connects_to": ["physics-informed-neural-networks", "operator-learning", "surrogate-modeling"],
+    },
+    "operator-learning": {
+        "one_sentence": "Operator learning tries to learn the machine that turns one field into another field.",
+        "use_when": "Use it when you have many solved examples and need fast answers for new inputs from the same named family.",
+        "do_not_use_when": "Do not use it as proof of broad scientific skill unless the new equation, boundary, grid, and parameter range were tested.",
+        "domain_story": "Instead of solving heat flow for one wall, learn the map from many wall materials and heat sources to their resulting temperature fields.",
+        "math_shape": [
+            "Collect many input fields and matching solution fields.",
+            "Name the family those examples come from.",
+            "Train a map from input function to output function.",
+            "Use structure such as Fourier modes, graph connections, or attention when needed.",
+            "Test on new fields that stress the intended use range.",
+        ],
+        "plain_formula": "input field -> learned field-to-field map -> output field",
+        "important_because": "It targets repeated simulation work, where the valuable object is the whole input-output map.",
+        "red_flags": [
+            "The training family is not named.",
+            "Only one resolution is tested.",
+            "The output looks plausible but physical quantities are not checked.",
+            "The model is used on a new boundary type without evidence.",
+        ],
+        "connects_to": ["surrogate-modeling", "attention-for-scientific-fields", "foundation-models-for-pdes"],
+    },
+    "surrogate-modeling": {
+        "one_sentence": "A surrogate is a faster stand-in for a slower trusted process.",
+        "use_when": "Use it when repeated simulation, design, or uncertainty questions would be too slow with the full solver.",
+        "do_not_use_when": "Do not use it outside the query family where it has been compared against the trusted source.",
+        "domain_story": "If every wing-shape test takes hours, a checked stand-in can screen many shapes before the expensive solver is used again.",
+        "math_shape": [
+            "Name the expensive source of truth.",
+            "Name the inputs people will vary.",
+            "Name the output quantity needed for decisions.",
+            "Fit the cheap stand-in on trusted examples.",
+            "Measure error near the edge of intended use.",
+        ],
+        "plain_formula": "new query -> fast stand-in -> approximate answer with a stated use range",
+        "important_because": "Speed changes what questions scientists and engineers can afford to ask.",
+        "red_flags": [
+            "The surrogate is described without its use range.",
+            "The edge cases are not tested.",
+            "The output metric ignores the decision people actually make.",
+            "The full solver is never used again for spot checks.",
+        ],
+        "connects_to": ["operator-learning", "deep-learning", "uncertainty-and-generalization"],
+    },
+    "uncertainty-and-generalization": {
+        "one_sentence": "This topic asks when a prediction should be believed on a case the model did not learn from.",
+        "use_when": "Use it whenever a model will guide a scientific or engineering decision under changed conditions.",
+        "do_not_use_when": "Do not replace changed-case testing with a confident-looking number.",
+        "domain_story": "A model trained on small clean lab samples may be asked about a large noisy field setup. The gap matters as much as the prediction.",
+        "math_shape": [
+            "Separate training cases from test cases.",
+            "Name the changes that matter in the real domain.",
+            "Measure error under those changes.",
+            "Report the use range with the prediction.",
+            "Look for the first condition where the model breaks.",
+        ],
+        "plain_formula": "prediction + tested use range + failure evidence",
+        "important_because": "A scientific model is dangerous when it is most confident exactly where it has the least evidence.",
+        "red_flags": [
+            "Only familiar cases are reported.",
+            "The test set differs from training only in name.",
+            "Rare regimes are averaged away.",
+            "No one states what condition would make the model unusable.",
+        ],
+        "connects_to": ["scientific-machine-learning", "surrogate-modeling", "foundation-models-for-pdes"],
+    },
+    "neural-differential-equations": {
+        "one_sentence": "A neural differential equation learns the missing rule for how a system changes.",
+        "use_when": "Use it when time evolution is central but the exact rate rule is partly unknown.",
+        "do_not_use_when": "Do not trust long-time behavior just because short training windows fit well.",
+        "domain_story": "If measurements show a chemical concentration changing but the reaction law is incomplete, the learned part can supply the missing rate.",
+        "math_shape": [
+            "Name the current state.",
+            "Represent the unknown rate of change with a learned function.",
+            "Use a time solver to move the state forward.",
+            "Compare the predicted path with measurements.",
+            "Run beyond the training window to test drift.",
+        ],
+        "plain_formula": "current state -> learned change rate -> next state",
+        "important_because": "It keeps the idea of continuous motion while admitting that part of the motion rule is unknown.",
+        "red_flags": [
+            "The model is tested only over short times.",
+            "Small rate errors accumulate unnoticed.",
+            "Known conservation or stability behavior is not checked.",
+            "The learned rate fits noise instead of mechanism.",
+        ],
+        "connects_to": ["symbolic-regression", "optimization-for-learning", "scientific-machine-learning"],
+    },
+    "symbolic-regression": {
+        "one_sentence": "Symbolic regression searches for a short formula that explains measured behavior.",
+        "use_when": "Use it when a readable equation is part of the scientific goal.",
+        "do_not_use_when": "Do not believe a neat formula unless it survives missing-variable, noise, and changed-experiment checks.",
+        "domain_story": "A lab may have measurements of motion and want a small law, not only a predictor that returns the next number.",
+        "math_shape": [
+            "Choose measured variables and candidate operations.",
+            "Generate many possible formulas.",
+            "Keep formulas that fit and stay small.",
+            "Reject formulas that fail changed experiments.",
+            "Inspect whether the remaining formula makes scientific sense.",
+        ],
+        "plain_formula": "candidate ingredients -> searched formulas -> tested small law",
+        "important_because": "A compact equation can be criticized and reused in ways a large fitted object cannot.",
+        "red_flags": [
+            "Important variables were never measured.",
+            "The formula is selected only on the original data.",
+            "Noise creates a fake term.",
+            "The search space could not express the real mechanism.",
+        ],
+        "connects_to": ["neural-differential-equations", "scientific-machine-learning", "optimization-for-learning"],
+    },
+    "foundation-models-for-pdes": {
+        "one_sentence": "A PDE foundation model tries to reuse structure across many related field-prediction tasks.",
+        "use_when": "Use it when many PDE tasks share enough structure that one broad model may reduce repeated training.",
+        "do_not_use_when": "Do not confuse broad training with proof that a new scientific regime is covered.",
+        "domain_story": "A model trained across many simulated fields may help on a new field task, but only if the new task shares the structure it learned.",
+        "math_shape": [
+            "Gather many field-prediction tasks.",
+            "Train one model to keep shared structure across those tasks.",
+            "Adapt or query it on a new task.",
+            "Compare against trusted solves or measurements.",
+            "Hold out whole task families, not just random examples.",
+        ],
+        "plain_formula": "many PDE tasks -> shared learned structure -> new task prediction",
+        "important_because": "If it works, broad training could reduce repeated model-building for related scientific problems.",
+        "red_flags": [
+            "The held-out test is too similar to training.",
+            "Rare regimes are missing.",
+            "New boundaries or quantities are assumed rather than tested.",
+            "Scale is treated as a substitute for scientific validation.",
+        ],
+        "connects_to": ["operator-learning", "uncertainty-and-generalization", "attention-for-scientific-fields"],
+    },
+}
+
+
 @dataclass
 class TranscriptRecord:
     video_id: str
@@ -702,6 +882,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
             "family_count": len(FAMILY_PAGES),
             "comparison_count": len(COMPARISON_PAGES),
             "worked_example_count": len(WORKED_EXAMPLES),
+            "deep_dive_count": len(TOPIC_DEEP_DIVES),
         },
         "transcript_index": [record_to_dict(record) for record in records],
         "concept_atlas": concept_atlas,
@@ -711,6 +892,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
         "family_pages": FAMILY_PAGES,
         "comparison_pages": COMPARISON_PAGES,
         "worked_examples": WORKED_EXAMPLES,
+        "topic_deep_dives": TOPIC_DEEP_DIVES,
     }
     for name, value in data.items():
         if name == "summary":
@@ -848,6 +1030,33 @@ def concept_links(slugs: list[str], root_prefix: str = "") -> str:
         name = concept_names.get(slug, slug.replace("-", " "))
         items.append(f'<li><a href="{root_prefix}topics/{html.escape(slug)}.html">{html.escape(name)}</a></li>')
     return "<ul>" + "".join(items) + "</ul>"
+
+
+def topic_deep_dive_html(slug: str) -> str:
+    deep = TOPIC_DEEP_DIVES.get(slug)
+    if not deep:
+        return ""
+    math_steps = "".join(f"<div class=\"route-step\">{idx}. {html.escape(step)}</div>" for idx, step in enumerate(deep["math_shape"], start=1))
+    red_flags = "".join(f"<li>{html.escape(item)}</li>" for item in deep["red_flags"])
+    return f"""
+<h2>Core Idea In One Sentence</h2>
+<p>{html.escape(str(deep['one_sentence']))}</p>
+<h2>Where This Is Useful</h2>
+<p>{html.escape(str(deep['use_when']))}</p>
+<h2>Where This Breaks</h2>
+<p>{html.escape(str(deep['do_not_use_when']))}</p>
+<h2>Concrete Domain Story</h2>
+<p>{html.escape(str(deep['domain_story']))}</p>
+<h2>Mathematical Shape Without Jargon</h2>
+<div class="route">{math_steps}</div>
+<p><strong>Plain formula:</strong> {html.escape(str(deep['plain_formula']))}</p>
+<h2>Why This Matters</h2>
+<p>{html.escape(str(deep['important_because']))}</p>
+<h2>Red Flags</h2>
+<ul>{red_flags}</ul>
+<h2>Connects To</h2>
+{concept_links(list(deep['connects_to']), root_prefix="../")}
+"""
 
 
 def write_site(data: dict[str, object]) -> None:
@@ -1144,6 +1353,7 @@ def write_topic_page(path: Path, topic: dict[str, object]) -> None:
         for row in evidence:
             evidence_items.append(f"<li><a href=\"{html.escape(str(row['url']))}\">{html.escape(str(row['title']))}</a>: {html.escape(str(row.get('excerpt') or 'metadata evidence'))}</li>")
     derivation = topic_derivation(topic)
+    deep_dive = topic_deep_dive_html(str(topic["slug"]))
     body = f"""
 <h1>{html.escape(str(topic['title']))}</h1>
 <h2>Common Problem This Solves</h2>
@@ -1163,6 +1373,7 @@ def write_topic_page(path: Path, topic: dict[str, object]) -> None:
   <li><strong>Read the shape:</strong> {html.escape(str(derivation['form']))}.</li>
   <li><strong>Say what it means:</strong> {html.escape(str(derivation['meaning']))}.</li>
 </ol>
+{deep_dive}
 <h2>Deeper Mathematical Why</h2>
 <p>The mathematical point is to decide what information is allowed to carry the scientific claim. If the carried information is too small, the model misses the behavior that matters. If it is too broad, the page may claim more than the evidence supports. The useful middle is a named object, a named scientific job, and a changed case that can reject the claim.</p>
 <h2>Reader Test</h2>
@@ -1298,6 +1509,19 @@ def write_markdown_export(data: dict[str, object]) -> None:
                 "",
             ]
         )
+    lines.extend(["", "## Core Topic Deep Dives"])
+    for slug, deep in data["topic_deep_dives"].items():
+        lines.extend(
+            [
+                f"### {slug.replace('-', ' ').title()}",
+                f"- One sentence: {deep['one_sentence']}",
+                f"- Use when: {deep['use_when']}",
+                f"- Do not use when: {deep['do_not_use_when']}",
+                f"- Plain formula: {deep['plain_formula']}",
+                f"- Why it matters: {deep['important_because']}",
+                "",
+            ]
+        )
     (EXPORTS / "research-package.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
@@ -1328,10 +1552,21 @@ def validate(data: dict[str, object] | None = None) -> None:
         if not record.get("concepts"):
             raise SystemExit(f"record missing concepts: {record.get('title')}")
     required_fields = ("problem", "domain", "why", "keeps", "leaves_out", "failure", "evidence")
+    concept_slugs = set()
     for concept in data["concept_atlas"]:
+        concept_slugs.add(str(concept.get("slug")))
         for field in required_fields:
             if not concept.get(field):
                 raise SystemExit(f"concept missing {field}: {concept.get('name')}")
+    for slug in TOPIC_DEEP_DIVES:
+        if slug not in concept_slugs:
+            raise SystemExit(f"deep dive references missing concept: {slug}")
+        topic_path = SITE / "topics" / f"{slug}.html"
+        if not topic_path.exists():
+            raise SystemExit(f"deep dive missing topic page: {slug}")
+        topic_text = topic_path.read_text(encoding="utf-8")
+        if "Core Idea In One Sentence" not in topic_text or "Mathematical Shape Without Jargon" not in topic_text:
+            raise SystemExit(f"deep dive not rendered on topic page: {slug}")
     for path in (
         SITE / "index.html",
         SITE / "transcripts.html",

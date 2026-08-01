@@ -37,6 +37,25 @@
   <li><strong>Read the shape:</strong> input function -&gt; learned map -&gt; output function.</li>
   <li><strong>Say what it means:</strong> the learned object is a shortcut for a family of solves, so the family must be named.</li>
 </ol>
+
+<h2>Core Idea In One Sentence</h2>
+<p>Operator learning tries to learn the machine that turns one field into another field.</p>
+<h2>Where This Is Useful</h2>
+<p>Use it when you have many solved examples and need fast answers for new inputs from the same named family.</p>
+<h2>Where This Breaks</h2>
+<p>Do not use it as proof of broad scientific skill unless the new equation, boundary, grid, and parameter range were tested.</p>
+<h2>Concrete Domain Story</h2>
+<p>Instead of solving heat flow for one wall, learn the map from many wall materials and heat sources to their resulting temperature fields.</p>
+<h2>Mathematical Shape Without Jargon</h2>
+<div class="route"><div class="route-step">1. Collect many input fields and matching solution fields.</div><div class="route-step">2. Name the family those examples come from.</div><div class="route-step">3. Train a map from input function to output function.</div><div class="route-step">4. Use structure such as Fourier modes, graph connections, or attention when needed.</div><div class="route-step">5. Test on new fields that stress the intended use range.</div></div>
+<p><strong>Plain formula:</strong> input field -&gt; learned field-to-field map -&gt; output field</p>
+<h2>Why This Matters</h2>
+<p>It targets repeated simulation work, where the valuable object is the whole input-output map.</p>
+<h2>Red Flags</h2>
+<ul><li>The training family is not named.</li><li>Only one resolution is tested.</li><li>The output looks plausible but physical quantities are not checked.</li><li>The model is used on a new boundary type without evidence.</li></ul>
+<h2>Connects To</h2>
+<ul><li><a href="../topics/surrogate-modeling.html">Surrogate Modeling</a></li><li><a href="../topics/attention-for-scientific-fields.html">Attention For Scientific Fields</a></li><li><a href="../topics/foundation-models-for-pdes.html">Foundation Models For PDEs</a></li></ul>
+
 <h2>Deeper Mathematical Why</h2>
 <p>The mathematical point is to decide what information is allowed to carry the scientific claim. If the carried information is too small, the model misses the behavior that matters. If it is too broad, the page may claim more than the evidence supports. The useful middle is a named object, a named scientific job, and a changed case that can reject the claim.</p>
 <h2>Reader Test</h2>

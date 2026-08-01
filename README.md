@@ -14,6 +14,9 @@ The purpose is not to summarize lectures. The purpose is to explain physics-info
 - `site/index.html`: package home page
 - `site/transcripts.html`: 40-video transcript index
 - `site/concept-atlas.html`: plain-language mathematical concept atlas
+- `site/families.html`: paper-family routes through related concepts
+- `site/comparisons.html`: plain-language comparisons between nearby methods
+- `site/worked-examples.html`: concrete scientific examples
 - `site/theme-map.html`: recurring theme map
 - `site/evidence-ledger.html`: transcript-backed evidence ledger
 - `site/topics/`: first-principles concept pages
@@ -58,7 +61,10 @@ http://127.0.0.1:8022/index.html
 - 40 videos
 - 40 available transcripts
 - concept atlas
+- paper-family routes
+- comparison pages
+- worked examples
+- deep dives for core topics
 - theme map
 - evidence ledger
 - per-topic and per-video pages
-

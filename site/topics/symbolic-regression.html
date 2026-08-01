@@ -37,6 +37,25 @@
   <li><strong>Read the shape:</strong> candidate formulas -&gt; selected formula -&gt; held-out test.</li>
   <li><strong>Say what it means:</strong> a compact equation is a claim about structure, not just a curve through points.</li>
 </ol>
+
+<h2>Core Idea In One Sentence</h2>
+<p>Symbolic regression searches for a short formula that explains measured behavior.</p>
+<h2>Where This Is Useful</h2>
+<p>Use it when a readable equation is part of the scientific goal.</p>
+<h2>Where This Breaks</h2>
+<p>Do not believe a neat formula unless it survives missing-variable, noise, and changed-experiment checks.</p>
+<h2>Concrete Domain Story</h2>
+<p>A lab may have measurements of motion and want a small law, not only a predictor that returns the next number.</p>
+<h2>Mathematical Shape Without Jargon</h2>
+<div class="route"><div class="route-step">1. Choose measured variables and candidate operations.</div><div class="route-step">2. Generate many possible formulas.</div><div class="route-step">3. Keep formulas that fit and stay small.</div><div class="route-step">4. Reject formulas that fail changed experiments.</div><div class="route-step">5. Inspect whether the remaining formula makes scientific sense.</div></div>
+<p><strong>Plain formula:</strong> candidate ingredients -&gt; searched formulas -&gt; tested small law</p>
+<h2>Why This Matters</h2>
+<p>A compact equation can be criticized and reused in ways a large fitted object cannot.</p>
+<h2>Red Flags</h2>
+<ul><li>Important variables were never measured.</li><li>The formula is selected only on the original data.</li><li>Noise creates a fake term.</li><li>The search space could not express the real mechanism.</li></ul>
+<h2>Connects To</h2>
+<ul><li><a href="../topics/neural-differential-equations.html">Neural Differential Equations</a></li><li><a href="../topics/scientific-machine-learning.html">Scientific Machine Learning</a></li><li><a href="../topics/optimization-for-learning.html">Optimization For Learning</a></li></ul>
+
 <h2>Deeper Mathematical Why</h2>
 <p>The mathematical point is to decide what information is allowed to carry the scientific claim. If the carried information is too small, the model misses the behavior that matters. If it is too broad, the page may claim more than the evidence supports. The useful middle is a named object, a named scientific job, and a changed case that can reject the claim.</p>
 <h2>Reader Test</h2>

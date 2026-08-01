@@ -37,6 +37,25 @@
   <li><strong>Read the shape:</strong> prediction + error check + stated use range.</li>
   <li><strong>Say what it means:</strong> a prediction without a use range is not yet a scientific claim.</li>
 </ol>
+
+<h2>Core Idea In One Sentence</h2>
+<p>This topic asks when a prediction should be believed on a case the model did not learn from.</p>
+<h2>Where This Is Useful</h2>
+<p>Use it whenever a model will guide a scientific or engineering decision under changed conditions.</p>
+<h2>Where This Breaks</h2>
+<p>Do not replace changed-case testing with a confident-looking number.</p>
+<h2>Concrete Domain Story</h2>
+<p>A model trained on small clean lab samples may be asked about a large noisy field setup. The gap matters as much as the prediction.</p>
+<h2>Mathematical Shape Without Jargon</h2>
+<div class="route"><div class="route-step">1. Separate training cases from test cases.</div><div class="route-step">2. Name the changes that matter in the real domain.</div><div class="route-step">3. Measure error under those changes.</div><div class="route-step">4. Report the use range with the prediction.</div><div class="route-step">5. Look for the first condition where the model breaks.</div></div>
+<p><strong>Plain formula:</strong> prediction + tested use range + failure evidence</p>
+<h2>Why This Matters</h2>
+<p>A scientific model is dangerous when it is most confident exactly where it has the least evidence.</p>
+<h2>Red Flags</h2>
+<ul><li>Only familiar cases are reported.</li><li>The test set differs from training only in name.</li><li>Rare regimes are averaged away.</li><li>No one states what condition would make the model unusable.</li></ul>
+<h2>Connects To</h2>
+<ul><li><a href="../topics/scientific-machine-learning.html">Scientific Machine Learning</a></li><li><a href="../topics/surrogate-modeling.html">Surrogate Modeling</a></li><li><a href="../topics/foundation-models-for-pdes.html">Foundation Models For PDEs</a></li></ul>
+
 <h2>Deeper Mathematical Why</h2>
 <p>The mathematical point is to decide what information is allowed to carry the scientific claim. If the carried information is too small, the model misses the behavior that matters. If it is too broad, the page may claim more than the evidence supports. The useful middle is a named object, a named scientific job, and a changed case that can reject the claim.</p>
 <h2>Reader Test</h2>

@@ -11,6 +11,7 @@
 - family_count: 4
 - comparison_count: 4
 - worked_example_count: 3
+- deep_dive_count: 8
 
 ## Concepts
 ### Deep Learning
@@ -164,4 +165,62 @@
 - Question: Can data reveal a short rule for how the system moves?
 - Observed: measurements of position, speed, concentration, or another changing quantity
 - Hidden: the rate rule that causes the next moment
+
+
+## Core Topic Deep Dives
+### Physics Informed Neural Networks
+- One sentence: A PINN is a fitted field that must answer to both measured values and a known physical rule.
+- Use when: Use it when measurements are sparse, the equation is trusted, and the scientific job is one specific field or parameter case.
+- Do not use when: Do not treat it as magic for hard PDEs; if boundary data, scales, or sharp regions are poorly handled, the equation penalty can mislead.
+- Plain formula: total error = data error + equation error + boundary error
+- Why it matters: The equation gives the model a reason not to invent impossible behavior between data points.
+
+### Partial Differential Equations
+- One sentence: A PDE is a rule for how a whole field changes across space and time.
+- Use when: Use it when one value is not enough because neighbors, boundaries, and time all matter.
+- Do not use when: Do not reduce the problem to independent points if movement, flow, stress, diffusion, or waves connect those points.
+- Plain formula: change over time = movement through space + sources + boundary effects
+- Why it matters: Most physics-informed machine learning borrows its scientific burden from PDEs.
+
+### Operator Learning
+- One sentence: Operator learning tries to learn the machine that turns one field into another field.
+- Use when: Use it when you have many solved examples and need fast answers for new inputs from the same named family.
+- Do not use when: Do not use it as proof of broad scientific skill unless the new equation, boundary, grid, and parameter range were tested.
+- Plain formula: input field -> learned field-to-field map -> output field
+- Why it matters: It targets repeated simulation work, where the valuable object is the whole input-output map.
+
+### Surrogate Modeling
+- One sentence: A surrogate is a faster stand-in for a slower trusted process.
+- Use when: Use it when repeated simulation, design, or uncertainty questions would be too slow with the full solver.
+- Do not use when: Do not use it outside the query family where it has been compared against the trusted source.
+- Plain formula: new query -> fast stand-in -> approximate answer with a stated use range
+- Why it matters: Speed changes what questions scientists and engineers can afford to ask.
+
+### Uncertainty And Generalization
+- One sentence: This topic asks when a prediction should be believed on a case the model did not learn from.
+- Use when: Use it whenever a model will guide a scientific or engineering decision under changed conditions.
+- Do not use when: Do not replace changed-case testing with a confident-looking number.
+- Plain formula: prediction + tested use range + failure evidence
+- Why it matters: A scientific model is dangerous when it is most confident exactly where it has the least evidence.
+
+### Neural Differential Equations
+- One sentence: A neural differential equation learns the missing rule for how a system changes.
+- Use when: Use it when time evolution is central but the exact rate rule is partly unknown.
+- Do not use when: Do not trust long-time behavior just because short training windows fit well.
+- Plain formula: current state -> learned change rate -> next state
+- Why it matters: It keeps the idea of continuous motion while admitting that part of the motion rule is unknown.
+
+### Symbolic Regression
+- One sentence: Symbolic regression searches for a short formula that explains measured behavior.
+- Use when: Use it when a readable equation is part of the scientific goal.
+- Do not use when: Do not believe a neat formula unless it survives missing-variable, noise, and changed-experiment checks.
+- Plain formula: candidate ingredients -> searched formulas -> tested small law
+- Why it matters: A compact equation can be criticized and reused in ways a large fitted object cannot.
+
+### Foundation Models For Pdes
+- One sentence: A PDE foundation model tries to reuse structure across many related field-prediction tasks.
+- Use when: Use it when many PDE tasks share enough structure that one broad model may reduce repeated training.
+- Do not use when: Do not confuse broad training with proof that a new scientific regime is covered.
+- Plain formula: many PDE tasks -> shared learned structure -> new task prediction
+- Why it matters: If it works, broad training could reduce repeated model-building for related scientific problems.
 
