@@ -1450,6 +1450,8 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
             }
         )
 
+    coverage_matrix = build_coverage_matrix(concept_atlas)
+
     data = {
         "summary": {
             "title": "Physics-Informed Machine Learning Concepts Research",
@@ -1470,6 +1472,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
             "reader_check_count": len(READER_CHECKS),
             "decision_guide_count": len(DECISION_GUIDES),
             "provenance_guide_count": len(PROVENANCE_GUIDES),
+            "coverage_row_count": len(coverage_matrix),
         },
         "transcript_index": [record_to_dict(record) for record in records],
         "concept_atlas": concept_atlas,
@@ -1487,6 +1490,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
         "reader_checks": READER_CHECKS,
         "decision_guides": DECISION_GUIDES,
         "provenance_guides": PROVENANCE_GUIDES,
+        "coverage_matrix": coverage_matrix,
     }
     for name, value in data.items():
         if name == "summary":
@@ -1511,6 +1515,29 @@ def everyday_anchor(slug: str) -> str:
         "graphs-and-geometric-learning": "A molecule, mesh, or network is not just a list. The connections decide what can influence what.",
     }
     return anchors.get(slug, "Start with the observed object, name what must be predicted, then test the claim on a changed case.")
+
+
+def build_coverage_matrix(concept_atlas: list[dict[str, object]]) -> list[dict[str, object]]:
+    rows = []
+    for concept in concept_atlas:
+        slug = str(concept["slug"])
+        rows.append(
+            {
+                "slug": slug,
+                "name": str(concept["name"]),
+                "video_count": int(concept["video_count"]),
+                "topic_page": True,
+                "deep_dive": slug in TOPIC_DEEP_DIVES,
+                "diagram": any(slug in diagram["topic_slugs"] for diagram in DIAGRAMS),
+                "learning_path": any(any(str(item["href"]) == f"topics/{slug}.html" for item in step["read"]) for step in LEARNING_PATH),
+                "glossary": any(slug in entry["related"] for entry in GLOSSARY),
+                "domain": any(slug in guide["concepts"] for guide in DOMAIN_GUIDES),
+                "reader_check": any(check["topic_slug"] == slug for check in READER_CHECKS),
+                "decision_guide": any(f"topics/{slug}.html" in decision["links"] for decision in DECISION_GUIDES),
+                "evidence_items": len(concept.get("evidence", [])),
+            }
+        )
+    return rows
 
 
 def write_style() -> None:
@@ -1631,6 +1658,7 @@ def html_page(title: str, body: str, root_prefix: str = "") -> str:
   <a href="{root_prefix}reader-checks.html">Checks</a>
   <a href="{root_prefix}decision-guide.html">Decide</a>
   <a href="{root_prefix}provenance.html">Provenance</a>
+  <a href="{root_prefix}coverage.html">Coverage</a>
   <a href="{root_prefix}theme-map.html">Themes</a>
   <a href="{root_prefix}evidence-ledger.html">Evidence</a>
 </nav>
@@ -1802,6 +1830,7 @@ def write_site(data: dict[str, object]) -> None:
     reader_checks = data["reader_checks"]
     decision_guides = data["decision_guides"]
     provenance_guides = data["provenance_guides"]
+    coverage_matrix = data["coverage_matrix"]
 
     index_body = f"""
 <h1>Physics-Informed Machine Learning Concepts Research</h1>
@@ -1819,6 +1848,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Reader Checks", f"{summary['reader_check_count']} self-check prompts for core ideas.", "reader-checks.html")}
 {card("Decision Guide", f"{summary['decision_guide_count']} method choices from concrete scientific situations.", "decision-guide.html")}
 {card("Provenance", f"{summary['provenance_guide_count']} pages documenting source, extraction, build, and reproduction.", "provenance.html")}
+{card("Coverage Matrix", f"{summary['coverage_row_count']} concepts checked across evidence and guide layers.", "coverage.html")}
 {card("Themes", f"{summary['theme_count']} recurring research pressures across the course family.", "theme-map.html")}
 {card("Evidence", "Each major claim links back to transcript or metadata evidence and states its limit.", "evidence-ledger.html")}
 </div>
@@ -1956,6 +1986,8 @@ def write_site(data: dict[str, object]) -> None:
         html_page("Physics-Informed ML Provenance", f"<h1>Provenance And Reproduction</h1><p>These pages show how source playlists, captions, cleaned transcripts, analysis data, and generated pages fit together. They also state what another CLI should reproduce for a similar channel.</p><div class=\"grid\">{''.join(provenance_cards)}</div>"),
         encoding="utf-8",
     )
+
+    write_coverage_page(SITE / "coverage.html", list(coverage_matrix))
 
     theme_cards = []
     for theme in themes:
@@ -2318,6 +2350,53 @@ def write_provenance_page(path: Path, guide: dict[str, object]) -> None:
     path.write_text(html_page(str(guide["title"]), body, root_prefix="../"), encoding="utf-8")
 
 
+def mark(value: object) -> str:
+    return "yes" if bool(value) else "no"
+
+
+def write_coverage_page(path: Path, rows: list[dict[str, object]]) -> None:
+    table_rows = []
+    for row in rows:
+        table_rows.append(
+            f"""
+<tr>
+  <td><a href="topics/{html.escape(str(row['slug']))}.html">{html.escape(str(row['name']))}</a></td>
+  <td>{html.escape(str(row['video_count']))}</td>
+  <td>{mark(row['deep_dive'])}</td>
+  <td>{mark(row['diagram'])}</td>
+  <td>{mark(row['learning_path'])}</td>
+  <td>{mark(row['glossary'])}</td>
+  <td>{mark(row['domain'])}</td>
+  <td>{mark(row['reader_check'])}</td>
+  <td>{mark(row['decision_guide'])}</td>
+  <td>{html.escape(str(row['evidence_items']))}</td>
+</tr>
+"""
+        )
+    body = f"""
+<h1>Coverage Matrix</h1>
+<p>This page is a review surface. It shows which concepts are supported by transcript evidence and which guide layers explain, test, or apply the concept.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Concept</th>
+      <th>Videos</th>
+      <th>Deep Dive</th>
+      <th>Diagram</th>
+      <th>Path</th>
+      <th>Glossary</th>
+      <th>Domain</th>
+      <th>Reader Check</th>
+      <th>Decision</th>
+      <th>Evidence Items</th>
+    </tr>
+  </thead>
+  <tbody>{''.join(table_rows)}</tbody>
+</table>
+"""
+    path.write_text(html_page("Physics-Informed ML Coverage Matrix", body), encoding="utf-8")
+
+
 def write_family_page(path: Path, family: dict[str, object]) -> None:
     steps = "".join(f"<div class=\"route-step\">{idx}. {html.escape(step)}</div>" for idx, step in enumerate(family["plain_route"], start=1))
     body = f"""
@@ -2533,6 +2612,19 @@ def write_markdown_export(data: dict[str, object]) -> None:
                 "",
             ]
         )
+    lines.extend(["", "## Coverage Matrix"])
+    for row in data["coverage_matrix"]:
+        lines.extend(
+            [
+                f"### {row['name']}",
+                f"- Videos: {row['video_count']}",
+                f"- Deep dive: {mark(row['deep_dive'])}",
+                f"- Diagram: {mark(row['diagram'])}",
+                f"- Reader check: {mark(row['reader_check'])}",
+                f"- Evidence items: {row['evidence_items']}",
+                "",
+            ]
+        )
     (EXPORTS / "research-package.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
@@ -2592,6 +2684,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         SITE / "reader-checks.html",
         SITE / "decision-guide.html",
         SITE / "provenance.html",
+        SITE / "coverage.html",
         SITE / "theme-map.html",
         SITE / "evidence-ledger.html",
     ):
@@ -2681,6 +2774,22 @@ def validate(data: dict[str, object] | None = None) -> None:
         guide_text = guide_path.read_text(encoding="utf-8")
         if "Local Files" not in guide_text or "Checks" not in guide_text:
             raise SystemExit(f"provenance page not rendered correctly: {guide['title']}")
+    coverage_path = SITE / "coverage.html"
+    coverage_text = coverage_path.read_text(encoding="utf-8")
+    if "Coverage Matrix" not in coverage_text or "Reader Check" not in coverage_text:
+        raise SystemExit("coverage matrix not rendered correctly")
+    coverage_rows = data.get("coverage_matrix") or []
+    if len(coverage_rows) != len(data["concept_atlas"]):
+        raise SystemExit("coverage matrix row count does not match concept atlas")
+    core_slugs = {"physics-informed-neural-networks", "operator-learning", "surrogate-modeling", "uncertainty-and-generalization", "symbolic-regression", "foundation-models-for-pdes"}
+    by_slug = {row["slug"]: row for row in coverage_rows}
+    for slug in core_slugs:
+        row = by_slug.get(slug)
+        if not row:
+            raise SystemExit(f"core concept missing coverage row: {slug}")
+        for field in ("deep_dive", "diagram", "reader_check", "decision_guide"):
+            if not row.get(field):
+                raise SystemExit(f"core concept missing {field}: {slug}")
     manifest_path = SITE / "page-manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     missing = [item for item in manifest if not (ROOT / item).exists()]

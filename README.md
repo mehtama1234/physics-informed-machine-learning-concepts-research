@@ -24,6 +24,7 @@ The purpose is not to summarize lectures. The purpose is to explain physics-info
 - `site/reader-checks.html`: self-check prompts for core ideas
 - `site/decision-guide.html`: method choice guide from scientific situations
 - `site/provenance.html`: source, extraction, build, and reproduction guide
+- `site/coverage.html`: concept coverage matrix across evidence and guide layers
 - `site/theme-map.html`: recurring theme map
 - `site/evidence-ledger.html`: transcript-backed evidence ledger
 - `site/topics/`: first-principles concept pages
@@ -78,6 +79,7 @@ http://127.0.0.1:8022/index.html
 - reader self-checks
 - decision guide
 - provenance and reproduction guide
+- coverage matrix
 - deep dives for core topics
 - theme map
 - evidence ledger

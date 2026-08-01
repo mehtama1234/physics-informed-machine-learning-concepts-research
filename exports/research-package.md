@@ -19,6 +19,7 @@
 - reader_check_count: 6
 - decision_guide_count: 6
 - provenance_guide_count: 5
+- coverage_row_count: 14
 
 ## Concepts
 ### Deep Learning
@@ -497,4 +498,104 @@
 - Purpose: Give another CLI enough detail to reproduce this package for another channel.
 - Local files: scripts/build_physics_informed_ml_research_package.py, README.md, Makefile
 - Checks: repo has a clear topic name, raw source material is preserved, generated pages are validated, commits are small enough to review
+
+
+## Coverage Matrix
+### Deep Learning
+- Videos: 38
+- Deep dive: no
+- Diagram: yes
+- Reader check: no
+- Evidence items: 6
+
+### Physics-Informed Neural Networks
+- Videos: 28
+- Deep dive: yes
+- Diagram: yes
+- Reader check: yes
+- Evidence items: 6
+
+### Partial Differential Equations
+- Videos: 34
+- Deep dive: yes
+- Diagram: yes
+- Reader check: no
+- Evidence items: 6
+
+### Operator Learning
+- Videos: 33
+- Deep dive: yes
+- Diagram: yes
+- Reader check: yes
+- Evidence items: 6
+
+### Scientific Machine Learning
+- Videos: 33
+- Deep dive: no
+- Diagram: yes
+- Reader check: no
+- Evidence items: 6
+
+### Surrogate Modeling
+- Videos: 35
+- Deep dive: yes
+- Diagram: yes
+- Reader check: yes
+- Evidence items: 6
+
+### Uncertainty And Generalization
+- Videos: 39
+- Deep dive: yes
+- Diagram: yes
+- Reader check: yes
+- Evidence items: 6
+
+### Optimization For Learning
+- Videos: 40
+- Deep dive: no
+- Diagram: no
+- Reader check: no
+- Evidence items: 6
+
+### Generative Modeling
+- Videos: 33
+- Deep dive: no
+- Diagram: no
+- Reader check: no
+- Evidence items: 6
+
+### Graphs And Geometric Learning
+- Videos: 31
+- Deep dive: no
+- Diagram: no
+- Reader check: no
+- Evidence items: 6
+
+### Neural Differential Equations
+- Videos: 40
+- Deep dive: yes
+- Diagram: yes
+- Reader check: no
+- Evidence items: 6
+
+### Symbolic Regression And Model Discovery
+- Videos: 33
+- Deep dive: yes
+- Diagram: yes
+- Reader check: yes
+- Evidence items: 6
+
+### Foundation Models For PDEs
+- Videos: 6
+- Deep dive: yes
+- Diagram: yes
+- Reader check: yes
+- Evidence items: 6
+
+### Attention For Scientific Fields
+- Videos: 28
+- Deep dive: no
+- Diagram: yes
+- Reader check: no
+- Evidence items: 6
 
