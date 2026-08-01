@@ -27,6 +27,7 @@ The purpose is not to summarize lectures. The purpose is to explain physics-info
 - `site/coverage.html`: concept coverage matrix across evidence and guide layers
 - `site/quality.html`: editorial quality rubric for first-principles pages
 - `site/synthesis.html`: field-level synthesis tying the concepts together
+- `site/review-entrypoints.html`: end-to-end review route through the package
 - `site/handoff.html`: review route, validation commands, and remaining editorial work
 - `site/theme-map.html`: recurring theme map
 - `site/evidence-ledger.html`: transcript-backed evidence ledger
@@ -87,6 +88,7 @@ http://127.0.0.1:8022/index.html
 - coverage matrix
 - editorial quality rubric
 - field synthesis
+- review entrypoint map
 - review handoff
 - deep dives for core topics
 - theme map

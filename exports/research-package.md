@@ -23,6 +23,7 @@
 - quality_rubric_count: 6
 - synthesis_guide_count: 4
 - review_handoff_count: 1
+- review_entrypoint_count: 17
 
 ## Concepts
 ### Deep Learning
@@ -678,3 +679,34 @@
 - Add more worked examples for chemistry, materials, graphs, attention, and foundation PDE models.
 - Add real figures or mathematical sketches where a static flow diagram is not enough.
 - Review transcript excerpts for places where better quotes or lecture-specific anchors should be selected.
+
+## Review Entrypoints
+
+### Start The Review
+- Purpose: Use these pages to see the whole argument before inspecting details.
+- Review Handoff: handoff.html | What exists now, and what still needs hand-written depth?
+- Field Synthesis: synthesis.html | What problem holds the field together?
+- Learning Path: learning-path.html | What should a new reader read first, second, and third?
+
+### Inspect Core Concepts
+- Purpose: Use these pages to judge whether the main mathematical ideas are explained from first principles.
+- PINNs: topics/physics-informed-neural-networks.html | How can a learned curve be pushed to obey a known physical rule?
+- Operator Learning: topics/operator-learning.html | When is the object being learned a whole solver shortcut?
+- Surrogate Modeling: topics/surrogate-modeling.html | When is speed useful, and where does it stop being trustworthy?
+- Uncertainty And Generalization: topics/uncertainty-and-generalization.html | How does the page say where the model may be wrong?
+- Symbolic Regression: topics/symbolic-regression.html | When is a short formula a scientific claim instead of a curve fit?
+- Foundation Models For PDEs: topics/foundation-models-for-pdes.html | What must carry from old equation cases to a new one?
+
+### Use The Package
+- Purpose: Use these pages when choosing a method for a concrete scientific situation.
+- Decision Guide: decision-guide.html | Which method family fits the job in front of the reader?
+- Domain Guides: domains.html | What quantity does this domain actually need?
+- Worked Examples: worked-examples.html | Can the reader follow one scientific job all the way through?
+- Comparisons: comparisons.html | What changes when two methods sound similar?
+
+### Check Coverage And Sources
+- Purpose: Use these pages to audit completeness, source support, and wording quality.
+- Coverage Matrix: coverage.html | Which important concepts still need more support?
+- Evidence Ledger: evidence-ledger.html | What does the transcript support, and what does it not prove?
+- Quality Rubric: quality.html | Does each page avoid empty language and explain the real problem?
+- Provenance: provenance.html | Could another CLI rebuild this package from the same sources?

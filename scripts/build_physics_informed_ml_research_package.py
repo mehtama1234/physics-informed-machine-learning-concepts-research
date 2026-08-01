@@ -1286,6 +1286,136 @@ REVIEW_HANDOFF = {
 }
 
 
+REVIEW_ENTRYPOINTS = [
+    {
+        "group": "Start The Review",
+        "purpose": "Use these pages to see the whole argument before inspecting details.",
+        "items": [
+            {
+                "label": "Review Handoff",
+                "href": "handoff.html",
+                "why": "Shows counts, validation commands, core pages, and remaining editorial work.",
+                "question": "What exists now, and what still needs hand-written depth?",
+            },
+            {
+                "label": "Field Synthesis",
+                "href": "synthesis.html",
+                "why": "Turns the course family into one plain-language map of scientific jobs.",
+                "question": "What problem holds the field together?",
+            },
+            {
+                "label": "Learning Path",
+                "href": "learning-path.html",
+                "why": "Gives a reader who knows no jargon a route from data to scientific claims.",
+                "question": "What should a new reader read first, second, and third?",
+            },
+        ],
+    },
+    {
+        "group": "Inspect Core Concepts",
+        "purpose": "Use these pages to judge whether the main mathematical ideas are explained from first principles.",
+        "items": [
+            {
+                "label": "PINNs",
+                "href": "topics/physics-informed-neural-networks.html",
+                "why": "Covers sparse measurements, known equations, equation error, and failure regions.",
+                "question": "How can a learned curve be pushed to obey a known physical rule?",
+            },
+            {
+                "label": "Operator Learning",
+                "href": "topics/operator-learning.html",
+                "why": "Covers learning maps from input fields to solution fields across a family of cases.",
+                "question": "When is the object being learned a whole solver shortcut?",
+            },
+            {
+                "label": "Surrogate Modeling",
+                "href": "topics/surrogate-modeling.html",
+                "why": "Covers cheap stand-ins for costly simulations and the limits of that trade.",
+                "question": "When is speed useful, and where does it stop being trustworthy?",
+            },
+            {
+                "label": "Uncertainty And Generalization",
+                "href": "topics/uncertainty-and-generalization.html",
+                "why": "Covers prediction limits, changed cases, and the difference between fit and trust.",
+                "question": "How does the page say where the model may be wrong?",
+            },
+            {
+                "label": "Symbolic Regression",
+                "href": "topics/symbolic-regression.html",
+                "why": "Covers searching for readable equations from observed variables and changed-case tests.",
+                "question": "When is a short formula a scientific claim instead of a curve fit?",
+            },
+            {
+                "label": "Foundation Models For PDEs",
+                "href": "topics/foundation-models-for-pdes.html",
+                "why": "Covers broad PDE training, shared structure, and held-out scientific tasks.",
+                "question": "What must carry from old equation cases to a new one?",
+            },
+        ],
+    },
+    {
+        "group": "Use The Package",
+        "purpose": "Use these pages when choosing a method for a concrete scientific situation.",
+        "items": [
+            {
+                "label": "Decision Guide",
+                "href": "decision-guide.html",
+                "why": "Starts from the scientific situation and names the evidence needed for a method choice.",
+                "question": "Which method family fits the job in front of the reader?",
+            },
+            {
+                "label": "Domain Guides",
+                "href": "domains.html",
+                "why": "Grounds the concepts in real domains such as fluids, climate, molecules, and materials.",
+                "question": "What quantity does this domain actually need?",
+            },
+            {
+                "label": "Worked Examples",
+                "href": "worked-examples.html",
+                "why": "Shows observed evidence, hidden quantity, method route, and failure test in concrete cases.",
+                "question": "Can the reader follow one scientific job all the way through?",
+            },
+            {
+                "label": "Comparisons",
+                "href": "comparisons.html",
+                "why": "Separates nearby methods by job, evidence, and failure case.",
+                "question": "What changes when two methods sound similar?",
+            },
+        ],
+    },
+    {
+        "group": "Check Coverage And Sources",
+        "purpose": "Use these pages to audit completeness, source support, and wording quality.",
+        "items": [
+            {
+                "label": "Coverage Matrix",
+                "href": "coverage.html",
+                "why": "Shows which concepts have evidence, deep dives, diagrams, checks, domains, and decisions.",
+                "question": "Which important concepts still need more support?",
+            },
+            {
+                "label": "Evidence Ledger",
+                "href": "evidence-ledger.html",
+                "why": "Links claims back to transcript or metadata evidence and states each limit.",
+                "question": "What does the transcript support, and what does it not prove?",
+            },
+            {
+                "label": "Quality Rubric",
+                "href": "quality.html",
+                "why": "Defines the editorial standard for plain first-principles pages.",
+                "question": "Does each page avoid empty language and explain the real problem?",
+            },
+            {
+                "label": "Provenance",
+                "href": "provenance.html",
+                "why": "Documents source playlists, caption extraction, local files, and reproduction commands.",
+                "question": "Could another CLI rebuild this package from the same sources?",
+            },
+        ],
+    },
+]
+
+
 @dataclass
 class TranscriptRecord:
     video_id: str
@@ -1596,6 +1726,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
             "quality_rubric_count": len(QUALITY_RUBRIC),
             "synthesis_guide_count": len(SYNTHESIS_GUIDES),
             "review_handoff_count": 1,
+            "review_entrypoint_count": sum(len(group["items"]) for group in REVIEW_ENTRYPOINTS),
         },
         "transcript_index": [record_to_dict(record) for record in records],
         "concept_atlas": concept_atlas,
@@ -1617,6 +1748,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
         "quality_rubric": QUALITY_RUBRIC,
         "synthesis_guides": SYNTHESIS_GUIDES,
         "review_handoff": REVIEW_HANDOFF,
+        "review_entrypoints": REVIEW_ENTRYPOINTS,
     }
     for name, value in data.items():
         if name == "summary":
@@ -1787,6 +1919,7 @@ def html_page(title: str, body: str, root_prefix: str = "") -> str:
   <a href="{root_prefix}coverage.html">Coverage</a>
   <a href="{root_prefix}quality.html">Quality</a>
   <a href="{root_prefix}synthesis.html">Synthesis</a>
+  <a href="{root_prefix}review-entrypoints.html">Review Map</a>
   <a href="{root_prefix}handoff.html">Handoff</a>
   <a href="{root_prefix}theme-map.html">Themes</a>
   <a href="{root_prefix}evidence-ledger.html">Evidence</a>
@@ -1985,6 +2118,7 @@ def write_site(data: dict[str, object]) -> None:
     quality_rubric = data["quality_rubric"]
     synthesis_guides = data["synthesis_guides"]
     review_handoff = data["review_handoff"]
+    review_entrypoints = data["review_entrypoints"]
 
     index_body = f"""
 <h1>Physics-Informed Machine Learning Concepts Research</h1>
@@ -2005,6 +2139,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Coverage Matrix", f"{summary['coverage_row_count']} concepts checked across evidence and guide layers.", "coverage.html")}
 {card("Quality Rubric", f"{summary['quality_rubric_count']} editorial standards for first-principles pages.", "quality.html")}
 {card("Synthesis", f"{summary['synthesis_guide_count']} pages tying the field into one argument.", "synthesis.html")}
+{card("Review Map", f"{summary['review_entrypoint_count']} entry points for end-to-end review, use, and source checks.", "review-entrypoints.html")}
 {card("Review Handoff", "Shortest route for reviewing the package and the remaining editorial work.", "handoff.html")}
 {card("Themes", f"{summary['theme_count']} recurring research pressures across the course family.", "theme-map.html")}
 {card("Evidence", "Each major claim links back to transcript or metadata evidence and states its limit.", "evidence-ledger.html")}
@@ -2165,6 +2300,7 @@ def write_site(data: dict[str, object]) -> None:
     )
 
     write_handoff_page(SITE / "handoff.html", dict(review_handoff), summary)
+    write_review_entrypoints_page(SITE / "review-entrypoints.html", list(review_entrypoints))
 
     theme_cards = []
     for theme in themes:
@@ -2635,6 +2771,37 @@ def write_handoff_page(path: Path, handoff: dict[str, object], summary: dict[str
     path.write_text(html_page(str(handoff["title"]), body), encoding="utf-8")
 
 
+def write_review_entrypoints_page(path: Path, groups: list[dict[str, object]]) -> None:
+    sections = []
+    for group in groups:
+        item_cards = []
+        for item in group["items"]:
+            item_cards.append(
+                f"""
+<article class="card">
+  <h3><a href="{html.escape(str(item['href']))}">{html.escape(str(item['label']))}</a></h3>
+  <p><strong>Why open it:</strong> {html.escape(str(item['why']))}</p>
+  <p><strong>Question it should answer:</strong> {html.escape(str(item['question']))}</p>
+</article>
+"""
+            )
+        sections.append(
+            f"""
+<h2>{html.escape(str(group['group']))}</h2>
+<p>{html.escape(str(group['purpose']))}</p>
+<div class="grid">{''.join(item_cards)}</div>
+"""
+        )
+    body = f"""
+<h1>Review Entrypoints</h1>
+<p>This page gives a reviewer a concrete route through the package. It separates four jobs: see the whole argument, inspect the core concepts, use the package for a scientific situation, and check whether source support is clear.</p>
+{''.join(sections)}
+<h2>End-To-End Test</h2>
+<p>A strong review can follow one concept from transcript evidence, to topic page, to diagram, to decision guide, to a domain example, then back to the coverage matrix. If that route breaks, the missing link is the next editorial task.</p>
+"""
+    path.write_text(html_page("Physics-Informed ML Review Entrypoints", body), encoding="utf-8")
+
+
 def write_family_page(path: Path, family: dict[str, object]) -> None:
     steps = "".join(f"<div class=\"route-step\">{idx}. {html.escape(step)}</div>" for idx, step in enumerate(family["plain_route"], start=1))
     body = f"""
@@ -2894,6 +3061,11 @@ def write_markdown_export(data: dict[str, object]) -> None:
     lines.extend(["", "### Remaining Editorial Work"])
     for item in handoff["remaining_editorial_work"]:
         lines.append(f"- {item}")
+    lines.extend(["", "## Review Entrypoints"])
+    for group in data["review_entrypoints"]:
+        lines.extend(["", f"### {group['group']}", f"- Purpose: {group['purpose']}"])
+        for item in group["items"]:
+            lines.append(f"- {item['label']}: {item['href']} | {item['question']}")
     (EXPORTS / "research-package.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
@@ -2956,6 +3128,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         SITE / "coverage.html",
         SITE / "quality.html",
         SITE / "synthesis.html",
+        SITE / "review-entrypoints.html",
         SITE / "handoff.html",
         SITE / "theme-map.html",
         SITE / "evidence-ledger.html",
@@ -3087,6 +3260,14 @@ def validate(data: dict[str, object] | None = None) -> None:
         for item in REVIEW_HANDOFF[group]:
             if not (SITE / item["href"]).exists():
                 raise SystemExit(f"handoff link missing: {item['href']}")
+    review_entrypoints_path = SITE / "review-entrypoints.html"
+    review_entrypoints_text = review_entrypoints_path.read_text(encoding="utf-8")
+    if "Review Entrypoints" not in review_entrypoints_text or "End-To-End Test" not in review_entrypoints_text:
+        raise SystemExit("review entrypoints page not rendered correctly")
+    for group in REVIEW_ENTRYPOINTS:
+        for item in group["items"]:
+            if not (SITE / item["href"]).exists():
+                raise SystemExit(f"review entrypoint link missing: {item['href']}")
     manifest_path = SITE / "page-manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     missing = [item for item in manifest if not (ROOT / item).exists()]
