@@ -52,6 +52,39 @@
 <p>the full field value at every point in space and time</p>
 <h2>Build The Mathematical Shape</h2>
 <div class="route"><div class="route-step">1. Choose a neural network to represent the unknown field.</div><div class="route-step">2. Compare the field with measured data where measurements exist.</div><div class="route-step">3. Differentiate the field and check whether it breaks the equation.</div><div class="route-step">4. Also check boundary or starting values.</div><div class="route-step">5. Train by reducing all of those errors together.</div></div>
+
+<h2>Hand Derivation</h2>
+<p>Start with an unknown field u. A few measurements tell us u at some points. The equation tells us what u should do between those points. The boundary tells us what must happen at the edge.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Term</th>
+      <th>Why It Enters</th>
+      <th>Check</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+  <td>data error</td>
+  <td>At measured points, the proposed field should match the observed values. This term keeps the answer tied to the sensors.</td>
+  <td>If this term is missing, the field may obey the equation while ignoring the actual measurements.</td>
+</tr>
+
+<tr>
+  <td>equation error</td>
+  <td>Away from measured points, the proposed field can still be checked by putting it into the known equation and measuring leftover rule-breaking.</td>
+  <td>If this term is small only at easy points, the hard regions still need separate tests.</td>
+</tr>
+
+<tr>
+  <td>boundary error</td>
+  <td>A field can satisfy the equation in the middle while using the wrong edge or starting values. This term pins down the problem being solved.</td>
+  <td>If boundaries are wrong, the solution can be a solution to a different physical problem.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Final Line:</strong> The loss is a written contract: match the measurements, obey the equation, and respect the edge information. The contract is only useful if each part matches the real scientific job.</p>
+
 <h2>Plain Formula</h2>
 <p>total error = data error + equation error + boundary error</p>
 <h2>Why This Matters</h2>

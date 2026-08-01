@@ -52,6 +52,39 @@
 <p>which shared structure carries from one scientific task to another</p>
 <h2>Build The Mathematical Shape</h2>
 <div class="route"><div class="route-step">1. Gather many field-prediction tasks.</div><div class="route-step">2. Train one model to keep shared structure across those tasks.</div><div class="route-step">3. Adapt or query it on a new task.</div><div class="route-step">4. Compare against trusted solves or measurements.</div><div class="route-step">5. Hold out whole task families, not just random examples.</div></div>
+
+<h2>Hand Derivation</h2>
+<p>Start with many PDE tasks. Each task teaches something about fields, equations, boundaries, or solution patterns. The new task is useful only if it shares structure the model actually learned.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Term</th>
+      <th>Why It Enters</th>
+      <th>Check</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+  <td>many PDE tasks</td>
+  <td>Broad training is the source of shared experience across equations or parameter ranges.</td>
+  <td>If the tasks are narrow, the model may only be broad in name.</td>
+</tr>
+
+<tr>
+  <td>shared learned structure</td>
+  <td>The model must keep something reusable, such as field patterns, operator behavior, or equation-family regularities.</td>
+  <td>If the shared structure is not named, transfer to a new task is only a hope.</td>
+</tr>
+
+<tr>
+  <td>new task prediction</td>
+  <td>The point is to use old task experience on a held-out scientific case.</td>
+  <td>If the held-out task is too similar to training, the broad claim is not tested.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Final Line:</strong> The derivation makes the transfer burden visible: old PDE tasks must carry something real into the new task, and the new task must be different enough to test that claim.</p>
+
 <h2>Plain Formula</h2>
 <p>many PDE tasks -&gt; shared learned structure -&gt; new task prediction</p>
 <h2>Why This Matters</h2>
