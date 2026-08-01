@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Neural Differential Equations</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<nav class="topbar">
+  <a href="../index.html">Physics-Informed ML</a>
+  <a href="../transcripts.html">Transcripts</a>
+  <a href="../concept-atlas.html">Concept Atlas</a>
+  <a href="../families.html">Families</a>
+  <a href="../comparisons.html">Comparisons</a>
+  <a href="../worked-examples.html">Examples</a>
+  <a href="../diagrams.html">Diagrams</a>
+  <a href="../derivations.html">Derivations</a>
+  <a href="../learning-path.html">Path</a>
+  <a href="../glossary.html">Glossary</a>
+  <a href="../domains.html">Domains</a>
+  <a href="../reader-checks.html">Checks</a>
+  <a href="../decision-guide.html">Decide</a>
+  <a href="../provenance.html">Provenance</a>
+  <a href="../coverage.html">Coverage</a>
+  <a href="../concept-ladder.html">Ladder</a>
+  <a href="../quality.html">Quality</a>
+  <a href="../synthesis.html">Synthesis</a>
+  <a href="../review-entrypoints.html">Review Map</a>
+  <a href="../handoff.html">Handoff</a>
+  <a href="../theme-map.html">Themes</a>
+  <a href="../evidence-ledger.html">Evidence</a>
+</nav>
+<main>
+
+<h1>Neural Differential Equations</h1>
+<p>A neural differential equation learns the missing rule for how a system changes.</p>
+<h2>Domain Story</h2>
+<p>If measurements show a chemical concentration changing but the reaction law is incomplete, the learned part can supply the missing rate.</p>
+<h2>Problem</h2>
+<p>scientists may know that a system changes continuously but not know the exact rule for that change</p>
+<h2>Start With What Is Observed</h2>
+<p>measurements of a system changing over time</p>
+<h2>Name What Is Hidden</h2>
+<p>the rate rule that moves the present value into the future</p>
+<h2>Build The Mathematical Shape</h2>
+<div class="route"><div class="route-step">1. Name the current state.</div><div class="route-step">2. Represent the unknown rate of change with a learned function.</div><div class="route-step">3. Use a time solver to move the state forward.</div><div class="route-step">4. Compare the predicted path with measurements.</div><div class="route-step">5. Run beyond the training window to test drift.</div></div>
+<h2>Plain Formula</h2>
+<p>current state -&gt; learned change rate -&gt; next state</p>
+<h2>Why This Matters</h2>
+<p>It keeps the idea of continuous motion while admitting that part of the motion rule is unknown.</p>
+<h2>Failure Test</h2>
+<p>run longer than the training window and check whether small rate errors accumulate into drift</p>
+<h2>Red Flags</h2>
+<ul><li>The model is tested only over short times.</li><li>Small rate errors accumulate unnoticed.</li><li>Known conservation or stability behavior is not checked.</li><li>The learned rate fits noise instead of mechanism.</li></ul>
+<h2>Connects To</h2>
+<ul><li><a href="../topics/symbolic-regression.html">Symbolic Regression And Model Discovery</a></li><li><a href="../topics/optimization-for-learning.html">Optimization For Learning</a></li><li><a href="../topics/scientific-machine-learning.html">Scientific Machine Learning</a></li></ul>
+<h2>Topic Page</h2>
+<p><a href="../topics/neural-differential-equations.html">Return to the main topic page</a></p>
+
+</main>
+</body>
+</html>
