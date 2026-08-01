@@ -442,7 +442,7 @@ WORKED_EXAMPLES = [
         "question": "What is the temperature everywhere if sensors only report a few places?",
         "observed": "sensor readings, starting temperature, boundary temperature, and the rule that heat flows from hot regions toward cold regions",
         "hidden": "temperature at every unsensed point and later time",
-        "method_route": ["partial-differential-equations", "physics-informed-neural-networks", "uncertainty-and-generalization"],
+        "method_route": ["partial-differential-equations", "physics-informed-neural-networks", "scientific-machine-learning", "uncertainty-and-generalization"],
         "plain_steps": [
             "Draw the unknown temperature as a field, not as one number.",
             "Use the measured points as anchors.",
@@ -490,7 +490,7 @@ WORKED_EXAMPLES = [
         "question": "Can a model predict a useful molecular property without flattening away the structure that causes it?",
         "observed": "molecular graphs, atom types, bond patterns, shape information, and measured properties from experiments or trusted calculations",
         "hidden": "which structural relations control the property for a new molecule",
-        "method_route": ["graphs-and-geometric-learning", "deep-learning", "uncertainty-and-generalization"],
+        "method_route": ["graphs-and-geometric-learning", "generative-modeling", "deep-learning", "uncertainty-and-generalization"],
         "plain_steps": [
             "Represent the molecule as connected parts, not as an unordered list.",
             "Let information move along bonds and nearby spatial relations.",
@@ -3964,6 +3964,31 @@ def topic_wrong_use_html(topic: dict[str, object]) -> str:
 """
 
 
+def topic_worked_examples_html(slug: str) -> str:
+    matches = [example for example in WORKED_EXAMPLES if slug in example["method_route"]]
+    if not matches:
+        return ""
+    cards = []
+    for example in matches[:2]:
+        cards.append(
+            f"""
+<article class="card">
+  <h3><a href="../worked-examples/{html.escape(str(example['slug']))}.html">{html.escape(str(example['title']))}</a></h3>
+  <p><strong>Domain:</strong> {html.escape(str(example['domain']))}</p>
+  <p><strong>Question:</strong> {html.escape(str(example['question']))}</p>
+  <p><strong>Observed:</strong> {html.escape(str(example['observed']))}</p>
+  <p><strong>Hidden:</strong> {html.escape(str(example['hidden']))}</p>
+  <p><strong>Why this example belongs here:</strong> {html.escape(str(example['why_it_teaches']))}</p>
+</article>
+"""
+        )
+    return f"""
+<h2>Concrete Worked Example</h2>
+<p>This concept becomes clearer when it is attached to a scientific job with observed evidence, a hidden quantity, and a testable claim.</p>
+<div class="grid">{''.join(cards)}</div>
+"""
+
+
 def write_topic_page(path: Path, topic: dict[str, object]) -> None:
     evidence = topic.get("evidence", [])
     evidence_items = []
@@ -3979,6 +4004,7 @@ def write_topic_page(path: Path, topic: dict[str, object]) -> None:
     source_anchors = source_anchor_cards(str(topic["slug"]), root_prefix="../")
     first_principles_essay = topic_first_principles_essay_html(topic, derivation)
     wrong_use = topic_wrong_use_html(topic)
+    worked_examples = topic_worked_examples_html(str(topic["slug"]))
     body = f"""
 <h1>{html.escape(str(topic['title']))}</h1>
 <h2>Common Problem This Solves</h2>
@@ -4003,6 +4029,7 @@ def write_topic_page(path: Path, topic: dict[str, object]) -> None:
 {sketches}
 {diagrams}
 {derivation_link}
+{worked_examples}
 {wrong_use}
 <h2>Deeper Mathematical Why</h2>
 <p>The mathematical point is to decide what information is allowed to carry the scientific claim. If the carried information is too small, the model misses the behavior that matters. If it is too broad, the page may claim more than the evidence supports. The useful middle is a named object, a named scientific job, and a changed case that can reject the claim.</p>
@@ -5302,8 +5329,12 @@ def validate(data: dict[str, object] | None = None) -> None:
         if not topic_path.exists():
             raise SystemExit(f"deep dive missing topic page: {slug}")
         topic_text = topic_path.read_text(encoding="utf-8")
-        if "First-Principles Essay" not in topic_text or "What A Strong Explanation Must Say" not in topic_text or "Concrete Wrong-Use Example" not in topic_text or "Test That Catches It" not in topic_text or "Core Idea In One Sentence" not in topic_text or "Mathematical Shape Without Jargon" not in topic_text:
+        if "First-Principles Essay" not in topic_text or "What A Strong Explanation Must Say" not in topic_text or "Concrete Worked Example" not in topic_text or "Concrete Wrong-Use Example" not in topic_text or "Test That Catches It" not in topic_text or "Core Idea In One Sentence" not in topic_text or "Mathematical Shape Without Jargon" not in topic_text:
             raise SystemExit(f"deep dive not rendered on topic page: {slug}")
+    worked_example_slugs = {str(slug) for example in WORKED_EXAMPLES for slug in example["method_route"]}
+    concepts_without_examples = sorted(concept_slugs - worked_example_slugs)
+    if concepts_without_examples:
+        raise SystemExit(f"concepts missing worked example route: {concepts_without_examples}")
     for path in (
         SITE / "index.html",
         SITE / "transcripts.html",
