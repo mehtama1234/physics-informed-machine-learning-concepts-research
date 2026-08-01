@@ -29,8 +29,9 @@
 - quality_rubric_count: 6
 - synthesis_guide_count: 4
 - review_handoff_count: 1
-- review_entrypoint_count: 25
+- review_entrypoint_count: 26
 - completion_requirement_count: 7
+- review_search_intent_count: 6
 
 ## Concepts
 ### Deep Learning
@@ -1137,6 +1138,7 @@
 ### Start The Review
 - Purpose: Use these pages to see the whole argument before inspecting details.
 - Review Handoff: handoff.html | What exists now, and what still needs hand-written depth?
+- Find Pages By Question: review-search.html | Which page should I open for the question I have right now?
 - Completion Audit: completion-audit.html | What is locally verified, and what is still outside the workspace?
 - Field Synthesis: synthesis.html | What problem holds the field together?
 - Learning Path: learning-path.html | What should a new reader read first, second, and third?
@@ -1170,6 +1172,50 @@
 - Quality Rubric: quality.html | Does each page avoid empty language and explain the real problem?
 - Provenance: provenance.html | Could another CLI rebuild this package from the same sources?
 - Cross-Channel Playbook: provenance/cross-channel-playbook.html | What exact source, concept, evidence, page, and validation steps should the next build follow?
+
+## Find Pages By Question
+
+### I need the big picture first.
+- Look for: central problem, field map, learning order, and completion state
+- Completion Audit: completion-audit.html
+- Field Synthesis: synthesis.html
+- Learning Path: learning-path.html
+- Review Handoff: handoff.html
+
+### I need to understand a concept from first principles.
+- Look for: problem, observed evidence, hidden quantity, formula shape, and failure test
+- Concept Ladder: concept-ladder.html
+- Dependency Map: dependencies.html
+- Formula Guide: formula-guide.html
+- Misconception Map: misconceptions.html
+
+### I need transcript support for a claim.
+- Look for: source video, transcript excerpt, support limit, and review links
+- Evidence Packets: evidence-packets.html
+- Evidence Ledger: evidence-ledger.html
+- Transcripts: transcripts.html
+- Coverage Matrix: coverage.html
+
+### I need to choose a method for a scientific job.
+- Look for: domain, quantity, method route, use range, and required evidence
+- Decision Guide: decision-guide.html
+- Domain Guides: domains.html
+- Worked Examples: worked-examples.html
+- Comparisons: comparisons.html
+
+### I need to audit quality.
+- Look for: plain language, failure boundary, evidence discipline, and connected map
+- Quality Rubric: quality.html
+- Reader Checks: reader-checks.html
+- Misconception Map: misconceptions.html
+- Completion Audit: completion-audit.html
+
+### I need another CLI to reproduce this for a different channel.
+- Look for: source capture, transcript extraction, analysis build, site generation, and review gates
+- Cross-Channel Playbook: provenance/cross-channel-playbook.html
+- CLI Reproduction Checklist: provenance/cli-reproduction.html
+- Transcript Extraction: provenance/transcript-extraction.html
+- Analysis Build: provenance/analysis-build.html
 
 ## Completion Audit
 ### Preserve transcript-backed source material for the two playlist family.

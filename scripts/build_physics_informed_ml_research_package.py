@@ -1458,6 +1458,12 @@ REVIEW_ENTRYPOINTS = [
                 "question": "What exists now, and what still needs hand-written depth?",
             },
             {
+                "label": "Find Pages By Question",
+                "href": "review-search.html",
+                "why": "Maps reviewer intents to the strongest pages for that job.",
+                "question": "Which page should I open for the question I have right now?",
+            },
+            {
                 "label": "Completion Audit",
                 "href": "completion-audit.html",
                 "why": "Maps the requested package requirements to local evidence and external status.",
@@ -1673,6 +1679,70 @@ COMPLETION_REQUIREMENTS = [
         "local_evidence": "local origin is configured, but GitHub currently returns Repository not found for the configured URL.",
         "status": "external blocker",
         "links": ["handoff.html", "provenance/cli-reproduction.html"],
+    },
+]
+
+
+REVIEW_SEARCH_INDEX = [
+    {
+        "intent": "I need the big picture first.",
+        "look_for": "central problem, field map, learning order, and completion state",
+        "pages": [
+            {"label": "Completion Audit", "href": "completion-audit.html"},
+            {"label": "Field Synthesis", "href": "synthesis.html"},
+            {"label": "Learning Path", "href": "learning-path.html"},
+            {"label": "Review Handoff", "href": "handoff.html"},
+        ],
+    },
+    {
+        "intent": "I need to understand a concept from first principles.",
+        "look_for": "problem, observed evidence, hidden quantity, formula shape, and failure test",
+        "pages": [
+            {"label": "Concept Ladder", "href": "concept-ladder.html"},
+            {"label": "Dependency Map", "href": "dependencies.html"},
+            {"label": "Formula Guide", "href": "formula-guide.html"},
+            {"label": "Misconception Map", "href": "misconceptions.html"},
+        ],
+    },
+    {
+        "intent": "I need transcript support for a claim.",
+        "look_for": "source video, transcript excerpt, support limit, and review links",
+        "pages": [
+            {"label": "Evidence Packets", "href": "evidence-packets.html"},
+            {"label": "Evidence Ledger", "href": "evidence-ledger.html"},
+            {"label": "Transcripts", "href": "transcripts.html"},
+            {"label": "Coverage Matrix", "href": "coverage.html"},
+        ],
+    },
+    {
+        "intent": "I need to choose a method for a scientific job.",
+        "look_for": "domain, quantity, method route, use range, and required evidence",
+        "pages": [
+            {"label": "Decision Guide", "href": "decision-guide.html"},
+            {"label": "Domain Guides", "href": "domains.html"},
+            {"label": "Worked Examples", "href": "worked-examples.html"},
+            {"label": "Comparisons", "href": "comparisons.html"},
+        ],
+    },
+    {
+        "intent": "I need to audit quality.",
+        "look_for": "plain language, failure boundary, evidence discipline, and connected map",
+        "pages": [
+            {"label": "Quality Rubric", "href": "quality.html"},
+            {"label": "Reader Checks", "href": "reader-checks.html"},
+            {"label": "Misconception Map", "href": "misconceptions.html"},
+            {"label": "Completion Audit", "href": "completion-audit.html"},
+        ],
+    },
+    {
+        "intent": "I need another CLI to reproduce this for a different channel.",
+        "look_for": "source capture, transcript extraction, analysis build, site generation, and review gates",
+        "pages": [
+            {"label": "Cross-Channel Playbook", "href": "provenance/cross-channel-playbook.html"},
+            {"label": "CLI Reproduction Checklist", "href": "provenance/cli-reproduction.html"},
+            {"label": "Transcript Extraction", "href": "provenance/transcript-extraction.html"},
+            {"label": "Analysis Build", "href": "provenance/analysis-build.html"},
+        ],
     },
 ]
 
@@ -2001,6 +2071,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
             "review_handoff_count": 1,
             "review_entrypoint_count": sum(len(group["items"]) for group in REVIEW_ENTRYPOINTS),
             "completion_requirement_count": len(COMPLETION_REQUIREMENTS),
+            "review_search_intent_count": len(REVIEW_SEARCH_INDEX),
         },
         "transcript_index": [record_to_dict(record) for record in records],
         "concept_atlas": concept_atlas,
@@ -2030,6 +2101,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
         "review_handoff": REVIEW_HANDOFF,
         "review_entrypoints": REVIEW_ENTRYPOINTS,
         "completion_requirements": COMPLETION_REQUIREMENTS,
+        "review_search_index": REVIEW_SEARCH_INDEX,
     }
     for name, value in data.items():
         if name == "summary":
@@ -2390,6 +2462,7 @@ def html_page(title: str, body: str, root_prefix: str = "") -> str:
   <a href="{root_prefix}quality.html">Quality</a>
   <a href="{root_prefix}synthesis.html">Synthesis</a>
   <a href="{root_prefix}review-entrypoints.html">Review Map</a>
+  <a href="{root_prefix}review-search.html">Find</a>
   <a href="{root_prefix}completion-audit.html">Audit</a>
   <a href="{root_prefix}handoff.html">Handoff</a>
   <a href="{root_prefix}theme-map.html">Themes</a>
@@ -2610,6 +2683,7 @@ def write_site(data: dict[str, object]) -> None:
     review_handoff = data["review_handoff"]
     review_entrypoints = data["review_entrypoints"]
     completion_requirements = data["completion_requirements"]
+    review_search_index = data["review_search_index"]
 
     index_body = f"""
 <h1>Physics-Informed Machine Learning Concepts Research</h1>
@@ -2637,6 +2711,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Quality Rubric", f"{summary['quality_rubric_count']} editorial standards for first-principles pages.", "quality.html")}
 {card("Synthesis", f"{summary['synthesis_guide_count']} pages tying the field into one argument.", "synthesis.html")}
 {card("Review Map", f"{summary['review_entrypoint_count']} entry points for end-to-end review, use, and source checks.", "review-entrypoints.html")}
+{card("Find By Question", f"{summary['review_search_intent_count']} reviewer intents mapped to the right pages.", "review-search.html")}
 {card("Completion Audit", f"{summary['completion_requirement_count']} requirements checked against local evidence and external status.", "completion-audit.html")}
 {card("Review Handoff", "Shortest route for reviewing the package and the remaining editorial work.", "handoff.html")}
 {card("Themes", f"{summary['theme_count']} recurring research pressures across the course family.", "theme-map.html")}
@@ -2821,6 +2896,7 @@ def write_site(data: dict[str, object]) -> None:
 
     write_handoff_page(SITE / "handoff.html", dict(review_handoff), summary)
     write_review_entrypoints_page(SITE / "review-entrypoints.html", list(review_entrypoints))
+    write_review_search_page(SITE / "review-search.html", list(review_search_index))
     write_completion_audit_page(SITE / "completion-audit.html", list(completion_requirements), summary)
 
     theme_cards = []
@@ -3549,6 +3625,32 @@ def write_review_entrypoints_page(path: Path, groups: list[dict[str, object]]) -
     path.write_text(html_page("Physics-Informed ML Review Entrypoints", body), encoding="utf-8")
 
 
+def write_review_search_page(path: Path, rows: list[dict[str, object]]) -> None:
+    cards = []
+    for row in rows:
+        pages = "".join(
+            f"<li><a href=\"{html.escape(str(item['href']))}\">{html.escape(str(item['label']))}</a></li>"
+            for item in row["pages"]
+        )
+        cards.append(
+            f"""
+<article class="card">
+  <h3>{html.escape(str(row['intent']))}</h3>
+  <p><strong>Look for:</strong> {html.escape(str(row['look_for']))}</p>
+  <ul>{pages}</ul>
+</article>
+"""
+        )
+    body = f"""
+<h1>Find Pages By Question</h1>
+<p>This page maps reviewer questions to the strongest pages. Use it when you know what you need to check but not which index contains it.</p>
+<div class="grid">{''.join(cards)}</div>
+<h2>Review Rule</h2>
+<p>Start from the question, open the page group, then follow links until the claim has a source, a domain, a formula shape, and a failure test.</p>
+"""
+    path.write_text(html_page("Physics-Informed ML Review Search", body), encoding="utf-8")
+
+
 def write_completion_audit_page(path: Path, requirements: list[dict[str, object]], summary: dict[str, object]) -> None:
     rows = []
     for item in requirements:
@@ -3939,6 +4041,11 @@ def write_markdown_export(data: dict[str, object]) -> None:
         lines.extend(["", f"### {group['group']}", f"- Purpose: {group['purpose']}"])
         for item in group["items"]:
             lines.append(f"- {item['label']}: {item['href']} | {item['question']}")
+    lines.extend(["", "## Find Pages By Question"])
+    for row in data["review_search_index"]:
+        lines.extend(["", f"### {row['intent']}", f"- Look for: {row['look_for']}"])
+        for item in row["pages"]:
+            lines.append(f"- {item['label']}: {item['href']}")
     lines.extend(["", "## Completion Audit"])
     for item in data["completion_requirements"]:
         lines.extend(
@@ -4018,6 +4125,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         SITE / "quality.html",
         SITE / "synthesis.html",
         SITE / "review-entrypoints.html",
+        SITE / "review-search.html",
         SITE / "completion-audit.html",
         SITE / "handoff.html",
         SITE / "theme-map.html",
@@ -4273,6 +4381,17 @@ def validate(data: dict[str, object] | None = None) -> None:
         for item in group["items"]:
             if not (SITE / item["href"]).exists():
                 raise SystemExit(f"review entrypoint link missing: {item['href']}")
+    review_search_path = SITE / "review-search.html"
+    review_search_text = review_search_path.read_text(encoding="utf-8")
+    if "Find Pages By Question" not in review_search_text or "Review Rule" not in review_search_text:
+        raise SystemExit("review search page not rendered correctly")
+    review_search_rows = data.get("review_search_index") or []
+    if len(review_search_rows) != len(REVIEW_SEARCH_INDEX):
+        raise SystemExit("review search row count mismatch")
+    for row in review_search_rows:
+        for item in row["pages"]:
+            if not (SITE / item["href"]).exists():
+                raise SystemExit(f"review search link missing: {item['href']}")
     audit_path = SITE / "completion-audit.html"
     audit_text = audit_path.read_text(encoding="utf-8")
     if "Completion Audit" not in audit_text or "Requirement Evidence" not in audit_text or "external blocker" not in audit_text:

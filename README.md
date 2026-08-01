@@ -35,6 +35,7 @@ The purpose is not to summarize lectures. The purpose is to explain physics-info
 - `site/quality.html`: editorial quality rubric for first-principles pages
 - `site/synthesis.html`: field-level synthesis tying the concepts together
 - `site/review-entrypoints.html`: end-to-end review route through the package
+- `site/review-search.html`: reviewer-question index for finding the right page
 - `site/completion-audit.html`: requirement-by-requirement local completion evidence
 - `site/handoff.html`: review route, validation commands, and remaining editorial work
 - `site/theme-map.html`: recurring theme map
@@ -104,6 +105,7 @@ http://127.0.0.1:8022/index.html
 - editorial quality rubric
 - field synthesis
 - review entrypoint map
+- reviewer-question index
 - completion audit
 - review handoff
 - deep dives for core topics
