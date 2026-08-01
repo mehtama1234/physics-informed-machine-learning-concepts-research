@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Physics-Informed ML Misconception Map</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav class="topbar">
+  <a href="index.html">Physics-Informed ML</a>
+  <a href="transcripts.html">Transcripts</a>
+  <a href="concept-atlas.html">Concept Atlas</a>
+  <a href="families.html">Families</a>
+  <a href="comparisons.html">Comparisons</a>
+  <a href="worked-examples.html">Examples</a>
+  <a href="diagrams.html">Diagrams</a>
+  <a href="derivations.html">Derivations</a>
+  <a href="formula-guide.html">Formulas</a>
+  <a href="misconceptions.html">Misreads</a>
+  <a href="learning-path.html">Path</a>
+  <a href="glossary.html">Glossary</a>
+  <a href="domains.html">Domains</a>
+  <a href="reader-checks.html">Checks</a>
+  <a href="decision-guide.html">Decide</a>
+  <a href="provenance.html">Provenance</a>
+  <a href="coverage.html">Coverage</a>
+  <a href="dependencies.html">Dependencies</a>
+  <a href="concept-ladder.html">Ladder</a>
+  <a href="evidence-packets.html">Packets</a>
+  <a href="quality.html">Quality</a>
+  <a href="synthesis.html">Synthesis</a>
+  <a href="review-entrypoints.html">Review Map</a>
+  <a href="completion-audit.html">Audit</a>
+  <a href="handoff.html">Handoff</a>
+  <a href="theme-map.html">Themes</a>
+  <a href="evidence-ledger.html">Evidence</a>
+</nav>
+<main>
+
+<h1>Misconception Map</h1>
+<p>This page lists common wrong turns for the core concepts. Each row pairs the misread with a plain correction and the first-principles test that should replace vague confidence.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Concept</th>
+      <th>Wrong Turn</th>
+      <th>Plain Correction</th>
+      <th>First-Principles Test</th>
+      <th>Review Links</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+  <td><a href="topics/physics-informed-neural-networks.html">Physics-Informed Neural Networks</a></td>
+  <td><ul><li>A weak answer says only that the neural network fits data.</li><li>The page reports only training error.</li><li>The hard region has few check points.</li><li>The equation is known to be incomplete for the experiment.</li><li>No comparison is made against held-out measurements or a trusted solver.</li></ul></td>
+  <td>A PINN is a fitted field that must answer to both measured values and a known physical rule.</td>
+  <td>move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements</td>
+  <td><a href="derivations/physics-informed-neural-networks.html">derivation</a> · <a href="reader-checks/pinns-check.html">reader check</a></td>
+</tr>
+
+<tr>
+  <td><a href="topics/partial-differential-equations.html">Partial Differential Equations</a></td>
+  <td><ul><li>The boundary condition is vague.</li><li>The learned answer ignores conservation.</li><li>The grid or resolution changes the conclusion.</li><li>Small visual error hides a large error in the quantity people care about.</li></ul></td>
+  <td>A PDE is a rule for how a whole field changes across space and time.</td>
+  <td>change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error</td>
+  <td><a href="derivations/partial-differential-equations.html">derivation</a></td>
+</tr>
+
+<tr>
+  <td><a href="topics/operator-learning.html">Operator Learning</a></td>
+  <td><ul><li>A weak answer says only that the model is fast.</li><li>The training family is not named.</li><li>Only one resolution is tested.</li><li>The output looks plausible but physical quantities are not checked.</li><li>The model is used on a new boundary type without evidence.</li></ul></td>
+  <td>Operator learning tries to learn the machine that turns one field into another field.</td>
+  <td>change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed</td>
+  <td><a href="derivations/operator-learning.html">derivation</a> · <a href="reader-checks/operator-learning-check.html">reader check</a></td>
+</tr>
+
+<tr>
+  <td><a href="topics/surrogate-modeling.html">Surrogate Modeling</a></td>
+  <td><ul><li>A weak answer treats speed as trust.</li><li>The surrogate is described without its use range.</li><li>The edge cases are not tested.</li><li>The output metric ignores the decision people actually make.</li><li>The full solver is never used again for spot checks.</li></ul></td>
+  <td>A surrogate is a faster stand-in for a slower trusted process.</td>
+  <td>compare against the full solver on new cases near the edge of the intended use</td>
+  <td><a href="derivations/surrogate-modeling.html">derivation</a> · <a href="reader-checks/surrogate-check.html">reader check</a></td>
+</tr>
+
+<tr>
+  <td><a href="topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></td>
+  <td><ul><li>A weak answer reports one score without saying what changed.</li><li>Only familiar cases are reported.</li><li>The test set differs from training only in name.</li><li>Rare regimes are averaged away.</li><li>No one states what condition would make the model unusable.</li></ul></td>
+  <td>This topic asks when a prediction should be believed on a case the model did not learn from.</td>
+  <td>move one important condition outside the training range and measure the first failure</td>
+  <td><a href="derivations/uncertainty-and-generalization.html">derivation</a> · <a href="reader-checks/uncertainty-check.html">reader check</a></td>
+</tr>
+
+<tr>
+  <td><a href="topics/neural-differential-equations.html">Neural Differential Equations</a></td>
+  <td><ul><li>The model is tested only over short times.</li><li>Small rate errors accumulate unnoticed.</li><li>Known conservation or stability behavior is not checked.</li><li>The learned rate fits noise instead of mechanism.</li></ul></td>
+  <td>A neural differential equation learns the missing rule for how a system changes.</td>
+  <td>run longer than the training window and check whether small rate errors accumulate into drift</td>
+  <td><a href="derivations/neural-differential-equations.html">derivation</a></td>
+</tr>
+
+<tr>
+  <td><a href="topics/symbolic-regression.html">Symbolic Regression And Model Discovery</a></td>
+  <td><ul><li>A weak answer trusts a neat formula because it fits the original data.</li><li>Important variables were never measured.</li><li>The formula is selected only on the original data.</li><li>Noise creates a fake term.</li><li>The search space could not express the real mechanism.</li></ul></td>
+  <td>Symbolic regression searches for a short formula that explains measured behavior.</td>
+  <td>remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts</td>
+  <td><a href="derivations/symbolic-regression.html">derivation</a> · <a href="reader-checks/symbolic-regression-check.html">reader check</a></td>
+</tr>
+
+<tr>
+  <td><a href="topics/foundation-models-for-pdes.html">Foundation Models For PDEs</a></td>
+  <td><ul><li>A weak answer treats broad training size as proof of broad scientific trust.</li><li>The held-out test is too similar to training.</li><li>Rare regimes are missing.</li><li>New boundaries or quantities are assumed rather than tested.</li><li>Scale is treated as a substitute for scientific validation.</li></ul></td>
+  <td>A PDE foundation model tries to reuse structure across many related field-prediction tasks.</td>
+  <td>hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver</td>
+  <td><a href="derivations/foundation-models-for-pdes.html">derivation</a> · <a href="reader-checks/foundation-pde-check.html">reader check</a></td>
+</tr>
+</tbody>
+</table>
+
+</main>
+</body>
+</html>
