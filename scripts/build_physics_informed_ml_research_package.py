@@ -1254,6 +1254,38 @@ SYNTHESIS_GUIDES = [
 ]
 
 
+REVIEW_HANDOFF = {
+    "title": "Review Handoff",
+    "purpose": "Give a reviewer the shortest reliable route through the package and the checks that prove the generated site is coherent.",
+    "start_here": [
+        {"label": "Field Synthesis", "href": "synthesis.html"},
+        {"label": "Learning Path", "href": "learning-path.html"},
+        {"label": "Coverage Matrix", "href": "coverage.html"},
+        {"label": "Decision Guide", "href": "decision-guide.html"},
+        {"label": "Provenance", "href": "provenance.html"},
+    ],
+    "core_review_pages": [
+        {"label": "PINNs", "href": "topics/physics-informed-neural-networks.html"},
+        {"label": "Operator Learning", "href": "topics/operator-learning.html"},
+        {"label": "Surrogate Modeling", "href": "topics/surrogate-modeling.html"},
+        {"label": "Uncertainty And Generalization", "href": "topics/uncertainty-and-generalization.html"},
+        {"label": "Symbolic Regression", "href": "topics/symbolic-regression.html"},
+        {"label": "Foundation Models For PDEs", "href": "topics/foundation-models-for-pdes.html"},
+    ],
+    "validation_commands": [
+        "python3 -m py_compile scripts/build_physics_informed_ml_research_package.py",
+        "python3 scripts/build_physics_informed_ml_research_package.py --build --validate",
+        "run the wording scan for restricted filler terms listed in the editorial quality rubric",
+    ],
+    "remaining_editorial_work": [
+        "Hand-write richer derivations for the highest-value concepts after reviewing the generated structure.",
+        "Add more worked examples for chemistry, materials, graphs, attention, and foundation PDE models.",
+        "Add real figures or mathematical sketches where a static flow diagram is not enough.",
+        "Review transcript excerpts for places where better quotes or lecture-specific anchors should be selected.",
+    ],
+}
+
+
 @dataclass
 class TranscriptRecord:
     video_id: str
@@ -1563,6 +1595,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
             "coverage_row_count": len(coverage_matrix),
             "quality_rubric_count": len(QUALITY_RUBRIC),
             "synthesis_guide_count": len(SYNTHESIS_GUIDES),
+            "review_handoff_count": 1,
         },
         "transcript_index": [record_to_dict(record) for record in records],
         "concept_atlas": concept_atlas,
@@ -1583,6 +1616,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
         "coverage_matrix": coverage_matrix,
         "quality_rubric": QUALITY_RUBRIC,
         "synthesis_guides": SYNTHESIS_GUIDES,
+        "review_handoff": REVIEW_HANDOFF,
     }
     for name, value in data.items():
         if name == "summary":
@@ -1753,6 +1787,7 @@ def html_page(title: str, body: str, root_prefix: str = "") -> str:
   <a href="{root_prefix}coverage.html">Coverage</a>
   <a href="{root_prefix}quality.html">Quality</a>
   <a href="{root_prefix}synthesis.html">Synthesis</a>
+  <a href="{root_prefix}handoff.html">Handoff</a>
   <a href="{root_prefix}theme-map.html">Themes</a>
   <a href="{root_prefix}evidence-ledger.html">Evidence</a>
 </nav>
@@ -1949,6 +1984,7 @@ def write_site(data: dict[str, object]) -> None:
     coverage_matrix = data["coverage_matrix"]
     quality_rubric = data["quality_rubric"]
     synthesis_guides = data["synthesis_guides"]
+    review_handoff = data["review_handoff"]
 
     index_body = f"""
 <h1>Physics-Informed Machine Learning Concepts Research</h1>
@@ -1969,6 +2005,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Coverage Matrix", f"{summary['coverage_row_count']} concepts checked across evidence and guide layers.", "coverage.html")}
 {card("Quality Rubric", f"{summary['quality_rubric_count']} editorial standards for first-principles pages.", "quality.html")}
 {card("Synthesis", f"{summary['synthesis_guide_count']} pages tying the field into one argument.", "synthesis.html")}
+{card("Review Handoff", "Shortest route for reviewing the package and the remaining editorial work.", "handoff.html")}
 {card("Themes", f"{summary['theme_count']} recurring research pressures across the course family.", "theme-map.html")}
 {card("Evidence", "Each major claim links back to transcript or metadata evidence and states its limit.", "evidence-ledger.html")}
 </div>
@@ -2126,6 +2163,8 @@ def write_site(data: dict[str, object]) -> None:
         html_page("Physics-Informed ML Synthesis", f"<h1>Field Synthesis</h1><p>This section ties the package into one argument: start from the scientific job, choose the mathematical move that carries the right evidence, and test the claim under a changed case.</p><div class=\"grid\">{''.join(synthesis_cards)}</div>"),
         encoding="utf-8",
     )
+
+    write_handoff_page(SITE / "handoff.html", dict(review_handoff), summary)
 
     theme_cards = []
     for theme in themes:
@@ -2566,6 +2605,36 @@ def write_synthesis_page(path: Path, item: dict[str, object]) -> None:
     path.write_text(html_page(str(item["title"]), body, root_prefix="../"), encoding="utf-8")
 
 
+def link_list(items: list[dict[str, str]], prefix: str = "") -> str:
+    return "<ul>" + "".join(f"<li><a href=\"{prefix}{html.escape(item['href'])}\">{html.escape(item['label'])}</a></li>" for item in items) + "</ul>"
+
+
+def write_handoff_page(path: Path, handoff: dict[str, object], summary: dict[str, object]) -> None:
+    commands = "".join(f"<li><code>{html.escape(str(command))}</code></li>" for command in handoff["validation_commands"])
+    remaining = "".join(f"<li>{html.escape(str(item))}</li>" for item in handoff["remaining_editorial_work"])
+    body = f"""
+<h1>{html.escape(str(handoff['title']))}</h1>
+<h2>Purpose</h2>
+<p>{html.escape(str(handoff['purpose']))}</p>
+<h2>Current Package Counts</h2>
+<ul>
+  <li>Videos: {html.escape(str(summary['video_count']))}</li>
+  <li>Concepts: {html.escape(str(summary['concept_count']))}</li>
+  <li>Available transcripts: {html.escape(str(summary['available_transcripts']))}</li>
+  <li>Generated guide layers: learning path, glossary, domains, checks, decisions, provenance, coverage, quality, synthesis.</li>
+</ul>
+<h2>Start Here</h2>
+{link_list(list(handoff['start_here']))}
+<h2>Core Review Pages</h2>
+{link_list(list(handoff['core_review_pages']))}
+<h2>Validation Commands</h2>
+<ul>{commands}</ul>
+<h2>Remaining Editorial Work</h2>
+<ul>{remaining}</ul>
+"""
+    path.write_text(html_page(str(handoff["title"]), body), encoding="utf-8")
+
+
 def write_family_page(path: Path, family: dict[str, object]) -> None:
     steps = "".join(f"<div class=\"route-step\">{idx}. {html.escape(step)}</div>" for idx, step in enumerate(family["plain_route"], start=1))
     body = f"""
@@ -2817,6 +2886,14 @@ def write_markdown_export(data: dict[str, object]) -> None:
                 "",
             ]
         )
+    handoff = data["review_handoff"]
+    lines.extend(["", "## Review Handoff", f"- Purpose: {handoff['purpose']}", ""])
+    lines.append("### Start Here")
+    for item in handoff["start_here"]:
+        lines.append(f"- {item['label']}: {item['href']}")
+    lines.extend(["", "### Remaining Editorial Work"])
+    for item in handoff["remaining_editorial_work"]:
+        lines.append(f"- {item}")
     (EXPORTS / "research-package.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
@@ -2879,6 +2956,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         SITE / "coverage.html",
         SITE / "quality.html",
         SITE / "synthesis.html",
+        SITE / "handoff.html",
         SITE / "theme-map.html",
         SITE / "evidence-ledger.html",
     ):
@@ -3001,6 +3079,14 @@ def validate(data: dict[str, object] | None = None) -> None:
         for href in item["links"]:
             if not (SITE / str(href)).exists():
                 raise SystemExit(f"synthesis link missing: {item['title']} -> {href}")
+    handoff_path = SITE / "handoff.html"
+    handoff_text = handoff_path.read_text(encoding="utf-8")
+    if "Start Here" not in handoff_text or "Remaining Editorial Work" not in handoff_text:
+        raise SystemExit("handoff page not rendered correctly")
+    for group in ("start_here", "core_review_pages"):
+        for item in REVIEW_HANDOFF[group]:
+            if not (SITE / item["href"]).exists():
+                raise SystemExit(f"handoff link missing: {item['href']}")
     manifest_path = SITE / "page-manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     missing = [item for item in manifest if not (ROOT / item).exists()]

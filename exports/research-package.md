@@ -22,6 +22,7 @@
 - coverage_row_count: 14
 - quality_rubric_count: 6
 - synthesis_guide_count: 4
+- review_handoff_count: 1
 
 ## Concepts
 ### Deep Learning
@@ -661,3 +662,19 @@
 - Explanation: Sparse measurements point toward physics checks. Many solved fields point toward operator learning. Repeated expensive decisions point toward surrogates. New settings point toward uncertainty. Need for a readable law points toward model discovery.
 - Reader takeaway: Start from the job, then choose the concept family that carries the right evidence.
 
+
+## Review Handoff
+- Purpose: Give a reviewer the shortest reliable route through the package and the checks that prove the generated site is coherent.
+
+### Start Here
+- Field Synthesis: synthesis.html
+- Learning Path: learning-path.html
+- Coverage Matrix: coverage.html
+- Decision Guide: decision-guide.html
+- Provenance: provenance.html
+
+### Remaining Editorial Work
+- Hand-write richer derivations for the highest-value concepts after reviewing the generated structure.
+- Add more worked examples for chemistry, materials, graphs, attention, and foundation PDE models.
+- Add real figures or mathematical sketches where a static flow diagram is not enough.
+- Review transcript excerpts for places where better quotes or lecture-specific anchors should be selected.
