@@ -55,6 +55,15 @@
 </div>
 <h2>Key Difference</h2>
 <p>A solver follows the written equations step by step. A surrogate imitates the solver&#x27;s input-output behavior inside a tested use range.</p>
+<h2>Concrete Choice Cases</h2>
+<table>
+  <tbody>
+    <tr><th>Use Trusted numerical solvers</th><td>A safety decision depends on a stress peak near a crack. Use the trusted solver because the local failure quantity matters more than speed.</td></tr>
+    <tr><th>Use Learned surrogates</th><td>A design team needs to screen thousands of similar wing shapes before choosing a few expensive solver runs. Use a surrogate inside that named shape family.</td></tr>
+    <tr><th>Wrong Choice Case</th><td>Replacing the solver everywhere because the surrogate is fast, including edge cases where no solver comparison exists.</td></tr>
+    <tr><th>Evidence That Exposes It</th><td>Compare against the solver near the design boundary and inspect the decision quantity, such as drag, lift, stress peak, or failure location.</td></tr>
+  </tbody>
+</table>
 <h2>Common Wrong Turn</h2>
 <p>A fast surrogate is not a replacement for the solver outside the cases where it was checked.</p>
 <h2>First-Principles Test</h2>
