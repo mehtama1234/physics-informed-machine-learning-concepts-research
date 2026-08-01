@@ -16,6 +16,7 @@
 - learning_path_step_count: 7
 - glossary_term_count: 10
 - domain_guide_count: 5
+- reader_check_count: 6
 
 ## Concepts
 ### Deep Learning
@@ -397,4 +398,36 @@
 - Why hard: a model may look broad while only covering the cases it saw often
 - Common question: Can one trained model reuse structure across many related scientific tasks?
 - Failure test: Withhold a full equation family, boundary type, or scale and check whether the model still earns the claim.
+
+
+## Reader Checks
+### PINNs Reader Check
+- Setup: A wall has only a few temperature sensors, but the heat equation is trusted.
+- Strong answer: Observed: sensor values, starting or boundary values, and the heat equation. Hidden: the full temperature field. The equation residual checks unsensed locations. The score needs data error, equation error, and boundary or starting error. A changed boundary, source, or held-out sensor should test the claim.
+- Weak answer warning: A weak answer says only that the neural network fits data.
+
+### Operator Learning Reader Check
+- Setup: You have many solved PDE examples and want fast predictions for new input fields.
+- Strong answer: The input is a whole field or function, and the output is a whole solution field. The equation, boundary, grid, parameter, and geometry family must be named. The method learns a map between fields, not one field. A new boundary, resolution, parameter range, or equation family should test the claim.
+- Weak answer warning: A weak answer says only that the model is fast.
+
+### Surrogate Reader Check
+- Setup: A trusted simulation is too slow for a design loop.
+- Strong answer: The surrogate replaces a named solver or experiment only inside a named query family. Inputs and outputs must match the decision. The stand-in should be checked near the edge of intended use, and the full solver should return when the query leaves that range or when errors affect the decision quantity.
+- Weak answer warning: A weak answer treats speed as trust.
+
+### Uncertainty Reader Check
+- Setup: A model works on familiar examples and is now proposed for a new scientific setting.
+- Strong answer: The answer names the actual shift, such as geometry, parameter range, sensor, scale, boundary, or regime. It measures the error that matters for the scientific decision, states the use range, and names a condition that would stop use.
+- Weak answer warning: A weak answer reports one score without saying what changed.
+
+### Symbolic Regression Reader Check
+- Setup: Measurements suggest there may be a short law behind a changing system.
+- Strong answer: The answer lists measured variables, allowed operations or ingredients, and the formula's claim about the system. It names at least one missing variable or untested regime and demands a changed experiment before calling the formula useful.
+- Weak answer warning: A weak answer trusts a neat formula because it fits the original data.
+
+### Foundation PDE Model Reader Check
+- Setup: One broad model is trained across many PDE tasks.
+- Strong answer: The answer names included and held-out task families, the shared structure being claimed, and a trusted solver or measurement for checking. It rejects broad claims when new equations, boundaries, scales, or rare regimes were not tested.
+- Weak answer warning: A weak answer treats broad training size as proof of broad scientific trust.
 

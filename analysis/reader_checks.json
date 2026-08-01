@@ -1,0 +1,116 @@
+[
+  {
+    "slug": "pinns-check",
+    "title": "PINNs Reader Check",
+    "topic_slug": "physics-informed-neural-networks",
+    "setup": "A wall has only a few temperature sensors, but the heat equation is trusted.",
+    "questions": [
+      "What is observed?",
+      "What is hidden?",
+      "Which physical rule checks the spaces between sensors?",
+      "What error terms should the training score include?",
+      "What changed case would make you doubt the claim?"
+    ],
+    "strong_answer": "Observed: sensor values, starting or boundary values, and the heat equation. Hidden: the full temperature field. The equation residual checks unsensed locations. The score needs data error, equation error, and boundary or starting error. A changed boundary, source, or held-out sensor should test the claim.",
+    "weak_answer_warning": "A weak answer says only that the neural network fits data.",
+    "related": [
+      "topics/physics-informed-neural-networks.html",
+      "worked-examples/heat-equation-from-few-measurements.html"
+    ]
+  },
+  {
+    "slug": "operator-learning-check",
+    "title": "Operator Learning Reader Check",
+    "topic_slug": "operator-learning",
+    "setup": "You have many solved PDE examples and want fast predictions for new input fields.",
+    "questions": [
+      "What is the input object?",
+      "What is the output object?",
+      "What family of cases must be named?",
+      "How is this different from learning one solution?",
+      "What test would expose overclaiming?"
+    ],
+    "strong_answer": "The input is a whole field or function, and the output is a whole solution field. The equation, boundary, grid, parameter, and geometry family must be named. The method learns a map between fields, not one field. A new boundary, resolution, parameter range, or equation family should test the claim.",
+    "weak_answer_warning": "A weak answer says only that the model is fast.",
+    "related": [
+      "topics/operator-learning.html",
+      "diagrams/operator-learning-flow.html"
+    ]
+  },
+  {
+    "slug": "surrogate-check",
+    "title": "Surrogate Reader Check",
+    "topic_slug": "surrogate-modeling",
+    "setup": "A trusted simulation is too slow for a design loop.",
+    "questions": [
+      "What trusted source does the surrogate replace?",
+      "Which inputs will be varied?",
+      "What output quantity matters for decisions?",
+      "Where was the fast stand-in checked?",
+      "When should the full solver be used again?"
+    ],
+    "strong_answer": "The surrogate replaces a named solver or experiment only inside a named query family. Inputs and outputs must match the decision. The stand-in should be checked near the edge of intended use, and the full solver should return when the query leaves that range or when errors affect the decision quantity.",
+    "weak_answer_warning": "A weak answer treats speed as trust.",
+    "related": [
+      "topics/surrogate-modeling.html",
+      "domains/fluids-and-flow.html"
+    ]
+  },
+  {
+    "slug": "uncertainty-check",
+    "title": "Uncertainty Reader Check",
+    "topic_slug": "uncertainty-and-generalization",
+    "setup": "A model works on familiar examples and is now proposed for a new scientific setting.",
+    "questions": [
+      "How is the new setting different from training?",
+      "Which difference matters scientifically?",
+      "What error should be measured?",
+      "What use range can be stated?",
+      "What first failure would stop use?"
+    ],
+    "strong_answer": "The answer names the actual shift, such as geometry, parameter range, sensor, scale, boundary, or regime. It measures the error that matters for the scientific decision, states the use range, and names a condition that would stop use.",
+    "weak_answer_warning": "A weak answer reports one score without saying what changed.",
+    "related": [
+      "topics/uncertainty-and-generalization.html",
+      "diagrams/surrogate-validation-flow.html"
+    ]
+  },
+  {
+    "slug": "symbolic-regression-check",
+    "title": "Symbolic Regression Reader Check",
+    "topic_slug": "symbolic-regression",
+    "setup": "Measurements suggest there may be a short law behind a changing system.",
+    "questions": [
+      "Which variables were measured?",
+      "Which candidate ingredients were allowed?",
+      "What does the selected formula claim?",
+      "What missing variable could make the formula wrong?",
+      "What changed experiment should test it?"
+    ],
+    "strong_answer": "The answer lists measured variables, allowed operations or ingredients, and the formula's claim about the system. It names at least one missing variable or untested regime and demands a changed experiment before calling the formula useful.",
+    "weak_answer_warning": "A weak answer trusts a neat formula because it fits the original data.",
+    "related": [
+      "topics/symbolic-regression.html",
+      "worked-examples/discovering-a-small-law-from-motion.html"
+    ]
+  },
+  {
+    "slug": "foundation-pde-check",
+    "title": "Foundation PDE Model Reader Check",
+    "topic_slug": "foundation-models-for-pdes",
+    "setup": "One broad model is trained across many PDE tasks.",
+    "questions": [
+      "What task families were included?",
+      "What shared structure is the model expected to keep?",
+      "What whole task family was held out?",
+      "What trusted source checks the new task?",
+      "What would show that scale did not create scientific coverage?"
+    ],
+    "strong_answer": "The answer names included and held-out task families, the shared structure being claimed, and a trusted solver or measurement for checking. It rejects broad claims when new equations, boundaries, scales, or rare regimes were not tested.",
+    "weak_answer_warning": "A weak answer treats broad training size as proof of broad scientific trust.",
+    "related": [
+      "topics/foundation-models-for-pdes.html",
+      "domains/many-pde-tasks.html"
+    ]
+  }
+]

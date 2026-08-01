@@ -926,6 +926,106 @@ DOMAIN_GUIDES = [
 ]
 
 
+READER_CHECKS = [
+    {
+        "slug": "pinns-check",
+        "title": "PINNs Reader Check",
+        "topic_slug": "physics-informed-neural-networks",
+        "setup": "A wall has only a few temperature sensors, but the heat equation is trusted.",
+        "questions": [
+            "What is observed?",
+            "What is hidden?",
+            "Which physical rule checks the spaces between sensors?",
+            "What error terms should the training score include?",
+            "What changed case would make you doubt the claim?",
+        ],
+        "strong_answer": "Observed: sensor values, starting or boundary values, and the heat equation. Hidden: the full temperature field. The equation residual checks unsensed locations. The score needs data error, equation error, and boundary or starting error. A changed boundary, source, or held-out sensor should test the claim.",
+        "weak_answer_warning": "A weak answer says only that the neural network fits data.",
+        "related": ["topics/physics-informed-neural-networks.html", "worked-examples/heat-equation-from-few-measurements.html"],
+    },
+    {
+        "slug": "operator-learning-check",
+        "title": "Operator Learning Reader Check",
+        "topic_slug": "operator-learning",
+        "setup": "You have many solved PDE examples and want fast predictions for new input fields.",
+        "questions": [
+            "What is the input object?",
+            "What is the output object?",
+            "What family of cases must be named?",
+            "How is this different from learning one solution?",
+            "What test would expose overclaiming?",
+        ],
+        "strong_answer": "The input is a whole field or function, and the output is a whole solution field. The equation, boundary, grid, parameter, and geometry family must be named. The method learns a map between fields, not one field. A new boundary, resolution, parameter range, or equation family should test the claim.",
+        "weak_answer_warning": "A weak answer says only that the model is fast.",
+        "related": ["topics/operator-learning.html", "diagrams/operator-learning-flow.html"],
+    },
+    {
+        "slug": "surrogate-check",
+        "title": "Surrogate Reader Check",
+        "topic_slug": "surrogate-modeling",
+        "setup": "A trusted simulation is too slow for a design loop.",
+        "questions": [
+            "What trusted source does the surrogate replace?",
+            "Which inputs will be varied?",
+            "What output quantity matters for decisions?",
+            "Where was the fast stand-in checked?",
+            "When should the full solver be used again?",
+        ],
+        "strong_answer": "The surrogate replaces a named solver or experiment only inside a named query family. Inputs and outputs must match the decision. The stand-in should be checked near the edge of intended use, and the full solver should return when the query leaves that range or when errors affect the decision quantity.",
+        "weak_answer_warning": "A weak answer treats speed as trust.",
+        "related": ["topics/surrogate-modeling.html", "domains/fluids-and-flow.html"],
+    },
+    {
+        "slug": "uncertainty-check",
+        "title": "Uncertainty Reader Check",
+        "topic_slug": "uncertainty-and-generalization",
+        "setup": "A model works on familiar examples and is now proposed for a new scientific setting.",
+        "questions": [
+            "How is the new setting different from training?",
+            "Which difference matters scientifically?",
+            "What error should be measured?",
+            "What use range can be stated?",
+            "What first failure would stop use?",
+        ],
+        "strong_answer": "The answer names the actual shift, such as geometry, parameter range, sensor, scale, boundary, or regime. It measures the error that matters for the scientific decision, states the use range, and names a condition that would stop use.",
+        "weak_answer_warning": "A weak answer reports one score without saying what changed.",
+        "related": ["topics/uncertainty-and-generalization.html", "diagrams/surrogate-validation-flow.html"],
+    },
+    {
+        "slug": "symbolic-regression-check",
+        "title": "Symbolic Regression Reader Check",
+        "topic_slug": "symbolic-regression",
+        "setup": "Measurements suggest there may be a short law behind a changing system.",
+        "questions": [
+            "Which variables were measured?",
+            "Which candidate ingredients were allowed?",
+            "What does the selected formula claim?",
+            "What missing variable could make the formula wrong?",
+            "What changed experiment should test it?",
+        ],
+        "strong_answer": "The answer lists measured variables, allowed operations or ingredients, and the formula's claim about the system. It names at least one missing variable or untested regime and demands a changed experiment before calling the formula useful.",
+        "weak_answer_warning": "A weak answer trusts a neat formula because it fits the original data.",
+        "related": ["topics/symbolic-regression.html", "worked-examples/discovering-a-small-law-from-motion.html"],
+    },
+    {
+        "slug": "foundation-pde-check",
+        "title": "Foundation PDE Model Reader Check",
+        "topic_slug": "foundation-models-for-pdes",
+        "setup": "One broad model is trained across many PDE tasks.",
+        "questions": [
+            "What task families were included?",
+            "What shared structure is the model expected to keep?",
+            "What whole task family was held out?",
+            "What trusted source checks the new task?",
+            "What would show that scale did not create scientific coverage?",
+        ],
+        "strong_answer": "The answer names included and held-out task families, the shared structure being claimed, and a trusted solver or measurement for checking. It rejects broad claims when new equations, boundaries, scales, or rare regimes were not tested.",
+        "weak_answer_warning": "A weak answer treats broad training size as proof of broad scientific trust.",
+        "related": ["topics/foundation-models-for-pdes.html", "domains/many-pde-tasks.html"],
+    },
+]
+
+
 @dataclass
 class TranscriptRecord:
     video_id: str
@@ -1227,6 +1327,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
             "learning_path_step_count": len(LEARNING_PATH),
             "glossary_term_count": len(GLOSSARY),
             "domain_guide_count": len(DOMAIN_GUIDES),
+            "reader_check_count": len(READER_CHECKS),
         },
         "transcript_index": [record_to_dict(record) for record in records],
         "concept_atlas": concept_atlas,
@@ -1241,6 +1342,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
         "learning_path": LEARNING_PATH,
         "glossary": GLOSSARY,
         "domain_guides": DOMAIN_GUIDES,
+        "reader_checks": READER_CHECKS,
     }
     for name, value in data.items():
         if name == "summary":
@@ -1382,6 +1484,7 @@ def html_page(title: str, body: str, root_prefix: str = "") -> str:
   <a href="{root_prefix}learning-path.html">Path</a>
   <a href="{root_prefix}glossary.html">Glossary</a>
   <a href="{root_prefix}domains.html">Domains</a>
+  <a href="{root_prefix}reader-checks.html">Checks</a>
   <a href="{root_prefix}theme-map.html">Themes</a>
   <a href="{root_prefix}evidence-ledger.html">Evidence</a>
 </nav>
@@ -1470,6 +1573,23 @@ def learning_step_card(step: dict[str, object], href_prefix: str = "") -> str:
 """
 
 
+def reader_check_card(check: dict[str, object], href_prefix: str = "") -> str:
+    return f"""
+<article class="card">
+  <h3><a href="{href_prefix}reader-checks/{html.escape(str(check['slug']))}.html">{html.escape(str(check['title']))}</a></h3>
+  <p>{html.escape(str(check['setup']))}</p>
+  <p><strong>Weak answer warning:</strong> {html.escape(str(check['weak_answer_warning']))}</p>
+</article>
+"""
+
+
+def topic_reader_check_html(slug: str) -> str:
+    checks = [check for check in READER_CHECKS if check["topic_slug"] == slug]
+    if not checks:
+        return ""
+    return "<h2>Reader Check</h2>" + "".join(reader_check_card(check, href_prefix="../") for check in checks)
+
+
 def write_site(data: dict[str, object]) -> None:
     SITE.mkdir(parents=True, exist_ok=True)
     write_style()
@@ -1482,7 +1602,8 @@ def write_site(data: dict[str, object]) -> None:
     learning_dir = SITE / "learning-path"
     glossary_dir = SITE / "glossary"
     domain_dir = SITE / "domains"
-    for generated_dir in (family_dir, comparison_dir, example_dir, diagram_dir, learning_dir, glossary_dir, domain_dir):
+    check_dir = SITE / "reader-checks"
+    for generated_dir in (family_dir, comparison_dir, example_dir, diagram_dir, learning_dir, glossary_dir, domain_dir, check_dir):
         if generated_dir.exists():
             shutil.rmtree(generated_dir)
     topic_dir.mkdir(exist_ok=True)
@@ -1494,6 +1615,7 @@ def write_site(data: dict[str, object]) -> None:
     learning_dir.mkdir(exist_ok=True)
     glossary_dir.mkdir(exist_ok=True)
     domain_dir.mkdir(exist_ok=True)
+    check_dir.mkdir(exist_ok=True)
 
     summary = data["summary"]
     concept_atlas = data["concept_atlas"]
@@ -1508,6 +1630,7 @@ def write_site(data: dict[str, object]) -> None:
     learning_path = data["learning_path"]
     glossary = data["glossary"]
     domain_guides = data["domain_guides"]
+    reader_checks = data["reader_checks"]
 
     index_body = f"""
 <h1>Physics-Informed Machine Learning Concepts Research</h1>
@@ -1522,6 +1645,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Learning Path", f"{summary['learning_path_step_count']} steps from first question to field-level understanding.", "learning-path.html")}
 {card("Glossary", f"{summary['glossary_term_count']} field terms translated into everyday language.", "glossary.html")}
 {card("Domains", f"{summary['domain_guide_count']} domain guides that ground concepts in real scientific work.", "domains.html")}
+{card("Reader Checks", f"{summary['reader_check_count']} self-check prompts for core ideas.", "reader-checks.html")}
 {card("Themes", f"{summary['theme_count']} recurring research pressures across the course family.", "theme-map.html")}
 {card("Evidence", "Each major claim links back to transcript or metadata evidence and states its limit.", "evidence-ledger.html")}
 </div>
@@ -1630,6 +1754,15 @@ def write_site(data: dict[str, object]) -> None:
         write_domain_page(domain_dir / f"{guide['slug']}.html", guide)
     (SITE / "domains.html").write_text(
         html_page("Physics-Informed ML Domain Guides", f"<h1>Domain Guides</h1><p>These pages ground the concepts in real scientific settings. Each guide names the quantity, what makes the domain hard, which concepts matter, and the failure test.</p><div class=\"grid\">{''.join(domain_cards)}</div>"),
+        encoding="utf-8",
+    )
+
+    check_cards = []
+    for check in reader_checks:
+        check_cards.append(reader_check_card(check))
+        write_reader_check_page(check_dir / f"{check['slug']}.html", check)
+    (SITE / "reader-checks.html").write_text(
+        html_page("Physics-Informed ML Reader Checks", f"<h1>Reader Checks</h1><p>These prompts test whether a reader can name the observed evidence, hidden quantity, method, failure case, and domain claim without hiding behind method names.</p><div class=\"grid\">{''.join(check_cards)}</div>"),
         encoding="utf-8",
     )
 
@@ -1821,6 +1954,7 @@ def write_topic_page(path: Path, topic: dict[str, object]) -> None:
     derivation = topic_derivation(topic)
     deep_dive = topic_deep_dive_html(str(topic["slug"]))
     diagrams = topic_diagrams_html(str(topic["slug"]))
+    reader_check = topic_reader_check_html(str(topic["slug"]))
     body = f"""
 <h1>{html.escape(str(topic['title']))}</h1>
 <h2>Common Problem This Solves</h2>
@@ -1844,6 +1978,7 @@ def write_topic_page(path: Path, topic: dict[str, object]) -> None:
 {diagrams}
 <h2>Deeper Mathematical Why</h2>
 <p>The mathematical point is to decide what information is allowed to carry the scientific claim. If the carried information is too small, the model misses the behavior that matters. If it is too broad, the page may claim more than the evidence supports. The useful middle is a named object, a named scientific job, and a changed case that can reject the claim.</p>
+{reader_check}
 <h2>Reader Test</h2>
 <p>A reader understands this concept only if they can say what is observed, what is hidden, what is kept, what is ignored, and why this changed-case test matters: {html.escape(str(derivation['test']))}.</p>
 <h2>Failure Boundary</h2>
@@ -1929,6 +2064,25 @@ def write_domain_page(path: Path, guide: dict[str, object]) -> None:
 <p><a href="../{html.escape(str(guide['example']))}">Related page</a></p>
 """
     path.write_text(html_page(str(guide["title"]), body, root_prefix="../"), encoding="utf-8")
+
+
+def write_reader_check_page(path: Path, check: dict[str, object]) -> None:
+    questions = "".join(f"<li>{html.escape(str(question))}</li>" for question in check["questions"])
+    related = "".join(f"<li><a href=\"../{html.escape(str(href))}\">{html.escape(str(href))}</a></li>" for href in check["related"])
+    body = f"""
+<h1>{html.escape(str(check['title']))}</h1>
+<h2>Setup</h2>
+<p>{html.escape(str(check['setup']))}</p>
+<h2>Questions</h2>
+<ol>{questions}</ol>
+<h2>Strong Answer Should Say</h2>
+<p>{html.escape(str(check['strong_answer']))}</p>
+<h2>Weak Answer Warning</h2>
+<p>{html.escape(str(check['weak_answer_warning']))}</p>
+<h2>Related Pages</h2>
+<ul>{related}</ul>
+"""
+    path.write_text(html_page(str(check["title"]), body, root_prefix="../"), encoding="utf-8")
 
 
 def write_family_page(path: Path, family: dict[str, object]) -> None:
@@ -2112,6 +2266,17 @@ def write_markdown_export(data: dict[str, object]) -> None:
                 "",
             ]
         )
+    lines.extend(["", "## Reader Checks"])
+    for check in data["reader_checks"]:
+        lines.extend(
+            [
+                f"### {check['title']}",
+                f"- Setup: {check['setup']}",
+                f"- Strong answer: {check['strong_answer']}",
+                f"- Weak answer warning: {check['weak_answer_warning']}",
+                "",
+            ]
+        )
     (EXPORTS / "research-package.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
@@ -2168,6 +2333,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         SITE / "learning-path.html",
         SITE / "glossary.html",
         SITE / "domains.html",
+        SITE / "reader-checks.html",
         SITE / "theme-map.html",
         SITE / "evidence-ledger.html",
     ):
@@ -2224,6 +2390,22 @@ def validate(data: dict[str, object] | None = None) -> None:
                 raise SystemExit(f"domain concept missing: {guide['title']} -> {slug}")
         if not (SITE / str(guide["example"])).exists():
             raise SystemExit(f"domain anchor missing: {guide['title']} -> {guide['example']}")
+    for check in READER_CHECKS:
+        check_path = SITE / "reader-checks" / f"{check['slug']}.html"
+        if not check_path.exists():
+            raise SystemExit(f"missing reader check page: {check['title']}")
+        check_text = check_path.read_text(encoding="utf-8")
+        if "Strong Answer Should Say" not in check_text or "Weak Answer Warning" not in check_text:
+            raise SystemExit(f"reader check not rendered correctly: {check['title']}")
+        topic_path = SITE / "topics" / f"{check['topic_slug']}.html"
+        if not topic_path.exists():
+            raise SystemExit(f"reader check topic missing: {check['title']} -> {check['topic_slug']}")
+        topic_text = topic_path.read_text(encoding="utf-8")
+        if str(check["title"]) not in topic_text:
+            raise SystemExit(f"reader check not embedded in topic: {check['title']}")
+        for href in check["related"]:
+            if not (SITE / str(href)).exists():
+                raise SystemExit(f"reader check related page missing: {check['title']} -> {href}")
     manifest_path = SITE / "page-manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     missing = [item for item in manifest if not (ROOT / item).exists()]
