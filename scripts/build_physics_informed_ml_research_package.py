@@ -1096,6 +1096,76 @@ DECISION_GUIDES = [
 ]
 
 
+PROVENANCE_GUIDES = [
+    {
+        "slug": "source-playlists",
+        "title": "Source Playlists",
+        "purpose": "Name the exact course sources used by the package.",
+        "steps": [
+            "Start from the two ETH Zurich AI in the Sciences and Engineering playlist URLs.",
+            "Store one flat playlist manifest for each year.",
+            "Use the playlist manifests to define the 40-video source set.",
+            "Keep each generated video page linked back to the original YouTube video.",
+        ],
+        "local_files": ["raw-material/playlists/eth-aise-2024.json", "raw-material/playlists/eth-aise-2025.json"],
+        "checks": ["40 video records are present", "each record has a source URL", "each record has at least one concept"],
+    },
+    {
+        "slug": "transcript-extraction",
+        "title": "Transcript Extraction",
+        "purpose": "Show how captions become local source material.",
+        "steps": [
+            "Use yt-dlp to download metadata, English captions, and automatic captions when provided.",
+            "Store raw VTT caption files by playlist and video id.",
+            "Clean VTT captions into plain text transcripts.",
+            "Keep raw VTT and cleaned text so extraction can be inspected later.",
+        ],
+        "local_files": ["raw-material/transcripts/eth-aise-2024/raw-vtt/", "raw-material/transcripts/eth-aise-2024/clean/", "raw-material/transcripts/eth-aise-2025/raw-vtt/", "raw-material/transcripts/eth-aise-2025/clean/"],
+        "checks": ["available transcript count equals 40", "clean transcript paths are recorded", "raw caption paths are recorded when present"],
+    },
+    {
+        "slug": "analysis-build",
+        "title": "Analysis Build",
+        "purpose": "Show how source text becomes concepts, themes, evidence, and pages.",
+        "steps": [
+            "Load playlist records, metadata paths, captions, and cleaned transcript text.",
+            "Match concept keywords against title and transcript text.",
+            "Build concept, theme, evidence, domain, decision, glossary, and learning-path data.",
+            "Write JSON analysis files before rendering the HTML site.",
+        ],
+        "local_files": ["analysis/summary.json", "analysis/concept_atlas.json", "analysis/evidence_ledger.json", "analysis/"],
+        "checks": ["concept atlas has required fields", "evidence ledger names support type and limit", "summary counts match generated pages"],
+    },
+    {
+        "slug": "site-generation",
+        "title": "Site Generation",
+        "purpose": "Show how the package turns analysis data into reviewable pages.",
+        "steps": [
+            "Render the home page, transcript index, topic pages, video pages, and all guide layers.",
+            "Write a page manifest listing every generated HTML page.",
+            "Serve the site locally from the site directory for review.",
+            "Validate that required pages and links exist before committing.",
+        ],
+        "local_files": ["site/index.html", "site/page-manifest.json", "site/topics/", "site/videos/"],
+        "checks": ["page manifest has the expected page count", "required guide pages exist", "local HTTP checks return OK"],
+    },
+    {
+        "slug": "cli-reproduction",
+        "title": "CLI Reproduction Checklist",
+        "purpose": "Give another CLI enough detail to reproduce this package for another channel.",
+        "steps": [
+            "Create a repo named after the topic, not after a temporary extraction job.",
+            "Save raw playlists, metadata, raw captions, and clean transcripts separately.",
+            "Build concept pages from first principles: problem, domain, why it matters, kept information, left-out information, and failure boundary.",
+            "Add family routes, comparisons, worked examples, diagrams, learning path, glossary, domains, reader checks, and decision guide.",
+            "Run build validation and a wording scan before committing.",
+        ],
+        "local_files": ["scripts/build_physics_informed_ml_research_package.py", "README.md", "Makefile"],
+        "checks": ["repo has a clear topic name", "raw source material is preserved", "generated pages are validated", "commits are small enough to review"],
+    },
+]
+
+
 @dataclass
 class TranscriptRecord:
     video_id: str
@@ -1399,6 +1469,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
             "domain_guide_count": len(DOMAIN_GUIDES),
             "reader_check_count": len(READER_CHECKS),
             "decision_guide_count": len(DECISION_GUIDES),
+            "provenance_guide_count": len(PROVENANCE_GUIDES),
         },
         "transcript_index": [record_to_dict(record) for record in records],
         "concept_atlas": concept_atlas,
@@ -1415,6 +1486,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
         "domain_guides": DOMAIN_GUIDES,
         "reader_checks": READER_CHECKS,
         "decision_guides": DECISION_GUIDES,
+        "provenance_guides": PROVENANCE_GUIDES,
     }
     for name, value in data.items():
         if name == "summary":
@@ -1558,6 +1630,7 @@ def html_page(title: str, body: str, root_prefix: str = "") -> str:
   <a href="{root_prefix}domains.html">Domains</a>
   <a href="{root_prefix}reader-checks.html">Checks</a>
   <a href="{root_prefix}decision-guide.html">Decide</a>
+  <a href="{root_prefix}provenance.html">Provenance</a>
   <a href="{root_prefix}theme-map.html">Themes</a>
   <a href="{root_prefix}evidence-ledger.html">Evidence</a>
 </nav>
@@ -1666,6 +1739,15 @@ def decision_card(decision: dict[str, object], href_prefix: str = "") -> str:
 """
 
 
+def provenance_card(guide: dict[str, object], href_prefix: str = "") -> str:
+    return f"""
+<article class="card">
+  <h3><a href="{href_prefix}provenance/{html.escape(str(guide['slug']))}.html">{html.escape(str(guide['title']))}</a></h3>
+  <p>{html.escape(str(guide['purpose']))}</p>
+</article>
+"""
+
+
 def topic_reader_check_html(slug: str) -> str:
     checks = [check for check in READER_CHECKS if check["topic_slug"] == slug]
     if not checks:
@@ -1687,7 +1769,8 @@ def write_site(data: dict[str, object]) -> None:
     domain_dir = SITE / "domains"
     check_dir = SITE / "reader-checks"
     decision_dir = SITE / "decision-guide"
-    for generated_dir in (family_dir, comparison_dir, example_dir, diagram_dir, learning_dir, glossary_dir, domain_dir, check_dir, decision_dir):
+    provenance_dir = SITE / "provenance"
+    for generated_dir in (family_dir, comparison_dir, example_dir, diagram_dir, learning_dir, glossary_dir, domain_dir, check_dir, decision_dir, provenance_dir):
         if generated_dir.exists():
             shutil.rmtree(generated_dir)
     topic_dir.mkdir(exist_ok=True)
@@ -1701,6 +1784,7 @@ def write_site(data: dict[str, object]) -> None:
     domain_dir.mkdir(exist_ok=True)
     check_dir.mkdir(exist_ok=True)
     decision_dir.mkdir(exist_ok=True)
+    provenance_dir.mkdir(exist_ok=True)
 
     summary = data["summary"]
     concept_atlas = data["concept_atlas"]
@@ -1717,6 +1801,7 @@ def write_site(data: dict[str, object]) -> None:
     domain_guides = data["domain_guides"]
     reader_checks = data["reader_checks"]
     decision_guides = data["decision_guides"]
+    provenance_guides = data["provenance_guides"]
 
     index_body = f"""
 <h1>Physics-Informed Machine Learning Concepts Research</h1>
@@ -1733,6 +1818,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Domains", f"{summary['domain_guide_count']} domain guides that ground concepts in real scientific work.", "domains.html")}
 {card("Reader Checks", f"{summary['reader_check_count']} self-check prompts for core ideas.", "reader-checks.html")}
 {card("Decision Guide", f"{summary['decision_guide_count']} method choices from concrete scientific situations.", "decision-guide.html")}
+{card("Provenance", f"{summary['provenance_guide_count']} pages documenting source, extraction, build, and reproduction.", "provenance.html")}
 {card("Themes", f"{summary['theme_count']} recurring research pressures across the course family.", "theme-map.html")}
 {card("Evidence", "Each major claim links back to transcript or metadata evidence and states its limit.", "evidence-ledger.html")}
 </div>
@@ -1859,6 +1945,15 @@ def write_site(data: dict[str, object]) -> None:
         write_decision_page(decision_dir / f"{decision['slug']}.html", decision)
     (SITE / "decision-guide.html").write_text(
         html_page("Physics-Informed ML Decision Guide", f"<h1>Decision Guide</h1><p>Start from the scientific situation, not the method name. Each case names when a method fits, when to avoid it, and what evidence would make the choice defensible.</p><div class=\"grid\">{''.join(decision_cards)}</div>"),
+        encoding="utf-8",
+    )
+
+    provenance_cards = []
+    for guide in provenance_guides:
+        provenance_cards.append(provenance_card(guide))
+        write_provenance_page(provenance_dir / f"{guide['slug']}.html", guide)
+    (SITE / "provenance.html").write_text(
+        html_page("Physics-Informed ML Provenance", f"<h1>Provenance And Reproduction</h1><p>These pages show how source playlists, captions, cleaned transcripts, analysis data, and generated pages fit together. They also state what another CLI should reproduce for a similar channel.</p><div class=\"grid\">{''.join(provenance_cards)}</div>"),
         encoding="utf-8",
     )
 
@@ -2205,6 +2300,24 @@ def write_decision_page(path: Path, decision: dict[str, object]) -> None:
     path.write_text(html_page(str(decision["title"]), body, root_prefix="../"), encoding="utf-8")
 
 
+def write_provenance_page(path: Path, guide: dict[str, object]) -> None:
+    steps = "".join(f"<li>{html.escape(str(step))}</li>" for step in guide["steps"])
+    files = "".join(f"<li><code>{html.escape(str(item))}</code></li>" for item in guide["local_files"])
+    checks = "".join(f"<li>{html.escape(str(check))}</li>" for check in guide["checks"])
+    body = f"""
+<h1>{html.escape(str(guide['title']))}</h1>
+<h2>Purpose</h2>
+<p>{html.escape(str(guide['purpose']))}</p>
+<h2>Process</h2>
+<ol>{steps}</ol>
+<h2>Local Files</h2>
+<ul>{files}</ul>
+<h2>Checks</h2>
+<ul>{checks}</ul>
+"""
+    path.write_text(html_page(str(guide["title"]), body, root_prefix="../"), encoding="utf-8")
+
+
 def write_family_page(path: Path, family: dict[str, object]) -> None:
     steps = "".join(f"<div class=\"route-step\">{idx}. {html.escape(step)}</div>" for idx, step in enumerate(family["plain_route"], start=1))
     body = f"""
@@ -2409,6 +2522,17 @@ def write_markdown_export(data: dict[str, object]) -> None:
                 "",
             ]
         )
+    lines.extend(["", "## Provenance And Reproduction"])
+    for guide in data["provenance_guides"]:
+        lines.extend(
+            [
+                f"### {guide['title']}",
+                f"- Purpose: {guide['purpose']}",
+                f"- Local files: {', '.join(guide['local_files'])}",
+                f"- Checks: {', '.join(guide['checks'])}",
+                "",
+            ]
+        )
     (EXPORTS / "research-package.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
@@ -2467,6 +2591,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         SITE / "domains.html",
         SITE / "reader-checks.html",
         SITE / "decision-guide.html",
+        SITE / "provenance.html",
         SITE / "theme-map.html",
         SITE / "evidence-ledger.html",
     ):
@@ -2549,6 +2674,13 @@ def validate(data: dict[str, object] | None = None) -> None:
         for href in decision["links"]:
             if not (SITE / str(href)).exists():
                 raise SystemExit(f"decision guide link missing: {decision['title']} -> {href}")
+    for guide in PROVENANCE_GUIDES:
+        guide_path = SITE / "provenance" / f"{guide['slug']}.html"
+        if not guide_path.exists():
+            raise SystemExit(f"missing provenance page: {guide['title']}")
+        guide_text = guide_path.read_text(encoding="utf-8")
+        if "Local Files" not in guide_text or "Checks" not in guide_text:
+            raise SystemExit(f"provenance page not rendered correctly: {guide['title']}")
     manifest_path = SITE / "page-manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     missing = [item for item in manifest if not (ROOT / item).exists()]

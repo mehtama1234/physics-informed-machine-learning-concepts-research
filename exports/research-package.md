@@ -18,6 +18,7 @@
 - domain_guide_count: 5
 - reader_check_count: 6
 - decision_guide_count: 6
+- provenance_guide_count: 5
 
 ## Concepts
 ### Deep Learning
@@ -469,4 +470,31 @@
 - Start with: Foundation models for PDEs
 - Why: The claim is about shared structure across tasks, so whole task families must be tested.
 - Evidence needed: held-out task-family tests, trusted-solver comparisons, boundary and scale tests, and failure reports
+
+
+## Provenance And Reproduction
+### Source Playlists
+- Purpose: Name the exact course sources used by the package.
+- Local files: raw-material/playlists/eth-aise-2024.json, raw-material/playlists/eth-aise-2025.json
+- Checks: 40 video records are present, each record has a source URL, each record has at least one concept
+
+### Transcript Extraction
+- Purpose: Show how captions become local source material.
+- Local files: raw-material/transcripts/eth-aise-2024/raw-vtt/, raw-material/transcripts/eth-aise-2024/clean/, raw-material/transcripts/eth-aise-2025/raw-vtt/, raw-material/transcripts/eth-aise-2025/clean/
+- Checks: available transcript count equals 40, clean transcript paths are recorded, raw caption paths are recorded when present
+
+### Analysis Build
+- Purpose: Show how source text becomes concepts, themes, evidence, and pages.
+- Local files: analysis/summary.json, analysis/concept_atlas.json, analysis/evidence_ledger.json, analysis/
+- Checks: concept atlas has required fields, evidence ledger names support type and limit, summary counts match generated pages
+
+### Site Generation
+- Purpose: Show how the package turns analysis data into reviewable pages.
+- Local files: site/index.html, site/page-manifest.json, site/topics/, site/videos/
+- Checks: page manifest has the expected page count, required guide pages exist, local HTTP checks return OK
+
+### CLI Reproduction Checklist
+- Purpose: Give another CLI enough detail to reproduce this package for another channel.
+- Local files: scripts/build_physics_informed_ml_research_package.py, README.md, Makefile
+- Checks: repo has a clear topic name, raw source material is preserved, generated pages are validated, commits are small enough to review
 

@@ -1,0 +1,111 @@
+[
+  {
+    "slug": "source-playlists",
+    "title": "Source Playlists",
+    "purpose": "Name the exact course sources used by the package.",
+    "steps": [
+      "Start from the two ETH Zurich AI in the Sciences and Engineering playlist URLs.",
+      "Store one flat playlist manifest for each year.",
+      "Use the playlist manifests to define the 40-video source set.",
+      "Keep each generated video page linked back to the original YouTube video."
+    ],
+    "local_files": [
+      "raw-material/playlists/eth-aise-2024.json",
+      "raw-material/playlists/eth-aise-2025.json"
+    ],
+    "checks": [
+      "40 video records are present",
+      "each record has a source URL",
+      "each record has at least one concept"
+    ]
+  },
+  {
+    "slug": "transcript-extraction",
+    "title": "Transcript Extraction",
+    "purpose": "Show how captions become local source material.",
+    "steps": [
+      "Use yt-dlp to download metadata, English captions, and automatic captions when provided.",
+      "Store raw VTT caption files by playlist and video id.",
+      "Clean VTT captions into plain text transcripts.",
+      "Keep raw VTT and cleaned text so extraction can be inspected later."
+    ],
+    "local_files": [
+      "raw-material/transcripts/eth-aise-2024/raw-vtt/",
+      "raw-material/transcripts/eth-aise-2024/clean/",
+      "raw-material/transcripts/eth-aise-2025/raw-vtt/",
+      "raw-material/transcripts/eth-aise-2025/clean/"
+    ],
+    "checks": [
+      "available transcript count equals 40",
+      "clean transcript paths are recorded",
+      "raw caption paths are recorded when present"
+    ]
+  },
+  {
+    "slug": "analysis-build",
+    "title": "Analysis Build",
+    "purpose": "Show how source text becomes concepts, themes, evidence, and pages.",
+    "steps": [
+      "Load playlist records, metadata paths, captions, and cleaned transcript text.",
+      "Match concept keywords against title and transcript text.",
+      "Build concept, theme, evidence, domain, decision, glossary, and learning-path data.",
+      "Write JSON analysis files before rendering the HTML site."
+    ],
+    "local_files": [
+      "analysis/summary.json",
+      "analysis/concept_atlas.json",
+      "analysis/evidence_ledger.json",
+      "analysis/"
+    ],
+    "checks": [
+      "concept atlas has required fields",
+      "evidence ledger names support type and limit",
+      "summary counts match generated pages"
+    ]
+  },
+  {
+    "slug": "site-generation",
+    "title": "Site Generation",
+    "purpose": "Show how the package turns analysis data into reviewable pages.",
+    "steps": [
+      "Render the home page, transcript index, topic pages, video pages, and all guide layers.",
+      "Write a page manifest listing every generated HTML page.",
+      "Serve the site locally from the site directory for review.",
+      "Validate that required pages and links exist before committing."
+    ],
+    "local_files": [
+      "site/index.html",
+      "site/page-manifest.json",
+      "site/topics/",
+      "site/videos/"
+    ],
+    "checks": [
+      "page manifest has the expected page count",
+      "required guide pages exist",
+      "local HTTP checks return OK"
+    ]
+  },
+  {
+    "slug": "cli-reproduction",
+    "title": "CLI Reproduction Checklist",
+    "purpose": "Give another CLI enough detail to reproduce this package for another channel.",
+    "steps": [
+      "Create a repo named after the topic, not after a temporary extraction job.",
+      "Save raw playlists, metadata, raw captions, and clean transcripts separately.",
+      "Build concept pages from first principles: problem, domain, why it matters, kept information, left-out information, and failure boundary.",
+      "Add family routes, comparisons, worked examples, diagrams, learning path, glossary, domains, reader checks, and decision guide.",
+      "Run build validation and a wording scan before committing."
+    ],
+    "local_files": [
+      "scripts/build_physics_informed_ml_research_package.py",
+      "README.md",
+      "Makefile"
+    ],
+    "checks": [
+      "repo has a clear topic name",
+      "raw source material is preserved",
+      "generated pages are validated",
+      "commits are small enough to review"
+    ]
+  }
+]
