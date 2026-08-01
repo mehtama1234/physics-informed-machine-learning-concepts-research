@@ -67,6 +67,19 @@
   <li>Name the rejection test: hold out a changed material, geometry, parameter range, or sensor condition.</li>
 </ol>
 
+
+<h2>One Concrete Case From Start To Finish</h2>
+<table>
+  <tbody>
+    <tr><th>Real Setting</th><td>A lab has thousands of microscope images of cells and wants to flag the next image that may show damage.</td></tr>
+    <tr><th>Observed Evidence</th><td>past images and labels from the same measurement process</td></tr>
+    <tr><th>Hidden Thing Needed</th><td>whether the next image shows the kind of damage the lab cares about</td></tr>
+    <tr><th>Mathematical Move</th><td>learn visual features from many examples, then check the result on images held back from training</td></tr>
+    <tr><th>Usable Answer</th><td>a prediction that helps sort images for human review</td></tr>
+    <tr><th>Rejection Test</th><td>images from a new microscope, stain, cell type, or lab are tested and the error changes sharply</td></tr>
+  </tbody>
+</table>
+
 <h2>First-Principles Walkthrough</h2>
 <ol>
   <li><strong>Start with what is observed:</strong> many input-output examples from experiments, simulations, or measurements.</li>

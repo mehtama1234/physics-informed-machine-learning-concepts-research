@@ -118,10 +118,10 @@ def check_required_sections() -> list[str]:
         "site/editorial-roadmap.html": ("Editorial Roadmap", "Status:", "Current Evidence", "Acceptance Check", "locally completed", "Meaty End-To-End Goal"),
         "site/completion-audit.html": ("Completion Audit", "Requirement Evidence", "locally verified"),
         "site/meaty-goal.html": ("Meaty End-To-End Goal", "Done Means", "Every Core Page Must Contain", "Acceptance Sentence", "Not Done If"),
-        "site/meaty-goal-coverage.html": ("Meaty Goal Coverage Audit", "First Principles", "Formula Terms", "Acceptance Sentence", "Missing Items"),
+        "site/meaty-goal-coverage.html": ("Meaty Goal Coverage Audit", "First Principles", "Case Walkthrough", "Formula Terms", "Acceptance Sentence", "Missing Items"),
         "site/diagrams.html": ("Mathematical Sketches", "Kept Rule", "Failure Case"),
-        "site/topics/operator-learning.html": ("Plain Formula Term By Term", "What It Carries", "Concrete Worked Example", "Concrete Wrong-Use Example", "Test That Catches It", "Acceptance Sentence Filled", "I would test it by changing", "Mathematical Sketch", "Field To Field", "Kept Rule"),
-        "site/topics/surrogate-modeling.html": ("Plain Formula Term By Term", "What It Carries", "Concrete Worked Example", "Concrete Wrong-Use Example", "Test That Catches It", "Acceptance Sentence Filled", "I would test it by changing", "Mathematical Sketch", "Fast Stand-In", "Failure Case"),
+        "site/topics/operator-learning.html": ("One Concrete Case From Start To Finish", "Observed Evidence", "Rejection Test", "Plain Formula Term By Term", "What It Carries", "Concrete Worked Example", "Concrete Wrong-Use Example", "Test That Catches It", "Acceptance Sentence Filled", "I would test it by changing", "Mathematical Sketch", "Field To Field", "Kept Rule"),
+        "site/topics/surrogate-modeling.html": ("One Concrete Case From Start To Finish", "Observed Evidence", "Rejection Test", "Plain Formula Term By Term", "What It Carries", "Concrete Worked Example", "Concrete Wrong-Use Example", "Test That Catches It", "Acceptance Sentence Filled", "I would test it by changing", "Mathematical Sketch", "Fast Stand-In", "Failure Case"),
         "site/comparisons/pinns-vs-neural-operators.html": ("How To Decide From First Principles", "Decision Checklist", "Concrete Choice Cases", "Wrong Choice Case", "Evidence That Exposes It"),
         "site/comparisons/solvers-vs-learned-surrogates.html": ("How To Decide From First Principles", "Decision Checklist", "Concrete Choice Cases", "Wrong Choice Case", "Evidence That Exposes It"),
         "site/learning-path/scientific-question-first.html": ("No-Jargon Explanation", "First-Principles Spine", "World:", "Reject it when:"),
@@ -133,7 +133,7 @@ def check_required_sections() -> list[str]:
         "site/misconceptions.html": ("Misconception Map", "Wrong Turn", "First-Principles Test"),
         "site/evidence-packets/physics-informed-neural-networks.html": ("Transcript Support", "What This Evidence Does Not Prove", "Review Links"),
         "site/evidence-packets/operator-learning.html": ("Transcript Support", "What This Evidence Does Not Prove", "Review Links"),
-        "site/topics/physics-informed-neural-networks.html": ("First-Principles Essay", "What A Strong Explanation Must Say", "Plain Formula Term By Term", "What It Carries", "Concrete Worked Example", "Concrete Wrong-Use Example", "Test That Catches It", "Acceptance Sentence Filled", "I would test it by changing", "Selected Source Anchors", "Claim Anchored", "Limit:"),
+        "site/topics/physics-informed-neural-networks.html": ("First-Principles Essay", "What A Strong Explanation Must Say", "One Concrete Case From Start To Finish", "Observed Evidence", "Rejection Test", "Plain Formula Term By Term", "What It Carries", "Concrete Worked Example", "Concrete Wrong-Use Example", "Test That Catches It", "Acceptance Sentence Filled", "I would test it by changing", "Selected Source Anchors", "Claim Anchored", "Limit:"),
         "site/evidence-packets/foundation-models-for-pdes.html": ("Selected Source Anchors", "Claim Anchored", "Limit:"),
         "site/derivations.html": ("Core Derivations",),
         "site/derivations/physics-informed-neural-networks.html": ("Hand Derivation", "Why It Enters", "Final Line"),
@@ -226,7 +226,7 @@ def check_meaty_goal_coverage() -> list[str]:
         title = str(row.get("title"))
         if row.get("missing"):
             errors.append(f"meaty goal coverage has missing items: {title} -> {row.get('missing')}")
-        if len(row.get("requirements") or []) != 8:
+        if len(row.get("requirements") or []) != 9:
             errors.append(f"meaty goal coverage requirement count mismatch: {title}")
         for href_field in ("topic_href", "evidence_packet_href", "reader_check_href"):
             href = str(row.get(href_field) or "")

@@ -2091,6 +2091,7 @@ SOURCE_ANCHORS = {
 
 MEATY_GOAL_REQUIREMENTS = [
     {"key": "first_principles", "label": "First Principles", "proof_term": "First-Principles Essay"},
+    {"key": "case_walkthrough", "label": "Case Walkthrough", "proof_term": "One Concrete Case From Start To Finish"},
     {"key": "formula_terms", "label": "Formula Terms", "proof_term": "Plain Formula Term By Term"},
     {"key": "worked_example", "label": "Worked Example", "proof_term": "Concrete Worked Example"},
     {"key": "wrong_use", "label": "Wrong-Use Example", "proof_term": "Concrete Wrong-Use Example"},
@@ -3999,6 +4000,152 @@ def topic_derivation(topic: dict[str, object]) -> dict[str, object]:
     )
 
 
+def topic_case_walkthrough(topic: dict[str, object], derivation: dict[str, object]) -> dict[str, str]:
+    slug = str(topic["slug"])
+    cases = {
+        "deep-learning": {
+            "setting": "A lab has thousands of microscope images of cells and wants to flag the next image that may show damage.",
+            "observed": "past images and labels from the same measurement process",
+            "hidden": "whether the next image shows the kind of damage the lab cares about",
+            "move": "learn visual features from many examples, then check the result on images held back from training",
+            "answer": "a prediction that helps sort images for human review",
+            "rejection": "images from a new microscope, stain, cell type, or lab are tested and the error changes sharply",
+        },
+        "physics-informed-neural-networks": {
+            "setting": "A heat plate has only a few temperature sensors, but the heat equation and boundary temperatures are partly known.",
+            "observed": "sensor readings, boundary values, starting values, and the equation residual",
+            "hidden": "the temperature at unsensed points inside the plate",
+            "move": "fit a neural network while penalizing disagreement with both sensor readings and the heat equation",
+            "answer": "a full temperature field that can be inspected between the sensors",
+            "rejection": "held-out sensors near sharp heat changes disagree or a trusted numerical solve shows a different field",
+        },
+        "partial-differential-equations": {
+            "setting": "A weather group tracks how a pollutant moves through air over a city.",
+            "observed": "concentration at locations, wind, sources, and boundary conditions",
+            "hidden": "how the full concentration field changes from one time to the next",
+            "move": "write the rule that connects local change, spatial movement, sources, and boundaries",
+            "answer": "a field forecast rather than one isolated number",
+            "rejection": "mass is not conserved, boundaries are violated, or a changed wind case produces impossible movement",
+        },
+        "operator-learning": {
+            "setting": "An engineer repeatedly solves flow around many related wing shapes and wants a fast answer for the next shape.",
+            "observed": "many wing-shape inputs paired with full solver fields",
+            "hidden": "the full pressure or velocity field for a new shape",
+            "move": "learn the map from input shape or forcing field to output solution field",
+            "answer": "a quick field prediction for a new member of the tested family",
+            "rejection": "a new boundary, geometry class, resolution, or coefficient range breaks the field or the lift estimate",
+        },
+        "scientific-machine-learning": {
+            "setting": "A materials team wants to predict stress while still respecting units, tests, and known physical limits.",
+            "observed": "test data, simulation data, material settings, and known physical checks",
+            "hidden": "the stress behavior for a new material setting",
+            "move": "combine learned prediction with checks tied to the scientific quantity",
+            "answer": "a prediction plus a stated use range and failure test",
+            "rejection": "the model does well on a generic score but fails the material condition used for the decision",
+        },
+        "surrogate-modeling": {
+            "setting": "A design team needs thousands of drag estimates, but each trusted fluid solve is expensive.",
+            "observed": "a smaller set of full-solver runs and their input conditions",
+            "hidden": "the drag or field answer for many new design queries",
+            "move": "train a fast stand-in and compare it against the full solver near the edge of use",
+            "answer": "a cheaper answer for repeated queries inside the tested range",
+            "rejection": "the shortcut fails near peaks, rare regimes, or design boundaries where decisions change",
+        },
+        "uncertainty-and-generalization": {
+            "setting": "A flood-risk model trained on past storms is used for a warmer future storm pattern.",
+            "observed": "training storms, held-out storms, errors, and the named climate shift",
+            "hidden": "how wrong the model may be under the shifted condition",
+            "move": "separate familiar-test accuracy from evidence on the changed condition",
+            "answer": "a prediction with a use range and warning boundary",
+            "rejection": "the shifted storm cases fail even though ordinary held-out cases looked accurate",
+        },
+        "optimization-for-learning": {
+            "setting": "A model is trained to predict a field, but the training score only measures average point error.",
+            "observed": "the loss terms, data fit, physics penalties, and training progress",
+            "hidden": "whether the optimized score matches the scientific decision",
+            "move": "change model settings to reduce the written score, then inspect what the score ignored",
+            "answer": "trained settings that are useful only if the score captured the real burden",
+            "rejection": "boundaries, rare cases, units, or conservation fail because they were not part of the score",
+        },
+        "generative-modeling": {
+            "setting": "A team needs many possible turbulent fields for stress testing a downstream solver.",
+            "observed": "example fields and the constraints those fields should obey",
+            "hidden": "the spread of valid fields beyond the stored examples",
+            "move": "sample new candidates, then test them as scientific objects rather than pictures",
+            "answer": "a set of possible fields for downstream checks",
+            "rejection": "samples look plausible but break conservation, rare-event statistics, or the downstream task",
+        },
+        "graphs-and-geometric-learning": {
+            "setting": "A molecule property depends on atoms, bonds, distances, and symmetries.",
+            "observed": "atoms as nodes, bonds or distances as edges, geometry, and measured properties",
+            "hidden": "which interactions control the target property",
+            "move": "move information along the scientific object instead of flattening it into a plain row",
+            "answer": "a property prediction that keeps connections visible",
+            "rejection": "the answer changes incorrectly under rotation, mesh change, or a missing long-range interaction",
+        },
+        "neural-differential-equations": {
+            "setting": "A sensor records a chemical process over time, but the exact reaction-rate law is unknown.",
+            "observed": "time measurements of the state and any known starting conditions",
+            "hidden": "the rate rule that moves the state forward",
+            "move": "learn the missing rate and put it inside a time-evolution calculation",
+            "answer": "a trajectory forecast and a candidate change rule",
+            "rejection": "small rate errors grow into long-time drift or break conservation under a new starting condition",
+        },
+        "symbolic-regression": {
+            "setting": "A scientist measures motion and wants a short equation that explains it.",
+            "observed": "measured variables, candidate ingredients, and changed experiments",
+            "hidden": "which compact formula, if any, carries the real relation",
+            "move": "search readable formulas, then reject formulas that only fit the discovery data",
+            "answer": "a candidate equation that people can inspect and test",
+            "rejection": "a missing variable, added noise, or changed experiment breaks the selected formula",
+        },
+        "foundation-models-for-pdes": {
+            "setting": "A broad PDE model trained on many tasks is proposed for a new equation family.",
+            "observed": "many prior PDE tasks, grids, parameters, and solver comparisons",
+            "hidden": "whether the new equation shares the structure the model learned",
+            "move": "reuse shared field structure while holding out whole task families for testing",
+            "answer": "a fast prediction for a new task family with a stated boundary",
+            "rejection": "the held-out equation family, boundary type, scale, or rare regime fails against a trusted solver",
+        },
+        "attention-for-scientific-fields": {
+            "setting": "A large fluid field has local regions whose behavior depends on distant regions.",
+            "observed": "field patches, their positions, and examples of full-field behavior",
+            "hidden": "which distant patches matter for the local update",
+            "move": "route information between selected field parts before predicting the updated field",
+            "answer": "an updated field that can carry nonlocal information",
+            "rejection": "changing the attention window or boundary case loses important long-range behavior",
+        },
+    }
+    return cases.get(
+        slug,
+        {
+            "setting": f"A scientist in {topic['domain']} needs to answer a concrete case.",
+            "observed": str(derivation["observed"]),
+            "hidden": str(derivation["hidden"]),
+            "move": str(derivation["move"]),
+            "answer": str(derivation["meaning"]),
+            "rejection": str(derivation["test"]),
+        },
+    )
+
+
+def topic_case_walkthrough_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
+    case = topic_case_walkthrough(topic, derivation)
+    return f"""
+<h2>One Concrete Case From Start To Finish</h2>
+<table>
+  <tbody>
+    <tr><th>Real Setting</th><td>{html.escape(case['setting'])}</td></tr>
+    <tr><th>Observed Evidence</th><td>{html.escape(case['observed'])}</td></tr>
+    <tr><th>Hidden Thing Needed</th><td>{html.escape(case['hidden'])}</td></tr>
+    <tr><th>Mathematical Move</th><td>{html.escape(case['move'])}</td></tr>
+    <tr><th>Usable Answer</th><td>{html.escape(case['answer'])}</td></tr>
+    <tr><th>Rejection Test</th><td>{html.escape(case['rejection'])}</td></tr>
+  </tbody>
+</table>
+"""
+
+
 def topic_wrong_use(topic: dict[str, object]) -> dict[str, str]:
     slug = str(topic["slug"])
     wrong_uses = {
@@ -4168,6 +4315,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     derivation_link = topic_derivation_link_html(str(topic["slug"]))
     source_anchors = source_anchor_cards(str(topic["slug"]), list(evidence) if isinstance(evidence, list) else [], root_prefix="../")
     first_principles_essay = topic_first_principles_essay_html(topic, derivation)
+    case_walkthrough = topic_case_walkthrough_html(topic, derivation)
     formula_terms = topic_formula_terms_html(derivation)
     wrong_use = topic_wrong_use_html(topic)
     worked_examples = topic_worked_examples_html(str(topic["slug"]))
@@ -4184,6 +4332,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
 <h2>Everyday Anchor</h2>
 <p>{html.escape(str(topic['everyday_anchor']))}</p>
 {first_principles_essay}
+{case_walkthrough}
 <h2>First-Principles Walkthrough</h2>
 <ol>
   <li><strong>Start with what is observed:</strong> {html.escape(str(derivation['observed']))}.</li>
@@ -5555,7 +5704,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         if not topic_path.exists():
             raise SystemExit(f"deep dive missing topic page: {slug}")
         topic_text = topic_path.read_text(encoding="utf-8")
-        if "First-Principles Essay" not in topic_text or "What A Strong Explanation Must Say" not in topic_text or "Plain Formula Term By Term" not in topic_text or "What It Carries" not in topic_text or "Concrete Worked Example" not in topic_text or "Concrete Wrong-Use Example" not in topic_text or "Test That Catches It" not in topic_text or "Acceptance Sentence Filled" not in topic_text or "I would test it by changing" not in topic_text or "Core Idea In One Sentence" not in topic_text or "Mathematical Shape Without Jargon" not in topic_text:
+        if "First-Principles Essay" not in topic_text or "What A Strong Explanation Must Say" not in topic_text or "One Concrete Case From Start To Finish" not in topic_text or "Observed Evidence" not in topic_text or "Rejection Test" not in topic_text or "Plain Formula Term By Term" not in topic_text or "What It Carries" not in topic_text or "Concrete Worked Example" not in topic_text or "Concrete Wrong-Use Example" not in topic_text or "Test That Catches It" not in topic_text or "Acceptance Sentence Filled" not in topic_text or "I would test it by changing" not in topic_text or "Core Idea In One Sentence" not in topic_text or "Mathematical Shape Without Jargon" not in topic_text:
             raise SystemExit(f"deep dive not rendered on topic page: {slug}")
     worked_example_slugs = {str(slug) for example in WORKED_EXAMPLES for slug in example["method_route"]}
     concepts_without_examples = sorted(concept_slugs - worked_example_slugs)
@@ -5903,7 +6052,7 @@ def validate(data: dict[str, object] | None = None) -> None:
             raise SystemExit(f"meaty goal core page link missing: {item['href']}")
     goal_coverage_path = SITE / "meaty-goal-coverage.html"
     goal_coverage_text = goal_coverage_path.read_text(encoding="utf-8")
-    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
+    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
         raise SystemExit("meaty goal coverage audit not rendered correctly")
     goal_coverage_rows = data.get("meaty_goal_coverage") or []
     if len(goal_coverage_rows) != len(data["concept_atlas"]):

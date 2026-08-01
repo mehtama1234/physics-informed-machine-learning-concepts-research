@@ -67,6 +67,19 @@
   <li>Name the rejection test: compare against the full solver on new cases near the edge of the intended use.</li>
 </ol>
 
+
+<h2>One Concrete Case From Start To Finish</h2>
+<table>
+  <tbody>
+    <tr><th>Real Setting</th><td>A design team needs thousands of drag estimates, but each trusted fluid solve is expensive.</td></tr>
+    <tr><th>Observed Evidence</th><td>a smaller set of full-solver runs and their input conditions</td></tr>
+    <tr><th>Hidden Thing Needed</th><td>the drag or field answer for many new design queries</td></tr>
+    <tr><th>Mathematical Move</th><td>train a fast stand-in and compare it against the full solver near the edge of use</td></tr>
+    <tr><th>Usable Answer</th><td>a cheaper answer for repeated queries inside the tested range</td></tr>
+    <tr><th>Rejection Test</th><td>the shortcut fails near peaks, rare regimes, or design boundaries where decisions change</td></tr>
+  </tbody>
+</table>
+
 <h2>First-Principles Walkthrough</h2>
 <ol>
   <li><strong>Start with what is observed:</strong> expensive solver inputs and outputs for a limited set of cases.</li>

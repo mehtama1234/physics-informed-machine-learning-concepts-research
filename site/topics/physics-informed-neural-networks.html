@@ -67,6 +67,19 @@
   <li>Name the rejection test: move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements.</li>
 </ol>
 
+
+<h2>One Concrete Case From Start To Finish</h2>
+<table>
+  <tbody>
+    <tr><th>Real Setting</th><td>A heat plate has only a few temperature sensors, but the heat equation and boundary temperatures are partly known.</td></tr>
+    <tr><th>Observed Evidence</th><td>sensor readings, boundary values, starting values, and the equation residual</td></tr>
+    <tr><th>Hidden Thing Needed</th><td>the temperature at unsensed points inside the plate</td></tr>
+    <tr><th>Mathematical Move</th><td>fit a neural network while penalizing disagreement with both sensor readings and the heat equation</td></tr>
+    <tr><th>Usable Answer</th><td>a full temperature field that can be inspected between the sensors</td></tr>
+    <tr><th>Rejection Test</th><td>held-out sensors near sharp heat changes disagree or a trusted numerical solve shows a different field</td></tr>
+  </tbody>
+</table>
+
 <h2>First-Principles Walkthrough</h2>
 <ol>
   <li><strong>Start with what is observed:</strong> some measured values, boundary values, starting values, and a known differential equation.</li>

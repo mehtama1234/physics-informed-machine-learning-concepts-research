@@ -67,6 +67,19 @@
   <li>Name the rejection test: run longer than the training window and check whether small rate errors accumulate into drift.</li>
 </ol>
 
+
+<h2>One Concrete Case From Start To Finish</h2>
+<table>
+  <tbody>
+    <tr><th>Real Setting</th><td>A sensor records a chemical process over time, but the exact reaction-rate law is unknown.</td></tr>
+    <tr><th>Observed Evidence</th><td>time measurements of the state and any known starting conditions</td></tr>
+    <tr><th>Hidden Thing Needed</th><td>the rate rule that moves the state forward</td></tr>
+    <tr><th>Mathematical Move</th><td>learn the missing rate and put it inside a time-evolution calculation</td></tr>
+    <tr><th>Usable Answer</th><td>a trajectory forecast and a candidate change rule</td></tr>
+    <tr><th>Rejection Test</th><td>small rate errors grow into long-time drift or break conservation under a new starting condition</td></tr>
+  </tbody>
+</table>
+
 <h2>First-Principles Walkthrough</h2>
 <ol>
   <li><strong>Start with what is observed:</strong> measurements of a system changing over time.</li>
