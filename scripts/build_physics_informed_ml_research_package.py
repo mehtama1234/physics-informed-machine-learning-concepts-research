@@ -2092,6 +2092,7 @@ SOURCE_ANCHORS = {
 MEATY_GOAL_REQUIREMENTS = [
     {"key": "first_principles", "label": "First Principles", "proof_term": "First-Principles Essay"},
     {"key": "case_walkthrough", "label": "Case Walkthrough", "proof_term": "One Concrete Case From Start To Finish"},
+    {"key": "concept_connections", "label": "Concept Connections", "proof_term": "How This Connects To Nearby Ideas"},
     {"key": "formula_terms", "label": "Formula Terms", "proof_term": "Plain Formula Term By Term"},
     {"key": "worked_example", "label": "Worked Example", "proof_term": "Concrete Worked Example"},
     {"key": "wrong_use", "label": "Wrong-Use Example", "proof_term": "Concrete Wrong-Use Example"},
@@ -4146,6 +4147,40 @@ def topic_case_walkthrough_html(topic: dict[str, object], derivation: dict[str, 
 """
 
 
+def topic_connections_html(topic: dict[str, object]) -> str:
+    slug = str(topic["slug"])
+    names = {str(item["slug"]): str(item["name"]) for item in CONCEPTS}
+    dependency = next((item for item in CONCEPT_DEPENDENCIES if item["concept"] == slug), None)
+    learn_first = []
+    why = "This concept can be read on its own, but it still sits inside the larger route from evidence to scientific claim."
+    confusion = "The main confusion is treating the concept name as enough, instead of asking what evidence, hidden quantity, and changed-case test it needs."
+    if dependency:
+        learn_first = list(dependency["depends_on"])
+        why = str(dependency["why"])
+        confusion = str(dependency["confusion_prevented"])
+    used_by = [str(item["concept"]) for item in CONCEPT_DEPENDENCIES if slug in item["depends_on"]]
+    if learn_first:
+        learn_first_html = "".join(f"<li><a href=\"{html.escape(dep)}.html\">{html.escape(names.get(dep, dep.replace('-', ' ').title()))}</a></li>" for dep in learn_first)
+    else:
+        learn_first_html = "<li>Start from the common problem, observed evidence, hidden quantity, and rejection test on this page.</li>"
+    if used_by:
+        used_by_html = "".join(f"<li><a href=\"{html.escape(dep)}.html\">{html.escape(names.get(dep, dep.replace('-', ' ').title()))}</a></li>" for dep in used_by)
+    else:
+        used_by_html = "<li>This page is mainly a support idea for understanding the field route, not only a prerequisite for one later page.</li>"
+    return f"""
+<h2>How This Connects To Nearby Ideas</h2>
+<table>
+  <tbody>
+    <tr><th>Learn Before This</th><td><ul>{learn_first_html}</ul></td></tr>
+    <tr><th>What Uses This Later</th><td><ul>{used_by_html}</ul></td></tr>
+    <tr><th>Why The Connection Matters</th><td>{html.escape(why)}</td></tr>
+    <tr><th>Confusion It Prevents</th><td>{html.escape(confusion)}</td></tr>
+  </tbody>
+</table>
+<p>Read this section as a map of information flow. A nearby idea belongs here only when it explains what evidence is being carried, what hidden thing is being asked for, or what changed case would reject the claim.</p>
+"""
+
+
 def topic_wrong_use(topic: dict[str, object]) -> dict[str, str]:
     slug = str(topic["slug"])
     wrong_uses = {
@@ -4316,6 +4351,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     source_anchors = source_anchor_cards(str(topic["slug"]), list(evidence) if isinstance(evidence, list) else [], root_prefix="../")
     first_principles_essay = topic_first_principles_essay_html(topic, derivation)
     case_walkthrough = topic_case_walkthrough_html(topic, derivation)
+    connections = topic_connections_html(topic)
     formula_terms = topic_formula_terms_html(derivation)
     wrong_use = topic_wrong_use_html(topic)
     worked_examples = topic_worked_examples_html(str(topic["slug"]))
@@ -4333,6 +4369,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
 <p>{html.escape(str(topic['everyday_anchor']))}</p>
 {first_principles_essay}
 {case_walkthrough}
+{connections}
 <h2>First-Principles Walkthrough</h2>
 <ol>
   <li><strong>Start with what is observed:</strong> {html.escape(str(derivation['observed']))}.</li>
@@ -5704,7 +5741,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         if not topic_path.exists():
             raise SystemExit(f"deep dive missing topic page: {slug}")
         topic_text = topic_path.read_text(encoding="utf-8")
-        if "First-Principles Essay" not in topic_text or "What A Strong Explanation Must Say" not in topic_text or "One Concrete Case From Start To Finish" not in topic_text or "Observed Evidence" not in topic_text or "Rejection Test" not in topic_text or "Plain Formula Term By Term" not in topic_text or "What It Carries" not in topic_text or "Concrete Worked Example" not in topic_text or "Concrete Wrong-Use Example" not in topic_text or "Test That Catches It" not in topic_text or "Acceptance Sentence Filled" not in topic_text or "I would test it by changing" not in topic_text or "Core Idea In One Sentence" not in topic_text or "Mathematical Shape Without Jargon" not in topic_text:
+        if "First-Principles Essay" not in topic_text or "What A Strong Explanation Must Say" not in topic_text or "One Concrete Case From Start To Finish" not in topic_text or "Observed Evidence" not in topic_text or "Rejection Test" not in topic_text or "How This Connects To Nearby Ideas" not in topic_text or "Learn Before This" not in topic_text or "Confusion It Prevents" not in topic_text or "Plain Formula Term By Term" not in topic_text or "What It Carries" not in topic_text or "Concrete Worked Example" not in topic_text or "Concrete Wrong-Use Example" not in topic_text or "Test That Catches It" not in topic_text or "Acceptance Sentence Filled" not in topic_text or "I would test it by changing" not in topic_text or "Core Idea In One Sentence" not in topic_text or "Mathematical Shape Without Jargon" not in topic_text:
             raise SystemExit(f"deep dive not rendered on topic page: {slug}")
     worked_example_slugs = {str(slug) for example in WORKED_EXAMPLES for slug in example["method_route"]}
     concepts_without_examples = sorted(concept_slugs - worked_example_slugs)
@@ -6052,7 +6089,7 @@ def validate(data: dict[str, object] | None = None) -> None:
             raise SystemExit(f"meaty goal core page link missing: {item['href']}")
     goal_coverage_path = SITE / "meaty-goal-coverage.html"
     goal_coverage_text = goal_coverage_path.read_text(encoding="utf-8")
-    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
+    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Concept Connections" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
         raise SystemExit("meaty goal coverage audit not rendered correctly")
     goal_coverage_rows = data.get("meaty_goal_coverage") or []
     if len(goal_coverage_rows) != len(data["concept_atlas"]):
