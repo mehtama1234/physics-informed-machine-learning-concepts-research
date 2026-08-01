@@ -30,12 +30,13 @@
 - quality_rubric_count: 6
 - synthesis_guide_count: 4
 - review_handoff_count: 1
-- review_entrypoint_count: 27
+- review_entrypoint_count: 28
 - completion_requirement_count: 7
 - review_search_intent_count: 7
 - editorial_roadmap_count: 7
 - editorial_roadmap_completed_count: 7
 - source_anchor_count: 12
+- meaty_goal_count: 1
 
 ## Concepts
 ### Deep Learning
@@ -1360,6 +1361,7 @@
 - Find Pages By Question: review-search.html | Which page should I open for the question I have right now?
 - Completion Audit: completion-audit.html | What is locally verified, and what is still outside the workspace?
 - Editorial Roadmap: editorial-roadmap.html | What is the meaty next goal after the generated first pass?
+- Meaty Goal: meaty-goal.html | What must be true before these writeups should count as done?
 - Field Synthesis: synthesis.html | What problem holds the field together?
 - Learning Path: learning-path.html | What should a new reader read first, second, and third?
 - Concept Ladder: concept-ladder.html | Can each concept be explained without starting from the method name?
@@ -1444,6 +1446,39 @@
 - CLI Reproduction Checklist: provenance/cli-reproduction.html
 - Transcript Extraction: provenance/transcript-extraction.html
 - Analysis Build: provenance/analysis-build.html
+
+## Meaty End-To-End Goal
+- Goal: Turn the Physics-Informed Machine Learning site from a structured first-pass atlas into a teaching-grade research package that explains the paper family from first principles.
+- Target reader: A new reader who does not know the math, machine learning terms, benchmark language, causal language, optimization language, or systems language.
+- Acceptance sentence: This concept exists because scientists need ___, but they only observe ___. The hidden thing is ___. The math does ___ because ___. It matters in ___ domain because ___. It fails when ___. I would test it by changing ___.
+
+### Done Means
+- The reader can start from a plain scientific problem before seeing a method name.
+- The reader can name the real quantity being predicted, explained, controlled, designed, or discovered.
+- The reader can name the available evidence: measurements, equations, simulations, boundary information, geometry, prior cases, or transcript support.
+- The reader can name what is hidden, missing, or unknown.
+- The reader can explain why the mathematical move follows from that missing piece.
+- The reader can translate the formula shape into everyday language.
+- The reader can say which domain the idea belongs to and why solving it matters there.
+- The reader can say what the method keeps, what it ignores, and where it fails.
+- The reader can name the changed case that would reject an overclaim.
+- The reader can connect the concept to nearby concepts, examples, diagrams, and source anchors.
+
+### Every Core Page Must Contain
+- A concrete domain story that starts from a real scientific job.
+- A first-principles derivation from observed evidence to hidden quantity to mathematical move.
+- A plain formula explanation that says what every term carries.
+- A worked example and a wrong-use example.
+- A failure boundary and a changed-case rejection test.
+- Transcript anchors that state what the source supports and what it does not prove.
+- Links to nearby concepts, diagrams, derivations, examples, and reader checks.
+
+### Not Done If
+- The page starts with a method name but does not explain the world problem first.
+- The page says a model learns patterns without naming the quantity, evidence, hidden part, and failure test.
+- The page uses broad confidence words instead of a changed-case test.
+- The page has transcript evidence but does not state what the evidence fails to prove.
+- The page cannot be retold by a new reader in ordinary language.
 
 ## Editorial Roadmap
 ### P0 Pin Down The Core Argument

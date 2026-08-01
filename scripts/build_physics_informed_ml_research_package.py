@@ -1938,6 +1938,57 @@ ROADMAP_STATUS = {
 }
 
 
+MEATY_END_TO_END_GOAL = {
+    "title": "Meaty End-To-End Goal",
+    "short_goal": "Turn the Physics-Informed Machine Learning site from a structured first-pass atlas into a teaching-grade research package that explains the paper family from first principles.",
+    "target_reader": "A new reader who does not know the math, machine learning terms, benchmark language, causal language, optimization language, or systems language.",
+    "done_means": [
+        "The reader can start from a plain scientific problem before seeing a method name.",
+        "The reader can name the real quantity being predicted, explained, controlled, designed, or discovered.",
+        "The reader can name the available evidence: measurements, equations, simulations, boundary information, geometry, prior cases, or transcript support.",
+        "The reader can name what is hidden, missing, or unknown.",
+        "The reader can explain why the mathematical move follows from that missing piece.",
+        "The reader can translate the formula shape into everyday language.",
+        "The reader can say which domain the idea belongs to and why solving it matters there.",
+        "The reader can say what the method keeps, what it ignores, and where it fails.",
+        "The reader can name the changed case that would reject an overclaim.",
+        "The reader can connect the concept to nearby concepts, examples, diagrams, and source anchors.",
+    ],
+    "core_pages": [
+        {"label": "PINNs", "href": "topics/physics-informed-neural-networks.html"},
+        {"label": "PDEs", "href": "topics/partial-differential-equations.html"},
+        {"label": "Operator Learning", "href": "topics/operator-learning.html"},
+        {"label": "Surrogate Modeling", "href": "topics/surrogate-modeling.html"},
+        {"label": "Uncertainty And Generalization", "href": "topics/uncertainty-and-generalization.html"},
+        {"label": "Symbolic Regression", "href": "topics/symbolic-regression.html"},
+        {"label": "Neural Differential Equations", "href": "topics/neural-differential-equations.html"},
+        {"label": "Foundation Models For PDEs", "href": "topics/foundation-models-for-pdes.html"},
+        {"label": "Attention For Scientific Fields", "href": "topics/attention-for-scientific-fields.html"},
+        {"label": "Graphs And Geometric Learning", "href": "topics/graphs-and-geometric-learning.html"},
+        {"label": "Optimization For Learning", "href": "topics/optimization-for-learning.html"},
+        {"label": "Generative Modeling", "href": "topics/generative-modeling.html"},
+        {"label": "Scientific Machine Learning", "href": "topics/scientific-machine-learning.html"},
+    ],
+    "page_requirements": [
+        "A concrete domain story that starts from a real scientific job.",
+        "A first-principles derivation from observed evidence to hidden quantity to mathematical move.",
+        "A plain formula explanation that says what every term carries.",
+        "A worked example and a wrong-use example.",
+        "A failure boundary and a changed-case rejection test.",
+        "Transcript anchors that state what the source supports and what it does not prove.",
+        "Links to nearby concepts, diagrams, derivations, examples, and reader checks.",
+    ],
+    "acceptance_sentence": "This concept exists because scientists need ___, but they only observe ___. The hidden thing is ___. The math does ___ because ___. It matters in ___ domain because ___. It fails when ___. I would test it by changing ___.",
+    "not_done_if": [
+        "The page starts with a method name but does not explain the world problem first.",
+        "The page says a model learns patterns without naming the quantity, evidence, hidden part, and failure test.",
+        "The page uses broad confidence words instead of a changed-case test.",
+        "The page has transcript evidence but does not state what the evidence fails to prove.",
+        "The page cannot be retold by a new reader in ordinary language.",
+    ],
+}
+
+
 SOURCE_ANCHORS = {
     "physics-informed-neural-networks": [
         {
@@ -2066,6 +2117,12 @@ REVIEW_ENTRYPOINTS = [
                 "href": "editorial-roadmap.html",
                 "why": "Turns the remaining hand-written depth work into prioritized tasks with acceptance checks.",
                 "question": "What is the meaty next goal after the generated first pass?",
+            },
+            {
+                "label": "Meaty Goal",
+                "href": "meaty-goal.html",
+                "why": "States the end-to-end done criteria for making the package teaching-grade rather than merely structured.",
+                "question": "What must be true before these writeups should count as done?",
             },
             {
                 "label": "Field Synthesis",
@@ -2690,6 +2747,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
             "editorial_roadmap_count": len(editorial_roadmap),
             "editorial_roadmap_completed_count": sum(1 for item in editorial_roadmap if item.get("status") == "locally completed"),
             "source_anchor_count": sum(len(rows) for rows in SOURCE_ANCHORS.values()),
+            "meaty_goal_count": 1,
         },
         "transcript_index": [record_to_dict(record) for record in records],
         "concept_atlas": concept_atlas,
@@ -2715,6 +2773,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
         "dependency_map": dependency_map,
         "concept_ladder": concept_ladder,
         "concept_evidence_packets": concept_evidence_packets,
+        "meaty_goal": MEATY_END_TO_END_GOAL,
         "quality_rubric": QUALITY_RUBRIC,
         "synthesis_guides": SYNTHESIS_GUIDES,
         "review_handoff": REVIEW_HANDOFF,
@@ -3390,6 +3449,7 @@ def write_site(data: dict[str, object]) -> None:
     completion_requirements = data["completion_requirements"]
     review_search_index = data["review_search_index"]
     editorial_roadmap = data["editorial_roadmap"]
+    meaty_goal = data["meaty_goal"]
 
     index_body = f"""
 <h1>Physics-Informed Machine Learning Concepts Research</h1>
@@ -3416,6 +3476,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Evidence Packets", f"{summary['concept_evidence_packet_count']} concept packets tying source support to review pages.", "evidence-packets.html")}
 {card("Quality Rubric", f"{summary['quality_rubric_count']} editorial standards for first-principles pages.", "quality.html")}
 {card("Synthesis", f"{summary['synthesis_guide_count']} pages tying the field into one argument.", "synthesis.html")}
+{card("Meaty Goal", "End-to-end done criteria for turning the package into a teaching-grade first-principles research guide.", "meaty-goal.html")}
 {card("Review Map", f"{summary['review_entrypoint_count']} entry points for end-to-end review, use, and source checks.", "review-entrypoints.html")}
 {card("Find By Question", f"{summary['review_search_intent_count']} reviewer intents mapped to the right pages.", "review-search.html")}
 {card("Editorial Roadmap", f"{summary['editorial_roadmap_completed_count']} of {summary['editorial_roadmap_count']} roadmap tasks are locally completed, including remote verification.", "editorial-roadmap.html")}
@@ -3608,6 +3669,7 @@ def write_site(data: dict[str, object]) -> None:
     write_review_search_page(SITE / "review-search.html", list(review_search_index))
     write_editorial_roadmap_page(SITE / "editorial-roadmap.html", list(editorial_roadmap))
     write_completion_audit_page(SITE / "completion-audit.html", list(completion_requirements), summary)
+    write_meaty_goal_page(SITE / "meaty-goal.html", dict(meaty_goal))
 
     theme_cards = []
     for theme in themes:
@@ -4400,6 +4462,34 @@ def link_list(items: list[dict[str, str]], prefix: str = "") -> str:
     return "<ul>" + "".join(f"<li><a href=\"{prefix}{html.escape(item['href'])}\">{html.escape(item['label'])}</a></li>" for item in items) + "</ul>"
 
 
+def write_meaty_goal_page(path: Path, goal: dict[str, object]) -> None:
+    done_items = "".join(f"<li>{html.escape(str(item))}</li>" for item in goal["done_means"])
+    requirements = "".join(f"<li>{html.escape(str(item))}</li>" for item in goal["page_requirements"])
+    not_done = "".join(f"<li>{html.escape(str(item))}</li>" for item in goal["not_done_if"])
+    core_pages = link_list(list(goal["core_pages"]))
+    body = f"""
+<h1>{html.escape(str(goal['title']))}</h1>
+<h2>Goal</h2>
+<p>{html.escape(str(goal['short_goal']))}</p>
+<h2>Target Reader</h2>
+<p>{html.escape(str(goal['target_reader']))}</p>
+<h2>Done Means</h2>
+<ol>{done_items}</ol>
+<h2>Core Pages To Finish To This Standard</h2>
+{core_pages}
+<h2>Every Core Page Must Contain</h2>
+<ul>{requirements}</ul>
+<h2>Acceptance Sentence</h2>
+<p>A reviewer should be able to fill this in from the page alone:</p>
+<blockquote>{html.escape(str(goal['acceptance_sentence']))}</blockquote>
+<h2>Not Done If</h2>
+<ul>{not_done}</ul>
+<h2>How To Use This Goal</h2>
+<p>Review one concept at a time. If the page cannot satisfy the acceptance sentence without relying on outside knowledge, keep editing that page. Passing validation only proves the site is structurally coherent; this goal defines the editorial finish line.</p>
+"""
+    path.write_text(html_page(str(goal["title"]), body), encoding="utf-8")
+
+
 def write_handoff_page(path: Path, handoff: dict[str, object], summary: dict[str, object]) -> None:
     commands = "".join(f"<li><code>{html.escape(str(command))}</code></li>" for command in handoff["validation_commands"])
     remote_commands = "".join(f"<li><code>{html.escape(str(command))}</code></li>" for command in handoff["remote_finish_commands"])
@@ -5007,6 +5097,26 @@ def write_markdown_export(data: dict[str, object]) -> None:
         lines.extend(["", f"### {row['intent']}", f"- Look for: {row['look_for']}"])
         for item in row["pages"]:
             lines.append(f"- {item['label']}: {item['href']}")
+    goal = data["meaty_goal"]
+    lines.extend(
+        [
+            "",
+            "## Meaty End-To-End Goal",
+            f"- Goal: {goal['short_goal']}",
+            f"- Target reader: {goal['target_reader']}",
+            f"- Acceptance sentence: {goal['acceptance_sentence']}",
+            "",
+            "### Done Means",
+        ]
+    )
+    for item in goal["done_means"]:
+        lines.append(f"- {item}")
+    lines.extend(["", "### Every Core Page Must Contain"])
+    for item in goal["page_requirements"]:
+        lines.append(f"- {item}")
+    lines.extend(["", "### Not Done If"])
+    for item in goal["not_done_if"]:
+        lines.append(f"- {item}")
     lines.extend(["", "## Editorial Roadmap"])
     for item in data["editorial_roadmap"]:
         lines.extend(
@@ -5105,6 +5215,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         SITE / "review-search.html",
         SITE / "editorial-roadmap.html",
         SITE / "completion-audit.html",
+        SITE / "meaty-goal.html",
         SITE / "handoff.html",
         SITE / "theme-map.html",
         SITE / "evidence-ledger.html",
@@ -5405,6 +5516,16 @@ def validate(data: dict[str, object] | None = None) -> None:
         for href in item["links"]:
             if not (SITE / str(href)).exists():
                 raise SystemExit(f"synthesis link missing: {item['title']} -> {href}")
+    goal_path = SITE / "meaty-goal.html"
+    goal_text = goal_path.read_text(encoding="utf-8")
+    if "Meaty End-To-End Goal" not in goal_text or "Done Means" not in goal_text or "Acceptance Sentence" not in goal_text or "Not Done If" not in goal_text:
+        raise SystemExit("meaty goal page not rendered correctly")
+    goal = data.get("meaty_goal") or {}
+    if len(goal.get("done_means") or []) < 10:
+        raise SystemExit("meaty goal needs at least ten done criteria")
+    for item in goal.get("core_pages") or []:
+        if not (SITE / str(item["href"])).exists():
+            raise SystemExit(f"meaty goal core page link missing: {item['href']}")
     handoff_path = SITE / "handoff.html"
     handoff_text = handoff_path.read_text(encoding="utf-8")
     if "Start Here" not in handoff_text or "Remaining Editorial Work" not in handoff_text or "Remote Verification Commands" not in handoff_text:
