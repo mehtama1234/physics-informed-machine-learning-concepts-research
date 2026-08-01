@@ -41,6 +41,7 @@ REQUIRED_ROOT_PAGES = {
     "editorial-roadmap.html",
     "completion-audit.html",
     "meaty-goal.html",
+    "meaty-goal-coverage.html",
     "handoff.html",
     "theme-map.html",
     "evidence-ledger.html",
@@ -117,6 +118,7 @@ def check_required_sections() -> list[str]:
         "site/editorial-roadmap.html": ("Editorial Roadmap", "Status:", "Current Evidence", "Acceptance Check", "locally completed", "Meaty End-To-End Goal"),
         "site/completion-audit.html": ("Completion Audit", "Requirement Evidence", "locally verified"),
         "site/meaty-goal.html": ("Meaty End-To-End Goal", "Done Means", "Every Core Page Must Contain", "Acceptance Sentence", "Not Done If"),
+        "site/meaty-goal-coverage.html": ("Meaty Goal Coverage Audit", "First Principles", "Formula Terms", "Acceptance Sentence", "Missing Items"),
         "site/diagrams.html": ("Mathematical Sketches", "Kept Rule", "Failure Case"),
         "site/topics/operator-learning.html": ("Plain Formula Term By Term", "What It Carries", "Concrete Worked Example", "Concrete Wrong-Use Example", "Test That Catches It", "Acceptance Sentence Filled", "I would test it by changing", "Mathematical Sketch", "Field To Field", "Kept Rule"),
         "site/topics/surrogate-modeling.html": ("Plain Formula Term By Term", "What It Carries", "Concrete Worked Example", "Concrete Wrong-Use Example", "Test That Catches It", "Acceptance Sentence Filled", "I would test it by changing", "Mathematical Sketch", "Fast Stand-In", "Failure Case"),
@@ -214,6 +216,28 @@ def check_reader_check_coverage() -> list[str]:
     return errors
 
 
+def check_meaty_goal_coverage() -> list[str]:
+    errors: list[str] = []
+    concepts = json.loads((ANALYSIS / "concept_atlas.json").read_text(encoding="utf-8"))
+    rows = json.loads((ANALYSIS / "meaty_goal_coverage.json").read_text(encoding="utf-8"))
+    if len(rows) != len(concepts):
+        errors.append(f"expected meaty goal coverage for {len(concepts)} concepts, found {len(rows)}")
+    for row in rows:
+        title = str(row.get("title"))
+        if row.get("missing"):
+            errors.append(f"meaty goal coverage has missing items: {title} -> {row.get('missing')}")
+        if len(row.get("requirements") or []) != 8:
+            errors.append(f"meaty goal coverage requirement count mismatch: {title}")
+        for href_field in ("topic_href", "evidence_packet_href", "reader_check_href"):
+            href = str(row.get(href_field) or "")
+            if not href:
+                errors.append(f"meaty goal coverage missing {href_field}: {title}")
+                continue
+            if not (SITE / href).exists():
+                errors.append(f"meaty goal coverage link missing: {title} -> {href}")
+    return errors
+
+
 def validate() -> None:
     manifest_path = SITE / "page-manifest.json"
     if not manifest_path.exists():
@@ -240,13 +264,14 @@ def validate() -> None:
         errors.append(f"expected 40 videos, found {summary.get('video_count')}")
     if summary.get("concept_count") != 14:
         errors.append(f"expected 14 concepts, found {summary.get('concept_count')}")
-    if len(manifest) != 186:
-        errors.append(f"expected 186 pages, found {len(manifest)}")
+    if len(manifest) != 187:
+        errors.append(f"expected 187 pages, found {len(manifest)}")
 
     errors.extend(check_internal_links(manifest))
     errors.extend(check_required_sections())
     errors.extend(check_source_anchor_coverage())
     errors.extend(check_reader_check_coverage())
+    errors.extend(check_meaty_goal_coverage())
 
     scan_paths = [ROOT / "README.md", ROOT / "exports/research-package.md"]
     scan_paths.extend((ROOT / item) for item in manifest)

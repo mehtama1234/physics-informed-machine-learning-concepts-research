@@ -2089,6 +2089,18 @@ SOURCE_ANCHORS = {
 }
 
 
+MEATY_GOAL_REQUIREMENTS = [
+    {"key": "first_principles", "label": "First Principles", "proof_term": "First-Principles Essay"},
+    {"key": "formula_terms", "label": "Formula Terms", "proof_term": "Plain Formula Term By Term"},
+    {"key": "worked_example", "label": "Worked Example", "proof_term": "Concrete Worked Example"},
+    {"key": "wrong_use", "label": "Wrong-Use Example", "proof_term": "Concrete Wrong-Use Example"},
+    {"key": "failure_boundary", "label": "Failure Boundary", "proof_term": "Failure Boundary"},
+    {"key": "source_anchors", "label": "Source Anchors", "proof_term": "Selected Source Anchors"},
+    {"key": "reader_check", "label": "Reader Check", "proof_term": "Reader Check"},
+    {"key": "acceptance_sentence", "label": "Acceptance Sentence", "proof_term": "Acceptance Sentence Filled"},
+]
+
+
 REVIEW_ENTRYPOINTS = [
     {
         "group": "Start The Review",
@@ -2123,6 +2135,12 @@ REVIEW_ENTRYPOINTS = [
                 "href": "meaty-goal.html",
                 "why": "States the end-to-end done criteria for making the package teaching-grade rather than merely structured.",
                 "question": "What must be true before these writeups should count as done?",
+            },
+            {
+                "label": "Meaty Goal Coverage",
+                "href": "meaty-goal-coverage.html",
+                "why": "Checks every core concept against the required teaching-grade page parts and links to the proof pages.",
+                "question": "Which concepts still miss a required first-principles teaching section?",
             },
             {
                 "label": "Field Synthesis",
@@ -2704,6 +2722,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
     coverage_matrix = build_coverage_matrix(concept_atlas, reader_checks)
     core_derivations = build_core_derivations(topic_treatments)
     concept_evidence_packets = build_concept_evidence_packets(topic_treatments)
+    meaty_goal_coverage = build_meaty_goal_coverage(topic_treatments, reader_checks, concept_evidence_packets)
     formula_guide = build_formula_guide(core_derivations)
     misconception_map = build_misconception_map(core_derivations, reader_checks)
     editorial_roadmap = []
@@ -2750,6 +2769,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
             "editorial_roadmap_completed_count": sum(1 for item in editorial_roadmap if item.get("status") == "locally completed"),
             "source_anchor_count": sum(len(SOURCE_ANCHORS.get(str(row["slug"]), [])) or min(2, len(row.get("evidence") or [])) for row in concept_atlas),
             "meaty_goal_count": 1,
+            "meaty_goal_coverage_count": len(meaty_goal_coverage),
         },
         "transcript_index": [record_to_dict(record) for record in records],
         "concept_atlas": concept_atlas,
@@ -2776,6 +2796,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
         "concept_ladder": concept_ladder,
         "concept_evidence_packets": concept_evidence_packets,
         "meaty_goal": MEATY_END_TO_END_GOAL,
+        "meaty_goal_coverage": meaty_goal_coverage,
         "quality_rubric": QUALITY_RUBRIC,
         "synthesis_guides": SYNTHESIS_GUIDES,
         "review_handoff": REVIEW_HANDOFF,
@@ -2861,6 +2882,42 @@ def build_coverage_matrix(concept_atlas: list[dict[str, object]], reader_checks:
                 "reader_check": any(check["topic_slug"] == slug for check in reader_checks),
                 "decision_guide": any(f"topics/{slug}.html" in decision["links"] for decision in DECISION_GUIDES),
                 "evidence_items": len(concept.get("evidence", [])),
+            }
+        )
+    return rows
+
+
+def build_meaty_goal_coverage(topic_treatments: list[dict[str, object]], reader_checks: list[dict[str, object]], packets: list[dict[str, object]]) -> list[dict[str, object]]:
+    check_by_topic = {str(check["topic_slug"]): check for check in reader_checks}
+    packet_by_slug = {str(packet["slug"]): packet for packet in packets}
+    rows = []
+    for topic in topic_treatments:
+        slug = str(topic["slug"])
+        check = check_by_topic.get(slug)
+        packet = packet_by_slug.get(slug)
+        requirements = []
+        missing = []
+        for item in MEATY_GOAL_REQUIREMENTS:
+            present = True
+            if item["key"] == "reader_check":
+                present = check is not None
+            elif item["key"] == "source_anchors":
+                source_anchor_count = len(packet.get("source_anchors") or []) if packet else 0
+                fallback_anchor_count = min(2, int(packet.get("evidence_count") or 0)) if packet else 0
+                present = max(source_anchor_count, fallback_anchor_count) >= 2
+            if not present:
+                missing.append(str(item["label"]))
+            requirements.append({**item, "present": present})
+        rows.append(
+            {
+                "slug": slug,
+                "title": str(topic["title"]),
+                "common_problem": str(topic["common_problem"]),
+                "topic_href": f"topics/{slug}.html",
+                "evidence_packet_href": str(packet["packet_href"]) if packet else f"evidence-packets/{slug}.html",
+                "reader_check_href": f"reader-checks/{check['slug']}.html" if check else "",
+                "requirements": requirements,
+                "missing": missing,
             }
         )
     return rows
@@ -3539,6 +3596,7 @@ def write_site(data: dict[str, object]) -> None:
     review_search_index = data["review_search_index"]
     editorial_roadmap = data["editorial_roadmap"]
     meaty_goal = data["meaty_goal"]
+    meaty_goal_coverage = data["meaty_goal_coverage"]
 
     index_body = f"""
 <h1>Physics-Informed Machine Learning Concepts Research</h1>
@@ -3566,6 +3624,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Quality Rubric", f"{summary['quality_rubric_count']} editorial standards for first-principles pages.", "quality.html")}
 {card("Synthesis", f"{summary['synthesis_guide_count']} pages tying the field into one argument.", "synthesis.html")}
 {card("Meaty Goal", "End-to-end done criteria for turning the package into a teaching-grade first-principles research guide.", "meaty-goal.html")}
+{card("Meaty Goal Coverage", f"{summary['meaty_goal_coverage_count']} concepts checked against the required teaching-grade page parts.", "meaty-goal-coverage.html")}
 {card("Review Map", f"{summary['review_entrypoint_count']} entry points for end-to-end review, use, and source checks.", "review-entrypoints.html")}
 {card("Find By Question", f"{summary['review_search_intent_count']} reviewer intents mapped to the right pages.", "review-search.html")}
 {card("Editorial Roadmap", f"{summary['editorial_roadmap_completed_count']} of {summary['editorial_roadmap_count']} roadmap tasks are locally completed, including remote verification.", "editorial-roadmap.html")}
@@ -3759,6 +3818,7 @@ def write_site(data: dict[str, object]) -> None:
     write_editorial_roadmap_page(SITE / "editorial-roadmap.html", list(editorial_roadmap))
     write_completion_audit_page(SITE / "completion-audit.html", list(completion_requirements), summary)
     write_meaty_goal_page(SITE / "meaty-goal.html", dict(meaty_goal))
+    write_meaty_goal_coverage_page(SITE / "meaty-goal-coverage.html", list(meaty_goal_coverage))
 
     theme_cards = []
     for theme in themes:
@@ -4714,6 +4774,46 @@ def link_list(items: list[dict[str, str]], prefix: str = "") -> str:
     return "<ul>" + "".join(f"<li><a href=\"{prefix}{html.escape(item['href'])}\">{html.escape(item['label'])}</a></li>" for item in items) + "</ul>"
 
 
+def write_meaty_goal_coverage_page(path: Path, rows: list[dict[str, object]]) -> None:
+    table_rows = []
+    for row in rows:
+        requirement_cells = []
+        for item in row["requirements"]:
+            status = "present" if item["present"] else "missing"
+            requirement_cells.append(f"{html.escape(str(item['label']))}: {status}")
+        missing = ", ".join(str(item) for item in row["missing"]) or "none"
+        reader_link = str(row.get("reader_check_href") or "")
+        reader_html = f'<a href="{html.escape(reader_link)}">reader check</a>' if reader_link else "missing"
+        links = (
+            f'<a href="{html.escape(str(row["topic_href"]))}">topic</a>, '
+            f'<a href="{html.escape(str(row["evidence_packet_href"]))}">evidence packet</a>, '
+            f"{reader_html}"
+        )
+        table_rows.append(
+            "<tr>"
+            f"<td><a href=\"{html.escape(str(row['topic_href']))}\">{html.escape(str(row['title']))}</a></td>"
+            f"<td>{html.escape(str(row['common_problem']))}</td>"
+            f"<td>{'<br>'.join(requirement_cells)}</td>"
+            f"<td>{html.escape(missing)}</td>"
+            f"<td>{links}</td>"
+            "</tr>"
+        )
+    body = f"""
+<h1>Meaty Goal Coverage Audit</h1>
+<p>This page checks each core concept against the required teaching-grade parts from the meaty end-to-end goal. It is a review map: it names the required page parts and links to the pages where a reviewer can inspect them.</p>
+<h2>Required Parts Checked</h2>
+<ul>{"".join(f"<li>{html.escape(str(item['label']))}: proof term <code>{html.escape(str(item['proof_term']))}</code></li>" for item in MEATY_GOAL_REQUIREMENTS)}</ul>
+<h2>Concept Coverage</h2>
+<table>
+<tr><th>Concept</th><th>Common Problem</th><th>Required Parts</th><th>Missing Items</th><th>Proof Links</th></tr>
+{''.join(table_rows)}
+</table>
+<h2>How To Read This Audit</h2>
+<p>Missing Items should read none before a page is treated as structurally ready for hand editorial polish. A present mark means the generated page contains the required section or linked proof page; the reviewer still needs to judge whether the writing is deep enough.</p>
+"""
+    path.write_text(html_page("Meaty Goal Coverage Audit", body), encoding="utf-8")
+
+
 def write_meaty_goal_page(path: Path, goal: dict[str, object]) -> None:
     done_items = "".join(f"<li>{html.escape(str(item))}</li>" for item in goal["done_means"])
     requirements = "".join(f"<li>{html.escape(str(item))}</li>" for item in goal["page_requirements"])
@@ -4734,6 +4834,8 @@ def write_meaty_goal_page(path: Path, goal: dict[str, object]) -> None:
 <h2>Acceptance Sentence</h2>
 <p>A reviewer should be able to fill this in from the page alone:</p>
 <blockquote>{html.escape(str(goal['acceptance_sentence']))}</blockquote>
+<h2>Coverage Audit</h2>
+<p><a href="meaty-goal-coverage.html">Open the per-concept meaty goal coverage audit</a> to see which required page parts are present and which proof pages to inspect.</p>
 <h2>Not Done If</h2>
 <ul>{not_done}</ul>
 <h2>How To Use This Goal</h2>
@@ -5369,6 +5471,21 @@ def write_markdown_export(data: dict[str, object]) -> None:
     lines.extend(["", "### Not Done If"])
     for item in goal["not_done_if"]:
         lines.append(f"- {item}")
+    lines.extend(["", "## Meaty Goal Coverage Audit"])
+    for row in data["meaty_goal_coverage"]:
+        present = [str(item["label"]) for item in row["requirements"] if item["present"]]
+        lines.extend(
+            [
+                f"### {row['title']}",
+                f"- Common problem: {row['common_problem']}",
+                f"- Missing items: {', '.join(row['missing']) or 'none'}",
+                f"- Present required parts: {', '.join(present)}",
+                f"- Topic: {row['topic_href']}",
+                f"- Evidence packet: {row['evidence_packet_href']}",
+                f"- Reader check: {row['reader_check_href']}",
+                "",
+            ]
+        )
     lines.extend(["", "## Editorial Roadmap"])
     for item in data["editorial_roadmap"]:
         lines.extend(
@@ -5472,6 +5589,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         SITE / "editorial-roadmap.html",
         SITE / "completion-audit.html",
         SITE / "meaty-goal.html",
+        SITE / "meaty-goal-coverage.html",
         SITE / "handoff.html",
         SITE / "theme-map.html",
         SITE / "evidence-ledger.html",
@@ -5783,6 +5901,21 @@ def validate(data: dict[str, object] | None = None) -> None:
     for item in goal.get("core_pages") or []:
         if not (SITE / str(item["href"])).exists():
             raise SystemExit(f"meaty goal core page link missing: {item['href']}")
+    goal_coverage_path = SITE / "meaty-goal-coverage.html"
+    goal_coverage_text = goal_coverage_path.read_text(encoding="utf-8")
+    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
+        raise SystemExit("meaty goal coverage audit not rendered correctly")
+    goal_coverage_rows = data.get("meaty_goal_coverage") or []
+    if len(goal_coverage_rows) != len(data["concept_atlas"]):
+        raise SystemExit("meaty goal coverage row count does not match concept atlas")
+    for row in goal_coverage_rows:
+        if row.get("missing"):
+            raise SystemExit(f"meaty goal coverage has missing items: {row.get('title')} -> {row.get('missing')}")
+        if len(row.get("requirements") or []) != len(MEATY_GOAL_REQUIREMENTS):
+            raise SystemExit(f"meaty goal coverage requirement count mismatch: {row.get('title')}")
+        for href_field in ("topic_href", "evidence_packet_href", "reader_check_href"):
+            if not (SITE / str(row[href_field])).exists():
+                raise SystemExit(f"meaty goal coverage link missing: {row.get('title')} -> {row[href_field]}")
     handoff_path = SITE / "handoff.html"
     handoff_text = handoff_path.read_text(encoding="utf-8")
     if "Start Here" not in handoff_text or "Remaining Editorial Work" not in handoff_text or "Remote Verification Commands" not in handoff_text:

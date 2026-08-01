@@ -30,13 +30,14 @@
 - quality_rubric_count: 6
 - synthesis_guide_count: 4
 - review_handoff_count: 1
-- review_entrypoint_count: 28
+- review_entrypoint_count: 29
 - completion_requirement_count: 7
 - review_search_intent_count: 7
 - editorial_roadmap_count: 7
 - editorial_roadmap_completed_count: 7
 - source_anchor_count: 28
 - meaty_goal_count: 1
+- meaty_goal_coverage_count: 14
 
 ## Concepts
 ### Deep Learning
@@ -1402,6 +1403,7 @@
 - Completion Audit: completion-audit.html | What is locally verified, and what is still outside the workspace?
 - Editorial Roadmap: editorial-roadmap.html | What is the meaty next goal after the generated first pass?
 - Meaty Goal: meaty-goal.html | What must be true before these writeups should count as done?
+- Meaty Goal Coverage: meaty-goal-coverage.html | Which concepts still miss a required first-principles teaching section?
 - Field Synthesis: synthesis.html | What problem holds the field together?
 - Learning Path: learning-path.html | What should a new reader read first, second, and third?
 - Concept Ladder: concept-ladder.html | Can each concept be explained without starting from the method name?
@@ -1519,6 +1521,120 @@
 - The page uses broad confidence words instead of a changed-case test.
 - The page has transcript evidence but does not state what the evidence fails to prove.
 - The page cannot be retold by a new reader in ordinary language.
+
+## Meaty Goal Coverage Audit
+### Deep Learning
+- Common problem: scientists often have examples of behavior but no short rule that predicts the next case
+- Missing items: none
+- Present required parts: First Principles, Formula Terms, Worked Example, Wrong-Use Example, Failure Boundary, Source Anchors, Reader Check, Acceptance Sentence
+- Topic: topics/deep-learning.html
+- Evidence packet: evidence-packets/deep-learning.html
+- Reader check: reader-checks/deep-learning-check.html
+
+### Physics-Informed Neural Networks
+- Common problem: measurements may be sparse, but the answer must still respect a known physical equation
+- Missing items: none
+- Present required parts: First Principles, Formula Terms, Worked Example, Wrong-Use Example, Failure Boundary, Source Anchors, Reader Check, Acceptance Sentence
+- Topic: topics/physics-informed-neural-networks.html
+- Evidence packet: evidence-packets/physics-informed-neural-networks.html
+- Reader check: reader-checks/pinns-check.html
+
+### Partial Differential Equations
+- Common problem: a quantity changes over space and time, so one number is not enough to describe the situation
+- Missing items: none
+- Present required parts: First Principles, Formula Terms, Worked Example, Wrong-Use Example, Failure Boundary, Source Anchors, Reader Check, Acceptance Sentence
+- Topic: topics/partial-differential-equations.html
+- Evidence packet: evidence-packets/partial-differential-equations.html
+- Reader check: reader-checks/partial-differential-equations-check.html
+
+### Operator Learning
+- Common problem: one simulation answer is not enough when engineers need the whole map from inputs to solution fields
+- Missing items: none
+- Present required parts: First Principles, Formula Terms, Worked Example, Wrong-Use Example, Failure Boundary, Source Anchors, Reader Check, Acceptance Sentence
+- Topic: topics/operator-learning.html
+- Evidence packet: evidence-packets/operator-learning.html
+- Reader check: reader-checks/operator-learning-check.html
+
+### Scientific Machine Learning
+- Common problem: scientific work needs predictions that respect measurements, equations, uncertainty, and domain limits at the same time
+- Missing items: none
+- Present required parts: First Principles, Formula Terms, Worked Example, Wrong-Use Example, Failure Boundary, Source Anchors, Reader Check, Acceptance Sentence
+- Topic: topics/scientific-machine-learning.html
+- Evidence packet: evidence-packets/scientific-machine-learning.html
+- Reader check: reader-checks/scientific-machine-learning-check.html
+
+### Surrogate Modeling
+- Common problem: a trusted simulator may be too slow to run for every design, control, or uncertainty question
+- Missing items: none
+- Present required parts: First Principles, Formula Terms, Worked Example, Wrong-Use Example, Failure Boundary, Source Anchors, Reader Check, Acceptance Sentence
+- Topic: topics/surrogate-modeling.html
+- Evidence packet: evidence-packets/surrogate-modeling.html
+- Reader check: reader-checks/surrogate-check.html
+
+### Uncertainty And Generalization
+- Common problem: a prediction is not enough unless the user knows when it should be believed
+- Missing items: none
+- Present required parts: First Principles, Formula Terms, Worked Example, Wrong-Use Example, Failure Boundary, Source Anchors, Reader Check, Acceptance Sentence
+- Topic: topics/uncertainty-and-generalization.html
+- Evidence packet: evidence-packets/uncertainty-and-generalization.html
+- Reader check: reader-checks/uncertainty-check.html
+
+### Optimization For Learning
+- Common problem: learning needs a way to decide which model settings are better or worse
+- Missing items: none
+- Present required parts: First Principles, Formula Terms, Worked Example, Wrong-Use Example, Failure Boundary, Source Anchors, Reader Check, Acceptance Sentence
+- Topic: topics/optimization-for-learning.html
+- Evidence packet: evidence-packets/optimization-for-learning.html
+- Reader check: reader-checks/optimization-for-learning-check.html
+
+### Generative Modeling
+- Common problem: some tasks need many possible examples, not one predicted answer
+- Missing items: none
+- Present required parts: First Principles, Formula Terms, Worked Example, Wrong-Use Example, Failure Boundary, Source Anchors, Reader Check, Acceptance Sentence
+- Topic: topics/generative-modeling.html
+- Evidence packet: evidence-packets/generative-modeling.html
+- Reader check: reader-checks/generative-modeling-check.html
+
+### Graphs And Geometric Learning
+- Common problem: many scientific objects are not simple rows of numbers; their connections matter
+- Missing items: none
+- Present required parts: First Principles, Formula Terms, Worked Example, Wrong-Use Example, Failure Boundary, Source Anchors, Reader Check, Acceptance Sentence
+- Topic: topics/graphs-and-geometric-learning.html
+- Evidence packet: evidence-packets/graphs-and-geometric-learning.html
+- Reader check: reader-checks/graphs-and-geometric-learning-check.html
+
+### Neural Differential Equations
+- Common problem: scientists may know that a system changes continuously but not know the exact rule for that change
+- Missing items: none
+- Present required parts: First Principles, Formula Terms, Worked Example, Wrong-Use Example, Failure Boundary, Source Anchors, Reader Check, Acceptance Sentence
+- Topic: topics/neural-differential-equations.html
+- Evidence packet: evidence-packets/neural-differential-equations.html
+- Reader check: reader-checks/neural-differential-equations-check.html
+
+### Symbolic Regression And Model Discovery
+- Common problem: a scientist may need a readable equation, not only a model that predicts well
+- Missing items: none
+- Present required parts: First Principles, Formula Terms, Worked Example, Wrong-Use Example, Failure Boundary, Source Anchors, Reader Check, Acceptance Sentence
+- Topic: topics/symbolic-regression.html
+- Evidence packet: evidence-packets/symbolic-regression.html
+- Reader check: reader-checks/symbolic-regression-check.html
+
+### Foundation Models For PDEs
+- Common problem: one trained model may be asked to handle many related equations, grids, parameters, or physical settings
+- Missing items: none
+- Present required parts: First Principles, Formula Terms, Worked Example, Wrong-Use Example, Failure Boundary, Source Anchors, Reader Check, Acceptance Sentence
+- Topic: topics/foundation-models-for-pdes.html
+- Evidence packet: evidence-packets/foundation-models-for-pdes.html
+- Reader check: reader-checks/foundation-pde-check.html
+
+### Attention For Scientific Fields
+- Common problem: a local patch of a field may depend on faraway information, but looking everywhere can be expensive
+- Missing items: none
+- Present required parts: First Principles, Formula Terms, Worked Example, Wrong-Use Example, Failure Boundary, Source Anchors, Reader Check, Acceptance Sentence
+- Topic: topics/attention-for-scientific-fields.html
+- Evidence packet: evidence-packets/attention-for-scientific-fields.html
+- Reader check: reader-checks/attention-for-scientific-fields-check.html
+
 
 ## Editorial Roadmap
 ### P0 Pin Down The Core Argument
