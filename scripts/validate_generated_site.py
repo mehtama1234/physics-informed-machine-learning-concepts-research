@@ -107,6 +107,8 @@ def check_required_sections() -> list[str]:
         "site/review-entrypoints.html": ("Review Entrypoints", "End-To-End Test"),
         "site/concept-ladder.html": ("Concept Ladder", "Mathematical Move", "Failure Test"),
         "site/derivations.html": ("Core Derivations",),
+        "site/worked-examples/molecule-property-from-structure.html": ("End-To-End Flow", "Claim Boundary"),
+        "site/worked-examples/foundation-pde-model-on-new-equation.html": ("End-To-End Flow", "Claim Boundary"),
     }
     errors: list[str] = []
     for rel_path, terms in required.items():

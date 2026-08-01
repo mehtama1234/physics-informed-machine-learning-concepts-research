@@ -3114,11 +3114,21 @@ def write_comparison_page(path: Path, comparison: dict[str, object]) -> None:
 
 def write_worked_example_page(path: Path, example: dict[str, object]) -> None:
     steps = "".join(f"<div class=\"route-step\">{idx}. {html.escape(step)}</div>" for idx, step in enumerate(example["plain_steps"], start=1))
+    flow_nodes = [
+        f"Observed: {example['observed']}",
+        f"Hidden: {example['hidden']}",
+        f"Route: {' -> '.join(str(slug).replace('-', ' ') for slug in example['method_route'])}",
+        "Claim: answer only for the named scientific job",
+        "Reject: changed case breaks the needed quantity",
+    ]
+    flow = "".join(f"<div class=\"flow-node\">{idx}. {html.escape(str(node))}</div>" for idx, node in enumerate(flow_nodes, start=1))
     body = f"""
 <h1>{html.escape(str(example['title']))}</h1>
 <h2>Scientific Job</h2>
 <p><strong>Domain:</strong> {html.escape(str(example['domain']))}</p>
 <p><strong>Question:</strong> {html.escape(str(example['question']))}</p>
+<h2>End-To-End Flow</h2>
+<div class="flow">{flow}</div>
 <h2>Observed And Hidden</h2>
 <p><strong>Observed:</strong> {html.escape(str(example['observed']))}</p>
 <p><strong>Hidden:</strong> {html.escape(str(example['hidden']))}</p>
@@ -3439,7 +3449,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         if not example_path.exists():
             raise SystemExit(f"missing worked example page: {example['title']}")
         example_text = example_path.read_text(encoding="utf-8")
-        if "Observed And Hidden" not in example_text or "Claim Boundary" not in example_text:
+        if "End-To-End Flow" not in example_text or "flow-node" not in example_text or "Claim Boundary" not in example_text:
             raise SystemExit(f"worked example not rendered correctly: {example['title']}")
         for slug in example["method_route"]:
             if not (SITE / "topics" / f"{slug}.html").exists():
