@@ -67,6 +67,19 @@
   <li>Name the rejection test: change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed.</li>
 </ol>
 
+
+<h2>One Concrete Case From Start To Finish</h2>
+<table>
+  <tbody>
+    <tr><th>Real Setting</th><td>An engineer repeatedly solves flow around many related wing shapes and wants a fast answer for the next shape.</td></tr>
+    <tr><th>Observed Evidence</th><td>many wing-shape inputs paired with full solver fields</td></tr>
+    <tr><th>Hidden Thing Needed</th><td>the full pressure or velocity field for a new shape</td></tr>
+    <tr><th>Mathematical Move</th><td>learn the map from input shape or forcing field to output solution field</td></tr>
+    <tr><th>Usable Answer</th><td>a quick field prediction for a new member of the tested family</td></tr>
+    <tr><th>Rejection Test</th><td>a new boundary, geometry class, resolution, or coefficient range breaks the field or the lift estimate</td></tr>
+  </tbody>
+</table>
+
 <h2>First-Principles Walkthrough</h2>
 <ol>
   <li><strong>Start with what is observed:</strong> many example inputs and their full solution fields.</li>
