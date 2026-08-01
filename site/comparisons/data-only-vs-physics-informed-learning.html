@@ -55,6 +55,15 @@
 </div>
 <h2>Key Difference</h2>
 <p>Data-only learning listens to examples. Physics-informed learning also listens to rules about what answers are allowed.</p>
+<h2>Concrete Choice Cases</h2>
+<table>
+  <tbody>
+    <tr><th>Use Data-only learning</th><td>A measured property has many examples and no trusted equation for the target. Use data-only learning with a clear held-out test.</td></tr>
+    <tr><th>Use Physics-informed learning</th><td>A temperature field has sparse measurements and a trusted heat equation. Add the physical rule so unsensed places are checked.</td></tr>
+    <tr><th>Wrong Choice Case</th><td>Adding a physical rule that is incomplete or wrong for the experiment, or ignoring a trusted rule when data are sparse.</td></tr>
+    <tr><th>Evidence That Exposes It</th><td>Compare changed cases where the rule matters: boundaries, conservation, units, symmetry, or regions between measurements.</td></tr>
+  </tbody>
+</table>
 <h2>Common Wrong Turn</h2>
 <p>Adding physics language does not help if the added rule is wrong, too weak, or never tested against the claim.</p>
 <h2>First-Principles Test</h2>

@@ -152,21 +152,37 @@
 ### PINNs vs Neural Operators
 - Shared problem: Both try to predict scientific fields without ignoring the physics that makes those fields meaningful.
 - Key difference: A PINN usually learns one field while being punished for breaking an equation. A neural operator learns the input-to-solution map for a named family of fields.
+- Left case: A wall has a few temperature sensors and a trusted heat equation. Use a PINN to fit one temperature field while checking data, equation, and boundary errors.
+- Right case: A lab has thousands of solved heat-flow cases for many source fields. Use an operator model to learn the input-field to solution-field map.
+- Wrong choice case: Using an operator model from one family on a boundary type it never saw, or using a PINN when the real need is thousands of fast repeated solves.
+- Evidence that exposes it: Hold out a changed boundary or input-field family and compare the full field and the scientific quantity, not only visual similarity.
 - Wrong turn: Do not use either word as a badge of trust. Ask what changed case was tested.
 
 ### Solvers vs Learned Surrogates
 - Shared problem: Both produce answers for scientific or engineering questions.
 - Key difference: A solver follows the written equations step by step. A surrogate imitates the solver's input-output behavior inside a tested use range.
+- Left case: A safety decision depends on a stress peak near a crack. Use the trusted solver because the local failure quantity matters more than speed.
+- Right case: A design team needs to screen thousands of similar wing shapes before choosing a few expensive solver runs. Use a surrogate inside that named shape family.
+- Wrong choice case: Replacing the solver everywhere because the surrogate is fast, including edge cases where no solver comparison exists.
+- Evidence that exposes it: Compare against the solver near the design boundary and inspect the decision quantity, such as drag, lift, stress peak, or failure location.
 - Wrong turn: A fast surrogate is not a replacement for the solver outside the cases where it was checked.
 
 ### Symbolic Regression vs Large Fitted Prediction
 - Shared problem: Both use data to make future or unseen cases easier to understand.
 - Key difference: Symbolic regression searches for a small formula. Large fitted prediction can carry more detail but usually gives less direct explanation.
+- Left case: A lab tracks a simple motion and wants a small equation that explains the rate of change. Use symbolic regression and test the law on a new experiment.
+- Right case: A molecular property depends on many structural details and the goal is accurate screening. Use a larger fitted predictor with clear use-range checks.
+- Wrong choice case: Treating a neat formula as a law when an important variable was never measured, or demanding a tiny formula for a pattern that needs richer structure.
+- Evidence that exposes it: Run a changed experiment, add missing-variable checks, and compare error on cases that differ from the data that selected the formula.
 - Wrong turn: A neat formula is not automatically true; it must survive changed data and missing-variable checks.
 
 ### Data-Only vs Physics-Informed Learning
 - Shared problem: Both try to turn examples into predictions.
 - Key difference: Data-only learning listens to examples. Physics-informed learning also listens to rules about what answers are allowed.
+- Left case: A measured property has many examples and no trusted equation for the target. Use data-only learning with a clear held-out test.
+- Right case: A temperature field has sparse measurements and a trusted heat equation. Add the physical rule so unsensed places are checked.
+- Wrong choice case: Adding a physical rule that is incomplete or wrong for the experiment, or ignoring a trusted rule when data are sparse.
+- Evidence that exposes it: Compare changed cases where the rule matters: boundaries, conservation, units, symmetry, or regions between measurements.
 - Wrong turn: Adding physics language does not help if the added rule is wrong, too weak, or never tested against the claim.
 
 

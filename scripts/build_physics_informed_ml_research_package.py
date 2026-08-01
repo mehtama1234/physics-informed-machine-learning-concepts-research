@@ -379,6 +379,10 @@ COMPARISON_PAGES = [
         "shared_problem": "Both try to predict scientific fields without ignoring the physics that makes those fields meaningful.",
         "left_when": "Use this side when you have one problem instance, sparse data, and a known equation you want the fitted field to obey.",
         "right_when": "Use this side when you have many solved examples and need a fast map from new problem inputs to full solution fields.",
+        "left_case": "A wall has a few temperature sensors and a trusted heat equation. Use a PINN to fit one temperature field while checking data, equation, and boundary errors.",
+        "right_case": "A lab has thousands of solved heat-flow cases for many source fields. Use an operator model to learn the input-field to solution-field map.",
+        "wrong_choice_case": "Using an operator model from one family on a boundary type it never saw, or using a PINN when the real need is thousands of fast repeated solves.",
+        "evidence_that_exposes_it": "Hold out a changed boundary or input-field family and compare the full field and the scientific quantity, not only visual similarity.",
         "key_difference": "A PINN usually learns one field while being punished for breaking an equation. A neural operator learns the input-to-solution map for a named family of fields.",
         "wrong_turn": "Do not use either word as a badge of trust. Ask what changed case was tested.",
     },
@@ -390,6 +394,10 @@ COMPARISON_PAGES = [
         "shared_problem": "Both produce answers for scientific or engineering questions.",
         "left_when": "Use this side when correctness, conservation, and known numerical behavior matter more than speed.",
         "right_when": "Use this side when many repeated queries make the full solver too costly and the query family is narrow enough to test.",
+        "left_case": "A safety decision depends on a stress peak near a crack. Use the trusted solver because the local failure quantity matters more than speed.",
+        "right_case": "A design team needs to screen thousands of similar wing shapes before choosing a few expensive solver runs. Use a surrogate inside that named shape family.",
+        "wrong_choice_case": "Replacing the solver everywhere because the surrogate is fast, including edge cases where no solver comparison exists.",
+        "evidence_that_exposes_it": "Compare against the solver near the design boundary and inspect the decision quantity, such as drag, lift, stress peak, or failure location.",
         "key_difference": "A solver follows the written equations step by step. A surrogate imitates the solver's input-output behavior inside a tested use range.",
         "wrong_turn": "A fast surrogate is not a replacement for the solver outside the cases where it was checked.",
     },
@@ -401,6 +409,10 @@ COMPARISON_PAGES = [
         "shared_problem": "Both use data to make future or unseen cases easier to understand.",
         "left_when": "Use this side when the user needs a short equation that can be inspected and argued over.",
         "right_when": "Use this side when predictive accuracy on a complex pattern matters more than a compact human-readable rule.",
+        "left_case": "A lab tracks a simple motion and wants a small equation that explains the rate of change. Use symbolic regression and test the law on a new experiment.",
+        "right_case": "A molecular property depends on many structural details and the goal is accurate screening. Use a larger fitted predictor with clear use-range checks.",
+        "wrong_choice_case": "Treating a neat formula as a law when an important variable was never measured, or demanding a tiny formula for a pattern that needs richer structure.",
+        "evidence_that_exposes_it": "Run a changed experiment, add missing-variable checks, and compare error on cases that differ from the data that selected the formula.",
         "key_difference": "Symbolic regression searches for a small formula. Large fitted prediction can carry more detail but usually gives less direct explanation.",
         "wrong_turn": "A neat formula is not automatically true; it must survive changed data and missing-variable checks.",
     },
@@ -412,6 +424,10 @@ COMPARISON_PAGES = [
         "shared_problem": "Both try to turn examples into predictions.",
         "left_when": "Use this side when examples are abundant, the use range is narrow, and there is no trusted rule to add.",
         "right_when": "Use this side when a known equation, boundary condition, conservation law, unit, or symmetry should constrain the answer.",
+        "left_case": "A measured property has many examples and no trusted equation for the target. Use data-only learning with a clear held-out test.",
+        "right_case": "A temperature field has sparse measurements and a trusted heat equation. Add the physical rule so unsensed places are checked.",
+        "wrong_choice_case": "Adding a physical rule that is incomplete or wrong for the experiment, or ignoring a trusted rule when data are sparse.",
+        "evidence_that_exposes_it": "Compare changed cases where the rule matters: boundaries, conservation, units, symmetry, or regions between measurements.",
         "key_difference": "Data-only learning listens to examples. Physics-informed learning also listens to rules about what answers are allowed.",
         "wrong_turn": "Adding physics language does not help if the added rule is wrong, too weak, or never tested against the claim.",
     },
@@ -4453,6 +4469,15 @@ def write_comparison_page(path: Path, comparison: dict[str, object]) -> None:
 </div>
 <h2>Key Difference</h2>
 <p>{html.escape(str(comparison['key_difference']))}</p>
+<h2>Concrete Choice Cases</h2>
+<table>
+  <tbody>
+    <tr><th>Use {html.escape(str(comparison['left']))}</th><td>{html.escape(str(comparison['left_case']))}</td></tr>
+    <tr><th>Use {html.escape(str(comparison['right']))}</th><td>{html.escape(str(comparison['right_case']))}</td></tr>
+    <tr><th>Wrong Choice Case</th><td>{html.escape(str(comparison['wrong_choice_case']))}</td></tr>
+    <tr><th>Evidence That Exposes It</th><td>{html.escape(str(comparison['evidence_that_exposes_it']))}</td></tr>
+  </tbody>
+</table>
 <h2>Common Wrong Turn</h2>
 <p>{html.escape(str(comparison['wrong_turn']))}</p>
 <h2>First-Principles Test</h2>
@@ -4529,6 +4554,10 @@ def write_markdown_export(data: dict[str, object]) -> None:
                 f"### {comparison['title']}",
                 f"- Shared problem: {comparison['shared_problem']}",
                 f"- Key difference: {comparison['key_difference']}",
+                f"- Left case: {comparison['left_case']}",
+                f"- Right case: {comparison['right_case']}",
+                f"- Wrong choice case: {comparison['wrong_choice_case']}",
+                f"- Evidence that exposes it: {comparison['evidence_that_exposes_it']}",
                 f"- Wrong turn: {comparison['wrong_turn']}",
                 "",
             ]
@@ -4912,8 +4941,15 @@ def validate(data: dict[str, object] | None = None) -> None:
         if not (SITE / "families" / f"{family['slug']}.html").exists():
             raise SystemExit(f"missing family page: {family['title']}")
     for comparison in COMPARISON_PAGES:
-        if not (SITE / "comparisons" / f"{comparison['slug']}.html").exists():
+        comparison_path = SITE / "comparisons" / f"{comparison['slug']}.html"
+        if not comparison_path.exists():
             raise SystemExit(f"missing comparison page: {comparison['title']}")
+        comparison_text = comparison_path.read_text(encoding="utf-8")
+        if "Concrete Choice Cases" not in comparison_text or "Wrong Choice Case" not in comparison_text or "Evidence That Exposes It" not in comparison_text:
+            raise SystemExit(f"comparison page missing concrete cases: {comparison['title']}")
+        for field in ("left_case", "right_case", "wrong_choice_case", "evidence_that_exposes_it"):
+            if not comparison.get(field):
+                raise SystemExit(f"comparison missing {field}: {comparison['title']}")
     for example in WORKED_EXAMPLES:
         example_path = SITE / "worked-examples" / f"{example['slug']}.html"
         if not example_path.exists():

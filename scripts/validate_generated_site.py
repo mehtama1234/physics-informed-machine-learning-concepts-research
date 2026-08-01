@@ -118,6 +118,8 @@ def check_required_sections() -> list[str]:
         "site/diagrams.html": ("Mathematical Sketches", "Kept Rule", "Failure Case"),
         "site/topics/operator-learning.html": ("Mathematical Sketch", "Field To Field", "Kept Rule"),
         "site/topics/surrogate-modeling.html": ("Mathematical Sketch", "Fast Stand-In", "Failure Case"),
+        "site/comparisons/pinns-vs-neural-operators.html": ("Concrete Choice Cases", "Wrong Choice Case", "Evidence That Exposes It"),
+        "site/comparisons/solvers-vs-learned-surrogates.html": ("Concrete Choice Cases", "Wrong Choice Case", "Evidence That Exposes It"),
         "site/learning-path/scientific-question-first.html": ("First-Principles Spine", "World:", "Reject it when:"),
         "site/learning-path/physics-as-check.html": ("First-Principles Spine", "Mathematical move:", "Reject it when:"),
         "site/dependencies.html": ("Concept Dependency Map", "Confusion It Prevents"),

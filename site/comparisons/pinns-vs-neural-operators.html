@@ -55,6 +55,15 @@
 </div>
 <h2>Key Difference</h2>
 <p>A PINN usually learns one field while being punished for breaking an equation. A neural operator learns the input-to-solution map for a named family of fields.</p>
+<h2>Concrete Choice Cases</h2>
+<table>
+  <tbody>
+    <tr><th>Use Physics-informed neural networks</th><td>A wall has a few temperature sensors and a trusted heat equation. Use a PINN to fit one temperature field while checking data, equation, and boundary errors.</td></tr>
+    <tr><th>Use Neural operators</th><td>A lab has thousands of solved heat-flow cases for many source fields. Use an operator model to learn the input-field to solution-field map.</td></tr>
+    <tr><th>Wrong Choice Case</th><td>Using an operator model from one family on a boundary type it never saw, or using a PINN when the real need is thousands of fast repeated solves.</td></tr>
+    <tr><th>Evidence That Exposes It</th><td>Hold out a changed boundary or input-field family and compare the full field and the scientific quantity, not only visual similarity.</td></tr>
+  </tbody>
+</table>
 <h2>Common Wrong Turn</h2>
 <p>Do not use either word as a badge of trust. Ask what changed case was tested.</p>
 <h2>First-Principles Test</h2>
