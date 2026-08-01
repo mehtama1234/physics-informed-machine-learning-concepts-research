@@ -20,10 +20,11 @@
 - decision_guide_count: 6
 - provenance_guide_count: 5
 - coverage_row_count: 14
+- concept_ladder_count: 14
 - quality_rubric_count: 6
 - synthesis_guide_count: 4
 - review_handoff_count: 1
-- review_entrypoint_count: 17
+- review_entrypoint_count: 18
 
 ## Concepts
 ### Deep Learning
@@ -604,6 +605,120 @@
 - Evidence items: 6
 
 
+## Concept Ladder
+### Deep Learning
+- Problem: scientists often have examples of behavior but no short rule that predicts the next case
+- Observed: many input-output examples from experiments, simulations, or measurements
+- Hidden: the exact rule that connects the input to the output
+- Mathematical move: adjust many weights until the model maps familiar inputs to the right outputs
+- Shape: input -> layered adjustable calculation -> prediction
+- Failure test: hold out a changed material, geometry, parameter range, or sensor condition
+
+### Physics-Informed Neural Networks
+- Problem: measurements may be sparse, but the answer must still respect a known physical equation
+- Observed: some measured values, boundary values, starting values, and a known differential equation
+- Hidden: the full field value at every point in space and time
+- Mathematical move: fit a neural network while also measuring how badly its output violates the known equation
+- Shape: prediction error + equation error + boundary error
+- Failure test: move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements
+
+### Partial Differential Equations
+- Problem: a quantity changes over space and time, so one number is not enough to describe the situation
+- Observed: a field such as temperature, pressure, concentration, velocity, or displacement
+- Hidden: how every point in the field affects nearby points over time
+- Mathematical move: write a local change rule that uses rates across space and time
+- Shape: future change = spatial change + sources + boundary information
+- Failure test: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error
+
+### Operator Learning
+- Problem: one simulation answer is not enough when engineers need the whole map from inputs to solution fields
+- Observed: many example inputs and their full solution fields
+- Hidden: the rule that maps a new input field to its new solution field
+- Mathematical move: learn the map from problem input to solution, not only one solution at a time
+- Shape: input function -> learned map -> output function
+- Failure test: change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed
+
+### Scientific Machine Learning
+- Problem: scientific work needs predictions that respect measurements, equations, uncertainty, and domain limits at the same time
+- Observed: data, equations, units, simulation outputs, and domain limits
+- Hidden: which parts of the scientific system are missing, noisy, or too costly to compute directly
+- Mathematical move: combine learned prediction with scientific checks that name what the claim is allowed to mean
+- Shape: data fit + scientific structure + validation case
+- Failure test: state the scientific quantity first, then test it under a changed case that matters in that domain
+
+### Surrogate Modeling
+- Problem: a trusted simulator may be too slow to run for every design, control, or uncertainty question
+- Observed: expensive solver inputs and outputs for a limited set of cases
+- Hidden: the solver answer for every new query someone wants to ask
+- Mathematical move: train a cheaper stand-in for the expensive input-output behavior
+- Shape: query -> fast stand-in -> approximate answer
+- Failure test: compare against the full solver on new cases near the edge of the intended use
+
+### Uncertainty And Generalization
+- Problem: a prediction is not enough unless the user knows when it should be believed
+- Observed: training cases, validation cases, prediction errors, and known shifts between cases
+- Hidden: how wrong the model may be on a case unlike the ones it learned from
+- Mathematical move: separate fit on familiar examples from evidence on changed examples
+- Shape: prediction + error check + stated use range
+- Failure test: move one important condition outside the training range and measure the first failure
+
+### Optimization For Learning
+- Problem: learning needs a way to decide which model settings are better or worse
+- Observed: a written score that says which model behavior is better or worse
+- Hidden: whether that score matches the scientific behavior the user actually cares about
+- Mathematical move: change model settings to lower the written score
+- Shape: choose settings that reduce data error, physics error, or design cost
+- Failure test: inspect what the score ignores, then check whether the ignored behavior fails after training
+
+### Generative Modeling
+- Problem: some tasks need many possible examples, not one predicted answer
+- Observed: examples of fields, molecules, flows, shapes, or other scientific objects
+- Hidden: the spread of possible valid objects beyond the examples
+- Mathematical move: learn how to sample new candidates that resemble the training family
+- Shape: random seed + learned sampler -> candidate scientific object
+- Failure test: measure constraints, rare cases, conservation, and downstream task performance on generated samples
+
+### Graphs And Geometric Learning
+- Problem: many scientific objects are not simple rows of numbers; their connections matter
+- Observed: objects with parts and connections, such as meshes, molecules, or interacting components
+- Hidden: which neighboring and long-range interactions control the scientific quantity
+- Mathematical move: let information move along the object connections instead of flattening the object into a plain row
+- Shape: nodes + edges + update rule -> predicted property or field
+- Failure test: change the mesh, rotate or move the object, or add missing interactions and inspect what breaks
+
+### Neural Differential Equations
+- Problem: scientists may know that a system changes continuously but not know the exact rule for that change
+- Observed: measurements of a system changing over time
+- Hidden: the rate rule that moves the present value into the future
+- Mathematical move: learn the missing rate rule and place it inside a time-evolution calculation
+- Shape: current state -> learned rate -> next state
+- Failure test: run longer than the training window and check whether small rate errors accumulate into drift
+
+### Symbolic Regression And Model Discovery
+- Problem: a scientist may need a readable equation, not only a model that predicts well
+- Observed: measured variables and candidate mathematical ingredients
+- Hidden: which short formula, if any, actually explains the measured change
+- Mathematical move: search for a readable equation that fits the data and survives a changed case
+- Shape: candidate formulas -> selected formula -> held-out test
+- Failure test: remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts
+
+### Foundation Models For PDEs
+- Problem: one trained model may be asked to handle many related equations, grids, parameters, or physical settings
+- Observed: many PDE problem instances across equations, grids, parameters, or physical settings
+- Hidden: which shared structure carries from one scientific task to another
+- Mathematical move: train one broad model to reuse structure across many related field-prediction tasks
+- Shape: many PDE tasks -> shared learned representation -> new task prediction
+- Failure test: hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver
+
+### Attention For Scientific Fields
+- Problem: a local patch of a field may depend on faraway information, but looking everywhere can be expensive
+- Observed: large fields where one location may depend on other locations
+- Hidden: which distant parts matter for the local prediction
+- Mathematical move: let the model choose which parts of the field exchange information
+- Shape: field pieces -> selected information exchange -> updated field pieces
+- Failure test: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures
+
+
 ## Editorial Quality Rubric
 ### First Principles
 - Standard: The page starts from the real problem, observed evidence, hidden quantity, and scientific job before naming a method.
@@ -687,6 +802,7 @@
 - Review Handoff: handoff.html | What exists now, and what still needs hand-written depth?
 - Field Synthesis: synthesis.html | What problem holds the field together?
 - Learning Path: learning-path.html | What should a new reader read first, second, and third?
+- Concept Ladder: concept-ladder.html | Can each concept be explained without starting from the method name?
 
 ### Inspect Core Concepts
 - Purpose: Use these pages to judge whether the main mathematical ideas are explained from first principles.

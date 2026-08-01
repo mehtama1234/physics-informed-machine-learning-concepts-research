@@ -25,6 +25,7 @@ The purpose is not to summarize lectures. The purpose is to explain physics-info
 - `site/decision-guide.html`: method choice guide from scientific situations
 - `site/provenance.html`: source, extraction, build, and reproduction guide
 - `site/coverage.html`: concept coverage matrix across evidence and guide layers
+- `site/concept-ladder.html`: first-principles concept ladder from evidence to failure test
 - `site/quality.html`: editorial quality rubric for first-principles pages
 - `site/synthesis.html`: field-level synthesis tying the concepts together
 - `site/review-entrypoints.html`: end-to-end review route through the package
@@ -86,6 +87,7 @@ http://127.0.0.1:8022/index.html
 - decision guide
 - provenance and reproduction guide
 - coverage matrix
+- concept ladder
 - editorial quality rubric
 - field synthesis
 - review entrypoint map

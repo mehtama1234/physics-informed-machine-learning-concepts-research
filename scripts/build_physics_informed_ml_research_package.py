@@ -1309,6 +1309,12 @@ REVIEW_ENTRYPOINTS = [
                 "why": "Gives a reader who knows no jargon a route from data to scientific claims.",
                 "question": "What should a new reader read first, second, and third?",
             },
+            {
+                "label": "Concept Ladder",
+                "href": "concept-ladder.html",
+                "why": "Lines up each concept by observed evidence, hidden quantity, mathematical move, and failure test.",
+                "question": "Can each concept be explained without starting from the method name?",
+            },
         ],
     },
     {
@@ -1701,6 +1707,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
         )
 
     coverage_matrix = build_coverage_matrix(concept_atlas)
+    concept_ladder = build_concept_ladder(topic_treatments)
 
     data = {
         "summary": {
@@ -1723,6 +1730,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
             "decision_guide_count": len(DECISION_GUIDES),
             "provenance_guide_count": len(PROVENANCE_GUIDES),
             "coverage_row_count": len(coverage_matrix),
+            "concept_ladder_count": len(concept_ladder),
             "quality_rubric_count": len(QUALITY_RUBRIC),
             "synthesis_guide_count": len(SYNTHESIS_GUIDES),
             "review_handoff_count": 1,
@@ -1745,6 +1753,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
         "decision_guides": DECISION_GUIDES,
         "provenance_guides": PROVENANCE_GUIDES,
         "coverage_matrix": coverage_matrix,
+        "concept_ladder": concept_ladder,
         "quality_rubric": QUALITY_RUBRIC,
         "synthesis_guides": SYNTHESIS_GUIDES,
         "review_handoff": REVIEW_HANDOFF,
@@ -1793,6 +1802,32 @@ def build_coverage_matrix(concept_atlas: list[dict[str, object]]) -> list[dict[s
                 "reader_check": any(check["topic_slug"] == slug for check in READER_CHECKS),
                 "decision_guide": any(f"topics/{slug}.html" in decision["links"] for decision in DECISION_GUIDES),
                 "evidence_items": len(concept.get("evidence", [])),
+            }
+        )
+    return rows
+
+
+def build_concept_ladder(topic_treatments: list[dict[str, object]]) -> list[dict[str, object]]:
+    rows = []
+    for topic in topic_treatments:
+        derivation = topic_derivation(topic)
+        evidence = topic.get("evidence") or []
+        first_evidence = evidence[0] if isinstance(evidence, list) and evidence else {}
+        rows.append(
+            {
+                "slug": str(topic["slug"]),
+                "title": str(topic["title"]),
+                "domain": str(topic["domain"]),
+                "common_problem": str(topic["common_problem"]),
+                "observed": str(derivation["observed"]),
+                "hidden": str(derivation["hidden"]),
+                "mathematical_move": str(derivation["move"]),
+                "shape": str(derivation["form"]),
+                "meaning": str(derivation["meaning"]),
+                "failure_test": str(derivation["test"]),
+                "topic_href": f"topics/{topic['slug']}.html",
+                "evidence_title": str(first_evidence.get("title") or ""),
+                "evidence_url": str(first_evidence.get("url") or ""),
             }
         )
     return rows
@@ -1917,6 +1952,7 @@ def html_page(title: str, body: str, root_prefix: str = "") -> str:
   <a href="{root_prefix}decision-guide.html">Decide</a>
   <a href="{root_prefix}provenance.html">Provenance</a>
   <a href="{root_prefix}coverage.html">Coverage</a>
+  <a href="{root_prefix}concept-ladder.html">Ladder</a>
   <a href="{root_prefix}quality.html">Quality</a>
   <a href="{root_prefix}synthesis.html">Synthesis</a>
   <a href="{root_prefix}review-entrypoints.html">Review Map</a>
@@ -2115,6 +2151,7 @@ def write_site(data: dict[str, object]) -> None:
     decision_guides = data["decision_guides"]
     provenance_guides = data["provenance_guides"]
     coverage_matrix = data["coverage_matrix"]
+    concept_ladder = data["concept_ladder"]
     quality_rubric = data["quality_rubric"]
     synthesis_guides = data["synthesis_guides"]
     review_handoff = data["review_handoff"]
@@ -2137,6 +2174,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Decision Guide", f"{summary['decision_guide_count']} method choices from concrete scientific situations.", "decision-guide.html")}
 {card("Provenance", f"{summary['provenance_guide_count']} pages documenting source, extraction, build, and reproduction.", "provenance.html")}
 {card("Coverage Matrix", f"{summary['coverage_row_count']} concepts checked across evidence and guide layers.", "coverage.html")}
+{card("Concept Ladder", f"{summary['concept_ladder_count']} concepts laid out from observed evidence to failure test.", "concept-ladder.html")}
 {card("Quality Rubric", f"{summary['quality_rubric_count']} editorial standards for first-principles pages.", "quality.html")}
 {card("Synthesis", f"{summary['synthesis_guide_count']} pages tying the field into one argument.", "synthesis.html")}
 {card("Review Map", f"{summary['review_entrypoint_count']} entry points for end-to-end review, use, and source checks.", "review-entrypoints.html")}
@@ -2280,6 +2318,7 @@ def write_site(data: dict[str, object]) -> None:
     )
 
     write_coverage_page(SITE / "coverage.html", list(coverage_matrix))
+    write_concept_ladder_page(SITE / "concept-ladder.html", list(concept_ladder))
 
     quality_cards = []
     for item in quality_rubric:
@@ -2710,6 +2749,50 @@ def write_coverage_page(path: Path, rows: list[dict[str, object]]) -> None:
     path.write_text(html_page("Physics-Informed ML Coverage Matrix", body), encoding="utf-8")
 
 
+def write_concept_ladder_page(path: Path, rows: list[dict[str, object]]) -> None:
+    table_rows = []
+    for row in rows:
+        evidence = ""
+        if row["evidence_title"] and row["evidence_url"]:
+            evidence = f'<a href="{html.escape(str(row["evidence_url"]))}">{html.escape(str(row["evidence_title"]))}</a>'
+        table_rows.append(
+            f"""
+<tr>
+  <td><a href="{html.escape(str(row['topic_href']))}">{html.escape(str(row['title']))}</a><br><span class="meta">{html.escape(str(row['domain']))}</span></td>
+  <td>{html.escape(str(row['common_problem']))}</td>
+  <td>{html.escape(str(row['observed']))}</td>
+  <td>{html.escape(str(row['hidden']))}</td>
+  <td>{html.escape(str(row['mathematical_move']))}</td>
+  <td>{html.escape(str(row['shape']))}</td>
+  <td>{html.escape(str(row['failure_test']))}</td>
+  <td>{evidence}</td>
+</tr>
+"""
+        )
+    body = f"""
+<h1>Concept Ladder</h1>
+<p>This page lines up the main concepts by the same first-principles questions. Read each row from left to right: the real problem, what is observed, what is hidden, what mathematical move is made, what shape that move has, and what test can reject the claim.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Concept</th>
+      <th>Problem</th>
+      <th>Observed</th>
+      <th>Hidden</th>
+      <th>Mathematical Move</th>
+      <th>Shape</th>
+      <th>Failure Test</th>
+      <th>Evidence Anchor</th>
+    </tr>
+  </thead>
+  <tbody>{''.join(table_rows)}</tbody>
+</table>
+<h2>How To Use This</h2>
+<p>Pick one row and try to say it aloud without the method name. If the row still makes sense, the concept has a real job. If it only sounds important after the method name is added back, the explanation needs more work.</p>
+"""
+    path.write_text(html_page("Physics-Informed ML Concept Ladder", body), encoding="utf-8")
+
+
 def write_quality_page(path: Path, item: dict[str, object]) -> None:
     body = f"""
 <h1>{html.escape(str(item['title']))}</h1>
@@ -3030,6 +3113,20 @@ def write_markdown_export(data: dict[str, object]) -> None:
                 "",
             ]
         )
+    lines.extend(["", "## Concept Ladder"])
+    for row in data["concept_ladder"]:
+        lines.extend(
+            [
+                f"### {row['title']}",
+                f"- Problem: {row['common_problem']}",
+                f"- Observed: {row['observed']}",
+                f"- Hidden: {row['hidden']}",
+                f"- Mathematical move: {row['mathematical_move']}",
+                f"- Shape: {row['shape']}",
+                f"- Failure test: {row['failure_test']}",
+                "",
+            ]
+        )
     lines.extend(["", "## Editorial Quality Rubric"])
     for item in data["quality_rubric"]:
         lines.extend(
@@ -3126,6 +3223,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         SITE / "decision-guide.html",
         SITE / "provenance.html",
         SITE / "coverage.html",
+        SITE / "concept-ladder.html",
         SITE / "quality.html",
         SITE / "synthesis.html",
         SITE / "review-entrypoints.html",
@@ -3226,6 +3324,19 @@ def validate(data: dict[str, object] | None = None) -> None:
     coverage_rows = data.get("coverage_matrix") or []
     if len(coverage_rows) != len(data["concept_atlas"]):
         raise SystemExit("coverage matrix row count does not match concept atlas")
+    ladder_path = SITE / "concept-ladder.html"
+    ladder_text = ladder_path.read_text(encoding="utf-8")
+    if "Concept Ladder" not in ladder_text or "Mathematical Move" not in ladder_text:
+        raise SystemExit("concept ladder not rendered correctly")
+    ladder_rows = data.get("concept_ladder") or []
+    if len(ladder_rows) != len(data["concept_atlas"]):
+        raise SystemExit("concept ladder row count does not match concept atlas")
+    for row in ladder_rows:
+        for field in ("observed", "hidden", "mathematical_move", "shape", "failure_test"):
+            if not row.get(field):
+                raise SystemExit(f"concept ladder missing {field}: {row.get('title')}")
+        if not (SITE / str(row["topic_href"])).exists():
+            raise SystemExit(f"concept ladder topic link missing: {row['topic_href']}")
     core_slugs = {"physics-informed-neural-networks", "operator-learning", "surrogate-modeling", "uncertainty-and-generalization", "symbolic-regression", "foundation-models-for-pdes"}
     by_slug = {row["slug"]: row for row in coverage_rows}
     for slug in core_slugs:
