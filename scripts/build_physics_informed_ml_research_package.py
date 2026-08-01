@@ -1421,6 +1421,7 @@ REVIEW_HANDOFF = {
         {"label": "Field Synthesis", "href": "synthesis.html"},
         {"label": "Learning Path", "href": "learning-path.html"},
         {"label": "Coverage Matrix", "href": "coverage.html"},
+        {"label": "Editorial Roadmap", "href": "editorial-roadmap.html"},
         {"label": "Decision Guide", "href": "decision-guide.html"},
         {"label": "Provenance", "href": "provenance.html"},
     ],
@@ -1438,12 +1439,155 @@ REVIEW_HANDOFF = {
         "run the wording scan for restricted filler terms listed in the editorial quality rubric",
     ],
     "remaining_editorial_work": [
-        "Hand-write richer derivations for the highest-value concepts after reviewing the generated structure.",
-        "Add lecture-specific quotes and figures to the worked examples after reviewing the transcript excerpts.",
+        "Use the editorial roadmap to turn the strongest generated pages into hand-written teaching pages.",
+        "Add lecture-specific quotes after checking the transcript excerpts against the source videos.",
         "Add real figures or mathematical sketches where a static flow diagram is not enough.",
-        "Review transcript excerpts for places where better quotes or lecture-specific anchors should be selected.",
+        "Deepen the derivations where the current page names the formula shape but does not yet walk through enough algebra.",
     ],
 }
+
+
+EDITORIAL_ROADMAP = [
+    {
+        "priority": "P0",
+        "slug": "pinning-the-core-argument",
+        "title": "Pin Down The Core Argument",
+        "goal": "Make the first review route say one thing clearly: physics-informed machine learning is about making learned answers answerable to data, physical rules, and changed scientific cases.",
+        "why": "Without this, readers see a pile of methods. With it, every concept becomes a different answer to the same scientific pressure.",
+        "target_pages": [
+            {"label": "Field Synthesis", "href": "synthesis.html"},
+            {"label": "Learning Path", "href": "learning-path.html"},
+            {"label": "Review Handoff", "href": "handoff.html"},
+            {"label": "Completion Audit", "href": "completion-audit.html"},
+        ],
+        "work": [
+            "Rewrite the opening paragraphs so they start from the scientific problem before naming methods.",
+            "Make every route explain what is observed, what is hidden, what rule is kept, and what changed case can reject the claim.",
+            "Remove any sentence that sounds impressive but does not name evidence, domain, quantity, or failure test.",
+        ],
+        "acceptance_check": "A new reader can say the field's common problem in one sentence before opening any topic page.",
+    },
+    {
+        "priority": "P0",
+        "slug": "source-anchored-core-concepts",
+        "title": "Add Source Anchors To Core Concepts",
+        "goal": "Turn the main topic pages and evidence packets into source-backed teaching pages, not only generated summaries.",
+        "why": "The package is transcript-backed only if the important claims point to lecture-specific support and state what that support does not prove.",
+        "target_pages": [
+            {"label": "PINNs Topic", "href": "topics/physics-informed-neural-networks.html"},
+            {"label": "Operator Learning Topic", "href": "topics/operator-learning.html"},
+            {"label": "Uncertainty Topic", "href": "topics/uncertainty-and-generalization.html"},
+            {"label": "Foundation PDE Topic", "href": "topics/foundation-models-for-pdes.html"},
+            {"label": "Evidence Packets", "href": "evidence-packets.html"},
+        ],
+        "work": [
+            "Manually review the transcript excerpts for each core concept and choose the best source anchors.",
+            "Add a short source note beside each major claim: what the lecture supports, and what it does not settle.",
+            "Prefer concrete lecture moments over broad statements.",
+        ],
+        "acceptance_check": "Each core concept has at least two reviewed transcript anchors and one clear limit statement.",
+    },
+    {
+        "priority": "P0",
+        "slug": "hand-derivations",
+        "title": "Deepen The Hand Derivations",
+        "goal": "Make the math feel inevitable from the problem instead of appearing as a finished formula.",
+        "why": "The reader should see why the terms show up: data error comes from measured points, physics error comes from the equation, uncertainty comes from possible wrong answers, and operators come from learning a map between fields.",
+        "target_pages": [
+            {"label": "Core Derivations", "href": "derivations.html"},
+            {"label": "PINNs Derivation", "href": "derivations/physics-informed-neural-networks.html"},
+            {"label": "Operator Learning Derivation", "href": "derivations/operator-learning.html"},
+            {"label": "Foundation PDE Derivation", "href": "derivations/foundation-models-for-pdes.html"},
+            {"label": "Plain Formula Guide", "href": "formula-guide.html"},
+        ],
+        "work": [
+            "Add one handwritten derivation from observed evidence to loss shape for PINNs.",
+            "Add one derivation showing why operator learning maps a whole input field to a whole output field.",
+            "Add one derivation showing what must be shared before a PDE model can transfer to a new equation case.",
+            "Keep each line in everyday language before adding symbols.",
+        ],
+        "acceptance_check": "A reader who skips the formula can still explain why each term exists and what would make it fail.",
+    },
+    {
+        "priority": "P1",
+        "slug": "figures-and-sketches",
+        "title": "Add Figures And Mathematical Sketches",
+        "goal": "Replace purely textual explanation where a picture would reveal the object being learned or checked.",
+        "why": "Some ideas are spatial: a PDE field, a boundary, a residual point, an input field, an output field, or a shifted test case. A sketch can make the hidden quantity visible.",
+        "target_pages": [
+            {"label": "Diagrams", "href": "diagrams.html"},
+            {"label": "PINNs Topic", "href": "topics/physics-informed-neural-networks.html"},
+            {"label": "Operator Learning Topic", "href": "topics/operator-learning.html"},
+            {"label": "Surrogate Modeling Topic", "href": "topics/surrogate-modeling.html"},
+            {"label": "Uncertainty Topic", "href": "topics/uncertainty-and-generalization.html"},
+        ],
+        "work": [
+            "Add one sketch for measured points plus equation-check points.",
+            "Add one sketch for input field to output field.",
+            "Add one sketch for a fast surrogate inside repeated scientific choices.",
+            "Add one sketch for a shifted case where the model should admit doubt.",
+        ],
+        "acceptance_check": "Each sketch names input, output, kept rule, and failure case in the caption.",
+    },
+    {
+        "priority": "P1",
+        "slug": "domain-examples",
+        "title": "Strengthen Domain Examples",
+        "goal": "Make chemistry, materials, climate, fluids, and geometry pages show real scientific jobs rather than generic use cases.",
+        "why": "The math matters because a scientist needs a quantity for a decision: a molecule property, stress field, flow force, climate risk, or field on an irregular shape.",
+        "target_pages": [
+            {"label": "Domain Guides", "href": "domains.html"},
+            {"label": "Worked Examples", "href": "worked-examples.html"},
+            {"label": "Molecule Example", "href": "worked-examples/molecule-property-from-structure.html"},
+            {"label": "Material Example", "href": "worked-examples/material-stress-from-sparse-tests.html"},
+            {"label": "Climate Example", "href": "worked-examples/climate-risk-under-shifted-conditions.html"},
+        ],
+        "work": [
+            "Add one richer concrete example per domain.",
+            "Name the observed evidence, hidden quantity, decision, and changed-case test.",
+            "Tie each example back to one concept page, one derivation, and one evidence packet.",
+        ],
+        "acceptance_check": "Each domain page contains a concrete scientific job that cannot be mistaken for a generic prediction task.",
+    },
+    {
+        "priority": "P1",
+        "slug": "compare-nearby-methods",
+        "title": "Sharpen Nearby Method Comparisons",
+        "goal": "Make the comparison pages teach what changes when two methods sound similar.",
+        "why": "Readers often confuse fitting data, obeying a rule, learning a solver shortcut, and building a cheap stand-in. The package should separate those by job and evidence.",
+        "target_pages": [
+            {"label": "Comparisons", "href": "comparisons.html"},
+            {"label": "Decision Guide", "href": "decision-guide.html"},
+            {"label": "Misconception Map", "href": "misconceptions.html"},
+            {"label": "Concept Dependency Map", "href": "dependencies.html"},
+        ],
+        "work": [
+            "For each comparison, add one situation where the left method is right and one where the right method is right.",
+            "Add one wrong-choice example and the evidence that would expose it.",
+            "Keep the language tied to the scientific job, not method labels.",
+        ],
+        "acceptance_check": "A reader can choose between two nearby methods by naming the job, evidence, and failure case.",
+    },
+    {
+        "priority": "P2",
+        "slug": "replication-and-remote-finish",
+        "title": "Finish Replication And Remote State",
+        "goal": "Make the package easy for another CLI to reproduce and push once the GitHub repository exists.",
+        "why": "Local validation proves the package files. The final handoff also needs a verified remote so another person can clone and continue.",
+        "target_pages": [
+            {"label": "Cross-Channel Playbook", "href": "provenance/cross-channel-playbook.html"},
+            {"label": "Provenance", "href": "provenance.html"},
+            {"label": "Completion Audit", "href": "completion-audit.html"},
+            {"label": "Handoff", "href": "handoff.html"},
+        ],
+        "work": [
+            "Create or grant access to the GitHub repository named by origin.",
+            "Push main and verify the branch exists remotely.",
+            "Record the clone URL and latest commit in the handoff.",
+        ],
+        "acceptance_check": "git ls-remote origin main returns a commit hash that matches the local main branch.",
+    },
+]
 
 
 REVIEW_ENTRYPOINTS = [
@@ -1468,6 +1612,12 @@ REVIEW_ENTRYPOINTS = [
                 "href": "completion-audit.html",
                 "why": "Maps the requested package requirements to local evidence and external status.",
                 "question": "What is locally verified, and what is still outside the workspace?",
+            },
+            {
+                "label": "Editorial Roadmap",
+                "href": "editorial-roadmap.html",
+                "why": "Turns the remaining hand-written depth work into prioritized tasks with acceptance checks.",
+                "question": "What is the meaty next goal after the generated first pass?",
             },
             {
                 "label": "Field Synthesis",
@@ -1662,9 +1812,9 @@ COMPLETION_REQUIREMENTS = [
     {
         "slug": "review-and-replication",
         "requirement": "Give reviewers and another CLI an end-to-end route through the package.",
-        "local_evidence": "review map, handoff, provenance, and cross-channel playbook name review route, extraction steps, build outputs, and validation checks.",
+        "local_evidence": "review map, editorial roadmap, handoff, provenance, and cross-channel playbook name review route, extraction steps, build outputs, next tasks, and validation checks.",
         "status": "locally verified",
-        "links": ["review-entrypoints.html", "handoff.html", "provenance/cross-channel-playbook.html"],
+        "links": ["review-entrypoints.html", "editorial-roadmap.html", "handoff.html", "provenance/cross-channel-playbook.html"],
     },
     {
         "slug": "local-validation",
@@ -1689,9 +1839,20 @@ REVIEW_SEARCH_INDEX = [
         "look_for": "central problem, field map, learning order, and completion state",
         "pages": [
             {"label": "Completion Audit", "href": "completion-audit.html"},
+            {"label": "Editorial Roadmap", "href": "editorial-roadmap.html"},
             {"label": "Field Synthesis", "href": "synthesis.html"},
             {"label": "Learning Path", "href": "learning-path.html"},
             {"label": "Review Handoff", "href": "handoff.html"},
+        ],
+    },
+    {
+        "intent": "I need to know the next serious goal.",
+        "look_for": "priorities, hand-written depth tasks, target pages, and acceptance checks",
+        "pages": [
+            {"label": "Editorial Roadmap", "href": "editorial-roadmap.html"},
+            {"label": "Review Entrypoints", "href": "review-entrypoints.html"},
+            {"label": "Quality Rubric", "href": "quality.html"},
+            {"label": "Core Derivations", "href": "derivations.html"},
         ],
     },
     {
@@ -2072,6 +2233,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
             "review_entrypoint_count": sum(len(group["items"]) for group in REVIEW_ENTRYPOINTS),
             "completion_requirement_count": len(COMPLETION_REQUIREMENTS),
             "review_search_intent_count": len(REVIEW_SEARCH_INDEX),
+            "editorial_roadmap_count": len(EDITORIAL_ROADMAP),
         },
         "transcript_index": [record_to_dict(record) for record in records],
         "concept_atlas": concept_atlas,
@@ -2102,6 +2264,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
         "review_entrypoints": REVIEW_ENTRYPOINTS,
         "completion_requirements": COMPLETION_REQUIREMENTS,
         "review_search_index": REVIEW_SEARCH_INDEX,
+        "editorial_roadmap": EDITORIAL_ROADMAP,
     }
     for name, value in data.items():
         if name == "summary":
@@ -2463,6 +2626,7 @@ def html_page(title: str, body: str, root_prefix: str = "") -> str:
   <a href="{root_prefix}synthesis.html">Synthesis</a>
   <a href="{root_prefix}review-entrypoints.html">Review Map</a>
   <a href="{root_prefix}review-search.html">Find</a>
+  <a href="{root_prefix}editorial-roadmap.html">Roadmap</a>
   <a href="{root_prefix}completion-audit.html">Audit</a>
   <a href="{root_prefix}handoff.html">Handoff</a>
   <a href="{root_prefix}theme-map.html">Themes</a>
@@ -2684,6 +2848,7 @@ def write_site(data: dict[str, object]) -> None:
     review_entrypoints = data["review_entrypoints"]
     completion_requirements = data["completion_requirements"]
     review_search_index = data["review_search_index"]
+    editorial_roadmap = data["editorial_roadmap"]
 
     index_body = f"""
 <h1>Physics-Informed Machine Learning Concepts Research</h1>
@@ -2712,6 +2877,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Synthesis", f"{summary['synthesis_guide_count']} pages tying the field into one argument.", "synthesis.html")}
 {card("Review Map", f"{summary['review_entrypoint_count']} entry points for end-to-end review, use, and source checks.", "review-entrypoints.html")}
 {card("Find By Question", f"{summary['review_search_intent_count']} reviewer intents mapped to the right pages.", "review-search.html")}
+{card("Editorial Roadmap", f"{summary['editorial_roadmap_count']} prioritized tasks for taking the first pass to hand-written depth.", "editorial-roadmap.html")}
 {card("Completion Audit", f"{summary['completion_requirement_count']} requirements checked against local evidence and external status.", "completion-audit.html")}
 {card("Review Handoff", "Shortest route for reviewing the package and the remaining editorial work.", "handoff.html")}
 {card("Themes", f"{summary['theme_count']} recurring research pressures across the course family.", "theme-map.html")}
@@ -2897,6 +3063,7 @@ def write_site(data: dict[str, object]) -> None:
     write_handoff_page(SITE / "handoff.html", dict(review_handoff), summary)
     write_review_entrypoints_page(SITE / "review-entrypoints.html", list(review_entrypoints))
     write_review_search_page(SITE / "review-search.html", list(review_search_index))
+    write_editorial_roadmap_page(SITE / "editorial-roadmap.html", list(editorial_roadmap))
     write_completion_audit_page(SITE / "completion-audit.html", list(completion_requirements), summary)
 
     theme_cards = []
@@ -3651,6 +3818,39 @@ def write_review_search_page(path: Path, rows: list[dict[str, object]]) -> None:
     path.write_text(html_page("Physics-Informed ML Review Search", body), encoding="utf-8")
 
 
+def write_editorial_roadmap_page(path: Path, rows: list[dict[str, object]]) -> None:
+    cards = []
+    for row in rows:
+        targets = "".join(
+            f"<li><a href=\"{html.escape(str(item['href']))}\">{html.escape(str(item['label']))}</a></li>"
+            for item in row["target_pages"]
+        )
+        work = "".join(f"<li>{html.escape(str(item))}</li>" for item in row["work"])
+        cards.append(
+            f"""
+<article class="card">
+  <p class="meta">{html.escape(str(row['priority']))}</p>
+  <h3>{html.escape(str(row['title']))}</h3>
+  <p><strong>Goal:</strong> {html.escape(str(row['goal']))}</p>
+  <p><strong>Why it matters:</strong> {html.escape(str(row['why']))}</p>
+  <h4>Target Pages</h4>
+  <ul>{targets}</ul>
+  <h4>Work</h4>
+  <ul>{work}</ul>
+  <p><strong>Acceptance Check:</strong> {html.escape(str(row['acceptance_check']))}</p>
+</article>
+"""
+        )
+    body = f"""
+<h1>Editorial Roadmap</h1>
+<p>This page names the next serious goal after the generated first pass: turn the strongest pages into hand-written, source-anchored teaching pages. The work is ordered by priority and each task has an acceptance check.</p>
+<div class="grid">{''.join(cards)}</div>
+<h2>Meaty End-To-End Goal</h2>
+<p>The end state is a package where a reader can start with a plain scientific problem, follow the evidence to a concept, see why the formula has its shape, inspect a domain example, and know the failure test. A task is not done until the target pages prove that route.</p>
+"""
+    path.write_text(html_page("Physics-Informed ML Editorial Roadmap", body), encoding="utf-8")
+
+
 def write_completion_audit_page(path: Path, requirements: list[dict[str, object]], summary: dict[str, object]) -> None:
     rows = []
     for item in requirements:
@@ -4046,6 +4246,19 @@ def write_markdown_export(data: dict[str, object]) -> None:
         lines.extend(["", f"### {row['intent']}", f"- Look for: {row['look_for']}"])
         for item in row["pages"]:
             lines.append(f"- {item['label']}: {item['href']}")
+    lines.extend(["", "## Editorial Roadmap"])
+    for item in data["editorial_roadmap"]:
+        lines.extend(
+            [
+                f"### {item['priority']} {item['title']}",
+                f"- Goal: {item['goal']}",
+                f"- Why it matters: {item['why']}",
+                f"- Target pages: {', '.join(row['href'] for row in item['target_pages'])}",
+                f"- Work: {'; '.join(item['work'])}",
+                f"- Acceptance check: {item['acceptance_check']}",
+                "",
+            ]
+        )
     lines.extend(["", "## Completion Audit"])
     for item in data["completion_requirements"]:
         lines.extend(
@@ -4126,6 +4339,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         SITE / "synthesis.html",
         SITE / "review-entrypoints.html",
         SITE / "review-search.html",
+        SITE / "editorial-roadmap.html",
         SITE / "completion-audit.html",
         SITE / "handoff.html",
         SITE / "theme-map.html",
@@ -4392,6 +4606,19 @@ def validate(data: dict[str, object] | None = None) -> None:
         for item in row["pages"]:
             if not (SITE / item["href"]).exists():
                 raise SystemExit(f"review search link missing: {item['href']}")
+    roadmap_path = SITE / "editorial-roadmap.html"
+    roadmap_text = roadmap_path.read_text(encoding="utf-8")
+    if "Editorial Roadmap" not in roadmap_text or "Acceptance Check" not in roadmap_text or "Meaty End-To-End Goal" not in roadmap_text:
+        raise SystemExit("editorial roadmap page not rendered correctly")
+    roadmap_rows = data.get("editorial_roadmap") or []
+    if len(roadmap_rows) != len(EDITORIAL_ROADMAP):
+        raise SystemExit("editorial roadmap row count mismatch")
+    for row in roadmap_rows:
+        if not row.get("work") or not row.get("acceptance_check"):
+            raise SystemExit(f"editorial roadmap row incomplete: {row.get('title')}")
+        for item in row["target_pages"]:
+            if not (SITE / str(item["href"])).exists():
+                raise SystemExit(f"editorial roadmap link missing: {row['title']} -> {item['href']}")
     audit_path = SITE / "completion-audit.html"
     audit_text = audit_path.read_text(encoding="utf-8")
     if "Completion Audit" not in audit_text or "Requirement Evidence" not in audit_text or "external blocker" not in audit_text:

@@ -36,6 +36,7 @@ The purpose is not to summarize lectures. The purpose is to explain physics-info
 - `site/synthesis.html`: field-level synthesis tying the concepts together
 - `site/review-entrypoints.html`: end-to-end review route through the package
 - `site/review-search.html`: reviewer-question index for finding the right page
+- `site/editorial-roadmap.html`: prioritized roadmap for taking the first pass to hand-written depth
 - `site/completion-audit.html`: requirement-by-requirement local completion evidence
 - `site/handoff.html`: review route, validation commands, and remaining editorial work
 - `site/theme-map.html`: recurring theme map
@@ -106,6 +107,7 @@ http://127.0.0.1:8022/index.html
 - field synthesis
 - review entrypoint map
 - reviewer-question index
+- editorial roadmap
 - completion audit
 - review handoff
 - deep dives for core topics

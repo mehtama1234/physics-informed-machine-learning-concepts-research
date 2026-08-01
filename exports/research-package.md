@@ -29,9 +29,10 @@
 - quality_rubric_count: 6
 - synthesis_guide_count: 4
 - review_handoff_count: 1
-- review_entrypoint_count: 26
+- review_entrypoint_count: 27
 - completion_requirement_count: 7
-- review_search_intent_count: 6
+- review_search_intent_count: 7
+- editorial_roadmap_count: 7
 
 ## Concepts
 ### Deep Learning
@@ -1124,14 +1125,15 @@
 - Field Synthesis: synthesis.html
 - Learning Path: learning-path.html
 - Coverage Matrix: coverage.html
+- Editorial Roadmap: editorial-roadmap.html
 - Decision Guide: decision-guide.html
 - Provenance: provenance.html
 
 ### Remaining Editorial Work
-- Hand-write richer derivations for the highest-value concepts after reviewing the generated structure.
-- Add lecture-specific quotes and figures to the worked examples after reviewing the transcript excerpts.
+- Use the editorial roadmap to turn the strongest generated pages into hand-written teaching pages.
+- Add lecture-specific quotes after checking the transcript excerpts against the source videos.
 - Add real figures or mathematical sketches where a static flow diagram is not enough.
-- Review transcript excerpts for places where better quotes or lecture-specific anchors should be selected.
+- Deepen the derivations where the current page names the formula shape but does not yet walk through enough algebra.
 
 ## Review Entrypoints
 
@@ -1140,6 +1142,7 @@
 - Review Handoff: handoff.html | What exists now, and what still needs hand-written depth?
 - Find Pages By Question: review-search.html | Which page should I open for the question I have right now?
 - Completion Audit: completion-audit.html | What is locally verified, and what is still outside the workspace?
+- Editorial Roadmap: editorial-roadmap.html | What is the meaty next goal after the generated first pass?
 - Field Synthesis: synthesis.html | What problem holds the field together?
 - Learning Path: learning-path.html | What should a new reader read first, second, and third?
 - Concept Ladder: concept-ladder.html | Can each concept be explained without starting from the method name?
@@ -1178,9 +1181,17 @@
 ### I need the big picture first.
 - Look for: central problem, field map, learning order, and completion state
 - Completion Audit: completion-audit.html
+- Editorial Roadmap: editorial-roadmap.html
 - Field Synthesis: synthesis.html
 - Learning Path: learning-path.html
 - Review Handoff: handoff.html
+
+### I need to know the next serious goal.
+- Look for: priorities, hand-written depth tasks, target pages, and acceptance checks
+- Editorial Roadmap: editorial-roadmap.html
+- Review Entrypoints: review-entrypoints.html
+- Quality Rubric: quality.html
+- Core Derivations: derivations.html
 
 ### I need to understand a concept from first principles.
 - Look for: problem, observed evidence, hidden quantity, formula shape, and failure test
@@ -1217,6 +1228,57 @@
 - Transcript Extraction: provenance/transcript-extraction.html
 - Analysis Build: provenance/analysis-build.html
 
+## Editorial Roadmap
+### P0 Pin Down The Core Argument
+- Goal: Make the first review route say one thing clearly: physics-informed machine learning is about making learned answers answerable to data, physical rules, and changed scientific cases.
+- Why it matters: Without this, readers see a pile of methods. With it, every concept becomes a different answer to the same scientific pressure.
+- Target pages: synthesis.html, learning-path.html, handoff.html, completion-audit.html
+- Work: Rewrite the opening paragraphs so they start from the scientific problem before naming methods.; Make every route explain what is observed, what is hidden, what rule is kept, and what changed case can reject the claim.; Remove any sentence that sounds impressive but does not name evidence, domain, quantity, or failure test.
+- Acceptance check: A new reader can say the field's common problem in one sentence before opening any topic page.
+
+### P0 Add Source Anchors To Core Concepts
+- Goal: Turn the main topic pages and evidence packets into source-backed teaching pages, not only generated summaries.
+- Why it matters: The package is transcript-backed only if the important claims point to lecture-specific support and state what that support does not prove.
+- Target pages: topics/physics-informed-neural-networks.html, topics/operator-learning.html, topics/uncertainty-and-generalization.html, topics/foundation-models-for-pdes.html, evidence-packets.html
+- Work: Manually review the transcript excerpts for each core concept and choose the best source anchors.; Add a short source note beside each major claim: what the lecture supports, and what it does not settle.; Prefer concrete lecture moments over broad statements.
+- Acceptance check: Each core concept has at least two reviewed transcript anchors and one clear limit statement.
+
+### P0 Deepen The Hand Derivations
+- Goal: Make the math feel inevitable from the problem instead of appearing as a finished formula.
+- Why it matters: The reader should see why the terms show up: data error comes from measured points, physics error comes from the equation, uncertainty comes from possible wrong answers, and operators come from learning a map between fields.
+- Target pages: derivations.html, derivations/physics-informed-neural-networks.html, derivations/operator-learning.html, derivations/foundation-models-for-pdes.html, formula-guide.html
+- Work: Add one handwritten derivation from observed evidence to loss shape for PINNs.; Add one derivation showing why operator learning maps a whole input field to a whole output field.; Add one derivation showing what must be shared before a PDE model can transfer to a new equation case.; Keep each line in everyday language before adding symbols.
+- Acceptance check: A reader who skips the formula can still explain why each term exists and what would make it fail.
+
+### P1 Add Figures And Mathematical Sketches
+- Goal: Replace purely textual explanation where a picture would reveal the object being learned or checked.
+- Why it matters: Some ideas are spatial: a PDE field, a boundary, a residual point, an input field, an output field, or a shifted test case. A sketch can make the hidden quantity visible.
+- Target pages: diagrams.html, topics/physics-informed-neural-networks.html, topics/operator-learning.html, topics/surrogate-modeling.html, topics/uncertainty-and-generalization.html
+- Work: Add one sketch for measured points plus equation-check points.; Add one sketch for input field to output field.; Add one sketch for a fast surrogate inside repeated scientific choices.; Add one sketch for a shifted case where the model should admit doubt.
+- Acceptance check: Each sketch names input, output, kept rule, and failure case in the caption.
+
+### P1 Strengthen Domain Examples
+- Goal: Make chemistry, materials, climate, fluids, and geometry pages show real scientific jobs rather than generic use cases.
+- Why it matters: The math matters because a scientist needs a quantity for a decision: a molecule property, stress field, flow force, climate risk, or field on an irregular shape.
+- Target pages: domains.html, worked-examples.html, worked-examples/molecule-property-from-structure.html, worked-examples/material-stress-from-sparse-tests.html, worked-examples/climate-risk-under-shifted-conditions.html
+- Work: Add one richer concrete example per domain.; Name the observed evidence, hidden quantity, decision, and changed-case test.; Tie each example back to one concept page, one derivation, and one evidence packet.
+- Acceptance check: Each domain page contains a concrete scientific job that cannot be mistaken for a generic prediction task.
+
+### P1 Sharpen Nearby Method Comparisons
+- Goal: Make the comparison pages teach what changes when two methods sound similar.
+- Why it matters: Readers often confuse fitting data, obeying a rule, learning a solver shortcut, and building a cheap stand-in. The package should separate those by job and evidence.
+- Target pages: comparisons.html, decision-guide.html, misconceptions.html, dependencies.html
+- Work: For each comparison, add one situation where the left method is right and one where the right method is right.; Add one wrong-choice example and the evidence that would expose it.; Keep the language tied to the scientific job, not method labels.
+- Acceptance check: A reader can choose between two nearby methods by naming the job, evidence, and failure case.
+
+### P2 Finish Replication And Remote State
+- Goal: Make the package easy for another CLI to reproduce and push once the GitHub repository exists.
+- Why it matters: Local validation proves the package files. The final handoff also needs a verified remote so another person can clone and continue.
+- Target pages: provenance/cross-channel-playbook.html, provenance.html, completion-audit.html, handoff.html
+- Work: Create or grant access to the GitHub repository named by origin.; Push main and verify the branch exists remotely.; Record the clone URL and latest commit in the handoff.
+- Acceptance check: git ls-remote origin main returns a commit hash that matches the local main branch.
+
+
 ## Completion Audit
 ### Preserve transcript-backed source material for the two playlist family.
 - Status: locally verified
@@ -1236,7 +1298,7 @@
 
 ### Give reviewers and another CLI an end-to-end route through the package.
 - Status: locally verified
-- Evidence: review map, handoff, provenance, and cross-channel playbook name review route, extraction steps, build outputs, and validation checks.
+- Evidence: review map, editorial roadmap, handoff, provenance, and cross-channel playbook name review route, extraction steps, build outputs, next tasks, and validation checks.
 
 ### Run local checks proving generated pages, links, counts, and wording gates are coherent.
 - Status: locally verified

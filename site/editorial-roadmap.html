@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Physics-Informed ML Editorial Roadmap</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav class="topbar">
+  <a href="index.html">Physics-Informed ML</a>
+  <a href="transcripts.html">Transcripts</a>
+  <a href="concept-atlas.html">Concept Atlas</a>
+  <a href="families.html">Families</a>
+  <a href="comparisons.html">Comparisons</a>
+  <a href="worked-examples.html">Examples</a>
+  <a href="diagrams.html">Diagrams</a>
+  <a href="derivations.html">Derivations</a>
+  <a href="formula-guide.html">Formulas</a>
+  <a href="misconceptions.html">Misreads</a>
+  <a href="learning-path.html">Path</a>
+  <a href="glossary.html">Glossary</a>
+  <a href="domains.html">Domains</a>
+  <a href="reader-checks.html">Checks</a>
+  <a href="decision-guide.html">Decide</a>
+  <a href="provenance.html">Provenance</a>
+  <a href="coverage.html">Coverage</a>
+  <a href="dependencies.html">Dependencies</a>
+  <a href="concept-ladder.html">Ladder</a>
+  <a href="evidence-packets.html">Packets</a>
+  <a href="quality.html">Quality</a>
+  <a href="synthesis.html">Synthesis</a>
+  <a href="review-entrypoints.html">Review Map</a>
+  <a href="review-search.html">Find</a>
+  <a href="editorial-roadmap.html">Roadmap</a>
+  <a href="completion-audit.html">Audit</a>
+  <a href="handoff.html">Handoff</a>
+  <a href="theme-map.html">Themes</a>
+  <a href="evidence-ledger.html">Evidence</a>
+</nav>
+<main>
+
+<h1>Editorial Roadmap</h1>
+<p>This page names the next serious goal after the generated first pass: turn the strongest pages into hand-written, source-anchored teaching pages. The work is ordered by priority and each task has an acceptance check.</p>
+<div class="grid">
+<article class="card">
+  <p class="meta">P0</p>
+  <h3>Pin Down The Core Argument</h3>
+  <p><strong>Goal:</strong> Make the first review route say one thing clearly: physics-informed machine learning is about making learned answers answerable to data, physical rules, and changed scientific cases.</p>
+  <p><strong>Why it matters:</strong> Without this, readers see a pile of methods. With it, every concept becomes a different answer to the same scientific pressure.</p>
+  <h4>Target Pages</h4>
+  <ul><li><a href="synthesis.html">Field Synthesis</a></li><li><a href="learning-path.html">Learning Path</a></li><li><a href="handoff.html">Review Handoff</a></li><li><a href="completion-audit.html">Completion Audit</a></li></ul>
+  <h4>Work</h4>
+  <ul><li>Rewrite the opening paragraphs so they start from the scientific problem before naming methods.</li><li>Make every route explain what is observed, what is hidden, what rule is kept, and what changed case can reject the claim.</li><li>Remove any sentence that sounds impressive but does not name evidence, domain, quantity, or failure test.</li></ul>
+  <p><strong>Acceptance Check:</strong> A new reader can say the field&#x27;s common problem in one sentence before opening any topic page.</p>
+</article>
+
+<article class="card">
+  <p class="meta">P0</p>
+  <h3>Add Source Anchors To Core Concepts</h3>
+  <p><strong>Goal:</strong> Turn the main topic pages and evidence packets into source-backed teaching pages, not only generated summaries.</p>
+  <p><strong>Why it matters:</strong> The package is transcript-backed only if the important claims point to lecture-specific support and state what that support does not prove.</p>
+  <h4>Target Pages</h4>
+  <ul><li><a href="topics/physics-informed-neural-networks.html">PINNs Topic</a></li><li><a href="topics/operator-learning.html">Operator Learning Topic</a></li><li><a href="topics/uncertainty-and-generalization.html">Uncertainty Topic</a></li><li><a href="topics/foundation-models-for-pdes.html">Foundation PDE Topic</a></li><li><a href="evidence-packets.html">Evidence Packets</a></li></ul>
+  <h4>Work</h4>
+  <ul><li>Manually review the transcript excerpts for each core concept and choose the best source anchors.</li><li>Add a short source note beside each major claim: what the lecture supports, and what it does not settle.</li><li>Prefer concrete lecture moments over broad statements.</li></ul>
+  <p><strong>Acceptance Check:</strong> Each core concept has at least two reviewed transcript anchors and one clear limit statement.</p>
+</article>
+
+<article class="card">
+  <p class="meta">P0</p>
+  <h3>Deepen The Hand Derivations</h3>
+  <p><strong>Goal:</strong> Make the math feel inevitable from the problem instead of appearing as a finished formula.</p>
+  <p><strong>Why it matters:</strong> The reader should see why the terms show up: data error comes from measured points, physics error comes from the equation, uncertainty comes from possible wrong answers, and operators come from learning a map between fields.</p>
+  <h4>Target Pages</h4>
+  <ul><li><a href="derivations.html">Core Derivations</a></li><li><a href="derivations/physics-informed-neural-networks.html">PINNs Derivation</a></li><li><a href="derivations/operator-learning.html">Operator Learning Derivation</a></li><li><a href="derivations/foundation-models-for-pdes.html">Foundation PDE Derivation</a></li><li><a href="formula-guide.html">Plain Formula Guide</a></li></ul>
+  <h4>Work</h4>
+  <ul><li>Add one handwritten derivation from observed evidence to loss shape for PINNs.</li><li>Add one derivation showing why operator learning maps a whole input field to a whole output field.</li><li>Add one derivation showing what must be shared before a PDE model can transfer to a new equation case.</li><li>Keep each line in everyday language before adding symbols.</li></ul>
+  <p><strong>Acceptance Check:</strong> A reader who skips the formula can still explain why each term exists and what would make it fail.</p>
+</article>
+
+<article class="card">
+  <p class="meta">P1</p>
+  <h3>Add Figures And Mathematical Sketches</h3>
+  <p><strong>Goal:</strong> Replace purely textual explanation where a picture would reveal the object being learned or checked.</p>
+  <p><strong>Why it matters:</strong> Some ideas are spatial: a PDE field, a boundary, a residual point, an input field, an output field, or a shifted test case. A sketch can make the hidden quantity visible.</p>
+  <h4>Target Pages</h4>
+  <ul><li><a href="diagrams.html">Diagrams</a></li><li><a href="topics/physics-informed-neural-networks.html">PINNs Topic</a></li><li><a href="topics/operator-learning.html">Operator Learning Topic</a></li><li><a href="topics/surrogate-modeling.html">Surrogate Modeling Topic</a></li><li><a href="topics/uncertainty-and-generalization.html">Uncertainty Topic</a></li></ul>
+  <h4>Work</h4>
+  <ul><li>Add one sketch for measured points plus equation-check points.</li><li>Add one sketch for input field to output field.</li><li>Add one sketch for a fast surrogate inside repeated scientific choices.</li><li>Add one sketch for a shifted case where the model should admit doubt.</li></ul>
+  <p><strong>Acceptance Check:</strong> Each sketch names input, output, kept rule, and failure case in the caption.</p>
+</article>
+
+<article class="card">
+  <p class="meta">P1</p>
+  <h3>Strengthen Domain Examples</h3>
+  <p><strong>Goal:</strong> Make chemistry, materials, climate, fluids, and geometry pages show real scientific jobs rather than generic use cases.</p>
+  <p><strong>Why it matters:</strong> The math matters because a scientist needs a quantity for a decision: a molecule property, stress field, flow force, climate risk, or field on an irregular shape.</p>
+  <h4>Target Pages</h4>
+  <ul><li><a href="domains.html">Domain Guides</a></li><li><a href="worked-examples.html">Worked Examples</a></li><li><a href="worked-examples/molecule-property-from-structure.html">Molecule Example</a></li><li><a href="worked-examples/material-stress-from-sparse-tests.html">Material Example</a></li><li><a href="worked-examples/climate-risk-under-shifted-conditions.html">Climate Example</a></li></ul>
+  <h4>Work</h4>
+  <ul><li>Add one richer concrete example per domain.</li><li>Name the observed evidence, hidden quantity, decision, and changed-case test.</li><li>Tie each example back to one concept page, one derivation, and one evidence packet.</li></ul>
+  <p><strong>Acceptance Check:</strong> Each domain page contains a concrete scientific job that cannot be mistaken for a generic prediction task.</p>
+</article>
+
+<article class="card">
+  <p class="meta">P1</p>
+  <h3>Sharpen Nearby Method Comparisons</h3>
+  <p><strong>Goal:</strong> Make the comparison pages teach what changes when two methods sound similar.</p>
+  <p><strong>Why it matters:</strong> Readers often confuse fitting data, obeying a rule, learning a solver shortcut, and building a cheap stand-in. The package should separate those by job and evidence.</p>
+  <h4>Target Pages</h4>
+  <ul><li><a href="comparisons.html">Comparisons</a></li><li><a href="decision-guide.html">Decision Guide</a></li><li><a href="misconceptions.html">Misconception Map</a></li><li><a href="dependencies.html">Concept Dependency Map</a></li></ul>
+  <h4>Work</h4>
+  <ul><li>For each comparison, add one situation where the left method is right and one where the right method is right.</li><li>Add one wrong-choice example and the evidence that would expose it.</li><li>Keep the language tied to the scientific job, not method labels.</li></ul>
+  <p><strong>Acceptance Check:</strong> A reader can choose between two nearby methods by naming the job, evidence, and failure case.</p>
+</article>
+
+<article class="card">
+  <p class="meta">P2</p>
+  <h3>Finish Replication And Remote State</h3>
+  <p><strong>Goal:</strong> Make the package easy for another CLI to reproduce and push once the GitHub repository exists.</p>
+  <p><strong>Why it matters:</strong> Local validation proves the package files. The final handoff also needs a verified remote so another person can clone and continue.</p>
+  <h4>Target Pages</h4>
+  <ul><li><a href="provenance/cross-channel-playbook.html">Cross-Channel Playbook</a></li><li><a href="provenance.html">Provenance</a></li><li><a href="completion-audit.html">Completion Audit</a></li><li><a href="handoff.html">Handoff</a></li></ul>
+  <h4>Work</h4>
+  <ul><li>Create or grant access to the GitHub repository named by origin.</li><li>Push main and verify the branch exists remotely.</li><li>Record the clone URL and latest commit in the handoff.</li></ul>
+  <p><strong>Acceptance Check:</strong> git ls-remote origin main returns a commit hash that matches the local main branch.</p>
+</article>
+</div>
+<h2>Meaty End-To-End Goal</h2>
+<p>The end state is a package where a reader can start with a plain scientific problem, follow the evidence to a concept, see why the formula has its shape, inspect a domain example, and know the failure test. A task is not done until the target pages prove that route.</p>
+
+</main>
+</body>
+</html>
