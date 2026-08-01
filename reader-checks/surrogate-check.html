@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Surrogate Reader Check</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<nav class="topbar">
+  <a href="../index.html">Physics-Informed ML</a>
+  <a href="../transcripts.html">Transcripts</a>
+  <a href="../concept-atlas.html">Concept Atlas</a>
+  <a href="../families.html">Families</a>
+  <a href="../comparisons.html">Comparisons</a>
+  <a href="../worked-examples.html">Examples</a>
+  <a href="../diagrams.html">Diagrams</a>
+  <a href="../learning-path.html">Path</a>
+  <a href="../glossary.html">Glossary</a>
+  <a href="../domains.html">Domains</a>
+  <a href="../reader-checks.html">Checks</a>
+  <a href="../theme-map.html">Themes</a>
+  <a href="../evidence-ledger.html">Evidence</a>
+</nav>
+<main>
+
+<h1>Surrogate Reader Check</h1>
+<h2>Setup</h2>
+<p>A trusted simulation is too slow for a design loop.</p>
+<h2>Questions</h2>
+<ol><li>What trusted source does the surrogate replace?</li><li>Which inputs will be varied?</li><li>What output quantity matters for decisions?</li><li>Where was the fast stand-in checked?</li><li>When should the full solver be used again?</li></ol>
+<h2>Strong Answer Should Say</h2>
+<p>The surrogate replaces a named solver or experiment only inside a named query family. Inputs and outputs must match the decision. The stand-in should be checked near the edge of intended use, and the full solver should return when the query leaves that range or when errors affect the decision quantity.</p>
+<h2>Weak Answer Warning</h2>
+<p>A weak answer treats speed as trust.</p>
+<h2>Related Pages</h2>
+<ul><li><a href="../topics/surrogate-modeling.html">topics/surrogate-modeling.html</a></li><li><a href="../domains/fluids-and-flow.html">domains/fluids-and-flow.html</a></li></ul>
+
+</main>
+</body>
+</html>

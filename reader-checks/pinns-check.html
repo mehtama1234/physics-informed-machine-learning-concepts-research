@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PINNs Reader Check</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<nav class="topbar">
+  <a href="../index.html">Physics-Informed ML</a>
+  <a href="../transcripts.html">Transcripts</a>
+  <a href="../concept-atlas.html">Concept Atlas</a>
+  <a href="../families.html">Families</a>
+  <a href="../comparisons.html">Comparisons</a>
+  <a href="../worked-examples.html">Examples</a>
+  <a href="../diagrams.html">Diagrams</a>
+  <a href="../learning-path.html">Path</a>
+  <a href="../glossary.html">Glossary</a>
+  <a href="../domains.html">Domains</a>
+  <a href="../reader-checks.html">Checks</a>
+  <a href="../theme-map.html">Themes</a>
+  <a href="../evidence-ledger.html">Evidence</a>
+</nav>
+<main>
+
+<h1>PINNs Reader Check</h1>
+<h2>Setup</h2>
+<p>A wall has only a few temperature sensors, but the heat equation is trusted.</p>
+<h2>Questions</h2>
+<ol><li>What is observed?</li><li>What is hidden?</li><li>Which physical rule checks the spaces between sensors?</li><li>What error terms should the training score include?</li><li>What changed case would make you doubt the claim?</li></ol>
+<h2>Strong Answer Should Say</h2>
+<p>Observed: sensor values, starting or boundary values, and the heat equation. Hidden: the full temperature field. The equation residual checks unsensed locations. The score needs data error, equation error, and boundary or starting error. A changed boundary, source, or held-out sensor should test the claim.</p>
+<h2>Weak Answer Warning</h2>
+<p>A weak answer says only that the neural network fits data.</p>
+<h2>Related Pages</h2>
+<ul><li><a href="../topics/physics-informed-neural-networks.html">topics/physics-informed-neural-networks.html</a></li><li><a href="../worked-examples/heat-equation-from-few-measurements.html">worked-examples/heat-equation-from-few-measurements.html</a></li></ul>
+
+</main>
+</body>
+</html>
