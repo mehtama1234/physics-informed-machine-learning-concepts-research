@@ -20,7 +20,7 @@
 - learning_path_step_count: 7
 - glossary_term_count: 10
 - domain_guide_count: 5
-- reader_check_count: 6
+- reader_check_count: 14
 - decision_guide_count: 6
 - provenance_guide_count: 6
 - coverage_row_count: 14
@@ -463,7 +463,7 @@
 ### Partial Differential Equations
 - Correction: A PDE is a rule for how a whole field changes across space and time.
 - First-principles test: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error
-- Wrong turns: The boundary condition is vague.; The learned answer ignores conservation.; The grid or resolution changes the conclusion.; Small visual error hides a large error in the quantity people care about.
+- Wrong turns: A weak answer says only that Partial Differential Equations is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.; The boundary condition is vague.; The learned answer ignores conservation.; The grid or resolution changes the conclusion.; Small visual error hides a large error in the quantity people care about.
 
 ### Operator Learning
 - Correction: Operator learning tries to learn the machine that turns one field into another field.
@@ -483,7 +483,7 @@
 ### Neural Differential Equations
 - Correction: A neural differential equation learns the missing rule for how a system changes.
 - First-principles test: run longer than the training window and check whether small rate errors accumulate into drift
-- Wrong turns: The model is tested only over short times.; Small rate errors accumulate unnoticed.; Known conservation or stability behavior is not checked.; The learned rate fits noise instead of mechanism.
+- Wrong turns: A weak answer says only that Neural Differential Equations is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.; The model is tested only over short times.; Small rate errors accumulate unnoticed.; Known conservation or stability behavior is not checked.; The learned rate fits noise instead of mechanism.
 
 ### Symbolic Regression And Model Discovery
 - Correction: Symbolic regression searches for a short formula that explains measured behavior.
@@ -759,6 +759,46 @@
 - Strong answer: The answer names included and held-out task families, the shared structure being claimed, and a trusted solver or measurement for checking. It rejects broad claims when new equations, boundaries, scales, or rare regimes were not tested.
 - Weak answer warning: A weak answer treats broad training size as proof of broad scientific trust.
 
+### Deep Learning Reader Check
+- Setup: A reader is deciding whether Deep Learning fits a scientific job in scientific prediction from large measured or simulated data sets.
+- Strong answer: Observed: many input-output examples from experiments, simulations, or measurements. Hidden: the exact rule that connects the input to the output. The mathematical move is to adjust many weights until the model maps familiar inputs to the right outputs. The formula shape means the model earns attention only when prediction survives examples it did not train on. The claim should be tested by this changed case: hold out a changed material, geometry, parameter range, or sensor condition.
+- Weak answer warning: A weak answer says only that Deep Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.
+
+### Partial Differential Equations Reader Check
+- Setup: A reader is deciding whether Partial Differential Equations fits a scientific job in fluids, heat, waves, mechanics, chemistry, climate, and other changing fields.
+- Strong answer: Observed: a field such as temperature, pressure, concentration, velocity, or displacement. Hidden: how every point in the field affects nearby points over time. The mathematical move is to write a local change rule that uses rates across space and time. The formula shape means the equation carries how a whole field changes, not just how one number changes. The claim should be tested by this changed case: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error.
+- Weak answer warning: A weak answer says only that Partial Differential Equations is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.
+
+### Scientific Machine Learning Reader Check
+- Setup: A reader is deciding whether Scientific Machine Learning fits a scientific job in using data-driven models inside scientific workflows.
+- Strong answer: Observed: data, equations, units, simulation outputs, and domain limits. Hidden: which parts of the scientific system are missing, noisy, or too costly to compute directly. The mathematical move is to combine learned prediction with scientific checks that name what the claim is allowed to mean. The formula shape means the model is judged by a scientific job, not by a score floating away from the job. The claim should be tested by this changed case: state the scientific quantity first, then test it under a changed case that matters in that domain.
+- Weak answer warning: A weak answer says only that Scientific Machine Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.
+
+### Optimization For Learning Reader Check
+- Setup: A reader is deciding whether Optimization For Learning fits a scientific job in turning model fitting into a repeatable computation.
+- Strong answer: Observed: a written score that says which model behavior is better or worse. Hidden: whether that score matches the scientific behavior the user actually cares about. The mathematical move is to change model settings to lower the written score. The formula shape means the model learns the score, so the score must include the scientific burden. The claim should be tested by this changed case: inspect what the score ignores, then check whether the ignored behavior fails after training.
+- Weak answer warning: A weak answer says only that Optimization For Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.
+
+### Generative Modeling Reader Check
+- Setup: A reader is deciding whether Generative Modeling fits a scientific job in creating plausible scientific samples, fields, or candidate designs.
+- Strong answer: Observed: examples of fields, molecules, flows, shapes, or other scientific objects. Hidden: the spread of possible valid objects beyond the examples. The mathematical move is to learn how to sample new candidates that resemble the training family. The formula shape means a generated object must still pass physics and usefulness checks. The claim should be tested by this changed case: measure constraints, rare cases, conservation, and downstream task performance on generated samples.
+- Weak answer warning: A weak answer says only that Generative Modeling is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.
+
+### Graphs And Geometric Learning Reader Check
+- Setup: A reader is deciding whether Graphs And Geometric Learning fits a scientific job in systems made of interacting parts, meshes, molecules, or spatial relations.
+- Strong answer: Observed: objects with parts and connections, such as meshes, molecules, or interacting components. Hidden: which neighboring and long-range interactions control the scientific quantity. The mathematical move is to let information move along the object connections instead of flattening the object into a plain row. The formula shape means the model keeps the structure of the scientific object visible. The claim should be tested by this changed case: change the mesh, rotate or move the object, or add missing interactions and inspect what breaks.
+- Weak answer warning: A weak answer says only that Graphs And Geometric Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.
+
+### Neural Differential Equations Reader Check
+- Setup: A reader is deciding whether Neural Differential Equations fits a scientific job in changing systems where time evolution is part of the model.
+- Strong answer: Observed: measurements of a system changing over time. Hidden: the rate rule that moves the present value into the future. The mathematical move is to learn the missing rate rule and place it inside a time-evolution calculation. The formula shape means learning supplies the unknown change rule while the time update carries the idea of continuous motion. The claim should be tested by this changed case: run longer than the training window and check whether small rate errors accumulate into drift.
+- Weak answer warning: A weak answer says only that Neural Differential Equations is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.
+
+### Attention For Scientific Fields Reader Check
+- Setup: A reader is deciding whether Attention For Scientific Fields fits a scientific job in large scientific fields where distant parts may interact.
+- Strong answer: Observed: large fields where one location may depend on other locations. Hidden: which distant parts matter for the local prediction. The mathematical move is to let the model choose which parts of the field exchange information. The formula shape means attention is a routing rule for information, not proof that the selected route is physically complete. The claim should be tested by this changed case: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures.
+- Weak answer warning: A weak answer says only that Attention For Scientific Fields is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.
+
 
 ## Decision Guide
 ### Sparse Data, Known Equation
@@ -835,7 +875,7 @@
 - Videos: 38
 - Deep dive: no
 - Diagram: yes
-- Reader check: no
+- Reader check: yes
 - Evidence items: 6
 
 ### Physics-Informed Neural Networks
@@ -849,7 +889,7 @@
 - Videos: 34
 - Deep dive: yes
 - Diagram: yes
-- Reader check: no
+- Reader check: yes
 - Evidence items: 6
 
 ### Operator Learning
@@ -863,7 +903,7 @@
 - Videos: 33
 - Deep dive: no
 - Diagram: yes
-- Reader check: no
+- Reader check: yes
 - Evidence items: 6
 
 ### Surrogate Modeling
@@ -884,28 +924,28 @@
 - Videos: 40
 - Deep dive: no
 - Diagram: no
-- Reader check: no
+- Reader check: yes
 - Evidence items: 6
 
 ### Generative Modeling
 - Videos: 33
 - Deep dive: no
 - Diagram: no
-- Reader check: no
+- Reader check: yes
 - Evidence items: 6
 
 ### Graphs And Geometric Learning
 - Videos: 31
 - Deep dive: no
 - Diagram: no
-- Reader check: no
+- Reader check: yes
 - Evidence items: 6
 
 ### Neural Differential Equations
 - Videos: 40
 - Deep dive: yes
 - Diagram: yes
-- Reader check: no
+- Reader check: yes
 - Evidence items: 6
 
 ### Symbolic Regression And Model Discovery
@@ -926,7 +966,7 @@
 - Videos: 28
 - Deep dive: no
 - Diagram: yes
-- Reader check: no
+- Reader check: yes
 - Evidence items: 6
 
 

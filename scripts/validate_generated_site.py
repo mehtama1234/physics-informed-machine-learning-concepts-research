@@ -184,6 +184,36 @@ def check_source_anchor_coverage() -> list[str]:
     return errors
 
 
+def check_reader_check_coverage() -> list[str]:
+    errors: list[str] = []
+    concepts = json.loads((ANALYSIS / "concept_atlas.json").read_text(encoding="utf-8"))
+    checks = json.loads((ANALYSIS / "reader_checks.json").read_text(encoding="utf-8"))
+    check_by_slug = {str(check["topic_slug"]): check for check in checks}
+    if len(check_by_slug) != len(concepts):
+        errors.append(f"expected reader checks for {len(concepts)} concepts, found {len(check_by_slug)}")
+    for concept in concepts:
+        slug = str(concept["slug"])
+        check = check_by_slug.get(slug)
+        if not check:
+            errors.append(f"missing reader check for concept: {slug}")
+            continue
+        topic_path = ROOT / f"site/topics/{slug}.html"
+        check_path = ROOT / f"site/reader-checks/{check['slug']}.html"
+        if not topic_path.exists():
+            errors.append(f"missing reader-check topic page: site/topics/{slug}.html")
+        else:
+            topic_text = topic_path.read_text(encoding="utf-8")
+            if "Reader Check" not in topic_text or str(check["title"]) not in topic_text or "Weak answer warning" not in topic_text:
+                errors.append(f"site/topics/{slug}.html: embedded reader check missing")
+        if not check_path.exists():
+            errors.append(f"missing reader-check page: site/reader-checks/{check['slug']}.html")
+        else:
+            check_text = check_path.read_text(encoding="utf-8")
+            if "Strong Answer Should Say" not in check_text or "Weak Answer Warning" not in check_text:
+                errors.append(f"site/reader-checks/{check['slug']}.html: reader check content missing")
+    return errors
+
+
 def validate() -> None:
     manifest_path = SITE / "page-manifest.json"
     if not manifest_path.exists():
@@ -210,12 +240,13 @@ def validate() -> None:
         errors.append(f"expected 40 videos, found {summary.get('video_count')}")
     if summary.get("concept_count") != 14:
         errors.append(f"expected 14 concepts, found {summary.get('concept_count')}")
-    if len(manifest) != 178:
-        errors.append(f"expected 178 pages, found {len(manifest)}")
+    if len(manifest) != 186:
+        errors.append(f"expected 186 pages, found {len(manifest)}")
 
     errors.extend(check_internal_links(manifest))
     errors.extend(check_required_sections())
     errors.extend(check_source_anchor_coverage())
+    errors.extend(check_reader_check_coverage())
 
     scan_paths = [ROOT / "README.md", ROOT / "exports/research-package.md"]
     scan_paths.extend((ROOT / item) for item in manifest)

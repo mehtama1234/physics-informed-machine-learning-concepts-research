@@ -2698,13 +2698,14 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
             }
         )
 
-    coverage_matrix = build_coverage_matrix(concept_atlas)
     dependency_map = build_dependency_map()
     concept_ladder = build_concept_ladder(topic_treatments)
+    reader_checks = build_reader_checks(topic_treatments)
+    coverage_matrix = build_coverage_matrix(concept_atlas, reader_checks)
     core_derivations = build_core_derivations(topic_treatments)
     concept_evidence_packets = build_concept_evidence_packets(topic_treatments)
     formula_guide = build_formula_guide(core_derivations)
-    misconception_map = build_misconception_map(core_derivations)
+    misconception_map = build_misconception_map(core_derivations, reader_checks)
     editorial_roadmap = []
     for item in EDITORIAL_ROADMAP:
         merged = dict(item)
@@ -2732,7 +2733,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
             "learning_path_step_count": len(LEARNING_PATH),
             "glossary_term_count": len(GLOSSARY),
             "domain_guide_count": len(DOMAIN_GUIDES),
-            "reader_check_count": len(READER_CHECKS),
+            "reader_check_count": len(reader_checks),
             "decision_guide_count": len(DECISION_GUIDES),
             "provenance_guide_count": len(PROVENANCE_GUIDES),
             "coverage_row_count": len(coverage_matrix),
@@ -2767,7 +2768,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
         "learning_path": LEARNING_PATH,
         "glossary": GLOSSARY,
         "domain_guides": DOMAIN_GUIDES,
-        "reader_checks": READER_CHECKS,
+        "reader_checks": reader_checks,
         "decision_guides": DECISION_GUIDES,
         "provenance_guides": PROVENANCE_GUIDES,
         "coverage_matrix": coverage_matrix,
@@ -2842,7 +2843,7 @@ def source_anchor_cards(slug: str, evidence: list[dict[str, object]] | None = No
     return f"<h2>Selected Source Anchors</h2><p>These anchors identify the lecture pages that should be checked first when reviewing the core claim. They are source links with claim boundaries, not proof by themselves.</p><div class=\"grid\">{''.join(cards)}</div>"
 
 
-def build_coverage_matrix(concept_atlas: list[dict[str, object]]) -> list[dict[str, object]]:
+def build_coverage_matrix(concept_atlas: list[dict[str, object]], reader_checks: list[dict[str, object]]) -> list[dict[str, object]]:
     rows = []
     for concept in concept_atlas:
         slug = str(concept["slug"])
@@ -2857,12 +2858,42 @@ def build_coverage_matrix(concept_atlas: list[dict[str, object]]) -> list[dict[s
                 "learning_path": any(any(str(item["href"]) == f"topics/{slug}.html" for item in step["read"]) for step in LEARNING_PATH),
                 "glossary": any(slug in entry["related"] for entry in GLOSSARY),
                 "domain": any(slug in guide["concepts"] for guide in DOMAIN_GUIDES),
-                "reader_check": any(check["topic_slug"] == slug for check in READER_CHECKS),
+                "reader_check": any(check["topic_slug"] == slug for check in reader_checks),
                 "decision_guide": any(f"topics/{slug}.html" in decision["links"] for decision in DECISION_GUIDES),
                 "evidence_items": len(concept.get("evidence", [])),
             }
         )
     return rows
+
+
+def build_reader_checks(topic_treatments: list[dict[str, object]]) -> list[dict[str, object]]:
+    checks = [dict(check) for check in READER_CHECKS]
+    covered = {str(check["topic_slug"]) for check in checks}
+    for topic in topic_treatments:
+        slug = str(topic["slug"])
+        if slug in covered:
+            continue
+        derivation = topic_derivation(topic)
+        title = str(topic["title"])
+        checks.append(
+            {
+                "slug": f"{slug}-check",
+                "title": f"{title} Reader Check",
+                "topic_slug": slug,
+                "setup": f"A reader is deciding whether {title} fits a scientific job in {topic['domain']}.",
+                "questions": [
+                    "What is observed?",
+                    "What is hidden?",
+                    "What mathematical move is being made?",
+                    "What does the formula shape carry?",
+                    "What changed case would reject the claim?",
+                ],
+                "strong_answer": f"Observed: {derivation['observed']}. Hidden: {derivation['hidden']}. The mathematical move is to {derivation['move']}. The formula shape means {derivation['meaning']}. The claim should be tested by this changed case: {derivation['test']}.",
+                "weak_answer_warning": f"A weak answer says only that {title} is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.",
+                "related": [f"topics/{slug}.html", "concept-ladder.html"],
+            }
+        )
+    return checks
 
 
 def build_dependency_map() -> list[dict[str, object]]:
@@ -3068,8 +3099,8 @@ def build_formula_guide(core_derivations: list[dict[str, object]]) -> list[dict[
     return rows
 
 
-def build_misconception_map(core_derivations: list[dict[str, object]]) -> list[dict[str, object]]:
-    check_by_slug = {str(check["topic_slug"]): check for check in READER_CHECKS}
+def build_misconception_map(core_derivations: list[dict[str, object]], reader_checks: list[dict[str, object]]) -> list[dict[str, object]]:
+    check_by_slug = {str(check["topic_slug"]): check for check in reader_checks}
     rows = []
     for derivation in core_derivations:
         slug = str(derivation["slug"])
@@ -3421,8 +3452,8 @@ def synthesis_card(item: dict[str, object], href_prefix: str = "") -> str:
 """
 
 
-def topic_reader_check_html(slug: str) -> str:
-    checks = [check for check in READER_CHECKS if check["topic_slug"] == slug]
+def topic_reader_check_html(slug: str, all_checks: list[dict[str, object]]) -> str:
+    checks = [check for check in all_checks if check["topic_slug"] == slug]
     if not checks:
         return ""
     return "<h2>Reader Check</h2>" + "".join(reader_check_card(check, href_prefix="../") for check in checks)
@@ -3581,7 +3612,7 @@ def write_site(data: dict[str, object]) -> None:
         encoding="utf-8",
     )
     for topic in topics:
-        write_topic_page(topic_dir / f"{topic['slug']}.html", topic)
+        write_topic_page(topic_dir / f"{topic['slug']}.html", topic, list(reader_checks))
 
     family_cards = []
     for family in family_pages:
@@ -4063,7 +4094,7 @@ def topic_acceptance_sentence_html(topic: dict[str, object], derivation: dict[st
 """
 
 
-def write_topic_page(path: Path, topic: dict[str, object]) -> None:
+def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[dict[str, object]]) -> None:
     evidence = topic.get("evidence", [])
     evidence_items = []
     if isinstance(evidence, list):
@@ -4073,7 +4104,7 @@ def write_topic_page(path: Path, topic: dict[str, object]) -> None:
     deep_dive = topic_deep_dive_html(str(topic["slug"]))
     sketches = topic_sketches_html(str(topic["slug"]))
     diagrams = topic_diagrams_html(str(topic["slug"]))
-    reader_check = topic_reader_check_html(str(topic["slug"]))
+    reader_check = topic_reader_check_html(str(topic["slug"]), reader_checks)
     derivation_link = topic_derivation_link_html(str(topic["slug"]))
     source_anchors = source_anchor_cards(str(topic["slug"]), list(evidence) if isinstance(evidence, list) else [], root_prefix="../")
     first_principles_essay = topic_first_principles_essay_html(topic, derivation)
@@ -5611,7 +5642,10 @@ def validate(data: dict[str, object] | None = None) -> None:
                 raise SystemExit(f"domain concept missing: {guide['title']} -> {slug}")
         if not (SITE / str(guide["example"])).exists():
             raise SystemExit(f"domain anchor missing: {guide['title']} -> {guide['example']}")
-    for check in READER_CHECKS:
+    reader_check_rows = data.get("reader_checks") or []
+    if len(reader_check_rows) != len(data["concept_atlas"]):
+        raise SystemExit("reader check count does not match concept atlas")
+    for check in reader_check_rows:
         check_path = SITE / "reader-checks" / f"{check['slug']}.html"
         if not check_path.exists():
             raise SystemExit(f"missing reader check page: {check['title']}")
