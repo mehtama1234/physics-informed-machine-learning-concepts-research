@@ -109,6 +109,17 @@
 <h2>Full Derivation Walkthrough</h2>
 <p><a href="../derivations/neural-differential-equations.html">Open the step-by-step derivation page</a>. It slows this concept down from observed evidence, to hidden quantity, to formula shape, to failure test.</p>
 
+
+<h2>Concrete Wrong-Use Example</h2>
+<table>
+  <tbody>
+    <tr><th>Mistake</th><td>Fit short observed trajectories and trust the learned rate for long-time prediction.</td></tr>
+    <tr><th>Why It Is Tempting</th><td>The short path can match measurements while hiding small rate errors.</td></tr>
+    <tr><th>What Breaks</th><td>Small errors in the learned change rule can accumulate until the system drifts into impossible behavior.</td></tr>
+    <tr><th>Test That Catches It</th><td>Run past the training window and check conservation, stability, long-time drift, and changed initial conditions.</td></tr>
+  </tbody>
+</table>
+
 <h2>Deeper Mathematical Why</h2>
 <p>The mathematical point is to decide what information is allowed to carry the scientific claim. If the carried information is too small, the model misses the behavior that matters. If it is too broad, the page may claim more than the evidence supports. The useful middle is a named object, a named scientific job, and a changed case that can reject the claim.</p>
 

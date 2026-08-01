@@ -79,6 +79,17 @@
 
 
 
+
+<h2>Concrete Wrong-Use Example</h2>
+<table>
+  <tbody>
+    <tr><th>Mistake</th><td>Optimize the written loss and assume the scientific goal improved with it.</td></tr>
+    <tr><th>Why It Is Tempting</th><td>The loss gives a clean progress number during training.</td></tr>
+    <tr><th>What Breaks</th><td>The model improves what was scored while ignoring what the score forgot: boundaries, rare cases, units, conservation, or the decision quantity.</td></tr>
+    <tr><th>Test That Catches It</th><td>List what the loss does not penalize, then test those ignored requirements after training.</td></tr>
+  </tbody>
+</table>
+
 <h2>Deeper Mathematical Why</h2>
 <p>The mathematical point is to decide what information is allowed to carry the scientific claim. If the carried information is too small, the model misses the behavior that matters. If it is too broad, the page may claim more than the evidence supports. The useful middle is a named object, a named scientific job, and a changed case that can reject the claim.</p>
 

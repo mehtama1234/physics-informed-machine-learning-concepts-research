@@ -161,6 +161,17 @@
 <h2>Full Derivation Walkthrough</h2>
 <p><a href="../derivations/foundation-models-for-pdes.html">Open the step-by-step derivation page</a>. It slows this concept down from observed evidence, to hidden quantity, to formula shape, to failure test.</p>
 
+
+<h2>Concrete Wrong-Use Example</h2>
+<table>
+  <tbody>
+    <tr><th>Mistake</th><td>Assume a broad PDE model covers a new equation because it was trained on many tasks.</td></tr>
+    <tr><th>Why It Is Tempting</th><td>Scale and breadth can sound like coverage.</td></tr>
+    <tr><th>What Breaks</th><td>The model may not have learned the structure needed for a rare regime, boundary type, scale, or output quantity.</td></tr>
+    <tr><th>Test That Catches It</th><td>Hold out whole task families, not just random examples, and compare against trusted solves on the new family.</td></tr>
+  </tbody>
+</table>
+
 <h2>Deeper Mathematical Why</h2>
 <p>The mathematical point is to decide what information is allowed to carry the scientific claim. If the carried information is too small, the model misses the behavior that matters. If it is too broad, the page may claim more than the evidence supports. The useful middle is a named object, a named scientific job, and a changed case that can reject the claim.</p>
 <h2>Reader Check</h2>
