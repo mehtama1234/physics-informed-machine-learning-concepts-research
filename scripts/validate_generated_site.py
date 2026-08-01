@@ -104,7 +104,7 @@ def check_internal_links(manifest: list[str]) -> list[str]:
 
 def check_required_sections() -> list[str]:
     required = {
-        "site/handoff.html": ("Start Here", "Remaining Editorial Work"),
+        "site/handoff.html": ("Start Here", "Remote Finish Commands", "git push -u origin main", "Remaining Editorial Work"),
         "site/coverage.html": ("Coverage Matrix", "Reader Check"),
         "site/synthesis.html": ("Field Synthesis",),
         "site/quality.html": ("Editorial Quality Rubric",),

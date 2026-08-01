@@ -821,7 +821,7 @@
 ### CLI Reproduction Checklist
 - Purpose: Give another CLI enough detail to reproduce this package for another channel.
 - Local files: scripts/build_physics_informed_ml_research_package.py, README.md, Makefile
-- Checks: repo has a clear topic name, raw source material is preserved, generated pages are validated, commits are small enough to review
+- Checks: repo has a clear topic name, raw source material is preserved, generated pages are validated, commits are small enough to review, remote main hash matches local main after push
 
 ### Cross-Channel Replication Playbook
 - Purpose: Give another CLI an end-to-end operating plan for building the same kind of package from a different channel or playlist family.
@@ -1339,10 +1339,18 @@
 - Provenance: provenance.html
 
 ### Remaining Editorial Work
-- Use the editorial roadmap to turn the strongest generated pages into hand-written teaching pages.
-- Add lecture-specific quotes after checking the transcript excerpts against the source videos.
-- Add real figures or mathematical sketches where a static flow diagram is not enough.
-- Deepen the derivations where the current page names the formula shape but does not yet walk through enough algebra.
+- Create or grant access to the configured GitHub repository, then push main.
+- After push, run git ls-remote origin main and compare it with git rev-parse main.
+- If the remote hash matches local main, update this handoff to mark the external blocker resolved.
+- Optional later editorial work: replace selected source anchors with manually verified short lecture quotes.
+
+### Remote Finish Commands
+- Blocker: Configured origin is https://github.com/mehtama1234/physics-informed-machine-learning-concepts-research.git, but GitHub returns Repository not found until the repository exists or access is granted.
+- `git status --short --branch`
+- `git remote -v`
+- `git rev-parse main`
+- `git ls-remote --heads origin main`
+- `git push -u origin main`
 
 ## Review Entrypoints
 

@@ -1601,9 +1601,12 @@ PROVENANCE_GUIDES = [
             "Build concept pages from first principles: problem, domain, why it matters, kept information, left-out information, and failure boundary.",
             "Add family routes, comparisons, worked examples, diagrams, learning path, glossary, domains, reader checks, and decision guide.",
             "Run build validation and a wording scan before committing.",
+            "Before remote handoff, run git status --short --branch and make check.",
+            "Create or grant access to the GitHub repository configured as origin.",
+            "Run git push -u origin main, then verify git ls-remote --heads origin main matches git rev-parse main.",
         ],
         "local_files": ["scripts/build_physics_informed_ml_research_package.py", "README.md", "Makefile"],
-        "checks": ["repo has a clear topic name", "raw source material is preserved", "generated pages are validated", "commits are small enough to review"],
+        "checks": ["repo has a clear topic name", "raw source material is preserved", "generated pages are validated", "commits are small enough to review", "remote main hash matches local main after push"],
     },
     {
         "slug": "cross-channel-playbook",
@@ -1737,11 +1740,19 @@ REVIEW_HANDOFF = {
         "run the wording scan for restricted filler terms listed in the editorial quality rubric",
     ],
     "remaining_editorial_work": [
-        "Use the editorial roadmap to turn the strongest generated pages into hand-written teaching pages.",
-        "Add lecture-specific quotes after checking the transcript excerpts against the source videos.",
-        "Add real figures or mathematical sketches where a static flow diagram is not enough.",
-        "Deepen the derivations where the current page names the formula shape but does not yet walk through enough algebra.",
+        "Create or grant access to the configured GitHub repository, then push main.",
+        "After push, run git ls-remote origin main and compare it with git rev-parse main.",
+        "If the remote hash matches local main, update this handoff to mark the external blocker resolved.",
+        "Optional later editorial work: replace selected source anchors with manually verified short lecture quotes.",
     ],
+    "remote_finish_commands": [
+        "git status --short --branch",
+        "git remote -v",
+        "git rev-parse main",
+        "git ls-remote --heads origin main",
+        "git push -u origin main",
+    ],
+    "remote_blocker": "Configured origin is https://github.com/mehtama1234/physics-informed-machine-learning-concepts-research.git, but GitHub returns Repository not found until the repository exists or access is granted.",
 }
 
 
@@ -4319,6 +4330,7 @@ def link_list(items: list[dict[str, str]], prefix: str = "") -> str:
 
 def write_handoff_page(path: Path, handoff: dict[str, object], summary: dict[str, object]) -> None:
     commands = "".join(f"<li><code>{html.escape(str(command))}</code></li>" for command in handoff["validation_commands"])
+    remote_commands = "".join(f"<li><code>{html.escape(str(command))}</code></li>" for command in handoff["remote_finish_commands"])
     remaining = "".join(f"<li>{html.escape(str(item))}</li>" for item in handoff["remaining_editorial_work"])
     body = f"""
 <h1>{html.escape(str(handoff['title']))}</h1>
@@ -4337,6 +4349,9 @@ def write_handoff_page(path: Path, handoff: dict[str, object], summary: dict[str
 {link_list(list(handoff['core_review_pages']))}
 <h2>Validation Commands</h2>
 <ul>{commands}</ul>
+<h2>Remote Finish Commands</h2>
+<p>{html.escape(str(handoff['remote_blocker']))}</p>
+<ul>{remote_commands}</ul>
 <h2>Remaining Editorial Work</h2>
 <ul>{remaining}</ul>
 """
@@ -4876,6 +4891,9 @@ def write_markdown_export(data: dict[str, object]) -> None:
     lines.extend(["", "### Remaining Editorial Work"])
     for item in handoff["remaining_editorial_work"]:
         lines.append(f"- {item}")
+    lines.extend(["", "### Remote Finish Commands", f"- Blocker: {handoff['remote_blocker']}"])
+    for command in handoff["remote_finish_commands"]:
+        lines.append(f"- `{command}`")
     lines.extend(["", "## Review Entrypoints"])
     for group in data["review_entrypoints"]:
         lines.extend(["", f"### {group['group']}", f"- Purpose: {group['purpose']}"])
@@ -5286,8 +5304,11 @@ def validate(data: dict[str, object] | None = None) -> None:
                 raise SystemExit(f"synthesis link missing: {item['title']} -> {href}")
     handoff_path = SITE / "handoff.html"
     handoff_text = handoff_path.read_text(encoding="utf-8")
-    if "Start Here" not in handoff_text or "Remaining Editorial Work" not in handoff_text:
+    if "Start Here" not in handoff_text or "Remaining Editorial Work" not in handoff_text or "Remote Finish Commands" not in handoff_text:
         raise SystemExit("handoff page not rendered correctly")
+    for command in REVIEW_HANDOFF["remote_finish_commands"]:
+        if command not in handoff_text:
+            raise SystemExit(f"handoff remote command missing: {command}")
     for group in ("start_here", "core_review_pages"):
         for item in REVIEW_HANDOFF[group]:
             if not (SITE / item["href"]).exists():
