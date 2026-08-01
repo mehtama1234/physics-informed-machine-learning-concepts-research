@@ -115,6 +115,8 @@ def check_required_sections() -> list[str]:
         "site/review-search.html": ("Find Pages By Question", "Review Rule"),
         "site/editorial-roadmap.html": ("Editorial Roadmap", "Acceptance Check", "Meaty End-To-End Goal"),
         "site/completion-audit.html": ("Completion Audit", "Requirement Evidence", "external blocker"),
+        "site/learning-path/scientific-question-first.html": ("First-Principles Spine", "World:", "Reject it when:"),
+        "site/learning-path/physics-as-check.html": ("First-Principles Spine", "Mathematical move:", "Reject it when:"),
         "site/dependencies.html": ("Concept Dependency Map", "Confusion It Prevents"),
         "site/concept-ladder.html": ("Concept Ladder", "Mathematical Move", "Failure Test"),
         "site/evidence-packets.html": ("Concept Evidence Packets",),

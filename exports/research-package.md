@@ -469,44 +469,51 @@
 ## Learning Path
 ### 1. Start With The Scientific Question
 - Question: What is being predicted, explained, designed, or checked?
-- Why here: Physics-informed machine learning is not one trick. The method depends on the scientific job.
+- Why here: Physics-informed machine learning is not one trick. The method depends on the scientific job, the evidence in hand, and the changed case where a wrong answer would matter.
 - Goal: Name the quantity, the domain, the evidence, and the changed case before naming a method.
+- First-principles spine: World: a scientist needs an answer for a real quantity.; Evidence: measurements, equations, simulations, or old cases give partial support.; Missing piece: the quantity needed for the next case is not directly known.; Mathematical move: choose the smallest learning route that carries the needed evidence.; Reject it when: a changed case breaks the quantity the scientist actually needs.
 - Checkpoint: You can say what answer the scientist wants and what would make that answer unusable.
 
 ### 2. Understand Fields And Equations
 - Question: Why is one number not enough?
 - Why here: Many scientific problems are fields: temperature, pressure, velocity, concentration, stress, or displacement across space and time.
 - Goal: See why boundaries, neighbors, rates of change, and starting values carry the scientific burden.
+- First-principles spine: World: the answer lives across space or time, not in one number.; Evidence: some values, edges, starting values, and physical rules are known.; Missing piece: the full field is unknown between measured or simulated cases.; Mathematical move: describe how nearby values, rates, and boundaries restrict the answer.; Reject it when: the field violates edges, neighbors, or measured behavior in a changed case.
 - Checkpoint: You can explain why a field prediction must respect boundaries and nearby values.
 
 ### 3. Use Physics As A Check
 - Question: How can a model be corrected where there are no measurements?
 - Why here: Sparse data leaves empty space. A known equation can check that empty space if the equation is trusted.
 - Goal: Understand PINNs as fitted fields that answer to both data and an equation.
+- First-principles spine: World: the true field should obey a known physical rule.; Evidence: measured points, boundaries, starting values, and the equation are available.; Missing piece: most field values are unmeasured.; Mathematical move: score both data mismatch and equation mismatch.; Reject it when: the fitted field matches points but breaks the equation, boundary, or changed test case.
 - Checkpoint: You can state the data error, equation error, boundary error, and the test case.
 
 ### 4. Learn Maps Between Fields
 - Question: What if the job is not one solution, but many related solutions?
 - Why here: Engineering and science often need repeated solves for many inputs, shapes, materials, or conditions.
 - Goal: Separate learning one answer from learning the map that turns an input field into an output field.
+- First-principles spine: World: many related scientific cases share an input-to-output relation.; Evidence: solved examples show input fields paired with output fields.; Missing piece: the full output field for a new input is unknown.; Mathematical move: learn the map from whole input fields to whole output fields.; Reject it when: a new input outside the learned family gives a bad field or a bad scientific quantity.
 - Checkpoint: You can name the family of inputs and outputs where the learned map is allowed to be used.
 
 ### 5. Use Speed Without Hiding Risk
 - Question: When is a fast approximation useful?
 - Why here: A fast model is valuable only if the slow trusted source still defines where the fast answer is valid.
 - Goal: Treat surrogates as checked stand-ins with a stated use range.
+- First-principles spine: World: the scientist needs many answers faster than the trusted source can provide them.; Evidence: trusted simulations or experiments define examples and limits.; Missing piece: a cheap answer is needed for repeated choices.; Mathematical move: train a stand-in and compare it against the trusted source inside a named range.; Reject it when: speed hides error near the edge of the range or in the quantity used for the decision.
 - Checkpoint: You can say what the surrogate replaces, what it does not replace, and where it was checked.
 
 ### 6. Make Trust A Testable Claim
 - Question: When should a prediction be believed?
 - Why here: Scientific mistakes often happen when a model is used outside the cases that taught it.
 - Goal: Attach every prediction to a use range, changed-case test, and failure boundary.
+- First-principles spine: World: the next scientific case may differ from the old cases.; Evidence: training and validation cases show only part of the possible range.; Missing piece: the model's reliability on the new case is unknown.; Mathematical move: measure error, doubt, and changed-case behavior instead of reporting only a prediction.; Reject it when: the model stays confident where the evidence no longer supports confidence.
 - Checkpoint: You can name the first changed condition that should make the model fail.
 
 ### 7. Look For Readable Laws When Needed
 - Question: When is prediction not enough?
 - Why here: Sometimes the scientific product is a rule people can inspect, criticize, and reuse.
 - Goal: Understand symbolic regression and neural differential equations as routes toward candidate mechanisms.
+- First-principles spine: World: the scientist wants a rule, not only an answer.; Evidence: measured variables and changes over time suggest possible relations.; Missing piece: the governing relation is unknown.; Mathematical move: search for a small rule or learned rate that explains the observations.; Reject it when: the rule fails a new experiment or depends on a missing variable.
 - Checkpoint: You can explain why a short formula still needs a changed-experiment test.
 
 
@@ -1098,24 +1105,24 @@
 
 ## Field Synthesis
 ### Central Problem
-- Claim: Physics-informed machine learning asks how data, equations, simulations, and scientific checks can work together without pretending any one of them is enough.
-- Explanation: Data gives examples. Equations give rules. Simulations give trusted cases. Validation gives the right to use a model under a named condition. The field exists because scientific prediction often needs all four.
-- Reader takeaway: Do not ask first which model is popular. Ask what scientific quantity is needed, what evidence exists, and what changed case would reject the answer.
+- Claim: Physics-informed machine learning asks how a learned answer can stay tied to the real scientific problem when measurements are sparse, equations are partial, simulations are costly, and future cases are different.
+- Explanation: Start with the world, not the model. A scientist needs a quantity such as a temperature field, a force, a molecule property, or a failure risk. The available evidence is incomplete: some measurements, some equations, some solved cases, some trusted simulations. The mathematical job is to carry that evidence into a new case while leaving a clear test that can reject the answer.
+- Reader takeaway: A strong explanation names five things: the real quantity, the evidence, the missing quantity, the mathematical move, and the changed case that could reject the claim.
 
 ### Main Moves
-- Claim: The recurring moves are fitting from data, constraining with physics, learning maps between fields, replacing expensive solves, estimating trust, and searching for readable rules.
-- Explanation: PINNs use equations as checks. Neural operators learn field-to-field maps. Surrogates trade full cost for checked speed. Uncertainty asks when belief should weaken. Symbolic regression asks whether data can support a small law.
-- Reader takeaway: Each method is a response to a different pressure. Confusing those pressures is how vague explanations start.
+- Claim: The main mathematical moves are different answers to different shortages: too few measurements, too many related solves, too much simulation cost, too much change between cases, or too little understanding of the rule.
+- Explanation: PINNs add equation checks where measurements are missing. Operator learning learns a field-to-field map when many related solves are needed. Surrogates build a fast checked stand-in when the trusted source is too slow. Uncertainty asks when belief should weaken. Symbolic regression asks whether the data can support a readable rule.
+- Reader takeaway: Choose the move by naming the shortage first. If the shortage is unclear, the method choice is not yet justified.
 
 ### Proof Burden
-- Claim: A method name never proves a scientific claim; only a named test under a meaningful changed case can carry that burden.
-- Explanation: A transcript mention shows that a topic appears in the course. A training score shows that a model matched a written score. A scientific claim needs more: a domain, quantity, use range, and failure test.
-- Reader takeaway: Every strong page should say what the transcript supports and what it does not prove.
+- Claim: A method name never proves a scientific claim. The claim needs a test tied to the domain quantity the scientist will use.
+- Explanation: A transcript mention shows that a topic appears in the course. A training score shows that a model matched a written score. Neither one alone proves that the model is safe for a new scientific use. The page has to state the domain, quantity, use range, evidence, and failure test.
+- Reader takeaway: Every strong page should say what the source supports, what remains unproved, and what changed case would expose a bad claim.
 
 ### Field Map
-- Claim: The field is best read as a map of scientific jobs, not a list of model names.
-- Explanation: Sparse measurements point toward physics checks. Many solved fields point toward operator learning. Repeated expensive decisions point toward surrogates. New settings point toward uncertainty. Need for a readable law points toward model discovery.
-- Reader takeaway: Start from the job, then choose the concept family that carries the right evidence.
+- Claim: The field is best read as a map from scientific jobs to mathematical moves, not as a list of model names.
+- Explanation: Sparse measurements point toward physics checks. Many solved fields point toward operator learning. Repeated costly decisions point toward surrogates. New settings point toward uncertainty. Need for a readable law points toward model discovery. Each route starts with a real quantity and ends with a failure test.
+- Reader takeaway: Start from the job, identify the shortage, then choose the concept family that carries the right evidence.
 
 
 ## Review Handoff

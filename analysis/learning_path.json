@@ -3,8 +3,15 @@
     "slug": "scientific-question-first",
     "title": "Start With The Scientific Question",
     "question": "What is being predicted, explained, designed, or checked?",
-    "why_first": "Physics-informed machine learning is not one trick. The method depends on the scientific job.",
+    "why_first": "Physics-informed machine learning is not one trick. The method depends on the scientific job, the evidence in hand, and the changed case where a wrong answer would matter.",
     "plain_goal": "Name the quantity, the domain, the evidence, and the changed case before naming a method.",
+    "first_principles_spine": [
+      "World: a scientist needs an answer for a real quantity.",
+      "Evidence: measurements, equations, simulations, or old cases give partial support.",
+      "Missing piece: the quantity needed for the next case is not directly known.",
+      "Mathematical move: choose the smallest learning route that carries the needed evidence.",
+      "Reject it when: a changed case breaks the quantity the scientist actually needs."
+    ],
     "read": [
       {
         "label": "Scientific Machine Learning",
@@ -27,6 +34,13 @@
     "question": "Why is one number not enough?",
     "why_first": "Many scientific problems are fields: temperature, pressure, velocity, concentration, stress, or displacement across space and time.",
     "plain_goal": "See why boundaries, neighbors, rates of change, and starting values carry the scientific burden.",
+    "first_principles_spine": [
+      "World: the answer lives across space or time, not in one number.",
+      "Evidence: some values, edges, starting values, and physical rules are known.",
+      "Missing piece: the full field is unknown between measured or simulated cases.",
+      "Mathematical move: describe how nearby values, rates, and boundaries restrict the answer.",
+      "Reject it when: the field violates edges, neighbors, or measured behavior in a changed case."
+    ],
     "read": [
       {
         "label": "Partial Differential Equations",
@@ -49,6 +63,13 @@
     "question": "How can a model be corrected where there are no measurements?",
     "why_first": "Sparse data leaves empty space. A known equation can check that empty space if the equation is trusted.",
     "plain_goal": "Understand PINNs as fitted fields that answer to both data and an equation.",
+    "first_principles_spine": [
+      "World: the true field should obey a known physical rule.",
+      "Evidence: measured points, boundaries, starting values, and the equation are available.",
+      "Missing piece: most field values are unmeasured.",
+      "Mathematical move: score both data mismatch and equation mismatch.",
+      "Reject it when: the fitted field matches points but breaks the equation, boundary, or changed test case."
+    ],
     "read": [
       {
         "label": "Physics-Informed Neural Networks",
@@ -71,6 +92,13 @@
     "question": "What if the job is not one solution, but many related solutions?",
     "why_first": "Engineering and science often need repeated solves for many inputs, shapes, materials, or conditions.",
     "plain_goal": "Separate learning one answer from learning the map that turns an input field into an output field.",
+    "first_principles_spine": [
+      "World: many related scientific cases share an input-to-output relation.",
+      "Evidence: solved examples show input fields paired with output fields.",
+      "Missing piece: the full output field for a new input is unknown.",
+      "Mathematical move: learn the map from whole input fields to whole output fields.",
+      "Reject it when: a new input outside the learned family gives a bad field or a bad scientific quantity."
+    ],
     "read": [
       {
         "label": "Operator Learning",
@@ -97,6 +125,13 @@
     "question": "When is a fast approximation useful?",
     "why_first": "A fast model is valuable only if the slow trusted source still defines where the fast answer is valid.",
     "plain_goal": "Treat surrogates as checked stand-ins with a stated use range.",
+    "first_principles_spine": [
+      "World: the scientist needs many answers faster than the trusted source can provide them.",
+      "Evidence: trusted simulations or experiments define examples and limits.",
+      "Missing piece: a cheap answer is needed for repeated choices.",
+      "Mathematical move: train a stand-in and compare it against the trusted source inside a named range.",
+      "Reject it when: speed hides error near the edge of the range or in the quantity used for the decision."
+    ],
     "read": [
       {
         "label": "Surrogate Modeling",
@@ -123,6 +158,13 @@
     "question": "When should a prediction be believed?",
     "why_first": "Scientific mistakes often happen when a model is used outside the cases that taught it.",
     "plain_goal": "Attach every prediction to a use range, changed-case test, and failure boundary.",
+    "first_principles_spine": [
+      "World: the next scientific case may differ from the old cases.",
+      "Evidence: training and validation cases show only part of the possible range.",
+      "Missing piece: the model's reliability on the new case is unknown.",
+      "Mathematical move: measure error, doubt, and changed-case behavior instead of reporting only a prediction.",
+      "Reject it when: the model stays confident where the evidence no longer supports confidence."
+    ],
     "read": [
       {
         "label": "Uncertainty And Generalization",
@@ -149,6 +191,13 @@
     "question": "When is prediction not enough?",
     "why_first": "Sometimes the scientific product is a rule people can inspect, criticize, and reuse.",
     "plain_goal": "Understand symbolic regression and neural differential equations as routes toward candidate mechanisms.",
+    "first_principles_spine": [
+      "World: the scientist wants a rule, not only an answer.",
+      "Evidence: measured variables and changes over time suggest possible relations.",
+      "Missing piece: the governing relation is unknown.",
+      "Mathematical move: search for a small rule or learned rate that explains the observations.",
+      "Reject it when: the rule fails a new experiment or depends on a missing variable."
+    ],
     "read": [
       {
         "label": "Symbolic Regression And Model Discovery",

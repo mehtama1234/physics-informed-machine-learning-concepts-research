@@ -823,8 +823,15 @@ LEARNING_PATH = [
         "slug": "scientific-question-first",
         "title": "Start With The Scientific Question",
         "question": "What is being predicted, explained, designed, or checked?",
-        "why_first": "Physics-informed machine learning is not one trick. The method depends on the scientific job.",
+        "why_first": "Physics-informed machine learning is not one trick. The method depends on the scientific job, the evidence in hand, and the changed case where a wrong answer would matter.",
         "plain_goal": "Name the quantity, the domain, the evidence, and the changed case before naming a method.",
+        "first_principles_spine": [
+            "World: a scientist needs an answer for a real quantity.",
+            "Evidence: measurements, equations, simulations, or old cases give partial support.",
+            "Missing piece: the quantity needed for the next case is not directly known.",
+            "Mathematical move: choose the smallest learning route that carries the needed evidence.",
+            "Reject it when: a changed case breaks the quantity the scientist actually needs.",
+        ],
         "read": [
             {"label": "Scientific Machine Learning", "href": "topics/scientific-machine-learning.html"},
             {"label": "Data-Only Learning Flow", "href": "diagrams/data-only-learning-flow.html"},
@@ -838,6 +845,13 @@ LEARNING_PATH = [
         "question": "Why is one number not enough?",
         "why_first": "Many scientific problems are fields: temperature, pressure, velocity, concentration, stress, or displacement across space and time.",
         "plain_goal": "See why boundaries, neighbors, rates of change, and starting values carry the scientific burden.",
+        "first_principles_spine": [
+            "World: the answer lives across space or time, not in one number.",
+            "Evidence: some values, edges, starting values, and physical rules are known.",
+            "Missing piece: the full field is unknown between measured or simulated cases.",
+            "Mathematical move: describe how nearby values, rates, and boundaries restrict the answer.",
+            "Reject it when: the field violates edges, neighbors, or measured behavior in a changed case.",
+        ],
         "read": [
             {"label": "Partial Differential Equations", "href": "topics/partial-differential-equations.html"},
             {"label": "PDE Field Reasoning Flow", "href": "diagrams/pde-field-reasoning-flow.html"},
@@ -851,6 +865,13 @@ LEARNING_PATH = [
         "question": "How can a model be corrected where there are no measurements?",
         "why_first": "Sparse data leaves empty space. A known equation can check that empty space if the equation is trusted.",
         "plain_goal": "Understand PINNs as fitted fields that answer to both data and an equation.",
+        "first_principles_spine": [
+            "World: the true field should obey a known physical rule.",
+            "Evidence: measured points, boundaries, starting values, and the equation are available.",
+            "Missing piece: most field values are unmeasured.",
+            "Mathematical move: score both data mismatch and equation mismatch.",
+            "Reject it when: the fitted field matches points but breaks the equation, boundary, or changed test case.",
+        ],
         "read": [
             {"label": "Physics-Informed Neural Networks", "href": "topics/physics-informed-neural-networks.html"},
             {"label": "Physics-Informed Learning Flow", "href": "diagrams/physics-informed-learning-flow.html"},
@@ -864,6 +885,13 @@ LEARNING_PATH = [
         "question": "What if the job is not one solution, but many related solutions?",
         "why_first": "Engineering and science often need repeated solves for many inputs, shapes, materials, or conditions.",
         "plain_goal": "Separate learning one answer from learning the map that turns an input field into an output field.",
+        "first_principles_spine": [
+            "World: many related scientific cases share an input-to-output relation.",
+            "Evidence: solved examples show input fields paired with output fields.",
+            "Missing piece: the full output field for a new input is unknown.",
+            "Mathematical move: learn the map from whole input fields to whole output fields.",
+            "Reject it when: a new input outside the learned family gives a bad field or a bad scientific quantity.",
+        ],
         "read": [
             {"label": "Operator Learning", "href": "topics/operator-learning.html"},
             {"label": "Operator Learning Flow", "href": "diagrams/operator-learning-flow.html"},
@@ -878,6 +906,13 @@ LEARNING_PATH = [
         "question": "When is a fast approximation useful?",
         "why_first": "A fast model is valuable only if the slow trusted source still defines where the fast answer is valid.",
         "plain_goal": "Treat surrogates as checked stand-ins with a stated use range.",
+        "first_principles_spine": [
+            "World: the scientist needs many answers faster than the trusted source can provide them.",
+            "Evidence: trusted simulations or experiments define examples and limits.",
+            "Missing piece: a cheap answer is needed for repeated choices.",
+            "Mathematical move: train a stand-in and compare it against the trusted source inside a named range.",
+            "Reject it when: speed hides error near the edge of the range or in the quantity used for the decision.",
+        ],
         "read": [
             {"label": "Surrogate Modeling", "href": "topics/surrogate-modeling.html"},
             {"label": "Surrogate Validation Flow", "href": "diagrams/surrogate-validation-flow.html"},
@@ -892,6 +927,13 @@ LEARNING_PATH = [
         "question": "When should a prediction be believed?",
         "why_first": "Scientific mistakes often happen when a model is used outside the cases that taught it.",
         "plain_goal": "Attach every prediction to a use range, changed-case test, and failure boundary.",
+        "first_principles_spine": [
+            "World: the next scientific case may differ from the old cases.",
+            "Evidence: training and validation cases show only part of the possible range.",
+            "Missing piece: the model's reliability on the new case is unknown.",
+            "Mathematical move: measure error, doubt, and changed-case behavior instead of reporting only a prediction.",
+            "Reject it when: the model stays confident where the evidence no longer supports confidence.",
+        ],
         "read": [
             {"label": "Uncertainty And Generalization", "href": "topics/uncertainty-and-generalization.html"},
             {"label": "Foundation Models For PDEs", "href": "topics/foundation-models-for-pdes.html"},
@@ -906,6 +948,13 @@ LEARNING_PATH = [
         "question": "When is prediction not enough?",
         "why_first": "Sometimes the scientific product is a rule people can inspect, criticize, and reuse.",
         "plain_goal": "Understand symbolic regression and neural differential equations as routes toward candidate mechanisms.",
+        "first_principles_spine": [
+            "World: the scientist wants a rule, not only an answer.",
+            "Evidence: measured variables and changes over time suggest possible relations.",
+            "Missing piece: the governing relation is unknown.",
+            "Mathematical move: search for a small rule or learned rate that explains the observations.",
+            "Reject it when: the rule fails a new experiment or depends on a missing variable.",
+        ],
         "read": [
             {"label": "Symbolic Regression And Model Discovery", "href": "topics/symbolic-regression.html"},
             {"label": "Neural Differential Equations", "href": "topics/neural-differential-equations.html"},
@@ -1382,33 +1431,33 @@ SYNTHESIS_GUIDES = [
     {
         "slug": "central-problem",
         "title": "Central Problem",
-        "claim": "Physics-informed machine learning asks how data, equations, simulations, and scientific checks can work together without pretending any one of them is enough.",
-        "explanation": "Data gives examples. Equations give rules. Simulations give trusted cases. Validation gives the right to use a model under a named condition. The field exists because scientific prediction often needs all four.",
-        "reader_takeaway": "Do not ask first which model is popular. Ask what scientific quantity is needed, what evidence exists, and what changed case would reject the answer.",
+        "claim": "Physics-informed machine learning asks how a learned answer can stay tied to the real scientific problem when measurements are sparse, equations are partial, simulations are costly, and future cases are different.",
+        "explanation": "Start with the world, not the model. A scientist needs a quantity such as a temperature field, a force, a molecule property, or a failure risk. The available evidence is incomplete: some measurements, some equations, some solved cases, some trusted simulations. The mathematical job is to carry that evidence into a new case while leaving a clear test that can reject the answer.",
+        "reader_takeaway": "A strong explanation names five things: the real quantity, the evidence, the missing quantity, the mathematical move, and the changed case that could reject the claim.",
         "links": ["learning-path.html", "decision-guide.html", "quality/first-principles.html"],
     },
     {
         "slug": "main-moves",
         "title": "Main Moves",
-        "claim": "The recurring moves are fitting from data, constraining with physics, learning maps between fields, replacing expensive solves, estimating trust, and searching for readable rules.",
-        "explanation": "PINNs use equations as checks. Neural operators learn field-to-field maps. Surrogates trade full cost for checked speed. Uncertainty asks when belief should weaken. Symbolic regression asks whether data can support a small law.",
-        "reader_takeaway": "Each method is a response to a different pressure. Confusing those pressures is how vague explanations start.",
+        "claim": "The main mathematical moves are different answers to different shortages: too few measurements, too many related solves, too much simulation cost, too much change between cases, or too little understanding of the rule.",
+        "explanation": "PINNs add equation checks where measurements are missing. Operator learning learns a field-to-field map when many related solves are needed. Surrogates build a fast checked stand-in when the trusted source is too slow. Uncertainty asks when belief should weaken. Symbolic regression asks whether the data can support a readable rule.",
+        "reader_takeaway": "Choose the move by naming the shortage first. If the shortage is unclear, the method choice is not yet justified.",
         "links": ["families.html", "comparisons.html", "diagrams.html"],
     },
     {
         "slug": "proof-burden",
         "title": "Proof Burden",
-        "claim": "A method name never proves a scientific claim; only a named test under a meaningful changed case can carry that burden.",
-        "explanation": "A transcript mention shows that a topic appears in the course. A training score shows that a model matched a written score. A scientific claim needs more: a domain, quantity, use range, and failure test.",
-        "reader_takeaway": "Every strong page should say what the transcript supports and what it does not prove.",
+        "claim": "A method name never proves a scientific claim. The claim needs a test tied to the domain quantity the scientist will use.",
+        "explanation": "A transcript mention shows that a topic appears in the course. A training score shows that a model matched a written score. Neither one alone proves that the model is safe for a new scientific use. The page has to state the domain, quantity, use range, evidence, and failure test.",
+        "reader_takeaway": "Every strong page should say what the source supports, what remains unproved, and what changed case would expose a bad claim.",
         "links": ["evidence-ledger.html", "reader-checks.html", "quality/evidence-discipline.html"],
     },
     {
         "slug": "field-map",
         "title": "Field Map",
-        "claim": "The field is best read as a map of scientific jobs, not a list of model names.",
-        "explanation": "Sparse measurements point toward physics checks. Many solved fields point toward operator learning. Repeated expensive decisions point toward surrogates. New settings point toward uncertainty. Need for a readable law points toward model discovery.",
-        "reader_takeaway": "Start from the job, then choose the concept family that carries the right evidence.",
+        "claim": "The field is best read as a map from scientific jobs to mathematical moves, not as a list of model names.",
+        "explanation": "Sparse measurements point toward physics checks. Many solved fields point toward operator learning. Repeated costly decisions point toward surrogates. New settings point toward uncertainty. Need for a readable law points toward model discovery. Each route starts with a real quantity and ends with a failure test.",
+        "reader_takeaway": "Start from the job, identify the shortage, then choose the concept family that carries the right evidence.",
         "links": ["decision-guide.html", "domains.html", "coverage.html"],
     },
 ]
@@ -2884,13 +2933,14 @@ def write_site(data: dict[str, object]) -> None:
 {card("Evidence", "Each major claim links back to transcript or metadata evidence and states its limit.", "evidence-ledger.html")}
 </div>
 <h2>Central Big Picture</h2>
-<p>The course family asks how machine learning can help science without throwing away physics. The recurring problem is not simply prediction. The real problem is turning data, equations, simulations, geometry, and uncertainty into models that can be trusted for a named scientific job.</p>
+<p>The course family asks how machine learning can help science without throwing away the checks that make science usable. The recurring problem is not simply prediction. The real problem is carrying incomplete evidence into a new case while making clear what would reject the answer.</p>
 <h2>Core Route Through The Material</h2>
 <ol>
-  <li>Start with scientific data and the need to predict or explain a changed case.</li>
-  <li>Add neural networks as adjustable function builders, but keep their limits visible.</li>
-  <li>Bring in PDEs, physics penalties, operators, geometry, and uncertainty as ways to stop the model from becoming an unchecked fit.</li>
-  <li>Judge every method by the scientific claim it can support and the failure case it can expose.</li>
+  <li>Name the real quantity: field, force, property, risk, or rule.</li>
+  <li>Name the evidence: measurements, equations, solved cases, simulations, geometry, or prior cases.</li>
+  <li>Name the missing quantity: the value, field, map, law, or trust estimate needed for the next case.</li>
+  <li>Choose the mathematical move that carries the evidence without hiding its limits.</li>
+  <li>Judge the result by the changed case that could reject the scientific claim.</li>
 </ol>
 """
     (SITE / "index.html").write_text(html_page("Physics-Informed Machine Learning Concepts Research", index_body), encoding="utf-8")
@@ -3422,6 +3472,7 @@ def write_learning_step_page(path: Path, step: dict[str, object]) -> None:
     read_items = []
     for item in step["read"]:
         read_items.append(f"<li><a href=\"../{html.escape(str(item['href']))}\">{html.escape(str(item['label']))}</a></li>")
+    spine_items = "".join(f"<li>{html.escape(str(item))}</li>" for item in step["first_principles_spine"])
     body = f"""
 <h1>{html.escape(str(step['title']))}</h1>
 <h2>Question</h2>
@@ -3430,6 +3481,8 @@ def write_learning_step_page(path: Path, step: dict[str, object]) -> None:
 <p>{html.escape(str(step['why_first']))}</p>
 <h2>Plain Goal</h2>
 <p>{html.escape(str(step['plain_goal']))}</p>
+<h2>First-Principles Spine</h2>
+<ul>{spine_items}</ul>
 <h2>Read Next</h2>
 <ul>{''.join(read_items)}</ul>
 <h2>Checkpoint</h2>
@@ -4093,6 +4146,7 @@ def write_markdown_export(data: dict[str, object]) -> None:
                 f"- Question: {step['question']}",
                 f"- Why here: {step['why_first']}",
                 f"- Goal: {step['plain_goal']}",
+                f"- First-principles spine: {'; '.join(step['first_principles_spine'])}",
                 f"- Checkpoint: {step['checkpoint']}",
                 "",
             ]
@@ -4437,8 +4491,10 @@ def validate(data: dict[str, object] | None = None) -> None:
         if not step_path.exists():
             raise SystemExit(f"missing learning path page: {step['title']}")
         step_text = step_path.read_text(encoding="utf-8")
-        if "Checkpoint" not in step_text or "Read Next" not in step_text:
+        if "Checkpoint" not in step_text or "Read Next" not in step_text or "First-Principles Spine" not in step_text:
             raise SystemExit(f"learning path page not rendered correctly: {step['title']}")
+        if len(step.get("first_principles_spine") or []) != 5:
+            raise SystemExit(f"learning path spine should have five parts: {step['title']}")
         for item in step["read"]:
             target = SITE / str(item["href"])
             if not target.exists():
