@@ -22,6 +22,7 @@ REQUIRED_ROOT_PAGES = {
     "worked-examples.html",
     "diagrams.html",
     "derivations.html",
+    "formula-guide.html",
     "learning-path.html",
     "glossary.html",
     "domains.html",
@@ -110,6 +111,7 @@ def check_required_sections() -> list[str]:
         "site/completion-audit.html": ("Completion Audit", "Requirement Evidence", "external blocker"),
         "site/concept-ladder.html": ("Concept Ladder", "Mathematical Move", "Failure Test"),
         "site/evidence-packets.html": ("Concept Evidence Packets",),
+        "site/formula-guide.html": ("Plain Formula Guide", "Common Misread", "What To Check"),
         "site/evidence-packets/physics-informed-neural-networks.html": ("Transcript Support", "What This Evidence Does Not Prove", "Review Links"),
         "site/evidence-packets/operator-learning.html": ("Transcript Support", "What This Evidence Does Not Prove", "Review Links"),
         "site/derivations.html": ("Core Derivations",),
@@ -167,8 +169,8 @@ def validate() -> None:
         errors.append(f"expected 40 videos, found {summary.get('video_count')}")
     if summary.get("concept_count") != 14:
         errors.append(f"expected 14 concepts, found {summary.get('concept_count')}")
-    if len(manifest) != 172:
-        errors.append(f"expected 172 pages, found {len(manifest)}")
+    if len(manifest) != 173:
+        errors.append(f"expected 173 pages, found {len(manifest)}")
 
     errors.extend(check_internal_links(manifest))
     errors.extend(check_required_sections())

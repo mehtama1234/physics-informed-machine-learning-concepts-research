@@ -1423,6 +1423,12 @@ REVIEW_ENTRYPOINTS = [
                 "why": "Slows the key mathematical ideas into plain step-by-step walkthroughs.",
                 "question": "Can the reader see how the formula shape follows from the scientific problem?",
             },
+            {
+                "label": "Formula Guide",
+                "href": "formula-guide.html",
+                "why": "Translates plain formula shapes into parts, meaning, checks, and common misreads.",
+                "question": "Can the reader understand what the formula carries without knowing notation first?",
+            },
         ],
     },
     {
@@ -1883,6 +1889,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
     concept_ladder = build_concept_ladder(topic_treatments)
     core_derivations = build_core_derivations(topic_treatments)
     concept_evidence_packets = build_concept_evidence_packets(topic_treatments)
+    formula_guide = build_formula_guide(core_derivations)
 
     data = {
         "summary": {
@@ -1898,6 +1905,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
             "worked_example_count": len(WORKED_EXAMPLES),
             "deep_dive_count": len(TOPIC_DEEP_DIVES),
             "core_derivation_count": len(core_derivations),
+            "formula_guide_count": len(formula_guide),
             "diagram_count": len(DIAGRAMS),
             "learning_path_step_count": len(LEARNING_PATH),
             "glossary_term_count": len(GLOSSARY),
@@ -1924,6 +1932,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
         "worked_examples": WORKED_EXAMPLES,
         "topic_deep_dives": TOPIC_DEEP_DIVES,
         "core_derivations": core_derivations,
+        "formula_guide": formula_guide,
         "diagrams": DIAGRAMS,
         "learning_path": LEARNING_PATH,
         "glossary": GLOSSARY,
@@ -2088,6 +2097,39 @@ def build_concept_evidence_packets(topic_treatments: list[dict[str, object]]) ->
     return packets
 
 
+def formula_parts(formula: str) -> list[str]:
+    if "->" in formula:
+        return [part.strip() for part in formula.split("->")]
+    if "+" in formula and "=" in formula:
+        left, right = formula.split("=", 1)
+        return [left.strip(), *[part.strip() for part in right.split("+")]]
+    if "+" in formula:
+        return [part.strip() for part in formula.split("+")]
+    if "=" in formula:
+        return [part.strip() for part in formula.split("=")]
+    return [formula.strip()]
+
+
+def build_formula_guide(core_derivations: list[dict[str, object]]) -> list[dict[str, object]]:
+    rows = []
+    for derivation in core_derivations:
+        formula = str(derivation["plain_formula"])
+        rows.append(
+            {
+                "slug": str(derivation["slug"]),
+                "title": str(derivation["title"]),
+                "plain_formula": formula,
+                "parts": formula_parts(formula),
+                "everyday_reading": str(derivation["why_it_matters"]),
+                "what_to_check": str(derivation["failure_test"]),
+                "common_misread": "Do not read the formula as proof. Read it as a compact map of what information is being carried and what must be tested.",
+                "derivation_href": str(derivation["derivation_href"]),
+                "topic_href": str(derivation["topic_href"]),
+            }
+        )
+    return rows
+
+
 def write_style() -> None:
     assets = SITE / "assets"
     assets.mkdir(parents=True, exist_ok=True)
@@ -2201,6 +2243,7 @@ def html_page(title: str, body: str, root_prefix: str = "") -> str:
   <a href="{root_prefix}worked-examples.html">Examples</a>
   <a href="{root_prefix}diagrams.html">Diagrams</a>
   <a href="{root_prefix}derivations.html">Derivations</a>
+  <a href="{root_prefix}formula-guide.html">Formulas</a>
   <a href="{root_prefix}learning-path.html">Path</a>
   <a href="{root_prefix}glossary.html">Glossary</a>
   <a href="{root_prefix}domains.html">Domains</a>
@@ -2416,6 +2459,7 @@ def write_site(data: dict[str, object]) -> None:
     worked_examples = data["worked_examples"]
     diagrams = data["diagrams"]
     core_derivations = data["core_derivations"]
+    formula_guide = data["formula_guide"]
     learning_path = data["learning_path"]
     glossary = data["glossary"]
     domain_guides = data["domain_guides"]
@@ -2442,6 +2486,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Worked Examples", f"{summary['worked_example_count']} concrete scientific examples.", "worked-examples.html")}
 {card("Diagrams", f"{summary['diagram_count']} visual flows for the main mathematical ideas.", "diagrams.html")}
 {card("Derivations", f"{summary['core_derivation_count']} core walkthroughs from observed evidence to formula shape and failure test.", "derivations.html")}
+{card("Formula Guide", f"{summary['formula_guide_count']} plain formula shapes translated into everyday meaning.", "formula-guide.html")}
 {card("Learning Path", f"{summary['learning_path_step_count']} steps from first question to field-level understanding.", "learning-path.html")}
 {card("Glossary", f"{summary['glossary_term_count']} field terms translated into everyday language.", "glossary.html")}
 {card("Domains", f"{summary['domain_guide_count']} domain guides that ground concepts in real scientific work.", "domains.html")}
@@ -2546,6 +2591,8 @@ def write_site(data: dict[str, object]) -> None:
         html_page("Physics-Informed ML Core Derivations", f"<h1>Core Derivations</h1><p>These pages slow down the main mathematical ideas. Each one starts from what is observed, names what is hidden, builds the formula shape in plain steps, and ends with the test that can reject the claim.</p><div class=\"grid\">{''.join(derivation_cards)}</div>"),
         encoding="utf-8",
     )
+
+    write_formula_guide_page(SITE / "formula-guide.html", list(formula_guide))
 
     learning_cards = []
     for step in learning_path:
@@ -2913,6 +2960,42 @@ def write_core_derivation_page(path: Path, derivation: dict[str, object]) -> Non
 <p><a href="../{html.escape(str(derivation['topic_href']))}">Return to the main topic page</a></p>
 """
     path.write_text(html_page(str(derivation["title"]), body, root_prefix="../"), encoding="utf-8")
+
+
+def write_formula_guide_page(path: Path, rows: list[dict[str, object]]) -> None:
+    table_rows = []
+    for row in rows:
+        parts = "".join(f"<li>{html.escape(str(part))}</li>" for part in row["parts"])
+        table_rows.append(
+            f"""
+<tr>
+  <td>{html.escape(str(row['title']))}<br><a href="{html.escape(str(row['topic_href']))}">topic</a> · <a href="{html.escape(str(row['derivation_href']))}">derivation</a></td>
+  <td><code>{html.escape(str(row['plain_formula']))}</code></td>
+  <td><ul>{parts}</ul></td>
+  <td>{html.escape(str(row['everyday_reading']))}</td>
+  <td>{html.escape(str(row['what_to_check']))}</td>
+  <td>{html.escape(str(row['common_misread']))}</td>
+</tr>
+"""
+        )
+    body = f"""
+<h1>Plain Formula Guide</h1>
+<p>This page translates the recurring formula shapes into everyday meaning. The goal is not to teach notation first. The goal is to show what information each formula carries, what it asks the model to do, and what test keeps the claim honest.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Concept</th>
+      <th>Formula Shape</th>
+      <th>Parts</th>
+      <th>Everyday Reading</th>
+      <th>What To Check</th>
+      <th>Common Misread</th>
+    </tr>
+  </thead>
+  <tbody>{''.join(table_rows)}</tbody>
+</table>
+"""
+    path.write_text(html_page("Physics-Informed ML Plain Formula Guide", body), encoding="utf-8")
 
 
 def write_learning_step_page(path: Path, step: dict[str, object]) -> None:
@@ -3452,6 +3535,18 @@ def write_markdown_export(data: dict[str, object]) -> None:
                 "",
             ]
         )
+    lines.extend(["", "## Plain Formula Guide"])
+    for row in data["formula_guide"]:
+        lines.extend(
+            [
+                f"### {row['title']}",
+                f"- Formula shape: {row['plain_formula']}",
+                f"- Parts: {', '.join(row['parts'])}",
+                f"- Everyday reading: {row['everyday_reading']}",
+                f"- What to check: {row['what_to_check']}",
+                "",
+            ]
+        )
     lines.extend(["", "## Diagrams"])
     for diagram in data["diagrams"]:
         lines.extend(
@@ -3672,6 +3767,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         SITE / "worked-examples.html",
         SITE / "diagrams.html",
         SITE / "derivations.html",
+        SITE / "formula-guide.html",
         SITE / "learning-path.html",
         SITE / "glossary.html",
         SITE / "domains.html",
@@ -3748,6 +3844,19 @@ def validate(data: dict[str, object] | None = None) -> None:
             raise SystemExit(f"derivation topic link missing: {item['topic_href']}")
         if str(item["derivation_href"]) not in topic_path.read_text(encoding="utf-8"):
             raise SystemExit(f"topic missing derivation link: {item['topic_href']}")
+    formula_path = SITE / "formula-guide.html"
+    formula_text = formula_path.read_text(encoding="utf-8")
+    if "Plain Formula Guide" not in formula_text or "Common Misread" not in formula_text:
+        raise SystemExit("formula guide not rendered correctly")
+    formula_rows = data.get("formula_guide") or []
+    if len(formula_rows) != len(derivation_rows):
+        raise SystemExit("formula guide count does not match derivations")
+    for row in formula_rows:
+        if not row.get("parts") or not row.get("plain_formula"):
+            raise SystemExit(f"formula guide row incomplete: {row.get('title')}")
+        for href_field in ("topic_href", "derivation_href"):
+            if not (SITE / str(row[href_field])).exists():
+                raise SystemExit(f"formula guide link missing: {row[href_field]}")
     for step in LEARNING_PATH:
         step_path = SITE / "learning-path" / f"{step['slug']}.html"
         if not step_path.exists():

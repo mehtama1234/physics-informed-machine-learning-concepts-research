@@ -13,6 +13,7 @@
 - worked_example_count: 8
 - deep_dive_count: 8
 - core_derivation_count: 8
+- formula_guide_count: 8
 - diagram_count: 6
 - learning_path_step_count: 7
 - glossary_term_count: 10
@@ -26,7 +27,7 @@
 - quality_rubric_count: 6
 - synthesis_guide_count: 4
 - review_handoff_count: 1
-- review_entrypoint_count: 22
+- review_entrypoint_count: 23
 - completion_requirement_count: 7
 
 ## Concepts
@@ -335,6 +336,56 @@
 - Plain formula: many PDE tasks -> shared learned structure -> new task prediction
 - Failure test: hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver
 - Page: derivations/foundation-models-for-pdes.html
+
+
+## Plain Formula Guide
+### Physics-Informed Neural Networks
+- Formula shape: total error = data error + equation error + boundary error
+- Parts: total error, data error, equation error, boundary error
+- Everyday reading: The equation gives the model a reason not to invent impossible behavior between data points.
+- What to check: move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements
+
+### Partial Differential Equations
+- Formula shape: change over time = movement through space + sources + boundary effects
+- Parts: change over time, movement through space, sources, boundary effects
+- Everyday reading: Most physics-informed machine learning borrows its scientific burden from PDEs.
+- What to check: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error
+
+### Operator Learning
+- Formula shape: input field -> learned field-to-field map -> output field
+- Parts: input field, learned field-to-field map, output field
+- Everyday reading: It targets repeated simulation work, where the valuable object is the whole input-output map.
+- What to check: change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed
+
+### Surrogate Modeling
+- Formula shape: new query -> fast stand-in -> approximate answer with a stated use range
+- Parts: new query, fast stand-in, approximate answer with a stated use range
+- Everyday reading: Speed changes what questions scientists and engineers can afford to ask.
+- What to check: compare against the full solver on new cases near the edge of the intended use
+
+### Uncertainty And Generalization
+- Formula shape: prediction + tested use range + failure evidence
+- Parts: prediction, tested use range, failure evidence
+- Everyday reading: A scientific model is dangerous when it is most confident exactly where it has the least evidence.
+- What to check: move one important condition outside the training range and measure the first failure
+
+### Neural Differential Equations
+- Formula shape: current state -> learned change rate -> next state
+- Parts: current state, learned change rate, next state
+- Everyday reading: It keeps the idea of continuous motion while admitting that part of the motion rule is unknown.
+- What to check: run longer than the training window and check whether small rate errors accumulate into drift
+
+### Symbolic Regression And Model Discovery
+- Formula shape: candidate ingredients -> searched formulas -> tested small law
+- Parts: candidate ingredients, searched formulas, tested small law
+- Everyday reading: A compact equation can be criticized and reused in ways a large fitted object cannot.
+- What to check: remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts
+
+### Foundation Models For PDEs
+- Formula shape: many PDE tasks -> shared learned structure -> new task prediction
+- Parts: many PDE tasks, shared learned structure, new task prediction
+- Everyday reading: If it works, broad training could reduce repeated model-building for related scientific problems.
+- What to check: hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver
 
 
 ## Diagrams
@@ -995,6 +1046,7 @@
 - Learning Path: learning-path.html | What should a new reader read first, second, and third?
 - Concept Ladder: concept-ladder.html | Can each concept be explained without starting from the method name?
 - Core Derivations: derivations.html | Can the reader see how the formula shape follows from the scientific problem?
+- Formula Guide: formula-guide.html | Can the reader understand what the formula carries without knowing notation first?
 
 ### Inspect Core Concepts
 - Purpose: Use these pages to judge whether the main mathematical ideas are explained from first principles.
