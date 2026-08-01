@@ -286,6 +286,13 @@
 - Failure test: move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements
 - Page: derivations/physics-informed-neural-networks.html
 
+#### Hand Derivation For Physics-Informed Neural Networks
+- Start: Start with an unknown field u. A few measurements tell us u at some points. The equation tells us what u should do between those points. The boundary tells us what must happen at the edge.
+- data error: At measured points, the proposed field should match the observed values. This term keeps the answer tied to the sensors. Check: If this term is missing, the field may obey the equation while ignoring the actual measurements.
+- equation error: Away from measured points, the proposed field can still be checked by putting it into the known equation and measuring leftover rule-breaking. Check: If this term is small only at easy points, the hard regions still need separate tests.
+- boundary error: A field can satisfy the equation in the middle while using the wrong edge or starting values. This term pins down the problem being solved. Check: If boundaries are wrong, the solution can be a solution to a different physical problem.
+- Final line: The loss is a written contract: match the measurements, obey the equation, and respect the edge information. The contract is only useful if each part matches the real scientific job.
+
 ### Partial Differential Equations
 - Problem: a quantity changes over space and time, so one number is not enough to describe the situation
 - Observed: a field such as temperature, pressure, concentration, velocity, or displacement
@@ -302,6 +309,13 @@
 - Failure test: change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed
 - Page: derivations/operator-learning.html
 
+#### Hand Derivation For Operator Learning
+- Start: Start with many solved cases. Each case has a whole input field and a whole output field. The unknown object is not one solution; it is the map that turns any allowed input field into its output field.
+- input field family: The learner needs to know what kind of inputs it is allowed to receive: source terms, coefficients, shapes, boundaries, or starting fields. Check: If the input family is not named, no one knows where the learned map is allowed to be used.
+- field-to-field map: The useful object is the rule from whole input field to whole output field, not a lookup table for one case. Check: If only one output is tested, the page has not shown that a map was learned.
+- new field test: The map earns trust only when it works on new input fields from the named family. Check: If the new field changes resolution, boundary type, or geometry, that change must be named and tested.
+- Final line: The derivation is a shift in the object being learned: from one answer to a reusable map between fields.
+
 ### Surrogate Modeling
 - Problem: a trusted simulator may be too slow to run for every design, control, or uncertainty question
 - Observed: expensive solver inputs and outputs for a limited set of cases
@@ -310,6 +324,13 @@
 - Failure test: compare against the full solver on new cases near the edge of the intended use
 - Page: derivations/surrogate-modeling.html
 
+#### Hand Derivation For Surrogate Modeling
+- Start: Start with a trusted source that is too slow for repeated use. The scientist still needs many answers for design, search, or risk checks.
+- trusted source: The stand-in needs something to imitate and something to be checked against. Check: If the trusted source is not named, the surrogate has no clear reference point.
+- cheap stand-in: The learned model replaces repeated expensive calls inside a named use range. Check: If the use range is missing, speed can hide bad answers.
+- edge check: Errors often matter most near the edge of the range where decisions are tempting and evidence is thin. Check: If only average error is reported, the decision quantity may still be wrong.
+- Final line: A surrogate derivation is not just about fitting a curve; it is about earning a cheaper answer while keeping the trusted source in view.
+
 ### Uncertainty And Generalization
 - Problem: a prediction is not enough unless the user knows when it should be believed
 - Observed: training cases, validation cases, prediction errors, and known shifts between cases
@@ -317,6 +338,13 @@
 - Plain formula: prediction + tested use range + failure evidence
 - Failure test: move one important condition outside the training range and measure the first failure
 - Page: derivations/uncertainty-and-generalization.html
+
+#### Hand Derivation For Uncertainty And Generalization
+- Start: Start with a model trained on old cases and a new case that may differ. The missing quantity is not only the prediction; it is how much trust the prediction deserves.
+- prediction: The model gives an answer for the quantity the scientist asked for. Check: A prediction without a use range is incomplete.
+- tested use range: The reader needs to know which cases actually support the answer. Check: If the test cases look like the training cases, changed-case trust is still unproved.
+- failure evidence: Knowing where the model breaks is part of knowing where it can be used. Check: If no failure case is named, confidence is just a number without a boundary.
+- Final line: The mathematical shape joins answer and boundary: report the prediction together with the evidence that says where belief should weaken.
 
 ### Neural Differential Equations
 - Problem: scientists may know that a system changes continuously but not know the exact rule for that change
@@ -334,6 +362,13 @@
 - Failure test: remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts
 - Page: derivations/symbolic-regression.html
 
+#### Hand Derivation For Symbolic Regression And Model Discovery
+- Start: Start with measured variables and a need for a readable law. The unknown object is the relation among the variables, not just the next predicted value.
+- candidate ingredients: The search can only build formulas from measured variables and allowed operations. Check: If an important variable is missing, the best formula may still be false.
+- searched formulas: Many possible short laws are tried because the correct relation is not known ahead of time. Check: If size is not controlled, the formula may only memorize noise.
+- changed experiment: A readable formula becomes a scientific candidate only if it survives a new situation. Check: If it is tested only where it was found, it is not yet a law.
+- Final line: The derivation is a search with a burden: the result must be short enough to inspect and strong enough to survive a new experiment.
+
 ### Foundation Models For PDEs
 - Problem: one trained model may be asked to handle many related equations, grids, parameters, or physical settings
 - Observed: many PDE problem instances across equations, grids, parameters, or physical settings
@@ -341,6 +376,13 @@
 - Plain formula: many PDE tasks -> shared learned structure -> new task prediction
 - Failure test: hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver
 - Page: derivations/foundation-models-for-pdes.html
+
+#### Hand Derivation For Foundation Models For PDEs
+- Start: Start with many PDE tasks. Each task teaches something about fields, equations, boundaries, or solution patterns. The new task is useful only if it shares structure the model actually learned.
+- many PDE tasks: Broad training is the source of shared experience across equations or parameter ranges. Check: If the tasks are narrow, the model may only be broad in name.
+- shared learned structure: The model must keep something reusable, such as field patterns, operator behavior, or equation-family regularities. Check: If the shared structure is not named, transfer to a new task is only a hope.
+- new task prediction: The point is to use old task experience on a held-out scientific case. Check: If the held-out task is too similar to training, the broad claim is not tested.
+- Final line: The derivation makes the transfer burden visible: old PDE tasks must carry something real into the new task, and the new task must be different enough to test that claim.
 
 
 ## Plain Formula Guide

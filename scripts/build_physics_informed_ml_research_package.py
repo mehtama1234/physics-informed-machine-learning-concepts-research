@@ -730,6 +730,136 @@ TOPIC_DEEP_DIVES = {
 }
 
 
+HAND_DERIVATIONS = {
+    "physics-informed-neural-networks": {
+        "plain_start": "Start with an unknown field u. A few measurements tell us u at some points. The equation tells us what u should do between those points. The boundary tells us what must happen at the edge.",
+        "line_steps": [
+            {
+                "term": "data error",
+                "why_it_enters": "At measured points, the proposed field should match the observed values. This term keeps the answer tied to the sensors.",
+                "check": "If this term is missing, the field may obey the equation while ignoring the actual measurements.",
+            },
+            {
+                "term": "equation error",
+                "why_it_enters": "Away from measured points, the proposed field can still be checked by putting it into the known equation and measuring leftover rule-breaking.",
+                "check": "If this term is small only at easy points, the hard regions still need separate tests.",
+            },
+            {
+                "term": "boundary error",
+                "why_it_enters": "A field can satisfy the equation in the middle while using the wrong edge or starting values. This term pins down the problem being solved.",
+                "check": "If boundaries are wrong, the solution can be a solution to a different physical problem.",
+            },
+        ],
+        "final_line": "The loss is a written contract: match the measurements, obey the equation, and respect the edge information. The contract is only useful if each part matches the real scientific job.",
+    },
+    "operator-learning": {
+        "plain_start": "Start with many solved cases. Each case has a whole input field and a whole output field. The unknown object is not one solution; it is the map that turns any allowed input field into its output field.",
+        "line_steps": [
+            {
+                "term": "input field family",
+                "why_it_enters": "The learner needs to know what kind of inputs it is allowed to receive: source terms, coefficients, shapes, boundaries, or starting fields.",
+                "check": "If the input family is not named, no one knows where the learned map is allowed to be used.",
+            },
+            {
+                "term": "field-to-field map",
+                "why_it_enters": "The useful object is the rule from whole input field to whole output field, not a lookup table for one case.",
+                "check": "If only one output is tested, the page has not shown that a map was learned.",
+            },
+            {
+                "term": "new field test",
+                "why_it_enters": "The map earns trust only when it works on new input fields from the named family.",
+                "check": "If the new field changes resolution, boundary type, or geometry, that change must be named and tested.",
+            },
+        ],
+        "final_line": "The derivation is a shift in the object being learned: from one answer to a reusable map between fields.",
+    },
+    "surrogate-modeling": {
+        "plain_start": "Start with a trusted source that is too slow for repeated use. The scientist still needs many answers for design, search, or risk checks.",
+        "line_steps": [
+            {
+                "term": "trusted source",
+                "why_it_enters": "The stand-in needs something to imitate and something to be checked against.",
+                "check": "If the trusted source is not named, the surrogate has no clear reference point.",
+            },
+            {
+                "term": "cheap stand-in",
+                "why_it_enters": "The learned model replaces repeated expensive calls inside a named use range.",
+                "check": "If the use range is missing, speed can hide bad answers.",
+            },
+            {
+                "term": "edge check",
+                "why_it_enters": "Errors often matter most near the edge of the range where decisions are tempting and evidence is thin.",
+                "check": "If only average error is reported, the decision quantity may still be wrong.",
+            },
+        ],
+        "final_line": "A surrogate derivation is not just about fitting a curve; it is about earning a cheaper answer while keeping the trusted source in view.",
+    },
+    "uncertainty-and-generalization": {
+        "plain_start": "Start with a model trained on old cases and a new case that may differ. The missing quantity is not only the prediction; it is how much trust the prediction deserves.",
+        "line_steps": [
+            {
+                "term": "prediction",
+                "why_it_enters": "The model gives an answer for the quantity the scientist asked for.",
+                "check": "A prediction without a use range is incomplete.",
+            },
+            {
+                "term": "tested use range",
+                "why_it_enters": "The reader needs to know which cases actually support the answer.",
+                "check": "If the test cases look like the training cases, changed-case trust is still unproved.",
+            },
+            {
+                "term": "failure evidence",
+                "why_it_enters": "Knowing where the model breaks is part of knowing where it can be used.",
+                "check": "If no failure case is named, confidence is just a number without a boundary.",
+            },
+        ],
+        "final_line": "The mathematical shape joins answer and boundary: report the prediction together with the evidence that says where belief should weaken.",
+    },
+    "symbolic-regression": {
+        "plain_start": "Start with measured variables and a need for a readable law. The unknown object is the relation among the variables, not just the next predicted value.",
+        "line_steps": [
+            {
+                "term": "candidate ingredients",
+                "why_it_enters": "The search can only build formulas from measured variables and allowed operations.",
+                "check": "If an important variable is missing, the best formula may still be false.",
+            },
+            {
+                "term": "searched formulas",
+                "why_it_enters": "Many possible short laws are tried because the correct relation is not known ahead of time.",
+                "check": "If size is not controlled, the formula may only memorize noise.",
+            },
+            {
+                "term": "changed experiment",
+                "why_it_enters": "A readable formula becomes a scientific candidate only if it survives a new situation.",
+                "check": "If it is tested only where it was found, it is not yet a law.",
+            },
+        ],
+        "final_line": "The derivation is a search with a burden: the result must be short enough to inspect and strong enough to survive a new experiment.",
+    },
+    "foundation-models-for-pdes": {
+        "plain_start": "Start with many PDE tasks. Each task teaches something about fields, equations, boundaries, or solution patterns. The new task is useful only if it shares structure the model actually learned.",
+        "line_steps": [
+            {
+                "term": "many PDE tasks",
+                "why_it_enters": "Broad training is the source of shared experience across equations or parameter ranges.",
+                "check": "If the tasks are narrow, the model may only be broad in name.",
+            },
+            {
+                "term": "shared learned structure",
+                "why_it_enters": "The model must keep something reusable, such as field patterns, operator behavior, or equation-family regularities.",
+                "check": "If the shared structure is not named, transfer to a new task is only a hope.",
+            },
+            {
+                "term": "new task prediction",
+                "why_it_enters": "The point is to use old task experience on a held-out scientific case.",
+                "check": "If the held-out task is too similar to training, the broad claim is not tested.",
+            },
+        ],
+        "final_line": "The derivation makes the transfer burden visible: old PDE tasks must carry something real into the new task, and the new task must be different enough to test that claim.",
+    },
+}
+
+
 DIAGRAMS = [
     {
         "slug": "data-only-learning-flow",
@@ -2553,6 +2683,7 @@ def build_core_derivations(topic_treatments: list[dict[str, object]]) -> list[di
                 "observed": str(derivation["observed"]),
                 "hidden": str(derivation["hidden"]),
                 "math_shape": list(deep["math_shape"]),
+                "hand_derivation": HAND_DERIVATIONS.get(slug),
                 "plain_formula": str(deep["plain_formula"]),
                 "why_it_matters": str(deep["important_because"]),
                 "failure_test": str(derivation["test"]),
@@ -3488,6 +3619,35 @@ def write_core_derivation_page(path: Path, derivation: dict[str, object]) -> Non
         f"<div class=\"route-step\">{idx}. {html.escape(str(step))}</div>"
         for idx, step in enumerate(derivation["math_shape"], start=1)
     )
+    hand_block = ""
+    hand = derivation.get("hand_derivation")
+    if isinstance(hand, dict):
+        hand_rows = []
+        for item in hand["line_steps"]:
+            hand_rows.append(
+                f"""
+<tr>
+  <td>{html.escape(str(item['term']))}</td>
+  <td>{html.escape(str(item['why_it_enters']))}</td>
+  <td>{html.escape(str(item['check']))}</td>
+</tr>
+"""
+            )
+        hand_block = f"""
+<h2>Hand Derivation</h2>
+<p>{html.escape(str(hand['plain_start']))}</p>
+<table>
+  <thead>
+    <tr>
+      <th>Term</th>
+      <th>Why It Enters</th>
+      <th>Check</th>
+    </tr>
+  </thead>
+  <tbody>{''.join(hand_rows)}</tbody>
+</table>
+<p><strong>Final Line:</strong> {html.escape(str(hand['final_line']))}</p>
+"""
     red_flags = "".join(f"<li>{html.escape(str(item))}</li>" for item in derivation["red_flags"])
     related = concept_links(list(derivation["connects_to"]), root_prefix="../")
     body = f"""
@@ -3503,6 +3663,7 @@ def write_core_derivation_page(path: Path, derivation: dict[str, object]) -> Non
 <p>{html.escape(str(derivation['hidden']))}</p>
 <h2>Build The Mathematical Shape</h2>
 <div class="route">{steps}</div>
+{hand_block}
 <h2>Plain Formula</h2>
 <p>{html.escape(str(derivation['plain_formula']))}</p>
 <h2>Why This Matters</h2>
@@ -4230,6 +4391,12 @@ def write_markdown_export(data: dict[str, object]) -> None:
                 "",
             ]
         )
+        hand = item.get("hand_derivation")
+        if isinstance(hand, dict):
+            lines.extend([f"#### Hand Derivation For {item['title']}", f"- Start: {hand['plain_start']}"])
+            for step in hand["line_steps"]:
+                lines.append(f"- {step['term']}: {step['why_it_enters']} Check: {step['check']}")
+            lines.extend([f"- Final line: {hand['final_line']}", ""])
     lines.extend(["", "## Plain Formula Guide"])
     for row in data["formula_guide"]:
         lines.extend(
@@ -4585,6 +4752,7 @@ def validate(data: dict[str, object] | None = None) -> None:
     derivation_rows = data.get("core_derivations") or []
     if len(derivation_rows) != len(TOPIC_DEEP_DIVES):
         raise SystemExit("core derivation count does not match deep dives")
+    hand_required_slugs = {"physics-informed-neural-networks", "operator-learning", "foundation-models-for-pdes"}
     for item in derivation_rows:
         derivation_path = SITE / str(item["derivation_href"])
         if not derivation_path.exists():
@@ -4593,6 +4761,13 @@ def validate(data: dict[str, object] | None = None) -> None:
         for required in ("Start With What Is Observed", "Build The Mathematical Shape", "Failure Test", "Red Flags"):
             if required not in derivation_text:
                 raise SystemExit(f"derivation page missing {required}: {item['title']}")
+        if item["slug"] in hand_required_slugs:
+            hand = item.get("hand_derivation")
+            if not isinstance(hand, dict) or len(hand.get("line_steps") or []) < 3:
+                raise SystemExit(f"core derivation missing hand derivation: {item['title']}")
+            for required in ("Hand Derivation", "Why It Enters", "Final Line"):
+                if required not in derivation_text:
+                    raise SystemExit(f"hand derivation page missing {required}: {item['title']}")
         topic_path = SITE / str(item["topic_href"])
         if not topic_path.exists():
             raise SystemExit(f"derivation topic link missing: {item['topic_href']}")

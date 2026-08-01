@@ -52,6 +52,39 @@
 <p>the solver answer for every new query someone wants to ask</p>
 <h2>Build The Mathematical Shape</h2>
 <div class="route"><div class="route-step">1. Name the expensive source of truth.</div><div class="route-step">2. Name the inputs people will vary.</div><div class="route-step">3. Name the output quantity needed for decisions.</div><div class="route-step">4. Fit the cheap stand-in on trusted examples.</div><div class="route-step">5. Measure error near the edge of intended use.</div></div>
+
+<h2>Hand Derivation</h2>
+<p>Start with a trusted source that is too slow for repeated use. The scientist still needs many answers for design, search, or risk checks.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Term</th>
+      <th>Why It Enters</th>
+      <th>Check</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+  <td>trusted source</td>
+  <td>The stand-in needs something to imitate and something to be checked against.</td>
+  <td>If the trusted source is not named, the surrogate has no clear reference point.</td>
+</tr>
+
+<tr>
+  <td>cheap stand-in</td>
+  <td>The learned model replaces repeated expensive calls inside a named use range.</td>
+  <td>If the use range is missing, speed can hide bad answers.</td>
+</tr>
+
+<tr>
+  <td>edge check</td>
+  <td>Errors often matter most near the edge of the range where decisions are tempting and evidence is thin.</td>
+  <td>If only average error is reported, the decision quantity may still be wrong.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Final Line:</strong> A surrogate derivation is not just about fitting a curve; it is about earning a cheaper answer while keeping the trusted source in view.</p>
+
 <h2>Plain Formula</h2>
 <p>new query -&gt; fast stand-in -&gt; approximate answer with a stated use range</p>
 <h2>Why This Matters</h2>

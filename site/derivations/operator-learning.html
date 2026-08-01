@@ -52,6 +52,39 @@
 <p>the rule that maps a new input field to its new solution field</p>
 <h2>Build The Mathematical Shape</h2>
 <div class="route"><div class="route-step">1. Collect many input fields and matching solution fields.</div><div class="route-step">2. Name the family those examples come from.</div><div class="route-step">3. Train a map from input function to output function.</div><div class="route-step">4. Use structure such as Fourier modes, graph connections, or attention when needed.</div><div class="route-step">5. Test on new fields that stress the intended use range.</div></div>
+
+<h2>Hand Derivation</h2>
+<p>Start with many solved cases. Each case has a whole input field and a whole output field. The unknown object is not one solution; it is the map that turns any allowed input field into its output field.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Term</th>
+      <th>Why It Enters</th>
+      <th>Check</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+  <td>input field family</td>
+  <td>The learner needs to know what kind of inputs it is allowed to receive: source terms, coefficients, shapes, boundaries, or starting fields.</td>
+  <td>If the input family is not named, no one knows where the learned map is allowed to be used.</td>
+</tr>
+
+<tr>
+  <td>field-to-field map</td>
+  <td>The useful object is the rule from whole input field to whole output field, not a lookup table for one case.</td>
+  <td>If only one output is tested, the page has not shown that a map was learned.</td>
+</tr>
+
+<tr>
+  <td>new field test</td>
+  <td>The map earns trust only when it works on new input fields from the named family.</td>
+  <td>If the new field changes resolution, boundary type, or geometry, that change must be named and tested.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Final Line:</strong> The derivation is a shift in the object being learned: from one answer to a reusable map between fields.</p>
+
 <h2>Plain Formula</h2>
 <p>input field -&gt; learned field-to-field map -&gt; output field</p>
 <h2>Why This Matters</h2>

@@ -52,6 +52,39 @@
 <p>how wrong the model may be on a case unlike the ones it learned from</p>
 <h2>Build The Mathematical Shape</h2>
 <div class="route"><div class="route-step">1. Separate training cases from test cases.</div><div class="route-step">2. Name the changes that matter in the real domain.</div><div class="route-step">3. Measure error under those changes.</div><div class="route-step">4. Report the use range with the prediction.</div><div class="route-step">5. Look for the first condition where the model breaks.</div></div>
+
+<h2>Hand Derivation</h2>
+<p>Start with a model trained on old cases and a new case that may differ. The missing quantity is not only the prediction; it is how much trust the prediction deserves.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Term</th>
+      <th>Why It Enters</th>
+      <th>Check</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+  <td>prediction</td>
+  <td>The model gives an answer for the quantity the scientist asked for.</td>
+  <td>A prediction without a use range is incomplete.</td>
+</tr>
+
+<tr>
+  <td>tested use range</td>
+  <td>The reader needs to know which cases actually support the answer.</td>
+  <td>If the test cases look like the training cases, changed-case trust is still unproved.</td>
+</tr>
+
+<tr>
+  <td>failure evidence</td>
+  <td>Knowing where the model breaks is part of knowing where it can be used.</td>
+  <td>If no failure case is named, confidence is just a number without a boundary.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Final Line:</strong> The mathematical shape joins answer and boundary: report the prediction together with the evidence that says where belief should weaken.</p>
+
 <h2>Plain Formula</h2>
 <p>prediction + tested use range + failure evidence</p>
 <h2>Why This Matters</h2>
