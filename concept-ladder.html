@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Physics-Informed ML Concept Ladder</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav class="topbar">
+  <a href="index.html">Physics-Informed ML</a>
+  <a href="transcripts.html">Transcripts</a>
+  <a href="concept-atlas.html">Concept Atlas</a>
+  <a href="families.html">Families</a>
+  <a href="comparisons.html">Comparisons</a>
+  <a href="worked-examples.html">Examples</a>
+  <a href="diagrams.html">Diagrams</a>
+  <a href="learning-path.html">Path</a>
+  <a href="glossary.html">Glossary</a>
+  <a href="domains.html">Domains</a>
+  <a href="reader-checks.html">Checks</a>
+  <a href="decision-guide.html">Decide</a>
+  <a href="provenance.html">Provenance</a>
+  <a href="coverage.html">Coverage</a>
+  <a href="concept-ladder.html">Ladder</a>
+  <a href="quality.html">Quality</a>
+  <a href="synthesis.html">Synthesis</a>
+  <a href="review-entrypoints.html">Review Map</a>
+  <a href="handoff.html">Handoff</a>
+  <a href="theme-map.html">Themes</a>
+  <a href="evidence-ledger.html">Evidence</a>
+</nav>
+<main>
+
+<h1>Concept Ladder</h1>
+<p>This page lines up the main concepts by the same first-principles questions. Read each row from left to right: the real problem, what is observed, what is hidden, what mathematical move is made, what shape that move has, and what test can reject the claim.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Concept</th>
+      <th>Problem</th>
+      <th>Observed</th>
+      <th>Hidden</th>
+      <th>Mathematical Move</th>
+      <th>Shape</th>
+      <th>Failure Test</th>
+      <th>Evidence Anchor</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+  <td><a href="topics/deep-learning.html">Deep Learning</a><br><span class="meta">scientific prediction from large measured or simulated data sets</span></td>
+  <td>scientists often have examples of behavior but no short rule that predicts the next case</td>
+  <td>many input-output examples from experiments, simulations, or measurements</td>
+  <td>the exact rule that connects the input to the output</td>
+  <td>adjust many weights until the model maps familiar inputs to the right outputs</td>
+  <td>input -&gt; layered adjustable calculation -&gt; prediction</td>
+  <td>hold out a changed material, geometry, parameter range, or sensor condition</td>
+  <td><a href="https://www.youtube.com/watch?v=LkKvhvsf6jY&amp;list=PLJkYEExhe7rYFkBIB2U5pf_RWzYnFLj7r">ETH Zürich AISE: Course Introduction</a></td>
+</tr>
+
+<tr>
+  <td><a href="topics/physics-informed-neural-networks.html">Physics-Informed Neural Networks</a><br><span class="meta">differential equations in science and engineering</span></td>
+  <td>measurements may be sparse, but the answer must still respect a known physical equation</td>
+  <td>some measured values, boundary values, starting values, and a known differential equation</td>
+  <td>the full field value at every point in space and time</td>
+  <td>fit a neural network while also measuring how badly its output violates the known equation</td>
+  <td>prediction error + equation error + boundary error</td>
+  <td>move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements</td>
+  <td><a href="https://www.youtube.com/watch?v=LkKvhvsf6jY&amp;list=PLJkYEExhe7rYFkBIB2U5pf_RWzYnFLj7r">ETH Zürich AISE: Course Introduction</a></td>
+</tr>
+
+<tr>
+  <td><a href="topics/partial-differential-equations.html">Partial Differential Equations</a><br><span class="meta">fluids, heat, waves, mechanics, chemistry, climate, and other changing fields</span></td>
+  <td>a quantity changes over space and time, so one number is not enough to describe the situation</td>
+  <td>a field such as temperature, pressure, concentration, velocity, or displacement</td>
+  <td>how every point in the field affects nearby points over time</td>
+  <td>write a local change rule that uses rates across space and time</td>
+  <td>future change = spatial change + sources + boundary information</td>
+  <td>change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error</td>
+  <td><a href="https://www.youtube.com/watch?v=LkKvhvsf6jY&amp;list=PLJkYEExhe7rYFkBIB2U5pf_RWzYnFLj7r">ETH Zürich AISE: Course Introduction</a></td>
+</tr>
+
+<tr>
+  <td><a href="topics/operator-learning.html">Operator Learning</a><br><span class="meta">fast prediction for families of scientific simulations</span></td>
+  <td>one simulation answer is not enough when engineers need the whole map from inputs to solution fields</td>
+  <td>many example inputs and their full solution fields</td>
+  <td>the rule that maps a new input field to its new solution field</td>
+  <td>learn the map from problem input to solution, not only one solution at a time</td>
+  <td>input function -&gt; learned map -&gt; output function</td>
+  <td>change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed</td>
+  <td><a href="https://www.youtube.com/watch?v=LkKvhvsf6jY&amp;list=PLJkYEExhe7rYFkBIB2U5pf_RWzYnFLj7r">ETH Zürich AISE: Course Introduction</a></td>
+</tr>
+
+<tr>
+  <td><a href="topics/scientific-machine-learning.html">Scientific Machine Learning</a><br><span class="meta">using data-driven models inside scientific workflows</span></td>
+  <td>scientific work needs predictions that respect measurements, equations, uncertainty, and domain limits at the same time</td>
+  <td>data, equations, units, simulation outputs, and domain limits</td>
+  <td>which parts of the scientific system are missing, noisy, or too costly to compute directly</td>
+  <td>combine learned prediction with scientific checks that name what the claim is allowed to mean</td>
+  <td>data fit + scientific structure + validation case</td>
+  <td>state the scientific quantity first, then test it under a changed case that matters in that domain</td>
+  <td><a href="https://www.youtube.com/watch?v=LkKvhvsf6jY&amp;list=PLJkYEExhe7rYFkBIB2U5pf_RWzYnFLj7r">ETH Zürich AISE: Course Introduction</a></td>
+</tr>
+
+<tr>
+  <td><a href="topics/surrogate-modeling.html">Surrogate Modeling</a><br><span class="meta">expensive simulation and design loops</span></td>
+  <td>a trusted simulator may be too slow to run for every design, control, or uncertainty question</td>
+  <td>expensive solver inputs and outputs for a limited set of cases</td>
+  <td>the solver answer for every new query someone wants to ask</td>
+  <td>train a cheaper stand-in for the expensive input-output behavior</td>
+  <td>query -&gt; fast stand-in -&gt; approximate answer</td>
+  <td>compare against the full solver on new cases near the edge of the intended use</td>
+  <td><a href="https://www.youtube.com/watch?v=LkKvhvsf6jY&amp;list=PLJkYEExhe7rYFkBIB2U5pf_RWzYnFLj7r">ETH Zürich AISE: Course Introduction</a></td>
+</tr>
+
+<tr>
+  <td><a href="topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a><br><span class="meta">model use under new conditions</span></td>
+  <td>a prediction is not enough unless the user knows when it should be believed</td>
+  <td>training cases, validation cases, prediction errors, and known shifts between cases</td>
+  <td>how wrong the model may be on a case unlike the ones it learned from</td>
+  <td>separate fit on familiar examples from evidence on changed examples</td>
+  <td>prediction + error check + stated use range</td>
+  <td>move one important condition outside the training range and measure the first failure</td>
+  <td><a href="https://www.youtube.com/watch?v=LkKvhvsf6jY&amp;list=PLJkYEExhe7rYFkBIB2U5pf_RWzYnFLj7r">ETH Zürich AISE: Course Introduction</a></td>
+</tr>
+
+<tr>
+  <td><a href="topics/optimization-for-learning.html">Optimization For Learning</a><br><span class="meta">turning model fitting into a repeatable computation</span></td>
+  <td>learning needs a way to decide which model settings are better or worse</td>
+  <td>a written score that says which model behavior is better or worse</td>
+  <td>whether that score matches the scientific behavior the user actually cares about</td>
+  <td>change model settings to lower the written score</td>
+  <td>choose settings that reduce data error, physics error, or design cost</td>
+  <td>inspect what the score ignores, then check whether the ignored behavior fails after training</td>
+  <td><a href="https://www.youtube.com/watch?v=LkKvhvsf6jY&amp;list=PLJkYEExhe7rYFkBIB2U5pf_RWzYnFLj7r">ETH Zürich AISE: Course Introduction</a></td>
+</tr>
+
+<tr>
+  <td><a href="topics/generative-modeling.html">Generative Modeling</a><br><span class="meta">creating plausible scientific samples, fields, or candidate designs</span></td>
+  <td>some tasks need many possible examples, not one predicted answer</td>
+  <td>examples of fields, molecules, flows, shapes, or other scientific objects</td>
+  <td>the spread of possible valid objects beyond the examples</td>
+  <td>learn how to sample new candidates that resemble the training family</td>
+  <td>random seed + learned sampler -&gt; candidate scientific object</td>
+  <td>measure constraints, rare cases, conservation, and downstream task performance on generated samples</td>
+  <td><a href="https://www.youtube.com/watch?v=LkKvhvsf6jY&amp;list=PLJkYEExhe7rYFkBIB2U5pf_RWzYnFLj7r">ETH Zürich AISE: Course Introduction</a></td>
+</tr>
+
+<tr>
+  <td><a href="topics/graphs-and-geometric-learning.html">Graphs And Geometric Learning</a><br><span class="meta">systems made of interacting parts, meshes, molecules, or spatial relations</span></td>
+  <td>many scientific objects are not simple rows of numbers; their connections matter</td>
+  <td>objects with parts and connections, such as meshes, molecules, or interacting components</td>
+  <td>which neighboring and long-range interactions control the scientific quantity</td>
+  <td>let information move along the object connections instead of flattening the object into a plain row</td>
+  <td>nodes + edges + update rule -&gt; predicted property or field</td>
+  <td>change the mesh, rotate or move the object, or add missing interactions and inspect what breaks</td>
+  <td><a href="https://www.youtube.com/watch?v=LkKvhvsf6jY&amp;list=PLJkYEExhe7rYFkBIB2U5pf_RWzYnFLj7r">ETH Zürich AISE: Course Introduction</a></td>
+</tr>
+
+<tr>
+  <td><a href="topics/neural-differential-equations.html">Neural Differential Equations</a><br><span class="meta">changing systems where time evolution is part of the model</span></td>
+  <td>scientists may know that a system changes continuously but not know the exact rule for that change</td>
+  <td>measurements of a system changing over time</td>
+  <td>the rate rule that moves the present value into the future</td>
+  <td>learn the missing rate rule and place it inside a time-evolution calculation</td>
+  <td>current state -&gt; learned rate -&gt; next state</td>
+  <td>run longer than the training window and check whether small rate errors accumulate into drift</td>
+  <td><a href="https://www.youtube.com/watch?v=LkKvhvsf6jY&amp;list=PLJkYEExhe7rYFkBIB2U5pf_RWzYnFLj7r">ETH Zürich AISE: Course Introduction</a></td>
+</tr>
+
+<tr>
+  <td><a href="topics/symbolic-regression.html">Symbolic Regression And Model Discovery</a><br><span class="meta">turning data into equations people can inspect</span></td>
+  <td>a scientist may need a readable equation, not only a model that predicts well</td>
+  <td>measured variables and candidate mathematical ingredients</td>
+  <td>which short formula, if any, actually explains the measured change</td>
+  <td>search for a readable equation that fits the data and survives a changed case</td>
+  <td>candidate formulas -&gt; selected formula -&gt; held-out test</td>
+  <td>remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts</td>
+  <td><a href="https://www.youtube.com/watch?v=LkKvhvsf6jY&amp;list=PLJkYEExhe7rYFkBIB2U5pf_RWzYnFLj7r">ETH Zürich AISE: Course Introduction</a></td>
+</tr>
+
+<tr>
+  <td><a href="topics/foundation-models-for-pdes.html">Foundation Models For PDEs</a><br><span class="meta">broad families of PDE problems and scientific fields</span></td>
+  <td>one trained model may be asked to handle many related equations, grids, parameters, or physical settings</td>
+  <td>many PDE problem instances across equations, grids, parameters, or physical settings</td>
+  <td>which shared structure carries from one scientific task to another</td>
+  <td>train one broad model to reuse structure across many related field-prediction tasks</td>
+  <td>many PDE tasks -&gt; shared learned representation -&gt; new task prediction</td>
+  <td>hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver</td>
+  <td><a href="https://www.youtube.com/watch?v=u1KFcAvjyCI&amp;list=PLJkYEExhe7rYFkBIB2U5pf_RWzYnFLj7r">ETH Zürich AISE: Time-Dependent Neural Operators</a></td>
+</tr>
+
+<tr>
+  <td><a href="topics/attention-for-scientific-fields.html">Attention For Scientific Fields</a><br><span class="meta">large scientific fields where distant parts may interact</span></td>
+  <td>a local patch of a field may depend on faraway information, but looking everywhere can be expensive</td>
+  <td>large fields where one location may depend on other locations</td>
+  <td>which distant parts matter for the local prediction</td>
+  <td>let the model choose which parts of the field exchange information</td>
+  <td>field pieces -&gt; selected information exchange -&gt; updated field pieces</td>
+  <td>change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures</td>
+  <td><a href="https://www.youtube.com/watch?v=LkKvhvsf6jY&amp;list=PLJkYEExhe7rYFkBIB2U5pf_RWzYnFLj7r">ETH Zürich AISE: Course Introduction</a></td>
+</tr>
+</tbody>
+</table>
+<h2>How To Use This</h2>
+<p>Pick one row and try to say it aloud without the method name. If the row still makes sense, the concept has a real job. If it only sounds important after the method name is added back, the explanation needs more work.</p>
+
+</main>
+</body>
+</html>
