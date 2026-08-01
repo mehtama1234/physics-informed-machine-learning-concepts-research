@@ -674,6 +674,105 @@ DIAGRAMS = [
 ]
 
 
+LEARNING_PATH = [
+    {
+        "slug": "scientific-question-first",
+        "title": "Start With The Scientific Question",
+        "question": "What is being predicted, explained, designed, or checked?",
+        "why_first": "Physics-informed machine learning is not one trick. The method depends on the scientific job.",
+        "plain_goal": "Name the quantity, the domain, the evidence, and the changed case before naming a method.",
+        "read": [
+            {"label": "Scientific Machine Learning", "href": "topics/scientific-machine-learning.html"},
+            {"label": "Data-Only Learning Flow", "href": "diagrams/data-only-learning-flow.html"},
+            {"label": "Data-Only vs Physics-Informed Learning", "href": "comparisons/data-only-vs-physics-informed-learning.html"},
+        ],
+        "checkpoint": "You can say what answer the scientist wants and what would make that answer unusable.",
+    },
+    {
+        "slug": "fields-and-equations",
+        "title": "Understand Fields And Equations",
+        "question": "Why is one number not enough?",
+        "why_first": "Many scientific problems are fields: temperature, pressure, velocity, concentration, stress, or displacement across space and time.",
+        "plain_goal": "See why boundaries, neighbors, rates of change, and starting values carry the scientific burden.",
+        "read": [
+            {"label": "Partial Differential Equations", "href": "topics/partial-differential-equations.html"},
+            {"label": "PDE Field Reasoning Flow", "href": "diagrams/pde-field-reasoning-flow.html"},
+            {"label": "Heat Equation From Few Measurements", "href": "worked-examples/heat-equation-from-few-measurements.html"},
+        ],
+        "checkpoint": "You can explain why a field prediction must respect boundaries and nearby values.",
+    },
+    {
+        "slug": "physics-as-check",
+        "title": "Use Physics As A Check",
+        "question": "How can a model be corrected where there are no measurements?",
+        "why_first": "Sparse data leaves empty space. A known equation can check that empty space if the equation is trusted.",
+        "plain_goal": "Understand PINNs as fitted fields that answer to both data and an equation.",
+        "read": [
+            {"label": "Physics-Informed Neural Networks", "href": "topics/physics-informed-neural-networks.html"},
+            {"label": "Physics-Informed Learning Flow", "href": "diagrams/physics-informed-learning-flow.html"},
+            {"label": "Physics Constraints Family", "href": "families/physics-constraints-family.html"},
+        ],
+        "checkpoint": "You can state the data error, equation error, boundary error, and the test case.",
+    },
+    {
+        "slug": "maps-between-fields",
+        "title": "Learn Maps Between Fields",
+        "question": "What if the job is not one solution, but many related solutions?",
+        "why_first": "Engineering and science often need repeated solves for many inputs, shapes, materials, or conditions.",
+        "plain_goal": "Separate learning one answer from learning the map that turns an input field into an output field.",
+        "read": [
+            {"label": "Operator Learning", "href": "topics/operator-learning.html"},
+            {"label": "Operator Learning Flow", "href": "diagrams/operator-learning-flow.html"},
+            {"label": "PINNs vs Neural Operators", "href": "comparisons/pinns-vs-neural-operators.html"},
+            {"label": "Neural Operators Family", "href": "families/neural-operators-family.html"},
+        ],
+        "checkpoint": "You can name the family of inputs and outputs where the learned map is allowed to be used.",
+    },
+    {
+        "slug": "speed-with-boundaries",
+        "title": "Use Speed Without Hiding Risk",
+        "question": "When is a fast approximation useful?",
+        "why_first": "A fast model is valuable only if the slow trusted source still defines where the fast answer is valid.",
+        "plain_goal": "Treat surrogates as checked stand-ins with a stated use range.",
+        "read": [
+            {"label": "Surrogate Modeling", "href": "topics/surrogate-modeling.html"},
+            {"label": "Surrogate Validation Flow", "href": "diagrams/surrogate-validation-flow.html"},
+            {"label": "Fast Fluid Field Surrogate", "href": "worked-examples/fast-fluid-field-surrogate.html"},
+            {"label": "Solvers vs Learned Surrogates", "href": "comparisons/solvers-vs-learned-surrogates.html"},
+        ],
+        "checkpoint": "You can say what the surrogate replaces, what it does not replace, and where it was checked.",
+    },
+    {
+        "slug": "trust-and-failure",
+        "title": "Make Trust A Testable Claim",
+        "question": "When should a prediction be believed?",
+        "why_first": "Scientific mistakes often happen when a model is used outside the cases that taught it.",
+        "plain_goal": "Attach every prediction to a use range, changed-case test, and failure boundary.",
+        "read": [
+            {"label": "Uncertainty And Generalization", "href": "topics/uncertainty-and-generalization.html"},
+            {"label": "Foundation Models For PDEs", "href": "topics/foundation-models-for-pdes.html"},
+            {"label": "Neural Operators Family", "href": "families/neural-operators-family.html"},
+            {"label": "Surrogate Validation Flow", "href": "diagrams/surrogate-validation-flow.html"},
+        ],
+        "checkpoint": "You can name the first changed condition that should make the model fail.",
+    },
+    {
+        "slug": "readable-laws",
+        "title": "Look For Readable Laws When Needed",
+        "question": "When is prediction not enough?",
+        "why_first": "Sometimes the scientific product is a rule people can inspect, criticize, and reuse.",
+        "plain_goal": "Understand symbolic regression and neural differential equations as routes toward candidate mechanisms.",
+        "read": [
+            {"label": "Symbolic Regression And Model Discovery", "href": "topics/symbolic-regression.html"},
+            {"label": "Neural Differential Equations", "href": "topics/neural-differential-equations.html"},
+            {"label": "Model Discovery Flow", "href": "diagrams/model-discovery-flow.html"},
+            {"label": "Discovering A Small Law From Motion", "href": "worked-examples/discovering-a-small-law-from-motion.html"},
+        ],
+        "checkpoint": "You can explain why a short formula still needs a changed-experiment test.",
+    },
+]
+
+
 @dataclass
 class TranscriptRecord:
     video_id: str
@@ -972,6 +1071,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
             "worked_example_count": len(WORKED_EXAMPLES),
             "deep_dive_count": len(TOPIC_DEEP_DIVES),
             "diagram_count": len(DIAGRAMS),
+            "learning_path_step_count": len(LEARNING_PATH),
         },
         "transcript_index": [record_to_dict(record) for record in records],
         "concept_atlas": concept_atlas,
@@ -983,6 +1083,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
         "worked_examples": WORKED_EXAMPLES,
         "topic_deep_dives": TOPIC_DEEP_DIVES,
         "diagrams": DIAGRAMS,
+        "learning_path": LEARNING_PATH,
     }
     for name, value in data.items():
         if name == "summary":
@@ -1121,6 +1222,7 @@ def html_page(title: str, body: str, root_prefix: str = "") -> str:
   <a href="{root_prefix}comparisons.html">Comparisons</a>
   <a href="{root_prefix}worked-examples.html">Examples</a>
   <a href="{root_prefix}diagrams.html">Diagrams</a>
+  <a href="{root_prefix}learning-path.html">Path</a>
   <a href="{root_prefix}theme-map.html">Themes</a>
   <a href="{root_prefix}evidence-ledger.html">Evidence</a>
 </nav>
@@ -1199,6 +1301,16 @@ def topic_diagrams_html(slug: str) -> str:
     return f"<h2>Visual Map</h2>{''.join(cards)}"
 
 
+def learning_step_card(step: dict[str, object], href_prefix: str = "") -> str:
+    return f"""
+<article class="card">
+  <h3><a href="{href_prefix}learning-path/{html.escape(str(step['slug']))}.html">{html.escape(str(step['title']))}</a></h3>
+  <p><strong>Question:</strong> {html.escape(str(step['question']))}</p>
+  <p>{html.escape(str(step['plain_goal']))}</p>
+</article>
+"""
+
+
 def write_site(data: dict[str, object]) -> None:
     SITE.mkdir(parents=True, exist_ok=True)
     write_style()
@@ -1208,7 +1320,8 @@ def write_site(data: dict[str, object]) -> None:
     comparison_dir = SITE / "comparisons"
     example_dir = SITE / "worked-examples"
     diagram_dir = SITE / "diagrams"
-    for generated_dir in (family_dir, comparison_dir, example_dir, diagram_dir):
+    learning_dir = SITE / "learning-path"
+    for generated_dir in (family_dir, comparison_dir, example_dir, diagram_dir, learning_dir):
         if generated_dir.exists():
             shutil.rmtree(generated_dir)
     topic_dir.mkdir(exist_ok=True)
@@ -1217,6 +1330,7 @@ def write_site(data: dict[str, object]) -> None:
     comparison_dir.mkdir(exist_ok=True)
     example_dir.mkdir(exist_ok=True)
     diagram_dir.mkdir(exist_ok=True)
+    learning_dir.mkdir(exist_ok=True)
 
     summary = data["summary"]
     concept_atlas = data["concept_atlas"]
@@ -1228,6 +1342,7 @@ def write_site(data: dict[str, object]) -> None:
     comparison_pages = data["comparison_pages"]
     worked_examples = data["worked_examples"]
     diagrams = data["diagrams"]
+    learning_path = data["learning_path"]
 
     index_body = f"""
 <h1>Physics-Informed Machine Learning Concepts Research</h1>
@@ -1239,6 +1354,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Comparisons", f"{summary['comparison_count']} plain-language method comparisons.", "comparisons.html")}
 {card("Worked Examples", f"{summary['worked_example_count']} concrete scientific examples.", "worked-examples.html")}
 {card("Diagrams", f"{summary['diagram_count']} visual flows for the main mathematical ideas.", "diagrams.html")}
+{card("Learning Path", f"{summary['learning_path_step_count']} steps from first question to field-level understanding.", "learning-path.html")}
 {card("Themes", f"{summary['theme_count']} recurring research pressures across the course family.", "theme-map.html")}
 {card("Evidence", "Each major claim links back to transcript or metadata evidence and states its limit.", "evidence-ledger.html")}
 </div>
@@ -1318,6 +1434,15 @@ def write_site(data: dict[str, object]) -> None:
         write_diagram_page(diagram_dir / f"{diagram['slug']}.html", diagram)
     (SITE / "diagrams.html").write_text(
         html_page("Physics-Informed ML Diagrams", f"<h1>Diagram Index</h1><p>These diagrams show the flow of evidence, rules, learned objects, and validation checks. They are deliberately simple so the core idea is visible before any notation appears.</p><div class=\"grid\">{''.join(diagram_cards)}</div>"),
+        encoding="utf-8",
+    )
+
+    learning_cards = []
+    for step in learning_path:
+        learning_cards.append(learning_step_card(step))
+        write_learning_step_page(learning_dir / f"{step['slug']}.html", step)
+    (SITE / "learning-path.html").write_text(
+        html_page("Physics-Informed ML Learning Path", f"<h1>Learning Path From First Principles</h1><p>This path is for a reader who does not want jargon first. It starts with the scientific question, then builds toward equations, physics checks, learned maps, speed, trust, and readable laws.</p><div class=\"grid\">{''.join(learning_cards)}</div>"),
         encoding="utf-8",
     )
 
@@ -1560,6 +1685,26 @@ def write_diagram_page(path: Path, diagram: dict[str, object]) -> None:
     path.write_text(html_page(str(diagram["title"]), body, root_prefix="../"), encoding="utf-8")
 
 
+def write_learning_step_page(path: Path, step: dict[str, object]) -> None:
+    read_items = []
+    for item in step["read"]:
+        read_items.append(f"<li><a href=\"../{html.escape(str(item['href']))}\">{html.escape(str(item['label']))}</a></li>")
+    body = f"""
+<h1>{html.escape(str(step['title']))}</h1>
+<h2>Question</h2>
+<p>{html.escape(str(step['question']))}</p>
+<h2>Why This Comes Here</h2>
+<p>{html.escape(str(step['why_first']))}</p>
+<h2>Plain Goal</h2>
+<p>{html.escape(str(step['plain_goal']))}</p>
+<h2>Read Next</h2>
+<ul>{''.join(read_items)}</ul>
+<h2>Checkpoint</h2>
+<p>{html.escape(str(step['checkpoint']))}</p>
+"""
+    path.write_text(html_page(str(step["title"]), body, root_prefix="../"), encoding="utf-8")
+
+
 def write_family_page(path: Path, family: dict[str, object]) -> None:
     steps = "".join(f"<div class=\"route-step\">{idx}. {html.escape(step)}</div>" for idx, step in enumerate(family["plain_route"], start=1))
     body = f"""
@@ -1705,6 +1850,18 @@ def write_markdown_export(data: dict[str, object]) -> None:
                 "",
             ]
         )
+    lines.extend(["", "## Learning Path"])
+    for idx, step in enumerate(data["learning_path"], start=1):
+        lines.extend(
+            [
+                f"### {idx}. {step['title']}",
+                f"- Question: {step['question']}",
+                f"- Why here: {step['why_first']}",
+                f"- Goal: {step['plain_goal']}",
+                f"- Checkpoint: {step['checkpoint']}",
+                "",
+            ]
+        )
     (EXPORTS / "research-package.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
@@ -1758,6 +1915,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         SITE / "comparisons.html",
         SITE / "worked-examples.html",
         SITE / "diagrams.html",
+        SITE / "learning-path.html",
         SITE / "theme-map.html",
         SITE / "evidence-ledger.html",
     ):
@@ -1779,6 +1937,17 @@ def validate(data: dict[str, object] | None = None) -> None:
         diagram_text = diagram_path.read_text(encoding="utf-8")
         if "flow-node" not in diagram_text or "Watch for:" not in diagram_text:
             raise SystemExit(f"diagram not rendered correctly: {diagram['title']}")
+    for step in LEARNING_PATH:
+        step_path = SITE / "learning-path" / f"{step['slug']}.html"
+        if not step_path.exists():
+            raise SystemExit(f"missing learning path page: {step['title']}")
+        step_text = step_path.read_text(encoding="utf-8")
+        if "Checkpoint" not in step_text or "Read Next" not in step_text:
+            raise SystemExit(f"learning path page not rendered correctly: {step['title']}")
+        for item in step["read"]:
+            target = SITE / str(item["href"])
+            if not target.exists():
+                raise SystemExit(f"learning path link missing: {step['title']} -> {item['href']}")
     manifest_path = SITE / "page-manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     missing = [item for item in manifest if not (ROOT / item).exists()]

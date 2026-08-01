@@ -18,6 +18,7 @@ The purpose is not to summarize lectures. The purpose is to explain physics-info
 - `site/comparisons.html`: plain-language comparisons between nearby methods
 - `site/worked-examples.html`: concrete scientific examples
 - `site/diagrams.html`: visual flows for the main mathematical ideas
+- `site/learning-path.html`: step-by-step route through the field from first principles
 - `site/theme-map.html`: recurring theme map
 - `site/evidence-ledger.html`: transcript-backed evidence ledger
 - `site/topics/`: first-principles concept pages
@@ -66,6 +67,7 @@ http://127.0.0.1:8022/index.html
 - comparison pages
 - worked examples
 - visual flow diagrams
+- first-principles learning path
 - deep dives for core topics
 - theme map
 - evidence ledger

@@ -13,6 +13,7 @@
 - worked_example_count: 3
 - deep_dive_count: 8
 - diagram_count: 6
+- learning_path_step_count: 7
 
 ## Concepts
 ### Deep Learning
@@ -256,4 +257,48 @@
 - Purpose: Show how measurements can lead to a candidate rule rather than only a prediction.
 - Flow: measured motion -> candidate variables -> searched rule or learned rate -> readable law -> new experiment check
 - Watch for: A short law can be wrong if important variables were never measured.
+
+
+## Learning Path
+### 1. Start With The Scientific Question
+- Question: What is being predicted, explained, designed, or checked?
+- Why here: Physics-informed machine learning is not one trick. The method depends on the scientific job.
+- Goal: Name the quantity, the domain, the evidence, and the changed case before naming a method.
+- Checkpoint: You can say what answer the scientist wants and what would make that answer unusable.
+
+### 2. Understand Fields And Equations
+- Question: Why is one number not enough?
+- Why here: Many scientific problems are fields: temperature, pressure, velocity, concentration, stress, or displacement across space and time.
+- Goal: See why boundaries, neighbors, rates of change, and starting values carry the scientific burden.
+- Checkpoint: You can explain why a field prediction must respect boundaries and nearby values.
+
+### 3. Use Physics As A Check
+- Question: How can a model be corrected where there are no measurements?
+- Why here: Sparse data leaves empty space. A known equation can check that empty space if the equation is trusted.
+- Goal: Understand PINNs as fitted fields that answer to both data and an equation.
+- Checkpoint: You can state the data error, equation error, boundary error, and the test case.
+
+### 4. Learn Maps Between Fields
+- Question: What if the job is not one solution, but many related solutions?
+- Why here: Engineering and science often need repeated solves for many inputs, shapes, materials, or conditions.
+- Goal: Separate learning one answer from learning the map that turns an input field into an output field.
+- Checkpoint: You can name the family of inputs and outputs where the learned map is allowed to be used.
+
+### 5. Use Speed Without Hiding Risk
+- Question: When is a fast approximation useful?
+- Why here: A fast model is valuable only if the slow trusted source still defines where the fast answer is valid.
+- Goal: Treat surrogates as checked stand-ins with a stated use range.
+- Checkpoint: You can say what the surrogate replaces, what it does not replace, and where it was checked.
+
+### 6. Make Trust A Testable Claim
+- Question: When should a prediction be believed?
+- Why here: Scientific mistakes often happen when a model is used outside the cases that taught it.
+- Goal: Attach every prediction to a use range, changed-case test, and failure boundary.
+- Checkpoint: You can name the first changed condition that should make the model fail.
+
+### 7. Look For Readable Laws When Needed
+- Question: When is prediction not enough?
+- Why here: Sometimes the scientific product is a rule people can inspect, criticize, and reuse.
+- Goal: Understand symbolic regression and neural differential equations as routes toward candidate mechanisms.
+- Checkpoint: You can explain why a short formula still needs a changed-experiment test.
 
