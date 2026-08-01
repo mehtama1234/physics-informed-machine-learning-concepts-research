@@ -77,6 +77,33 @@
 <h2>Connects To</h2>
 <ul><li><a href="../topics/scientific-machine-learning.html">Scientific Machine Learning</a></li><li><a href="../topics/surrogate-modeling.html">Surrogate Modeling</a></li><li><a href="../topics/foundation-models-for-pdes.html">Foundation Models For PDEs</a></li></ul>
 
+<h2>Mathematical Sketch</h2>
+<article class="sketch">
+  <h3>Uncertainty: New Case Near The Edge</h3>
+  <div class="sketch-grid">
+<div class="sketch-cell input">
+  <span>old cases</span>
+</div>
+
+<div class="sketch-cell rule">
+  <span>use range</span>
+</div>
+
+<div class="sketch-cell output">
+  <span>prediction</span>
+</div>
+
+<div class="sketch-cell failure">
+  <span>shifted case</span>
+</div>
+</div>
+  <p><strong>Input:</strong> training cases and a new case that may be different</p>
+  <p><strong>Output:</strong> prediction with a tested use range</p>
+  <p><strong>Kept Rule:</strong> belief should weaken when the new case leaves the evidence range</p>
+  <p><strong>Failure Case:</strong> the model stays confident where training and validation no longer support confidence</p>
+  <p class="sketch-caption">Input: old cases plus new case. Output: prediction with use range. Kept rule: doubt grows near the edge. Failure case: confident answer outside evidence.</p>
+</article>
+
 <h2>Visual Map</h2>
 <article class="card">
   <h3><a href="../diagrams/surrogate-validation-flow.html">Surrogate Validation Flow</a></h3>

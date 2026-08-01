@@ -77,6 +77,33 @@
 <h2>Connects To</h2>
 <ul><li><a href="../topics/partial-differential-equations.html">Partial Differential Equations</a></li><li><a href="../topics/optimization-for-learning.html">Optimization For Learning</a></li><li><a href="../topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></li></ul>
 
+<h2>Mathematical Sketch</h2>
+<article class="sketch">
+  <h3>PINNs: Points Plus Rule Checks</h3>
+  <div class="sketch-grid">
+<div class="sketch-cell input">
+  <span>measured points</span>
+</div>
+
+<div class="sketch-cell rule">
+  <span>equation-check points</span>
+</div>
+
+<div class="sketch-cell output">
+  <span>fitted field</span>
+</div>
+
+<div class="sketch-cell failure">
+  <span>held-out region</span>
+</div>
+</div>
+  <p><strong>Input:</strong> few measured points, boundary values, and a known equation</p>
+  <p><strong>Output:</strong> a fitted field for the whole domain</p>
+  <p><strong>Kept Rule:</strong> the field should match data and leave little equation-breaking between data points</p>
+  <p><strong>Failure Case:</strong> the field matches sensors but breaks the equation, boundary, or held-out measurements</p>
+  <p class="sketch-caption">Input: measured points and equation. Output: full field. Kept rule: data plus equation checks. Failure case: correct-looking fit that breaks physics in unmeasured regions.</p>
+</article>
+
 <h2>Visual Map</h2>
 <article class="card">
   <h3><a href="../diagrams/physics-informed-learning-flow.html">Physics-Informed Learning Flow</a></h3>

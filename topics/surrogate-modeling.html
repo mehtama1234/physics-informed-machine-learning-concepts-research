@@ -77,6 +77,33 @@
 <h2>Connects To</h2>
 <ul><li><a href="../topics/operator-learning.html">Operator Learning</a></li><li><a href="../topics/deep-learning.html">Deep Learning</a></li><li><a href="../topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></li></ul>
 
+<h2>Mathematical Sketch</h2>
+<article class="sketch">
+  <h3>Surrogate Modeling: Fast Stand-In With Boundaries</h3>
+  <div class="sketch-grid">
+<div class="sketch-cell input">
+  <span>repeated query</span>
+</div>
+
+<div class="sketch-cell rule">
+  <span>trusted source</span>
+</div>
+
+<div class="sketch-cell output">
+  <span>fast answer</span>
+</div>
+
+<div class="sketch-cell failure">
+  <span>edge case</span>
+</div>
+</div>
+  <p><strong>Input:</strong> queries that would normally require a trusted slow source</p>
+  <p><strong>Output:</strong> fast approximate answers for repeated choices</p>
+  <p><strong>Kept Rule:</strong> the stand-in remains checked against the trusted source inside a named use range</p>
+  <p><strong>Failure Case:</strong> the stand-in is used near an edge case where the trusted source has not checked it</p>
+  <p class="sketch-caption">Input: repeated query. Output: fast answer. Kept rule: checked against trusted source. Failure case: fast answer outside the tested use range.</p>
+</article>
+
 <h2>Visual Map</h2>
 <article class="card">
   <h3><a href="../diagrams/surrogate-validation-flow.html">Surrogate Validation Flow</a></h3>
