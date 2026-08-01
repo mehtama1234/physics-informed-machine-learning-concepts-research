@@ -50,6 +50,23 @@
 <p><strong>What it leaves out:</strong> certainty that shared training structure covers the new scientific case</p>
 <h2>Everyday Anchor</h2>
 <p>Start with the observed object, name what must be predicted, then test the claim on a changed case.</p>
+
+<h2>First-Principles Essay</h2>
+<p>Start before the method name. In broad families of PDE problems and scientific fields, the real difficulty is this: one trained model may be asked to handle many related equations, grids, parameters, or physical settings. The concept called Foundation Models For PDEs is useful only if it helps carry the right information from the evidence already available to the answer the scientist still needs. The name of the method is secondary. The first question is what the world is asking us to recover, predict, explain, or check.</p>
+<p>The observed side is many PDE problem instances across equations, grids, parameters, or physical settings. That is the part the page is allowed to use as evidence. The hidden side is which shared structure carries from one scientific task to another. That is the part a reader should keep their eyes on, because the hidden part is where bad explanations often slip in. A weak writeup says the model learns a pattern. A stronger writeup says exactly which hidden quantity is being asked for and what would count as evidence that the answer is wrong.</p>
+<p>The mathematical move follows from that shortage. Here the move is: train one broad model to reuse structure across many related field-prediction tasks. The shape is: many PDE tasks -&gt; shared learned representation -&gt; new task prediction. Read that shape as a promise about information. It says which facts are kept, which checks are made, and which parts of the real scientific situation are not being carried. In this case, the concept keeps shared structure across many scientific problem instances. It leaves out certainty that shared training structure covers the new scientific case. That missing part is not a footnote; it is the boundary of the claim.</p>
+<p>The reason this matters is not the method name. It matters because a broad model could reduce repeated training cost if it keeps the physical features that matter across tasks. If the method works, it gives a scientist a usable answer for a named situation. If it fails, it usually fails in a concrete way: the model can look broad while missing rare regimes, new boundary conditions, or quantities not represented in training. That is why the page must end with a changed-case test rather than a general statement of confidence.</p>
+<h3>Tiny Concrete Version</h3>
+<p>Start with the observed object, name what must be predicted, then test the claim on a changed case. Strip away the notation and the question becomes: what do we know, what do we not know, what rule or pattern is allowed to connect them, and what changed case would make us stop trusting the answer?</p>
+<h3>What A Strong Explanation Must Say</h3>
+<ol>
+  <li>Name the real quantity, not only the method.</li>
+  <li>Name the evidence: data, equation, simulation, boundary, geometry, or previous cases.</li>
+  <li>Name the hidden quantity the method is trying to recover.</li>
+  <li>Name the mathematical move in plain language: breadth is useful only if the new task shares the structure the model actually learned.</li>
+  <li>Name the rejection test: hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver.</li>
+</ol>
+
 <h2>First-Principles Walkthrough</h2>
 <ol>
   <li><strong>Start with what is observed:</strong> many PDE problem instances across equations, grids, parameters, or physical settings.</li>

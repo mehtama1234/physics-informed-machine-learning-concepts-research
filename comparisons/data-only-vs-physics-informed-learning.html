@@ -55,6 +55,21 @@
 </div>
 <h2>Key Difference</h2>
 <p>Data-only learning listens to examples. Physics-informed learning also listens to rules about what answers are allowed.</p>
+
+<h2>How To Decide From First Principles</h2>
+<p>Do not start by asking which side sounds more advanced. Start by asking what shortage creates the problem. The shared problem is: Both try to turn examples into predictions. The two sides are different because they carry different evidence and fail in different places.</p>
+<p>Use Data-only learning when this is the situation: Use this side when examples are abundant, the use range is narrow, and there is no trusted rule to add. In plain terms, this side is chosen when its evidence matches the job and its failure boundary can be tested. The concrete version is: A measured property has many examples and no trusted equation for the target. Use data-only learning with a clear held-out test.</p>
+<p>Use Physics-informed learning when this is the situation: Use this side when a known equation, boundary condition, conservation law, unit, or symmetry should constrain the answer. In plain terms, this side is chosen when the scientific task asks for the kind of shortcut, rule, or evidence this side actually provides. The concrete version is: A temperature field has sparse measurements and a trusted heat equation. Add the physical rule so unsensed places are checked.</p>
+<p>The dangerous middle is the wrong-choice case: Adding a physical rule that is incomplete or wrong for the experiment, or ignoring a trusted rule when data are sparse. This is where a shallow writeup usually fails. It names a method but does not name the quantity, use range, or changed case. The evidence that exposes the mistake is: Compare changed cases where the rule matters: boundaries, conservation, units, symmetry, or regions between measurements.</p>
+<h3>Decision Checklist</h3>
+<ol>
+  <li>Name the real quantity the scientist will use.</li>
+  <li>Name the evidence each side is allowed to use.</li>
+  <li>Name the repeated use case, single case, or changed case.</li>
+  <li>Name the first failure that would make the choice wrong.</li>
+  <li>Choose the side whose burden matches the job, not the side with the more impressive label.</li>
+</ol>
+
 <h2>Concrete Choice Cases</h2>
 <table>
   <tbody>

@@ -55,6 +55,21 @@
 </div>
 <h2>Key Difference</h2>
 <p>A PINN usually learns one field while being punished for breaking an equation. A neural operator learns the input-to-solution map for a named family of fields.</p>
+
+<h2>How To Decide From First Principles</h2>
+<p>Do not start by asking which side sounds more advanced. Start by asking what shortage creates the problem. The shared problem is: Both try to predict scientific fields without ignoring the physics that makes those fields meaningful. The two sides are different because they carry different evidence and fail in different places.</p>
+<p>Use Physics-informed neural networks when this is the situation: Use this side when you have one problem instance, sparse data, and a known equation you want the fitted field to obey. In plain terms, this side is chosen when its evidence matches the job and its failure boundary can be tested. The concrete version is: A wall has a few temperature sensors and a trusted heat equation. Use a PINN to fit one temperature field while checking data, equation, and boundary errors.</p>
+<p>Use Neural operators when this is the situation: Use this side when you have many solved examples and need a fast map from new problem inputs to full solution fields. In plain terms, this side is chosen when the scientific task asks for the kind of shortcut, rule, or evidence this side actually provides. The concrete version is: A lab has thousands of solved heat-flow cases for many source fields. Use an operator model to learn the input-field to solution-field map.</p>
+<p>The dangerous middle is the wrong-choice case: Using an operator model from one family on a boundary type it never saw, or using a PINN when the real need is thousands of fast repeated solves. This is where a shallow writeup usually fails. It names a method but does not name the quantity, use range, or changed case. The evidence that exposes the mistake is: Hold out a changed boundary or input-field family and compare the full field and the scientific quantity, not only visual similarity.</p>
+<h3>Decision Checklist</h3>
+<ol>
+  <li>Name the real quantity the scientist will use.</li>
+  <li>Name the evidence each side is allowed to use.</li>
+  <li>Name the repeated use case, single case, or changed case.</li>
+  <li>Name the first failure that would make the choice wrong.</li>
+  <li>Choose the side whose burden matches the job, not the side with the more impressive label.</li>
+</ol>
+
 <h2>Concrete Choice Cases</h2>
 <table>
   <tbody>

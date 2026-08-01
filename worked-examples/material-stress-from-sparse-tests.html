@@ -44,6 +44,12 @@
 <h2>Scientific Job</h2>
 <p><strong>Domain:</strong> materials and mechanics, where stress and strain depend on shape, load, defects, and boundary conditions</p>
 <p><strong>Question:</strong> How can a model estimate stress inside a material when only a few tests or simulations are available?</p>
+
+<h2>First-Principles Story</h2>
+<p>Start with the decision a person is trying to make. The question is: How can a model estimate stress inside a material when only a few tests or simulations are available? The observed evidence is sample geometry, load conditions, a few measured displacements or strains, and known mechanical balance laws. That evidence is useful, but it is not the whole answer. The hidden part is the internal stress field and the weak region where failure may begin.</p>
+<p>The method route is not a list of names. It is the ordered bridge from evidence to hidden quantity: partial differential equations -&gt; physics informed neural networks -&gt; surrogate modeling. Each step has to earn its place. If a step does not add a rule, a structure, a cheaper calculation, or a trust check that the job needs, it should not be in the route.</p>
+<p>This example teaches the field for a concrete reason: It connects physics constraints to a practical engineering risk: missing a local stress concentration can matter more than average error. A reader should be able to retell it as a plain chain: what is known, what is missing, what mathematical object carries the missing part, what decision uses the answer, and what changed case would reject the claim.</p>
+
 <h2>End-To-End Flow</h2>
 <div class="flow"><div class="flow-node">1. Observed: sample geometry, load conditions, a few measured displacements or strains, and known mechanical balance laws</div><div class="flow-node">2. Hidden: the internal stress field and the weak region where failure may begin</div><div class="flow-node">3. Route: partial differential equations -&gt; physics informed neural networks -&gt; surrogate modeling</div><div class="flow-node">4. Claim: answer only for the named scientific job</div><div class="flow-node">5. Reject: changed case breaks the needed quantity</div></div>
 <h2>Observed And Hidden</h2>
