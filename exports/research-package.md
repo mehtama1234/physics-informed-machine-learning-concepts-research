@@ -22,12 +22,13 @@
 - decision_guide_count: 6
 - provenance_guide_count: 6
 - coverage_row_count: 14
+- dependency_count: 10
 - concept_ladder_count: 14
 - concept_evidence_packet_count: 14
 - quality_rubric_count: 6
 - synthesis_guide_count: 4
 - review_handoff_count: 1
-- review_entrypoint_count: 23
+- review_entrypoint_count: 24
 - completion_requirement_count: 7
 
 ## Concepts
@@ -760,6 +761,58 @@
 - Evidence items: 6
 
 
+## Concept Dependency Map
+### Physics-Informed Neural Networks
+- Learn first: Partial Differential Equations, Deep Learning, Optimization For Learning
+- Why: A PINN combines a fitted neural network, a differential equation check, and a training score.
+- Confusion prevented: Without the dependencies, a reader may think a PINN is just a neural network with physics language attached.
+
+### Operator Learning
+- Learn first: Partial Differential Equations, Deep Learning, Surrogate Modeling
+- Why: Operator learning makes sense when the job is a fast map between full fields across many related solves.
+- Confusion prevented: Without fields and surrogates, a reader may mistake it for one more predictor on a table.
+
+### Surrogate Modeling
+- Learn first: Deep Learning, Uncertainty And Generalization
+- Why: A surrogate is useful only when its repeated query family and tested use range are named.
+- Confusion prevented: Without uncertainty, speed can be mistaken for scientific trust.
+
+### Uncertainty And Generalization
+- Learn first: Deep Learning, Scientific Machine Learning
+- Why: Uncertainty and generalization ask whether fitted behavior survives a changed scientific case.
+- Confusion prevented: Without the scientific job, uncertainty can look like a decorative confidence number.
+
+### Neural Differential Equations
+- Learn first: Partial Differential Equations, Deep Learning, Optimization For Learning
+- Why: The learned part is a rate or missing change rule placed inside a time-evolution calculation.
+- Confusion prevented: Without differential equations, a reader may miss why small rate errors can accumulate over time.
+
+### Symbolic Regression And Model Discovery
+- Learn first: Optimization For Learning, Uncertainty And Generalization
+- Why: Symbolic regression searches for a readable rule, then needs changed-case tests to reject neat but wrong formulas.
+- Confusion prevented: Without changed-case testing, a compact equation can be mistaken for truth.
+
+### Graphs And Geometric Learning
+- Learn first: Deep Learning, Scientific Machine Learning
+- Why: Geometric learning keeps connections, shapes, and symmetries visible inside learned prediction.
+- Confusion prevented: Without the scientific object, graph structure can look like a modeling fashion rather than required information.
+
+### Attention For Scientific Fields
+- Learn first: Operator Learning, Graphs And Geometric Learning
+- Why: Attention is a way to move selected information across large fields or connected objects.
+- Confusion prevented: Without fields and connections, attention can be misread as proof that all important interactions were captured.
+
+### Generative Modeling
+- Learn first: Deep Learning, Uncertainty And Generalization
+- Why: Generated scientific samples need checks for validity, rarity, and downstream use.
+- Confusion prevented: Without validation, plausible samples can be mistaken for physically useful samples.
+
+### Foundation Models For PDEs
+- Learn first: Operator Learning, Partial Differential Equations, Uncertainty And Generalization
+- Why: Broad PDE models depend on field-to-field maps, equation families, and tests on held-out task families.
+- Confusion prevented: Without these dependencies, scale can be mistaken for coverage of a new scientific case.
+
+
 ## Concept Ladder
 ### Deep Learning
 - Problem: scientists often have examples of behavior but no short rule that predicts the next case
@@ -1045,6 +1098,7 @@
 - Field Synthesis: synthesis.html | What problem holds the field together?
 - Learning Path: learning-path.html | What should a new reader read first, second, and third?
 - Concept Ladder: concept-ladder.html | Can each concept be explained without starting from the method name?
+- Dependency Map: dependencies.html | Which missing prerequisite is making the concept feel vague?
 - Core Derivations: derivations.html | Can the reader see how the formula shape follows from the scientific problem?
 - Formula Guide: formula-guide.html | Can the reader understand what the formula carries without knowing notation first?
 

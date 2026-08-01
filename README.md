@@ -28,6 +28,7 @@ The purpose is not to summarize lectures. The purpose is to explain physics-info
 - `site/provenance.html`: source, extraction, build, and reproduction guide
 - `site/provenance/cross-channel-playbook.html`: instructions for another CLI building a similar package
 - `site/coverage.html`: concept coverage matrix across evidence and guide layers
+- `site/dependencies.html`: concept dependency map for prerequisite ideas
 - `site/concept-ladder.html`: first-principles concept ladder from evidence to failure test
 - `site/evidence-packets.html`: per-concept source support and review links
 - `site/quality.html`: editorial quality rubric for first-principles pages
@@ -95,6 +96,7 @@ http://127.0.0.1:8022/index.html
 - provenance and reproduction guide
 - cross-channel replication playbook
 - coverage matrix
+- concept dependency map
 - concept ladder
 - concept evidence packets
 - editorial quality rubric

@@ -238,6 +238,70 @@ THEMES = [
 ]
 
 
+CONCEPT_DEPENDENCIES = [
+    {
+        "concept": "physics-informed-neural-networks",
+        "depends_on": ["partial-differential-equations", "deep-learning", "optimization-for-learning"],
+        "why": "A PINN combines a fitted neural network, a differential equation check, and a training score.",
+        "confusion_prevented": "Without the dependencies, a reader may think a PINN is just a neural network with physics language attached.",
+    },
+    {
+        "concept": "operator-learning",
+        "depends_on": ["partial-differential-equations", "deep-learning", "surrogate-modeling"],
+        "why": "Operator learning makes sense when the job is a fast map between full fields across many related solves.",
+        "confusion_prevented": "Without fields and surrogates, a reader may mistake it for one more predictor on a table.",
+    },
+    {
+        "concept": "surrogate-modeling",
+        "depends_on": ["deep-learning", "uncertainty-and-generalization"],
+        "why": "A surrogate is useful only when its repeated query family and tested use range are named.",
+        "confusion_prevented": "Without uncertainty, speed can be mistaken for scientific trust.",
+    },
+    {
+        "concept": "uncertainty-and-generalization",
+        "depends_on": ["deep-learning", "scientific-machine-learning"],
+        "why": "Uncertainty and generalization ask whether fitted behavior survives a changed scientific case.",
+        "confusion_prevented": "Without the scientific job, uncertainty can look like a decorative confidence number.",
+    },
+    {
+        "concept": "neural-differential-equations",
+        "depends_on": ["partial-differential-equations", "deep-learning", "optimization-for-learning"],
+        "why": "The learned part is a rate or missing change rule placed inside a time-evolution calculation.",
+        "confusion_prevented": "Without differential equations, a reader may miss why small rate errors can accumulate over time.",
+    },
+    {
+        "concept": "symbolic-regression",
+        "depends_on": ["optimization-for-learning", "uncertainty-and-generalization"],
+        "why": "Symbolic regression searches for a readable rule, then needs changed-case tests to reject neat but wrong formulas.",
+        "confusion_prevented": "Without changed-case testing, a compact equation can be mistaken for truth.",
+    },
+    {
+        "concept": "graphs-and-geometric-learning",
+        "depends_on": ["deep-learning", "scientific-machine-learning"],
+        "why": "Geometric learning keeps connections, shapes, and symmetries visible inside learned prediction.",
+        "confusion_prevented": "Without the scientific object, graph structure can look like a modeling fashion rather than required information.",
+    },
+    {
+        "concept": "attention-for-scientific-fields",
+        "depends_on": ["operator-learning", "graphs-and-geometric-learning"],
+        "why": "Attention is a way to move selected information across large fields or connected objects.",
+        "confusion_prevented": "Without fields and connections, attention can be misread as proof that all important interactions were captured.",
+    },
+    {
+        "concept": "generative-modeling",
+        "depends_on": ["deep-learning", "uncertainty-and-generalization"],
+        "why": "Generated scientific samples need checks for validity, rarity, and downstream use.",
+        "confusion_prevented": "Without validation, plausible samples can be mistaken for physically useful samples.",
+    },
+    {
+        "concept": "foundation-models-for-pdes",
+        "depends_on": ["operator-learning", "partial-differential-equations", "uncertainty-and-generalization"],
+        "why": "Broad PDE models depend on field-to-field maps, equation families, and tests on held-out task families.",
+        "confusion_prevented": "Without these dependencies, scale can be mistaken for coverage of a new scientific case.",
+    },
+]
+
+
 FAMILY_PAGES = [
     {
         "slug": "physics-constraints-family",
@@ -1418,6 +1482,12 @@ REVIEW_ENTRYPOINTS = [
                 "question": "Can each concept be explained without starting from the method name?",
             },
             {
+                "label": "Dependency Map",
+                "href": "dependencies.html",
+                "why": "Shows what ideas to learn before each harder concept and what confusion that prevents.",
+                "question": "Which missing prerequisite is making the concept feel vague?",
+            },
+            {
                 "label": "Core Derivations",
                 "href": "derivations.html",
                 "why": "Slows the key mathematical ideas into plain step-by-step walkthroughs.",
@@ -1886,6 +1956,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
         )
 
     coverage_matrix = build_coverage_matrix(concept_atlas)
+    dependency_map = build_dependency_map()
     concept_ladder = build_concept_ladder(topic_treatments)
     core_derivations = build_core_derivations(topic_treatments)
     concept_evidence_packets = build_concept_evidence_packets(topic_treatments)
@@ -1914,6 +1985,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
             "decision_guide_count": len(DECISION_GUIDES),
             "provenance_guide_count": len(PROVENANCE_GUIDES),
             "coverage_row_count": len(coverage_matrix),
+            "dependency_count": len(dependency_map),
             "concept_ladder_count": len(concept_ladder),
             "concept_evidence_packet_count": len(concept_evidence_packets),
             "quality_rubric_count": len(QUALITY_RUBRIC),
@@ -1941,6 +2013,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
         "decision_guides": DECISION_GUIDES,
         "provenance_guides": PROVENANCE_GUIDES,
         "coverage_matrix": coverage_matrix,
+        "dependency_map": dependency_map,
         "concept_ladder": concept_ladder,
         "concept_evidence_packets": concept_evidence_packets,
         "quality_rubric": QUALITY_RUBRIC,
@@ -1992,6 +2065,31 @@ def build_coverage_matrix(concept_atlas: list[dict[str, object]]) -> list[dict[s
                 "reader_check": any(check["topic_slug"] == slug for check in READER_CHECKS),
                 "decision_guide": any(f"topics/{slug}.html" in decision["links"] for decision in DECISION_GUIDES),
                 "evidence_items": len(concept.get("evidence", [])),
+            }
+        )
+    return rows
+
+
+def build_dependency_map() -> list[dict[str, object]]:
+    names = {str(item["slug"]): str(item["name"]) for item in CONCEPTS}
+    rows = []
+    for item in CONCEPT_DEPENDENCIES:
+        concept = str(item["concept"])
+        rows.append(
+            {
+                "concept": concept,
+                "concept_name": names.get(concept, concept.replace("-", " ")),
+                "concept_href": f"topics/{concept}.html",
+                "depends_on": [
+                    {
+                        "slug": str(slug),
+                        "name": names.get(str(slug), str(slug).replace("-", " ")),
+                        "href": f"topics/{slug}.html",
+                    }
+                    for slug in item["depends_on"]
+                ],
+                "why": str(item["why"]),
+                "confusion_prevented": str(item["confusion_prevented"]),
             }
         )
     return rows
@@ -2251,6 +2349,7 @@ def html_page(title: str, body: str, root_prefix: str = "") -> str:
   <a href="{root_prefix}decision-guide.html">Decide</a>
   <a href="{root_prefix}provenance.html">Provenance</a>
   <a href="{root_prefix}coverage.html">Coverage</a>
+  <a href="{root_prefix}dependencies.html">Dependencies</a>
   <a href="{root_prefix}concept-ladder.html">Ladder</a>
   <a href="{root_prefix}evidence-packets.html">Packets</a>
   <a href="{root_prefix}quality.html">Quality</a>
@@ -2467,6 +2566,7 @@ def write_site(data: dict[str, object]) -> None:
     decision_guides = data["decision_guides"]
     provenance_guides = data["provenance_guides"]
     coverage_matrix = data["coverage_matrix"]
+    dependency_map = data["dependency_map"]
     concept_ladder = data["concept_ladder"]
     concept_evidence_packets = data["concept_evidence_packets"]
     quality_rubric = data["quality_rubric"]
@@ -2494,6 +2594,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Decision Guide", f"{summary['decision_guide_count']} method choices from concrete scientific situations.", "decision-guide.html")}
 {card("Provenance", f"{summary['provenance_guide_count']} pages documenting source, extraction, build, and reproduction.", "provenance.html")}
 {card("Coverage Matrix", f"{summary['coverage_row_count']} concepts checked across evidence and guide layers.", "coverage.html")}
+{card("Dependencies", f"{summary['dependency_count']} concept dependencies showing what to learn before what.", "dependencies.html")}
 {card("Concept Ladder", f"{summary['concept_ladder_count']} concepts laid out from observed evidence to failure test.", "concept-ladder.html")}
 {card("Evidence Packets", f"{summary['concept_evidence_packet_count']} concept packets tying source support to review pages.", "evidence-packets.html")}
 {card("Quality Rubric", f"{summary['quality_rubric_count']} editorial standards for first-principles pages.", "quality.html")}
@@ -2651,6 +2752,7 @@ def write_site(data: dict[str, object]) -> None:
     )
 
     write_coverage_page(SITE / "coverage.html", list(coverage_matrix))
+    write_dependency_map_page(SITE / "dependencies.html", list(dependency_map))
     write_concept_ladder_page(SITE / "concept-ladder.html", list(concept_ladder))
     packet_cards = []
     for packet in concept_evidence_packets:
@@ -3165,6 +3267,43 @@ def write_coverage_page(path: Path, rows: list[dict[str, object]]) -> None:
     path.write_text(html_page("Physics-Informed ML Coverage Matrix", body), encoding="utf-8")
 
 
+def write_dependency_map_page(path: Path, rows: list[dict[str, object]]) -> None:
+    table_rows = []
+    for row in rows:
+        depends = "".join(
+            f"<li><a href=\"{html.escape(str(item['href']))}\">{html.escape(str(item['name']))}</a></li>"
+            for item in row["depends_on"]
+        )
+        table_rows.append(
+            f"""
+<tr>
+  <td><a href="{html.escape(str(row['concept_href']))}">{html.escape(str(row['concept_name']))}</a></td>
+  <td><ul>{depends}</ul></td>
+  <td>{html.escape(str(row['why']))}</td>
+  <td>{html.escape(str(row['confusion_prevented']))}</td>
+</tr>
+"""
+        )
+    body = f"""
+<h1>Concept Dependency Map</h1>
+<p>This page shows which ideas should come before other ideas. Read it as a route for understanding, not as a ranking of importance.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Concept</th>
+      <th>Learn First</th>
+      <th>Why This Dependency Matters</th>
+      <th>Confusion It Prevents</th>
+    </tr>
+  </thead>
+  <tbody>{''.join(table_rows)}</tbody>
+</table>
+<h2>How To Use This</h2>
+<p>If a concept feels vague, move to its Learn First column and read those pages before returning. Most confusion comes from skipping the object being predicted, the rule being checked, or the failure test.</p>
+"""
+    path.write_text(html_page("Physics-Informed ML Concept Dependency Map", body), encoding="utf-8")
+
+
 def write_concept_ladder_page(path: Path, rows: list[dict[str, object]]) -> None:
     table_rows = []
     for row in rows:
@@ -3641,6 +3780,17 @@ def write_markdown_export(data: dict[str, object]) -> None:
                 "",
             ]
         )
+    lines.extend(["", "## Concept Dependency Map"])
+    for row in data["dependency_map"]:
+        lines.extend(
+            [
+                f"### {row['concept_name']}",
+                f"- Learn first: {', '.join(item['name'] for item in row['depends_on'])}",
+                f"- Why: {row['why']}",
+                f"- Confusion prevented: {row['confusion_prevented']}",
+                "",
+            ]
+        )
     lines.extend(["", "## Concept Ladder"])
     for row in data["concept_ladder"]:
         lines.extend(
@@ -3775,6 +3925,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         SITE / "decision-guide.html",
         SITE / "provenance.html",
         SITE / "coverage.html",
+        SITE / "dependencies.html",
         SITE / "concept-ladder.html",
         SITE / "evidence-packets.html",
         SITE / "quality.html",
@@ -3932,6 +4083,19 @@ def validate(data: dict[str, object] | None = None) -> None:
     coverage_rows = data.get("coverage_matrix") or []
     if len(coverage_rows) != len(data["concept_atlas"]):
         raise SystemExit("coverage matrix row count does not match concept atlas")
+    dependency_path = SITE / "dependencies.html"
+    dependency_text = dependency_path.read_text(encoding="utf-8")
+    if "Concept Dependency Map" not in dependency_text or "Confusion It Prevents" not in dependency_text:
+        raise SystemExit("dependency map not rendered correctly")
+    dependency_rows = data.get("dependency_map") or []
+    if len(dependency_rows) != len(CONCEPT_DEPENDENCIES):
+        raise SystemExit("dependency map row count mismatch")
+    for row in dependency_rows:
+        if not (SITE / str(row["concept_href"])).exists():
+            raise SystemExit(f"dependency concept link missing: {row['concept_href']}")
+        for item in row["depends_on"]:
+            if not (SITE / str(item["href"])).exists():
+                raise SystemExit(f"dependency link missing: {item['href']}")
     ladder_path = SITE / "concept-ladder.html"
     ladder_text = ladder_path.read_text(encoding="utf-8")
     if "Concept Ladder" not in ladder_text or "Mathematical Move" not in ladder_text:
