@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Physics-Informed Neural Networks</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<nav class="topbar">
+  <a href="../index.html">Physics-Informed ML</a>
+  <a href="../transcripts.html">Transcripts</a>
+  <a href="../concept-atlas.html">Concept Atlas</a>
+  <a href="../theme-map.html">Themes</a>
+  <a href="../evidence-ledger.html">Evidence</a>
+</nav>
+<main>
+
+<h1>Physics-Informed Neural Networks</h1>
+<h2>Common Problem This Solves</h2>
+<p>measurements may be sparse, but the answer must still respect a known physical equation</p>
+<h2>Big Picture Plain Summary</h2>
+<p><strong>Domain:</strong> differential equations in science and engineering</p>
+<p><strong>Why it matters:</strong> it lets known physics push the fit toward physically possible behavior instead of treating data points as the only evidence</p>
+<p><strong>What it keeps:</strong> a neural network prediction plus a penalty for violating the known equation</p>
+<p><strong>What it leaves out:</strong> guaranteed accuracy when the equation, boundary data, or training points are poor</p>
+<h2>Everyday Anchor</h2>
+<p>A student drawing a bridge cannot ignore gravity. A PINN is similar: the fitted curve is pushed to obey the equation, not only the measured dots.</p>
+<h2>First-Principles Walkthrough</h2>
+<ol>
+  <li><strong>Start with what is observed:</strong> some measured values, boundary values, starting values, and a known differential equation.</li>
+  <li><strong>Name what is hidden:</strong> the full field value at every point in space and time.</li>
+  <li><strong>Make the smallest mathematical move:</strong> fit a neural network while also measuring how badly its output violates the known equation.</li>
+  <li><strong>Read the shape:</strong> prediction error + equation error + boundary error.</li>
+  <li><strong>Say what it means:</strong> the model is not allowed to match points while freely breaking the equation between those points.</li>
+</ol>
+<h2>Deeper Mathematical Why</h2>
+<p>The mathematical point is to decide what information is allowed to carry the scientific claim. If the carried information is too small, the model misses the behavior that matters. If it is too broad, the page may claim more than the evidence supports. The useful middle is a named object, a named scientific job, and a changed case that can reject the claim.</p>
+<h2>Reader Test</h2>
+<p>A reader understands this concept only if they can say what is observed, what is hidden, what is kept, what is ignored, and why this changed-case test matters: move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements.</p>
+<h2>Failure Boundary</h2>
+<p>the equation penalty can look small while the solution is wrong in hard regions, sharp layers, or unseen boundary cases</p>
+<h2>What The Transcript Does Not Prove</h2>
+<p>The transcript evidence shows where the course introduces or uses this concept. It does not prove the concept works for every equation, data set, solver, material, geometry, or scientific task. That wider claim needs explicit validation evidence.</p>
+<h2>Transcript Evidence</h2>
+<ul><li><a href="https://www.youtube.com/watch?v=LkKvhvsf6jY&amp;list=PLJkYEExhe7rYFkBIB2U5pf_RWzYnFLj7r">ETH Zürich AISE: Course Introduction</a>: morning everyone Okay good morning everyone Welcome to the first lecture of AI in Welcome to the first lecture of AI in Welcome to the first lecture of AI in the science and engineering My name is the science and engineering My name is</li><li><a href="https://www.youtube.com/watch?v=z3tQaNOwQqM&amp;list=PLJkYEExhe7rYFkBIB2U5pf_RWzYnFLj7r">ETH Zürich AISE: Introduction to Deep Learning Part 2</a>: everyone and welcome to this lecture this is the second lecture this lecture this is the second lecture this lecture this is the second lecture on introduction to deep learning uh of on introduction to deep learning uh of on introduction to deep learning</li><li><a href="https://www.youtube.com/watch?v=UiZxDRBd0Q8&amp;list=PLJkYEExhe7rYFkBIB2U5pf_RWzYnFLj7r">ETH Zürich AISE: Importance of PDEs in Science</a>: started uh welcome to lecture number four of the AI in the science and number four of the AI in the science and number four of the AI in the science and engineering course Ben has been teaching engineering course Ben has been teaching</li><li><a href="https://www.youtube.com/watch?v=D-F7BYRhAkQ&amp;list=PLJkYEExhe7rYFkBIB2U5pf_RWzYnFLj7r">ETH Zürich AISE: Physics-Informed Neural Networks – Introduction</a>: so welcome to this lecture this is uh the first lecture on physics informed the first lecture on physics informed the first lecture on physics informed noral networks so I&#x27;m going to be noral networks so I&#x27;m going to be noral networks so I&#x27;m</li><li><a href="https://www.youtube.com/watch?v=S11QK8baGVI&amp;list=PLJkYEExhe7rYFkBIB2U5pf_RWzYnFLj7r">ETH Zürich AISE: Physics-Informed Neural Networks – Limitations and Extensions Part 1</a>: let&#x27;s get started with today&#x27;s lecture this is the second lecture on lecture this is the second lecture on lecture this is the second lecture on physics and formed noral networks last physics and formed noral networks last physics and formed noral networks last</li><li><a href="https://www.youtube.com/watch?v=NFtE1pyD5LA&amp;list=PLJkYEExhe7rYFkBIB2U5pf_RWzYnFLj7r">ETH Zürich AISE: Physics-Informed Neural Networks – Limitations and Extensions Part 2</a>: Main limitations limitations limitations of at least standard physics informal of at least standard physics informal of at least standard physics informal networks networks networks um and uh we&#x27;re focusing on these two um and uh we&#x27;re focusing on these two um and uh</li></ul>
+
+</main>
+</body>
+</html>
