@@ -20,6 +20,7 @@ The purpose is not to summarize lectures. The purpose is to explain physics-info
 - `site/diagrams.html`: visual flows for the main mathematical ideas
 - `site/derivations.html`: core first-principles derivation walkthroughs
 - `site/formula-guide.html`: plain-language guide to formula shapes
+- `site/misconceptions.html`: core misconception map with plain corrections
 - `site/learning-path.html`: step-by-step route through the field from first principles
 - `site/glossary.html`: plain-language glossary for core terms
 - `site/domains.html`: domain guides for real scientific settings
@@ -88,6 +89,7 @@ http://127.0.0.1:8022/index.html
 - visual flow diagrams
 - core derivation walkthroughs
 - plain formula guide
+- misconception map
 - first-principles learning path
 - plain-language glossary
 - domain guides

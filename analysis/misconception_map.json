@@ -1,0 +1,128 @@
+[
+  {
+    "slug": "physics-informed-neural-networks",
+    "title": "Physics-Informed Neural Networks",
+    "wrong_turns": [
+      "A weak answer says only that the neural network fits data.",
+      "The page reports only training error.",
+      "The hard region has few check points.",
+      "The equation is known to be incomplete for the experiment.",
+      "No comparison is made against held-out measurements or a trusted solver."
+    ],
+    "plain_correction": "A PINN is a fitted field that must answer to both measured values and a known physical rule.",
+    "first_principles_test": "move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements",
+    "reader_check_href": "reader-checks/pinns-check.html",
+    "derivation_href": "derivations/physics-informed-neural-networks.html",
+    "topic_href": "topics/physics-informed-neural-networks.html"
+  },
+  {
+    "slug": "partial-differential-equations",
+    "title": "Partial Differential Equations",
+    "wrong_turns": [
+      "The boundary condition is vague.",
+      "The learned answer ignores conservation.",
+      "The grid or resolution changes the conclusion.",
+      "Small visual error hides a large error in the quantity people care about."
+    ],
+    "plain_correction": "A PDE is a rule for how a whole field changes across space and time.",
+    "first_principles_test": "change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error",
+    "reader_check_href": "",
+    "derivation_href": "derivations/partial-differential-equations.html",
+    "topic_href": "topics/partial-differential-equations.html"
+  },
+  {
+    "slug": "operator-learning",
+    "title": "Operator Learning",
+    "wrong_turns": [
+      "A weak answer says only that the model is fast.",
+      "The training family is not named.",
+      "Only one resolution is tested.",
+      "The output looks plausible but physical quantities are not checked.",
+      "The model is used on a new boundary type without evidence."
+    ],
+    "plain_correction": "Operator learning tries to learn the machine that turns one field into another field.",
+    "first_principles_test": "change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed",
+    "reader_check_href": "reader-checks/operator-learning-check.html",
+    "derivation_href": "derivations/operator-learning.html",
+    "topic_href": "topics/operator-learning.html"
+  },
+  {
+    "slug": "surrogate-modeling",
+    "title": "Surrogate Modeling",
+    "wrong_turns": [
+      "A weak answer treats speed as trust.",
+      "The surrogate is described without its use range.",
+      "The edge cases are not tested.",
+      "The output metric ignores the decision people actually make.",
+      "The full solver is never used again for spot checks."
+    ],
+    "plain_correction": "A surrogate is a faster stand-in for a slower trusted process.",
+    "first_principles_test": "compare against the full solver on new cases near the edge of the intended use",
+    "reader_check_href": "reader-checks/surrogate-check.html",
+    "derivation_href": "derivations/surrogate-modeling.html",
+    "topic_href": "topics/surrogate-modeling.html"
+  },
+  {
+    "slug": "uncertainty-and-generalization",
+    "title": "Uncertainty And Generalization",
+    "wrong_turns": [
+      "A weak answer reports one score without saying what changed.",
+      "Only familiar cases are reported.",
+      "The test set differs from training only in name.",
+      "Rare regimes are averaged away.",
+      "No one states what condition would make the model unusable."
+    ],
+    "plain_correction": "This topic asks when a prediction should be believed on a case the model did not learn from.",
+    "first_principles_test": "move one important condition outside the training range and measure the first failure",
+    "reader_check_href": "reader-checks/uncertainty-check.html",
+    "derivation_href": "derivations/uncertainty-and-generalization.html",
+    "topic_href": "topics/uncertainty-and-generalization.html"
+  },
+  {
+    "slug": "neural-differential-equations",
+    "title": "Neural Differential Equations",
+    "wrong_turns": [
+      "The model is tested only over short times.",
+      "Small rate errors accumulate unnoticed.",
+      "Known conservation or stability behavior is not checked.",
+      "The learned rate fits noise instead of mechanism."
+    ],
+    "plain_correction": "A neural differential equation learns the missing rule for how a system changes.",
+    "first_principles_test": "run longer than the training window and check whether small rate errors accumulate into drift",
+    "reader_check_href": "",
+    "derivation_href": "derivations/neural-differential-equations.html",
+    "topic_href": "topics/neural-differential-equations.html"
+  },
+  {
+    "slug": "symbolic-regression",
+    "title": "Symbolic Regression And Model Discovery",
+    "wrong_turns": [
+      "A weak answer trusts a neat formula because it fits the original data.",
+      "Important variables were never measured.",
+      "The formula is selected only on the original data.",
+      "Noise creates a fake term.",
+      "The search space could not express the real mechanism."
+    ],
+    "plain_correction": "Symbolic regression searches for a short formula that explains measured behavior.",
+    "first_principles_test": "remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts",
+    "reader_check_href": "reader-checks/symbolic-regression-check.html",
+    "derivation_href": "derivations/symbolic-regression.html",
+    "topic_href": "topics/symbolic-regression.html"
+  },
+  {
+    "slug": "foundation-models-for-pdes",
+    "title": "Foundation Models For PDEs",
+    "wrong_turns": [
+      "A weak answer treats broad training size as proof of broad scientific trust.",
+      "The held-out test is too similar to training.",
+      "Rare regimes are missing.",
+      "New boundaries or quantities are assumed rather than tested.",
+      "Scale is treated as a substitute for scientific validation."
+    ],
+    "plain_correction": "A PDE foundation model tries to reuse structure across many related field-prediction tasks.",
+    "first_principles_test": "hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver",
+    "reader_check_href": "reader-checks/foundation-pde-check.html",
+    "derivation_href": "derivations/foundation-models-for-pdes.html",
+    "topic_href": "topics/foundation-models-for-pdes.html"
+  }
+]

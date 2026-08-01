@@ -14,6 +14,7 @@
 - deep_dive_count: 8
 - core_derivation_count: 8
 - formula_guide_count: 8
+- misconception_count: 8
 - diagram_count: 6
 - learning_path_step_count: 7
 - glossary_term_count: 10
@@ -28,7 +29,7 @@
 - quality_rubric_count: 6
 - synthesis_guide_count: 4
 - review_handoff_count: 1
-- review_entrypoint_count: 24
+- review_entrypoint_count: 25
 - completion_requirement_count: 7
 
 ## Concepts
@@ -387,6 +388,48 @@
 - Parts: many PDE tasks, shared learned structure, new task prediction
 - Everyday reading: If it works, broad training could reduce repeated model-building for related scientific problems.
 - What to check: hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver
+
+
+## Misconception Map
+### Physics-Informed Neural Networks
+- Correction: A PINN is a fitted field that must answer to both measured values and a known physical rule.
+- First-principles test: move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements
+- Wrong turns: A weak answer says only that the neural network fits data.; The page reports only training error.; The hard region has few check points.; The equation is known to be incomplete for the experiment.; No comparison is made against held-out measurements or a trusted solver.
+
+### Partial Differential Equations
+- Correction: A PDE is a rule for how a whole field changes across space and time.
+- First-principles test: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error
+- Wrong turns: The boundary condition is vague.; The learned answer ignores conservation.; The grid or resolution changes the conclusion.; Small visual error hides a large error in the quantity people care about.
+
+### Operator Learning
+- Correction: Operator learning tries to learn the machine that turns one field into another field.
+- First-principles test: change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed
+- Wrong turns: A weak answer says only that the model is fast.; The training family is not named.; Only one resolution is tested.; The output looks plausible but physical quantities are not checked.; The model is used on a new boundary type without evidence.
+
+### Surrogate Modeling
+- Correction: A surrogate is a faster stand-in for a slower trusted process.
+- First-principles test: compare against the full solver on new cases near the edge of the intended use
+- Wrong turns: A weak answer treats speed as trust.; The surrogate is described without its use range.; The edge cases are not tested.; The output metric ignores the decision people actually make.; The full solver is never used again for spot checks.
+
+### Uncertainty And Generalization
+- Correction: This topic asks when a prediction should be believed on a case the model did not learn from.
+- First-principles test: move one important condition outside the training range and measure the first failure
+- Wrong turns: A weak answer reports one score without saying what changed.; Only familiar cases are reported.; The test set differs from training only in name.; Rare regimes are averaged away.; No one states what condition would make the model unusable.
+
+### Neural Differential Equations
+- Correction: A neural differential equation learns the missing rule for how a system changes.
+- First-principles test: run longer than the training window and check whether small rate errors accumulate into drift
+- Wrong turns: The model is tested only over short times.; Small rate errors accumulate unnoticed.; Known conservation or stability behavior is not checked.; The learned rate fits noise instead of mechanism.
+
+### Symbolic Regression And Model Discovery
+- Correction: Symbolic regression searches for a short formula that explains measured behavior.
+- First-principles test: remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts
+- Wrong turns: A weak answer trusts a neat formula because it fits the original data.; Important variables were never measured.; The formula is selected only on the original data.; Noise creates a fake term.; The search space could not express the real mechanism.
+
+### Foundation Models For PDEs
+- Correction: A PDE foundation model tries to reuse structure across many related field-prediction tasks.
+- First-principles test: hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver
+- Wrong turns: A weak answer treats broad training size as proof of broad scientific trust.; The held-out test is too similar to training.; Rare regimes are missing.; New boundaries or quantities are assumed rather than tested.; Scale is treated as a substitute for scientific validation.
 
 
 ## Diagrams
@@ -1101,6 +1144,7 @@
 - Dependency Map: dependencies.html | Which missing prerequisite is making the concept feel vague?
 - Core Derivations: derivations.html | Can the reader see how the formula shape follows from the scientific problem?
 - Formula Guide: formula-guide.html | Can the reader understand what the formula carries without knowing notation first?
+- Misconception Map: misconceptions.html | Which vague or overconfident explanation should the reader avoid?
 
 ### Inspect Core Concepts
 - Purpose: Use these pages to judge whether the main mathematical ideas are explained from first principles.

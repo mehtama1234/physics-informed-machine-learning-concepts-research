@@ -1499,6 +1499,12 @@ REVIEW_ENTRYPOINTS = [
                 "why": "Translates plain formula shapes into parts, meaning, checks, and common misreads.",
                 "question": "Can the reader understand what the formula carries without knowing notation first?",
             },
+            {
+                "label": "Misconception Map",
+                "href": "misconceptions.html",
+                "why": "Lists common wrong turns and the plain correction for each core concept.",
+                "question": "Which vague or overconfident explanation should the reader avoid?",
+            },
         ],
     },
     {
@@ -1961,6 +1967,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
     core_derivations = build_core_derivations(topic_treatments)
     concept_evidence_packets = build_concept_evidence_packets(topic_treatments)
     formula_guide = build_formula_guide(core_derivations)
+    misconception_map = build_misconception_map(core_derivations)
 
     data = {
         "summary": {
@@ -1977,6 +1984,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
             "deep_dive_count": len(TOPIC_DEEP_DIVES),
             "core_derivation_count": len(core_derivations),
             "formula_guide_count": len(formula_guide),
+            "misconception_count": len(misconception_map),
             "diagram_count": len(DIAGRAMS),
             "learning_path_step_count": len(LEARNING_PATH),
             "glossary_term_count": len(GLOSSARY),
@@ -2005,6 +2013,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
         "topic_deep_dives": TOPIC_DEEP_DIVES,
         "core_derivations": core_derivations,
         "formula_guide": formula_guide,
+        "misconception_map": misconception_map,
         "diagrams": DIAGRAMS,
         "learning_path": LEARNING_PATH,
         "glossary": GLOSSARY,
@@ -2228,6 +2237,31 @@ def build_formula_guide(core_derivations: list[dict[str, object]]) -> list[dict[
     return rows
 
 
+def build_misconception_map(core_derivations: list[dict[str, object]]) -> list[dict[str, object]]:
+    check_by_slug = {str(check["topic_slug"]): check for check in READER_CHECKS}
+    rows = []
+    for derivation in core_derivations:
+        slug = str(derivation["slug"])
+        check = check_by_slug.get(slug, {})
+        wrong_turns = list(derivation["red_flags"])
+        weak_warning = str(check.get("weak_answer_warning") or "")
+        if weak_warning:
+            wrong_turns.insert(0, weak_warning)
+        rows.append(
+            {
+                "slug": slug,
+                "title": str(derivation["title"]),
+                "wrong_turns": wrong_turns,
+                "plain_correction": str(derivation["one_sentence"]),
+                "first_principles_test": str(derivation["failure_test"]),
+                "reader_check_href": f"reader-checks/{check['slug']}.html" if check else "",
+                "derivation_href": str(derivation["derivation_href"]),
+                "topic_href": str(derivation["topic_href"]),
+            }
+        )
+    return rows
+
+
 def write_style() -> None:
     assets = SITE / "assets"
     assets.mkdir(parents=True, exist_ok=True)
@@ -2342,6 +2376,7 @@ def html_page(title: str, body: str, root_prefix: str = "") -> str:
   <a href="{root_prefix}diagrams.html">Diagrams</a>
   <a href="{root_prefix}derivations.html">Derivations</a>
   <a href="{root_prefix}formula-guide.html">Formulas</a>
+  <a href="{root_prefix}misconceptions.html">Misreads</a>
   <a href="{root_prefix}learning-path.html">Path</a>
   <a href="{root_prefix}glossary.html">Glossary</a>
   <a href="{root_prefix}domains.html">Domains</a>
@@ -2559,6 +2594,7 @@ def write_site(data: dict[str, object]) -> None:
     diagrams = data["diagrams"]
     core_derivations = data["core_derivations"]
     formula_guide = data["formula_guide"]
+    misconception_map = data["misconception_map"]
     learning_path = data["learning_path"]
     glossary = data["glossary"]
     domain_guides = data["domain_guides"]
@@ -2587,6 +2623,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Diagrams", f"{summary['diagram_count']} visual flows for the main mathematical ideas.", "diagrams.html")}
 {card("Derivations", f"{summary['core_derivation_count']} core walkthroughs from observed evidence to formula shape and failure test.", "derivations.html")}
 {card("Formula Guide", f"{summary['formula_guide_count']} plain formula shapes translated into everyday meaning.", "formula-guide.html")}
+{card("Misconceptions", f"{summary['misconception_count']} core wrong turns paired with plain corrections.", "misconceptions.html")}
 {card("Learning Path", f"{summary['learning_path_step_count']} steps from first question to field-level understanding.", "learning-path.html")}
 {card("Glossary", f"{summary['glossary_term_count']} field terms translated into everyday language.", "glossary.html")}
 {card("Domains", f"{summary['domain_guide_count']} domain guides that ground concepts in real scientific work.", "domains.html")}
@@ -2694,6 +2731,7 @@ def write_site(data: dict[str, object]) -> None:
     )
 
     write_formula_guide_page(SITE / "formula-guide.html", list(formula_guide))
+    write_misconception_map_page(SITE / "misconceptions.html", list(misconception_map))
 
     learning_cards = []
     for step in learning_path:
@@ -3098,6 +3136,43 @@ def write_formula_guide_page(path: Path, rows: list[dict[str, object]]) -> None:
 </table>
 """
     path.write_text(html_page("Physics-Informed ML Plain Formula Guide", body), encoding="utf-8")
+
+
+def write_misconception_map_page(path: Path, rows: list[dict[str, object]]) -> None:
+    table_rows = []
+    for row in rows:
+        wrong_turns = "".join(f"<li>{html.escape(str(item))}</li>" for item in row["wrong_turns"])
+        check_link = ""
+        if row["reader_check_href"]:
+            check_link = f' · <a href="{html.escape(str(row["reader_check_href"]))}">reader check</a>'
+        table_rows.append(
+            f"""
+<tr>
+  <td><a href="{html.escape(str(row['topic_href']))}">{html.escape(str(row['title']))}</a></td>
+  <td><ul>{wrong_turns}</ul></td>
+  <td>{html.escape(str(row['plain_correction']))}</td>
+  <td>{html.escape(str(row['first_principles_test']))}</td>
+  <td><a href="{html.escape(str(row['derivation_href']))}">derivation</a>{check_link}</td>
+</tr>
+"""
+        )
+    body = f"""
+<h1>Misconception Map</h1>
+<p>This page lists common wrong turns for the core concepts. Each row pairs the misread with a plain correction and the first-principles test that should replace vague confidence.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Concept</th>
+      <th>Wrong Turn</th>
+      <th>Plain Correction</th>
+      <th>First-Principles Test</th>
+      <th>Review Links</th>
+    </tr>
+  </thead>
+  <tbody>{''.join(table_rows)}</tbody>
+</table>
+"""
+    path.write_text(html_page("Physics-Informed ML Misconception Map", body), encoding="utf-8")
 
 
 def write_learning_step_page(path: Path, step: dict[str, object]) -> None:
@@ -3686,6 +3761,17 @@ def write_markdown_export(data: dict[str, object]) -> None:
                 "",
             ]
         )
+    lines.extend(["", "## Misconception Map"])
+    for row in data["misconception_map"]:
+        lines.extend(
+            [
+                f"### {row['title']}",
+                f"- Correction: {row['plain_correction']}",
+                f"- First-principles test: {row['first_principles_test']}",
+                f"- Wrong turns: {'; '.join(row['wrong_turns'])}",
+                "",
+            ]
+        )
     lines.extend(["", "## Diagrams"])
     for diagram in data["diagrams"]:
         lines.extend(
@@ -3918,6 +4004,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         SITE / "diagrams.html",
         SITE / "derivations.html",
         SITE / "formula-guide.html",
+        SITE / "misconceptions.html",
         SITE / "learning-path.html",
         SITE / "glossary.html",
         SITE / "domains.html",
@@ -4008,6 +4095,21 @@ def validate(data: dict[str, object] | None = None) -> None:
         for href_field in ("topic_href", "derivation_href"):
             if not (SITE / str(row[href_field])).exists():
                 raise SystemExit(f"formula guide link missing: {row[href_field]}")
+    misconception_path = SITE / "misconceptions.html"
+    misconception_text = misconception_path.read_text(encoding="utf-8")
+    if "Misconception Map" not in misconception_text or "First-Principles Test" not in misconception_text:
+        raise SystemExit("misconception map not rendered correctly")
+    misconception_rows = data.get("misconception_map") or []
+    if len(misconception_rows) != len(derivation_rows):
+        raise SystemExit("misconception map count does not match derivations")
+    for row in misconception_rows:
+        if not row.get("wrong_turns") or not row.get("plain_correction"):
+            raise SystemExit(f"misconception row incomplete: {row.get('title')}")
+        for href_field in ("topic_href", "derivation_href"):
+            if not (SITE / str(row[href_field])).exists():
+                raise SystemExit(f"misconception link missing: {row[href_field]}")
+        if row.get("reader_check_href") and not (SITE / str(row["reader_check_href"])).exists():
+            raise SystemExit(f"misconception reader check link missing: {row['reader_check_href']}")
     for step in LEARNING_PATH:
         step_path = SITE / "learning-path" / f"{step['slug']}.html"
         if not step_path.exists():
