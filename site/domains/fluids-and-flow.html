@@ -47,6 +47,14 @@
 <p>small changes in shape, boundary, or regime can create large changes in the field</p>
 <h2>Common Question</h2>
 <p>Can we predict flow fields or forces quickly enough for design while still catching important failures?</p>
+
+<h2>Walk The Domain From Scratch</h2>
+<p>Begin with the quantity, not the algorithm. In this domain the quantity is velocity, pressure, vorticity, drag, lift, or other flow quantities. A useful page has to say where that quantity lives, how it is observed, and why a wrong estimate would matter. The hard part is not that the domain has technical vocabulary. The hard part is that small changes in shape, boundary, or regime can create large changes in the field.</p>
+<p>The concrete job is: Predict pressure and velocity around a new wing or channel shape before running the full solver. The evidence available is trusted simulations for earlier shapes, boundary conditions, inflow speed, and resulting velocity or pressure fields. The hidden quantity is the field and forces for a new shape near the edge of the design range. This is the first-principles chain: evidence is partial, the needed quantity is larger than the evidence, and the method is only a bridge between the two.</p>
+<p>The bridge matters because someone will make a decision: screen designs and decide which cases deserve expensive solver runs. That decision gives the math its burden. Average visual similarity is not enough if the decision depends on a boundary layer, a rare event, a peak stress, a force, a concentration, or another local quantity. The domain test must therefore be: hold out a new geometry or flow regime and check drag, lift, boundary behavior, and vortices.</p>
+<h3>How The Methods Enter Without Jargon</h3>
+<p>Name the shape and flow family. Train on trusted simulated fields. Check forces, boundary behavior, and difficult regimes rather than only visual similarity. Read these as jobs, not labels. One method names how the quantity is allowed to change. Another makes a fast stand-in. Another keeps geometry or field structure visible. Another asks where belief should weaken. The right method is the one that carries the missing information needed for the decision and exposes the first condition where it breaks.</p>
+
 <h2>Concrete Scientific Job</h2>
 <table>
   <tbody>

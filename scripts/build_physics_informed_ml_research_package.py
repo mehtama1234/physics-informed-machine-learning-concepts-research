@@ -3801,6 +3801,7 @@ def write_topic_page(path: Path, topic: dict[str, object]) -> None:
     reader_check = topic_reader_check_html(str(topic["slug"]))
     derivation_link = topic_derivation_link_html(str(topic["slug"]))
     source_anchors = source_anchor_cards(str(topic["slug"]), root_prefix="../")
+    first_principles_essay = topic_first_principles_essay_html(topic, derivation)
     body = f"""
 <h1>{html.escape(str(topic['title']))}</h1>
 <h2>Common Problem This Solves</h2>
@@ -3812,6 +3813,7 @@ def write_topic_page(path: Path, topic: dict[str, object]) -> None:
 <p><strong>What it leaves out:</strong> {html.escape(str(topic['leaves_out']))}</p>
 <h2>Everyday Anchor</h2>
 <p>{html.escape(str(topic['everyday_anchor']))}</p>
+{first_principles_essay}
 <h2>First-Principles Walkthrough</h2>
 <ol>
   <li><strong>Start with what is observed:</strong> {html.escape(str(derivation['observed']))}.</li>
@@ -3838,6 +3840,40 @@ def write_topic_page(path: Path, topic: dict[str, object]) -> None:
 <ul>{''.join(evidence_items)}</ul>
 """
     path.write_text(html_page(str(topic["title"]), body, root_prefix="../"), encoding="utf-8")
+
+
+def topic_first_principles_essay_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
+    title = str(topic["title"])
+    domain = str(topic["domain"])
+    problem = str(topic["common_problem"])
+    observed = str(derivation["observed"])
+    hidden = str(derivation["hidden"])
+    move = str(derivation["move"])
+    form = str(derivation["form"])
+    meaning = str(derivation["meaning"])
+    test = str(derivation["test"])
+    keeps = str(topic["keeps"])
+    leaves_out = str(topic["leaves_out"])
+    why = str(topic["why_it_matters"])
+    failure = str(topic["failure_boundary"])
+    anchor = str(topic["everyday_anchor"])
+    return f"""
+<h2>First-Principles Essay</h2>
+<p>Start before the method name. In {html.escape(domain)}, the real difficulty is this: {html.escape(problem)}. The concept called {html.escape(title)} is useful only if it helps carry the right information from the evidence already available to the answer the scientist still needs. The name of the method is secondary. The first question is what the world is asking us to recover, predict, explain, or check.</p>
+<p>The observed side is {html.escape(observed)}. That is the part the page is allowed to use as evidence. The hidden side is {html.escape(hidden)}. That is the part a reader should keep their eyes on, because the hidden part is where bad explanations often slip in. A weak writeup says the model learns a pattern. A stronger writeup says exactly which hidden quantity is being asked for and what would count as evidence that the answer is wrong.</p>
+<p>The mathematical move follows from that shortage. Here the move is: {html.escape(move)}. The shape is: {html.escape(form)}. Read that shape as a promise about information. It says which facts are kept, which checks are made, and which parts of the real scientific situation are not being carried. In this case, the concept keeps {html.escape(keeps)}. It leaves out {html.escape(leaves_out)}. That missing part is not a footnote; it is the boundary of the claim.</p>
+<p>The reason this matters is not the method name. It matters because {html.escape(why)}. If the method works, it gives a scientist a usable answer for a named situation. If it fails, it usually fails in a concrete way: {html.escape(failure)}. That is why the page must end with a changed-case test rather than a general statement of confidence.</p>
+<h3>Tiny Concrete Version</h3>
+<p>{html.escape(anchor)} Strip away the notation and the question becomes: what do we know, what do we not know, what rule or pattern is allowed to connect them, and what changed case would make us stop trusting the answer?</p>
+<h3>What A Strong Explanation Must Say</h3>
+<ol>
+  <li>Name the real quantity, not only the method.</li>
+  <li>Name the evidence: data, equation, simulation, boundary, geometry, or previous cases.</li>
+  <li>Name the hidden quantity the method is trying to recover.</li>
+  <li>Name the mathematical move in plain language: {html.escape(meaning)}.</li>
+  <li>Name the rejection test: {html.escape(test)}.</li>
+</ol>
+"""
 
 
 def write_diagram_page(path: Path, diagram: dict[str, object]) -> None:
@@ -4008,6 +4044,8 @@ def write_learning_step_page(path: Path, step: dict[str, object]) -> None:
 <p>{html.escape(str(step['why_first']))}</p>
 <h2>Plain Goal</h2>
 <p>{html.escape(str(step['plain_goal']))}</p>
+<h2>No-Jargon Explanation</h2>
+<p>{learning_step_plain_essay(step)}</p>
 <h2>First-Principles Spine</h2>
 <ul>{spine_items}</ul>
 <h2>Read Next</h2>
@@ -4016,6 +4054,25 @@ def write_learning_step_page(path: Path, step: dict[str, object]) -> None:
 <p>{html.escape(str(step['checkpoint']))}</p>
 """
     path.write_text(html_page(str(step["title"]), body, root_prefix="../"), encoding="utf-8")
+
+
+def learning_step_plain_essay(step: dict[str, object]) -> str:
+    spine = [str(item) for item in step["first_principles_spine"]]
+    return html.escape(
+        " ".join(
+            [
+                "This step asks the reader to slow down before reaching for a method name.",
+                spine[0],
+                spine[1],
+                spine[2],
+                "The point is to make the missing piece visible before choosing any model.",
+                spine[3],
+                "That move is only useful if it survives the stated rejection test.",
+                spine[4],
+                "If a reader cannot say this in ordinary language, they are not ready to trust the technical page that follows.",
+            ]
+        )
+    )
 
 
 def write_glossary_page(path: Path, entry: dict[str, object]) -> None:
@@ -4038,6 +4095,7 @@ def write_glossary_page(path: Path, entry: dict[str, object]) -> None:
 def write_domain_page(path: Path, guide: dict[str, object]) -> None:
     method_items = "".join(f"<li>{html.escape(str(item))}</li>" for item in guide["methods"])
     job = guide["domain_job"]
+    domain_essay = domain_first_principles_essay_html(guide)
     body = f"""
 <h1>{html.escape(str(guide['title']))}</h1>
 <h2>Real Quantity</h2>
@@ -4046,6 +4104,7 @@ def write_domain_page(path: Path, guide: dict[str, object]) -> None:
 <p>{html.escape(str(guide['why_hard']))}</p>
 <h2>Common Question</h2>
 <p>{html.escape(str(guide['common_question']))}</p>
+{domain_essay}
 <h2>Concrete Scientific Job</h2>
 <table>
   <tbody>
@@ -4066,6 +4125,19 @@ def write_domain_page(path: Path, guide: dict[str, object]) -> None:
 <p><a href="../{html.escape(str(guide['example']))}">Related page</a></p>
 """
     path.write_text(html_page(str(guide["title"]), body, root_prefix="../"), encoding="utf-8")
+
+
+def domain_first_principles_essay_html(guide: dict[str, object]) -> str:
+    job = guide["domain_job"]
+    methods = " ".join(str(item) for item in guide["methods"])
+    return f"""
+<h2>Walk The Domain From Scratch</h2>
+<p>Begin with the quantity, not the algorithm. In this domain the quantity is {html.escape(str(guide['real_quantity']))}. A useful page has to say where that quantity lives, how it is observed, and why a wrong estimate would matter. The hard part is not that the domain has technical vocabulary. The hard part is that {html.escape(str(guide['why_hard']))}.</p>
+<p>The concrete job is: {html.escape(str(job['scientific_job']))} The evidence available is {html.escape(str(job['observed_evidence']))}. The hidden quantity is {html.escape(str(job['hidden_quantity']))}. This is the first-principles chain: evidence is partial, the needed quantity is larger than the evidence, and the method is only a bridge between the two.</p>
+<p>The bridge matters because someone will make a decision: {html.escape(str(job['decision']))}. That decision gives the math its burden. Average visual similarity is not enough if the decision depends on a boundary layer, a rare event, a peak stress, a force, a concentration, or another local quantity. The domain test must therefore be: {html.escape(str(job['changed_case_test']))}.</p>
+<h3>How The Methods Enter Without Jargon</h3>
+<p>{html.escape(methods)} Read these as jobs, not labels. One method names how the quantity is allowed to change. Another makes a fast stand-in. Another keeps geometry or field structure visible. Another asks where belief should weaken. The right method is the one that carries the missing information needed for the decision and exposes the first condition where it breaks.</p>
+"""
 
 
 def write_reader_check_page(path: Path, check: dict[str, object]) -> None:
@@ -4518,6 +4590,7 @@ def write_family_page(path: Path, family: dict[str, object]) -> None:
 
 
 def write_comparison_page(path: Path, comparison: dict[str, object]) -> None:
+    decision_essay = comparison_decision_essay_html(comparison)
     body = f"""
 <h1>{html.escape(str(comparison['title']))}</h1>
 <h2>Shared Problem</h2>
@@ -4534,6 +4607,7 @@ def write_comparison_page(path: Path, comparison: dict[str, object]) -> None:
 </div>
 <h2>Key Difference</h2>
 <p>{html.escape(str(comparison['key_difference']))}</p>
+{decision_essay}
 <h2>Concrete Choice Cases</h2>
 <table>
   <tbody>
@@ -4551,6 +4625,24 @@ def write_comparison_page(path: Path, comparison: dict[str, object]) -> None:
     path.write_text(html_page(str(comparison["title"]), body, root_prefix="../"), encoding="utf-8")
 
 
+def comparison_decision_essay_html(comparison: dict[str, object]) -> str:
+    return f"""
+<h2>How To Decide From First Principles</h2>
+<p>Do not start by asking which side sounds more advanced. Start by asking what shortage creates the problem. The shared problem is: {html.escape(str(comparison['shared_problem']))} The two sides are different because they carry different evidence and fail in different places.</p>
+<p>Use {html.escape(str(comparison['left']))} when this is the situation: {html.escape(str(comparison['left_when']))} In plain terms, this side is chosen when its evidence matches the job and its failure boundary can be tested. The concrete version is: {html.escape(str(comparison['left_case']))}</p>
+<p>Use {html.escape(str(comparison['right']))} when this is the situation: {html.escape(str(comparison['right_when']))} In plain terms, this side is chosen when the scientific task asks for the kind of shortcut, rule, or evidence this side actually provides. The concrete version is: {html.escape(str(comparison['right_case']))}</p>
+<p>The dangerous middle is the wrong-choice case: {html.escape(str(comparison['wrong_choice_case']))} This is where a shallow writeup usually fails. It names a method but does not name the quantity, use range, or changed case. The evidence that exposes the mistake is: {html.escape(str(comparison['evidence_that_exposes_it']))}</p>
+<h3>Decision Checklist</h3>
+<ol>
+  <li>Name the real quantity the scientist will use.</li>
+  <li>Name the evidence each side is allowed to use.</li>
+  <li>Name the repeated use case, single case, or changed case.</li>
+  <li>Name the first failure that would make the choice wrong.</li>
+  <li>Choose the side whose burden matches the job, not the side with the more impressive label.</li>
+</ol>
+"""
+
+
 def write_worked_example_page(path: Path, example: dict[str, object]) -> None:
     steps = "".join(f"<div class=\"route-step\">{idx}. {html.escape(step)}</div>" for idx, step in enumerate(example["plain_steps"], start=1))
     flow_nodes = [
@@ -4561,11 +4653,13 @@ def write_worked_example_page(path: Path, example: dict[str, object]) -> None:
         "Reject: changed case breaks the needed quantity",
     ]
     flow = "".join(f"<div class=\"flow-node\">{idx}. {html.escape(str(node))}</div>" for idx, node in enumerate(flow_nodes, start=1))
+    first_principles_story = worked_example_story_html(example)
     body = f"""
 <h1>{html.escape(str(example['title']))}</h1>
 <h2>Scientific Job</h2>
 <p><strong>Domain:</strong> {html.escape(str(example['domain']))}</p>
 <p><strong>Question:</strong> {html.escape(str(example['question']))}</p>
+{first_principles_story}
 <h2>End-To-End Flow</h2>
 <div class="flow">{flow}</div>
 <h2>Observed And Hidden</h2>
@@ -4581,6 +4675,15 @@ def write_worked_example_page(path: Path, example: dict[str, object]) -> None:
 <p>The example supports a method only inside the named scientific job. A wider claim needs a new test, not stronger wording.</p>
 """
     path.write_text(html_page(str(example["title"]), body, root_prefix="../"), encoding="utf-8")
+
+
+def worked_example_story_html(example: dict[str, object]) -> str:
+    return f"""
+<h2>First-Principles Story</h2>
+<p>Start with the decision a person is trying to make. The question is: {html.escape(str(example['question']))} The observed evidence is {html.escape(str(example['observed']))}. That evidence is useful, but it is not the whole answer. The hidden part is {html.escape(str(example['hidden']))}.</p>
+<p>The method route is not a list of names. It is the ordered bridge from evidence to hidden quantity: {html.escape(' -> '.join(str(slug).replace('-', ' ') for slug in example['method_route']))}. Each step has to earn its place. If a step does not add a rule, a structure, a cheaper calculation, or a trust check that the job needs, it should not be in the route.</p>
+<p>This example teaches the field for a concrete reason: {html.escape(str(example['why_it_teaches']))} A reader should be able to retell it as a plain chain: what is known, what is missing, what mathematical object carries the missing part, what decision uses the answer, and what changed case would reject the claim.</p>
+"""
 
 
 def write_markdown_export(data: dict[str, object]) -> None:
@@ -4973,7 +5076,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         if not topic_path.exists():
             raise SystemExit(f"deep dive missing topic page: {slug}")
         topic_text = topic_path.read_text(encoding="utf-8")
-        if "Core Idea In One Sentence" not in topic_text or "Mathematical Shape Without Jargon" not in topic_text:
+        if "First-Principles Essay" not in topic_text or "What A Strong Explanation Must Say" not in topic_text or "Core Idea In One Sentence" not in topic_text or "Mathematical Shape Without Jargon" not in topic_text:
             raise SystemExit(f"deep dive not rendered on topic page: {slug}")
     for path in (
         SITE / "index.html",
@@ -5016,7 +5119,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         if not comparison_path.exists():
             raise SystemExit(f"missing comparison page: {comparison['title']}")
         comparison_text = comparison_path.read_text(encoding="utf-8")
-        if "Concrete Choice Cases" not in comparison_text or "Wrong Choice Case" not in comparison_text or "Evidence That Exposes It" not in comparison_text:
+        if "How To Decide From First Principles" not in comparison_text or "Decision Checklist" not in comparison_text or "Concrete Choice Cases" not in comparison_text or "Wrong Choice Case" not in comparison_text or "Evidence That Exposes It" not in comparison_text:
             raise SystemExit(f"comparison page missing concrete cases: {comparison['title']}")
         for field in ("left_case", "right_case", "wrong_choice_case", "evidence_that_exposes_it"):
             if not comparison.get(field):
@@ -5026,7 +5129,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         if not example_path.exists():
             raise SystemExit(f"missing worked example page: {example['title']}")
         example_text = example_path.read_text(encoding="utf-8")
-        if "End-To-End Flow" not in example_text or "flow-node" not in example_text or "Claim Boundary" not in example_text:
+        if "First-Principles Story" not in example_text or "End-To-End Flow" not in example_text or "flow-node" not in example_text or "Claim Boundary" not in example_text:
             raise SystemExit(f"worked example not rendered correctly: {example['title']}")
         for slug in example["method_route"]:
             if not (SITE / "topics" / f"{slug}.html").exists():
@@ -5133,7 +5236,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         if not step_path.exists():
             raise SystemExit(f"missing learning path page: {step['title']}")
         step_text = step_path.read_text(encoding="utf-8")
-        if "Checkpoint" not in step_text or "Read Next" not in step_text or "First-Principles Spine" not in step_text:
+        if "No-Jargon Explanation" not in step_text or "Checkpoint" not in step_text or "Read Next" not in step_text or "First-Principles Spine" not in step_text:
             raise SystemExit(f"learning path page not rendered correctly: {step['title']}")
         if len(step.get("first_principles_spine") or []) != 5:
             raise SystemExit(f"learning path spine should have five parts: {step['title']}")
@@ -5157,7 +5260,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         if not guide_path.exists():
             raise SystemExit(f"missing domain guide page: {guide['title']}")
         guide_text = guide_path.read_text(encoding="utf-8")
-        if "Real Quantity" not in guide_text or "Failure Test" not in guide_text or "Concrete Scientific Job" not in guide_text:
+        if "Walk The Domain From Scratch" not in guide_text or "How The Methods Enter Without Jargon" not in guide_text or "Real Quantity" not in guide_text or "Failure Test" not in guide_text or "Concrete Scientific Job" not in guide_text:
             raise SystemExit(f"domain guide not rendered correctly: {guide['title']}")
         job = guide.get("domain_job") or {}
         for field in ("scientific_job", "observed_evidence", "hidden_quantity", "decision", "changed_case_test"):

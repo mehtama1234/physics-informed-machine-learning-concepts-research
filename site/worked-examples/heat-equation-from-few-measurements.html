@@ -44,6 +44,12 @@
 <h2>Scientific Job</h2>
 <p><strong>Domain:</strong> heat moving through a rod, wall, chip, or material sample</p>
 <p><strong>Question:</strong> What is the temperature everywhere if sensors only report a few places?</p>
+
+<h2>First-Principles Story</h2>
+<p>Start with the decision a person is trying to make. The question is: What is the temperature everywhere if sensors only report a few places? The observed evidence is sensor readings, starting temperature, boundary temperature, and the rule that heat flows from hot regions toward cold regions. That evidence is useful, but it is not the whole answer. The hidden part is temperature at every unsensed point and later time.</p>
+<p>The method route is not a list of names. It is the ordered bridge from evidence to hidden quantity: partial differential equations -&gt; physics informed neural networks -&gt; uncertainty and generalization. Each step has to earn its place. If a step does not add a rule, a structure, a cheaper calculation, or a trust check that the job needs, it should not be in the route.</p>
+<p>This example teaches the field for a concrete reason: This is the cleanest entry point for PINNs because the physical rule is familiar: heat smooths out unless a source keeps adding energy. A reader should be able to retell it as a plain chain: what is known, what is missing, what mathematical object carries the missing part, what decision uses the answer, and what changed case would reject the claim.</p>
+
 <h2>End-To-End Flow</h2>
 <div class="flow"><div class="flow-node">1. Observed: sensor readings, starting temperature, boundary temperature, and the rule that heat flows from hot regions toward cold regions</div><div class="flow-node">2. Hidden: temperature at every unsensed point and later time</div><div class="flow-node">3. Route: partial differential equations -&gt; physics informed neural networks -&gt; uncertainty and generalization</div><div class="flow-node">4. Claim: answer only for the named scientific job</div><div class="flow-node">5. Reject: changed case breaks the needed quantity</div></div>
 <h2>Observed And Hidden</h2>
