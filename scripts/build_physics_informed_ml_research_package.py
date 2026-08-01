@@ -867,6 +867,65 @@ GLOSSARY = [
 ]
 
 
+DOMAIN_GUIDES = [
+    {
+        "slug": "heat-and-diffusion",
+        "title": "Heat And Diffusion",
+        "real_quantity": "temperature, concentration, or another quantity spreading through space",
+        "why_hard": "measurements may be sparse, but the unsensed region still matters",
+        "common_question": "What is happening between sensors, later in time, or under a changed boundary?",
+        "concepts": ["partial-differential-equations", "physics-informed-neural-networks", "uncertainty-and-generalization"],
+        "methods": ["Use a PDE to name how spreading should behave.", "Use sparse measurements as anchors.", "Use held-out sensors or a trusted solve to check the claim."],
+        "failure_test": "Change the boundary temperature, source strength, or sensor placement and see whether the prediction still follows the physical rule.",
+        "example": "worked-examples/heat-equation-from-few-measurements.html",
+    },
+    {
+        "slug": "fluids-and-flow",
+        "title": "Fluids And Flow",
+        "real_quantity": "velocity, pressure, vorticity, drag, lift, or other flow quantities",
+        "why_hard": "small changes in shape, boundary, or regime can create large changes in the field",
+        "common_question": "Can we predict flow fields or forces quickly enough for design while still catching important failures?",
+        "concepts": ["operator-learning", "surrogate-modeling", "attention-for-scientific-fields", "uncertainty-and-generalization"],
+        "methods": ["Name the shape and flow family.", "Train on trusted simulated fields.", "Check forces, boundary behavior, and difficult regimes rather than only visual similarity."],
+        "failure_test": "Hold out a new geometry or flow condition near the edge of the intended design range.",
+        "example": "worked-examples/fast-fluid-field-surrogate.html",
+    },
+    {
+        "slug": "materials-and-mechanics",
+        "title": "Materials And Mechanics",
+        "real_quantity": "stress, strain, displacement, failure location, or material response",
+        "why_hard": "the same load can produce different behavior when geometry, defects, or material parameters change",
+        "common_question": "Can a model predict how a material or structure responds under a new load or shape?",
+        "concepts": ["partial-differential-equations", "surrogate-modeling", "graphs-and-geometric-learning", "uncertainty-and-generalization"],
+        "methods": ["Keep geometry and connections visible.", "Compare against trusted simulations or measurements.", "Name the load, material range, and failure quantity."],
+        "failure_test": "Change the geometry, mesh, defect, or load path and check the physical quantity used for decisions.",
+        "example": "families/scientific-surrogates-family.html",
+    },
+    {
+        "slug": "chemistry-and-biology",
+        "title": "Chemistry And Biology",
+        "real_quantity": "molecular property, reaction behavior, concentration, binding, or biological response",
+        "why_hard": "the object may be a graph, a field, a time process, or a set of interacting parts",
+        "common_question": "Can learned structure help predict scientific behavior while respecting the object being studied?",
+        "concepts": ["graphs-and-geometric-learning", "generative-modeling", "symbolic-regression", "uncertainty-and-generalization"],
+        "methods": ["Represent connections when interactions matter.", "Use generation only with scientific checks.", "Look for readable rules only when the measured variables support them."],
+        "failure_test": "Test on a changed molecule, condition, experiment, or biological setting that was not close to training.",
+        "example": "topics/graphs-and-geometric-learning.html",
+    },
+    {
+        "slug": "many-pde-tasks",
+        "title": "Many PDE Tasks",
+        "real_quantity": "solution fields across many equations, grids, parameters, or boundary settings",
+        "why_hard": "a model may look broad while only covering the cases it saw often",
+        "common_question": "Can one trained model reuse structure across many related scientific tasks?",
+        "concepts": ["foundation-models-for-pdes", "operator-learning", "attention-for-scientific-fields", "uncertainty-and-generalization"],
+        "methods": ["Train across many tasks.", "Hold out whole task families.", "Compare against trusted solves on changed equations, boundaries, and scales."],
+        "failure_test": "Withhold a full equation family, boundary type, or scale and check whether the model still earns the claim.",
+        "example": "topics/foundation-models-for-pdes.html",
+    },
+]
+
+
 @dataclass
 class TranscriptRecord:
     video_id: str
@@ -1167,6 +1226,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
             "diagram_count": len(DIAGRAMS),
             "learning_path_step_count": len(LEARNING_PATH),
             "glossary_term_count": len(GLOSSARY),
+            "domain_guide_count": len(DOMAIN_GUIDES),
         },
         "transcript_index": [record_to_dict(record) for record in records],
         "concept_atlas": concept_atlas,
@@ -1180,6 +1240,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
         "diagrams": DIAGRAMS,
         "learning_path": LEARNING_PATH,
         "glossary": GLOSSARY,
+        "domain_guides": DOMAIN_GUIDES,
     }
     for name, value in data.items():
         if name == "summary":
@@ -1320,6 +1381,7 @@ def html_page(title: str, body: str, root_prefix: str = "") -> str:
   <a href="{root_prefix}diagrams.html">Diagrams</a>
   <a href="{root_prefix}learning-path.html">Path</a>
   <a href="{root_prefix}glossary.html">Glossary</a>
+  <a href="{root_prefix}domains.html">Domains</a>
   <a href="{root_prefix}theme-map.html">Themes</a>
   <a href="{root_prefix}evidence-ledger.html">Evidence</a>
 </nav>
@@ -1419,7 +1481,8 @@ def write_site(data: dict[str, object]) -> None:
     diagram_dir = SITE / "diagrams"
     learning_dir = SITE / "learning-path"
     glossary_dir = SITE / "glossary"
-    for generated_dir in (family_dir, comparison_dir, example_dir, diagram_dir, learning_dir, glossary_dir):
+    domain_dir = SITE / "domains"
+    for generated_dir in (family_dir, comparison_dir, example_dir, diagram_dir, learning_dir, glossary_dir, domain_dir):
         if generated_dir.exists():
             shutil.rmtree(generated_dir)
     topic_dir.mkdir(exist_ok=True)
@@ -1430,6 +1493,7 @@ def write_site(data: dict[str, object]) -> None:
     diagram_dir.mkdir(exist_ok=True)
     learning_dir.mkdir(exist_ok=True)
     glossary_dir.mkdir(exist_ok=True)
+    domain_dir.mkdir(exist_ok=True)
 
     summary = data["summary"]
     concept_atlas = data["concept_atlas"]
@@ -1443,6 +1507,7 @@ def write_site(data: dict[str, object]) -> None:
     diagrams = data["diagrams"]
     learning_path = data["learning_path"]
     glossary = data["glossary"]
+    domain_guides = data["domain_guides"]
 
     index_body = f"""
 <h1>Physics-Informed Machine Learning Concepts Research</h1>
@@ -1456,6 +1521,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Diagrams", f"{summary['diagram_count']} visual flows for the main mathematical ideas.", "diagrams.html")}
 {card("Learning Path", f"{summary['learning_path_step_count']} steps from first question to field-level understanding.", "learning-path.html")}
 {card("Glossary", f"{summary['glossary_term_count']} field terms translated into everyday language.", "glossary.html")}
+{card("Domains", f"{summary['domain_guide_count']} domain guides that ground concepts in real scientific work.", "domains.html")}
 {card("Themes", f"{summary['theme_count']} recurring research pressures across the course family.", "theme-map.html")}
 {card("Evidence", "Each major claim links back to transcript or metadata evidence and states its limit.", "evidence-ledger.html")}
 </div>
@@ -1554,6 +1620,16 @@ def write_site(data: dict[str, object]) -> None:
         write_glossary_page(glossary_dir / f"{entry['slug']}.html", entry)
     (SITE / "glossary.html").write_text(
         html_page("Physics-Informed ML Glossary", f"<h1>Plain-Language Glossary</h1><p>These terms are translated by the job they do. Each page states the everyday meaning, the real problem, why the term matters, and what to watch for.</p><div class=\"grid\">{''.join(glossary_cards)}</div>"),
+        encoding="utf-8",
+    )
+
+    domain_cards = []
+    for guide in domain_guides:
+        href = f"domains/{guide['slug']}.html"
+        domain_cards.append(card(str(guide["title"]), str(guide["common_question"]), href))
+        write_domain_page(domain_dir / f"{guide['slug']}.html", guide)
+    (SITE / "domains.html").write_text(
+        html_page("Physics-Informed ML Domain Guides", f"<h1>Domain Guides</h1><p>These pages ground the concepts in real scientific settings. Each guide names the quantity, what makes the domain hard, which concepts matter, and the failure test.</p><div class=\"grid\">{''.join(domain_cards)}</div>"),
         encoding="utf-8",
     )
 
@@ -1833,6 +1909,28 @@ def write_glossary_page(path: Path, entry: dict[str, object]) -> None:
     path.write_text(html_page(str(entry["term"]), body, root_prefix="../"), encoding="utf-8")
 
 
+def write_domain_page(path: Path, guide: dict[str, object]) -> None:
+    method_items = "".join(f"<li>{html.escape(str(item))}</li>" for item in guide["methods"])
+    body = f"""
+<h1>{html.escape(str(guide['title']))}</h1>
+<h2>Real Quantity</h2>
+<p>{html.escape(str(guide['real_quantity']))}</p>
+<h2>Why This Domain Is Hard</h2>
+<p>{html.escape(str(guide['why_hard']))}</p>
+<h2>Common Question</h2>
+<p>{html.escape(str(guide['common_question']))}</p>
+<h2>Concepts That Matter</h2>
+{concept_links(list(guide['concepts']), root_prefix="../")}
+<h2>How The Methods Enter</h2>
+<ul>{method_items}</ul>
+<h2>Failure Test</h2>
+<p>{html.escape(str(guide['failure_test']))}</p>
+<h2>Concrete Anchor</h2>
+<p><a href="../{html.escape(str(guide['example']))}">Related page</a></p>
+"""
+    path.write_text(html_page(str(guide["title"]), body, root_prefix="../"), encoding="utf-8")
+
+
 def write_family_page(path: Path, family: dict[str, object]) -> None:
     steps = "".join(f"<div class=\"route-step\">{idx}. {html.escape(step)}</div>" for idx, step in enumerate(family["plain_route"], start=1))
     body = f"""
@@ -2002,6 +2100,18 @@ def write_markdown_export(data: dict[str, object]) -> None:
                 "",
             ]
         )
+    lines.extend(["", "## Domain Guides"])
+    for guide in data["domain_guides"]:
+        lines.extend(
+            [
+                f"### {guide['title']}",
+                f"- Real quantity: {guide['real_quantity']}",
+                f"- Why hard: {guide['why_hard']}",
+                f"- Common question: {guide['common_question']}",
+                f"- Failure test: {guide['failure_test']}",
+                "",
+            ]
+        )
     (EXPORTS / "research-package.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
@@ -2057,6 +2167,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         SITE / "diagrams.html",
         SITE / "learning-path.html",
         SITE / "glossary.html",
+        SITE / "domains.html",
         SITE / "theme-map.html",
         SITE / "evidence-ledger.html",
     ):
@@ -2100,6 +2211,19 @@ def validate(data: dict[str, object] | None = None) -> None:
             target = SITE / "topics" / f"{slug}.html"
             if not target.exists():
                 raise SystemExit(f"glossary related concept missing: {entry['term']} -> {slug}")
+    for guide in DOMAIN_GUIDES:
+        guide_path = SITE / "domains" / f"{guide['slug']}.html"
+        if not guide_path.exists():
+            raise SystemExit(f"missing domain guide page: {guide['title']}")
+        guide_text = guide_path.read_text(encoding="utf-8")
+        if "Real Quantity" not in guide_text or "Failure Test" not in guide_text:
+            raise SystemExit(f"domain guide not rendered correctly: {guide['title']}")
+        for slug in guide["concepts"]:
+            target = SITE / "topics" / f"{slug}.html"
+            if not target.exists():
+                raise SystemExit(f"domain concept missing: {guide['title']} -> {slug}")
+        if not (SITE / str(guide["example"])).exists():
+            raise SystemExit(f"domain anchor missing: {guide['title']} -> {guide['example']}")
     manifest_path = SITE / "page-manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     missing = [item for item in manifest if not (ROOT / item).exists()]

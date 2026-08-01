@@ -1,0 +1,101 @@
+[
+  {
+    "slug": "heat-and-diffusion",
+    "title": "Heat And Diffusion",
+    "real_quantity": "temperature, concentration, or another quantity spreading through space",
+    "why_hard": "measurements may be sparse, but the unsensed region still matters",
+    "common_question": "What is happening between sensors, later in time, or under a changed boundary?",
+    "concepts": [
+      "partial-differential-equations",
+      "physics-informed-neural-networks",
+      "uncertainty-and-generalization"
+    ],
+    "methods": [
+      "Use a PDE to name how spreading should behave.",
+      "Use sparse measurements as anchors.",
+      "Use held-out sensors or a trusted solve to check the claim."
+    ],
+    "failure_test": "Change the boundary temperature, source strength, or sensor placement and see whether the prediction still follows the physical rule.",
+    "example": "worked-examples/heat-equation-from-few-measurements.html"
+  },
+  {
+    "slug": "fluids-and-flow",
+    "title": "Fluids And Flow",
+    "real_quantity": "velocity, pressure, vorticity, drag, lift, or other flow quantities",
+    "why_hard": "small changes in shape, boundary, or regime can create large changes in the field",
+    "common_question": "Can we predict flow fields or forces quickly enough for design while still catching important failures?",
+    "concepts": [
+      "operator-learning",
+      "surrogate-modeling",
+      "attention-for-scientific-fields",
+      "uncertainty-and-generalization"
+    ],
+    "methods": [
+      "Name the shape and flow family.",
+      "Train on trusted simulated fields.",
+      "Check forces, boundary behavior, and difficult regimes rather than only visual similarity."
+    ],
+    "failure_test": "Hold out a new geometry or flow condition near the edge of the intended design range.",
+    "example": "worked-examples/fast-fluid-field-surrogate.html"
+  },
+  {
+    "slug": "materials-and-mechanics",
+    "title": "Materials And Mechanics",
+    "real_quantity": "stress, strain, displacement, failure location, or material response",
+    "why_hard": "the same load can produce different behavior when geometry, defects, or material parameters change",
+    "common_question": "Can a model predict how a material or structure responds under a new load or shape?",
+    "concepts": [
+      "partial-differential-equations",
+      "surrogate-modeling",
+      "graphs-and-geometric-learning",
+      "uncertainty-and-generalization"
+    ],
+    "methods": [
+      "Keep geometry and connections visible.",
+      "Compare against trusted simulations or measurements.",
+      "Name the load, material range, and failure quantity."
+    ],
+    "failure_test": "Change the geometry, mesh, defect, or load path and check the physical quantity used for decisions.",
+    "example": "families/scientific-surrogates-family.html"
+  },
+  {
+    "slug": "chemistry-and-biology",
+    "title": "Chemistry And Biology",
+    "real_quantity": "molecular property, reaction behavior, concentration, binding, or biological response",
+    "why_hard": "the object may be a graph, a field, a time process, or a set of interacting parts",
+    "common_question": "Can learned structure help predict scientific behavior while respecting the object being studied?",
+    "concepts": [
+      "graphs-and-geometric-learning",
+      "generative-modeling",
+      "symbolic-regression",
+      "uncertainty-and-generalization"
+    ],
+    "methods": [
+      "Represent connections when interactions matter.",
+      "Use generation only with scientific checks.",
+      "Look for readable rules only when the measured variables support them."
+    ],
+    "failure_test": "Test on a changed molecule, condition, experiment, or biological setting that was not close to training.",
+    "example": "topics/graphs-and-geometric-learning.html"
+  },
+  {
+    "slug": "many-pde-tasks",
+    "title": "Many PDE Tasks",
+    "real_quantity": "solution fields across many equations, grids, parameters, or boundary settings",
+    "why_hard": "a model may look broad while only covering the cases it saw often",
+    "common_question": "Can one trained model reuse structure across many related scientific tasks?",
+    "concepts": [
+      "foundation-models-for-pdes",
+      "operator-learning",
+      "attention-for-scientific-fields",
+      "uncertainty-and-generalization"
+    ],
+    "methods": [
+      "Train across many tasks.",
+      "Hold out whole task families.",
+      "Compare against trusted solves on changed equations, boundaries, and scales."
+    ],
+    "failure_test": "Withhold a full equation family, boundary type, or scale and check whether the model still earns the claim.",
+    "example": "topics/foundation-models-for-pdes.html"
+  }
+]

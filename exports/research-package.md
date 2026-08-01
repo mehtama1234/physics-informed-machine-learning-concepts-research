@@ -15,6 +15,7 @@
 - diagram_count: 6
 - learning_path_step_count: 7
 - glossary_term_count: 10
+- domain_guide_count: 5
 
 ## Concepts
 ### Deep Learning
@@ -364,4 +365,36 @@
 - Problem it names: training a new model for every scientific task can be expensive
 - Why it matters: shared structure may reduce repeated training if the new task truly belongs to the learned family
 - Watch for: broad training is not proof that a new regime, boundary, or quantity is covered
+
+
+## Domain Guides
+### Heat And Diffusion
+- Real quantity: temperature, concentration, or another quantity spreading through space
+- Why hard: measurements may be sparse, but the unsensed region still matters
+- Common question: What is happening between sensors, later in time, or under a changed boundary?
+- Failure test: Change the boundary temperature, source strength, or sensor placement and see whether the prediction still follows the physical rule.
+
+### Fluids And Flow
+- Real quantity: velocity, pressure, vorticity, drag, lift, or other flow quantities
+- Why hard: small changes in shape, boundary, or regime can create large changes in the field
+- Common question: Can we predict flow fields or forces quickly enough for design while still catching important failures?
+- Failure test: Hold out a new geometry or flow condition near the edge of the intended design range.
+
+### Materials And Mechanics
+- Real quantity: stress, strain, displacement, failure location, or material response
+- Why hard: the same load can produce different behavior when geometry, defects, or material parameters change
+- Common question: Can a model predict how a material or structure responds under a new load or shape?
+- Failure test: Change the geometry, mesh, defect, or load path and check the physical quantity used for decisions.
+
+### Chemistry And Biology
+- Real quantity: molecular property, reaction behavior, concentration, binding, or biological response
+- Why hard: the object may be a graph, a field, a time process, or a set of interacting parts
+- Common question: Can learned structure help predict scientific behavior while respecting the object being studied?
+- Failure test: Test on a changed molecule, condition, experiment, or biological setting that was not close to training.
+
+### Many PDE Tasks
+- Real quantity: solution fields across many equations, grids, parameters, or boundary settings
+- Why hard: a model may look broad while only covering the cases it saw often
+- Common question: Can one trained model reuse structure across many related scientific tasks?
+- Failure test: Withhold a full equation family, boundary type, or scale and check whether the model still earns the claim.
 
