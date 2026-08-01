@@ -773,6 +773,100 @@ LEARNING_PATH = [
 ]
 
 
+GLOSSARY = [
+    {
+        "slug": "field",
+        "term": "Field",
+        "everyday": "a value spread across space or time, like temperature across a room",
+        "problem": "one number cannot describe the whole situation",
+        "why_it_matters": "many scientific predictions are about complete fields, not single answers",
+        "watch_for": "a method that predicts isolated points may miss how neighboring points affect each other",
+        "related": ["partial-differential-equations", "operator-learning"],
+    },
+    {
+        "slug": "boundary-condition",
+        "term": "Boundary Condition",
+        "everyday": "what is known at the edge of the problem",
+        "problem": "a field can have many possible answers unless the edges or starting situation are pinned down",
+        "why_it_matters": "boundaries often decide the scientific answer as much as the equation does",
+        "watch_for": "a model can look accurate inside the domain while quietly violating the edge information",
+        "related": ["partial-differential-equations", "physics-informed-neural-networks"],
+    },
+    {
+        "slug": "residual",
+        "term": "Residual",
+        "everyday": "the leftover rule-breaking after a proposed answer is checked",
+        "problem": "a prediction may match measured points but still break the equation between them",
+        "why_it_matters": "PINNs use this leftover error to push a fitted field toward physically allowed behavior",
+        "watch_for": "a small reported residual does not prove the answer is correct in hard regions",
+        "related": ["physics-informed-neural-networks", "optimization-for-learning"],
+    },
+    {
+        "slug": "loss",
+        "term": "Loss",
+        "everyday": "the score the training process tries to lower",
+        "problem": "a model needs a written way to decide which answer is better",
+        "why_it_matters": "the model learns what the score asks for, not what the reader hoped it meant",
+        "watch_for": "if the score forgets a scientific requirement, training can improve while the science gets worse",
+        "related": ["optimization-for-learning", "physics-informed-neural-networks"],
+    },
+    {
+        "slug": "operator",
+        "term": "Operator",
+        "everyday": "a machine that takes one whole function or field and returns another",
+        "problem": "some tasks need the full input-to-output rule, not one solved example",
+        "why_it_matters": "operator learning targets families of simulations where inputs and outputs are fields",
+        "watch_for": "the learned machine only deserves trust inside the named family of cases",
+        "related": ["operator-learning", "surrogate-modeling"],
+    },
+    {
+        "slug": "surrogate",
+        "term": "Surrogate",
+        "everyday": "a faster stand-in for something slower",
+        "problem": "trusted simulations or experiments may be too expensive to run repeatedly",
+        "why_it_matters": "a checked stand-in can make design, search, and uncertainty studies possible",
+        "watch_for": "speed is useful only where the stand-in has been compared against the trusted source",
+        "related": ["surrogate-modeling", "uncertainty-and-generalization"],
+    },
+    {
+        "slug": "generalization",
+        "term": "Generalization",
+        "everyday": "whether a model still works on a new case",
+        "problem": "training examples do not cover every situation where the model may be used",
+        "why_it_matters": "scientific use depends on changed cases, not only familiar examples",
+        "watch_for": "a test that barely differs from training can create false confidence",
+        "related": ["uncertainty-and-generalization", "foundation-models-for-pdes"],
+    },
+    {
+        "slug": "uncertainty",
+        "term": "Uncertainty",
+        "everyday": "a warning about how much the answer may be wrong",
+        "problem": "a single prediction hides how much evidence supports it",
+        "why_it_matters": "scientific decisions need to know where belief should weaken",
+        "watch_for": "uncertainty is weak if it is not tied to changed-case testing",
+        "related": ["uncertainty-and-generalization", "surrogate-modeling"],
+    },
+    {
+        "slug": "symbolic-regression",
+        "term": "Symbolic Regression",
+        "everyday": "searching for a short formula that fits measured behavior",
+        "problem": "sometimes a scientist needs a readable rule, not only a prediction",
+        "why_it_matters": "a compact formula can be inspected, criticized, and reused",
+        "watch_for": "a neat formula can be wrong if key variables were missing from the search",
+        "related": ["symbolic-regression", "neural-differential-equations"],
+    },
+    {
+        "slug": "foundation-model",
+        "term": "Foundation Model",
+        "everyday": "one broad model trained across many related tasks",
+        "problem": "training a new model for every scientific task can be expensive",
+        "why_it_matters": "shared structure may reduce repeated training if the new task truly belongs to the learned family",
+        "watch_for": "broad training is not proof that a new regime, boundary, or quantity is covered",
+        "related": ["foundation-models-for-pdes", "operator-learning"],
+    },
+]
+
+
 @dataclass
 class TranscriptRecord:
     video_id: str
@@ -1072,6 +1166,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
             "deep_dive_count": len(TOPIC_DEEP_DIVES),
             "diagram_count": len(DIAGRAMS),
             "learning_path_step_count": len(LEARNING_PATH),
+            "glossary_term_count": len(GLOSSARY),
         },
         "transcript_index": [record_to_dict(record) for record in records],
         "concept_atlas": concept_atlas,
@@ -1084,6 +1179,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
         "topic_deep_dives": TOPIC_DEEP_DIVES,
         "diagrams": DIAGRAMS,
         "learning_path": LEARNING_PATH,
+        "glossary": GLOSSARY,
     }
     for name, value in data.items():
         if name == "summary":
@@ -1223,6 +1319,7 @@ def html_page(title: str, body: str, root_prefix: str = "") -> str:
   <a href="{root_prefix}worked-examples.html">Examples</a>
   <a href="{root_prefix}diagrams.html">Diagrams</a>
   <a href="{root_prefix}learning-path.html">Path</a>
+  <a href="{root_prefix}glossary.html">Glossary</a>
   <a href="{root_prefix}theme-map.html">Themes</a>
   <a href="{root_prefix}evidence-ledger.html">Evidence</a>
 </nav>
@@ -1321,7 +1418,8 @@ def write_site(data: dict[str, object]) -> None:
     example_dir = SITE / "worked-examples"
     diagram_dir = SITE / "diagrams"
     learning_dir = SITE / "learning-path"
-    for generated_dir in (family_dir, comparison_dir, example_dir, diagram_dir, learning_dir):
+    glossary_dir = SITE / "glossary"
+    for generated_dir in (family_dir, comparison_dir, example_dir, diagram_dir, learning_dir, glossary_dir):
         if generated_dir.exists():
             shutil.rmtree(generated_dir)
     topic_dir.mkdir(exist_ok=True)
@@ -1331,6 +1429,7 @@ def write_site(data: dict[str, object]) -> None:
     example_dir.mkdir(exist_ok=True)
     diagram_dir.mkdir(exist_ok=True)
     learning_dir.mkdir(exist_ok=True)
+    glossary_dir.mkdir(exist_ok=True)
 
     summary = data["summary"]
     concept_atlas = data["concept_atlas"]
@@ -1343,6 +1442,7 @@ def write_site(data: dict[str, object]) -> None:
     worked_examples = data["worked_examples"]
     diagrams = data["diagrams"]
     learning_path = data["learning_path"]
+    glossary = data["glossary"]
 
     index_body = f"""
 <h1>Physics-Informed Machine Learning Concepts Research</h1>
@@ -1355,6 +1455,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Worked Examples", f"{summary['worked_example_count']} concrete scientific examples.", "worked-examples.html")}
 {card("Diagrams", f"{summary['diagram_count']} visual flows for the main mathematical ideas.", "diagrams.html")}
 {card("Learning Path", f"{summary['learning_path_step_count']} steps from first question to field-level understanding.", "learning-path.html")}
+{card("Glossary", f"{summary['glossary_term_count']} field terms translated into everyday language.", "glossary.html")}
 {card("Themes", f"{summary['theme_count']} recurring research pressures across the course family.", "theme-map.html")}
 {card("Evidence", "Each major claim links back to transcript or metadata evidence and states its limit.", "evidence-ledger.html")}
 </div>
@@ -1443,6 +1544,16 @@ def write_site(data: dict[str, object]) -> None:
         write_learning_step_page(learning_dir / f"{step['slug']}.html", step)
     (SITE / "learning-path.html").write_text(
         html_page("Physics-Informed ML Learning Path", f"<h1>Learning Path From First Principles</h1><p>This path is for a reader who does not want jargon first. It starts with the scientific question, then builds toward equations, physics checks, learned maps, speed, trust, and readable laws.</p><div class=\"grid\">{''.join(learning_cards)}</div>"),
+        encoding="utf-8",
+    )
+
+    glossary_cards = []
+    for entry in glossary:
+        href = f"glossary/{entry['slug']}.html"
+        glossary_cards.append(card(str(entry["term"]), str(entry["everyday"]), href))
+        write_glossary_page(glossary_dir / f"{entry['slug']}.html", entry)
+    (SITE / "glossary.html").write_text(
+        html_page("Physics-Informed ML Glossary", f"<h1>Plain-Language Glossary</h1><p>These terms are translated by the job they do. Each page states the everyday meaning, the real problem, why the term matters, and what to watch for.</p><div class=\"grid\">{''.join(glossary_cards)}</div>"),
         encoding="utf-8",
     )
 
@@ -1705,6 +1816,23 @@ def write_learning_step_page(path: Path, step: dict[str, object]) -> None:
     path.write_text(html_page(str(step["title"]), body, root_prefix="../"), encoding="utf-8")
 
 
+def write_glossary_page(path: Path, entry: dict[str, object]) -> None:
+    body = f"""
+<h1>{html.escape(str(entry['term']))}</h1>
+<h2>Everyday Meaning</h2>
+<p>{html.escape(str(entry['everyday']))}</p>
+<h2>Problem It Names</h2>
+<p>{html.escape(str(entry['problem']))}</p>
+<h2>Why It Matters</h2>
+<p>{html.escape(str(entry['why_it_matters']))}</p>
+<h2>What To Watch For</h2>
+<p>{html.escape(str(entry['watch_for']))}</p>
+<h2>Related Concepts</h2>
+{concept_links(list(entry['related']), root_prefix="../")}
+"""
+    path.write_text(html_page(str(entry["term"]), body, root_prefix="../"), encoding="utf-8")
+
+
 def write_family_page(path: Path, family: dict[str, object]) -> None:
     steps = "".join(f"<div class=\"route-step\">{idx}. {html.escape(step)}</div>" for idx, step in enumerate(family["plain_route"], start=1))
     body = f"""
@@ -1862,6 +1990,18 @@ def write_markdown_export(data: dict[str, object]) -> None:
                 "",
             ]
         )
+    lines.extend(["", "## Plain-Language Glossary"])
+    for entry in data["glossary"]:
+        lines.extend(
+            [
+                f"### {entry['term']}",
+                f"- Everyday meaning: {entry['everyday']}",
+                f"- Problem it names: {entry['problem']}",
+                f"- Why it matters: {entry['why_it_matters']}",
+                f"- Watch for: {entry['watch_for']}",
+                "",
+            ]
+        )
     (EXPORTS / "research-package.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
@@ -1916,6 +2056,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         SITE / "worked-examples.html",
         SITE / "diagrams.html",
         SITE / "learning-path.html",
+        SITE / "glossary.html",
         SITE / "theme-map.html",
         SITE / "evidence-ledger.html",
     ):
@@ -1948,6 +2089,17 @@ def validate(data: dict[str, object] | None = None) -> None:
             target = SITE / str(item["href"])
             if not target.exists():
                 raise SystemExit(f"learning path link missing: {step['title']} -> {item['href']}")
+    for entry in GLOSSARY:
+        entry_path = SITE / "glossary" / f"{entry['slug']}.html"
+        if not entry_path.exists():
+            raise SystemExit(f"missing glossary page: {entry['term']}")
+        entry_text = entry_path.read_text(encoding="utf-8")
+        if "Everyday Meaning" not in entry_text or "What To Watch For" not in entry_text:
+            raise SystemExit(f"glossary page not rendered correctly: {entry['term']}")
+        for slug in entry["related"]:
+            target = SITE / "topics" / f"{slug}.html"
+            if not target.exists():
+                raise SystemExit(f"glossary related concept missing: {entry['term']} -> {slug}")
     manifest_path = SITE / "page-manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     missing = [item for item in manifest if not (ROOT / item).exists()]

@@ -14,6 +14,7 @@
 - deep_dive_count: 8
 - diagram_count: 6
 - learning_path_step_count: 7
+- glossary_term_count: 10
 
 ## Concepts
 ### Deep Learning
@@ -301,4 +302,66 @@
 - Why here: Sometimes the scientific product is a rule people can inspect, criticize, and reuse.
 - Goal: Understand symbolic regression and neural differential equations as routes toward candidate mechanisms.
 - Checkpoint: You can explain why a short formula still needs a changed-experiment test.
+
+
+## Plain-Language Glossary
+### Field
+- Everyday meaning: a value spread across space or time, like temperature across a room
+- Problem it names: one number cannot describe the whole situation
+- Why it matters: many scientific predictions are about complete fields, not single answers
+- Watch for: a method that predicts isolated points may miss how neighboring points affect each other
+
+### Boundary Condition
+- Everyday meaning: what is known at the edge of the problem
+- Problem it names: a field can have many possible answers unless the edges or starting situation are pinned down
+- Why it matters: boundaries often decide the scientific answer as much as the equation does
+- Watch for: a model can look accurate inside the domain while quietly violating the edge information
+
+### Residual
+- Everyday meaning: the leftover rule-breaking after a proposed answer is checked
+- Problem it names: a prediction may match measured points but still break the equation between them
+- Why it matters: PINNs use this leftover error to push a fitted field toward physically allowed behavior
+- Watch for: a small reported residual does not prove the answer is correct in hard regions
+
+### Loss
+- Everyday meaning: the score the training process tries to lower
+- Problem it names: a model needs a written way to decide which answer is better
+- Why it matters: the model learns what the score asks for, not what the reader hoped it meant
+- Watch for: if the score forgets a scientific requirement, training can improve while the science gets worse
+
+### Operator
+- Everyday meaning: a machine that takes one whole function or field and returns another
+- Problem it names: some tasks need the full input-to-output rule, not one solved example
+- Why it matters: operator learning targets families of simulations where inputs and outputs are fields
+- Watch for: the learned machine only deserves trust inside the named family of cases
+
+### Surrogate
+- Everyday meaning: a faster stand-in for something slower
+- Problem it names: trusted simulations or experiments may be too expensive to run repeatedly
+- Why it matters: a checked stand-in can make design, search, and uncertainty studies possible
+- Watch for: speed is useful only where the stand-in has been compared against the trusted source
+
+### Generalization
+- Everyday meaning: whether a model still works on a new case
+- Problem it names: training examples do not cover every situation where the model may be used
+- Why it matters: scientific use depends on changed cases, not only familiar examples
+- Watch for: a test that barely differs from training can create false confidence
+
+### Uncertainty
+- Everyday meaning: a warning about how much the answer may be wrong
+- Problem it names: a single prediction hides how much evidence supports it
+- Why it matters: scientific decisions need to know where belief should weaken
+- Watch for: uncertainty is weak if it is not tied to changed-case testing
+
+### Symbolic Regression
+- Everyday meaning: searching for a short formula that fits measured behavior
+- Problem it names: sometimes a scientist needs a readable rule, not only a prediction
+- Why it matters: a compact formula can be inspected, criticized, and reused
+- Watch for: a neat formula can be wrong if key variables were missing from the search
+
+### Foundation Model
+- Everyday meaning: one broad model trained across many related tasks
+- Problem it names: training a new model for every scientific task can be expensive
+- Why it matters: shared structure may reduce repeated training if the new task truly belongs to the learned family
+- Watch for: broad training is not proof that a new regime, boundary, or quantity is covered
 

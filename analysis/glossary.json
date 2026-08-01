@@ -1,0 +1,122 @@
+[
+  {
+    "slug": "field",
+    "term": "Field",
+    "everyday": "a value spread across space or time, like temperature across a room",
+    "problem": "one number cannot describe the whole situation",
+    "why_it_matters": "many scientific predictions are about complete fields, not single answers",
+    "watch_for": "a method that predicts isolated points may miss how neighboring points affect each other",
+    "related": [
+      "partial-differential-equations",
+      "operator-learning"
+    ]
+  },
+  {
+    "slug": "boundary-condition",
+    "term": "Boundary Condition",
+    "everyday": "what is known at the edge of the problem",
+    "problem": "a field can have many possible answers unless the edges or starting situation are pinned down",
+    "why_it_matters": "boundaries often decide the scientific answer as much as the equation does",
+    "watch_for": "a model can look accurate inside the domain while quietly violating the edge information",
+    "related": [
+      "partial-differential-equations",
+      "physics-informed-neural-networks"
+    ]
+  },
+  {
+    "slug": "residual",
+    "term": "Residual",
+    "everyday": "the leftover rule-breaking after a proposed answer is checked",
+    "problem": "a prediction may match measured points but still break the equation between them",
+    "why_it_matters": "PINNs use this leftover error to push a fitted field toward physically allowed behavior",
+    "watch_for": "a small reported residual does not prove the answer is correct in hard regions",
+    "related": [
+      "physics-informed-neural-networks",
+      "optimization-for-learning"
+    ]
+  },
+  {
+    "slug": "loss",
+    "term": "Loss",
+    "everyday": "the score the training process tries to lower",
+    "problem": "a model needs a written way to decide which answer is better",
+    "why_it_matters": "the model learns what the score asks for, not what the reader hoped it meant",
+    "watch_for": "if the score forgets a scientific requirement, training can improve while the science gets worse",
+    "related": [
+      "optimization-for-learning",
+      "physics-informed-neural-networks"
+    ]
+  },
+  {
+    "slug": "operator",
+    "term": "Operator",
+    "everyday": "a machine that takes one whole function or field and returns another",
+    "problem": "some tasks need the full input-to-output rule, not one solved example",
+    "why_it_matters": "operator learning targets families of simulations where inputs and outputs are fields",
+    "watch_for": "the learned machine only deserves trust inside the named family of cases",
+    "related": [
+      "operator-learning",
+      "surrogate-modeling"
+    ]
+  },
+  {
+    "slug": "surrogate",
+    "term": "Surrogate",
+    "everyday": "a faster stand-in for something slower",
+    "problem": "trusted simulations or experiments may be too expensive to run repeatedly",
+    "why_it_matters": "a checked stand-in can make design, search, and uncertainty studies possible",
+    "watch_for": "speed is useful only where the stand-in has been compared against the trusted source",
+    "related": [
+      "surrogate-modeling",
+      "uncertainty-and-generalization"
+    ]
+  },
+  {
+    "slug": "generalization",
+    "term": "Generalization",
+    "everyday": "whether a model still works on a new case",
+    "problem": "training examples do not cover every situation where the model may be used",
+    "why_it_matters": "scientific use depends on changed cases, not only familiar examples",
+    "watch_for": "a test that barely differs from training can create false confidence",
+    "related": [
+      "uncertainty-and-generalization",
+      "foundation-models-for-pdes"
+    ]
+  },
+  {
+    "slug": "uncertainty",
+    "term": "Uncertainty",
+    "everyday": "a warning about how much the answer may be wrong",
+    "problem": "a single prediction hides how much evidence supports it",
+    "why_it_matters": "scientific decisions need to know where belief should weaken",
+    "watch_for": "uncertainty is weak if it is not tied to changed-case testing",
+    "related": [
+      "uncertainty-and-generalization",
+      "surrogate-modeling"
+    ]
+  },
+  {
+    "slug": "symbolic-regression",
+    "term": "Symbolic Regression",
+    "everyday": "searching for a short formula that fits measured behavior",
+    "problem": "sometimes a scientist needs a readable rule, not only a prediction",
+    "why_it_matters": "a compact formula can be inspected, criticized, and reused",
+    "watch_for": "a neat formula can be wrong if key variables were missing from the search",
+    "related": [
+      "symbolic-regression",
+      "neural-differential-equations"
+    ]
+  },
+  {
+    "slug": "foundation-model",
+    "term": "Foundation Model",
+    "everyday": "one broad model trained across many related tasks",
+    "problem": "training a new model for every scientific task can be expensive",
+    "why_it_matters": "shared structure may reduce repeated training if the new task truly belongs to the learned family",
+    "watch_for": "broad training is not proof that a new regime, boundary, or quantity is covered",
+    "related": [
+      "foundation-models-for-pdes",
+      "operator-learning"
+    ]
+  }
+]
