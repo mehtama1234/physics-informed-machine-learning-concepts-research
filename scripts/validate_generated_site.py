@@ -113,7 +113,7 @@ def check_required_sections() -> list[str]:
         "site/reader-checks.html": ("Reader Checks",),
         "site/review-entrypoints.html": ("Review Entrypoints", "End-To-End Test"),
         "site/review-search.html": ("Find Pages By Question", "Review Rule"),
-        "site/editorial-roadmap.html": ("Editorial Roadmap", "Acceptance Check", "Meaty End-To-End Goal"),
+        "site/editorial-roadmap.html": ("Editorial Roadmap", "Status:", "Current Evidence", "Acceptance Check", "external blocker", "Meaty End-To-End Goal"),
         "site/completion-audit.html": ("Completion Audit", "Requirement Evidence", "external blocker"),
         "site/diagrams.html": ("Mathematical Sketches", "Kept Rule", "Failure Case"),
         "site/topics/operator-learning.html": ("Mathematical Sketch", "Field To Field", "Kept Rule"),

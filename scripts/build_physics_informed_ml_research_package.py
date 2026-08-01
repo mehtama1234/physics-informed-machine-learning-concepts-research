@@ -1888,6 +1888,45 @@ EDITORIAL_ROADMAP = [
 ]
 
 
+ROADMAP_STATUS = {
+    "pinning-the-core-argument": {
+        "status": "locally completed",
+        "evidence": "The home page, synthesis pages, and learning path now use the five-part route: real quantity, evidence, missing quantity, mathematical move, and changed-case test.",
+        "proof_pages": ["index.html", "synthesis/central-problem.html", "learning-path/scientific-question-first.html"],
+    },
+    "source-anchored-core-concepts": {
+        "status": "locally completed",
+        "evidence": "Core topic pages and evidence packets include selected source anchors with claim, source page, reason, and limit.",
+        "proof_pages": ["topics/physics-informed-neural-networks.html", "evidence-packets/foundation-models-for-pdes.html", "evidence-packets/operator-learning.html"],
+    },
+    "hand-derivations": {
+        "status": "locally completed",
+        "evidence": "Core derivation pages include Hand Derivation tables that explain each term, why it enters, and how to check it.",
+        "proof_pages": ["derivations/physics-informed-neural-networks.html", "derivations/operator-learning.html", "derivations/foundation-models-for-pdes.html"],
+    },
+    "figures-and-sketches": {
+        "status": "locally completed",
+        "evidence": "The diagrams index and core topic pages include mathematical sketches with input, output, kept rule, and failure case.",
+        "proof_pages": ["diagrams.html", "topics/operator-learning.html", "topics/surrogate-modeling.html"],
+    },
+    "domain-examples": {
+        "status": "locally completed",
+        "evidence": "Each domain guide includes a concrete scientific job with observed evidence, hidden quantity, decision, and changed-case test.",
+        "proof_pages": ["domains/chemistry-and-biology.html", "domains/materials-and-mechanics.html", "domains/many-pde-tasks.html"],
+    },
+    "compare-nearby-methods": {
+        "status": "locally completed",
+        "evidence": "Each comparison page includes left-case, right-case, wrong-choice case, and evidence that exposes the wrong choice.",
+        "proof_pages": ["comparisons/pinns-vs-neural-operators.html", "comparisons/solvers-vs-learned-surrogates.html"],
+    },
+    "replication-and-remote-finish": {
+        "status": "external blocker",
+        "evidence": "The local repository is clean and validated, but the configured GitHub origin still returns Repository not found.",
+        "proof_pages": ["completion-audit.html", "handoff.html", "provenance/cli-reproduction.html"],
+    },
+}
+
+
 SOURCE_ANCHORS = {
     "physics-informed-neural-networks": [
         {
@@ -2597,6 +2636,11 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
     concept_evidence_packets = build_concept_evidence_packets(topic_treatments)
     formula_guide = build_formula_guide(core_derivations)
     misconception_map = build_misconception_map(core_derivations)
+    editorial_roadmap = []
+    for item in EDITORIAL_ROADMAP:
+        merged = dict(item)
+        merged.update(ROADMAP_STATUS.get(str(item["slug"]), {}))
+        editorial_roadmap.append(merged)
 
     data = {
         "summary": {
@@ -2632,7 +2676,8 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
             "review_entrypoint_count": sum(len(group["items"]) for group in REVIEW_ENTRYPOINTS),
             "completion_requirement_count": len(COMPLETION_REQUIREMENTS),
             "review_search_intent_count": len(REVIEW_SEARCH_INDEX),
-            "editorial_roadmap_count": len(EDITORIAL_ROADMAP),
+            "editorial_roadmap_count": len(editorial_roadmap),
+            "editorial_roadmap_completed_count": sum(1 for item in editorial_roadmap if item.get("status") == "locally completed"),
             "source_anchor_count": sum(len(rows) for rows in SOURCE_ANCHORS.values()),
         },
         "transcript_index": [record_to_dict(record) for record in records],
@@ -2665,7 +2710,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
         "review_entrypoints": REVIEW_ENTRYPOINTS,
         "completion_requirements": COMPLETION_REQUIREMENTS,
         "review_search_index": REVIEW_SEARCH_INDEX,
-        "editorial_roadmap": EDITORIAL_ROADMAP,
+        "editorial_roadmap": editorial_roadmap,
         "source_anchors": SOURCE_ANCHORS,
     }
     for name, value in data.items():
@@ -3362,7 +3407,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Synthesis", f"{summary['synthesis_guide_count']} pages tying the field into one argument.", "synthesis.html")}
 {card("Review Map", f"{summary['review_entrypoint_count']} entry points for end-to-end review, use, and source checks.", "review-entrypoints.html")}
 {card("Find By Question", f"{summary['review_search_intent_count']} reviewer intents mapped to the right pages.", "review-search.html")}
-{card("Editorial Roadmap", f"{summary['editorial_roadmap_count']} prioritized tasks for taking the first pass to hand-written depth.", "editorial-roadmap.html")}
+{card("Editorial Roadmap", f"{summary['editorial_roadmap_completed_count']} of {summary['editorial_roadmap_count']} roadmap tasks are locally completed; the remaining item is external.", "editorial-roadmap.html")}
 {card("Completion Audit", f"{summary['completion_requirement_count']} requirements checked against local evidence and external status.", "completion-audit.html")}
 {card("Review Handoff", "Shortest route for reviewing the package and the remaining editorial work.", "handoff.html")}
 {card("Themes", f"{summary['theme_count']} recurring research pressures across the course family.", "theme-map.html")}
@@ -4363,13 +4408,18 @@ def write_editorial_roadmap_page(path: Path, rows: list[dict[str, object]]) -> N
             for item in row["target_pages"]
         )
         work = "".join(f"<li>{html.escape(str(item))}</li>" for item in row["work"])
+        proof_pages = "".join(f"<li><a href=\"{html.escape(str(href))}\">{html.escape(str(href))}</a></li>" for href in row.get("proof_pages", []))
         cards.append(
             f"""
 <article class="card">
   <p class="meta">{html.escape(str(row['priority']))}</p>
   <h3>{html.escape(str(row['title']))}</h3>
+  <p><strong>Status:</strong> {html.escape(str(row.get('status', 'not started')))}</p>
   <p><strong>Goal:</strong> {html.escape(str(row['goal']))}</p>
   <p><strong>Why it matters:</strong> {html.escape(str(row['why']))}</p>
+  <p><strong>Current Evidence:</strong> {html.escape(str(row.get('evidence', 'No local evidence recorded yet.')))}</p>
+  <h4>Proof Pages</h4>
+  <ul>{proof_pages}</ul>
   <h4>Target Pages</h4>
   <ul>{targets}</ul>
   <h4>Work</h4>
@@ -4380,7 +4430,7 @@ def write_editorial_roadmap_page(path: Path, rows: list[dict[str, object]]) -> N
         )
     body = f"""
 <h1>Editorial Roadmap</h1>
-<p>This page names the next serious goal after the generated first pass: turn the strongest pages into hand-written, source-anchored teaching pages. The work is ordered by priority and each task has an acceptance check.</p>
+<p>This page tracks the next serious goal after the generated first pass: turn the strongest pages into hand-written, source-anchored teaching pages. The work is ordered by priority, each task has an acceptance check, and each row states the current local status.</p>
 <div class="grid">{''.join(cards)}</div>
 <h2>Meaty End-To-End Goal</h2>
 <p>The end state is a package where a reader can start with a plain scientific problem, follow the evidence to a concept, see why the formula has its shape, inspect a domain example, and know the failure test. A task is not done until the target pages prove that route.</p>
@@ -4841,8 +4891,11 @@ def write_markdown_export(data: dict[str, object]) -> None:
         lines.extend(
             [
                 f"### {item['priority']} {item['title']}",
+                f"- Status: {item.get('status', 'not started')}",
                 f"- Goal: {item['goal']}",
                 f"- Why it matters: {item['why']}",
+                f"- Current evidence: {item.get('evidence', 'No local evidence recorded yet.')}",
+                f"- Proof pages: {', '.join(item.get('proof_pages', []))}",
                 f"- Target pages: {', '.join(row['href'] for row in item['target_pages'])}",
                 f"- Work: {'; '.join(item['work'])}",
                 f"- Acceptance check: {item['acceptance_check']}",
@@ -5265,12 +5318,18 @@ def validate(data: dict[str, object] | None = None) -> None:
     roadmap_rows = data.get("editorial_roadmap") or []
     if len(roadmap_rows) != len(EDITORIAL_ROADMAP):
         raise SystemExit("editorial roadmap row count mismatch")
+    completed_rows = [row for row in roadmap_rows if row.get("status") == "locally completed"]
+    if len(completed_rows) != data["summary"].get("editorial_roadmap_completed_count"):
+        raise SystemExit("editorial roadmap completed count mismatch")
     for row in roadmap_rows:
-        if not row.get("work") or not row.get("acceptance_check"):
+        if not row.get("work") or not row.get("acceptance_check") or not row.get("status") or not row.get("evidence"):
             raise SystemExit(f"editorial roadmap row incomplete: {row.get('title')}")
         for item in row["target_pages"]:
             if not (SITE / str(item["href"])).exists():
                 raise SystemExit(f"editorial roadmap link missing: {row['title']} -> {item['href']}")
+        for href in row.get("proof_pages", []):
+            if not (SITE / str(href)).exists() and not (ROOT / str(href)).exists():
+                raise SystemExit(f"editorial roadmap proof link missing: {row['title']} -> {href}")
     audit_path = SITE / "completion-audit.html"
     audit_text = audit_path.read_text(encoding="utf-8")
     if "Completion Audit" not in audit_text or "Requirement Evidence" not in audit_text or "external blocker" not in audit_text:

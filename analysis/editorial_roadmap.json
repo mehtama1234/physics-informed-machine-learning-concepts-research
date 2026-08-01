@@ -28,7 +28,14 @@
       "Make every route explain what is observed, what is hidden, what rule is kept, and what changed case can reject the claim.",
       "Remove any sentence that sounds impressive but does not name evidence, domain, quantity, or failure test."
     ],
-    "acceptance_check": "A new reader can say the field's common problem in one sentence before opening any topic page."
+    "acceptance_check": "A new reader can say the field's common problem in one sentence before opening any topic page.",
+    "status": "locally completed",
+    "evidence": "The home page, synthesis pages, and learning path now use the five-part route: real quantity, evidence, missing quantity, mathematical move, and changed-case test.",
+    "proof_pages": [
+      "index.html",
+      "synthesis/central-problem.html",
+      "learning-path/scientific-question-first.html"
+    ]
   },
   {
     "priority": "P0",
@@ -63,7 +70,14 @@
       "Add a short source note beside each major claim: what the lecture supports, and what it does not settle.",
       "Prefer concrete lecture moments over broad statements."
     ],
-    "acceptance_check": "Each core concept has at least two reviewed transcript anchors and one clear limit statement."
+    "acceptance_check": "Each core concept has at least two reviewed transcript anchors and one clear limit statement.",
+    "status": "locally completed",
+    "evidence": "Core topic pages and evidence packets include selected source anchors with claim, source page, reason, and limit.",
+    "proof_pages": [
+      "topics/physics-informed-neural-networks.html",
+      "evidence-packets/foundation-models-for-pdes.html",
+      "evidence-packets/operator-learning.html"
+    ]
   },
   {
     "priority": "P0",
@@ -99,7 +113,14 @@
       "Add one derivation showing what must be shared before a PDE model can transfer to a new equation case.",
       "Keep each line in everyday language before adding symbols."
     ],
-    "acceptance_check": "A reader who skips the formula can still explain why each term exists and what would make it fail."
+    "acceptance_check": "A reader who skips the formula can still explain why each term exists and what would make it fail.",
+    "status": "locally completed",
+    "evidence": "Core derivation pages include Hand Derivation tables that explain each term, why it enters, and how to check it.",
+    "proof_pages": [
+      "derivations/physics-informed-neural-networks.html",
+      "derivations/operator-learning.html",
+      "derivations/foundation-models-for-pdes.html"
+    ]
   },
   {
     "priority": "P1",
@@ -135,7 +156,14 @@
       "Add one sketch for a fast surrogate inside repeated scientific choices.",
       "Add one sketch for a shifted case where the model should admit doubt."
     ],
-    "acceptance_check": "Each sketch names input, output, kept rule, and failure case in the caption."
+    "acceptance_check": "Each sketch names input, output, kept rule, and failure case in the caption.",
+    "status": "locally completed",
+    "evidence": "The diagrams index and core topic pages include mathematical sketches with input, output, kept rule, and failure case.",
+    "proof_pages": [
+      "diagrams.html",
+      "topics/operator-learning.html",
+      "topics/surrogate-modeling.html"
+    ]
   },
   {
     "priority": "P1",
@@ -170,7 +198,14 @@
       "Name the observed evidence, hidden quantity, decision, and changed-case test.",
       "Tie each example back to one concept page, one derivation, and one evidence packet."
     ],
-    "acceptance_check": "Each domain page contains a concrete scientific job that cannot be mistaken for a generic prediction task."
+    "acceptance_check": "Each domain page contains a concrete scientific job that cannot be mistaken for a generic prediction task.",
+    "status": "locally completed",
+    "evidence": "Each domain guide includes a concrete scientific job with observed evidence, hidden quantity, decision, and changed-case test.",
+    "proof_pages": [
+      "domains/chemistry-and-biology.html",
+      "domains/materials-and-mechanics.html",
+      "domains/many-pde-tasks.html"
+    ]
   },
   {
     "priority": "P1",
@@ -201,7 +236,13 @@
       "Add one wrong-choice example and the evidence that would expose it.",
       "Keep the language tied to the scientific job, not method labels."
     ],
-    "acceptance_check": "A reader can choose between two nearby methods by naming the job, evidence, and failure case."
+    "acceptance_check": "A reader can choose between two nearby methods by naming the job, evidence, and failure case.",
+    "status": "locally completed",
+    "evidence": "Each comparison page includes left-case, right-case, wrong-choice case, and evidence that exposes the wrong choice.",
+    "proof_pages": [
+      "comparisons/pinns-vs-neural-operators.html",
+      "comparisons/solvers-vs-learned-surrogates.html"
+    ]
   },
   {
     "priority": "P2",
@@ -232,6 +273,13 @@
       "Push main and verify the branch exists remotely.",
       "Record the clone URL and latest commit in the handoff."
     ],
-    "acceptance_check": "git ls-remote origin main returns a commit hash that matches the local main branch."
+    "acceptance_check": "git ls-remote origin main returns a commit hash that matches the local main branch.",
+    "status": "external blocker",
+    "evidence": "The local repository is clean and validated, but the configured GitHub origin still returns Repository not found.",
+    "proof_pages": [
+      "completion-audit.html",
+      "handoff.html",
+      "provenance/cli-reproduction.html"
+    ]
   }
 ]

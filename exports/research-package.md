@@ -34,6 +34,7 @@
 - completion_requirement_count: 7
 - review_search_intent_count: 7
 - editorial_roadmap_count: 7
+- editorial_roadmap_completed_count: 6
 - source_anchor_count: 12
 
 ## Concepts
@@ -1438,50 +1439,71 @@
 
 ## Editorial Roadmap
 ### P0 Pin Down The Core Argument
+- Status: locally completed
 - Goal: Make the first review route say one thing clearly: physics-informed machine learning is about making learned answers answerable to data, physical rules, and changed scientific cases.
 - Why it matters: Without this, readers see a pile of methods. With it, every concept becomes a different answer to the same scientific pressure.
+- Current evidence: The home page, synthesis pages, and learning path now use the five-part route: real quantity, evidence, missing quantity, mathematical move, and changed-case test.
+- Proof pages: index.html, synthesis/central-problem.html, learning-path/scientific-question-first.html
 - Target pages: synthesis.html, learning-path.html, handoff.html, completion-audit.html
 - Work: Rewrite the opening paragraphs so they start from the scientific problem before naming methods.; Make every route explain what is observed, what is hidden, what rule is kept, and what changed case can reject the claim.; Remove any sentence that sounds impressive but does not name evidence, domain, quantity, or failure test.
 - Acceptance check: A new reader can say the field's common problem in one sentence before opening any topic page.
 
 ### P0 Add Source Anchors To Core Concepts
+- Status: locally completed
 - Goal: Turn the main topic pages and evidence packets into source-backed teaching pages, not only generated summaries.
 - Why it matters: The package is transcript-backed only if the important claims point to lecture-specific support and state what that support does not prove.
+- Current evidence: Core topic pages and evidence packets include selected source anchors with claim, source page, reason, and limit.
+- Proof pages: topics/physics-informed-neural-networks.html, evidence-packets/foundation-models-for-pdes.html, evidence-packets/operator-learning.html
 - Target pages: topics/physics-informed-neural-networks.html, topics/operator-learning.html, topics/uncertainty-and-generalization.html, topics/foundation-models-for-pdes.html, evidence-packets.html
 - Work: Manually review the transcript excerpts for each core concept and choose the best source anchors.; Add a short source note beside each major claim: what the lecture supports, and what it does not settle.; Prefer concrete lecture moments over broad statements.
 - Acceptance check: Each core concept has at least two reviewed transcript anchors and one clear limit statement.
 
 ### P0 Deepen The Hand Derivations
+- Status: locally completed
 - Goal: Make the math feel inevitable from the problem instead of appearing as a finished formula.
 - Why it matters: The reader should see why the terms show up: data error comes from measured points, physics error comes from the equation, uncertainty comes from possible wrong answers, and operators come from learning a map between fields.
+- Current evidence: Core derivation pages include Hand Derivation tables that explain each term, why it enters, and how to check it.
+- Proof pages: derivations/physics-informed-neural-networks.html, derivations/operator-learning.html, derivations/foundation-models-for-pdes.html
 - Target pages: derivations.html, derivations/physics-informed-neural-networks.html, derivations/operator-learning.html, derivations/foundation-models-for-pdes.html, formula-guide.html
 - Work: Add one handwritten derivation from observed evidence to loss shape for PINNs.; Add one derivation showing why operator learning maps a whole input field to a whole output field.; Add one derivation showing what must be shared before a PDE model can transfer to a new equation case.; Keep each line in everyday language before adding symbols.
 - Acceptance check: A reader who skips the formula can still explain why each term exists and what would make it fail.
 
 ### P1 Add Figures And Mathematical Sketches
+- Status: locally completed
 - Goal: Replace purely textual explanation where a picture would reveal the object being learned or checked.
 - Why it matters: Some ideas are spatial: a PDE field, a boundary, a residual point, an input field, an output field, or a shifted test case. A sketch can make the hidden quantity visible.
+- Current evidence: The diagrams index and core topic pages include mathematical sketches with input, output, kept rule, and failure case.
+- Proof pages: diagrams.html, topics/operator-learning.html, topics/surrogate-modeling.html
 - Target pages: diagrams.html, topics/physics-informed-neural-networks.html, topics/operator-learning.html, topics/surrogate-modeling.html, topics/uncertainty-and-generalization.html
 - Work: Add one sketch for measured points plus equation-check points.; Add one sketch for input field to output field.; Add one sketch for a fast surrogate inside repeated scientific choices.; Add one sketch for a shifted case where the model should admit doubt.
 - Acceptance check: Each sketch names input, output, kept rule, and failure case in the caption.
 
 ### P1 Strengthen Domain Examples
+- Status: locally completed
 - Goal: Make chemistry, materials, climate, fluids, and geometry pages show real scientific jobs rather than generic use cases.
 - Why it matters: The math matters because a scientist needs a quantity for a decision: a molecule property, stress field, flow force, climate risk, or field on an irregular shape.
+- Current evidence: Each domain guide includes a concrete scientific job with observed evidence, hidden quantity, decision, and changed-case test.
+- Proof pages: domains/chemistry-and-biology.html, domains/materials-and-mechanics.html, domains/many-pde-tasks.html
 - Target pages: domains.html, worked-examples.html, worked-examples/molecule-property-from-structure.html, worked-examples/material-stress-from-sparse-tests.html, worked-examples/climate-risk-under-shifted-conditions.html
 - Work: Add one richer concrete example per domain.; Name the observed evidence, hidden quantity, decision, and changed-case test.; Tie each example back to one concept page, one derivation, and one evidence packet.
 - Acceptance check: Each domain page contains a concrete scientific job that cannot be mistaken for a generic prediction task.
 
 ### P1 Sharpen Nearby Method Comparisons
+- Status: locally completed
 - Goal: Make the comparison pages teach what changes when two methods sound similar.
 - Why it matters: Readers often confuse fitting data, obeying a rule, learning a solver shortcut, and building a cheap stand-in. The package should separate those by job and evidence.
+- Current evidence: Each comparison page includes left-case, right-case, wrong-choice case, and evidence that exposes the wrong choice.
+- Proof pages: comparisons/pinns-vs-neural-operators.html, comparisons/solvers-vs-learned-surrogates.html
 - Target pages: comparisons.html, decision-guide.html, misconceptions.html, dependencies.html
 - Work: For each comparison, add one situation where the left method is right and one where the right method is right.; Add one wrong-choice example and the evidence that would expose it.; Keep the language tied to the scientific job, not method labels.
 - Acceptance check: A reader can choose between two nearby methods by naming the job, evidence, and failure case.
 
 ### P2 Finish Replication And Remote State
+- Status: external blocker
 - Goal: Make the package easy for another CLI to reproduce and push once the GitHub repository exists.
 - Why it matters: Local validation proves the package files. The final handoff also needs a verified remote so another person can clone and continue.
+- Current evidence: The local repository is clean and validated, but the configured GitHub origin still returns Repository not found.
+- Proof pages: completion-audit.html, handoff.html, provenance/cli-reproduction.html
 - Target pages: provenance/cross-channel-playbook.html, provenance.html, completion-audit.html, handoff.html
 - Work: Create or grant access to the GitHub repository named by origin.; Push main and verify the branch exists remotely.; Record the clone URL and latest commit in the handoff.
 - Acceptance check: git ls-remote origin main returns a commit hash that matches the local main branch.
