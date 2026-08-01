@@ -1639,6 +1639,106 @@ EDITORIAL_ROADMAP = [
 ]
 
 
+SOURCE_ANCHORS = {
+    "physics-informed-neural-networks": [
+        {
+            "claim": "PINNs are introduced as learned fields checked against both measured data and physical equations.",
+            "source": "ETH Zurich AISE 2025: Lecture 3 Physics-Informed Neural Networks Introduction",
+            "href": "videos/eth-aise-2025-003-eth-zrich-aise-2025-lecture-3-physics-informed-neural-networks-introduction.html",
+            "why_this_source": "This is the 2025 introductory PINNs lecture in the local transcript set.",
+            "limit": "The source supports the course placement and core idea; it does not prove performance on every PDE or boundary setting.",
+        },
+        {
+            "claim": "PINNs need theory and failure checks because satisfying a written training score is not the same as proving the field is right everywhere.",
+            "source": "ETH Zurich AISE 2025: Lecture 4 PINNs Theoretical Insights",
+            "href": "videos/eth-aise-2025-004-eth-zrich-aise-2025-lecture-4-pinns-theoretical-insights.html",
+            "why_this_source": "This lecture is the 2025 theory follow-up for PINNs.",
+            "limit": "The source anchors the need for theoretical care; the page still needs task-specific validation for any scientific claim.",
+        },
+    ],
+    "operator-learning": [
+        {
+            "claim": "Operator learning is about learning maps from whole input fields or functions to whole output fields or functions.",
+            "source": "ETH Zurich AISE 2025: Lecture 5 Operator Learning Introduction",
+            "href": "videos/eth-aise-2025-005-eth-zrich-aise-2025-lecture-5-operator-learning-introduction.html",
+            "why_this_source": "This is the 2025 introduction to the operator-learning block.",
+            "limit": "The source supports the object being learned; it does not prove the learned map works outside the named input family.",
+        },
+        {
+            "claim": "Fourier neural operators are one route for learning field-to-field maps in PDE settings.",
+            "source": "ETH Zurich AISE 2025: Lecture 6 Operator Learning FNO",
+            "href": "videos/eth-aise-2025-006-eth-zrich-aise-2025-lecture-6-operator-learning-fno.html",
+            "why_this_source": "This lecture is the 2025 FNO treatment inside the operator-learning sequence.",
+            "limit": "The source anchors the method family; reliability still depends on the training range, resolution, geometry, and target quantity.",
+        },
+    ],
+    "surrogate-modeling": [
+        {
+            "claim": "Surrogates are useful when repeated scientific choices need answers faster than a trusted simulation or experiment can provide them.",
+            "source": "ETH Zurich AISE 2024: Introduction to Hybrid Workflows Part 1",
+            "href": "videos/eth-aise-2024-019-eth-zrich-aise-introduction-to-hybrid-workflows-part-1.html",
+            "why_this_source": "This lecture starts the local hybrid-workflow block where learned components are placed next to trusted scientific tools.",
+            "limit": "The source supports the need for faster learned components; it does not prove a surrogate is valid outside checked cases.",
+        },
+        {
+            "claim": "A learned stand-in remains tied to the trusted source and must be checked where it will be used.",
+            "source": "ETH Zurich AISE 2024: Introduction to Hybrid Workflows Part 2",
+            "href": "videos/eth-aise-2024-020-eth-zrich-aise-introduction-to-hybrid-workflows-part-2.html",
+            "why_this_source": "This lecture continues the hybrid-workflow treatment in the local transcript set.",
+            "limit": "The source supports the review route; task-level error checks are still needed before using any stand-in for a decision.",
+        },
+    ],
+    "uncertainty-and-generalization": [
+        {
+            "claim": "Trust depends on changed-case behavior, not only on matching familiar examples.",
+            "source": "ETH Zurich AISE 2024: Windowed Attention and Scaling Laws",
+            "href": "videos/eth-aise-2024-018-eth-zrich-aise-windowed-attention-and-scaling-laws.html",
+            "why_this_source": "This source sits in the sequence where model behavior is discussed beyond a single training case.",
+            "limit": "The source anchors the need to discuss scale and changed behavior; it does not certify uncertainty estimates for a specific domain.",
+        },
+        {
+            "claim": "Foundation and operator-style PDE models need evaluation on held-out scientific cases before broad use.",
+            "source": "ETH Zurich AISE 2025: Lecture 12 Foundation Models for PDEs Poseidon",
+            "href": "videos/eth-aise-2025-012-eth-zrich-aise-2025-lecture-12-foundation-models-for-pdes-poseidon.html",
+            "why_this_source": "This lecture anchors the broad PDE-model part of the 2025 playlist.",
+            "limit": "The source supports the need for held-out case checks; it does not prove broad transfer for every equation family.",
+        },
+    ],
+    "symbolic-regression": [
+        {
+            "claim": "Symbolic regression aims for a readable candidate law, not just a fitted prediction.",
+            "source": "ETH Zurich AISE 2024: Symbolic Regression and Model Discovery",
+            "href": "videos/eth-aise-2024-024-eth-zrich-aise-symbolic-regression-and-model-discovery.html",
+            "why_this_source": "This is the local lecture dedicated to symbolic regression and model discovery.",
+            "limit": "The source supports the concept and goal; a discovered law still needs a new-experiment test and measured variables that cover the real cause.",
+        },
+        {
+            "claim": "Neural differential equations are a related route when the unknown object is the rate or rule of change.",
+            "source": "ETH Zurich AISE 2024: Neural Differential Equations",
+            "href": "videos/eth-aise-2024-021-eth-zrich-aise-neural-differential-equations.html",
+            "why_this_source": "This lecture anchors the neighboring model-discovery route in the source set.",
+            "limit": "The source supports the relation between learned dynamics and model discovery; it does not prove interpretability by itself.",
+        },
+    ],
+    "foundation-models-for-pdes": [
+        {
+            "claim": "Foundation PDE models try to carry structure from many PDE tasks into a new PDE case.",
+            "source": "ETH Zurich AISE 2025: Lecture 12 Foundation Models for PDEs Poseidon",
+            "href": "videos/eth-aise-2025-012-eth-zrich-aise-2025-lecture-12-foundation-models-for-pdes-poseidon.html",
+            "why_this_source": "This lecture is the 2025 source page for foundation models for PDEs.",
+            "limit": "The source anchors the ambition and lecture treatment; the page must still state which new PDE case was held out and what failed.",
+        },
+        {
+            "claim": "Broad PDE models build on operator-learning ideas because both care about maps between fields across many cases.",
+            "source": "ETH Zurich AISE 2025: Lecture 5 Operator Learning Introduction",
+            "href": "videos/eth-aise-2025-005-eth-zrich-aise-2025-lecture-5-operator-learning-introduction.html",
+            "why_this_source": "This lecture anchors the operator-learning prerequisite for later broad PDE models.",
+            "limit": "The source supports the dependency; it does not imply that a broad model works on every PDE family.",
+        },
+    ],
+}
+
+
 REVIEW_ENTRYPOINTS = [
     {
         "group": "Start The Review",
@@ -2283,6 +2383,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
             "completion_requirement_count": len(COMPLETION_REQUIREMENTS),
             "review_search_intent_count": len(REVIEW_SEARCH_INDEX),
             "editorial_roadmap_count": len(EDITORIAL_ROADMAP),
+            "source_anchor_count": sum(len(rows) for rows in SOURCE_ANCHORS.values()),
         },
         "transcript_index": [record_to_dict(record) for record in records],
         "concept_atlas": concept_atlas,
@@ -2314,6 +2415,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
         "completion_requirements": COMPLETION_REQUIREMENTS,
         "review_search_index": REVIEW_SEARCH_INDEX,
         "editorial_roadmap": EDITORIAL_ROADMAP,
+        "source_anchors": SOURCE_ANCHORS,
     }
     for name, value in data.items():
         if name == "summary":
@@ -2338,6 +2440,25 @@ def everyday_anchor(slug: str) -> str:
         "graphs-and-geometric-learning": "A molecule, mesh, or network is not just a list. The connections decide what can influence what.",
     }
     return anchors.get(slug, "Start with the observed object, name what must be predicted, then test the claim on a changed case.")
+
+
+def source_anchor_cards(slug: str, root_prefix: str = "") -> str:
+    anchors = SOURCE_ANCHORS.get(slug, [])
+    if not anchors:
+        return ""
+    cards = []
+    for item in anchors:
+        cards.append(
+            f"""
+<article class="card">
+  <h3><a href="{root_prefix}{html.escape(str(item['href']))}">{html.escape(str(item['source']))}</a></h3>
+  <p><strong>Claim Anchored:</strong> {html.escape(str(item['claim']))}</p>
+  <p><strong>Why this source:</strong> {html.escape(str(item['why_this_source']))}</p>
+  <p><strong>Limit:</strong> {html.escape(str(item['limit']))}</p>
+</article>
+"""
+        )
+    return f"<h2>Selected Source Anchors</h2><p>These anchors identify the lecture pages that should be checked first when reviewing the core claim. They are source links with claim boundaries, not proof by themselves.</p><div class=\"grid\">{''.join(cards)}</div>"
 
 
 def build_coverage_matrix(concept_atlas: list[dict[str, object]]) -> list[dict[str, object]]:
@@ -2476,6 +2597,7 @@ def build_concept_evidence_packets(topic_treatments: list[dict[str, object]]) ->
                 "why_it_matters": str(topic["why_it_matters"]),
                 "evidence_count": len(evidence),
                 "evidence": evidence,
+                "source_anchors": SOURCE_ANCHORS.get(slug, []),
                 "limits": [
                     "Transcript evidence shows the concept appears in this course family.",
                     "It does not prove the method works for every equation, material, geometry, data size, or future case.",
@@ -3306,6 +3428,7 @@ def write_topic_page(path: Path, topic: dict[str, object]) -> None:
     diagrams = topic_diagrams_html(str(topic["slug"]))
     reader_check = topic_reader_check_html(str(topic["slug"]))
     derivation_link = topic_derivation_link_html(str(topic["slug"]))
+    source_anchors = source_anchor_cards(str(topic["slug"]), root_prefix="../")
     body = f"""
 <h1>{html.escape(str(topic['title']))}</h1>
 <h2>Common Problem This Solves</h2>
@@ -3337,6 +3460,7 @@ def write_topic_page(path: Path, topic: dict[str, object]) -> None:
 <p>{html.escape(str(topic['failure_boundary']))}</p>
 <h2>What The Transcript Does Not Prove</h2>
 <p>The transcript evidence shows where the course introduces or uses this concept. It does not prove the concept works for every equation, data set, solver, material, geometry, or scientific task. That wider claim needs explicit validation evidence.</p>
+{source_anchors}
 <h2>Transcript Evidence</h2>
 <ul>{''.join(evidence_items)}</ul>
 """
@@ -3736,12 +3860,14 @@ def write_concept_evidence_packet_page(path: Path, packet: dict[str, object]) ->
         f"<li><a href=\"../{html.escape(str(item['href']))}\">{html.escape(str(item['label']))}</a></li>"
         for item in packet["review_links"]
     )
+    source_anchors = source_anchor_cards(str(packet["slug"]), root_prefix="../")
     body = f"""
 <h1>{html.escape(str(packet['title']))}</h1>
 <h2>Concept Job</h2>
 <p><strong>Problem:</strong> {html.escape(str(packet['common_problem']))}</p>
 <p><strong>Domain:</strong> {html.escape(str(packet['domain']))}</p>
 <p><strong>Why it matters:</strong> {html.escape(str(packet['why_it_matters']))}</p>
+{source_anchors}
 <h2>Transcript Support</h2>
 <p>This packet has {html.escape(str(packet['evidence_count']))} selected transcript anchors for review.</p>
 <ul>{''.join(evidence_items)}</ul>
@@ -4259,6 +4385,20 @@ def write_markdown_export(data: dict[str, object]) -> None:
                 "",
             ]
         )
+    lines.extend(["", "## Selected Source Anchors"])
+    for slug, anchors in data["source_anchors"].items():
+        lines.extend(["", f"### {slug.replace('-', ' ').title()}"])
+        for item in anchors:
+            lines.extend(
+                [
+                    f"- Source: {item['source']}",
+                    f"- Page: {item['href']}",
+                    f"- Claim anchored: {item['claim']}",
+                    f"- Why this source: {item['why_this_source']}",
+                    f"- Limit: {item['limit']}",
+                    "",
+                ]
+            )
     lines.extend(["", "## Editorial Quality Rubric"])
     for item in data["quality_rubric"]:
         lines.extend(
@@ -4596,6 +4736,7 @@ def validate(data: dict[str, object] | None = None) -> None:
     packets = data.get("concept_evidence_packets") or []
     if len(packets) != len(data["concept_atlas"]):
         raise SystemExit("concept evidence packet count does not match concept atlas")
+    core_slugs = {"physics-informed-neural-networks", "operator-learning", "surrogate-modeling", "uncertainty-and-generalization", "symbolic-regression", "foundation-models-for-pdes"}
     for packet in packets:
         packet_path = SITE / str(packet["packet_href"])
         if not packet_path.exists():
@@ -4609,7 +4750,24 @@ def validate(data: dict[str, object] | None = None) -> None:
         for item in packet["review_links"]:
             if not (SITE / str(item["href"])).exists():
                 raise SystemExit(f"concept evidence packet review link missing: {packet['title']} -> {item['href']}")
-    core_slugs = {"physics-informed-neural-networks", "operator-learning", "surrogate-modeling", "uncertainty-and-generalization", "symbolic-regression", "foundation-models-for-pdes"}
+    source_anchors = data.get("source_anchors") or {}
+    for slug in core_slugs:
+        anchors = source_anchors.get(slug) or []
+        if len(anchors) < 2:
+            raise SystemExit(f"core concept missing selected source anchors: {slug}")
+        topic_path = SITE / "topics" / f"{slug}.html"
+        packet_path = SITE / "evidence-packets" / f"{slug}.html"
+        for page_path in (topic_path, packet_path):
+            page_text = page_path.read_text(encoding="utf-8")
+            if "Selected Source Anchors" not in page_text or "Claim Anchored" not in page_text:
+                raise SystemExit(f"source anchors not rendered on page: {page_path}")
+        for item in anchors:
+            target = SITE / str(item["href"])
+            if not target.exists():
+                raise SystemExit(f"source anchor link missing: {slug} -> {item['href']}")
+            for field in ("claim", "source", "why_this_source", "limit"):
+                if not item.get(field):
+                    raise SystemExit(f"source anchor missing {field}: {slug}")
     by_slug = {row["slug"]: row for row in coverage_rows}
     for slug in core_slugs:
         row = by_slug.get(slug)

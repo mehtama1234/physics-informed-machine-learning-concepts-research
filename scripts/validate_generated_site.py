@@ -124,6 +124,8 @@ def check_required_sections() -> list[str]:
         "site/misconceptions.html": ("Misconception Map", "Wrong Turn", "First-Principles Test"),
         "site/evidence-packets/physics-informed-neural-networks.html": ("Transcript Support", "What This Evidence Does Not Prove", "Review Links"),
         "site/evidence-packets/operator-learning.html": ("Transcript Support", "What This Evidence Does Not Prove", "Review Links"),
+        "site/topics/physics-informed-neural-networks.html": ("Selected Source Anchors", "Claim Anchored", "Limit:"),
+        "site/evidence-packets/foundation-models-for-pdes.html": ("Selected Source Anchors", "Claim Anchored", "Limit:"),
         "site/derivations.html": ("Core Derivations",),
         "site/provenance/cross-channel-playbook.html": ("Cross-Channel Replication Playbook", "Process", "Checks"),
         "site/worked-examples/molecule-property-from-structure.html": ("End-To-End Flow", "Claim Boundary"),
