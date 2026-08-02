@@ -157,7 +157,7 @@
 <article class="card">
   <h3><a href="../diagrams/data-only-learning-flow.html">Data-Only Learning Flow</a></h3>
   <p>Show what a model sees when examples are the only source of correction.</p>
-  
+
 <div class="flow"><div class="flow-node">1. past examples</div><div class="flow-node">2. adjustable model</div><div class="flow-node">3. prediction</div><div class="flow-node">4. compare with known answers</div><div class="flow-node">5. test on a changed case</div></div>
 <p class="diagram-note"><strong>Watch for:</strong> If the changed case is too similar to the past examples, the test says little about scientific use.</p>
 
@@ -232,11 +232,19 @@
   </thead>
   <tbody>
 <tr>
-  <td>using data-driven models inside scientific workflows</td>
-  <td>which parts of the scientific system are missing, noisy, or too costly to compute directly</td>
-  <td>scientific work needs predictions that respect measurements, equations, uncertainty, and domain limits at the same time</td>
-  <td>data, equations, units, simulation outputs, and domain limits</td>
-  <td>state the scientific quantity first, then test it under a changed case that matters in that domain</td>
+  <td><a href="../domains/scientific-model-building.html">Scientific Model Building</a></td>
+  <td>the physical or scientific quantity the model is supposed to explain, predict, or support</td>
+  <td>Build a model for a named scientific quantity when neither data alone nor a hand-written rule is enough.</td>
+  <td>measurements, partial equations, known units, boundaries, trusted simulations, and known failure modes</td>
+  <td>change the experiment, boundary, scale, or measured variable and verify the scientific target directly</td>
+</tr>
+
+<tr>
+  <td><a href="../domains/training-score-design.html">Training Score Design</a></td>
+  <td>the scientific quantity encoded by the terms of the training score</td>
+  <td>Choose training terms that reward the behavior needed by the scientific claim.</td>
+  <td>data errors, equation errors, boundary errors, weights between terms, constraints, and held-out checks</td>
+  <td>change the weights, hold out hard regions, and check the physical or decision quantity directly</td>
 </tr>
 </tbody>
 </table>
