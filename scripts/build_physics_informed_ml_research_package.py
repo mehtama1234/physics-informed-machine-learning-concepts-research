@@ -3312,6 +3312,7 @@ MEATY_GOAL_REQUIREMENTS = [
     {"key": "first_principles", "label": "First Principles", "proof_term": "First-Principles Essay"},
     {"key": "claim_chain", "label": "Big Picture Claim Chain", "proof_term": "Big Picture Claim Chain"},
     {"key": "use_protocol", "label": "End-To-End Use Protocol", "proof_term": "End-To-End Use Protocol"},
+    {"key": "plain_big_picture", "label": "Plain Big Picture Essay", "proof_term": "Plain Big Picture Essay"},
     {"key": "hand_teaching_note", "label": "Hand Teaching Note", "proof_term": "Hand Teaching Note"},
     {"key": "case_walkthrough", "label": "Case Walkthrough", "proof_term": "One Concrete Case From Start To Finish"},
     {"key": "concept_connections", "label": "Concept Connections", "proof_term": "How This Connects To Nearby Ideas"},
@@ -6404,6 +6405,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     claim_chain = topic_claim_chain_html(topic, derivation)
     use_protocol = topic_use_protocol_html(topic, derivation)
     first_principles_essay = topic_first_principles_essay_html(topic, derivation)
+    plain_big_picture = topic_plain_big_picture_essay_html(topic, derivation)
     teaching_note = topic_teaching_note_html(str(topic["slug"]))
     case_walkthrough = topic_case_walkthrough_html(topic, derivation)
     connections = topic_connections_html(topic)
@@ -6431,6 +6433,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
 {claim_chain}
 {use_protocol}
 {first_principles_essay}
+{plain_big_picture}
 {teaching_note}
 {case_walkthrough}
 {connections}
@@ -6546,6 +6549,60 @@ def topic_first_principles_essay_html(topic: dict[str, object], derivation: dict
   <li>Name the mathematical move in plain language: {html.escape(meaning)}.</li>
   <li>Name the rejection test: {html.escape(test)}.</li>
 </ol>
+"""
+
+
+def topic_plain_big_picture_essay_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
+    title = str(topic["title"])
+    case = topic_case_walkthrough(topic, derivation)
+    applications = [
+        {
+            "field": "Topology and shape",
+            "use": "Ask what stays connected, what has a hole, what touches what, and what can bend without changing the real question.",
+            "why": f"{title} matters here when the answer depends on shape evidence, not only on a row of numbers.",
+            "check": "Change the mesh, bend the shape, relabel points, or add a missing connection and see whether the claim still follows.",
+        },
+        {
+            "field": "Engineering design",
+            "use": "Ask whether a wing, bridge, part, battery, or device will work before every costly test is run.",
+            "why": f"{title} matters here because the answer must guide a build, a redesign, or a stop decision.",
+            "check": "Move the design near the edge of the planned use and compare with a trusted solve or measurement.",
+        },
+        {
+            "field": "Materials, chemistry, and biology",
+            "use": "Ask how small parts, bonds, cells, grains, or local regions add up to a property people care about.",
+            "why": f"{title} matters here because the useful answer is about the thing itself, not only about fitting old examples.",
+            "check": "Hold out a new molecule, material setting, tissue type, or lab condition and inspect the target quantity.",
+        },
+        {
+            "field": "Climate, fluids, and fields",
+            "use": "Ask how a value spread over space changes when wind, heat, pressure, flow, or a boundary changes.",
+            "why": f"{title} matters here because one number is not enough when the decision depends on a whole field.",
+            "check": "Change a boundary, source, scale, region, or rare event and test the field where the decision is made.",
+        },
+    ]
+    rows = "".join(
+        f"""
+<tr>
+  <td>{html.escape(row['field'])}</td>
+  <td>{html.escape(row['use'])}</td>
+  <td>{html.escape(row['why'])}</td>
+  <td>{html.escape(row['check'])}</td>
+</tr>
+"""
+        for row in applications
+    )
+    return f"""
+<h2>Plain Big Picture Essay</h2>
+<p>Start with the human problem. Someone needs to act, explain, build, test, or decide, and the answer is not sitting in front of them. For {html.escape(title)}, the plain problem is this: {html.escape(str(topic['common_problem']))}. The course idea is important only because it helps move from what is already known to what still has to be known. If that movement is not clear, the page is only naming a tool. If the movement is clear, the reader can see why the tool enters at all.</p>
+<p>The first-principles path is simple. We have evidence: {html.escape(str(derivation['observed']))}. We need something hidden: {html.escape(str(derivation['hidden']))}. We make a move: {html.escape(str(derivation['move']))}. The move is allowed only because it carries the right part of the evidence toward the missing answer. It is not allowed to claim more than that. The final claim is: {html.escape(str(derivation['meaning']))}.</p>
+<p>A plain example keeps the idea honest. One concrete case: {html.escape(str(case['setting']))} The evidence is {html.escape(str(case['observed']))}. The missing answer is {html.escape(str(case['hidden']))}. The useful move is to {html.escape(str(case['move']))}. The result is useful only if it gives {html.escape(str(case['answer']))}. The first sign to stop or narrow the claim is this: {html.escape(str(case['rejection']))}.</p>
+<p>This matters across the course because the same pattern keeps returning. A scientist rarely wants a method name. They want a field, a shape, a property, a rate, a risk, a design answer, or a reason to reject a claim. The lesson is to ask the same plain questions every time: What do we know? What is missing? What carries the missing part? What did we leave out? What changed case would prove that the answer was too broad?</p>
+<h3>Applications In Everyday Words</h3>
+<table>
+  <thead><tr><th>Field</th><th>Plain Use</th><th>Why It Matters</th><th>First Check</th></tr></thead>
+  <tbody>{rows}</tbody>
+</table>
 """
 
 
@@ -8474,6 +8531,13 @@ def validate(data: dict[str, object] | None = None) -> None:
             "Reject Or Narrow The Claim When",
             "Final Claim Allowed",
             "First-Principles Essay",
+            "Plain Big Picture Essay",
+            "Applications In Everyday Words",
+            "Topology and shape",
+            "what stays connected",
+            "Engineering design",
+            "Materials, chemistry, and biology",
+            "Climate, fluids, and fields",
             "What A Strong Explanation Must Say",
             "One Concrete Case From Start To Finish",
             "Observed Evidence",
