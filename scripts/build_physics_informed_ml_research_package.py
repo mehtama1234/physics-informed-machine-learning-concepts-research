@@ -5207,6 +5207,7 @@ def html_page(title: str, body: str, root_prefix: str = "") -> str:
   <a href="{root_prefix}field-application-guide.html">Fields</a>
   <a href="{root_prefix}end-to-end-walkthrough.html">Walkthrough</a>
   <a href="{root_prefix}example-route-guide.html">Routes</a>
+  <a href="{root_prefix}no-jargon-concept-guide.html">No Jargon</a>
   <a href="{root_prefix}learning-path.html">Path</a>
   <a href="{root_prefix}glossary.html">Glossary</a>
   <a href="{root_prefix}domains.html">Domains</a>
@@ -5536,6 +5537,47 @@ def write_example_route_guide_page(path: Path, examples: list[dict[str, object]]
     path.write_text(html_page("Physics-Informed ML Example Route Guide", body), encoding="utf-8")
 
 
+def write_no_jargon_concept_guide_page(path: Path, topics: list[dict[str, object]]) -> None:
+    rows = []
+    for topic in topics:
+        derivation = topic_derivation(topic)
+        rows.append(
+            f"""
+<tr>
+  <td><a href="topics/{html.escape(str(topic['slug']))}.html">{html.escape(str(topic['title']))}</a></td>
+  <td>{html.escape(str(topic['common_problem']))}</td>
+  <td>{html.escape(str(derivation['observed']))}</td>
+  <td>{html.escape(str(derivation['hidden']))}</td>
+  <td>{html.escape(str(derivation['move']))}</td>
+  <td>{html.escape(str(derivation['test']))}</td>
+</tr>
+"""
+        )
+    body = f"""
+<h1>No-Jargon Concept Guide</h1>
+<h2>Translate The Label Into A Job</h2>
+<p>Use this page when a concept name sounds familiar but the reason for it is still unclear. The label is not the explanation. The explanation starts when the reader can say the everyday problem, the evidence in hand, the hidden answer, the move being made, and the changed case that can reject the claim.</p>
+<h2>Concepts Without Hiding Behind Names</h2>
+<table>
+  <thead>
+    <tr><th>Concept Label</th><th>Everyday Job</th><th>Evidence In Hand</th><th>Hidden Answer Needed</th><th>Plain Move</th><th>First Rejection Check</th></tr>
+  </thead>
+  <tbody>{''.join(rows)}</tbody>
+</table>
+<h2>How To Read A Method Name</h2>
+<ol>
+  <li>Pause before treating the label as understanding.</li>
+  <li>Say what the scientist or engineer needs to decide.</li>
+  <li>Say what evidence is already present.</li>
+  <li>Say what answer is still missing.</li>
+  <li>Say what changes first when the claim becomes too broad.</li>
+</ol>
+<h2>Reader Test</h2>
+<p>A reader understands a concept label only when they can replace it with an everyday sentence about the job it does. That sentence must name evidence, hidden answer, field use, shape or topology if it matters, and the first changed case.</p>
+"""
+    path.write_text(html_page("Physics-Informed ML No-Jargon Concept Guide", body), encoding="utf-8")
+
+
 def concept_links(slugs: list[str], root_prefix: str = "") -> str:
     items = []
     concept_names = {str(item["slug"]): str(item["name"]) for item in CONCEPTS}
@@ -5795,6 +5837,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Field Application Guide", "A plain map of how each topic enters engineering, materials, biology, climate, fluids, and field problems.", "field-application-guide.html")}
 {card("End-To-End Walkthrough", "One plain route from sparse evidence and a scientific job to a bounded claim.", "end-to-end-walkthrough.html")}
 {card("Example Route Guide", "Concrete worked examples mapped from scientific job to topic route and first failure signal.", "example-route-guide.html")}
+{card("No-Jargon Concept Guide", "Every concept label translated into the everyday job, evidence, hidden answer, move, and rejection check.", "no-jargon-concept-guide.html")}
 {card("Learning Path", f"{summary['learning_path_step_count']} steps from first question to field-level understanding.", "learning-path.html")}
 {card("Glossary", f"{summary['glossary_term_count']} field terms translated into everyday language.", "glossary.html")}
 {card("Domains", f"{summary['domain_guide_count']} domain guides that ground concepts in real scientific work.", "domains.html")}
@@ -5918,6 +5961,7 @@ def write_site(data: dict[str, object]) -> None:
     write_field_application_guide_page(SITE / "field-application-guide.html", list(topics))
     write_end_to_end_walkthrough_page(SITE / "end-to-end-walkthrough.html", list(topics))
     write_example_route_guide_page(SITE / "example-route-guide.html", list(worked_examples))
+    write_no_jargon_concept_guide_page(SITE / "no-jargon-concept-guide.html", list(topics))
 
     learning_cards = []
     for step in learning_path:
@@ -8844,6 +8888,10 @@ def write_markdown_export(data: dict[str, object]) -> None:
     for example in data["worked_examples"]:
         route = " -> ".join(str(slug).replace("-", " ") for slug in example["method_route"])
         lines.append(f"- {example['title']}: job: {example['question']} Observed: {example['observed']} Hidden: {example['hidden']} Route: {route}. First failure: {example['failure_signal']}")
+    lines.extend(["", "## No-Jargon Concept Guide"])
+    for topic in data["topic_treatments"]:
+        derivation = topic_derivation(topic)
+        lines.append(f"- {topic['title']}: job: {topic['common_problem']} Evidence: {derivation['observed']} Hidden answer: {derivation['hidden']} Move: {derivation['move']} Reject first by: {derivation['test']}")
     lines.extend(["", "## Concepts"])
     for concept in data["concept_atlas"]:
         lines.extend(
@@ -9490,6 +9538,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         SITE / "field-application-guide.html",
         SITE / "end-to-end-walkthrough.html",
         SITE / "example-route-guide.html",
+        SITE / "no-jargon-concept-guide.html",
         SITE / "learning-path.html",
         SITE / "glossary.html",
         SITE / "domains.html",
@@ -9576,6 +9625,22 @@ def validate(data: dict[str, object] | None = None) -> None:
     ):
         if term not in example_route_text:
             raise SystemExit(f"example route guide missing: {term}")
+    no_jargon_text = (SITE / "no-jargon-concept-guide.html").read_text(encoding="utf-8")
+    for term in (
+        "No-Jargon Concept Guide",
+        "Translate The Label Into A Job",
+        "Concepts Without Hiding Behind Names",
+        "Concept Label",
+        "Everyday Job",
+        "Evidence In Hand",
+        "Hidden Answer Needed",
+        "Plain Move",
+        "First Rejection Check",
+        "How To Read A Method Name",
+        "Reader Test",
+    ):
+        if term not in no_jargon_text:
+            raise SystemExit(f"no-jargon concept guide missing: {term}")
     for family in FAMILY_PAGES:
         family_path = SITE / "families" / f"{family['slug']}.html"
         if not family_path.exists():

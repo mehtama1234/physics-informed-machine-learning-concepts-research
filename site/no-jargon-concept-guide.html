@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Physics-Informed ML End-To-End Course Walkthrough</title>
+  <title>Physics-Informed ML No-Jargon Concept Guide</title>
   <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
@@ -49,135 +49,152 @@
 </nav>
 <main>
 
-<h1>End-To-End Course Walkthrough</h1>
-<h2>One Scientific Job From Start To Finish</h2>
-<p>Imagine a team has sparse measurements from a physical system, a few old simulations, a shaped domain, and a real decision to make. They need a field, property, risk, design answer, or readable rule for a new case. The course route is the plain path from that shortage to a claim that can be tested.</p>
-<p>The route below is not a ranking of topics. It is a way to read the course when the reader wants the big picture first. Each row says the everyday need, the first topic that helps, what that topic adds, and what changed case can reject the claim.</p>
-<h2>The Plain Route</h2>
+<h1>No-Jargon Concept Guide</h1>
+<h2>Translate The Label Into A Job</h2>
+<p>Use this page when a concept name sounds familiar but the reason for it is still unclear. The label is not the explanation. The explanation starts when the reader can say the everyday problem, the evidence in hand, the hidden answer, the move being made, and the changed case that can reject the claim.</p>
+<h2>Concepts Without Hiding Behind Names</h2>
 <table>
   <thead>
-    <tr><th>Step</th><th>First Topic To Open</th><th>Everyday Need</th><th>What It Adds</th><th>Rejection Check</th></tr>
+    <tr><th>Concept Label</th><th>Everyday Job</th><th>Evidence In Hand</th><th>Hidden Answer Needed</th><th>Plain Move</th><th>First Rejection Check</th></tr>
   </thead>
   <tbody>
 <tr>
-  <th>1</th>
-  <td><a href="topics/scientific-machine-learning.html">Scientific Machine Learning</a></td>
-  <td>scientific work needs predictions that respect measurements, equations, uncertainty, and domain limits at the same time</td>
-  <td>combine learned prediction with scientific checks that name what the claim is allowed to mean</td>
-  <td>state the scientific quantity first, then test it under a changed case that matters in that domain</td>
+  <td><a href="topics/deep-learning.html">Deep Learning</a></td>
+  <td>scientists often have examples of behavior but no short rule that predicts the next case</td>
+  <td>many input-output examples from experiments, simulations, or measurements</td>
+  <td>the exact rule that connects the input to the output</td>
+  <td>adjust many weights until the model maps familiar inputs to the right outputs</td>
+  <td>hold out a changed material, geometry, parameter range, or sensor condition</td>
 </tr>
 
 <tr>
-  <th>2</th>
-  <td><a href="topics/partial-differential-equations.html">Partial Differential Equations</a></td>
-  <td>a quantity changes over space and time, so one number is not enough to describe the situation</td>
-  <td>write a local change rule that uses rates across space and time</td>
-  <td>change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error</td>
-</tr>
-
-<tr>
-  <th>3</th>
   <td><a href="topics/physics-informed-neural-networks.html">Physics-Informed Neural Networks</a></td>
   <td>measurements may be sparse, but the answer must still respect a known physical equation</td>
+  <td>some measured values, boundary values, starting values, and a known differential equation</td>
+  <td>the full field value at every point in space and time</td>
   <td>fit a neural network while also measuring how badly its output violates the known equation</td>
   <td>move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements</td>
 </tr>
 
 <tr>
-  <th>4</th>
+  <td><a href="topics/partial-differential-equations.html">Partial Differential Equations</a></td>
+  <td>a quantity changes over space and time, so one number is not enough to describe the situation</td>
+  <td>a field such as temperature, pressure, concentration, velocity, or displacement</td>
+  <td>how every point in the field affects nearby points over time</td>
+  <td>write a local change rule that uses rates across space and time</td>
+  <td>change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error</td>
+</tr>
+
+<tr>
   <td><a href="topics/operator-learning.html">Operator Learning</a></td>
   <td>one simulation answer is not enough when engineers need the whole map from inputs to solution fields</td>
+  <td>many example inputs and their full solution fields</td>
+  <td>the rule that maps a new input field to its new solution field</td>
   <td>learn the map from problem input to solution, not only one solution at a time</td>
   <td>change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed</td>
 </tr>
 
 <tr>
-  <th>5</th>
+  <td><a href="topics/scientific-machine-learning.html">Scientific Machine Learning</a></td>
+  <td>scientific work needs predictions that respect measurements, equations, uncertainty, and domain limits at the same time</td>
+  <td>data, equations, units, simulation outputs, and domain limits</td>
+  <td>which parts of the scientific system are missing, noisy, or too costly to compute directly</td>
+  <td>combine learned prediction with scientific checks that name what the claim is allowed to mean</td>
+  <td>state the scientific quantity first, then test it under a changed case that matters in that domain</td>
+</tr>
+
+<tr>
   <td><a href="topics/surrogate-modeling.html">Surrogate Modeling</a></td>
   <td>a trusted simulator may be too slow to run for every design, control, or uncertainty question</td>
+  <td>expensive solver inputs and outputs for a limited set of cases</td>
+  <td>the solver answer for every new query someone wants to ask</td>
   <td>train a cheaper stand-in for the expensive input-output behavior</td>
   <td>compare against the full solver on new cases near the edge of the intended use</td>
 </tr>
 
 <tr>
-  <th>6</th>
-  <td><a href="topics/graphs-and-geometric-learning.html">Graphs And Geometric Learning</a></td>
-  <td>many scientific objects are not simple rows of numbers; their connections matter</td>
-  <td>let information move along the object connections instead of flattening the object into a plain row</td>
-  <td>change the mesh, rotate or move the object, or add missing interactions and inspect what breaks</td>
-</tr>
-
-<tr>
-  <th>7</th>
-  <td><a href="topics/attention-for-scientific-fields.html">Attention For Scientific Fields</a></td>
-  <td>a local patch of a field may depend on faraway information, but looking everywhere can be expensive</td>
-  <td>let the model choose which parts of the field exchange information</td>
-  <td>change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures</td>
-</tr>
-
-<tr>
-  <th>8</th>
   <td><a href="topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></td>
   <td>a prediction is not enough unless the user knows when it should be believed</td>
+  <td>training cases, validation cases, prediction errors, and known shifts between cases</td>
+  <td>how wrong the model may be on a case unlike the ones it learned from</td>
   <td>separate fit on familiar examples from evidence on changed examples</td>
   <td>move one important condition outside the training range and measure the first failure</td>
 </tr>
 
 <tr>
-  <th>9</th>
   <td><a href="topics/optimization-for-learning.html">Optimization For Learning</a></td>
   <td>learning needs a way to decide which model settings are better or worse</td>
+  <td>a written score that says which model behavior is better or worse</td>
+  <td>whether that score matches the scientific behavior the user actually cares about</td>
   <td>change model settings to lower the written score</td>
   <td>inspect what the score ignores, then check whether the ignored behavior fails after training</td>
 </tr>
 
 <tr>
-  <th>10</th>
   <td><a href="topics/generative-modeling.html">Generative Modeling</a></td>
   <td>some tasks need many possible examples, not one predicted answer</td>
+  <td>examples of fields, molecules, flows, shapes, or other scientific objects</td>
+  <td>the spread of possible valid objects beyond the examples</td>
   <td>learn how to sample new candidates that resemble the training family</td>
   <td>measure constraints, rare cases, conservation, and downstream task performance on generated samples</td>
 </tr>
 
 <tr>
-  <th>11</th>
+  <td><a href="topics/graphs-and-geometric-learning.html">Graphs And Geometric Learning</a></td>
+  <td>many scientific objects are not simple rows of numbers; their connections matter</td>
+  <td>objects with parts and connections, such as meshes, molecules, or interacting components</td>
+  <td>which neighboring and long-range interactions control the scientific quantity</td>
+  <td>let information move along the object connections instead of flattening the object into a plain row</td>
+  <td>change the mesh, rotate or move the object, or add missing interactions and inspect what breaks</td>
+</tr>
+
+<tr>
   <td><a href="topics/neural-differential-equations.html">Neural Differential Equations</a></td>
   <td>scientists may know that a system changes continuously but not know the exact rule for that change</td>
+  <td>measurements of a system changing over time</td>
+  <td>the rate rule that moves the present value into the future</td>
   <td>learn the missing rate rule and place it inside a time-evolution calculation</td>
   <td>run longer than the training window and check whether small rate errors accumulate into drift</td>
 </tr>
 
 <tr>
-  <th>12</th>
   <td><a href="topics/symbolic-regression.html">Symbolic Regression And Model Discovery</a></td>
   <td>a scientist may need a readable equation, not only a model that predicts well</td>
+  <td>measured variables and candidate mathematical ingredients</td>
+  <td>which short formula, if any, actually explains the measured change</td>
   <td>search for a readable equation that fits the data and survives a changed case</td>
   <td>remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts</td>
 </tr>
 
 <tr>
-  <th>13</th>
   <td><a href="topics/foundation-models-for-pdes.html">Foundation Models For PDEs</a></td>
   <td>one trained model may be asked to handle many related equations, grids, parameters, or physical settings</td>
+  <td>many PDE problem instances across equations, grids, parameters, or physical settings</td>
+  <td>which shared structure carries from one scientific task to another</td>
   <td>train one broad model to reuse structure across many related field-prediction tasks</td>
   <td>hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver</td>
 </tr>
 
 <tr>
-  <th>14</th>
-  <td><a href="topics/deep-learning.html">Deep Learning</a></td>
-  <td>scientists often have examples of behavior but no short rule that predicts the next case</td>
-  <td>adjust many weights until the model maps familiar inputs to the right outputs</td>
-  <td>hold out a changed material, geometry, parameter range, or sensor condition</td>
+  <td><a href="topics/attention-for-scientific-fields.html">Attention For Scientific Fields</a></td>
+  <td>a local patch of a field may depend on faraway information, but looking everywhere can be expensive</td>
+  <td>large fields where one location may depend on other locations</td>
+  <td>which distant parts matter for the local prediction</td>
+  <td>let the model choose which parts of the field exchange information</td>
+  <td>change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures</td>
 </tr>
 </tbody>
 </table>
-<h2>Shape And Field Checks</h2>
-<p>Any route through the course should pause when the scientific object has a shape, boundary, mesh, molecule, graph, surface, or field. Ask what relation carries the quantity. Then change that relation: move a boundary, refine a mesh, add a missing link, hold out a molecule family, shift a field region, or test a rare flow case.</p>
-<h2>What The Final Claim Can Say</h2>
-<p>The final claim should be modest and useful. It can say which evidence was used, which answer was needed, which mathematical move carried the answer, which field decision used it, and which changed case was checked. It should not claim that the method works everywhere, or that the course label itself proves anything.</p>
-<h2>Final Say-It-Back Test</h2>
-<p>A reader understands the whole course when they can tell the story without hiding behind a method name: here is the real scientific job, here is the evidence, here is the hidden answer, here is the topic route, here is where shape or topology enters, here is the field where the answer matters, and here is the changed case that can reject the claim.</p>
+<h2>How To Read A Method Name</h2>
+<ol>
+  <li>Pause before treating the label as understanding.</li>
+  <li>Say what the scientist or engineer needs to decide.</li>
+  <li>Say what evidence is already present.</li>
+  <li>Say what answer is still missing.</li>
+  <li>Say what changes first when the claim becomes too broad.</li>
+</ol>
+<h2>Reader Test</h2>
+<p>A reader understands a concept label only when they can replace it with an everyday sentence about the job it does. That sentence must name evidence, hidden answer, field use, shape or topology if it matters, and the first changed case.</p>
 
 </main>
 </body>
