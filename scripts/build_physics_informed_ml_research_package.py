@@ -3451,18 +3451,63 @@ def theme_hits(concepts: list[str]) -> list[str]:
     return hits[:3] or ["data-to-scientific-prediction"]
 
 
+def dedupe_adjacent_words(words: list[str]) -> list[str]:
+    cleaned: list[str] = []
+    for word in words:
+        cleaned.append(word)
+        for span in range(8, 2, -1):
+            if len(cleaned) >= span * 2 and cleaned[-span:] == cleaned[-span * 2 : -span]:
+                del cleaned[-span:]
+                break
+    return cleaned
+
+
 def first_excerpt(text: str, terms: list[str], limit: int = 44) -> str:
     words = re.findall(r"[A-Za-z][A-Za-z'-]*", text)
     if not words:
         return ""
     lowered_words = [word.lower() for word in words]
-    term_words = [part for term in terms for part in term.lower().split()]
-    start = 0
+    term_words = {
+        part
+        for term in terms
+        for part in re.findall(r"[a-z][a-z'-]*", term.lower())
+        if len(part) > 2 and part not in {"the", "and", "for", "with", "from", "into"}
+    }
+    if not term_words:
+        return " ".join(dedupe_adjacent_words(words[:limit]))
+    boilerplate = {"welcome", "lecture", "morning", "everyone", "course", "today", "started"}
+    best_start = 0
+    best_score = -10_000
     for idx, word in enumerate(lowered_words):
-        if word in term_words:
-            start = max(0, idx - 8)
-            break
-    return " ".join(words[start : start + limit])
+        if word not in term_words:
+            continue
+        start = max(0, idx - 14)
+        window = lowered_words[start : start + limit]
+        term_hits = sum(1 for item in window if item in term_words)
+        boilerplate_hits = sum(1 for item in window if item in boilerplate)
+        early_penalty = 4 if start < 45 else 0
+        score = term_hits * 5 - boilerplate_hits * 2 - early_penalty
+        if score > best_score:
+            best_score = score
+            best_start = start
+    excerpt_words = dedupe_adjacent_words(words[best_start : best_start + limit + 12])
+    return " ".join(excerpt_words[:limit])
+
+
+def evidence_score(record: TranscriptRecord, concept: dict[str, object]) -> int:
+    title_words = re.findall(r"[a-z][a-z'-]*", record.title.lower())
+    excerpt_words = re.findall(r"[a-z][a-z'-]*", record.evidence_excerpt.lower())
+    keywords = [
+        part
+        for keyword in concept["keywords"]
+        for part in re.findall(r"[a-z][a-z'-]*", str(keyword).lower())
+        if len(part) > 2
+    ]
+    title_hits = sum(1 for word in title_words if word in keywords)
+    excerpt_hits = sum(1 for word in excerpt_words if word in keywords)
+    boilerplate_hits = sum(1 for word in excerpt_words if word in {"welcome", "morning", "everyone", "lecture"})
+    source_anchor_hits = sum(1 for anchor in SOURCE_ANCHORS.get(str(concept["slug"]), []) if record.title in str(anchor["source"]))
+    return title_hits * 20 + min(excerpt_hits, 8) * 3 + source_anchor_hits * 30 - boilerplate_hits * 6
 
 
 def load_records() -> list[TranscriptRecord]:
@@ -3536,7 +3581,11 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
 
     concept_atlas = []
     for concept in CONCEPTS:
-        supporting = concept_records.get(concept["slug"], [])
+        supporting = sorted(
+            concept_records.get(concept["slug"], []),
+            key=lambda row: (evidence_score(row, concept), row.word_count),
+            reverse=True,
+        )
         if not supporting:
             continue
         concept_atlas.append(
@@ -7748,6 +7797,16 @@ def validate(data: dict[str, object] | None = None) -> None:
                 raise SystemExit(f"concept evidence packet missing source strength {field}: {packet['title']}")
         if int(packet.get("evidence_count") or 0) <= 0:
             raise SystemExit(f"concept evidence packet has no evidence: {packet['title']}")
+        boilerplate_excerpt_patterns = (
+            "welcome to the first lecture",
+            "welcome to this lecture",
+            "morning everyone",
+            "let's get started with today's lecture",
+        )
+        for evidence in packet.get("evidence", []):
+            excerpt = str(evidence.get("excerpt") or "").lower()
+            if any(pattern in excerpt for pattern in boilerplate_excerpt_patterns):
+                raise SystemExit(f"boilerplate evidence excerpt selected: {packet['title']} -> {evidence.get('title')}")
         for item in packet["review_links"]:
             if not (SITE / str(item["href"])).exists():
                 raise SystemExit(f"concept evidence packet review link missing: {packet['title']} -> {item['href']}")
