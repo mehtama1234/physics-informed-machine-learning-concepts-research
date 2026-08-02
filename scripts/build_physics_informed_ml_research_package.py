@@ -5229,6 +5229,7 @@ def html_page(title: str, body: str, root_prefix: str = "") -> str:
   <a href="{root_prefix}evidence-packets.html">Packets</a>
   <a href="{root_prefix}quality.html">Quality</a>
   <a href="{root_prefix}wording-audit.html">Wording</a>
+  <a href="{root_prefix}plain-essay-review.html">Essays</a>
   <a href="{root_prefix}synthesis.html">Synthesis</a>
   <a href="{root_prefix}review-entrypoints.html">Review Map</a>
   <a href="{root_prefix}review-search.html">Find</a>
@@ -5502,6 +5503,74 @@ def write_importance_matrix_page(path: Path, topics: list[dict[str, object]]) ->
 <p>A reader understands the course-wide importance when they can pick Deep Learning, Operator Learning, and Graphs And Geometric Learning and explain the everyday problem, the shape or topology link, one other-field use, and the first changed case without using the method name as the reason.</p>
 """
     path.write_text(html_page("Physics-Informed ML Importance Matrix", body), encoding="utf-8")
+
+
+def write_plain_essay_review_page(path: Path, topics: list[dict[str, object]]) -> None:
+    rows = []
+    detail_sections = []
+    for topic in topics:
+        derivation = topic_derivation(topic)
+        applications = topic_plain_applications(topic, derivation)
+        shape = next(row for row in applications if row["field"] == "Topology and shape")
+        engineering = next(row for row in applications if row["field"] == "Engineering design")
+        materials = next(row for row in applications if row["field"] == "Materials, chemistry, and biology")
+        fields = next(row for row in applications if row["field"] == "Climate, fluids, and fields")
+        topic_href = f"topics/{html.escape(str(topic['slug']))}.html"
+        rows.append(
+            f"""
+<tr>
+  <td><a href="{topic_href}">{html.escape(str(topic['title']))}</a></td>
+  <td>{html.escape(str(topic['common_problem']))}</td>
+  <td>{html.escape(str(derivation['observed']))} -> {html.escape(str(derivation['hidden']))}</td>
+  <td>{html.escape(str(shape['use']))}</td>
+  <td>{html.escape(str(engineering['use']))} {html.escape(str(materials['use']))} {html.escape(str(fields['use']))}</td>
+  <td>{html.escape(str(derivation['test']))}</td>
+</tr>
+"""
+        )
+        detail_sections.append(
+            f"""
+<section>
+  <h2>{html.escape(str(topic['title']))}</h2>
+  <table>
+    <tbody>
+      <tr><th>Everyday Opening To Find</th><td>{html.escape(str(topic['common_problem']))}</td></tr>
+      <tr><th>First-Principles Chain To Find</th><td>Evidence: {html.escape(str(derivation['observed']))}. Missing answer: {html.escape(str(derivation['hidden']))}. Move: {html.escape(str(derivation['move']))}.</td></tr>
+      <tr><th>Shape Or Topology To Find</th><td>{html.escape(str(shape['why']))} Check: {html.escape(str(shape['check']))}</td></tr>
+      <tr><th>Field Uses To Find</th><td>Engineering: {html.escape(str(engineering['why']))} Materials, chemistry, and biology: {html.escape(str(materials['why']))} Climate, fluids, and fields: {html.escape(str(fields['why']))}</td></tr>
+      <tr><th>Final Importance Claim To Find</th><td>{html.escape(str(topic['why_it_matters']))}</td></tr>
+      <tr><th>Weak Spot To Inspect First</th><td>{html.escape(str(topic['failure_boundary']))}</td></tr>
+    </tbody>
+  </table>
+</section>
+"""
+        )
+    body = f"""
+<h1>Plain Essay Review</h1>
+<h2>Teacher Review Goal</h2>
+<p>This page checks whether the long topic essays do the job the course promises. A topic passes only when a reader can start from an everyday need, follow the first-principles chain, see where topology or shape enters, name uses in other fields, and end with a test that can narrow the claim.</p>
+<h2>Review Matrix</h2>
+<table>
+  <thead>
+    <tr><th>Topic</th><th>Everyday Need</th><th>First-Principles Chain</th><th>Shape Or Topology</th><th>Other Field Uses</th><th>First Changed Case</th></tr>
+  </thead>
+  <tbody>{''.join(rows)}</tbody>
+</table>
+<h2>Review Method</h2>
+<ol>
+  <li>Open the topic page and find Long Everyday Importance Essay.</li>
+  <li>Read the first paragraph and check that it starts from a person with a real shortage.</li>
+  <li>Find the evidence, hidden answer, and plain move before reading any formula.</li>
+  <li>Check that topology or shape is explained as a real relation, not as a buzzword.</li>
+  <li>Find engineering, materials or biology, and climate or field uses.</li>
+  <li>End by naming the changed case that can narrow the claim.</li>
+</ol>
+<h2>Per-Topic Review Burden</h2>
+{''.join(detail_sections)}
+<h2>Reader Pass Test</h2>
+<p>A reader passes this review when they can pick any topic and say why it matters in everyday words, how the first-principles move follows from the evidence, where shape or topology matters, how the idea appears in at least two fields, and what changed case would make the claim too broad.</p>
+"""
+    path.write_text(html_page("Physics-Informed ML Plain Essay Review", body), encoding="utf-8")
 
 
 def write_end_to_end_walkthrough_page(path: Path, topics: list[dict[str, object]]) -> None:
@@ -5918,6 +5987,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Evidence Packets", f"{summary['concept_evidence_packet_count']} concept packets tying source support to review pages.", "evidence-packets.html")}
 {card("Quality Rubric", f"{summary['quality_rubric_count']} editorial standards for first-principles pages.", "quality.html")}
 {card("Wording Audit", "Hard-stop and review wording terms mapped to current pages and replacement tests.", "wording-audit.html")}
+{card("Plain Essay Review", "Teacher-facing checks for the long everyday topic essays across all concepts.", "plain-essay-review.html")}
 {card("Synthesis", f"{summary['synthesis_guide_count']} pages tying the field into one argument.", "synthesis.html")}
 {card("Meaty Goal", "End-to-end done criteria for turning the package into a teaching-grade first-principles research guide.", "meaty-goal.html")}
 {card("Meaty Goal Coverage", f"{summary['meaty_goal_coverage_count']} concepts checked against the required teaching-grade page parts.", "meaty-goal-coverage.html")}
@@ -6112,6 +6182,7 @@ def write_site(data: dict[str, object]) -> None:
     wording_audit = build_wording_audit()
     (ANALYSIS / "wording_audit.json").write_text(json.dumps(wording_audit, indent=2) + "\n", encoding="utf-8")
     write_wording_audit_page(SITE / "wording-audit.html", wording_audit)
+    write_plain_essay_review_page(SITE / "plain-essay-review.html", list(topics))
 
     synthesis_cards = []
     for item in synthesis_guides:
@@ -9579,6 +9650,13 @@ def write_markdown_export(data: dict[str, object]) -> None:
             ]
         )
     lines.extend(["", "## Wording Audit", "- See `site/wording-audit.html` for hard-stop terms, review terms, current page hits, and replacement tests."])
+    lines.extend(
+        [
+            "",
+            "## Plain Essay Review",
+            "- See `site/plain-essay-review.html` for teacher-facing checks that each long topic essay starts from an everyday need, follows first principles, explains topology or shape, names field uses, and ends with a changed-case test.",
+        ]
+    )
     lines.extend(["", "## Field Synthesis"])
     for item in data["synthesis_guides"]:
         lines.extend(
@@ -9903,6 +9981,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         SITE / "evidence-packets.html",
         SITE / "quality.html",
         SITE / "synthesis.html",
+        SITE / "plain-essay-review.html",
         SITE / "review-entrypoints.html",
         SITE / "review-search.html",
         SITE / "editorial-roadmap.html",
@@ -9965,6 +10044,27 @@ def validate(data: dict[str, object] | None = None) -> None:
     ):
         if term not in importance_matrix_text:
             raise SystemExit(f"importance matrix missing: {term}")
+    plain_essay_review_text = (SITE / "plain-essay-review.html").read_text(encoding="utf-8")
+    for term in (
+        "Plain Essay Review",
+        "Teacher Review Goal",
+        "Review Matrix",
+        "Everyday Need",
+        "First-Principles Chain",
+        "Shape Or Topology",
+        "Other Field Uses",
+        "First Changed Case",
+        "Review Method",
+        "Per-Topic Review Burden",
+        "Everyday Opening To Find",
+        "Weak Spot To Inspect First",
+        "Reader Pass Test",
+        "Deep Learning",
+        "Operator Learning",
+        "Graphs And Geometric Learning",
+    ):
+        if term not in plain_essay_review_text:
+            raise SystemExit(f"plain essay review missing: {term}")
     walkthrough_text = (SITE / "end-to-end-walkthrough.html").read_text(encoding="utf-8")
     for term in (
         "End-To-End Course Walkthrough",

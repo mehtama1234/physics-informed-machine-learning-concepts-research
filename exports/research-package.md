@@ -2983,6 +2983,9 @@
 ## Wording Audit
 - See `site/wording-audit.html` for hard-stop terms, review terms, current page hits, and replacement tests.
 
+## Plain Essay Review
+- See `site/plain-essay-review.html` for teacher-facing checks that each long topic essay starts from an everyday need, follows first principles, explains topology or shape, names field uses, and ends with a changed-case test.
+
 ## Field Synthesis
 ### Central Problem
 - Claim: Physics-informed machine learning asks how a learned answer can stay tied to the real scientific problem when measurements are sparse, equations are partial, simulations are costly, and future cases are different.
