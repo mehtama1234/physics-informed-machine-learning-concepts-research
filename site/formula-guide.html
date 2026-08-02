@@ -126,6 +126,60 @@
   <td>hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver</td>
   <td>Do not read broad training as coverage of a new equation. The new task must share the structure the model actually learned.</td>
 </tr>
+
+<tr>
+  <td>Deep Learning<br><a href="topics/deep-learning.html">topic</a> · <a href="derivations/deep-learning.html">derivation</a></td>
+  <td><code>input example -&gt; adjustable rule -&gt; predicted answer -&gt; error check</code></td>
+  <td><ul><li>input example</li><li>adjustable rule</li><li>predicted answer</li><li>error check</li></ul></td>
+  <td>It can use large example collections, but the examples define the world it has evidence for.</td>
+  <td>hold out a changed material, geometry, parameter range, or sensor condition</td>
+  <td>Do not read the formula as proof. It is a compact map from many input-output examples from experiments, simulations, or measurements to the exact rule that connects the input to the output, and it still needs the stated failure test.</td>
+</tr>
+
+<tr>
+  <td>Scientific Machine Learning<br><a href="topics/scientific-machine-learning.html">topic</a> · <a href="derivations/scientific-machine-learning.html">derivation</a></td>
+  <td><code>measurements + known rule + learned missing part -&gt; checked scientific answer</code></td>
+  <td><ul><li>measurements + known rule + learned missing part</li><li>checked scientific answer</li></ul></td>
+  <td>It turns machine learning from a general prediction tool into a disciplined way to answer a scientific question with stated evidence.</td>
+  <td>state the scientific quantity first, then test it under a changed case that matters in that domain</td>
+  <td>Do not read the formula as proof. It is a compact map from data, equations, units, simulation outputs, and domain limits to which parts of the scientific system are missing, noisy, or too costly to compute directly, and it still needs the stated failure test.</td>
+</tr>
+
+<tr>
+  <td>Optimization For Learning<br><a href="topics/optimization-for-learning.html">topic</a> · <a href="derivations/optimization-for-learning.html">derivation</a></td>
+  <td><code>current model -&gt; error score -&gt; change model -&gt; check again</code></td>
+  <td><ul><li>current model</li><li>error score</li><li>change model</li><li>check again</li></ul></td>
+  <td>The training score is the contract the model follows; if the contract is wrong, the learned answer can be wrong in a polished way.</td>
+  <td>inspect what the score ignores, then check whether the ignored behavior fails after training</td>
+  <td>Do not read the formula as proof. It is a compact map from a written score that says which model behavior is better or worse to whether that score matches the scientific behavior the user actually cares about, and it still needs the stated failure test.</td>
+</tr>
+
+<tr>
+  <td>Generative Modeling<br><a href="topics/generative-modeling.html">topic</a> · <a href="derivations/generative-modeling.html">derivation</a></td>
+  <td><code>known conditions + variation -&gt; candidate example -&gt; realism and rule checks</code></td>
+  <td><ul><li>known conditions + variation</li><li>candidate example</li><li>realism and rule checks</li></ul></td>
+  <td>Many scientific decisions need a range of possible cases, not a single average case.</td>
+  <td>measure constraints, rare cases, conservation, and downstream task performance on generated samples</td>
+  <td>Do not read the formula as proof. It is a compact map from examples of fields, molecules, flows, shapes, or other scientific objects to the spread of possible valid objects beyond the examples, and it still needs the stated failure test.</td>
+</tr>
+
+<tr>
+  <td>Graphs And Geometric Learning<br><a href="topics/graphs-and-geometric-learning.html">topic</a> · <a href="derivations/graphs-and-geometric-learning.html">derivation</a></td>
+  <td><code>connected shape + local values -&gt; relation-aware updates -&gt; field or object answer</code></td>
+  <td><ul><li>connected shape + local values</li><li>relation-aware updates</li><li>field or object answer</li></ul></td>
+  <td>Many scientific objects are defined partly by their shape and connections, so the model must preserve that structure to ask the right question.</td>
+  <td>change the mesh, rotate or move the object, or add missing interactions and inspect what breaks</td>
+  <td>Do not read the formula as proof. It is a compact map from objects with parts and connections, such as meshes, molecules, or interacting components to which neighboring and long-range interactions control the scientific quantity, and it still needs the stated failure test.</td>
+</tr>
+
+<tr>
+  <td>Attention For Scientific Fields<br><a href="topics/attention-for-scientific-fields.html">topic</a> · <a href="derivations/attention-for-scientific-fields.html">derivation</a></td>
+  <td><code>current field part + relevant other parts -&gt; weighted information -&gt; updated field part</code></td>
+  <td><ul><li>current field part + relevant other parts</li><li>weighted information</li><li>updated field part</li></ul></td>
+  <td>Scientific fields often have nonlocal influence, and a purely local rule can miss how far-away structure changes the answer.</td>
+  <td>change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures</td>
+  <td>Do not read the formula as proof. It is a compact map from large fields where one location may depend on other locations to which distant parts matter for the local prediction, and it still needs the stated failure test.</td>
+</tr>
 </tbody>
 </table>
 

@@ -128,8 +128,29 @@
 </table>
 
 
+<h2>Core Idea In One Sentence</h2>
+<p>Graph and geometric learning keeps the connections and shape of the object visible to the model.</p>
+<h2>Where This Is Useful</h2>
+<p>Use it when the data lives on meshes, molecules, surfaces, sensor networks, or other connected shapes where nearby relations matter.</p>
+<h2>Where This Breaks</h2>
+<p>Do not flatten connected scientific data into an ordinary table if the connections carry the physical meaning.</p>
+<h2>Concrete Domain Story</h2>
+<p>A bridge mesh, a molecule, and an airfoil surface are not just lists of numbers. Which points touch, which edges carry forces, and which shape is rotated or refined can change the answer.</p>
+<h2>Mathematical Shape Without Jargon</h2>
+<div class="route"><div class="route-step">1. Represent the object as points with connections or geometric positions.</div><div class="route-step">2. Attach measured or computed values to points, edges, or whole shapes.</div><div class="route-step">3. Move information along connections and through local neighborhoods.</div><div class="route-step">4. Build an answer for each point, edge, or whole object.</div><div class="route-step">5. Test changed meshes, rotations, refinements, and boundary regions.</div></div>
+<p><strong>Plain formula:</strong> connected shape + local values -&gt; relation-aware updates -&gt; field or object answer</p>
+<h2>Why This Matters</h2>
+<p>Many scientific objects are defined partly by their shape and connections, so the model must preserve that structure to ask the right question.</p>
+<h2>Red Flags</h2>
+<ul><li>Mesh order changes the answer when the geometry did not change.</li><li>The model ignores boundaries or long-distance connections that matter physically.</li><li>It is tested only on one mesh resolution.</li><li>A rotated or refined shape breaks the result without explanation.</li></ul>
+<h2>Connects To</h2>
+<ul><li><a href="../topics/operator-learning.html">Operator Learning</a></li><li><a href="../topics/attention-for-scientific-fields.html">Attention For Scientific Fields</a></li><li><a href="../topics/partial-differential-equations.html">Partial Differential Equations</a></li></ul>
 
 
+
+
+<h2>Full Derivation Walkthrough</h2>
+<p><a href="../derivations/graphs-and-geometric-learning.html">Open the step-by-step derivation page</a>. It slows this concept down from observed evidence, to hidden quantity, to formula shape, to failure test.</p>
 
 
 <h2>Concrete Worked Example</h2>

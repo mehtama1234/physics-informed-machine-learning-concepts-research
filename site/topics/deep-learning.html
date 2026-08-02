@@ -134,6 +134,24 @@
 </table>
 
 
+<h2>Core Idea In One Sentence</h2>
+<p>Deep learning fits a flexible rule from examples when the useful pattern is hard to write by hand.</p>
+<h2>Where This Is Useful</h2>
+<p>Use it when there are many checked examples and the job is to predict, classify, compress, or complete a new case from the same kind of source.</p>
+<h2>Where This Breaks</h2>
+<p>Do not use a good fit on old examples as proof that the model understands a new physical regime, new sensor, new scale, or new boundary.</p>
+<h2>Concrete Domain Story</h2>
+<p>Suppose many solved flow snapshots are available. A deep model can learn repeated shapes in those snapshots, but it still needs a changed-case test before it can be used as scientific evidence.</p>
+<h2>Mathematical Shape Without Jargon</h2>
+<div class="route"><div class="route-step">1. Choose what the model receives, such as an image, field, history, or measured variables.</div><div class="route-step">2. Choose what answer it must return.</div><div class="route-step">3. Let many adjustable internal steps turn the input into the answer.</div><div class="route-step">4. Compare the answer with known examples and adjust the steps.</div><div class="route-step">5. Test on cases that differ in the same way real use will differ.</div></div>
+<p><strong>Plain formula:</strong> input example -&gt; adjustable rule -&gt; predicted answer -&gt; error check</p>
+<h2>Why This Matters</h2>
+<p>It can use large example collections, but the examples define the world it has evidence for.</p>
+<h2>Red Flags</h2>
+<ul><li>The page talks about accuracy without naming the test cases.</li><li>The model is used after the data source or physical scale changes.</li><li>The important scientific quantity is not the quantity being checked.</li><li>No one asks what pattern the examples could not possibly teach.</li></ul>
+<h2>Connects To</h2>
+<ul><li><a href="../topics/surrogate-modeling.html">Surrogate Modeling</a></li><li><a href="../topics/scientific-machine-learning.html">Scientific Machine Learning</a></li><li><a href="../topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></li></ul>
+
 
 <h2>Visual Map</h2>
 <article class="card">
@@ -145,6 +163,9 @@
 
 </article>
 
+
+<h2>Full Derivation Walkthrough</h2>
+<p><a href="../derivations/deep-learning.html">Open the step-by-step derivation page</a>. It slows this concept down from observed evidence, to hidden quantity, to formula shape, to failure test.</p>
 
 
 <h2>Concrete Worked Example</h2>

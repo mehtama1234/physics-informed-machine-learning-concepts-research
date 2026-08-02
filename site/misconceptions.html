@@ -117,6 +117,54 @@
   <td>hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver</td>
   <td><a href="derivations/foundation-models-for-pdes.html">derivation</a> · <a href="reader-checks/foundation-pde-check.html">reader check</a></td>
 </tr>
+
+<tr>
+  <td><a href="topics/deep-learning.html">Deep Learning</a></td>
+  <td><ul><li>A weak answer says only that Deep Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.</li><li>The page talks about accuracy without naming the test cases.</li><li>The model is used after the data source or physical scale changes.</li><li>The important scientific quantity is not the quantity being checked.</li><li>No one asks what pattern the examples could not possibly teach.</li></ul></td>
+  <td>Deep learning fits a flexible rule from examples when the useful pattern is hard to write by hand.</td>
+  <td>hold out a changed material, geometry, parameter range, or sensor condition</td>
+  <td><a href="derivations/deep-learning.html">derivation</a> · <a href="reader-checks/deep-learning-check.html">reader check</a></td>
+</tr>
+
+<tr>
+  <td><a href="topics/scientific-machine-learning.html">Scientific Machine Learning</a></td>
+  <td><ul><li>A weak answer says only that Scientific Machine Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.</li><li>The target quantity is vague.</li><li>The known rule is mentioned but not actually checked.</li><li>The learned part can violate conservation, boundaries, or units without penalty.</li><li>The result is not compared against a changed experiment or trusted solve.</li></ul></td>
+  <td>Scientific machine learning uses data and scientific rules together so the answer is useful for a named scientific question.</td>
+  <td>state the scientific quantity first, then test it under a changed case that matters in that domain</td>
+  <td><a href="derivations/scientific-machine-learning.html">derivation</a> · <a href="reader-checks/scientific-machine-learning-check.html">reader check</a></td>
+</tr>
+
+<tr>
+  <td><a href="topics/optimization-for-learning.html">Optimization For Learning</a></td>
+  <td><ul><li>A weak answer says only that Optimization For Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.</li><li>The loss terms are listed but their relative weight is not justified.</li><li>Only the final score is reported.</li><li>A hard constraint is treated as a soft suggestion without checking the damage.</li><li>Training succeeds while the physical test fails.</li></ul></td>
+  <td>Optimization is the process of changing a model until a written error score gets smaller.</td>
+  <td>inspect what the score ignores, then check whether the ignored behavior fails after training</td>
+  <td><a href="derivations/optimization-for-learning.html">derivation</a> · <a href="reader-checks/optimization-for-learning-check.html">reader check</a></td>
+</tr>
+
+<tr>
+  <td><a href="topics/generative-modeling.html">Generative Modeling</a></td>
+  <td><ul><li>A weak answer says only that Generative Modeling is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.</li><li>Samples look realistic but violate a known equation or boundary.</li><li>Diversity is reported without saying whether the candidates are valid.</li><li>The model creates cases outside the evidence family.</li><li>The generated object is used as data without marking it as generated.</li></ul></td>
+  <td>Generative modeling learns how to make possible examples, not just score one existing example.</td>
+  <td>measure constraints, rare cases, conservation, and downstream task performance on generated samples</td>
+  <td><a href="derivations/generative-modeling.html">derivation</a> · <a href="reader-checks/generative-modeling-check.html">reader check</a></td>
+</tr>
+
+<tr>
+  <td><a href="topics/graphs-and-geometric-learning.html">Graphs And Geometric Learning</a></td>
+  <td><ul><li>A weak answer says only that Graphs And Geometric Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.</li><li>Mesh order changes the answer when the geometry did not change.</li><li>The model ignores boundaries or long-distance connections that matter physically.</li><li>It is tested only on one mesh resolution.</li><li>A rotated or refined shape breaks the result without explanation.</li></ul></td>
+  <td>Graph and geometric learning keeps the connections and shape of the object visible to the model.</td>
+  <td>change the mesh, rotate or move the object, or add missing interactions and inspect what breaks</td>
+  <td><a href="derivations/graphs-and-geometric-learning.html">derivation</a> · <a href="reader-checks/graphs-and-geometric-learning-check.html">reader check</a></td>
+</tr>
+
+<tr>
+  <td><a href="topics/attention-for-scientific-fields.html">Attention For Scientific Fields</a></td>
+  <td><ul><li>A weak answer says only that Attention For Scientific Fields is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.</li><li>Attention maps are shown as explanation without validation.</li><li>The method ignores conservation or boundary checks.</li><li>It works only at the trained resolution or patch size.</li><li>Long-range influence is claimed but not stress-tested.</li></ul></td>
+  <td>Attention lets a model decide which other parts of a field matter for the point or region being predicted.</td>
+  <td>change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures</td>
+  <td><a href="derivations/attention-for-scientific-fields.html">derivation</a> · <a href="reader-checks/attention-for-scientific-fields-check.html">reader check</a></td>
+</tr>
 </tbody>
 </table>
 

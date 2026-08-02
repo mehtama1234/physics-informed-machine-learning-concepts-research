@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Scientific Machine Learning</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<nav class="topbar">
+  <a href="../index.html">Physics-Informed ML</a>
+  <a href="../transcripts.html">Transcripts</a>
+  <a href="../concept-atlas.html">Concept Atlas</a>
+  <a href="../families.html">Families</a>
+  <a href="../comparisons.html">Comparisons</a>
+  <a href="../worked-examples.html">Examples</a>
+  <a href="../diagrams.html">Diagrams</a>
+  <a href="../derivations.html">Derivations</a>
+  <a href="../formula-guide.html">Formulas</a>
+  <a href="../misconceptions.html">Misreads</a>
+  <a href="../learning-path.html">Path</a>
+  <a href="../glossary.html">Glossary</a>
+  <a href="../domains.html">Domains</a>
+  <a href="../reader-checks.html">Checks</a>
+  <a href="../decision-guide.html">Decide</a>
+  <a href="../provenance.html">Provenance</a>
+  <a href="../coverage.html">Coverage</a>
+  <a href="../dependencies.html">Dependencies</a>
+  <a href="../concept-ladder.html">Ladder</a>
+  <a href="../evidence-packets.html">Packets</a>
+  <a href="../quality.html">Quality</a>
+  <a href="../synthesis.html">Synthesis</a>
+  <a href="../review-entrypoints.html">Review Map</a>
+  <a href="../review-search.html">Find</a>
+  <a href="../review-queue.html">Queue</a>
+  <a href="../editorial-roadmap.html">Roadmap</a>
+  <a href="../completion-audit.html">Audit</a>
+  <a href="../handoff.html">Handoff</a>
+  <a href="../theme-map.html">Themes</a>
+  <a href="../evidence-ledger.html">Evidence</a>
+</nav>
+<main>
+
+<h1>Scientific Machine Learning</h1>
+<p>Scientific machine learning uses data and scientific rules together so the answer is useful for a named scientific question.</p>
+<h2>Domain Story</h2>
+<p>A material test may have sparse measurements and a partial stress law. Scientific machine learning asks how the measurements and the law should correct each other.</p>
+<h2>Problem</h2>
+<p>scientific work needs predictions that respect measurements, equations, uncertainty, and domain limits at the same time</p>
+<h2>Start With What Is Observed</h2>
+<p>data, equations, units, simulation outputs, and domain limits</p>
+<h2>Name What Is Hidden</h2>
+<p>which parts of the scientific system are missing, noisy, or too costly to compute directly</p>
+<h2>Build The Mathematical Shape</h2>
+<div class="route"><div class="route-step">1. Name the scientific quantity people need.</div><div class="route-step">2. Name the measured evidence and the trusted rule.</div><div class="route-step">3. Decide which part is learned and which part is fixed.</div><div class="route-step">4. Fit the learned part while checking the rule and the measurements.</div><div class="route-step">5. Report where the combined model was tested and where it broke.</div></div>
+
+<h2>Why This Shape And Not Another</h2>
+<p>The formula shape is justified only when each part carries a burden from the scientific problem. If a part carries no burden, it is decoration. If a burden is missing, the formula is answering a weaker question.</p>
+<table>
+  <tbody>
+    <tr><th>Observed Burden</th><td>The shape must use data, equations, units, simulation outputs, and domain limits, because that is the evidence actually available.</td></tr>
+    <tr><th>Hidden Burden</th><td>The shape must point toward which parts of the scientific system are missing, noisy, or too costly to compute directly, because that is the answer the scientist still needs.</td></tr>
+    <tr><th>Use Burden</th><td>The shape matters only if it supports this job: It turns machine learning from a general prediction tool into a disciplined way to answer a scientific question with stated evidence.</td></tr>
+    <tr><th>Rejection Burden</th><td>The shape is too weak if it cannot be tested this way: state the scientific quantity first, then test it under a changed case that matters in that domain</td></tr>
+  </tbody>
+</table>
+
+
+<h2>Plain Formula</h2>
+<p>measurements + known rule + learned missing part -&gt; checked scientific answer</p>
+<h2>Why This Matters</h2>
+<p>It turns machine learning from a general prediction tool into a disciplined way to answer a scientific question with stated evidence.</p>
+<h2>Failure Test</h2>
+<p>state the scientific quantity first, then test it under a changed case that matters in that domain</p>
+<h2>Red Flags</h2>
+<ul><li>The target quantity is vague.</li><li>The known rule is mentioned but not actually checked.</li><li>The learned part can violate conservation, boundaries, or units without penalty.</li><li>The result is not compared against a changed experiment or trusted solve.</li></ul>
+<h2>Connects To</h2>
+<ul><li><a href="../topics/physics-informed-neural-networks.html">Physics-Informed Neural Networks</a></li><li><a href="../topics/symbolic-regression.html">Symbolic Regression And Model Discovery</a></li><li><a href="../topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></li></ul>
+<h2>Topic Page</h2>
+<p><a href="../topics/scientific-machine-learning.html">Return to the main topic page</a></p>
+
+</main>
+</body>
+</html>

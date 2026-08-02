@@ -134,6 +134,24 @@
 </table>
 
 
+<h2>Core Idea In One Sentence</h2>
+<p>Attention lets a model decide which other parts of a field matter for the point or region being predicted.</p>
+<h2>Where This Is Useful</h2>
+<p>Use it when distant regions, boundary information, or multi-scale structure may influence the local answer.</p>
+<h2>Where This Breaks</h2>
+<p>Do not treat attention weights as scientific proof unless the learned relations survive physical and changed-case tests.</p>
+<h2>Concrete Domain Story</h2>
+<p>A fluid point near one region may depend on a boundary, a forcing pattern, or a large coherent structure far away. Attention gives the model a way to look beyond immediate neighbors.</p>
+<h2>Mathematical Shape Without Jargon</h2>
+<div class="route"><div class="route-step">1. Break the field into points, patches, modes, or tokens.</div><div class="route-step">2. For each part, compare it with other parts that might matter.</div><div class="route-step">3. Assign stronger influence to the parts judged more relevant.</div><div class="route-step">4. Combine the selected information to update the prediction.</div><div class="route-step">5. Check whether the selected relations match physical behavior under new cases.</div></div>
+<p><strong>Plain formula:</strong> current field part + relevant other parts -&gt; weighted information -&gt; updated field part</p>
+<h2>Why This Matters</h2>
+<p>Scientific fields often have nonlocal influence, and a purely local rule can miss how far-away structure changes the answer.</p>
+<h2>Red Flags</h2>
+<ul><li>Attention maps are shown as explanation without validation.</li><li>The method ignores conservation or boundary checks.</li><li>It works only at the trained resolution or patch size.</li><li>Long-range influence is claimed but not stress-tested.</li></ul>
+<h2>Connects To</h2>
+<ul><li><a href="../topics/operator-learning.html">Operator Learning</a></li><li><a href="../topics/graphs-and-geometric-learning.html">Graphs And Geometric Learning</a></li><li><a href="../topics/foundation-models-for-pdes.html">Foundation Models For PDEs</a></li></ul>
+
 
 <h2>Visual Map</h2>
 <article class="card">
@@ -145,6 +163,9 @@
 
 </article>
 
+
+<h2>Full Derivation Walkthrough</h2>
+<p><a href="../derivations/attention-for-scientific-fields.html">Open the step-by-step derivation page</a>. It slows this concept down from observed evidence, to hidden quantity, to formula shape, to failure test.</p>
 
 
 <h2>Concrete Worked Example</h2>

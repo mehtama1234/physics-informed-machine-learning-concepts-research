@@ -382,5 +382,203 @@
     ],
     "topic_href": "topics/foundation-models-for-pdes.html",
     "derivation_href": "derivations/foundation-models-for-pdes.html"
+  },
+  {
+    "slug": "deep-learning",
+    "title": "Deep Learning",
+    "one_sentence": "Deep learning fits a flexible rule from examples when the useful pattern is hard to write by hand.",
+    "domain_story": "Suppose many solved flow snapshots are available. A deep model can learn repeated shapes in those snapshots, but it still needs a changed-case test before it can be used as scientific evidence.",
+    "common_problem": "scientists often have examples of behavior but no short rule that predicts the next case",
+    "observed": "many input-output examples from experiments, simulations, or measurements",
+    "hidden": "the exact rule that connects the input to the output",
+    "math_shape": [
+      "Choose what the model receives, such as an image, field, history, or measured variables.",
+      "Choose what answer it must return.",
+      "Let many adjustable internal steps turn the input into the answer.",
+      "Compare the answer with known examples and adjust the steps.",
+      "Test on cases that differ in the same way real use will differ."
+    ],
+    "hand_derivation": null,
+    "plain_formula": "input example -> adjustable rule -> predicted answer -> error check",
+    "why_it_matters": "It can use large example collections, but the examples define the world it has evidence for.",
+    "failure_test": "hold out a changed material, geometry, parameter range, or sensor condition",
+    "red_flags": [
+      "The page talks about accuracy without naming the test cases.",
+      "The model is used after the data source or physical scale changes.",
+      "The important scientific quantity is not the quantity being checked.",
+      "No one asks what pattern the examples could not possibly teach."
+    ],
+    "connects_to": [
+      "surrogate-modeling",
+      "scientific-machine-learning",
+      "uncertainty-and-generalization"
+    ],
+    "topic_href": "topics/deep-learning.html",
+    "derivation_href": "derivations/deep-learning.html"
+  },
+  {
+    "slug": "scientific-machine-learning",
+    "title": "Scientific Machine Learning",
+    "one_sentence": "Scientific machine learning uses data and scientific rules together so the answer is useful for a named scientific question.",
+    "domain_story": "A material test may have sparse measurements and a partial stress law. Scientific machine learning asks how the measurements and the law should correct each other.",
+    "common_problem": "scientific work needs predictions that respect measurements, equations, uncertainty, and domain limits at the same time",
+    "observed": "data, equations, units, simulation outputs, and domain limits",
+    "hidden": "which parts of the scientific system are missing, noisy, or too costly to compute directly",
+    "math_shape": [
+      "Name the scientific quantity people need.",
+      "Name the measured evidence and the trusted rule.",
+      "Decide which part is learned and which part is fixed.",
+      "Fit the learned part while checking the rule and the measurements.",
+      "Report where the combined model was tested and where it broke."
+    ],
+    "hand_derivation": null,
+    "plain_formula": "measurements + known rule + learned missing part -> checked scientific answer",
+    "why_it_matters": "It turns machine learning from a general prediction tool into a disciplined way to answer a scientific question with stated evidence.",
+    "failure_test": "state the scientific quantity first, then test it under a changed case that matters in that domain",
+    "red_flags": [
+      "The target quantity is vague.",
+      "The known rule is mentioned but not actually checked.",
+      "The learned part can violate conservation, boundaries, or units without penalty.",
+      "The result is not compared against a changed experiment or trusted solve."
+    ],
+    "connects_to": [
+      "physics-informed-neural-networks",
+      "symbolic-regression",
+      "uncertainty-and-generalization"
+    ],
+    "topic_href": "topics/scientific-machine-learning.html",
+    "derivation_href": "derivations/scientific-machine-learning.html"
+  },
+  {
+    "slug": "optimization-for-learning",
+    "title": "Optimization For Learning",
+    "one_sentence": "Optimization is the process of changing a model until a written error score gets smaller.",
+    "domain_story": "Training a PINN is not only choosing a network. It is deciding how strongly sensor error, equation error, and boundary error should push during fitting.",
+    "common_problem": "learning needs a way to decide which model settings are better or worse",
+    "observed": "a written score that says which model behavior is better or worse",
+    "hidden": "whether that score matches the scientific behavior the user actually cares about",
+    "math_shape": [
+      "Write down the adjustable parts of the model.",
+      "Write down the error score the model is trying to reduce.",
+      "Use local information about how the score changes to update the adjustable parts.",
+      "Repeat until the score stops improving or a trusted check fails.",
+      "Inspect whether the score rewarded the behavior the scientific job actually needs."
+    ],
+    "hand_derivation": null,
+    "plain_formula": "current model -> error score -> change model -> check again",
+    "why_it_matters": "The training score is the contract the model follows; if the contract is wrong, the learned answer can be wrong in a polished way.",
+    "failure_test": "inspect what the score ignores, then check whether the ignored behavior fails after training",
+    "red_flags": [
+      "The loss terms are listed but their relative weight is not justified.",
+      "Only the final score is reported.",
+      "A hard constraint is treated as a soft suggestion without checking the damage.",
+      "Training succeeds while the physical test fails."
+    ],
+    "connects_to": [
+      "physics-informed-neural-networks",
+      "neural-differential-equations",
+      "deep-learning"
+    ],
+    "topic_href": "topics/optimization-for-learning.html",
+    "derivation_href": "derivations/optimization-for-learning.html"
+  },
+  {
+    "slug": "generative-modeling",
+    "title": "Generative Modeling",
+    "one_sentence": "Generative modeling learns how to make possible examples, not just score one existing example.",
+    "domain_story": "For uncertain weather or material fields, one answer may hide the range of possible outcomes. A generative model can propose many candidates, but those candidates still need physical checks.",
+    "common_problem": "some tasks need many possible examples, not one predicted answer",
+    "observed": "examples of fields, molecules, flows, shapes, or other scientific objects",
+    "hidden": "the spread of possible valid objects beyond the examples",
+    "math_shape": [
+      "Collect examples of the kind of object the model should produce.",
+      "Give the model a source of variation so it can make different candidates.",
+      "Train it so generated candidates resemble checked examples.",
+      "Condition it on known measurements, boundaries, or design requirements when needed.",
+      "Reject candidates that break the scientific rule or fall outside the tested family."
+    ],
+    "hand_derivation": null,
+    "plain_formula": "known conditions + variation -> candidate example -> realism and rule checks",
+    "why_it_matters": "Many scientific decisions need a range of possible cases, not a single average case.",
+    "failure_test": "measure constraints, rare cases, conservation, and downstream task performance on generated samples",
+    "red_flags": [
+      "Samples look realistic but violate a known equation or boundary.",
+      "Diversity is reported without saying whether the candidates are valid.",
+      "The model creates cases outside the evidence family.",
+      "The generated object is used as data without marking it as generated."
+    ],
+    "connects_to": [
+      "uncertainty-and-generalization",
+      "deep-learning",
+      "foundation-models-for-pdes"
+    ],
+    "topic_href": "topics/generative-modeling.html",
+    "derivation_href": "derivations/generative-modeling.html"
+  },
+  {
+    "slug": "graphs-and-geometric-learning",
+    "title": "Graphs And Geometric Learning",
+    "one_sentence": "Graph and geometric learning keeps the connections and shape of the object visible to the model.",
+    "domain_story": "A bridge mesh, a molecule, and an airfoil surface are not just lists of numbers. Which points touch, which edges carry forces, and which shape is rotated or refined can change the answer.",
+    "common_problem": "many scientific objects are not simple rows of numbers; their connections matter",
+    "observed": "objects with parts and connections, such as meshes, molecules, or interacting components",
+    "hidden": "which neighboring and long-range interactions control the scientific quantity",
+    "math_shape": [
+      "Represent the object as points with connections or geometric positions.",
+      "Attach measured or computed values to points, edges, or whole shapes.",
+      "Move information along connections and through local neighborhoods.",
+      "Build an answer for each point, edge, or whole object.",
+      "Test changed meshes, rotations, refinements, and boundary regions."
+    ],
+    "hand_derivation": null,
+    "plain_formula": "connected shape + local values -> relation-aware updates -> field or object answer",
+    "why_it_matters": "Many scientific objects are defined partly by their shape and connections, so the model must preserve that structure to ask the right question.",
+    "failure_test": "change the mesh, rotate or move the object, or add missing interactions and inspect what breaks",
+    "red_flags": [
+      "Mesh order changes the answer when the geometry did not change.",
+      "The model ignores boundaries or long-distance connections that matter physically.",
+      "It is tested only on one mesh resolution.",
+      "A rotated or refined shape breaks the result without explanation."
+    ],
+    "connects_to": [
+      "operator-learning",
+      "attention-for-scientific-fields",
+      "partial-differential-equations"
+    ],
+    "topic_href": "topics/graphs-and-geometric-learning.html",
+    "derivation_href": "derivations/graphs-and-geometric-learning.html"
+  },
+  {
+    "slug": "attention-for-scientific-fields",
+    "title": "Attention For Scientific Fields",
+    "one_sentence": "Attention lets a model decide which other parts of a field matter for the point or region being predicted.",
+    "domain_story": "A fluid point near one region may depend on a boundary, a forcing pattern, or a large coherent structure far away. Attention gives the model a way to look beyond immediate neighbors.",
+    "common_problem": "a local patch of a field may depend on faraway information, but looking everywhere can be expensive",
+    "observed": "large fields where one location may depend on other locations",
+    "hidden": "which distant parts matter for the local prediction",
+    "math_shape": [
+      "Break the field into points, patches, modes, or tokens.",
+      "For each part, compare it with other parts that might matter.",
+      "Assign stronger influence to the parts judged more relevant.",
+      "Combine the selected information to update the prediction.",
+      "Check whether the selected relations match physical behavior under new cases."
+    ],
+    "hand_derivation": null,
+    "plain_formula": "current field part + relevant other parts -> weighted information -> updated field part",
+    "why_it_matters": "Scientific fields often have nonlocal influence, and a purely local rule can miss how far-away structure changes the answer.",
+    "failure_test": "change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures",
+    "red_flags": [
+      "Attention maps are shown as explanation without validation.",
+      "The method ignores conservation or boundary checks.",
+      "It works only at the trained resolution or patch size.",
+      "Long-range influence is claimed but not stress-tested."
+    ],
+    "connects_to": [
+      "operator-learning",
+      "graphs-and-geometric-learning",
+      "foundation-models-for-pdes"
+    ],
+    "topic_href": "topics/attention-for-scientific-fields.html",
+    "derivation_href": "derivations/attention-for-scientific-fields.html"
   }
 ]

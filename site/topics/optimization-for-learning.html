@@ -122,8 +122,29 @@
 </table>
 
 
+<h2>Core Idea In One Sentence</h2>
+<p>Optimization is the process of changing a model until a written error score gets smaller.</p>
+<h2>Where This Is Useful</h2>
+<p>Use it whenever a model has adjustable parts and there is a clear score saying what counts as a better answer.</p>
+<h2>Where This Breaks</h2>
+<p>Do not mistake a lower training score for a better scientific model if the score omits boundaries, rare cases, units, or the decision quantity.</p>
+<h2>Concrete Domain Story</h2>
+<p>Training a PINN is not only choosing a network. It is deciding how strongly sensor error, equation error, and boundary error should push during fitting.</p>
+<h2>Mathematical Shape Without Jargon</h2>
+<div class="route"><div class="route-step">1. Write down the adjustable parts of the model.</div><div class="route-step">2. Write down the error score the model is trying to reduce.</div><div class="route-step">3. Use local information about how the score changes to update the adjustable parts.</div><div class="route-step">4. Repeat until the score stops improving or a trusted check fails.</div><div class="route-step">5. Inspect whether the score rewarded the behavior the scientific job actually needs.</div></div>
+<p><strong>Plain formula:</strong> current model -&gt; error score -&gt; change model -&gt; check again</p>
+<h2>Why This Matters</h2>
+<p>The training score is the contract the model follows; if the contract is wrong, the learned answer can be wrong in a polished way.</p>
+<h2>Red Flags</h2>
+<ul><li>The loss terms are listed but their relative weight is not justified.</li><li>Only the final score is reported.</li><li>A hard constraint is treated as a soft suggestion without checking the damage.</li><li>Training succeeds while the physical test fails.</li></ul>
+<h2>Connects To</h2>
+<ul><li><a href="../topics/physics-informed-neural-networks.html">Physics-Informed Neural Networks</a></li><li><a href="../topics/neural-differential-equations.html">Neural Differential Equations</a></li><li><a href="../topics/deep-learning.html">Deep Learning</a></li></ul>
 
 
+
+
+<h2>Full Derivation Walkthrough</h2>
+<p><a href="../derivations/optimization-for-learning.html">Open the step-by-step derivation page</a>. It slows this concept down from observed evidence, to hidden quantity, to formula shape, to failure test.</p>
 
 
 <h2>Concrete Worked Example</h2>

@@ -11,10 +11,10 @@
 - family_count: 4
 - comparison_count: 4
 - worked_example_count: 8
-- deep_dive_count: 8
-- core_derivation_count: 8
-- formula_guide_count: 8
-- misconception_count: 8
+- deep_dive_count: 14
+- core_derivation_count: 14
+- formula_guide_count: 14
+- misconception_count: 14
 - diagram_count: 6
 - sketch_count: 4
 - learning_path_step_count: 7
@@ -351,6 +351,48 @@
 - Plain formula: many PDE tasks -> shared learned structure -> new task prediction
 - Why it matters: If it works, broad training could reduce repeated model-building for related scientific problems.
 
+### Deep Learning
+- One sentence: Deep learning fits a flexible rule from examples when the useful pattern is hard to write by hand.
+- Use when: Use it when there are many checked examples and the job is to predict, classify, compress, or complete a new case from the same kind of source.
+- Do not use when: Do not use a good fit on old examples as proof that the model understands a new physical regime, new sensor, new scale, or new boundary.
+- Plain formula: input example -> adjustable rule -> predicted answer -> error check
+- Why it matters: It can use large example collections, but the examples define the world it has evidence for.
+
+### Scientific Machine Learning
+- One sentence: Scientific machine learning uses data and scientific rules together so the answer is useful for a named scientific question.
+- Use when: Use it when measurements alone are incomplete and hand-written equations alone are incomplete, too slow, or partly uncertain.
+- Do not use when: Do not call a model scientific just because the data came from science; the physical quantity, rule, and failure test must be explicit.
+- Plain formula: measurements + known rule + learned missing part -> checked scientific answer
+- Why it matters: It turns machine learning from a general prediction tool into a disciplined way to answer a scientific question with stated evidence.
+
+### Optimization For Learning
+- One sentence: Optimization is the process of changing a model until a written error score gets smaller.
+- Use when: Use it whenever a model has adjustable parts and there is a clear score saying what counts as a better answer.
+- Do not use when: Do not mistake a lower training score for a better scientific model if the score omits boundaries, rare cases, units, or the decision quantity.
+- Plain formula: current model -> error score -> change model -> check again
+- Why it matters: The training score is the contract the model follows; if the contract is wrong, the learned answer can be wrong in a polished way.
+
+### Generative Modeling
+- One sentence: Generative modeling learns how to make possible examples, not just score one existing example.
+- Use when: Use it when the job is to sample plausible fields, fill missing parts, create candidate designs, or explore many possible futures.
+- Do not use when: Do not treat a plausible-looking sample as a valid scientific answer unless constraints, measurements, and use-range checks are passed.
+- Plain formula: known conditions + variation -> candidate example -> realism and rule checks
+- Why it matters: Many scientific decisions need a range of possible cases, not a single average case.
+
+### Graphs And Geometric Learning
+- One sentence: Graph and geometric learning keeps the connections and shape of the object visible to the model.
+- Use when: Use it when the data lives on meshes, molecules, surfaces, sensor networks, or other connected shapes where nearby relations matter.
+- Do not use when: Do not flatten connected scientific data into an ordinary table if the connections carry the physical meaning.
+- Plain formula: connected shape + local values -> relation-aware updates -> field or object answer
+- Why it matters: Many scientific objects are defined partly by their shape and connections, so the model must preserve that structure to ask the right question.
+
+### Attention For Scientific Fields
+- One sentence: Attention lets a model decide which other parts of a field matter for the point or region being predicted.
+- Use when: Use it when distant regions, boundary information, or multi-scale structure may influence the local answer.
+- Do not use when: Do not treat attention weights as scientific proof unless the learned relations survive physical and changed-case tests.
+- Plain formula: current field part + relevant other parts -> weighted information -> updated field part
+- Why it matters: Scientific fields often have nonlocal influence, and a purely local rule can miss how far-away structure changes the answer.
+
 
 ## Core Derivations
 ### Physics-Informed Neural Networks
@@ -459,6 +501,54 @@
 - new task prediction: The point is to use old task experience on a held-out scientific case. Check: If the held-out task is too similar to training, the broad claim is not tested.
 - Final line: The derivation makes the transfer burden visible: old PDE tasks must carry something real into the new task, and the new task must be different enough to test that claim.
 
+### Deep Learning
+- Problem: scientists often have examples of behavior but no short rule that predicts the next case
+- Observed: many input-output examples from experiments, simulations, or measurements
+- Hidden: the exact rule that connects the input to the output
+- Plain formula: input example -> adjustable rule -> predicted answer -> error check
+- Failure test: hold out a changed material, geometry, parameter range, or sensor condition
+- Page: derivations/deep-learning.html
+
+### Scientific Machine Learning
+- Problem: scientific work needs predictions that respect measurements, equations, uncertainty, and domain limits at the same time
+- Observed: data, equations, units, simulation outputs, and domain limits
+- Hidden: which parts of the scientific system are missing, noisy, or too costly to compute directly
+- Plain formula: measurements + known rule + learned missing part -> checked scientific answer
+- Failure test: state the scientific quantity first, then test it under a changed case that matters in that domain
+- Page: derivations/scientific-machine-learning.html
+
+### Optimization For Learning
+- Problem: learning needs a way to decide which model settings are better or worse
+- Observed: a written score that says which model behavior is better or worse
+- Hidden: whether that score matches the scientific behavior the user actually cares about
+- Plain formula: current model -> error score -> change model -> check again
+- Failure test: inspect what the score ignores, then check whether the ignored behavior fails after training
+- Page: derivations/optimization-for-learning.html
+
+### Generative Modeling
+- Problem: some tasks need many possible examples, not one predicted answer
+- Observed: examples of fields, molecules, flows, shapes, or other scientific objects
+- Hidden: the spread of possible valid objects beyond the examples
+- Plain formula: known conditions + variation -> candidate example -> realism and rule checks
+- Failure test: measure constraints, rare cases, conservation, and downstream task performance on generated samples
+- Page: derivations/generative-modeling.html
+
+### Graphs And Geometric Learning
+- Problem: many scientific objects are not simple rows of numbers; their connections matter
+- Observed: objects with parts and connections, such as meshes, molecules, or interacting components
+- Hidden: which neighboring and long-range interactions control the scientific quantity
+- Plain formula: connected shape + local values -> relation-aware updates -> field or object answer
+- Failure test: change the mesh, rotate or move the object, or add missing interactions and inspect what breaks
+- Page: derivations/graphs-and-geometric-learning.html
+
+### Attention For Scientific Fields
+- Problem: a local patch of a field may depend on faraway information, but looking everywhere can be expensive
+- Observed: large fields where one location may depend on other locations
+- Hidden: which distant parts matter for the local prediction
+- Plain formula: current field part + relevant other parts -> weighted information -> updated field part
+- Failure test: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures
+- Page: derivations/attention-for-scientific-fields.html
+
 
 ## Plain Formula Guide
 ### Physics-Informed Neural Networks
@@ -509,6 +599,42 @@
 - Everyday reading: If it works, broad training could reduce repeated model-building for related scientific problems.
 - What to check: hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver
 
+### Deep Learning
+- Formula shape: input example -> adjustable rule -> predicted answer -> error check
+- Parts: input example, adjustable rule, predicted answer, error check
+- Everyday reading: It can use large example collections, but the examples define the world it has evidence for.
+- What to check: hold out a changed material, geometry, parameter range, or sensor condition
+
+### Scientific Machine Learning
+- Formula shape: measurements + known rule + learned missing part -> checked scientific answer
+- Parts: measurements + known rule + learned missing part, checked scientific answer
+- Everyday reading: It turns machine learning from a general prediction tool into a disciplined way to answer a scientific question with stated evidence.
+- What to check: state the scientific quantity first, then test it under a changed case that matters in that domain
+
+### Optimization For Learning
+- Formula shape: current model -> error score -> change model -> check again
+- Parts: current model, error score, change model, check again
+- Everyday reading: The training score is the contract the model follows; if the contract is wrong, the learned answer can be wrong in a polished way.
+- What to check: inspect what the score ignores, then check whether the ignored behavior fails after training
+
+### Generative Modeling
+- Formula shape: known conditions + variation -> candidate example -> realism and rule checks
+- Parts: known conditions + variation, candidate example, realism and rule checks
+- Everyday reading: Many scientific decisions need a range of possible cases, not a single average case.
+- What to check: measure constraints, rare cases, conservation, and downstream task performance on generated samples
+
+### Graphs And Geometric Learning
+- Formula shape: connected shape + local values -> relation-aware updates -> field or object answer
+- Parts: connected shape + local values, relation-aware updates, field or object answer
+- Everyday reading: Many scientific objects are defined partly by their shape and connections, so the model must preserve that structure to ask the right question.
+- What to check: change the mesh, rotate or move the object, or add missing interactions and inspect what breaks
+
+### Attention For Scientific Fields
+- Formula shape: current field part + relevant other parts -> weighted information -> updated field part
+- Parts: current field part + relevant other parts, weighted information, updated field part
+- Everyday reading: Scientific fields often have nonlocal influence, and a purely local rule can miss how far-away structure changes the answer.
+- What to check: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures
+
 
 ## Misconception Map
 ### Physics-Informed Neural Networks
@@ -550,6 +676,36 @@
 - Correction: A PDE foundation model tries to reuse structure across many related field-prediction tasks.
 - First-principles test: hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver
 - Wrong turns: A weak answer treats broad training size as proof of broad scientific trust.; The held-out test is too similar to training.; Rare regimes are missing.; New boundaries or quantities are assumed rather than tested.; Scale is treated as a substitute for scientific validation.
+
+### Deep Learning
+- Correction: Deep learning fits a flexible rule from examples when the useful pattern is hard to write by hand.
+- First-principles test: hold out a changed material, geometry, parameter range, or sensor condition
+- Wrong turns: A weak answer says only that Deep Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.; The page talks about accuracy without naming the test cases.; The model is used after the data source or physical scale changes.; The important scientific quantity is not the quantity being checked.; No one asks what pattern the examples could not possibly teach.
+
+### Scientific Machine Learning
+- Correction: Scientific machine learning uses data and scientific rules together so the answer is useful for a named scientific question.
+- First-principles test: state the scientific quantity first, then test it under a changed case that matters in that domain
+- Wrong turns: A weak answer says only that Scientific Machine Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.; The target quantity is vague.; The known rule is mentioned but not actually checked.; The learned part can violate conservation, boundaries, or units without penalty.; The result is not compared against a changed experiment or trusted solve.
+
+### Optimization For Learning
+- Correction: Optimization is the process of changing a model until a written error score gets smaller.
+- First-principles test: inspect what the score ignores, then check whether the ignored behavior fails after training
+- Wrong turns: A weak answer says only that Optimization For Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.; The loss terms are listed but their relative weight is not justified.; Only the final score is reported.; A hard constraint is treated as a soft suggestion without checking the damage.; Training succeeds while the physical test fails.
+
+### Generative Modeling
+- Correction: Generative modeling learns how to make possible examples, not just score one existing example.
+- First-principles test: measure constraints, rare cases, conservation, and downstream task performance on generated samples
+- Wrong turns: A weak answer says only that Generative Modeling is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.; Samples look realistic but violate a known equation or boundary.; Diversity is reported without saying whether the candidates are valid.; The model creates cases outside the evidence family.; The generated object is used as data without marking it as generated.
+
+### Graphs And Geometric Learning
+- Correction: Graph and geometric learning keeps the connections and shape of the object visible to the model.
+- First-principles test: change the mesh, rotate or move the object, or add missing interactions and inspect what breaks
+- Wrong turns: A weak answer says only that Graphs And Geometric Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.; Mesh order changes the answer when the geometry did not change.; The model ignores boundaries or long-distance connections that matter physically.; It is tested only on one mesh resolution.; A rotated or refined shape breaks the result without explanation.
+
+### Attention For Scientific Fields
+- Correction: Attention lets a model decide which other parts of a field matter for the point or region being predicted.
+- First-principles test: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures
+- Wrong turns: A weak answer says only that Attention For Scientific Fields is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.; Attention maps are shown as explanation without validation.; The method ignores conservation or boundary checks.; It works only at the trained resolution or patch size.; Long-range influence is claimed but not stress-tested.
 
 
 ## Diagrams
@@ -971,7 +1127,7 @@
 ## Coverage Matrix
 ### Deep Learning
 - Videos: 38
-- Deep dive: no
+- Deep dive: yes
 - Diagram: yes
 - Reader check: yes
 - Evidence items: 6
@@ -999,7 +1155,7 @@
 
 ### Scientific Machine Learning
 - Videos: 33
-- Deep dive: no
+- Deep dive: yes
 - Diagram: yes
 - Reader check: yes
 - Evidence items: 6
@@ -1020,21 +1176,21 @@
 
 ### Optimization For Learning
 - Videos: 40
-- Deep dive: no
+- Deep dive: yes
 - Diagram: no
 - Reader check: yes
 - Evidence items: 6
 
 ### Generative Modeling
 - Videos: 33
-- Deep dive: no
+- Deep dive: yes
 - Diagram: no
 - Reader check: yes
 - Evidence items: 6
 
 ### Graphs And Geometric Learning
 - Videos: 31
-- Deep dive: no
+- Deep dive: yes
 - Diagram: no
 - Reader check: yes
 - Evidence items: 6
@@ -1062,7 +1218,7 @@
 
 ### Attention For Scientific Fields
 - Videos: 28
-- Deep dive: no
+- Deep dive: yes
 - Diagram: yes
 - Reader check: yes
 - Evidence items: 6
@@ -1072,7 +1228,7 @@
 ### P1 Deep Learning
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
-- Missing layers: deep dive, learning path, glossary, domain guide
+- Missing layers: learning path, glossary, domain guide
 - Reason: has missing support layers
 - Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Deep Learning.
 - Topic: topics/deep-learning.html
@@ -1081,7 +1237,7 @@
 ### P1 Generative Modeling
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
-- Missing layers: deep dive, diagram, learning path, glossary
+- Missing layers: diagram, learning path, glossary
 - Reason: has missing support layers
 - Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Generative Modeling.
 - Topic: topics/generative-modeling.html
@@ -1090,7 +1246,7 @@
 ### P1 Graphs And Geometric Learning
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
-- Missing layers: deep dive, diagram, learning path, glossary
+- Missing layers: diagram, learning path, glossary
 - Reason: has missing support layers
 - Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Graphs And Geometric Learning.
 - Topic: topics/graphs-and-geometric-learning.html
@@ -1099,7 +1255,7 @@
 ### P1 Optimization For Learning
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
-- Missing layers: deep dive, diagram, learning path, domain guide
+- Missing layers: diagram, learning path, domain guide
 - Reason: has missing support layers
 - Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Optimization For Learning.
 - Topic: topics/optimization-for-learning.html
@@ -1108,7 +1264,7 @@
 ### P1 Attention For Scientific Fields
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
-- Missing layers: deep dive, learning path, glossary
+- Missing layers: learning path, glossary
 - Reason: has missing support layers
 - Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Attention For Scientific Fields.
 - Topic: topics/attention-for-scientific-fields.html
@@ -1117,7 +1273,7 @@
 ### P1 Scientific Machine Learning
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
-- Missing layers: deep dive, glossary, domain guide
+- Missing layers: glossary, domain guide
 - Reason: has missing support layers
 - Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Scientific Machine Learning.
 - Topic: topics/scientific-machine-learning.html

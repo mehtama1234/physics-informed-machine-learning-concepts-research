@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Deep Learning</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<nav class="topbar">
+  <a href="../index.html">Physics-Informed ML</a>
+  <a href="../transcripts.html">Transcripts</a>
+  <a href="../concept-atlas.html">Concept Atlas</a>
+  <a href="../families.html">Families</a>
+  <a href="../comparisons.html">Comparisons</a>
+  <a href="../worked-examples.html">Examples</a>
+  <a href="../diagrams.html">Diagrams</a>
+  <a href="../derivations.html">Derivations</a>
+  <a href="../formula-guide.html">Formulas</a>
+  <a href="../misconceptions.html">Misreads</a>
+  <a href="../learning-path.html">Path</a>
+  <a href="../glossary.html">Glossary</a>
+  <a href="../domains.html">Domains</a>
+  <a href="../reader-checks.html">Checks</a>
+  <a href="../decision-guide.html">Decide</a>
+  <a href="../provenance.html">Provenance</a>
+  <a href="../coverage.html">Coverage</a>
+  <a href="../dependencies.html">Dependencies</a>
+  <a href="../concept-ladder.html">Ladder</a>
+  <a href="../evidence-packets.html">Packets</a>
+  <a href="../quality.html">Quality</a>
+  <a href="../synthesis.html">Synthesis</a>
+  <a href="../review-entrypoints.html">Review Map</a>
+  <a href="../review-search.html">Find</a>
+  <a href="../review-queue.html">Queue</a>
+  <a href="../editorial-roadmap.html">Roadmap</a>
+  <a href="../completion-audit.html">Audit</a>
+  <a href="../handoff.html">Handoff</a>
+  <a href="../theme-map.html">Themes</a>
+  <a href="../evidence-ledger.html">Evidence</a>
+</nav>
+<main>
+
+<h1>Deep Learning</h1>
+<p>Deep learning fits a flexible rule from examples when the useful pattern is hard to write by hand.</p>
+<h2>Domain Story</h2>
+<p>Suppose many solved flow snapshots are available. A deep model can learn repeated shapes in those snapshots, but it still needs a changed-case test before it can be used as scientific evidence.</p>
+<h2>Problem</h2>
+<p>scientists often have examples of behavior but no short rule that predicts the next case</p>
+<h2>Start With What Is Observed</h2>
+<p>many input-output examples from experiments, simulations, or measurements</p>
+<h2>Name What Is Hidden</h2>
+<p>the exact rule that connects the input to the output</p>
+<h2>Build The Mathematical Shape</h2>
+<div class="route"><div class="route-step">1. Choose what the model receives, such as an image, field, history, or measured variables.</div><div class="route-step">2. Choose what answer it must return.</div><div class="route-step">3. Let many adjustable internal steps turn the input into the answer.</div><div class="route-step">4. Compare the answer with known examples and adjust the steps.</div><div class="route-step">5. Test on cases that differ in the same way real use will differ.</div></div>
+
+<h2>Why This Shape And Not Another</h2>
+<p>The formula shape is justified only when each part carries a burden from the scientific problem. If a part carries no burden, it is decoration. If a burden is missing, the formula is answering a weaker question.</p>
+<table>
+  <tbody>
+    <tr><th>Observed Burden</th><td>The shape must use many input-output examples from experiments, simulations, or measurements, because that is the evidence actually available.</td></tr>
+    <tr><th>Hidden Burden</th><td>The shape must point toward the exact rule that connects the input to the output, because that is the answer the scientist still needs.</td></tr>
+    <tr><th>Use Burden</th><td>The shape matters only if it supports this job: It can use large example collections, but the examples define the world it has evidence for.</td></tr>
+    <tr><th>Rejection Burden</th><td>The shape is too weak if it cannot be tested this way: hold out a changed material, geometry, parameter range, or sensor condition</td></tr>
+  </tbody>
+</table>
+
+
+<h2>Plain Formula</h2>
+<p>input example -&gt; adjustable rule -&gt; predicted answer -&gt; error check</p>
+<h2>Why This Matters</h2>
+<p>It can use large example collections, but the examples define the world it has evidence for.</p>
+<h2>Failure Test</h2>
+<p>hold out a changed material, geometry, parameter range, or sensor condition</p>
+<h2>Red Flags</h2>
+<ul><li>The page talks about accuracy without naming the test cases.</li><li>The model is used after the data source or physical scale changes.</li><li>The important scientific quantity is not the quantity being checked.</li><li>No one asks what pattern the examples could not possibly teach.</li></ul>
+<h2>Connects To</h2>
+<ul><li><a href="../topics/surrogate-modeling.html">Surrogate Modeling</a></li><li><a href="../topics/scientific-machine-learning.html">Scientific Machine Learning</a></li><li><a href="../topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></li></ul>
+<h2>Topic Page</h2>
+<p><a href="../topics/deep-learning.html">Return to the main topic page</a></p>
+
+</main>
+</body>
+</html>

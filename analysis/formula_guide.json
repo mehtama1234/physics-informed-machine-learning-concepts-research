@@ -120,5 +120,96 @@
     "common_misread": "Do not read broad training as coverage of a new equation. The new task must share the structure the model actually learned.",
     "derivation_href": "derivations/foundation-models-for-pdes.html",
     "topic_href": "topics/foundation-models-for-pdes.html"
+  },
+  {
+    "slug": "deep-learning",
+    "title": "Deep Learning",
+    "plain_formula": "input example -> adjustable rule -> predicted answer -> error check",
+    "parts": [
+      "input example",
+      "adjustable rule",
+      "predicted answer",
+      "error check"
+    ],
+    "everyday_reading": "It can use large example collections, but the examples define the world it has evidence for.",
+    "what_to_check": "hold out a changed material, geometry, parameter range, or sensor condition",
+    "common_misread": "Do not read the formula as proof. It is a compact map from many input-output examples from experiments, simulations, or measurements to the exact rule that connects the input to the output, and it still needs the stated failure test.",
+    "derivation_href": "derivations/deep-learning.html",
+    "topic_href": "topics/deep-learning.html"
+  },
+  {
+    "slug": "scientific-machine-learning",
+    "title": "Scientific Machine Learning",
+    "plain_formula": "measurements + known rule + learned missing part -> checked scientific answer",
+    "parts": [
+      "measurements + known rule + learned missing part",
+      "checked scientific answer"
+    ],
+    "everyday_reading": "It turns machine learning from a general prediction tool into a disciplined way to answer a scientific question with stated evidence.",
+    "what_to_check": "state the scientific quantity first, then test it under a changed case that matters in that domain",
+    "common_misread": "Do not read the formula as proof. It is a compact map from data, equations, units, simulation outputs, and domain limits to which parts of the scientific system are missing, noisy, or too costly to compute directly, and it still needs the stated failure test.",
+    "derivation_href": "derivations/scientific-machine-learning.html",
+    "topic_href": "topics/scientific-machine-learning.html"
+  },
+  {
+    "slug": "optimization-for-learning",
+    "title": "Optimization For Learning",
+    "plain_formula": "current model -> error score -> change model -> check again",
+    "parts": [
+      "current model",
+      "error score",
+      "change model",
+      "check again"
+    ],
+    "everyday_reading": "The training score is the contract the model follows; if the contract is wrong, the learned answer can be wrong in a polished way.",
+    "what_to_check": "inspect what the score ignores, then check whether the ignored behavior fails after training",
+    "common_misread": "Do not read the formula as proof. It is a compact map from a written score that says which model behavior is better or worse to whether that score matches the scientific behavior the user actually cares about, and it still needs the stated failure test.",
+    "derivation_href": "derivations/optimization-for-learning.html",
+    "topic_href": "topics/optimization-for-learning.html"
+  },
+  {
+    "slug": "generative-modeling",
+    "title": "Generative Modeling",
+    "plain_formula": "known conditions + variation -> candidate example -> realism and rule checks",
+    "parts": [
+      "known conditions + variation",
+      "candidate example",
+      "realism and rule checks"
+    ],
+    "everyday_reading": "Many scientific decisions need a range of possible cases, not a single average case.",
+    "what_to_check": "measure constraints, rare cases, conservation, and downstream task performance on generated samples",
+    "common_misread": "Do not read the formula as proof. It is a compact map from examples of fields, molecules, flows, shapes, or other scientific objects to the spread of possible valid objects beyond the examples, and it still needs the stated failure test.",
+    "derivation_href": "derivations/generative-modeling.html",
+    "topic_href": "topics/generative-modeling.html"
+  },
+  {
+    "slug": "graphs-and-geometric-learning",
+    "title": "Graphs And Geometric Learning",
+    "plain_formula": "connected shape + local values -> relation-aware updates -> field or object answer",
+    "parts": [
+      "connected shape + local values",
+      "relation-aware updates",
+      "field or object answer"
+    ],
+    "everyday_reading": "Many scientific objects are defined partly by their shape and connections, so the model must preserve that structure to ask the right question.",
+    "what_to_check": "change the mesh, rotate or move the object, or add missing interactions and inspect what breaks",
+    "common_misread": "Do not read the formula as proof. It is a compact map from objects with parts and connections, such as meshes, molecules, or interacting components to which neighboring and long-range interactions control the scientific quantity, and it still needs the stated failure test.",
+    "derivation_href": "derivations/graphs-and-geometric-learning.html",
+    "topic_href": "topics/graphs-and-geometric-learning.html"
+  },
+  {
+    "slug": "attention-for-scientific-fields",
+    "title": "Attention For Scientific Fields",
+    "plain_formula": "current field part + relevant other parts -> weighted information -> updated field part",
+    "parts": [
+      "current field part + relevant other parts",
+      "weighted information",
+      "updated field part"
+    ],
+    "everyday_reading": "Scientific fields often have nonlocal influence, and a purely local rule can miss how far-away structure changes the answer.",
+    "what_to_check": "change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures",
+    "common_misread": "Do not read the formula as proof. It is a compact map from large fields where one location may depend on other locations to which distant parts matter for the local prediction, and it still needs the stated failure test.",
+    "derivation_href": "derivations/attention-for-scientific-fields.html",
+    "topic_href": "topics/attention-for-scientific-fields.html"
   }
 ]

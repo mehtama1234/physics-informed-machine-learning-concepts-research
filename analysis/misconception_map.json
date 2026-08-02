@@ -126,5 +126,101 @@
     "reader_check_href": "reader-checks/foundation-pde-check.html",
     "derivation_href": "derivations/foundation-models-for-pdes.html",
     "topic_href": "topics/foundation-models-for-pdes.html"
+  },
+  {
+    "slug": "deep-learning",
+    "title": "Deep Learning",
+    "wrong_turns": [
+      "A weak answer says only that Deep Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.",
+      "The page talks about accuracy without naming the test cases.",
+      "The model is used after the data source or physical scale changes.",
+      "The important scientific quantity is not the quantity being checked.",
+      "No one asks what pattern the examples could not possibly teach."
+    ],
+    "plain_correction": "Deep learning fits a flexible rule from examples when the useful pattern is hard to write by hand.",
+    "first_principles_test": "hold out a changed material, geometry, parameter range, or sensor condition",
+    "reader_check_href": "reader-checks/deep-learning-check.html",
+    "derivation_href": "derivations/deep-learning.html",
+    "topic_href": "topics/deep-learning.html"
+  },
+  {
+    "slug": "scientific-machine-learning",
+    "title": "Scientific Machine Learning",
+    "wrong_turns": [
+      "A weak answer says only that Scientific Machine Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.",
+      "The target quantity is vague.",
+      "The known rule is mentioned but not actually checked.",
+      "The learned part can violate conservation, boundaries, or units without penalty.",
+      "The result is not compared against a changed experiment or trusted solve."
+    ],
+    "plain_correction": "Scientific machine learning uses data and scientific rules together so the answer is useful for a named scientific question.",
+    "first_principles_test": "state the scientific quantity first, then test it under a changed case that matters in that domain",
+    "reader_check_href": "reader-checks/scientific-machine-learning-check.html",
+    "derivation_href": "derivations/scientific-machine-learning.html",
+    "topic_href": "topics/scientific-machine-learning.html"
+  },
+  {
+    "slug": "optimization-for-learning",
+    "title": "Optimization For Learning",
+    "wrong_turns": [
+      "A weak answer says only that Optimization For Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.",
+      "The loss terms are listed but their relative weight is not justified.",
+      "Only the final score is reported.",
+      "A hard constraint is treated as a soft suggestion without checking the damage.",
+      "Training succeeds while the physical test fails."
+    ],
+    "plain_correction": "Optimization is the process of changing a model until a written error score gets smaller.",
+    "first_principles_test": "inspect what the score ignores, then check whether the ignored behavior fails after training",
+    "reader_check_href": "reader-checks/optimization-for-learning-check.html",
+    "derivation_href": "derivations/optimization-for-learning.html",
+    "topic_href": "topics/optimization-for-learning.html"
+  },
+  {
+    "slug": "generative-modeling",
+    "title": "Generative Modeling",
+    "wrong_turns": [
+      "A weak answer says only that Generative Modeling is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.",
+      "Samples look realistic but violate a known equation or boundary.",
+      "Diversity is reported without saying whether the candidates are valid.",
+      "The model creates cases outside the evidence family.",
+      "The generated object is used as data without marking it as generated."
+    ],
+    "plain_correction": "Generative modeling learns how to make possible examples, not just score one existing example.",
+    "first_principles_test": "measure constraints, rare cases, conservation, and downstream task performance on generated samples",
+    "reader_check_href": "reader-checks/generative-modeling-check.html",
+    "derivation_href": "derivations/generative-modeling.html",
+    "topic_href": "topics/generative-modeling.html"
+  },
+  {
+    "slug": "graphs-and-geometric-learning",
+    "title": "Graphs And Geometric Learning",
+    "wrong_turns": [
+      "A weak answer says only that Graphs And Geometric Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.",
+      "Mesh order changes the answer when the geometry did not change.",
+      "The model ignores boundaries or long-distance connections that matter physically.",
+      "It is tested only on one mesh resolution.",
+      "A rotated or refined shape breaks the result without explanation."
+    ],
+    "plain_correction": "Graph and geometric learning keeps the connections and shape of the object visible to the model.",
+    "first_principles_test": "change the mesh, rotate or move the object, or add missing interactions and inspect what breaks",
+    "reader_check_href": "reader-checks/graphs-and-geometric-learning-check.html",
+    "derivation_href": "derivations/graphs-and-geometric-learning.html",
+    "topic_href": "topics/graphs-and-geometric-learning.html"
+  },
+  {
+    "slug": "attention-for-scientific-fields",
+    "title": "Attention For Scientific Fields",
+    "wrong_turns": [
+      "A weak answer says only that Attention For Scientific Fields is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.",
+      "Attention maps are shown as explanation without validation.",
+      "The method ignores conservation or boundary checks.",
+      "It works only at the trained resolution or patch size.",
+      "Long-range influence is claimed but not stress-tested."
+    ],
+    "plain_correction": "Attention lets a model decide which other parts of a field matter for the point or region being predicted.",
+    "first_principles_test": "change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures",
+    "reader_check_href": "reader-checks/attention-for-scientific-fields-check.html",
+    "derivation_href": "derivations/attention-for-scientific-fields.html",
+    "topic_href": "topics/attention-for-scientific-fields.html"
   }
 ]
