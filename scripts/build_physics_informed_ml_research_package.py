@@ -3325,6 +3325,7 @@ MEATY_GOAL_REQUIREMENTS = [
     {"key": "from_scratch_story", "label": "From Scratch Story", "proof_term": "From Scratch Story In Plain Words"},
     {"key": "no_jargon_translation", "label": "No-Jargon Translation", "proof_term": "No-Jargon Translation For This Topic"},
     {"key": "plain_retell_drill", "label": "Plain Retell Drill", "proof_term": "Plain Retell Drill"},
+    {"key": "field_transfer_check", "label": "Field Transfer Check", "proof_term": "Field Transfer Check In Plain Words"},
     {"key": "field_mini_cases", "label": "Field Mini Cases", "proof_term": "Field Mini Cases In Plain Words"},
     {"key": "hand_teaching_note", "label": "Hand Teaching Note", "proof_term": "Hand Teaching Note"},
     {"key": "case_walkthrough", "label": "Case Walkthrough", "proof_term": "One Concrete Case From Start To Finish"},
@@ -7256,6 +7257,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     from_scratch_story = topic_from_scratch_story_html(topic, derivation)
     no_jargon_translation = topic_no_jargon_translation_html(topic, derivation)
     plain_retell_drill = topic_plain_retell_drill_html(topic, derivation)
+    field_transfer_check = topic_field_transfer_check_html(topic, derivation)
     plain_question_answer_script = topic_plain_question_answer_script_html(topic, derivation)
     know_still_test = topic_know_still_test_html(topic, derivation)
     failure_consequence = topic_failure_consequence_html(topic, derivation)
@@ -7301,6 +7303,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
 {from_scratch_story}
 {no_jargon_translation}
 {plain_retell_drill}
+{field_transfer_check}
 {plain_question_answer_script}
 {know_still_test}
 {failure_consequence}
@@ -8013,6 +8016,36 @@ def topic_plain_retell_drill_html(topic: dict[str, object], derivation: dict[str
 <p>{html.escape(filled_answer)}</p>
 <h3>Retell Pass Test</h3>
 <p>A retell passes only if it names the shortage, evidence, hidden answer, first-principles move, shape or topology issue, one concrete case, useful answer, trust boundary, and changed case without using the topic name as the reason.</p>
+"""
+
+
+def topic_field_transfer_check_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
+    rows = []
+    for application in topic_plain_applications(topic, derivation):
+        rows.append(
+            f"""
+<tr>
+  <th>{html.escape(application['field'])}</th>
+  <td>{html.escape(application['use'])}</td>
+  <td>{html.escape(str(derivation['observed']))}</td>
+  <td>{html.escape(str(derivation['hidden']))}</td>
+  <td>{html.escape(application['check'])}</td>
+</tr>
+"""
+        )
+    return f"""
+<h2>Field Transfer Check In Plain Words</h2>
+<p>The topic should not become a new idea every time the field changes. The object in the world changes, but the learner should still see the same chain: evidence in hand, hidden answer needed, first-principles move, and changed-case test.</p>
+<table>
+  <thead>
+    <tr><th>Field Where It Moves</th><th>What Changes In The World</th><th>Evidence That Still Starts It</th><th>Hidden Answer That Still Matters</th><th>Changed Case That Travels</th></tr>
+  </thead>
+  <tbody>{''.join(rows)}</tbody>
+</table>
+<h3>Same Chain Across Fields</h3>
+<p>The same chain across fields is: start from {html.escape(str(derivation['observed']))}, seek {html.escape(str(derivation['hidden']))}, make this move: {html.escape(str(derivation['move']))}, and reject or narrow the claim with {html.escape(str(derivation['test']))}.</p>
+<h3>Transfer Pass Test</h3>
+<p>A field transfer passes only if the learner can change the field while keeping the evidence, hidden answer, mathematical move, and rejection test visible in everyday words.</p>
 """
 
 
@@ -10314,6 +10347,14 @@ def validate(data: dict[str, object] | None = None) -> None:
             "End With A Changed Case",
             "Filled Retell Answer",
             "Retell Pass Test",
+            "Field Transfer Check In Plain Words",
+            "Field Where It Moves",
+            "What Changes In The World",
+            "Evidence That Still Starts It",
+            "Hidden Answer That Still Matters",
+            "Changed Case That Travels",
+            "Same Chain Across Fields",
+            "Transfer Pass Test",
             "Plain Question To Answer Script",
             "Real question",
             "Evidence sentence",
