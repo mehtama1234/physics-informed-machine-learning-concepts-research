@@ -3322,6 +3322,7 @@ MEATY_GOAL_REQUIREMENTS = [
     {"key": "plain_big_picture", "label": "Plain Big Picture Essay", "proof_term": "Plain Big Picture Essay"},
     {"key": "slow_importance_essay", "label": "Slow Importance Essay", "proof_term": "Why This Matters Slowly"},
     {"key": "long_everyday_importance_essay", "label": "Long Everyday Importance Essay", "proof_term": "Long Everyday Importance Essay"},
+    {"key": "from_scratch_story", "label": "From Scratch Story", "proof_term": "From Scratch Story In Plain Words"},
     {"key": "field_mini_cases", "label": "Field Mini Cases", "proof_term": "Field Mini Cases In Plain Words"},
     {"key": "hand_teaching_note", "label": "Hand Teaching Note", "proof_term": "Hand Teaching Note"},
     {"key": "case_walkthrough", "label": "Case Walkthrough", "proof_term": "One Concrete Case From Start To Finish"},
@@ -7250,6 +7251,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     teach_from_zero = topic_teach_from_zero_html(topic, derivation)
     application_claim_ladder = topic_application_claim_ladder_html(topic, derivation)
     field_mini_cases = topic_field_mini_cases_html(topic, derivation)
+    from_scratch_story = topic_from_scratch_story_html(topic, derivation)
     plain_question_answer_script = topic_plain_question_answer_script_html(topic, derivation)
     know_still_test = topic_know_still_test_html(topic, derivation)
     failure_consequence = topic_failure_consequence_html(topic, derivation)
@@ -7292,6 +7294,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
 {teach_from_zero}
 {application_claim_ladder}
 {field_mini_cases}
+{from_scratch_story}
 {plain_question_answer_script}
 {know_still_test}
 {failure_consequence}
@@ -7861,6 +7864,27 @@ def topic_field_mini_cases_html(topic: dict[str, object], derivation: dict[str, 
 <h2>Field Mini Cases In Plain Words</h2>
 <p>Each mini case starts with a person and a job in the world. The point is to see why the idea matters before using the topic name as a shortcut.</p>
 {''.join(sections)}
+"""
+
+
+def topic_from_scratch_story_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
+    title = str(topic["title"])
+    case = topic_case_walkthrough(topic, derivation)
+    setting = str(case["setting"]).rstrip(".")
+    applications = topic_plain_applications(topic, derivation)
+    shape = applications[0]
+    engineering = applications[1]
+    lab = applications[2]
+    fields = applications[3]
+    return f"""
+<h2>From Scratch Story In Plain Words</h2>
+<p>Imagine a person has a real job to do and no method name yet. The job begins with this shortage: {html.escape(str(topic['common_problem']))}. That is the reason {html.escape(title)} enters the course. The idea does not start as a label. It starts because someone has evidence in hand, a missing answer, and a decision that cannot wait for a perfect view of the world.</p>
+<p>The evidence in hand is {html.escape(str(derivation['observed']))}. This is the visible side of the problem. It might be measurements, a known rule, a simulation, a boundary, a mesh, a molecule, a graph, a field, or previous examples. The hidden side is {html.escape(str(derivation['hidden']))}. That hidden side is what the learner should keep asking about. If the page cannot say what is hidden, then the method name is doing too much work.</p>
+<p>The first-principles move is this: {html.escape(str(derivation['move']))}. In everyday words, the move has to do a named job. It is a way of carrying information from what can be seen to what still needs to be known. The shape of that move is {html.escape(str(derivation['form']))}. That shape matters because it tells the reader what the method is allowed to keep, what it is allowed to ignore, and where the claim can become too wide.</p>
+<p>Shape and topology enter when the answer depends on connection, boundary, hole, surface, mesh, molecule form, graph link, or how a field moves across space and time. For {html.escape(title)}, the plain shape use is: {html.escape(shape['use'])} The first shape check is: {html.escape(shape['check'])} This is why topology is not a decorative topic. It decides whether the answer keeps the part of the world that carries the claim.</p>
+<p>The same idea also has to make sense away from the shape example. In engineering, the plain use is: {html.escape(engineering['use'])} In materials, chemistry, or biology, the plain use is: {html.escape(lab['use'])} In climate, fluids, or other field problems, the plain use is: {html.escape(fields['use'])} These uses are not praise for the topic. They are checks that the learner can translate the same first-principles shortage into more than one real setting.</p>
+<p>A concrete case makes the story honest. Here, the setting is {html.escape(setting)}. The observed evidence is {html.escape(case['observed'])}. The hidden target is {html.escape(case['hidden'])}. The move is {html.escape(case['move'])}. The usable answer is {html.escape(case['answer'])}. The first changed case is {html.escape(case['rejection'])}. If that changed case fails, the right response is not to defend the method name. The right response is to narrow the claim, gather stronger evidence, or choose a better starting point.</p>
+<p>The plain ending is this: {html.escape(title)} matters because {html.escape(str(topic['why_it_matters']))}. It keeps {html.escape(str(topic['keeps']))}. It leaves out {html.escape(str(topic['leaves_out']))}. It should stop being trusted, or be narrowed, when {html.escape(str(topic['failure_boundary']))}. A learner understands the topic only when they can say that whole chain without hiding behind the topic name.</p>
 """
 
 
@@ -10133,6 +10157,14 @@ def validate(data: dict[str, object] | None = None) -> None:
             "What The Math Is Doing",
             "Why This Matters In The Field",
             "First Check",
+            "From Scratch Story In Plain Words",
+            "The evidence in hand is",
+            "The hidden side is",
+            "The first-principles move is this",
+            "Shape and topology enter",
+            "The same idea also has to make sense",
+            "A concrete case makes the story honest",
+            "The plain ending is this",
             "Plain Question To Answer Script",
             "Real question",
             "Evidence sentence",
