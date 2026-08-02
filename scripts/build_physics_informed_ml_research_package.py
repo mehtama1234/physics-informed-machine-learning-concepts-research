@@ -4745,6 +4745,7 @@ def build_concept_evidence_packets(topic_treatments: list[dict[str, object]]) ->
                 "evidence": evidence,
                 "source_anchors": source_anchors,
                 "source_strength": concept_source_strength(topic, evidence, source_anchors),
+                "proof_boundary": concept_proof_boundary(topic, derivation),
                 "limits": [
                     "Transcript evidence shows the concept appears in this course family.",
                     "It does not prove the method works for every equation, material, geometry, data size, or future case.",
@@ -4768,6 +4769,19 @@ def concept_source_strength(topic: dict[str, object], evidence: list[dict[str, o
         "broad_mention_meaning": "broad transcript mentions show the concept appears in the playlist family but may not carry the main claim by themselves",
         "minimum_review_action": f"Check whether the selected anchors support this concept job: {topic['common_problem']}",
         "stronger_proof_needed": f"To trust the method, add evidence from a changed-case test in {topic['domain']}, not only a lecture mention.",
+    }
+
+
+def concept_proof_boundary(topic: dict[str, object], derivation: dict[str, object]) -> dict[str, str]:
+    title = str(topic["title"])
+    problem = str(topic["common_problem"])
+    domain = str(topic["domain"])
+    return {
+        "transcript_can_support": f"The transcript can support that {title} is taught as a way to address this shortage: {problem}",
+        "transcript_cannot_support": f"The transcript cannot prove that {title} will work on every new case in {domain}; that has to be tested on the target quantity.",
+        "stronger_validation_needed": f"Run the idea on a changed case in {domain} and compare the predicted quantity with trusted measurements, trusted solves, or a known conservation check.",
+        "first_overclaim_to_reject": f"Reject any sentence saying {title} is generally reliable before it survives this test: {topic['failure_boundary']}",
+        "reviewer_action": f"Start from the selected source anchors, then ask whether the page's claim is no wider than this hidden need: {derivation['hidden']}",
     }
 
 
@@ -6426,6 +6440,22 @@ def claim_boundary_review_html(review: dict[str, str]) -> str:
 """
 
 
+def proof_boundary_html(boundary: dict[str, str]) -> str:
+    return f"""
+<h2>Transcript Evidence vs Scientific Proof</h2>
+<p>This table separates a course-supported claim from proof that the method will work on a new scientific case.</p>
+<table>
+  <tbody>
+    <tr><th>Transcript Can Support</th><td>{html.escape(str(boundary['transcript_can_support']))}</td></tr>
+    <tr><th>Transcript Cannot Support</th><td>{html.escape(str(boundary['transcript_cannot_support']))}</td></tr>
+    <tr><th>Stronger Validation Needed</th><td>{html.escape(str(boundary['stronger_validation_needed']))}</td></tr>
+    <tr><th>First Overclaim To Reject</th><td>{html.escape(str(boundary['first_overclaim_to_reject']))}</td></tr>
+    <tr><th>Reviewer Action</th><td>{html.escape(str(boundary['reviewer_action']))}</td></tr>
+  </tbody>
+</table>
+"""
+
+
 def topic_teaching_note_html(slug: str) -> str:
     note = TOPIC_TEACHING_NOTES.get(slug)
     if not note:
@@ -7216,6 +7246,7 @@ def write_concept_evidence_packet_page(path: Path, packet: dict[str, object]) ->
     source_anchors = source_anchor_cards(str(packet["slug"]), list(packet["evidence"]), root_prefix="../", anchors=list(packet.get("source_anchors") or []))
     strength = packet["source_strength"]
     claim_review = claim_boundary_review_html(dict(packet["claim_review"]))
+    proof_boundary = proof_boundary_html(dict(packet["proof_boundary"]))
     body = f"""
 <h1>{html.escape(str(packet['title']))}</h1>
 <h2>Concept Job</h2>
@@ -7234,6 +7265,7 @@ def write_concept_evidence_packet_page(path: Path, packet: dict[str, object]) ->
   </tbody>
 </table>
 {claim_review}
+{proof_boundary}
 <h2>Transcript Support</h2>
 <p>This packet has {html.escape(str(packet['evidence_count']))} selected transcript anchors for review.</p>
 <ul>{''.join(evidence_items)}</ul>
@@ -8183,6 +8215,7 @@ def write_markdown_export(data: dict[str, object]) -> None:
     lines.extend(["", "## Concept Evidence Packets"])
     for packet in data["concept_evidence_packets"]:
         strength = packet["source_strength"]
+        boundary = packet["proof_boundary"]
         lines.extend(
             [
                 f"### {packet['title']}",
@@ -8192,6 +8225,11 @@ def write_markdown_export(data: dict[str, object]) -> None:
                 f"- Reviewed source anchors: {strength['strong_anchor_count']}",
                 f"- Broad transcript mentions: {strength['broad_mention_count']}",
                 f"- Stronger proof needed: {strength['stronger_proof_needed']}",
+                f"- Transcript can support: {boundary['transcript_can_support']}",
+                f"- Transcript cannot support: {boundary['transcript_cannot_support']}",
+                f"- Stronger validation needed: {boundary['stronger_validation_needed']}",
+                f"- First overclaim to reject: {boundary['first_overclaim_to_reject']}",
+                f"- Reviewer action: {boundary['reviewer_action']}",
                 f"- Packet: {packet['packet_href']}",
                 "",
             ]
@@ -8731,13 +8769,17 @@ def validate(data: dict[str, object] | None = None) -> None:
         if not packet_path.exists():
             raise SystemExit(f"missing concept evidence packet: {packet['title']}")
         packet_text = packet_path.read_text(encoding="utf-8")
-        for required in ("Source Strength Audit", "Reviewed Source Anchors", "Broad Transcript Mentions", "Minimum Review Action", "Stronger Proof Needed", "Claim Boundary Review", "Overclaim To Avoid", "First Rejection Test", "Transcript Support", "What This Evidence Does Not Prove", "Review Links"):
+        for required in ("Source Strength Audit", "Reviewed Source Anchors", "Broad Transcript Mentions", "Minimum Review Action", "Stronger Proof Needed", "Claim Boundary Review", "Overclaim To Avoid", "First Rejection Test", "Transcript Evidence vs Scientific Proof", "Transcript Can Support", "Transcript Cannot Support", "Stronger Validation Needed", "First Overclaim To Reject", "Reviewer Action", "Transcript Support", "What This Evidence Does Not Prove", "Review Links"):
             if required not in packet_text:
                 raise SystemExit(f"concept evidence packet missing {required}: {packet['title']}")
         claim_review = packet.get("claim_review") or {}
         for field in ("supported_claim", "source_limit", "overclaim_to_avoid", "stronger_evidence_needed", "first_rejection_test"):
             if not claim_review.get(field):
                 raise SystemExit(f"concept evidence packet missing claim review {field}: {packet['title']}")
+        proof_boundary = packet.get("proof_boundary") or {}
+        for field in ("transcript_can_support", "transcript_cannot_support", "stronger_validation_needed", "first_overclaim_to_reject", "reviewer_action"):
+            if not proof_boundary.get(field):
+                raise SystemExit(f"concept evidence packet missing proof boundary {field}: {packet['title']}")
         strength = packet.get("source_strength") or {}
         for field in ("strong_anchor_count", "broad_mention_count", "minimum_review_action", "stronger_proof_needed"):
             if field not in strength:

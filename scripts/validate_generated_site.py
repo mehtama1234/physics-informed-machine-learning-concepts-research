@@ -155,8 +155,8 @@ def check_required_sections() -> list[str]:
         "site/evidence-packets.html": ("Concept Evidence Packets",),
         "site/formula-guide.html": ("Plain Formula Guide", "Common Misread", "What To Check", "Do not read the loss as proof", "Do not read broad training as coverage"),
         "site/misconceptions.html": ("Misconception Map", "Wrong Turn", "Why It Is Tempting", "Repair Sentence", "First-Principles Test"),
-        "site/evidence-packets/physics-informed-neural-networks.html": ("Source Strength Audit", "Reviewed Source Anchors", "Broad Transcript Mentions", "Minimum Review Action", "Stronger Proof Needed", "Transcript Support", "What This Evidence Does Not Prove", "Review Links"),
-        "site/evidence-packets/operator-learning.html": ("Source Strength Audit", "Reviewed Source Anchors", "Broad Transcript Mentions", "Minimum Review Action", "Stronger Proof Needed", "Transcript Support", "What This Evidence Does Not Prove", "Review Links"),
+        "site/evidence-packets/physics-informed-neural-networks.html": ("Source Strength Audit", "Reviewed Source Anchors", "Broad Transcript Mentions", "Minimum Review Action", "Stronger Proof Needed", "Transcript Evidence vs Scientific Proof", "Transcript Can Support", "Transcript Cannot Support", "Stronger Validation Needed", "First Overclaim To Reject", "Reviewer Action", "Transcript Support", "What This Evidence Does Not Prove", "Review Links"),
+        "site/evidence-packets/operator-learning.html": ("Source Strength Audit", "Reviewed Source Anchors", "Broad Transcript Mentions", "Minimum Review Action", "Stronger Proof Needed", "Transcript Evidence vs Scientific Proof", "Transcript Can Support", "Transcript Cannot Support", "Stronger Validation Needed", "First Overclaim To Reject", "Reviewer Action", "Transcript Support", "What This Evidence Does Not Prove", "Review Links"),
         "site/topics/physics-informed-neural-networks.html": ("First-Principles Essay", "What A Strong Explanation Must Say", "One Concrete Case From Start To Finish", "Observed Evidence", "Rejection Test", "How This Connects To Nearby Ideas", "Learn Before This", "Confusion It Prevents", "Evidence Needed To Believe This", "Strong Evidence", "Too Weak", "Reject Or Recheck When", "Where This Fits By Domain", "When To Avoid This In A Domain", "Changed-Case Test", "Plain Formula Term By Term", "What It Carries", "Concrete Worked Example", "Concrete Wrong-Use Example", "Test That Catches It", "What Breaks Without This Idea", "Minimum Proof Needed", "Reader Must Be Able To Say", "Acceptance Sentence Filled", "I would test it by changing", "Selected Source Anchors", "Claim Anchored", "Limit:"),
         "site/evidence-packets/foundation-models-for-pdes.html": ("Selected Source Anchors", "Claim Anchored", "Limit:"),
         "site/derivations.html": ("Core Derivations",),
@@ -212,6 +212,45 @@ def check_source_anchor_coverage() -> list[str]:
             text = path.read_text(encoding="utf-8")
             if "Selected Source Anchors" not in text or text.count("Claim Anchored") < 2:
                 errors.append(f"{rel_path}: expected at least two selected source anchors")
+    return errors
+
+
+def check_evidence_packet_proof_boundaries() -> list[str]:
+    errors: list[str] = []
+    packets = json.loads((ANALYSIS / "concept_evidence_packets.json").read_text(encoding="utf-8"))
+    required_fields = (
+        "transcript_can_support",
+        "transcript_cannot_support",
+        "stronger_validation_needed",
+        "first_overclaim_to_reject",
+        "reviewer_action",
+    )
+    required_terms = (
+        "Transcript Evidence vs Scientific Proof",
+        "Transcript Can Support",
+        "Transcript Cannot Support",
+        "Stronger Validation Needed",
+        "First Overclaim To Reject",
+        "Reviewer Action",
+    )
+    for packet in packets:
+        title = str(packet.get("title") or packet.get("slug") or "untitled packet")
+        boundary = packet.get("proof_boundary") or {}
+        for field in required_fields:
+            if not boundary.get(field):
+                errors.append(f"evidence packet missing proof_boundary.{field}: {title}")
+        href = str(packet.get("packet_href") or "")
+        if not href:
+            errors.append(f"evidence packet missing packet_href: {title}")
+            continue
+        path = ROOT / "site" / href.removeprefix("site/")
+        if not path.exists():
+            errors.append(f"missing evidence packet page: {href}")
+            continue
+        text = path.read_text(encoding="utf-8")
+        for term in required_terms:
+            if term not in text:
+                errors.append(f"{path.relative_to(ROOT)}: missing proof-boundary term: {term}")
     return errors
 
 
@@ -390,6 +429,7 @@ def validate() -> None:
     errors.extend(check_internal_links(manifest))
     errors.extend(check_required_sections())
     errors.extend(check_source_anchor_coverage())
+    errors.extend(check_evidence_packet_proof_boundaries())
     errors.extend(check_reader_check_coverage())
     errors.extend(check_meaty_goal_coverage())
     errors.extend(check_topic_shape_depth())

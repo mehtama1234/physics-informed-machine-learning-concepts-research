@@ -2390,6 +2390,11 @@
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
 - Stronger proof needed: To trust the method, add evidence from a changed-case test in scientific prediction from large measured or simulated data sets, not only a lecture mention.
+- Transcript can support: The transcript can support that Deep Learning is taught as a way to address this shortage: scientists often have examples of behavior but no short rule that predicts the next case
+- Transcript cannot support: The transcript cannot prove that Deep Learning will work on every new case in scientific prediction from large measured or simulated data sets; that has to be tested on the target quantity.
+- Stronger validation needed: Run the idea on a changed case in scientific prediction from large measured or simulated data sets and compare the predicted quantity with trusted measurements, trusted solves, or a known conservation check.
+- First overclaim to reject: Reject any sentence saying Deep Learning is generally reliable before it survives this test: the model can fit familiar examples while failing on a new material, geometry, scale, or boundary condition
+- Reviewer action: Start from the selected source anchors, then ask whether the page's claim is no wider than this hidden need: the exact rule that connects the input to the output
 - Packet: evidence-packets/deep-learning.html
 
 ### Physics-Informed Neural Networks
@@ -2399,6 +2404,11 @@
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
 - Stronger proof needed: To trust the method, add evidence from a changed-case test in differential equations in science and engineering, not only a lecture mention.
+- Transcript can support: The transcript can support that Physics-Informed Neural Networks is taught as a way to address this shortage: measurements may be sparse, but the answer must still respect a known physical equation
+- Transcript cannot support: The transcript cannot prove that Physics-Informed Neural Networks will work on every new case in differential equations in science and engineering; that has to be tested on the target quantity.
+- Stronger validation needed: Run the idea on a changed case in differential equations in science and engineering and compare the predicted quantity with trusted measurements, trusted solves, or a known conservation check.
+- First overclaim to reject: Reject any sentence saying Physics-Informed Neural Networks is generally reliable before it survives this test: the equation penalty can look small while the solution is wrong in hard regions, sharp layers, or unseen boundary cases
+- Reviewer action: Start from the selected source anchors, then ask whether the page's claim is no wider than this hidden need: the full field value at every point in space and time
 - Packet: evidence-packets/physics-informed-neural-networks.html
 
 ### Partial Differential Equations
@@ -2408,6 +2418,11 @@
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
 - Stronger proof needed: To trust the method, add evidence from a changed-case test in fluids, heat, waves, mechanics, chemistry, climate, and other changing fields, not only a lecture mention.
+- Transcript can support: The transcript can support that Partial Differential Equations is taught as a way to address this shortage: a quantity changes over space and time, so one number is not enough to describe the situation
+- Transcript cannot support: The transcript cannot prove that Partial Differential Equations will work on every new case in fluids, heat, waves, mechanics, chemistry, climate, and other changing fields; that has to be tested on the target quantity.
+- Stronger validation needed: Run the idea on a changed case in fluids, heat, waves, mechanics, chemistry, climate, and other changing fields and compare the predicted quantity with trusted measurements, trusted solves, or a known conservation check.
+- First overclaim to reject: Reject any sentence saying Partial Differential Equations is generally reliable before it survives this test: a learned shortcut can ignore boundary conditions or conservation behavior that the PDE was carrying
+- Reviewer action: Start from the selected source anchors, then ask whether the page's claim is no wider than this hidden need: how every point in the field affects nearby points over time
 - Packet: evidence-packets/partial-differential-equations.html
 
 ### Operator Learning
@@ -2417,6 +2432,11 @@
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
 - Stronger proof needed: To trust the method, add evidence from a changed-case test in fast prediction for families of scientific simulations, not only a lecture mention.
+- Transcript can support: The transcript can support that Operator Learning is taught as a way to address this shortage: one simulation answer is not enough when engineers need the whole map from inputs to solution fields
+- Transcript cannot support: The transcript cannot prove that Operator Learning will work on every new case in fast prediction for families of scientific simulations; that has to be tested on the target quantity.
+- Stronger validation needed: Run the idea on a changed case in fast prediction for families of scientific simulations and compare the predicted quantity with trusted measurements, trusted solves, or a known conservation check.
+- First overclaim to reject: Reject any sentence saying Operator Learning is generally reliable before it survives this test: the learned map can give plausible-looking fields that violate the equation or fail on a shifted input family
+- Reviewer action: Start from the selected source anchors, then ask whether the page's claim is no wider than this hidden need: the rule that maps a new input field to its new solution field
 - Packet: evidence-packets/operator-learning.html
 
 ### Scientific Machine Learning
@@ -2426,6 +2446,11 @@
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
 - Stronger proof needed: To trust the method, add evidence from a changed-case test in using data-driven models inside scientific workflows, not only a lecture mention.
+- Transcript can support: The transcript can support that Scientific Machine Learning is taught as a way to address this shortage: scientific work needs predictions that respect measurements, equations, uncertainty, and domain limits at the same time
+- Transcript cannot support: The transcript cannot prove that Scientific Machine Learning will work on every new case in using data-driven models inside scientific workflows; that has to be tested on the target quantity.
+- Stronger validation needed: Run the idea on a changed case in using data-driven models inside scientific workflows and compare the predicted quantity with trusted measurements, trusted solves, or a known conservation check.
+- First overclaim to reject: Reject any sentence saying Scientific Machine Learning is generally reliable before it survives this test: the method becomes a generic fitting tool if the physical quantity, scientific claim, and validation case are not named
+- Reviewer action: Start from the selected source anchors, then ask whether the page's claim is no wider than this hidden need: which parts of the scientific system are missing, noisy, or too costly to compute directly
 - Packet: evidence-packets/scientific-machine-learning.html
 
 ### Surrogate Modeling
@@ -2435,6 +2460,11 @@
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
 - Stronger proof needed: To trust the method, add evidence from a changed-case test in expensive simulation and design loops, not only a lecture mention.
+- Transcript can support: The transcript can support that Surrogate Modeling is taught as a way to address this shortage: a trusted simulator may be too slow to run for every design, control, or uncertainty question
+- Transcript cannot support: The transcript cannot prove that Surrogate Modeling will work on every new case in expensive simulation and design loops; that has to be tested on the target quantity.
+- Stronger validation needed: Run the idea on a changed case in expensive simulation and design loops and compare the predicted quantity with trusted measurements, trusted solves, or a known conservation check.
+- First overclaim to reject: Reject any sentence saying Surrogate Modeling is generally reliable before it survives this test: speed can hide missing physics when the surrogate is used beyond the regime where it was checked
+- Reviewer action: Start from the selected source anchors, then ask whether the page's claim is no wider than this hidden need: the solver answer for every new query someone wants to ask
 - Packet: evidence-packets/surrogate-modeling.html
 
 ### Uncertainty And Generalization
@@ -2444,6 +2474,11 @@
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
 - Stronger proof needed: To trust the method, add evidence from a changed-case test in model use under new conditions, not only a lecture mention.
+- Transcript can support: The transcript can support that Uncertainty And Generalization is taught as a way to address this shortage: a prediction is not enough unless the user knows when it should be believed
+- Transcript cannot support: The transcript cannot prove that Uncertainty And Generalization will work on every new case in model use under new conditions; that has to be tested on the target quantity.
+- Stronger validation needed: Run the idea on a changed case in model use under new conditions and compare the predicted quantity with trusted measurements, trusted solves, or a known conservation check.
+- First overclaim to reject: Reject any sentence saying Uncertainty And Generalization is generally reliable before it survives this test: training error can look good while the model fails under a new geometry, parameter range, sensor, or physical regime
+- Reviewer action: Start from the selected source anchors, then ask whether the page's claim is no wider than this hidden need: how wrong the model may be on a case unlike the ones it learned from
 - Packet: evidence-packets/uncertainty-and-generalization.html
 
 ### Optimization For Learning
@@ -2453,6 +2488,11 @@
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
 - Stronger proof needed: To trust the method, add evidence from a changed-case test in turning model fitting into a repeatable computation, not only a lecture mention.
+- Transcript can support: The transcript can support that Optimization For Learning is taught as a way to address this shortage: learning needs a way to decide which model settings are better or worse
+- Transcript cannot support: The transcript cannot prove that Optimization For Learning will work on every new case in turning model fitting into a repeatable computation; that has to be tested on the target quantity.
+- Stronger validation needed: Run the idea on a changed case in turning model fitting into a repeatable computation and compare the predicted quantity with trusted measurements, trusted solves, or a known conservation check.
+- First overclaim to reject: Reject any sentence saying Optimization For Learning is generally reliable before it survives this test: a model can optimize the written score while missing the scientific behavior the score failed to name
+- Reviewer action: Start from the selected source anchors, then ask whether the page's claim is no wider than this hidden need: whether that score matches the scientific behavior the user actually cares about
 - Packet: evidence-packets/optimization-for-learning.html
 
 ### Generative Modeling
@@ -2462,6 +2502,11 @@
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
 - Stronger proof needed: To trust the method, add evidence from a changed-case test in creating plausible scientific samples, fields, or candidate designs, not only a lecture mention.
+- Transcript can support: The transcript can support that Generative Modeling is taught as a way to address this shortage: some tasks need many possible examples, not one predicted answer
+- Transcript cannot support: The transcript cannot prove that Generative Modeling will work on every new case in creating plausible scientific samples, fields, or candidate designs; that has to be tested on the target quantity.
+- Stronger validation needed: Run the idea on a changed case in creating plausible scientific samples, fields, or candidate designs and compare the predicted quantity with trusted measurements, trusted solves, or a known conservation check.
+- First overclaim to reject: Reject any sentence saying Generative Modeling is generally reliable before it survives this test: generated samples can look realistic while breaking constraints, conservation, or rare-event behavior
+- Reviewer action: Start from the selected source anchors, then ask whether the page's claim is no wider than this hidden need: the spread of possible valid objects beyond the examples
 - Packet: evidence-packets/generative-modeling.html
 
 ### Graphs And Geometric Learning
@@ -2471,6 +2516,11 @@
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
 - Stronger proof needed: To trust the method, add evidence from a changed-case test in systems made of interacting parts, meshes, molecules, or spatial relations, not only a lecture mention.
+- Transcript can support: The transcript can support that Graphs And Geometric Learning is taught as a way to address this shortage: many scientific objects are not simple rows of numbers; their connections matter
+- Transcript cannot support: The transcript cannot prove that Graphs And Geometric Learning will work on every new case in systems made of interacting parts, meshes, molecules, or spatial relations; that has to be tested on the target quantity.
+- Stronger validation needed: Run the idea on a changed case in systems made of interacting parts, meshes, molecules, or spatial relations and compare the predicted quantity with trusted measurements, trusted solves, or a known conservation check.
+- First overclaim to reject: Reject any sentence saying Graphs And Geometric Learning is generally reliable before it survives this test: the graph can encode the wrong neighborhood, hide missing interactions, or fail when the mesh changes
+- Reviewer action: Start from the selected source anchors, then ask whether the page's claim is no wider than this hidden need: which neighboring and long-range interactions control the scientific quantity
 - Packet: evidence-packets/graphs-and-geometric-learning.html
 
 ### Neural Differential Equations
@@ -2480,6 +2530,11 @@
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
 - Stronger proof needed: To trust the method, add evidence from a changed-case test in changing systems where time evolution is part of the model, not only a lecture mention.
+- Transcript can support: The transcript can support that Neural Differential Equations is taught as a way to address this shortage: scientists may know that a system changes continuously but not know the exact rule for that change
+- Transcript cannot support: The transcript cannot prove that Neural Differential Equations will work on every new case in changing systems where time evolution is part of the model; that has to be tested on the target quantity.
+- Stronger validation needed: Run the idea on a changed case in changing systems where time evolution is part of the model and compare the predicted quantity with trusted measurements, trusted solves, or a known conservation check.
+- First overclaim to reject: Reject any sentence saying Neural Differential Equations is generally reliable before it survives this test: small learned-rate errors can accumulate until long-time predictions drift away from the real system
+- Reviewer action: Start from the selected source anchors, then ask whether the page's claim is no wider than this hidden need: the rate rule that moves the present value into the future
 - Packet: evidence-packets/neural-differential-equations.html
 
 ### Symbolic Regression And Model Discovery
@@ -2489,6 +2544,11 @@
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
 - Stronger proof needed: To trust the method, add evidence from a changed-case test in turning data into equations people can inspect, not only a lecture mention.
+- Transcript can support: The transcript can support that Symbolic Regression And Model Discovery is taught as a way to address this shortage: a scientist may need a readable equation, not only a model that predicts well
+- Transcript cannot support: The transcript cannot prove that Symbolic Regression And Model Discovery will work on every new case in turning data into equations people can inspect; that has to be tested on the target quantity.
+- Stronger validation needed: Run the idea on a changed case in turning data into equations people can inspect and compare the predicted quantity with trusted measurements, trusted solves, or a known conservation check.
+- First overclaim to reject: Reject any sentence saying Symbolic Regression And Model Discovery is generally reliable before it survives this test: a neat formula can fit the training data while using the wrong variables or failing on a changed experiment
+- Reviewer action: Start from the selected source anchors, then ask whether the page's claim is no wider than this hidden need: which short formula, if any, actually explains the measured change
 - Packet: evidence-packets/symbolic-regression.html
 
 ### Foundation Models For PDEs
@@ -2498,6 +2558,11 @@
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
 - Stronger proof needed: To trust the method, add evidence from a changed-case test in broad families of PDE problems and scientific fields, not only a lecture mention.
+- Transcript can support: The transcript can support that Foundation Models For PDEs is taught as a way to address this shortage: one trained model may be asked to handle many related equations, grids, parameters, or physical settings
+- Transcript cannot support: The transcript cannot prove that Foundation Models For PDEs will work on every new case in broad families of PDE problems and scientific fields; that has to be tested on the target quantity.
+- Stronger validation needed: Run the idea on a changed case in broad families of PDE problems and scientific fields and compare the predicted quantity with trusted measurements, trusted solves, or a known conservation check.
+- First overclaim to reject: Reject any sentence saying Foundation Models For PDEs is generally reliable before it survives this test: the model can look broad while missing rare regimes, new boundary conditions, or quantities not represented in training
+- Reviewer action: Start from the selected source anchors, then ask whether the page's claim is no wider than this hidden need: which shared structure carries from one scientific task to another
 - Packet: evidence-packets/foundation-models-for-pdes.html
 
 ### Attention For Scientific Fields
@@ -2507,6 +2572,11 @@
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
 - Stronger proof needed: To trust the method, add evidence from a changed-case test in large scientific fields where distant parts may interact, not only a lecture mention.
+- Transcript can support: The transcript can support that Attention For Scientific Fields is taught as a way to address this shortage: a local patch of a field may depend on faraway information, but looking everywhere can be expensive
+- Transcript cannot support: The transcript cannot prove that Attention For Scientific Fields will work on every new case in large scientific fields where distant parts may interact; that has to be tested on the target quantity.
+- Stronger validation needed: Run the idea on a changed case in large scientific fields where distant parts may interact and compare the predicted quantity with trusted measurements, trusted solves, or a known conservation check.
+- First overclaim to reject: Reject any sentence saying Attention For Scientific Fields is generally reliable before it survives this test: windowing or scaling choices can miss long-range effects that matter for the scientific quantity being predicted
+- Reviewer action: Start from the selected source anchors, then ask whether the page's claim is no wider than this hidden need: which distant parts matter for the local prediction
 - Packet: evidence-packets/attention-for-scientific-fields.html
 
 
