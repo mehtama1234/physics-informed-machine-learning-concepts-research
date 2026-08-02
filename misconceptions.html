@@ -48,7 +48,9 @@
     <tr>
       <th>Concept</th>
       <th>Wrong Turn</th>
+      <th>Why It Is Tempting</th>
       <th>Plain Correction</th>
+      <th>Repair Sentence</th>
       <th>First-Principles Test</th>
       <th>Review Links</th>
     </tr>
@@ -57,7 +59,9 @@
 <tr>
   <td><a href="topics/physics-informed-neural-networks.html">Physics-Informed Neural Networks</a></td>
   <td><ul><li>A weak answer says only that the neural network fits data.</li><li>The page reports only training error.</li><li>The hard region has few check points.</li><li>The equation is known to be incomplete for the experiment.</li><li>No comparison is made against held-out measurements or a trusted solver.</li></ul></td>
+  <td>The shortcut is tempting because it keeps the visible result for Physics-Informed Neural Networks while skipping the evidence boundary: move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements.</td>
   <td>A PINN is a fitted field that must answer to both measured values and a known physical rule.</td>
+  <td>Say instead: A PINN is a fitted field that must answer to both measured values and a known physical rule. It should be trusted only after this check: move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements.</td>
   <td>move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements</td>
   <td><a href="derivations/physics-informed-neural-networks.html">derivation</a> · <a href="reader-checks/pinns-check.html">reader check</a></td>
 </tr>
@@ -65,7 +69,9 @@
 <tr>
   <td><a href="topics/partial-differential-equations.html">Partial Differential Equations</a></td>
   <td><ul><li>A weak answer says only that Partial Differential Equations is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.</li><li>The boundary condition is vague.</li><li>The learned answer ignores conservation.</li><li>The grid or resolution changes the conclusion.</li><li>Small visual error hides a large error in the quantity people care about.</li></ul></td>
+  <td>The shortcut is tempting because it keeps the visible result for Partial Differential Equations while skipping the evidence boundary: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error.</td>
   <td>A PDE is a rule for how a whole field changes across space and time.</td>
+  <td>Say instead: A PDE is a rule for how a whole field changes across space and time. It should be trusted only after this check: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error.</td>
   <td>change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error</td>
   <td><a href="derivations/partial-differential-equations.html">derivation</a> · <a href="reader-checks/partial-differential-equations-check.html">reader check</a></td>
 </tr>
@@ -73,7 +79,9 @@
 <tr>
   <td><a href="topics/operator-learning.html">Operator Learning</a></td>
   <td><ul><li>A weak answer says only that the model is fast.</li><li>The training family is not named.</li><li>Only one resolution is tested.</li><li>The output looks plausible but physical quantities are not checked.</li><li>The model is used on a new boundary type without evidence.</li></ul></td>
+  <td>The shortcut is tempting because it keeps the visible result for Operator Learning while skipping the evidence boundary: change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed.</td>
   <td>Operator learning tries to learn the machine that turns one field into another field.</td>
+  <td>Say instead: Operator learning tries to learn the machine that turns one field into another field. It should be trusted only after this check: change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed.</td>
   <td>change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed</td>
   <td><a href="derivations/operator-learning.html">derivation</a> · <a href="reader-checks/operator-learning-check.html">reader check</a></td>
 </tr>
@@ -81,7 +89,9 @@
 <tr>
   <td><a href="topics/surrogate-modeling.html">Surrogate Modeling</a></td>
   <td><ul><li>A weak answer treats speed as trust.</li><li>The surrogate is described without its use range.</li><li>The edge cases are not tested.</li><li>The output metric ignores the decision people actually make.</li><li>The full solver is never used again for spot checks.</li></ul></td>
+  <td>The shortcut is tempting because it keeps the visible result for Surrogate Modeling while skipping the evidence boundary: compare against the full solver on new cases near the edge of the intended use.</td>
   <td>A surrogate is a faster stand-in for a slower trusted process.</td>
+  <td>Say instead: A surrogate is a faster stand-in for a slower trusted process. It should be trusted only after this check: compare against the full solver on new cases near the edge of the intended use.</td>
   <td>compare against the full solver on new cases near the edge of the intended use</td>
   <td><a href="derivations/surrogate-modeling.html">derivation</a> · <a href="reader-checks/surrogate-check.html">reader check</a></td>
 </tr>
@@ -89,7 +99,9 @@
 <tr>
   <td><a href="topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></td>
   <td><ul><li>A weak answer reports one score without saying what changed.</li><li>Only familiar cases are reported.</li><li>The test set differs from training only in name.</li><li>Rare regimes are averaged away.</li><li>No one states what condition would make the model unusable.</li></ul></td>
+  <td>The shortcut is tempting because it keeps the visible result for Uncertainty And Generalization while skipping the evidence boundary: move one important condition outside the training range and measure the first failure.</td>
   <td>This topic asks when a prediction should be believed on a case the model did not learn from.</td>
+  <td>Say instead: This topic asks when a prediction should be believed on a case the model did not learn from. It should be trusted only after this check: move one important condition outside the training range and measure the first failure.</td>
   <td>move one important condition outside the training range and measure the first failure</td>
   <td><a href="derivations/uncertainty-and-generalization.html">derivation</a> · <a href="reader-checks/uncertainty-check.html">reader check</a></td>
 </tr>
@@ -97,7 +109,9 @@
 <tr>
   <td><a href="topics/neural-differential-equations.html">Neural Differential Equations</a></td>
   <td><ul><li>A weak answer says only that Neural Differential Equations is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.</li><li>The model is tested only over short times.</li><li>Small rate errors accumulate unnoticed.</li><li>Known conservation or stability behavior is not checked.</li><li>The learned rate fits noise instead of mechanism.</li></ul></td>
+  <td>The shortcut is tempting because it keeps the visible result for Neural Differential Equations while skipping the evidence boundary: run longer than the training window and check whether small rate errors accumulate into drift.</td>
   <td>A neural differential equation learns the missing rule for how a system changes.</td>
+  <td>Say instead: A neural differential equation learns the missing rule for how a system changes. It should be trusted only after this check: run longer than the training window and check whether small rate errors accumulate into drift.</td>
   <td>run longer than the training window and check whether small rate errors accumulate into drift</td>
   <td><a href="derivations/neural-differential-equations.html">derivation</a> · <a href="reader-checks/neural-differential-equations-check.html">reader check</a></td>
 </tr>
@@ -105,7 +119,9 @@
 <tr>
   <td><a href="topics/symbolic-regression.html">Symbolic Regression And Model Discovery</a></td>
   <td><ul><li>A weak answer trusts a neat formula because it fits the original data.</li><li>Important variables were never measured.</li><li>The formula is selected only on the original data.</li><li>Noise creates a fake term.</li><li>The search space could not express the real mechanism.</li></ul></td>
+  <td>The shortcut is tempting because it keeps the visible result for Symbolic Regression And Model Discovery while skipping the evidence boundary: remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts.</td>
   <td>Symbolic regression searches for a short formula that explains measured behavior.</td>
+  <td>Say instead: Symbolic regression searches for a short formula that explains measured behavior. It should be trusted only after this check: remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts.</td>
   <td>remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts</td>
   <td><a href="derivations/symbolic-regression.html">derivation</a> · <a href="reader-checks/symbolic-regression-check.html">reader check</a></td>
 </tr>
@@ -113,7 +129,9 @@
 <tr>
   <td><a href="topics/foundation-models-for-pdes.html">Foundation Models For PDEs</a></td>
   <td><ul><li>A weak answer treats broad training size as proof of broad scientific trust.</li><li>The held-out test is too similar to training.</li><li>Rare regimes are missing.</li><li>New boundaries or quantities are assumed rather than tested.</li><li>Scale is treated as a substitute for scientific validation.</li></ul></td>
+  <td>The shortcut is tempting because it keeps the visible result for Foundation Models For PDEs while skipping the evidence boundary: hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver.</td>
   <td>A PDE foundation model tries to reuse structure across many related field-prediction tasks.</td>
+  <td>Say instead: A PDE foundation model tries to reuse structure across many related field-prediction tasks. It should be trusted only after this check: hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver.</td>
   <td>hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver</td>
   <td><a href="derivations/foundation-models-for-pdes.html">derivation</a> · <a href="reader-checks/foundation-pde-check.html">reader check</a></td>
 </tr>
@@ -121,7 +139,9 @@
 <tr>
   <td><a href="topics/deep-learning.html">Deep Learning</a></td>
   <td><ul><li>A weak answer says only that Deep Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.</li><li>The page talks about accuracy without naming the test cases.</li><li>The model is used after the data source or physical scale changes.</li><li>The important scientific quantity is not the quantity being checked.</li><li>No one asks what pattern the examples could not possibly teach.</li></ul></td>
+  <td>The shortcut is tempting because it keeps the visible result for Deep Learning while skipping the evidence boundary: hold out a changed material, geometry, parameter range, or sensor condition.</td>
   <td>Deep learning fits a flexible rule from examples when the useful pattern is hard to write by hand.</td>
+  <td>Say instead: Deep learning fits a flexible rule from examples when the useful pattern is hard to write by hand. It should be trusted only after this check: hold out a changed material, geometry, parameter range, or sensor condition.</td>
   <td>hold out a changed material, geometry, parameter range, or sensor condition</td>
   <td><a href="derivations/deep-learning.html">derivation</a> · <a href="reader-checks/deep-learning-check.html">reader check</a></td>
 </tr>
@@ -129,7 +149,9 @@
 <tr>
   <td><a href="topics/scientific-machine-learning.html">Scientific Machine Learning</a></td>
   <td><ul><li>A weak answer says only that Scientific Machine Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.</li><li>The target quantity is vague.</li><li>The known rule is mentioned but not actually checked.</li><li>The learned part can violate conservation, boundaries, or units without penalty.</li><li>The result is not compared against a changed experiment or trusted solve.</li></ul></td>
+  <td>The shortcut is tempting because it keeps the visible result for Scientific Machine Learning while skipping the evidence boundary: state the scientific quantity first, then test it under a changed case that matters in that domain.</td>
   <td>Scientific machine learning uses data and scientific rules together so the answer is useful for a named scientific question.</td>
+  <td>Say instead: Scientific machine learning uses data and scientific rules together so the answer is useful for a named scientific question. It should be trusted only after this check: state the scientific quantity first, then test it under a changed case that matters in that domain.</td>
   <td>state the scientific quantity first, then test it under a changed case that matters in that domain</td>
   <td><a href="derivations/scientific-machine-learning.html">derivation</a> · <a href="reader-checks/scientific-machine-learning-check.html">reader check</a></td>
 </tr>
@@ -137,7 +159,9 @@
 <tr>
   <td><a href="topics/optimization-for-learning.html">Optimization For Learning</a></td>
   <td><ul><li>A weak answer says only that Optimization For Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.</li><li>The loss terms are listed but their relative weight is not justified.</li><li>Only the final score is reported.</li><li>A hard constraint is treated as a soft suggestion without checking the damage.</li><li>Training succeeds while the physical test fails.</li></ul></td>
+  <td>The shortcut is tempting because it keeps the visible result for Optimization For Learning while skipping the evidence boundary: inspect what the score ignores, then check whether the ignored behavior fails after training.</td>
   <td>Optimization is the process of changing a model until a written error score gets smaller.</td>
+  <td>Say instead: Optimization is the process of changing a model until a written error score gets smaller. It should be trusted only after this check: inspect what the score ignores, then check whether the ignored behavior fails after training.</td>
   <td>inspect what the score ignores, then check whether the ignored behavior fails after training</td>
   <td><a href="derivations/optimization-for-learning.html">derivation</a> · <a href="reader-checks/optimization-for-learning-check.html">reader check</a></td>
 </tr>
@@ -145,7 +169,9 @@
 <tr>
   <td><a href="topics/generative-modeling.html">Generative Modeling</a></td>
   <td><ul><li>A weak answer says only that Generative Modeling is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.</li><li>Samples look realistic but violate a known equation or boundary.</li><li>Diversity is reported without saying whether the candidates are valid.</li><li>The model creates cases outside the evidence family.</li><li>The generated object is used as data without marking it as generated.</li></ul></td>
+  <td>The shortcut is tempting because it keeps the visible result for Generative Modeling while skipping the evidence boundary: measure constraints, rare cases, conservation, and downstream task performance on generated samples.</td>
   <td>Generative modeling learns how to make possible examples, not just score one existing example.</td>
+  <td>Say instead: Generative modeling learns how to make possible examples, not just score one existing example. It should be trusted only after this check: measure constraints, rare cases, conservation, and downstream task performance on generated samples.</td>
   <td>measure constraints, rare cases, conservation, and downstream task performance on generated samples</td>
   <td><a href="derivations/generative-modeling.html">derivation</a> · <a href="reader-checks/generative-modeling-check.html">reader check</a></td>
 </tr>
@@ -153,7 +179,9 @@
 <tr>
   <td><a href="topics/graphs-and-geometric-learning.html">Graphs And Geometric Learning</a></td>
   <td><ul><li>A weak answer says only that Graphs And Geometric Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.</li><li>Mesh order changes the answer when the geometry did not change.</li><li>The model ignores boundaries or long-distance connections that matter physically.</li><li>It is tested only on one mesh resolution.</li><li>A rotated or refined shape breaks the result without explanation.</li></ul></td>
+  <td>The shortcut is tempting because it keeps the visible result for Graphs And Geometric Learning while skipping the evidence boundary: change the mesh, rotate or move the object, or add missing interactions and inspect what breaks.</td>
   <td>Graph and geometric learning keeps the connections and shape of the object visible to the model.</td>
+  <td>Say instead: Graph and geometric learning keeps the connections and shape of the object visible to the model. It should be trusted only after this check: change the mesh, rotate or move the object, or add missing interactions and inspect what breaks.</td>
   <td>change the mesh, rotate or move the object, or add missing interactions and inspect what breaks</td>
   <td><a href="derivations/graphs-and-geometric-learning.html">derivation</a> · <a href="reader-checks/graphs-and-geometric-learning-check.html">reader check</a></td>
 </tr>
@@ -161,7 +189,9 @@
 <tr>
   <td><a href="topics/attention-for-scientific-fields.html">Attention For Scientific Fields</a></td>
   <td><ul><li>A weak answer says only that Attention For Scientific Fields is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.</li><li>Attention maps are shown as explanation without validation.</li><li>The method ignores conservation or boundary checks.</li><li>It works only at the trained resolution or patch size.</li><li>Long-range influence is claimed but not stress-tested.</li></ul></td>
+  <td>The shortcut is tempting because it keeps the visible result for Attention For Scientific Fields while skipping the evidence boundary: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures.</td>
   <td>Attention lets a model decide which other parts of a field matter for the point or region being predicted.</td>
+  <td>Say instead: Attention lets a model decide which other parts of a field matter for the point or region being predicted. It should be trusted only after this check: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures.</td>
   <td>change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures</td>
   <td><a href="derivations/attention-for-scientific-fields.html">derivation</a> · <a href="reader-checks/attention-for-scientific-fields-check.html">reader check</a></td>
 </tr>
