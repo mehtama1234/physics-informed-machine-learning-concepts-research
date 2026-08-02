@@ -3327,6 +3327,7 @@ MEATY_GOAL_REQUIREMENTS = [
     {"key": "plain_retell_drill", "label": "Plain Retell Drill", "proof_term": "Plain Retell Drill"},
     {"key": "field_transfer_check", "label": "Field Transfer Check", "proof_term": "Field Transfer Check In Plain Words"},
     {"key": "wrong_path_repair", "label": "Wrong Path Repair", "proof_term": "Wrong Path To Right Path Repair"},
+    {"key": "course_bridge", "label": "Course Bridge", "proof_term": "Course Bridge In Plain Words"},
     {"key": "field_mini_cases", "label": "Field Mini Cases", "proof_term": "Field Mini Cases In Plain Words"},
     {"key": "hand_teaching_note", "label": "Hand Teaching Note", "proof_term": "Hand Teaching Note"},
     {"key": "case_walkthrough", "label": "Case Walkthrough", "proof_term": "One Concrete Case From Start To Finish"},
@@ -6824,6 +6825,36 @@ def topic_course_role_html(topic: dict[str, object], derivation: dict[str, objec
 """
 
 
+def topic_course_bridge_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
+    slug = str(topic["slug"])
+    title = str(topic["title"])
+    names = {str(item["slug"]): str(item["name"]) for item in CONCEPTS}
+    dependency = next((item for item in CONCEPT_DEPENDENCIES if item["concept"] == slug), None)
+    learn_first = list(dependency["depends_on"]) if dependency else []
+    used_by = [str(item["concept"]) for item in CONCEPT_DEPENDENCIES if slug in item["depends_on"]]
+    before = ", ".join(names.get(dep, dep.replace("-", " ").title()) for dep in learn_first) if learn_first else "the course starting question"
+    after = ", ".join(names.get(dep, dep.replace("-", " ").title()) for dep in used_by) if used_by else "careful judgment about later claims"
+    why_connection = str(dependency["why"]) if dependency else "This is a starting point because it makes the evidence-to-answer shortage visible."
+    confusion = str(dependency["confusion_prevented"]) if dependency else "It prevents the reader from choosing a method before naming the job."
+    return f"""
+<h2>Course Bridge In Plain Words</h2>
+<p>This bridge explains how {html.escape(title)} helps the whole course story, not only this page. The course keeps asking one question: what evidence do we have, what answer is missing, what move is allowed, and what changed case can reject the claim?</p>
+<table>
+  <tbody>
+    <tr><th>What The Reader Should Already Have</th><td>{html.escape(before)}. Before this topic, the reader should be able to name the evidence, hidden answer, and first rejection test.</td></tr>
+    <tr><th>What This Topic Adds To The Course</th><td>{html.escape(title)} adds this move: {html.escape(str(derivation['move']))}. It matters because {html.escape(str(topic['why_it_matters']))}.</td></tr>
+    <tr><th>What Later Pages Can Now Use</th><td>{html.escape(after)} can use this idea only if the claim stays inside this boundary: {html.escape(str(topic['failure_boundary']))}.</td></tr>
+    <tr><th>Why This Link Matters</th><td>{html.escape(why_connection)}</td></tr>
+    <tr><th>Confusion This Bridge Prevents</th><td>{html.escape(confusion)}</td></tr>
+  </tbody>
+</table>
+<h3>Whole Course Sentence</h3>
+<p>In the whole course, {html.escape(title)} is one way to move from {html.escape(str(derivation['observed']))} to {html.escape(str(derivation['hidden']))}; it earns its place only when the reader can say the changed case: {html.escape(str(derivation['test']))}.</p>
+<h3>Bridge Pass Test</h3>
+<p>The bridge passes only if the learner can say what came before, what this topic adds, what later pages can use, and why the same evidence-to-claim chain still controls the topic.</p>
+"""
+
+
 def topic_wrong_use(topic: dict[str, object]) -> dict[str, str]:
     slug = str(topic["slug"])
     wrong_uses = {
@@ -7270,6 +7301,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     teaching_note = topic_teaching_note_html(str(topic["slug"]))
     case_walkthrough = topic_case_walkthrough_html(topic, derivation)
     course_role = topic_course_role_html(topic, derivation)
+    course_bridge = topic_course_bridge_html(topic, derivation)
     connections = topic_connections_html(topic)
     shape_follows = topic_shape_follows_html(str(topic["slug"]), derivation)
     formula_terms = topic_formula_terms_html(derivation)
@@ -7317,6 +7349,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
 {teaching_note}
 {case_walkthrough}
 {course_role}
+{course_bridge}
 {connections}
 <h2>First-Principles Walkthrough</h2>
 <ol>
@@ -10447,6 +10480,14 @@ def validate(data: dict[str, object] | None = None) -> None:
             "What It Unlocks Later",
             "Confusion This Prevents",
             "Plain Course Sentence",
+            "Course Bridge In Plain Words",
+            "What The Reader Should Already Have",
+            "What This Topic Adds To The Course",
+            "What Later Pages Can Now Use",
+            "Why This Link Matters",
+            "Confusion This Bridge Prevents",
+            "Whole Course Sentence",
+            "Bridge Pass Test",
             "How This Connects To Nearby Ideas",
             "Learn Before This",
             "Confusion It Prevents",
