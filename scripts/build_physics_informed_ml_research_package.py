@@ -2149,11 +2149,12 @@ PROVENANCE_GUIDES = [
             "Add family routes, comparisons, worked examples, diagrams, learning path, glossary, domains, reader checks, and decision guide.",
             "Run build validation and a wording scan before committing.",
             "Before remote handoff, run git status --short --branch and make check.",
+            "After pushing, run make remote-check or make audit to compare local main with origin/main.",
             "Create or grant access to the GitHub repository configured as origin.",
             "Run git push -u origin main, then verify git ls-remote --heads origin main matches git rev-parse main.",
         ],
         "local_files": ["scripts/build_physics_informed_ml_research_package.py", "README.md", "Makefile"],
-        "checks": ["repo has a clear topic name", "raw source material is preserved", "generated pages are validated", "commits are small enough to review", "remote main hash matches local main after push"],
+        "checks": ["repo has a clear topic name", "raw source material is preserved", "generated pages are validated", "commits are small enough to review", "remote main hash matches local main after push", "make review prints the strongest local review URLs"],
     },
     {
         "slug": "cross-channel-playbook",
@@ -2290,6 +2291,9 @@ REVIEW_HANDOFF = {
         {"label": "Foundation Models For PDEs", "href": "topics/foundation-models-for-pdes.html"},
     ],
     "validation_commands": [
+        "make check",
+        "make review",
+        "make remote-check",
         "python3 -m py_compile scripts/build_physics_informed_ml_research_package.py",
         "python3 -m py_compile scripts/verify_remote_state.py",
         "python3 scripts/build_physics_informed_ml_research_package.py --build --validate",
@@ -2307,6 +2311,7 @@ REVIEW_HANDOFF = {
         "git remote -v",
         "git rev-parse main",
         "git ls-remote --heads origin main",
+        "make remote-check",
         "python3 scripts/verify_remote_state.py",
         "git push -u origin main",
     ],
@@ -7402,7 +7407,7 @@ def validate(data: dict[str, object] | None = None) -> None:
                 raise SystemExit(f"meaty goal coverage link missing: {row.get('title')} -> {row[href_field]}")
     handoff_path = SITE / "handoff.html"
     handoff_text = handoff_path.read_text(encoding="utf-8")
-    if "Review Now" not in handoff_text or "http://127.0.0.1:8022/hand-polish.html" not in handoff_text or "python3 scripts/verify_remote_state.py" not in handoff_text or "Start Here" not in handoff_text or "Remaining Editorial Work" not in handoff_text or "Remote Verification Commands" not in handoff_text:
+    if "Review Now" not in handoff_text or "http://127.0.0.1:8022/hand-polish.html" not in handoff_text or "make review" not in handoff_text or "make remote-check" not in handoff_text or "python3 scripts/verify_remote_state.py" not in handoff_text or "Start Here" not in handoff_text or "Remaining Editorial Work" not in handoff_text or "Remote Verification Commands" not in handoff_text:
         raise SystemExit("handoff page not rendered correctly")
     for command in REVIEW_HANDOFF["remote_finish_commands"]:
         if command not in handoff_text:

@@ -53,12 +53,13 @@ The purpose is not to summarize lectures. The purpose is to explain physics-info
 - `exports/`: portable Markdown export
 - `scripts/build_physics_informed_ml_research_package.py`: downloader, builder, and validator
 - `scripts/validate_generated_site.py`: standalone generated-site link and content validator
+- `scripts/verify_remote_state.py`: local-vs-remote branch verification
 
 ## Commands
 
 ```bash
-python3 scripts/build_physics_informed_ml_research_package.py --build --validate
-python3 scripts/validate_generated_site.py
+make check
+make remote-check
 ```
 
 To refresh YouTube captions and metadata:
@@ -70,13 +71,25 @@ python3 scripts/build_physics_informed_ml_research_package.py --download --build
 To review locally:
 
 ```bash
-python3 -m http.server 8022 --directory site
+make serve
 ```
 
 Then open:
 
 ```text
 http://127.0.0.1:8022/index.html
+```
+
+To print the strongest review URLs:
+
+```bash
+make review
+```
+
+To run local validation and confirm `origin/main` matches local `main`:
+
+```bash
+make audit
 ```
 
 ## Current Coverage

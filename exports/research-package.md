@@ -1314,7 +1314,7 @@
 ### CLI Reproduction Checklist
 - Purpose: Give another CLI enough detail to reproduce this package for another channel.
 - Local files: scripts/build_physics_informed_ml_research_package.py, README.md, Makefile
-- Checks: repo has a clear topic name, raw source material is preserved, generated pages are validated, commits are small enough to review, remote main hash matches local main after push
+- Checks: repo has a clear topic name, raw source material is preserved, generated pages are validated, commits are small enough to review, remote main hash matches local main after push, make review prints the strongest local review URLs
 
 ### Cross-Channel Replication Playbook
 - Purpose: Give another CLI an end-to-end operating plan for building the same kind of package from a different channel or playlist family.
@@ -2267,6 +2267,7 @@
 - `git remote -v`
 - `git rev-parse main`
 - `git ls-remote --heads origin main`
+- `make remote-check`
 - `python3 scripts/verify_remote_state.py`
 - `git push -u origin main`
 

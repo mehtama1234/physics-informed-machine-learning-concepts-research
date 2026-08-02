@@ -86,6 +86,9 @@
     }
   ],
   "validation_commands": [
+    "make check",
+    "make review",
+    "make remote-check",
     "python3 -m py_compile scripts/build_physics_informed_ml_research_package.py",
     "python3 -m py_compile scripts/verify_remote_state.py",
     "python3 scripts/build_physics_informed_ml_research_package.py --build --validate",
@@ -103,6 +106,7 @@
     "git remote -v",
     "git rev-parse main",
     "git ls-remote --heads origin main",
+    "make remote-check",
     "python3 scripts/verify_remote_state.py",
     "git push -u origin main"
   ],
