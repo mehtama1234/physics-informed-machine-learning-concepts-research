@@ -69,6 +69,48 @@
 </table>
 <h2>Concepts That Matter</h2>
 <ul><li><a href="../topics/graphs-and-geometric-learning.html">Graphs And Geometric Learning</a></li><li><a href="../topics/generative-modeling.html">Generative Modeling</a></li><li><a href="../topics/symbolic-regression.html">Symbolic Regression And Model Discovery</a></li><li><a href="../topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></li></ul>
+
+<h2>What Each Concept Must Carry In This Domain</h2>
+<p>Each concept earns its place only if it carries part of the domain job. This table states the burden before the method name is allowed to matter.</p>
+<table>
+  <thead>
+    <tr><th>Concept</th><th>Domain Job It Handles</th><th>Evidence It Uses</th><th>What It Carries</th><th>Domain Failure</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <td><a href="../topics/graphs-and-geometric-learning.html">Graphs And Geometric Learning</a></td>
+  <td>many scientific objects are not simple rows of numbers; their connections matter</td>
+  <td>objects with parts and connections, such as meshes, molecules, or interacting components</td>
+  <td>nodes, edges, spatial relations, and symmetry rules that should not change the answer</td>
+  <td>the graph can encode the wrong neighborhood, hide missing interactions, or fail when the mesh changes. In this domain, reject it if this changed-case test fails: test on a new scaffold, rare atom type, changed assay, or biological condition outside the familiar set.</td>
+</tr>
+
+<tr>
+  <td><a href="../topics/generative-modeling.html">Generative Modeling</a></td>
+  <td>some tasks need many possible examples, not one predicted answer</td>
+  <td>examples of fields, molecules, flows, shapes, or other scientific objects</td>
+  <td>a learned rule for sampling outputs that resemble the training family</td>
+  <td>generated samples can look realistic while breaking constraints, conservation, or rare-event behavior. In this domain, reject it if this changed-case test fails: test on a new scaffold, rare atom type, changed assay, or biological condition outside the familiar set.</td>
+</tr>
+
+<tr>
+  <td><a href="../topics/symbolic-regression.html">Symbolic Regression And Model Discovery</a></td>
+  <td>a scientist may need a readable equation, not only a model that predicts well</td>
+  <td>measured variables and candidate mathematical ingredients</td>
+  <td>candidate formulas that can be written, checked, and compared</td>
+  <td>a neat formula can fit the training data while using the wrong variables or failing on a changed experiment. In this domain, reject it if this changed-case test fails: test on a new scaffold, rare atom type, changed assay, or biological condition outside the familiar set.</td>
+</tr>
+
+<tr>
+  <td><a href="../topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></td>
+  <td>a prediction is not enough unless the user knows when it should be believed</td>
+  <td>training cases, validation cases, prediction errors, and known shifts between cases</td>
+  <td>error checks, changed-case tests, and limits on where the model was trained</td>
+  <td>training error can look good while the model fails under a new geometry, parameter range, sensor, or physical regime. In this domain, reject it if this changed-case test fails: test on a new scaffold, rare atom type, changed assay, or biological condition outside the familiar set.</td>
+</tr>
+</tbody>
+</table>
+
 <h2>How The Methods Enter</h2>
 <ul><li>Represent connections when interactions matter.</li><li>Use generation only with scientific checks.</li><li>Look for readable rules only when the measured variables support them.</li></ul>
 <h2>Failure Test</h2>

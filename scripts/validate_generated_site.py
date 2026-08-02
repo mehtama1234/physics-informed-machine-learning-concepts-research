@@ -325,6 +325,39 @@ def check_decision_guide_depth() -> list[str]:
     return errors
 
 
+def check_domain_guide_depth() -> list[str]:
+    errors: list[str] = []
+    guides = json.loads((ANALYSIS / "domain_guides.json").read_text(encoding="utf-8"))
+    required_terms = (
+        "Walk The Domain From Scratch",
+        "Concrete Scientific Job",
+        "What Each Concept Must Carry In This Domain",
+        "Domain Job It Handles",
+        "Evidence It Uses",
+        "What It Carries",
+        "Domain Failure",
+        "Domain Stress Test",
+    )
+    for guide in guides:
+        slug = str(guide["slug"])
+        burdens = guide.get("concept_burdens") or []
+        if len(burdens) != len(guide.get("concepts") or []):
+            errors.append(f"domain guide concept burden count mismatch: {slug}")
+        for item in burdens:
+            for field in ("slug", "name", "domain_job", "evidence_it_uses", "what_it_carries", "domain_failure"):
+                if not item.get(field):
+                    errors.append(f"domain guide missing concept_burdens.{field}: {slug}")
+        path = ROOT / f"site/domains/{slug}.html"
+        if not path.exists():
+            errors.append(f"missing domain guide page: site/domains/{slug}.html")
+            continue
+        text = path.read_text(encoding="utf-8")
+        for term in required_terms:
+            if term not in text:
+                errors.append(f"site/domains/{slug}.html: missing domain-depth term: {term}")
+    return errors
+
+
 def validate() -> None:
     manifest_path = SITE / "page-manifest.json"
     if not manifest_path.exists():
@@ -361,6 +394,7 @@ def validate() -> None:
     errors.extend(check_meaty_goal_coverage())
     errors.extend(check_topic_shape_depth())
     errors.extend(check_decision_guide_depth())
+    errors.extend(check_domain_guide_depth())
 
     scan_paths = [ROOT / "README.md", ROOT / "exports/research-package.md"]
     scan_paths.extend((ROOT / item) for item in manifest)

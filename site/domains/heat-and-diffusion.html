@@ -69,6 +69,40 @@
 </table>
 <h2>Concepts That Matter</h2>
 <ul><li><a href="../topics/partial-differential-equations.html">Partial Differential Equations</a></li><li><a href="../topics/physics-informed-neural-networks.html">Physics-Informed Neural Networks</a></li><li><a href="../topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></li></ul>
+
+<h2>What Each Concept Must Carry In This Domain</h2>
+<p>Each concept earns its place only if it carries part of the domain job. This table states the burden before the method name is allowed to matter.</p>
+<table>
+  <thead>
+    <tr><th>Concept</th><th>Domain Job It Handles</th><th>Evidence It Uses</th><th>What It Carries</th><th>Domain Failure</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <td><a href="../topics/partial-differential-equations.html">Partial Differential Equations</a></td>
+  <td>a quantity changes over space and time, so one number is not enough to describe the situation</td>
+  <td>a field such as temperature, pressure, concentration, velocity, or displacement</td>
+  <td>a field, its rates of change, and the boundary or starting information needed to evolve it</td>
+  <td>a learned shortcut can ignore boundary conditions or conservation behavior that the PDE was carrying. In this domain, reject it if this changed-case test fails: move the heat source or change the boundary temperature and compare against held-out sensors or a trusted solve.</td>
+</tr>
+
+<tr>
+  <td><a href="../topics/physics-informed-neural-networks.html">Physics-Informed Neural Networks</a></td>
+  <td>measurements may be sparse, but the answer must still respect a known physical equation</td>
+  <td>some measured values, boundary values, starting values, and a known differential equation</td>
+  <td>a neural network prediction plus a penalty for violating the known equation</td>
+  <td>the equation penalty can look small while the solution is wrong in hard regions, sharp layers, or unseen boundary cases. In this domain, reject it if this changed-case test fails: move the heat source or change the boundary temperature and compare against held-out sensors or a trusted solve.</td>
+</tr>
+
+<tr>
+  <td><a href="../topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></td>
+  <td>a prediction is not enough unless the user knows when it should be believed</td>
+  <td>training cases, validation cases, prediction errors, and known shifts between cases</td>
+  <td>error checks, changed-case tests, and limits on where the model was trained</td>
+  <td>training error can look good while the model fails under a new geometry, parameter range, sensor, or physical regime. In this domain, reject it if this changed-case test fails: move the heat source or change the boundary temperature and compare against held-out sensors or a trusted solve.</td>
+</tr>
+</tbody>
+</table>
+
 <h2>How The Methods Enter</h2>
 <ul><li>Use a PDE to name how spreading should behave.</li><li>Use sparse measurements as anchors.</li><li>Use held-out sensors or a trusted solve to check the claim.</li></ul>
 <h2>Failure Test</h2>

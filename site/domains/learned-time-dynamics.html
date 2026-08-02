@@ -69,6 +69,48 @@
 </table>
 <h2>Concepts That Matter</h2>
 <ul><li><a href="../topics/neural-differential-equations.html">Neural Differential Equations</a></li><li><a href="../topics/symbolic-regression.html">Symbolic Regression And Model Discovery</a></li><li><a href="../topics/optimization-for-learning.html">Optimization For Learning</a></li><li><a href="../topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></li></ul>
+
+<h2>What Each Concept Must Carry In This Domain</h2>
+<p>Each concept earns its place only if it carries part of the domain job. This table states the burden before the method name is allowed to matter.</p>
+<table>
+  <thead>
+    <tr><th>Concept</th><th>Domain Job It Handles</th><th>Evidence It Uses</th><th>What It Carries</th><th>Domain Failure</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <td><a href="../topics/neural-differential-equations.html">Neural Differential Equations</a></td>
+  <td>scientists may know that a system changes continuously but not know the exact rule for that change</td>
+  <td>measurements of a system changing over time</td>
+  <td>a learned rate rule inside a time-stepping calculation</td>
+  <td>small learned-rate errors can accumulate until long-time predictions drift away from the real system. In this domain, reject it if this changed-case test fails: start from a new condition, run longer than the training window, and check drift, stability, and conserved quantities.</td>
+</tr>
+
+<tr>
+  <td><a href="../topics/symbolic-regression.html">Symbolic Regression And Model Discovery</a></td>
+  <td>a scientist may need a readable equation, not only a model that predicts well</td>
+  <td>measured variables and candidate mathematical ingredients</td>
+  <td>candidate formulas that can be written, checked, and compared</td>
+  <td>a neat formula can fit the training data while using the wrong variables or failing on a changed experiment. In this domain, reject it if this changed-case test fails: start from a new condition, run longer than the training window, and check drift, stability, and conserved quantities.</td>
+</tr>
+
+<tr>
+  <td><a href="../topics/optimization-for-learning.html">Optimization For Learning</a></td>
+  <td>learning needs a way to decide which model settings are better or worse</td>
+  <td>a written score that says which model behavior is better or worse</td>
+  <td>a written score that compares model output against data, physics penalties, or design goals</td>
+  <td>a model can optimize the written score while missing the scientific behavior the score failed to name. In this domain, reject it if this changed-case test fails: start from a new condition, run longer than the training window, and check drift, stability, and conserved quantities.</td>
+</tr>
+
+<tr>
+  <td><a href="../topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></td>
+  <td>a prediction is not enough unless the user knows when it should be believed</td>
+  <td>training cases, validation cases, prediction errors, and known shifts between cases</td>
+  <td>error checks, changed-case tests, and limits on where the model was trained</td>
+  <td>training error can look good while the model fails under a new geometry, parameter range, sensor, or physical regime. In this domain, reject it if this changed-case test fails: start from a new condition, run longer than the training window, and check drift, stability, and conserved quantities.</td>
+</tr>
+</tbody>
+</table>
+
 <h2>How The Methods Enter</h2>
 <ul><li>Name the state that carries the system forward.</li><li>Learn or search for the missing change rule.</li><li>Test long-time behavior and changed starting conditions.</li></ul>
 <h2>Failure Test</h2>

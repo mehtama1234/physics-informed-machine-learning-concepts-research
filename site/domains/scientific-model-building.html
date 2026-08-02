@@ -69,6 +69,48 @@
 </table>
 <h2>Concepts That Matter</h2>
 <ul><li><a href="../topics/scientific-machine-learning.html">Scientific Machine Learning</a></li><li><a href="../topics/physics-informed-neural-networks.html">Physics-Informed Neural Networks</a></li><li><a href="../topics/symbolic-regression.html">Symbolic Regression And Model Discovery</a></li><li><a href="../topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></li></ul>
+
+<h2>What Each Concept Must Carry In This Domain</h2>
+<p>Each concept earns its place only if it carries part of the domain job. This table states the burden before the method name is allowed to matter.</p>
+<table>
+  <thead>
+    <tr><th>Concept</th><th>Domain Job It Handles</th><th>Evidence It Uses</th><th>What It Carries</th><th>Domain Failure</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <td><a href="../topics/scientific-machine-learning.html">Scientific Machine Learning</a></td>
+  <td>scientific work needs predictions that respect measurements, equations, uncertainty, and domain limits at the same time</td>
+  <td>data, equations, units, simulation outputs, and domain limits</td>
+  <td>data evidence, scientific structure, and validation against changed cases</td>
+  <td>the method becomes a generic fitting tool if the physical quantity, scientific claim, and validation case are not named. In this domain, reject it if this changed-case test fails: change the experiment, boundary, scale, or measured variable and verify the scientific target directly.</td>
+</tr>
+
+<tr>
+  <td><a href="../topics/physics-informed-neural-networks.html">Physics-Informed Neural Networks</a></td>
+  <td>measurements may be sparse, but the answer must still respect a known physical equation</td>
+  <td>some measured values, boundary values, starting values, and a known differential equation</td>
+  <td>a neural network prediction plus a penalty for violating the known equation</td>
+  <td>the equation penalty can look small while the solution is wrong in hard regions, sharp layers, or unseen boundary cases. In this domain, reject it if this changed-case test fails: change the experiment, boundary, scale, or measured variable and verify the scientific target directly.</td>
+</tr>
+
+<tr>
+  <td><a href="../topics/symbolic-regression.html">Symbolic Regression And Model Discovery</a></td>
+  <td>a scientist may need a readable equation, not only a model that predicts well</td>
+  <td>measured variables and candidate mathematical ingredients</td>
+  <td>candidate formulas that can be written, checked, and compared</td>
+  <td>a neat formula can fit the training data while using the wrong variables or failing on a changed experiment. In this domain, reject it if this changed-case test fails: change the experiment, boundary, scale, or measured variable and verify the scientific target directly.</td>
+</tr>
+
+<tr>
+  <td><a href="../topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></td>
+  <td>a prediction is not enough unless the user knows when it should be believed</td>
+  <td>training cases, validation cases, prediction errors, and known shifts between cases</td>
+  <td>error checks, changed-case tests, and limits on where the model was trained</td>
+  <td>training error can look good while the model fails under a new geometry, parameter range, sensor, or physical regime. In this domain, reject it if this changed-case test fails: change the experiment, boundary, scale, or measured variable and verify the scientific target directly.</td>
+</tr>
+</tbody>
+</table>
+
 <h2>How The Methods Enter</h2>
 <ul><li>Name the target quantity before the method.</li><li>State which rule is fixed and which part is learned.</li><li>Reject the model when the scientific target fails under a changed case.</li></ul>
 <h2>Failure Test</h2>

@@ -23,7 +23,33 @@
       "Use held-out sensors or a trusted solve to check the claim."
     ],
     "failure_test": "Change the boundary temperature, source strength, or sensor placement and see whether the prediction still follows the physical rule.",
-    "example": "worked-examples/heat-equation-from-few-measurements.html"
+    "example": "worked-examples/heat-equation-from-few-measurements.html",
+    "concept_burdens": [
+      {
+        "slug": "partial-differential-equations",
+        "name": "Partial Differential Equations",
+        "domain_job": "a quantity changes over space and time, so one number is not enough to describe the situation",
+        "evidence_it_uses": "a field such as temperature, pressure, concentration, velocity, or displacement",
+        "what_it_carries": "a field, its rates of change, and the boundary or starting information needed to evolve it",
+        "domain_failure": "a learned shortcut can ignore boundary conditions or conservation behavior that the PDE was carrying. In this domain, reject it if this changed-case test fails: move the heat source or change the boundary temperature and compare against held-out sensors or a trusted solve."
+      },
+      {
+        "slug": "physics-informed-neural-networks",
+        "name": "Physics-Informed Neural Networks",
+        "domain_job": "measurements may be sparse, but the answer must still respect a known physical equation",
+        "evidence_it_uses": "some measured values, boundary values, starting values, and a known differential equation",
+        "what_it_carries": "a neural network prediction plus a penalty for violating the known equation",
+        "domain_failure": "the equation penalty can look small while the solution is wrong in hard regions, sharp layers, or unseen boundary cases. In this domain, reject it if this changed-case test fails: move the heat source or change the boundary temperature and compare against held-out sensors or a trusted solve."
+      },
+      {
+        "slug": "uncertainty-and-generalization",
+        "name": "Uncertainty And Generalization",
+        "domain_job": "a prediction is not enough unless the user knows when it should be believed",
+        "evidence_it_uses": "training cases, validation cases, prediction errors, and known shifts between cases",
+        "what_it_carries": "error checks, changed-case tests, and limits on where the model was trained",
+        "domain_failure": "training error can look good while the model fails under a new geometry, parameter range, sensor, or physical regime. In this domain, reject it if this changed-case test fails: move the heat source or change the boundary temperature and compare against held-out sensors or a trusted solve."
+      }
+    ]
   },
   {
     "slug": "fluids-and-flow",
@@ -50,7 +76,41 @@
       "Check forces, boundary behavior, and difficult regimes rather than only visual similarity."
     ],
     "failure_test": "Hold out a new geometry or flow condition near the edge of the intended design range.",
-    "example": "worked-examples/fast-fluid-field-surrogate.html"
+    "example": "worked-examples/fast-fluid-field-surrogate.html",
+    "concept_burdens": [
+      {
+        "slug": "operator-learning",
+        "name": "Operator Learning",
+        "domain_job": "one simulation answer is not enough when engineers need the whole map from inputs to solution fields",
+        "evidence_it_uses": "many example inputs and their full solution fields",
+        "what_it_carries": "a learned map from a forcing, coefficient, shape, or starting field to a solution field",
+        "domain_failure": "the learned map can give plausible-looking fields that violate the equation or fail on a shifted input family. In this domain, reject it if this changed-case test fails: hold out a new geometry or flow regime and check drag, lift, boundary behavior, and vortices."
+      },
+      {
+        "slug": "surrogate-modeling",
+        "name": "Surrogate Modeling",
+        "domain_job": "a trusted simulator may be too slow to run for every design, control, or uncertainty question",
+        "evidence_it_uses": "expensive solver inputs and outputs for a limited set of cases",
+        "what_it_carries": "the input-output behavior needed for a specified family of queries",
+        "domain_failure": "speed can hide missing physics when the surrogate is used beyond the regime where it was checked. In this domain, reject it if this changed-case test fails: hold out a new geometry or flow regime and check drag, lift, boundary behavior, and vortices."
+      },
+      {
+        "slug": "attention-for-scientific-fields",
+        "name": "Attention For Scientific Fields",
+        "domain_job": "a local patch of a field may depend on faraway information, but looking everywhere can be expensive",
+        "evidence_it_uses": "large fields where one location may depend on other locations",
+        "what_it_carries": "selected interactions between parts of the input field",
+        "domain_failure": "windowing or scaling choices can miss long-range effects that matter for the scientific quantity being predicted. In this domain, reject it if this changed-case test fails: hold out a new geometry or flow regime and check drag, lift, boundary behavior, and vortices."
+      },
+      {
+        "slug": "uncertainty-and-generalization",
+        "name": "Uncertainty And Generalization",
+        "domain_job": "a prediction is not enough unless the user knows when it should be believed",
+        "evidence_it_uses": "training cases, validation cases, prediction errors, and known shifts between cases",
+        "what_it_carries": "error checks, changed-case tests, and limits on where the model was trained",
+        "domain_failure": "training error can look good while the model fails under a new geometry, parameter range, sensor, or physical regime. In this domain, reject it if this changed-case test fails: hold out a new geometry or flow regime and check drag, lift, boundary behavior, and vortices."
+      }
+    ]
   },
   {
     "slug": "materials-and-mechanics",
@@ -77,7 +137,41 @@
       "Name the load, material range, and failure quantity."
     ],
     "failure_test": "Change the geometry, mesh, defect, or load path and check the physical quantity used for decisions.",
-    "example": "worked-examples/material-stress-from-sparse-tests.html"
+    "example": "worked-examples/material-stress-from-sparse-tests.html",
+    "concept_burdens": [
+      {
+        "slug": "partial-differential-equations",
+        "name": "Partial Differential Equations",
+        "domain_job": "a quantity changes over space and time, so one number is not enough to describe the situation",
+        "evidence_it_uses": "a field such as temperature, pressure, concentration, velocity, or displacement",
+        "what_it_carries": "a field, its rates of change, and the boundary or starting information needed to evolve it",
+        "domain_failure": "a learned shortcut can ignore boundary conditions or conservation behavior that the PDE was carrying. In this domain, reject it if this changed-case test fails: change the load path, defect, mesh, or boundary and check stress near failure regions."
+      },
+      {
+        "slug": "surrogate-modeling",
+        "name": "Surrogate Modeling",
+        "domain_job": "a trusted simulator may be too slow to run for every design, control, or uncertainty question",
+        "evidence_it_uses": "expensive solver inputs and outputs for a limited set of cases",
+        "what_it_carries": "the input-output behavior needed for a specified family of queries",
+        "domain_failure": "speed can hide missing physics when the surrogate is used beyond the regime where it was checked. In this domain, reject it if this changed-case test fails: change the load path, defect, mesh, or boundary and check stress near failure regions."
+      },
+      {
+        "slug": "graphs-and-geometric-learning",
+        "name": "Graphs And Geometric Learning",
+        "domain_job": "many scientific objects are not simple rows of numbers; their connections matter",
+        "evidence_it_uses": "objects with parts and connections, such as meshes, molecules, or interacting components",
+        "what_it_carries": "nodes, edges, spatial relations, and symmetry rules that should not change the answer",
+        "domain_failure": "the graph can encode the wrong neighborhood, hide missing interactions, or fail when the mesh changes. In this domain, reject it if this changed-case test fails: change the load path, defect, mesh, or boundary and check stress near failure regions."
+      },
+      {
+        "slug": "uncertainty-and-generalization",
+        "name": "Uncertainty And Generalization",
+        "domain_job": "a prediction is not enough unless the user knows when it should be believed",
+        "evidence_it_uses": "training cases, validation cases, prediction errors, and known shifts between cases",
+        "what_it_carries": "error checks, changed-case tests, and limits on where the model was trained",
+        "domain_failure": "training error can look good while the model fails under a new geometry, parameter range, sensor, or physical regime. In this domain, reject it if this changed-case test fails: change the load path, defect, mesh, or boundary and check stress near failure regions."
+      }
+    ]
   },
   {
     "slug": "chemistry-and-biology",
@@ -104,7 +198,41 @@
       "Look for readable rules only when the measured variables support them."
     ],
     "failure_test": "Test on a changed molecule, condition, experiment, or biological setting that was not close to training.",
-    "example": "worked-examples/molecule-property-from-structure.html"
+    "example": "worked-examples/molecule-property-from-structure.html",
+    "concept_burdens": [
+      {
+        "slug": "graphs-and-geometric-learning",
+        "name": "Graphs And Geometric Learning",
+        "domain_job": "many scientific objects are not simple rows of numbers; their connections matter",
+        "evidence_it_uses": "objects with parts and connections, such as meshes, molecules, or interacting components",
+        "what_it_carries": "nodes, edges, spatial relations, and symmetry rules that should not change the answer",
+        "domain_failure": "the graph can encode the wrong neighborhood, hide missing interactions, or fail when the mesh changes. In this domain, reject it if this changed-case test fails: test on a new scaffold, rare atom type, changed assay, or biological condition outside the familiar set."
+      },
+      {
+        "slug": "generative-modeling",
+        "name": "Generative Modeling",
+        "domain_job": "some tasks need many possible examples, not one predicted answer",
+        "evidence_it_uses": "examples of fields, molecules, flows, shapes, or other scientific objects",
+        "what_it_carries": "a learned rule for sampling outputs that resemble the training family",
+        "domain_failure": "generated samples can look realistic while breaking constraints, conservation, or rare-event behavior. In this domain, reject it if this changed-case test fails: test on a new scaffold, rare atom type, changed assay, or biological condition outside the familiar set."
+      },
+      {
+        "slug": "symbolic-regression",
+        "name": "Symbolic Regression And Model Discovery",
+        "domain_job": "a scientist may need a readable equation, not only a model that predicts well",
+        "evidence_it_uses": "measured variables and candidate mathematical ingredients",
+        "what_it_carries": "candidate formulas that can be written, checked, and compared",
+        "domain_failure": "a neat formula can fit the training data while using the wrong variables or failing on a changed experiment. In this domain, reject it if this changed-case test fails: test on a new scaffold, rare atom type, changed assay, or biological condition outside the familiar set."
+      },
+      {
+        "slug": "uncertainty-and-generalization",
+        "name": "Uncertainty And Generalization",
+        "domain_job": "a prediction is not enough unless the user knows when it should be believed",
+        "evidence_it_uses": "training cases, validation cases, prediction errors, and known shifts between cases",
+        "what_it_carries": "error checks, changed-case tests, and limits on where the model was trained",
+        "domain_failure": "training error can look good while the model fails under a new geometry, parameter range, sensor, or physical regime. In this domain, reject it if this changed-case test fails: test on a new scaffold, rare atom type, changed assay, or biological condition outside the familiar set."
+      }
+    ]
   },
   {
     "slug": "many-pde-tasks",
@@ -131,7 +259,41 @@
       "Compare against trusted solves on changed equations, boundaries, and scales."
     ],
     "failure_test": "Withhold a full equation family, boundary type, or scale and check whether the model still earns the claim.",
-    "example": "worked-examples/foundation-pde-model-on-new-equation.html"
+    "example": "worked-examples/foundation-pde-model-on-new-equation.html",
+    "concept_burdens": [
+      {
+        "slug": "foundation-models-for-pdes",
+        "name": "Foundation Models For PDEs",
+        "domain_job": "one trained model may be asked to handle many related equations, grids, parameters, or physical settings",
+        "evidence_it_uses": "many PDE problem instances across equations, grids, parameters, or physical settings",
+        "what_it_carries": "shared structure across many scientific problem instances",
+        "domain_failure": "the model can look broad while missing rare regimes, new boundary conditions, or quantities not represented in training. In this domain, reject it if this changed-case test fails: withhold a full equation family, boundary type, scale, or quantity and compare against trusted solves."
+      },
+      {
+        "slug": "operator-learning",
+        "name": "Operator Learning",
+        "domain_job": "one simulation answer is not enough when engineers need the whole map from inputs to solution fields",
+        "evidence_it_uses": "many example inputs and their full solution fields",
+        "what_it_carries": "a learned map from a forcing, coefficient, shape, or starting field to a solution field",
+        "domain_failure": "the learned map can give plausible-looking fields that violate the equation or fail on a shifted input family. In this domain, reject it if this changed-case test fails: withhold a full equation family, boundary type, scale, or quantity and compare against trusted solves."
+      },
+      {
+        "slug": "attention-for-scientific-fields",
+        "name": "Attention For Scientific Fields",
+        "domain_job": "a local patch of a field may depend on faraway information, but looking everywhere can be expensive",
+        "evidence_it_uses": "large fields where one location may depend on other locations",
+        "what_it_carries": "selected interactions between parts of the input field",
+        "domain_failure": "windowing or scaling choices can miss long-range effects that matter for the scientific quantity being predicted. In this domain, reject it if this changed-case test fails: withhold a full equation family, boundary type, scale, or quantity and compare against trusted solves."
+      },
+      {
+        "slug": "uncertainty-and-generalization",
+        "name": "Uncertainty And Generalization",
+        "domain_job": "a prediction is not enough unless the user knows when it should be believed",
+        "evidence_it_uses": "training cases, validation cases, prediction errors, and known shifts between cases",
+        "what_it_carries": "error checks, changed-case tests, and limits on where the model was trained",
+        "domain_failure": "training error can look good while the model fails under a new geometry, parameter range, sensor, or physical regime. In this domain, reject it if this changed-case test fails: withhold a full equation family, boundary type, scale, or quantity and compare against trusted solves."
+      }
+    ]
   },
   {
     "slug": "data-rich-scientific-prediction",
@@ -157,7 +319,33 @@
       "Use changed-case tests to define where the answer should be trusted."
     ],
     "failure_test": "Change the source, scale, or measured condition and check whether the target quantity still holds.",
-    "example": "worked-examples/climate-risk-under-shifted-conditions.html"
+    "example": "worked-examples/climate-risk-under-shifted-conditions.html",
+    "concept_burdens": [
+      {
+        "slug": "deep-learning",
+        "name": "Deep Learning",
+        "domain_job": "scientists often have examples of behavior but no short rule that predicts the next case",
+        "evidence_it_uses": "many input-output examples from experiments, simulations, or measurements",
+        "what_it_carries": "many adjustable weights that turn inputs into predictions",
+        "domain_failure": "the model can fit familiar examples while failing on a new material, geometry, scale, or boundary condition. In this domain, reject it if this changed-case test fails: hold out a new source, scale, sensor condition, or rare case and check the quantity used for decisions."
+      },
+      {
+        "slug": "uncertainty-and-generalization",
+        "name": "Uncertainty And Generalization",
+        "domain_job": "a prediction is not enough unless the user knows when it should be believed",
+        "evidence_it_uses": "training cases, validation cases, prediction errors, and known shifts between cases",
+        "what_it_carries": "error checks, changed-case tests, and limits on where the model was trained",
+        "domain_failure": "training error can look good while the model fails under a new geometry, parameter range, sensor, or physical regime. In this domain, reject it if this changed-case test fails: hold out a new source, scale, sensor condition, or rare case and check the quantity used for decisions."
+      },
+      {
+        "slug": "surrogate-modeling",
+        "name": "Surrogate Modeling",
+        "domain_job": "a trusted simulator may be too slow to run for every design, control, or uncertainty question",
+        "evidence_it_uses": "expensive solver inputs and outputs for a limited set of cases",
+        "what_it_carries": "the input-output behavior needed for a specified family of queries",
+        "domain_failure": "speed can hide missing physics when the surrogate is used beyond the regime where it was checked. In this domain, reject it if this changed-case test fails: hold out a new source, scale, sensor condition, or rare case and check the quantity used for decisions."
+      }
+    ]
   },
   {
     "slug": "scientific-model-building",
@@ -184,7 +372,41 @@
       "Reject the model when the scientific target fails under a changed case."
     ],
     "failure_test": "Change the experimental setting or target quantity and check whether the claimed scientific answer still survives.",
-    "example": "worked-examples/material-stress-from-sparse-tests.html"
+    "example": "worked-examples/material-stress-from-sparse-tests.html",
+    "concept_burdens": [
+      {
+        "slug": "scientific-machine-learning",
+        "name": "Scientific Machine Learning",
+        "domain_job": "scientific work needs predictions that respect measurements, equations, uncertainty, and domain limits at the same time",
+        "evidence_it_uses": "data, equations, units, simulation outputs, and domain limits",
+        "what_it_carries": "data evidence, scientific structure, and validation against changed cases",
+        "domain_failure": "the method becomes a generic fitting tool if the physical quantity, scientific claim, and validation case are not named. In this domain, reject it if this changed-case test fails: change the experiment, boundary, scale, or measured variable and verify the scientific target directly."
+      },
+      {
+        "slug": "physics-informed-neural-networks",
+        "name": "Physics-Informed Neural Networks",
+        "domain_job": "measurements may be sparse, but the answer must still respect a known physical equation",
+        "evidence_it_uses": "some measured values, boundary values, starting values, and a known differential equation",
+        "what_it_carries": "a neural network prediction plus a penalty for violating the known equation",
+        "domain_failure": "the equation penalty can look small while the solution is wrong in hard regions, sharp layers, or unseen boundary cases. In this domain, reject it if this changed-case test fails: change the experiment, boundary, scale, or measured variable and verify the scientific target directly."
+      },
+      {
+        "slug": "symbolic-regression",
+        "name": "Symbolic Regression And Model Discovery",
+        "domain_job": "a scientist may need a readable equation, not only a model that predicts well",
+        "evidence_it_uses": "measured variables and candidate mathematical ingredients",
+        "what_it_carries": "candidate formulas that can be written, checked, and compared",
+        "domain_failure": "a neat formula can fit the training data while using the wrong variables or failing on a changed experiment. In this domain, reject it if this changed-case test fails: change the experiment, boundary, scale, or measured variable and verify the scientific target directly."
+      },
+      {
+        "slug": "uncertainty-and-generalization",
+        "name": "Uncertainty And Generalization",
+        "domain_job": "a prediction is not enough unless the user knows when it should be believed",
+        "evidence_it_uses": "training cases, validation cases, prediction errors, and known shifts between cases",
+        "what_it_carries": "error checks, changed-case tests, and limits on where the model was trained",
+        "domain_failure": "training error can look good while the model fails under a new geometry, parameter range, sensor, or physical regime. In this domain, reject it if this changed-case test fails: change the experiment, boundary, scale, or measured variable and verify the scientific target directly."
+      }
+    ]
   },
   {
     "slug": "learned-time-dynamics",
@@ -211,7 +433,41 @@
       "Test long-time behavior and changed starting conditions."
     ],
     "failure_test": "Run beyond the training window or change the starting state and check accumulated error, stability, and known invariants.",
-    "example": "worked-examples/discovering-a-small-law-from-motion.html"
+    "example": "worked-examples/discovering-a-small-law-from-motion.html",
+    "concept_burdens": [
+      {
+        "slug": "neural-differential-equations",
+        "name": "Neural Differential Equations",
+        "domain_job": "scientists may know that a system changes continuously but not know the exact rule for that change",
+        "evidence_it_uses": "measurements of a system changing over time",
+        "what_it_carries": "a learned rate rule inside a time-stepping calculation",
+        "domain_failure": "small learned-rate errors can accumulate until long-time predictions drift away from the real system. In this domain, reject it if this changed-case test fails: start from a new condition, run longer than the training window, and check drift, stability, and conserved quantities."
+      },
+      {
+        "slug": "symbolic-regression",
+        "name": "Symbolic Regression And Model Discovery",
+        "domain_job": "a scientist may need a readable equation, not only a model that predicts well",
+        "evidence_it_uses": "measured variables and candidate mathematical ingredients",
+        "what_it_carries": "candidate formulas that can be written, checked, and compared",
+        "domain_failure": "a neat formula can fit the training data while using the wrong variables or failing on a changed experiment. In this domain, reject it if this changed-case test fails: start from a new condition, run longer than the training window, and check drift, stability, and conserved quantities."
+      },
+      {
+        "slug": "optimization-for-learning",
+        "name": "Optimization For Learning",
+        "domain_job": "learning needs a way to decide which model settings are better or worse",
+        "evidence_it_uses": "a written score that says which model behavior is better or worse",
+        "what_it_carries": "a written score that compares model output against data, physics penalties, or design goals",
+        "domain_failure": "a model can optimize the written score while missing the scientific behavior the score failed to name. In this domain, reject it if this changed-case test fails: start from a new condition, run longer than the training window, and check drift, stability, and conserved quantities."
+      },
+      {
+        "slug": "uncertainty-and-generalization",
+        "name": "Uncertainty And Generalization",
+        "domain_job": "a prediction is not enough unless the user knows when it should be believed",
+        "evidence_it_uses": "training cases, validation cases, prediction errors, and known shifts between cases",
+        "what_it_carries": "error checks, changed-case tests, and limits on where the model was trained",
+        "domain_failure": "training error can look good while the model fails under a new geometry, parameter range, sensor, or physical regime. In this domain, reject it if this changed-case test fails: start from a new condition, run longer than the training window, and check drift, stability, and conserved quantities."
+      }
+    ]
   },
   {
     "slug": "training-score-design",
@@ -238,6 +494,40 @@
       "Check whether lowering the score improves the real target quantity."
     ],
     "failure_test": "Lower the training score while checking a hard held-out region; reject the setup if the scientific quantity gets worse.",
-    "example": "worked-examples/heat-equation-from-few-measurements.html"
+    "example": "worked-examples/heat-equation-from-few-measurements.html",
+    "concept_burdens": [
+      {
+        "slug": "optimization-for-learning",
+        "name": "Optimization For Learning",
+        "domain_job": "learning needs a way to decide which model settings are better or worse",
+        "evidence_it_uses": "a written score that says which model behavior is better or worse",
+        "what_it_carries": "a written score that compares model output against data, physics penalties, or design goals",
+        "domain_failure": "a model can optimize the written score while missing the scientific behavior the score failed to name. In this domain, reject it if this changed-case test fails: change the weights, hold out hard regions, and check the physical or decision quantity directly."
+      },
+      {
+        "slug": "physics-informed-neural-networks",
+        "name": "Physics-Informed Neural Networks",
+        "domain_job": "measurements may be sparse, but the answer must still respect a known physical equation",
+        "evidence_it_uses": "some measured values, boundary values, starting values, and a known differential equation",
+        "what_it_carries": "a neural network prediction plus a penalty for violating the known equation",
+        "domain_failure": "the equation penalty can look small while the solution is wrong in hard regions, sharp layers, or unseen boundary cases. In this domain, reject it if this changed-case test fails: change the weights, hold out hard regions, and check the physical or decision quantity directly."
+      },
+      {
+        "slug": "deep-learning",
+        "name": "Deep Learning",
+        "domain_job": "scientists often have examples of behavior but no short rule that predicts the next case",
+        "evidence_it_uses": "many input-output examples from experiments, simulations, or measurements",
+        "what_it_carries": "many adjustable weights that turn inputs into predictions",
+        "domain_failure": "the model can fit familiar examples while failing on a new material, geometry, scale, or boundary condition. In this domain, reject it if this changed-case test fails: change the weights, hold out hard regions, and check the physical or decision quantity directly."
+      },
+      {
+        "slug": "scientific-machine-learning",
+        "name": "Scientific Machine Learning",
+        "domain_job": "scientific work needs predictions that respect measurements, equations, uncertainty, and domain limits at the same time",
+        "evidence_it_uses": "data, equations, units, simulation outputs, and domain limits",
+        "what_it_carries": "data evidence, scientific structure, and validation against changed cases",
+        "domain_failure": "the method becomes a generic fitting tool if the physical quantity, scientific claim, and validation case are not named. In this domain, reject it if this changed-case test fails: change the weights, hold out hard regions, and check the physical or decision quantity directly."
+      }
+    ]
   }
 ]

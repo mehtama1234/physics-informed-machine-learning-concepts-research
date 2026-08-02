@@ -69,6 +69,48 @@
 </table>
 <h2>Concepts That Matter</h2>
 <ul><li><a href="../topics/foundation-models-for-pdes.html">Foundation Models For PDEs</a></li><li><a href="../topics/operator-learning.html">Operator Learning</a></li><li><a href="../topics/attention-for-scientific-fields.html">Attention For Scientific Fields</a></li><li><a href="../topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></li></ul>
+
+<h2>What Each Concept Must Carry In This Domain</h2>
+<p>Each concept earns its place only if it carries part of the domain job. This table states the burden before the method name is allowed to matter.</p>
+<table>
+  <thead>
+    <tr><th>Concept</th><th>Domain Job It Handles</th><th>Evidence It Uses</th><th>What It Carries</th><th>Domain Failure</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <td><a href="../topics/foundation-models-for-pdes.html">Foundation Models For PDEs</a></td>
+  <td>one trained model may be asked to handle many related equations, grids, parameters, or physical settings</td>
+  <td>many PDE problem instances across equations, grids, parameters, or physical settings</td>
+  <td>shared structure across many scientific problem instances</td>
+  <td>the model can look broad while missing rare regimes, new boundary conditions, or quantities not represented in training. In this domain, reject it if this changed-case test fails: withhold a full equation family, boundary type, scale, or quantity and compare against trusted solves.</td>
+</tr>
+
+<tr>
+  <td><a href="../topics/operator-learning.html">Operator Learning</a></td>
+  <td>one simulation answer is not enough when engineers need the whole map from inputs to solution fields</td>
+  <td>many example inputs and their full solution fields</td>
+  <td>a learned map from a forcing, coefficient, shape, or starting field to a solution field</td>
+  <td>the learned map can give plausible-looking fields that violate the equation or fail on a shifted input family. In this domain, reject it if this changed-case test fails: withhold a full equation family, boundary type, scale, or quantity and compare against trusted solves.</td>
+</tr>
+
+<tr>
+  <td><a href="../topics/attention-for-scientific-fields.html">Attention For Scientific Fields</a></td>
+  <td>a local patch of a field may depend on faraway information, but looking everywhere can be expensive</td>
+  <td>large fields where one location may depend on other locations</td>
+  <td>selected interactions between parts of the input field</td>
+  <td>windowing or scaling choices can miss long-range effects that matter for the scientific quantity being predicted. In this domain, reject it if this changed-case test fails: withhold a full equation family, boundary type, scale, or quantity and compare against trusted solves.</td>
+</tr>
+
+<tr>
+  <td><a href="../topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></td>
+  <td>a prediction is not enough unless the user knows when it should be believed</td>
+  <td>training cases, validation cases, prediction errors, and known shifts between cases</td>
+  <td>error checks, changed-case tests, and limits on where the model was trained</td>
+  <td>training error can look good while the model fails under a new geometry, parameter range, sensor, or physical regime. In this domain, reject it if this changed-case test fails: withhold a full equation family, boundary type, scale, or quantity and compare against trusted solves.</td>
+</tr>
+</tbody>
+</table>
+
 <h2>How The Methods Enter</h2>
 <ul><li>Train across many tasks.</li><li>Hold out whole task families.</li><li>Compare against trusted solves on changed equations, boundaries, and scales.</li></ul>
 <h2>Failure Test</h2>

@@ -4265,7 +4265,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
         "concept_sketches": CONCEPT_SKETCHES,
         "learning_path": LEARNING_PATH,
         "glossary": GLOSSARY,
-        "domain_guides": DOMAIN_GUIDES,
+        "domain_guides": [{**guide, "concept_burdens": domain_concept_burdens(guide)} for guide in DOMAIN_GUIDES],
         "reader_checks": reader_checks,
         "decision_guides": [{**decision, "decision_burden": decision_burden_data(decision)} for decision in DECISION_GUIDES],
         "provenance_guides": PROVENANCE_GUIDES,
@@ -6718,6 +6718,7 @@ def write_domain_page(path: Path, guide: dict[str, object]) -> None:
     job = guide["domain_job"]
     domain_essay = domain_first_principles_essay_html(guide)
     stress_test = domain_stress_test_html(guide)
+    concept_burdens = domain_concept_burdens_html(guide)
     body = f"""
 <h1>{html.escape(str(guide['title']))}</h1>
 <h2>Real Quantity</h2>
@@ -6739,6 +6740,7 @@ def write_domain_page(path: Path, guide: dict[str, object]) -> None:
 </table>
 <h2>Concepts That Matter</h2>
 {concept_links(list(guide['concepts']), root_prefix="../")}
+{concept_burdens}
 <h2>How The Methods Enter</h2>
 <ul>{method_items}</ul>
 <h2>Failure Test</h2>
@@ -6748,6 +6750,52 @@ def write_domain_page(path: Path, guide: dict[str, object]) -> None:
 <p><a href="../{html.escape(str(guide['example']))}">Related page</a></p>
 """
     path.write_text(html_page(str(guide["title"]), body, root_prefix="../"), encoding="utf-8")
+
+
+def domain_concept_burdens(guide: dict[str, object]) -> list[dict[str, str]]:
+    concepts_by_slug = {str(item["slug"]): item for item in CONCEPTS}
+    job = guide["domain_job"]
+    rows = []
+    for slug in guide["concepts"]:
+        concept = concepts_by_slug[str(slug)]
+        derivation = topic_derivation(concept)
+        rows.append(
+            {
+                "slug": str(slug),
+                "name": str(concept["name"]),
+                "domain_job": str(concept["problem"]),
+                "evidence_it_uses": str(derivation["observed"]),
+                "what_it_carries": str(concept["keeps"]),
+                "domain_failure": f"{concept['failure']}. In this domain, reject it if this changed-case test fails: {job['changed_case_test']}.",
+            }
+        )
+    return rows
+
+
+def domain_concept_burdens_html(guide: dict[str, object]) -> str:
+    rows = []
+    for item in domain_concept_burdens(guide):
+        rows.append(
+            f"""
+<tr>
+  <td><a href="../topics/{html.escape(str(item['slug']))}.html">{html.escape(str(item['name']))}</a></td>
+  <td>{html.escape(str(item['domain_job']))}</td>
+  <td>{html.escape(str(item['evidence_it_uses']))}</td>
+  <td>{html.escape(str(item['what_it_carries']))}</td>
+  <td>{html.escape(str(item['domain_failure']))}</td>
+</tr>
+"""
+        )
+    return f"""
+<h2>What Each Concept Must Carry In This Domain</h2>
+<p>Each concept earns its place only if it carries part of the domain job. This table states the burden before the method name is allowed to matter.</p>
+<table>
+  <thead>
+    <tr><th>Concept</th><th>Domain Job It Handles</th><th>Evidence It Uses</th><th>What It Carries</th><th>Domain Failure</th></tr>
+  </thead>
+  <tbody>{''.join(rows)}</tbody>
+</table>
+"""
 
 
 def domain_index_card(guide: dict[str, object], href: str) -> str:
@@ -8010,6 +8058,12 @@ def write_markdown_export(data: dict[str, object]) -> None:
                 "",
             ]
         )
+        lines.append("#### What Each Concept Must Carry In This Domain")
+        for item in guide["concept_burdens"]:
+            lines.append(
+                f"- {item['name']}: handles {item['domain_job']} Evidence it uses: {item['evidence_it_uses']} Carries: {item['what_it_carries']} Failure: {item['domain_failure']}"
+            )
+        lines.append("")
     lines.extend(["", "## Reader Checks"])
     for check in data["reader_checks"]:
         lines.extend(
@@ -8540,8 +8594,10 @@ def validate(data: dict[str, object] | None = None) -> None:
         if not guide_path.exists():
             raise SystemExit(f"missing domain guide page: {guide['title']}")
         guide_text = guide_path.read_text(encoding="utf-8")
-        if "Walk The Domain From Scratch" not in guide_text or "How The Methods Enter Without Jargon" not in guide_text or "Real Quantity" not in guide_text or "Failure Test" not in guide_text or "Concrete Scientific Job" not in guide_text or "Domain Stress Test" not in guide_text or "Quantity At Risk" not in guide_text or "Concepts Under Pressure" not in guide_text:
+        if "Walk The Domain From Scratch" not in guide_text or "How The Methods Enter Without Jargon" not in guide_text or "Real Quantity" not in guide_text or "Failure Test" not in guide_text or "Concrete Scientific Job" not in guide_text or "What Each Concept Must Carry In This Domain" not in guide_text or "Domain Job It Handles" not in guide_text or "Evidence It Uses" not in guide_text or "Domain Failure" not in guide_text or "Domain Stress Test" not in guide_text or "Quantity At Risk" not in guide_text or "Concepts Under Pressure" not in guide_text:
             raise SystemExit(f"domain guide not rendered correctly: {guide['title']}")
+        if len(domain_concept_burdens(guide)) != len(guide["concepts"]):
+            raise SystemExit(f"domain guide concept burden mismatch: {guide['title']}")
         job = guide.get("domain_job") or {}
         for field in ("scientific_job", "observed_evidence", "hidden_quantity", "decision", "changed_case_test"):
             if not job.get(field):
