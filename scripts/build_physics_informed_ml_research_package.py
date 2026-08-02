@@ -2377,6 +2377,7 @@ REVIEW_SEARCH_INDEX = [
         "intent": "I need to know the next serious goal.",
         "look_for": "priorities, hand-written depth tasks, target pages, and acceptance checks",
         "pages": [
+            {"label": "Review Queue", "href": "review-queue.html"},
             {"label": "Editorial Roadmap", "href": "editorial-roadmap.html"},
             {"label": "Review Entrypoints", "href": "review-entrypoints.html"},
             {"label": "Quality Rubric", "href": "quality.html"},
@@ -2397,6 +2398,7 @@ REVIEW_SEARCH_INDEX = [
         "intent": "I need transcript support for a claim.",
         "look_for": "source video, transcript excerpt, support limit, and review links",
         "pages": [
+            {"label": "Review Queue", "href": "review-queue.html"},
             {"label": "Evidence Packets", "href": "evidence-packets.html"},
             {"label": "Evidence Ledger", "href": "evidence-ledger.html"},
             {"label": "Transcripts", "href": "transcripts.html"},
@@ -2727,6 +2729,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
     coverage_matrix = build_coverage_matrix(concept_atlas, reader_checks)
     core_derivations = build_core_derivations(topic_treatments)
     concept_evidence_packets = build_concept_evidence_packets(topic_treatments)
+    review_queue = build_review_queue(coverage_matrix, concept_evidence_packets)
     meaty_goal_coverage = build_meaty_goal_coverage(topic_treatments, reader_checks, concept_evidence_packets)
     formula_guide = build_formula_guide(core_derivations)
     misconception_map = build_misconception_map(core_derivations, reader_checks)
@@ -2770,6 +2773,8 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
             "review_entrypoint_count": sum(len(group["items"]) for group in REVIEW_ENTRYPOINTS),
             "completion_requirement_count": len(COMPLETION_REQUIREMENTS),
             "review_search_intent_count": len(REVIEW_SEARCH_INDEX),
+            "review_queue_count": len(review_queue),
+            "review_queue_p0_count": sum(1 for item in review_queue if item["priority"] == "P0"),
             "editorial_roadmap_count": len(editorial_roadmap),
             "editorial_roadmap_completed_count": sum(1 for item in editorial_roadmap if item.get("status") == "locally completed"),
             "source_anchor_count": sum(len(SOURCE_ANCHORS.get(str(row["slug"]), [])) or min(2, len(row.get("evidence") or [])) for row in concept_atlas),
@@ -2808,6 +2813,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
         "review_entrypoints": REVIEW_ENTRYPOINTS,
         "completion_requirements": COMPLETION_REQUIREMENTS,
         "review_search_index": REVIEW_SEARCH_INDEX,
+        "review_queue": review_queue,
         "editorial_roadmap": editorial_roadmap,
         "source_anchors": SOURCE_ANCHORS,
     }
@@ -2890,6 +2896,46 @@ def build_coverage_matrix(concept_atlas: list[dict[str, object]], reader_checks:
             }
         )
     return rows
+
+
+def build_review_queue(coverage_rows: list[dict[str, object]], packets: list[dict[str, object]]) -> list[dict[str, object]]:
+    packet_by_slug = {str(packet["slug"]): packet for packet in packets}
+    queue = []
+    for row in coverage_rows:
+        slug = str(row["slug"])
+        packet = packet_by_slug.get(slug, {})
+        strength = packet.get("source_strength") or {}
+        missing_layers = []
+        for key, label in (
+            ("deep_dive", "deep dive"),
+            ("diagram", "diagram"),
+            ("learning_path", "learning path"),
+            ("glossary", "glossary"),
+            ("domain", "domain guide"),
+            ("decision_guide", "decision guide"),
+        ):
+            if not row.get(key):
+                missing_layers.append(label)
+        reviewed = int(strength.get("strong_anchor_count") or 0)
+        broad = int(strength.get("broad_mention_count") or 0)
+        priority = "P0" if reviewed == 0 else "P1" if missing_layers else "P2"
+        reason = "needs reviewed source anchors" if reviewed == 0 else "has missing support layers" if missing_layers else "ready for hand polish"
+        queue.append(
+            {
+                "priority": priority,
+                "slug": slug,
+                "name": str(row["name"]),
+                "topic_href": f"topics/{slug}.html",
+                "packet_href": f"evidence-packets/{slug}.html",
+                "reviewed_source_anchors": reviewed,
+                "broad_transcript_mentions": broad,
+                "missing_layers": missing_layers,
+                "reason": reason,
+                "next_action": f"Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for {row['name']}.",
+            }
+        )
+    priority_order = {"P0": 0, "P1": 1, "P2": 2}
+    return sorted(queue, key=lambda item: (priority_order[str(item["priority"])], -len(item["missing_layers"]), str(item["name"])))
 
 
 def build_meaty_goal_coverage(topic_treatments: list[dict[str, object]], reader_checks: list[dict[str, object]], packets: list[dict[str, object]]) -> list[dict[str, object]]:
@@ -3377,6 +3423,7 @@ def html_page(title: str, body: str, root_prefix: str = "") -> str:
   <a href="{root_prefix}synthesis.html">Synthesis</a>
   <a href="{root_prefix}review-entrypoints.html">Review Map</a>
   <a href="{root_prefix}review-search.html">Find</a>
+  <a href="{root_prefix}review-queue.html">Queue</a>
   <a href="{root_prefix}editorial-roadmap.html">Roadmap</a>
   <a href="{root_prefix}completion-audit.html">Audit</a>
   <a href="{root_prefix}handoff.html">Handoff</a>
@@ -3664,6 +3711,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Meaty Goal Coverage", f"{summary['meaty_goal_coverage_count']} concepts checked against the required teaching-grade page parts.", "meaty-goal-coverage.html")}
 {card("Review Map", f"{summary['review_entrypoint_count']} entry points for end-to-end review, use, and source checks.", "review-entrypoints.html")}
 {card("Find By Question", f"{summary['review_search_intent_count']} reviewer intents mapped to the right pages.", "review-search.html")}
+{card("Review Queue", f"{summary['review_queue_p0_count']} P0 concepts need reviewed source anchors before wider claims.", "review-queue.html")}
 {card("Editorial Roadmap", f"{summary['editorial_roadmap_completed_count']} of {summary['editorial_roadmap_count']} roadmap tasks are locally completed, including remote verification.", "editorial-roadmap.html")}
 {card("Completion Audit", f"{summary['completion_requirement_count']} requirements checked against local evidence and external status.", "completion-audit.html")}
 {card("Review Handoff", "Shortest route for reviewing the package and the remaining editorial work.", "handoff.html")}
@@ -3820,6 +3868,7 @@ def write_site(data: dict[str, object]) -> None:
     )
 
     write_coverage_page(SITE / "coverage.html", list(coverage_matrix))
+    write_review_queue_page(SITE / "review-queue.html", list(data["review_queue"]))
     write_dependency_map_page(SITE / "dependencies.html", list(dependency_map))
     write_concept_ladder_page(SITE / "concept-ladder.html", list(concept_ladder))
     packet_cards = []
@@ -4994,6 +5043,44 @@ def write_coverage_page(path: Path, rows: list[dict[str, object]]) -> None:
     path.write_text(html_page("Physics-Informed ML Coverage Matrix", body), encoding="utf-8")
 
 
+def write_review_queue_page(path: Path, rows: list[dict[str, object]]) -> None:
+    table_rows = []
+    for row in rows:
+        missing = ", ".join(str(item) for item in row["missing_layers"]) or "none"
+        table_rows.append(
+            f"""
+<tr>
+  <td>{html.escape(str(row['priority']))}</td>
+  <td><a href="{html.escape(str(row['topic_href']))}">{html.escape(str(row['name']))}</a><br><a href="{html.escape(str(row['packet_href']))}">evidence packet</a></td>
+  <td>{html.escape(str(row['reviewed_source_anchors']))}</td>
+  <td>{html.escape(str(row['broad_transcript_mentions']))}</td>
+  <td>{html.escape(missing)}</td>
+  <td>{html.escape(str(row['reason']))}</td>
+  <td>{html.escape(str(row['next_action']))}</td>
+</tr>
+"""
+        )
+    body = f"""
+<h1>Review Queue</h1>
+<p>This page turns coverage and source-strength evidence into an editing order. P0 means the concept has broad transcript mentions but no reviewed source anchors yet. P1 means the source anchors exist but some support layer is still missing. P2 means the generated structure is ready for hand polish.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Priority</th>
+      <th>Concept</th>
+      <th>Reviewed Anchors</th>
+      <th>Broad Mentions</th>
+      <th>Missing Layers</th>
+      <th>Reason</th>
+      <th>Next Action</th>
+    </tr>
+  </thead>
+  <tbody>{''.join(table_rows)}</tbody>
+</table>
+"""
+    path.write_text(html_page("Physics-Informed ML Review Queue", body), encoding="utf-8")
+
+
 def write_dependency_map_page(path: Path, rows: list[dict[str, object]]) -> None:
     table_rows = []
     for row in rows:
@@ -5824,6 +5911,22 @@ def write_markdown_export(data: dict[str, object]) -> None:
                 "",
             ]
         )
+    lines.extend(["", "## Review Queue"])
+    for row in data["review_queue"]:
+        missing = ", ".join(str(item) for item in row["missing_layers"]) or "none"
+        lines.extend(
+            [
+                f"### {row['priority']} {row['name']}",
+                f"- Reviewed source anchors: {row['reviewed_source_anchors']}",
+                f"- Broad transcript mentions: {row['broad_transcript_mentions']}",
+                f"- Missing layers: {missing}",
+                f"- Reason: {row['reason']}",
+                f"- Next action: {row['next_action']}",
+                f"- Topic: {row['topic_href']}",
+                f"- Evidence packet: {row['packet_href']}",
+                "",
+            ]
+        )
     lines.extend(["", "## Concept Dependency Map"])
     for row in data["dependency_map"]:
         lines.extend(
@@ -6279,6 +6382,19 @@ def validate(data: dict[str, object] | None = None) -> None:
     coverage_rows = data.get("coverage_matrix") or []
     if len(coverage_rows) != len(data["concept_atlas"]):
         raise SystemExit("coverage matrix row count does not match concept atlas")
+    review_queue_path = SITE / "review-queue.html"
+    review_queue_text = review_queue_path.read_text(encoding="utf-8")
+    if "Review Queue" not in review_queue_text or "Reviewed Anchors" not in review_queue_text or "Broad Mentions" not in review_queue_text or "Missing Layers" not in review_queue_text or "Next Action" not in review_queue_text:
+        raise SystemExit("review queue not rendered correctly")
+    review_queue_rows = data.get("review_queue") or []
+    if len(review_queue_rows) != len(data["concept_atlas"]):
+        raise SystemExit("review queue row count does not match concept atlas")
+    if not any(row.get("priority") == "P0" for row in review_queue_rows):
+        raise SystemExit("review queue should surface P0 source-anchor work")
+    for row in review_queue_rows:
+        for href_field in ("topic_href", "packet_href"):
+            if not (SITE / str(row[href_field])).exists():
+                raise SystemExit(f"review queue link missing: {row.get('name')} -> {row[href_field]}")
     dependency_path = SITE / "dependencies.html"
     dependency_text = dependency_path.read_text(encoding="utf-8")
     if "Concept Dependency Map" not in dependency_text or "Confusion It Prevents" not in dependency_text:

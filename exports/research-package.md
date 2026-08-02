@@ -33,6 +33,8 @@
 - review_entrypoint_count: 29
 - completion_requirement_count: 7
 - review_search_intent_count: 7
+- review_queue_count: 14
+- review_queue_p0_count: 8
 - editorial_roadmap_count: 7
 - editorial_roadmap_completed_count: 7
 - source_anchor_count: 28
@@ -1023,6 +1025,134 @@
 - Evidence items: 6
 
 
+## Review Queue
+### P0 Deep Learning
+- Reviewed source anchors: 0
+- Broad transcript mentions: 6
+- Missing layers: deep dive, learning path, glossary, domain guide, decision guide
+- Reason: needs reviewed source anchors
+- Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Deep Learning.
+- Topic: topics/deep-learning.html
+- Evidence packet: evidence-packets/deep-learning.html
+
+### P0 Generative Modeling
+- Reviewed source anchors: 0
+- Broad transcript mentions: 6
+- Missing layers: deep dive, diagram, learning path, glossary, decision guide
+- Reason: needs reviewed source anchors
+- Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Generative Modeling.
+- Topic: topics/generative-modeling.html
+- Evidence packet: evidence-packets/generative-modeling.html
+
+### P0 Graphs And Geometric Learning
+- Reviewed source anchors: 0
+- Broad transcript mentions: 6
+- Missing layers: deep dive, diagram, learning path, glossary, decision guide
+- Reason: needs reviewed source anchors
+- Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Graphs And Geometric Learning.
+- Topic: topics/graphs-and-geometric-learning.html
+- Evidence packet: evidence-packets/graphs-and-geometric-learning.html
+
+### P0 Optimization For Learning
+- Reviewed source anchors: 0
+- Broad transcript mentions: 6
+- Missing layers: deep dive, diagram, learning path, domain guide, decision guide
+- Reason: needs reviewed source anchors
+- Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Optimization For Learning.
+- Topic: topics/optimization-for-learning.html
+- Evidence packet: evidence-packets/optimization-for-learning.html
+
+### P0 Attention For Scientific Fields
+- Reviewed source anchors: 0
+- Broad transcript mentions: 6
+- Missing layers: deep dive, learning path, glossary, decision guide
+- Reason: needs reviewed source anchors
+- Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Attention For Scientific Fields.
+- Topic: topics/attention-for-scientific-fields.html
+- Evidence packet: evidence-packets/attention-for-scientific-fields.html
+
+### P0 Scientific Machine Learning
+- Reviewed source anchors: 0
+- Broad transcript mentions: 6
+- Missing layers: deep dive, glossary, domain guide, decision guide
+- Reason: needs reviewed source anchors
+- Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Scientific Machine Learning.
+- Topic: topics/scientific-machine-learning.html
+- Evidence packet: evidence-packets/scientific-machine-learning.html
+
+### P0 Neural Differential Equations
+- Reviewed source anchors: 0
+- Broad transcript mentions: 6
+- Missing layers: domain guide
+- Reason: needs reviewed source anchors
+- Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Neural Differential Equations.
+- Topic: topics/neural-differential-equations.html
+- Evidence packet: evidence-packets/neural-differential-equations.html
+
+### P0 Partial Differential Equations
+- Reviewed source anchors: 0
+- Broad transcript mentions: 6
+- Missing layers: decision guide
+- Reason: needs reviewed source anchors
+- Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Partial Differential Equations.
+- Topic: topics/partial-differential-equations.html
+- Evidence packet: evidence-packets/partial-differential-equations.html
+
+### P2 Foundation Models For PDEs
+- Reviewed source anchors: 2
+- Broad transcript mentions: 4
+- Missing layers: none
+- Reason: ready for hand polish
+- Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Foundation Models For PDEs.
+- Topic: topics/foundation-models-for-pdes.html
+- Evidence packet: evidence-packets/foundation-models-for-pdes.html
+
+### P2 Operator Learning
+- Reviewed source anchors: 2
+- Broad transcript mentions: 4
+- Missing layers: none
+- Reason: ready for hand polish
+- Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Operator Learning.
+- Topic: topics/operator-learning.html
+- Evidence packet: evidence-packets/operator-learning.html
+
+### P2 Physics-Informed Neural Networks
+- Reviewed source anchors: 2
+- Broad transcript mentions: 4
+- Missing layers: none
+- Reason: ready for hand polish
+- Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Physics-Informed Neural Networks.
+- Topic: topics/physics-informed-neural-networks.html
+- Evidence packet: evidence-packets/physics-informed-neural-networks.html
+
+### P2 Surrogate Modeling
+- Reviewed source anchors: 2
+- Broad transcript mentions: 4
+- Missing layers: none
+- Reason: ready for hand polish
+- Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Surrogate Modeling.
+- Topic: topics/surrogate-modeling.html
+- Evidence packet: evidence-packets/surrogate-modeling.html
+
+### P2 Symbolic Regression And Model Discovery
+- Reviewed source anchors: 2
+- Broad transcript mentions: 4
+- Missing layers: none
+- Reason: ready for hand polish
+- Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Symbolic Regression And Model Discovery.
+- Topic: topics/symbolic-regression.html
+- Evidence packet: evidence-packets/symbolic-regression.html
+
+### P2 Uncertainty And Generalization
+- Reviewed source anchors: 2
+- Broad transcript mentions: 4
+- Missing layers: none
+- Reason: ready for hand polish
+- Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Uncertainty And Generalization.
+- Topic: topics/uncertainty-and-generalization.html
+- Evidence packet: evidence-packets/uncertainty-and-generalization.html
+
+
 ## Concept Dependency Map
 ### Physics-Informed Neural Networks
 - Learn first: Partial Differential Equations, Deep Learning, Optimization For Learning
@@ -1543,6 +1673,7 @@
 
 ### I need to know the next serious goal.
 - Look for: priorities, hand-written depth tasks, target pages, and acceptance checks
+- Review Queue: review-queue.html
 - Editorial Roadmap: editorial-roadmap.html
 - Review Entrypoints: review-entrypoints.html
 - Quality Rubric: quality.html
@@ -1557,6 +1688,7 @@
 
 ### I need transcript support for a claim.
 - Look for: source video, transcript excerpt, support limit, and review links
+- Review Queue: review-queue.html
 - Evidence Packets: evidence-packets.html
 - Evidence Ledger: evidence-ledger.html
 - Transcripts: transcripts.html

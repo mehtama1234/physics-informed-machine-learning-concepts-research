@@ -38,6 +38,7 @@ REQUIRED_ROOT_PAGES = {
     "synthesis.html",
     "review-entrypoints.html",
     "review-search.html",
+    "review-queue.html",
     "editorial-roadmap.html",
     "completion-audit.html",
     "meaty-goal.html",
@@ -117,6 +118,7 @@ def check_required_sections() -> list[str]:
         "site/reader-checks.html": ("Reader Checks",),
         "site/review-entrypoints.html": ("Review Entrypoints", "End-To-End Test"),
         "site/review-search.html": ("Find Pages By Question", "Review Rule"),
+        "site/review-queue.html": ("Review Queue", "Reviewed Anchors", "Broad Mentions", "Missing Layers", "Next Action", "P0"),
         "site/editorial-roadmap.html": ("Editorial Roadmap", "Status:", "Current Evidence", "Acceptance Check", "locally completed", "Meaty End-To-End Goal"),
         "site/completion-audit.html": ("Completion Audit", "Requirement Evidence", "locally verified"),
         "site/meaty-goal.html": ("Meaty End-To-End Goal", "Done Means", "Every Core Page Must Contain", "Acceptance Sentence", "Not Done If"),
@@ -271,8 +273,8 @@ def validate() -> None:
         errors.append(f"expected 40 videos, found {summary.get('video_count')}")
     if summary.get("concept_count") != 14:
         errors.append(f"expected 14 concepts, found {summary.get('concept_count')}")
-    if len(manifest) != 187:
-        errors.append(f"expected 187 pages, found {len(manifest)}")
+    if len(manifest) != 188:
+        errors.append(f"expected 188 pages, found {len(manifest)}")
 
     errors.extend(check_internal_links(manifest))
     errors.extend(check_required_sections())
