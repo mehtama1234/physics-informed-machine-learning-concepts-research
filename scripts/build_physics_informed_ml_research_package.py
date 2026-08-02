@@ -3330,6 +3330,7 @@ MEATY_GOAL_REQUIREMENTS = [
     {"key": "course_bridge", "label": "Course Bridge", "proof_term": "Course Bridge In Plain Words"},
     {"key": "use_or_refuse_gate", "label": "Use Or Refuse Gate", "proof_term": "Use Or Refuse Gate In Plain Words"},
     {"key": "final_learner_proof", "label": "Final Learner Proof", "proof_term": "Final Learner Proof In Plain Words"},
+    {"key": "next_day_memory_check", "label": "Next-Day Memory Check", "proof_term": "Next-Day Memory Check"},
     {"key": "field_mini_cases", "label": "Field Mini Cases", "proof_term": "Field Mini Cases In Plain Words"},
     {"key": "hand_teaching_note", "label": "Hand Teaching Note", "proof_term": "Hand Teaching Note"},
     {"key": "case_walkthrough", "label": "Case Walkthrough", "proof_term": "One Concrete Case From Start To Finish"},
@@ -7295,6 +7296,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     wrong_path_repair = topic_wrong_path_repair_html(topic, derivation)
     use_or_refuse_gate = topic_use_or_refuse_gate_html(topic, derivation)
     final_learner_proof = topic_final_learner_proof_html(topic, derivation)
+    next_day_memory_check = topic_next_day_memory_check_html(topic, derivation)
     plain_question_answer_script = topic_plain_question_answer_script_html(topic, derivation)
     know_still_test = topic_know_still_test_html(topic, derivation)
     failure_consequence = topic_failure_consequence_html(topic, derivation)
@@ -7345,6 +7347,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
 {wrong_path_repair}
 {use_or_refuse_gate}
 {final_learner_proof}
+{next_day_memory_check}
 {plain_question_answer_script}
 {know_still_test}
 {failure_consequence}
@@ -8175,6 +8178,32 @@ def topic_final_learner_proof_html(topic: dict[str, object], derivation: dict[st
 <p>{html.escape(proof_sentence)}</p>
 <h3>Final Proof Pass Test</h3>
 <p>The final proof passes only if the learner can say the problem, evidence, hidden answer, move, shape issue, concrete case, useful answer, changed-case test, and refusal boundary in one ordinary-language answer.</p>
+"""
+
+
+def topic_next_day_memory_check_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
+    title = str(topic["title"])
+    case = topic_case_walkthrough(topic, derivation)
+    shape = topic_plain_applications(topic, derivation)[0]
+    return f"""
+<h2>Next-Day Memory Check</h2>
+<p>This check is for the next day, when the page is closed. The learner passes only if the plain chain is still available without the table.</p>
+<table>
+  <tbody>
+    <tr><th>Remember The Need</th><td>{html.escape(str(topic['common_problem']))}</td></tr>
+    <tr><th>Remember The Evidence</th><td>{html.escape(str(derivation['observed']))}</td></tr>
+    <tr><th>Remember The Missing Answer</th><td>{html.escape(str(derivation['hidden']))}</td></tr>
+    <tr><th>Remember The Move</th><td>{html.escape(str(derivation['move']))}</td></tr>
+    <tr><th>Remember The Shape Issue</th><td>{html.escape(str(shape['use']))}</td></tr>
+    <tr><th>Remember One Case</th><td>{html.escape(str(case['setting']))}</td></tr>
+    <tr><th>Remember The First Check</th><td>{html.escape(str(derivation['test']))}</td></tr>
+    <tr><th>Remember When To Stop</th><td>{html.escape(str(topic['failure_boundary']))}</td></tr>
+  </tbody>
+</table>
+<h3>One-Minute Memory Answer</h3>
+<p>{html.escape(title)} should still be remembered as a route from {html.escape(str(derivation['observed']))} to {html.escape(str(derivation['hidden']))}, using this move: {html.escape(str(derivation['move']))}. The memory is not enough unless the learner also remembers this check: {html.escape(str(derivation['test']))}.</p>
+<h3>Memory Pass Test</h3>
+<p>The memory check passes only if the learner can say the need, evidence, missing answer, move, shape issue, one case, first check, and stop condition without reading the page.</p>
 """
 
 
@@ -10514,6 +10543,17 @@ def validate(data: dict[str, object] | None = None) -> None:
             "Refusal Proof",
             "Accepted Final Answer",
             "Final Proof Pass Test",
+            "Next-Day Memory Check",
+            "Remember The Need",
+            "Remember The Evidence",
+            "Remember The Missing Answer",
+            "Remember The Move",
+            "Remember The Shape Issue",
+            "Remember One Case",
+            "Remember The First Check",
+            "Remember When To Stop",
+            "One-Minute Memory Answer",
+            "Memory Pass Test",
             "Plain Question To Answer Script",
             "Real question",
             "Evidence sentence",
