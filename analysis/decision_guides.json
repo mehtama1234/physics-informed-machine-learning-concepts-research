@@ -136,5 +136,166 @@
       "reader-checks/foundation-pde-check.html",
       "domains/many-pde-tasks.html"
     ]
+  },
+  {
+    "slug": "many-examples-no-rule",
+    "title": "Many Examples, No Clear Rule",
+    "situation": "You have many examples, but no trusted equation or readable law yet.",
+    "best_start": "Deep learning",
+    "why": "The first useful move is to learn a flexible predictor, then test whether it carries the quantity that matters.",
+    "use_if": [
+      "examples are plentiful",
+      "the measurement process is named",
+      "a held-out changed case can be built"
+    ],
+    "avoid_if": [
+      "the new setting differs from the examples",
+      "the target quantity is vague",
+      "a scientific rule is claimed without a rule check"
+    ],
+    "evidence_needed": "held-out examples, changed measurement tests, target-quantity error, and a named first failure",
+    "links": [
+      "topics/deep-learning.html",
+      "reader-checks/deep-learning-check.html",
+      "evidence-packets/deep-learning.html"
+    ]
+  },
+  {
+    "slug": "scientific-claim-needs-discipline",
+    "title": "Scientific Claim Needs Discipline",
+    "situation": "A model is being called scientific, but the claim, evidence, and failure boundary are not yet separated.",
+    "best_start": "Scientific machine learning",
+    "why": "The field-level job is to make the learned answer answerable to evidence, physical quantities, and changed cases.",
+    "use_if": [
+      "the scientific quantity can be named",
+      "the evidence source is visible",
+      "the failure boundary matters for a decision"
+    ],
+    "avoid_if": [
+      "the page only names a method",
+      "generic accuracy is treated as scientific proof",
+      "the domain limit is missing"
+    ],
+    "evidence_needed": "source anchors, a named scientific quantity, domain-specific checks, and a changed-case rejection test",
+    "links": [
+      "topics/scientific-machine-learning.html",
+      "reader-checks/scientific-machine-learning-check.html",
+      "evidence-packets/scientific-machine-learning.html"
+    ]
+  },
+  {
+    "slug": "training-score-burden",
+    "title": "Training Score Burden",
+    "situation": "A model improves a written score, but the scientific decision may depend on something the score ignored.",
+    "best_start": "Optimization for learning",
+    "why": "Training only improves what the objective asks it to improve, so the objective must match the scientific burden.",
+    "use_if": [
+      "loss terms are visible",
+      "the ignored requirements can be listed",
+      "post-training checks are possible"
+    ],
+    "avoid_if": [
+      "the loss is treated as the decision",
+      "rare cases or boundaries are not scored",
+      "the optimization target hides units or constraints"
+    ],
+    "evidence_needed": "loss-term inspection, ignored-requirement tests, held-out edge cases, and the decision quantity after training",
+    "links": [
+      "topics/optimization-for-learning.html",
+      "reader-checks/optimization-for-learning-check.html",
+      "formula-guide.html"
+    ]
+  },
+  {
+    "slug": "need-many-valid-possibilities",
+    "title": "Need Many Valid Possibilities",
+    "situation": "The task needs many candidate fields, molecules, designs, or futures rather than one answer.",
+    "best_start": "Generative modeling",
+    "why": "The useful product is a set of possible scientific objects that still obey the rules that matter.",
+    "use_if": [
+      "many plausible candidates are useful",
+      "validity checks can be stated",
+      "downstream use can reject bad samples"
+    ],
+    "avoid_if": [
+      "samples are judged only by appearance",
+      "constraints are not checked",
+      "rare but important cases are missing"
+    ],
+    "evidence_needed": "constraint checks, rare-event checks, downstream-task tests, and examples of rejected samples",
+    "links": [
+      "topics/generative-modeling.html",
+      "reader-checks/generative-modeling-check.html",
+      "evidence-packets/generative-modeling.html"
+    ]
+  },
+  {
+    "slug": "connected-object-matters",
+    "title": "Connected Object Matters",
+    "situation": "The object is a molecule, mesh, graph, surface, or network where connections carry part of the scientific meaning.",
+    "best_start": "Graphs and geometric learning",
+    "why": "Flattening the object can hide which parts influence which other parts.",
+    "use_if": [
+      "nodes, edges, distances, or geometry matter",
+      "symmetries or mesh changes can be tested",
+      "the target property depends on interactions"
+    ],
+    "avoid_if": [
+      "the chosen graph is arbitrary",
+      "long-range effects are missing",
+      "rotation or mesh changes break the claim"
+    ],
+    "evidence_needed": "mesh-change tests, symmetry checks, missing-interaction tests, and target-property error on changed objects",
+    "links": [
+      "topics/graphs-and-geometric-learning.html",
+      "reader-checks/graphs-and-geometric-learning-check.html",
+      "worked-examples/molecule-property-from-structure.html"
+    ]
+  },
+  {
+    "slug": "far-field-information-matters",
+    "title": "Far Field Information Matters",
+    "situation": "A local part of a scientific field depends on distant regions, but carrying every interaction is expensive.",
+    "best_start": "Attention for scientific fields",
+    "why": "Attention gives a way to route selected information across a field while making the routing choice testable.",
+    "use_if": [
+      "nonlocal effects are plausible",
+      "the routing or window choice can be varied",
+      "the scientific quantity depends on distant context"
+    ],
+    "avoid_if": [
+      "attention is treated as explanation by itself",
+      "long-range effects are not stress tested",
+      "window choices are fixed without evidence"
+    ],
+    "evidence_needed": "window-change tests, long-range interaction tests, boundary-stress cases, and error on the scientific quantity",
+    "links": [
+      "topics/attention-for-scientific-fields.html",
+      "reader-checks/attention-for-scientific-fields-check.html",
+      "diagrams/operator-learning-flow.html"
+    ]
+  },
+  {
+    "slug": "field-rule-before-method",
+    "title": "Field Rule Before Method",
+    "situation": "A quantity changes across space, time, or both, and one number cannot describe the scientific state.",
+    "best_start": "Partial differential equations",
+    "why": "The PDE names how local change, movement, sources, and boundaries must fit together before a learned method is trusted.",
+    "use_if": [
+      "the field quantity is named",
+      "boundaries or sources matter",
+      "conservation or stability can be checked"
+    ],
+    "avoid_if": [
+      "points are predicted independently",
+      "boundary conditions are unknown",
+      "the equation is incomplete for the experiment"
+    ],
+    "evidence_needed": "boundary tests, source-term checks, conservation or stability checks, and changed-grid or changed-scale cases",
+    "links": [
+      "topics/partial-differential-equations.html",
+      "reader-checks/partial-differential-equations-check.html",
+      "derivations/partial-differential-equations.html"
+    ]
   }
 ]

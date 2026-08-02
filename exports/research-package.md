@@ -21,7 +21,7 @@
 - glossary_term_count: 10
 - domain_guide_count: 5
 - reader_check_count: 14
-- decision_guide_count: 6
+- decision_guide_count: 13
 - provenance_guide_count: 6
 - coverage_row_count: 14
 - dependency_count: 10
@@ -35,7 +35,7 @@
 - review_search_intent_count: 7
 - review_queue_count: 14
 - review_queue_p0_count: 0
-- review_queue_p1_count: 8
+- review_queue_p1_count: 7
 - editorial_roadmap_count: 7
 - editorial_roadmap_completed_count: 7
 - source_anchor_count: 28
@@ -893,6 +893,48 @@
 - Why: The claim is about shared structure across tasks, so whole task families must be tested.
 - Evidence needed: held-out task-family tests, trusted-solver comparisons, boundary and scale tests, and failure reports
 
+### Many Examples, No Clear Rule
+- Situation: You have many examples, but no trusted equation or readable law yet.
+- Start with: Deep learning
+- Why: The first useful move is to learn a flexible predictor, then test whether it carries the quantity that matters.
+- Evidence needed: held-out examples, changed measurement tests, target-quantity error, and a named first failure
+
+### Scientific Claim Needs Discipline
+- Situation: A model is being called scientific, but the claim, evidence, and failure boundary are not yet separated.
+- Start with: Scientific machine learning
+- Why: The field-level job is to make the learned answer answerable to evidence, physical quantities, and changed cases.
+- Evidence needed: source anchors, a named scientific quantity, domain-specific checks, and a changed-case rejection test
+
+### Training Score Burden
+- Situation: A model improves a written score, but the scientific decision may depend on something the score ignored.
+- Start with: Optimization for learning
+- Why: Training only improves what the objective asks it to improve, so the objective must match the scientific burden.
+- Evidence needed: loss-term inspection, ignored-requirement tests, held-out edge cases, and the decision quantity after training
+
+### Need Many Valid Possibilities
+- Situation: The task needs many candidate fields, molecules, designs, or futures rather than one answer.
+- Start with: Generative modeling
+- Why: The useful product is a set of possible scientific objects that still obey the rules that matter.
+- Evidence needed: constraint checks, rare-event checks, downstream-task tests, and examples of rejected samples
+
+### Connected Object Matters
+- Situation: The object is a molecule, mesh, graph, surface, or network where connections carry part of the scientific meaning.
+- Start with: Graphs and geometric learning
+- Why: Flattening the object can hide which parts influence which other parts.
+- Evidence needed: mesh-change tests, symmetry checks, missing-interaction tests, and target-property error on changed objects
+
+### Far Field Information Matters
+- Situation: A local part of a scientific field depends on distant regions, but carrying every interaction is expensive.
+- Start with: Attention for scientific fields
+- Why: Attention gives a way to route selected information across a field while making the routing choice testable.
+- Evidence needed: window-change tests, long-range interaction tests, boundary-stress cases, and error on the scientific quantity
+
+### Field Rule Before Method
+- Situation: A quantity changes across space, time, or both, and one number cannot describe the scientific state.
+- Start with: Partial differential equations
+- Why: The PDE names how local change, movement, sources, and boundaries must fit together before a learned method is trusted.
+- Evidence needed: boundary tests, source-term checks, conservation or stability checks, and changed-grid or changed-scale cases
+
 
 ## Provenance And Reproduction
 ### Source Playlists
@@ -1030,7 +1072,7 @@
 ### P1 Deep Learning
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
-- Missing layers: deep dive, learning path, glossary, domain guide, decision guide
+- Missing layers: deep dive, learning path, glossary, domain guide
 - Reason: has missing support layers
 - Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Deep Learning.
 - Topic: topics/deep-learning.html
@@ -1039,7 +1081,7 @@
 ### P1 Generative Modeling
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
-- Missing layers: deep dive, diagram, learning path, glossary, decision guide
+- Missing layers: deep dive, diagram, learning path, glossary
 - Reason: has missing support layers
 - Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Generative Modeling.
 - Topic: topics/generative-modeling.html
@@ -1048,7 +1090,7 @@
 ### P1 Graphs And Geometric Learning
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
-- Missing layers: deep dive, diagram, learning path, glossary, decision guide
+- Missing layers: deep dive, diagram, learning path, glossary
 - Reason: has missing support layers
 - Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Graphs And Geometric Learning.
 - Topic: topics/graphs-and-geometric-learning.html
@@ -1057,7 +1099,7 @@
 ### P1 Optimization For Learning
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
-- Missing layers: deep dive, diagram, learning path, domain guide, decision guide
+- Missing layers: deep dive, diagram, learning path, domain guide
 - Reason: has missing support layers
 - Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Optimization For Learning.
 - Topic: topics/optimization-for-learning.html
@@ -1066,7 +1108,7 @@
 ### P1 Attention For Scientific Fields
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
-- Missing layers: deep dive, learning path, glossary, decision guide
+- Missing layers: deep dive, learning path, glossary
 - Reason: has missing support layers
 - Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Attention For Scientific Fields.
 - Topic: topics/attention-for-scientific-fields.html
@@ -1075,7 +1117,7 @@
 ### P1 Scientific Machine Learning
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
-- Missing layers: deep dive, glossary, domain guide, decision guide
+- Missing layers: deep dive, glossary, domain guide
 - Reason: has missing support layers
 - Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Scientific Machine Learning.
 - Topic: topics/scientific-machine-learning.html
@@ -1089,15 +1131,6 @@
 - Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Neural Differential Equations.
 - Topic: topics/neural-differential-equations.html
 - Evidence packet: evidence-packets/neural-differential-equations.html
-
-### P1 Partial Differential Equations
-- Reviewed source anchors: 2
-- Broad transcript mentions: 4
-- Missing layers: decision guide
-- Reason: has missing support layers
-- Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Partial Differential Equations.
-- Topic: topics/partial-differential-equations.html
-- Evidence packet: evidence-packets/partial-differential-equations.html
 
 ### P2 Foundation Models For PDEs
 - Reviewed source anchors: 2
@@ -1116,6 +1149,15 @@
 - Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Operator Learning.
 - Topic: topics/operator-learning.html
 - Evidence packet: evidence-packets/operator-learning.html
+
+### P2 Partial Differential Equations
+- Reviewed source anchors: 2
+- Broad transcript mentions: 4
+- Missing layers: none
+- Reason: ready for hand polish
+- Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Partial Differential Equations.
+- Topic: topics/partial-differential-equations.html
+- Evidence packet: evidence-packets/partial-differential-equations.html
 
 ### P2 Physics-Informed Neural Networks
 - Reviewed source anchors: 2

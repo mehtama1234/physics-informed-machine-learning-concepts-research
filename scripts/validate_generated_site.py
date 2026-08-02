@@ -115,6 +115,9 @@ def check_required_sections() -> list[str]:
         "site/quality.html": ("Editorial Quality Rubric",),
         "site/provenance.html": ("Provenance And Reproduction",),
         "site/decision-guide.html": ("Decision Guide",),
+        "site/decision-guide/many-examples-no-rule.html": ("Best Starting Point", "Evidence Needed", "Deep learning"),
+        "site/decision-guide/field-rule-before-method.html": ("Best Starting Point", "Evidence Needed", "Partial differential equations"),
+        "site/decision-guide/need-many-valid-possibilities.html": ("Best Starting Point", "Evidence Needed", "Generative modeling"),
         "site/reader-checks.html": ("Reader Checks",),
         "site/review-entrypoints.html": ("Review Entrypoints", "End-To-End Test"),
         "site/review-search.html": ("Find Pages By Question", "Review Rule"),
@@ -273,8 +276,8 @@ def validate() -> None:
         errors.append(f"expected 40 videos, found {summary.get('video_count')}")
     if summary.get("concept_count") != 14:
         errors.append(f"expected 14 concepts, found {summary.get('concept_count')}")
-    if len(manifest) != 188:
-        errors.append(f"expected 188 pages, found {len(manifest)}")
+    if len(manifest) != 195:
+        errors.append(f"expected 195 pages, found {len(manifest)}")
 
     errors.extend(check_internal_links(manifest))
     errors.extend(check_required_sections())
