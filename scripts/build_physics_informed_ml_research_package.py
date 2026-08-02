@@ -3311,6 +3311,7 @@ SOURCE_ANCHORS = {
 MEATY_GOAL_REQUIREMENTS = [
     {"key": "first_principles", "label": "First Principles", "proof_term": "First-Principles Essay"},
     {"key": "claim_chain", "label": "Big Picture Claim Chain", "proof_term": "Big Picture Claim Chain"},
+    {"key": "use_protocol", "label": "End-To-End Use Protocol", "proof_term": "End-To-End Use Protocol"},
     {"key": "hand_teaching_note", "label": "Hand Teaching Note", "proof_term": "Hand Teaching Note"},
     {"key": "case_walkthrough", "label": "Case Walkthrough", "proof_term": "One Concrete Case From Start To Finish"},
     {"key": "concept_connections", "label": "Concept Connections", "proof_term": "How This Connects To Nearby Ideas"},
@@ -6193,6 +6194,26 @@ def topic_claim_chain_html(topic: dict[str, object], derivation: dict[str, objec
 """
 
 
+def topic_use_protocol_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
+    wrong = topic_wrong_use(topic)
+    return f"""
+<h2>End-To-End Use Protocol</h2>
+<p>Use this as the smallest complete path from a real scientific question to a claim that can be rejected.</p>
+<table>
+  <tbody>
+    <tr><th>1. State The Scientific Job</th><td>{html.escape(str(topic['common_problem']))}</td></tr>
+    <tr><th>2. Name The Decision Quantity</th><td>{html.escape(str(topic['why_it_matters']))}</td></tr>
+    <tr><th>3. Inventory The Evidence</th><td>{html.escape(str(derivation['observed']))}</td></tr>
+    <tr><th>4. Choose The Mathematical Carrier</th><td>{html.escape(str(derivation['move']))}</td></tr>
+    <tr><th>5. Build The Smallest Working Case</th><td>{html.escape(str(derivation['form']))}</td></tr>
+    <tr><th>6. Run The Changed-Case Test</th><td>{html.escape(str(derivation['test']))}</td></tr>
+    <tr><th>7. Reject Or Narrow The Claim When</th><td>{html.escape(wrong['catch_test'])}</td></tr>
+    <tr><th>8. Final Claim Allowed</th><td>{html.escape(str(derivation['meaning']))}</td></tr>
+  </tbody>
+</table>
+"""
+
+
 def topic_belief_evidence_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
     wrong = topic_wrong_use(topic)
     rows = [
@@ -6381,6 +6402,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     derivation_link = topic_derivation_link_html(str(topic["slug"]))
     source_anchors = source_anchor_cards(str(topic["slug"]), (list(evidence) if isinstance(evidence, list) else []) + source_anchor_evidence, root_prefix="../")
     claim_chain = topic_claim_chain_html(topic, derivation)
+    use_protocol = topic_use_protocol_html(topic, derivation)
     first_principles_essay = topic_first_principles_essay_html(topic, derivation)
     teaching_note = topic_teaching_note_html(str(topic["slug"]))
     case_walkthrough = topic_case_walkthrough_html(topic, derivation)
@@ -6407,6 +6429,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
 <h2>Everyday Anchor</h2>
 <p>{html.escape(str(topic['everyday_anchor']))}</p>
 {claim_chain}
+{use_protocol}
 {first_principles_essay}
 {teaching_note}
 {case_walkthrough}
@@ -8435,8 +8458,58 @@ def validate(data: dict[str, object] | None = None) -> None:
         if not topic_path.exists():
             raise SystemExit(f"deep dive missing topic page: {slug}")
         topic_text = topic_path.read_text(encoding="utf-8")
-        if "Big Picture Claim Chain" not in topic_text or "Everyday Problem" not in topic_text or "Decision Or Quantity At Stake" not in topic_text or "Hidden Thing Needed" not in topic_text or "First Thing That Can Break The Claim" not in topic_text or "First-Principles Essay" not in topic_text or "What A Strong Explanation Must Say" not in topic_text or "One Concrete Case From Start To Finish" not in topic_text or "Observed Evidence" not in topic_text or "Rejection Test" not in topic_text or "How This Connects To Nearby Ideas" not in topic_text or "Learn Before This" not in topic_text or "Confusion It Prevents" not in topic_text or "Evidence Needed To Believe This" not in topic_text or "Strong Evidence" not in topic_text or "Too Weak" not in topic_text or "Reject Or Recheck When" not in topic_text or "Where This Fits By Domain" not in topic_text or "When To Avoid This In A Domain" not in topic_text or "Changed-Case Test" not in topic_text or "Why This Shape Follows" not in topic_text or "Why It Has To Be There" not in topic_text or "First wrong simplification" not in topic_text or "Plain Formula Term By Term" not in topic_text or "What It Carries" not in topic_text or "Concrete Worked Example" not in topic_text or "Concrete Wrong-Use Example" not in topic_text or "Test That Catches It" not in topic_text or "What Breaks Without This Idea" not in topic_text or "Minimum Proof Needed" not in topic_text or "Reader Must Be Able To Say" not in topic_text or "Acceptance Sentence Filled" not in topic_text or "I would test it by changing" not in topic_text or "Core Idea In One Sentence" not in topic_text or "Mathematical Shape Without Jargon" not in topic_text or "Quality Gate Before Review" not in topic_text or "Forbidden Shortcut" not in topic_text or "Replacement Test" not in topic_text:
-            raise SystemExit(f"deep dive not rendered on topic page: {slug}")
+        required_topic_terms = (
+            "Big Picture Claim Chain",
+            "Everyday Problem",
+            "Decision Or Quantity At Stake",
+            "Hidden Thing Needed",
+            "First Thing That Can Break The Claim",
+            "End-To-End Use Protocol",
+            "State The Scientific Job",
+            "Name The Decision Quantity",
+            "Inventory The Evidence",
+            "Choose The Mathematical Carrier",
+            "Build The Smallest Working Case",
+            "Run The Changed-Case Test",
+            "Reject Or Narrow The Claim When",
+            "Final Claim Allowed",
+            "First-Principles Essay",
+            "What A Strong Explanation Must Say",
+            "One Concrete Case From Start To Finish",
+            "Observed Evidence",
+            "Rejection Test",
+            "How This Connects To Nearby Ideas",
+            "Learn Before This",
+            "Confusion It Prevents",
+            "Evidence Needed To Believe This",
+            "Strong Evidence",
+            "Too Weak",
+            "Reject Or Recheck When",
+            "Where This Fits By Domain",
+            "When To Avoid This In A Domain",
+            "Changed-Case Test",
+            "Why This Shape Follows",
+            "Why It Has To Be There",
+            "First wrong simplification",
+            "Plain Formula Term By Term",
+            "What It Carries",
+            "Concrete Worked Example",
+            "Concrete Wrong-Use Example",
+            "Test That Catches It",
+            "What Breaks Without This Idea",
+            "Minimum Proof Needed",
+            "Reader Must Be Able To Say",
+            "Acceptance Sentence Filled",
+            "I would test it by changing",
+            "Core Idea In One Sentence",
+            "Mathematical Shape Without Jargon",
+            "Quality Gate Before Review",
+            "Forbidden Shortcut",
+            "Replacement Test",
+        )
+        missing_topic_terms = [term for term in required_topic_terms if term not in topic_text]
+        if missing_topic_terms:
+            raise SystemExit(f"deep dive not rendered on topic page: {slug}: {missing_topic_terms}")
     worked_example_slugs = {str(slug) for example in WORKED_EXAMPLES for slug in example["method_route"]}
     concepts_without_examples = sorted(concept_slugs - worked_example_slugs)
     if concepts_without_examples:
