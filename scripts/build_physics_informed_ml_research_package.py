@@ -3330,6 +3330,7 @@ MEATY_GOAL_REQUIREMENTS = [
     {"key": "course_bridge", "label": "Course Bridge", "proof_term": "Course Bridge In Plain Words"},
     {"key": "use_or_refuse_gate", "label": "Use Or Refuse Gate", "proof_term": "Use Or Refuse Gate In Plain Words"},
     {"key": "final_learner_proof", "label": "Final Learner Proof", "proof_term": "Final Learner Proof In Plain Words"},
+    {"key": "teach_someone_handoff", "label": "Teach Someone Handoff", "proof_term": "Teach Someone Else Handoff"},
     {"key": "next_day_memory_check", "label": "Next-Day Memory Check", "proof_term": "Next-Day Memory Check"},
     {"key": "nearby_topic_comparison", "label": "Nearby Topic Comparison", "proof_term": "Nearby Topic Comparison In Plain Words"},
     {"key": "math_shape_rehearsal", "label": "Math Shape Rehearsal", "proof_term": "Everyday Math Shape Rehearsal"},
@@ -7382,6 +7383,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     wrong_path_repair = topic_wrong_path_repair_html(topic, derivation)
     use_or_refuse_gate = topic_use_or_refuse_gate_html(topic, derivation)
     final_learner_proof = topic_final_learner_proof_html(topic, derivation)
+    teach_someone_handoff = topic_teach_someone_handoff_html(topic, derivation)
     next_day_memory_check = topic_next_day_memory_check_html(topic, derivation)
     plain_question_answer_script = topic_plain_question_answer_script_html(topic, derivation)
     know_still_test = topic_know_still_test_html(topic, derivation)
@@ -7436,6 +7438,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
 {wrong_path_repair}
 {use_or_refuse_gate}
 {final_learner_proof}
+{teach_someone_handoff}
 {next_day_memory_check}
 {plain_question_answer_script}
 {know_still_test}
@@ -8270,6 +8273,44 @@ def topic_final_learner_proof_html(topic: dict[str, object], derivation: dict[st
 <p>{html.escape(proof_sentence)}</p>
 <h3>Final Proof Pass Test</h3>
 <p>The final proof passes only if the learner can say the problem, evidence, hidden answer, move, shape issue, concrete case, useful answer, changed-case test, and refusal boundary in one ordinary-language answer.</p>
+"""
+
+
+def topic_teach_someone_handoff_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
+    title = str(topic["title"])
+    case = topic_case_walkthrough(topic, derivation)
+    shape = next(row for row in topic_plain_applications(topic, derivation) if row["field"] == "Topology and shape")
+    application = next(row for row in topic_plain_applications(topic, derivation) if row["field"] == "Engineering design")
+    handoff = (
+        f"Start with the everyday shortage: {str(topic['common_problem'])}. "
+        f"Then say what is seen: {str(derivation['observed'])}. "
+        f"Say what is still missing: {str(derivation['hidden'])}. "
+        f"Explain the move in one plain line: {str(derivation['move'])}. "
+        f"Name the shape issue: {str(shape['use'])}. "
+        f"Ground it in this case: {str(case['setting'])}. "
+        f"End carefully: {str(derivation['meaning'])}. "
+        f"Stop or narrow the claim when {str(topic['failure_boundary'])}."
+    )
+    return f"""
+<h2>Teach Someone Else Handoff</h2>
+<p>This is the handoff a learner should be able to give to another person without using the topic name as a shortcut.</p>
+<table>
+  <tbody>
+    <tr><th>First Sentence</th><td>{html.escape(title)} starts from this everyday shortage: {html.escape(str(topic['common_problem']))}</td></tr>
+    <tr><th>What They Can Point To</th><td>{html.escape(str(derivation['observed']))}</td></tr>
+    <tr><th>What They Still Need</th><td>{html.escape(str(derivation['hidden']))}</td></tr>
+    <tr><th>Plain Move To Say Out Loud</th><td>{html.escape(str(derivation['move']))}</td></tr>
+    <tr><th>Shape Or Topology Line</th><td>{html.escape(str(shape['use']))} Check: {html.escape(str(shape['check']))}</td></tr>
+    <tr><th>One Field Use</th><td>{html.escape(str(application['use']))} Check: {html.escape(str(application['check']))}</td></tr>
+    <tr><th>One Concrete Case</th><td>{html.escape(str(case['setting']))}</td></tr>
+    <tr><th>Careful Ending</th><td>{html.escape(str(derivation['meaning']))}</td></tr>
+    <tr><th>Stop Teaching It As True When</th><td>{html.escape(str(topic['failure_boundary']))}</td></tr>
+  </tbody>
+</table>
+<h3>Full Handoff In Plain Words</h3>
+<p>{html.escape(handoff)}</p>
+<h3>Handoff Pass Test</h3>
+<p>The handoff passes only if another person can repeat the problem, evidence, missing answer, shape issue, field use, careful ending, and stop condition without needing the topic name first.</p>
 """
 
 
@@ -10635,6 +10676,17 @@ def validate(data: dict[str, object] | None = None) -> None:
             "Refusal Proof",
             "Accepted Final Answer",
             "Final Proof Pass Test",
+            "Teach Someone Else Handoff",
+            "First Sentence",
+            "What They Can Point To",
+            "What They Still Need",
+            "Plain Move To Say Out Loud",
+            "Shape Or Topology Line",
+            "One Field Use",
+            "Careful Ending",
+            "Stop Teaching It As True When",
+            "Full Handoff In Plain Words",
+            "Handoff Pass Test",
             "Next-Day Memory Check",
             "Remember The Need",
             "Remember The Evidence",
@@ -11447,7 +11499,7 @@ def validate(data: dict[str, object] | None = None) -> None:
             raise SystemExit(f"meaty goal core page link missing: {item['href']}")
     goal_coverage_path = SITE / "meaty-goal-coverage.html"
     goal_coverage_text = goal_coverage_path.read_text(encoding="utf-8")
-    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Teach From Zero" not in goal_coverage_text or "Application Claim Ladder" not in goal_coverage_text or "Plain Question To Answer Script" not in goal_coverage_text or "Know And Still Test" not in goal_coverage_text or "Failure Consequence" not in goal_coverage_text or "Slow Problem Shape Bridge" not in goal_coverage_text or "Slow Importance Essay" not in goal_coverage_text or "Source-To-Claim Boundary" not in goal_coverage_text or "Hand Teaching Note" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Concept Connections" not in goal_coverage_text or "Belief Evidence" not in goal_coverage_text or "Domain Fit" not in goal_coverage_text or "Shape Follows" not in goal_coverage_text or "Reader Answer Parts" not in goal_coverage_text or "Say It Back Check" not in goal_coverage_text or "Misread Repair Drill" not in goal_coverage_text or "Plain-Language Audit" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
+    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Teach From Zero" not in goal_coverage_text or "Application Claim Ladder" not in goal_coverage_text or "Plain Question To Answer Script" not in goal_coverage_text or "Know And Still Test" not in goal_coverage_text or "Failure Consequence" not in goal_coverage_text or "Slow Problem Shape Bridge" not in goal_coverage_text or "Slow Importance Essay" not in goal_coverage_text or "Source-To-Claim Boundary" not in goal_coverage_text or "Teach Someone Handoff" not in goal_coverage_text or "Hand Teaching Note" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Concept Connections" not in goal_coverage_text or "Belief Evidence" not in goal_coverage_text or "Domain Fit" not in goal_coverage_text or "Shape Follows" not in goal_coverage_text or "Reader Answer Parts" not in goal_coverage_text or "Say It Back Check" not in goal_coverage_text or "Misread Repair Drill" not in goal_coverage_text or "Plain-Language Audit" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
         raise SystemExit("meaty goal coverage audit not rendered correctly")
     goal_coverage_rows = data.get("meaty_goal_coverage") or []
     if len(goal_coverage_rows) != len(data["concept_atlas"]):
