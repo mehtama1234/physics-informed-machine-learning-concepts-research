@@ -54,6 +54,48 @@
 <p>An engineering team needs to screen many wing shapes, but each trusted flow solve is expensive. A surrogate is useful only if it stays tied to the same shape family and to the actual decision quantity, such as drag, lift, or a stress peak.</p>
 <h2>Route Through The Ideas</h2>
 <div class="route"><div class="route-step">1. Start with an expensive solver or experiment.</div><div class="route-step">2. Name the repeated questions people need to ask.</div><div class="route-step">3. Train a cheaper stand-in only for those questions.</div><div class="route-step">4. Compare against the trusted source near the edge of intended use.</div><div class="route-step">5. Report the use range with the answer, not after the answer.</div></div>
+<h2>Route Burden Table</h2>
+<table>
+  <thead>
+    <tr><th>Step</th><th>Question It Answers</th><th>Evidence Needed</th><th>Mistake It Catches</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <td>1</td>
+  <td>What trusted source is too slow to call every time?</td>
+  <td>the solver, experiment, or workflow used as the check</td>
+  <td>building a fast answer with no source of truth to compare against</td>
+</tr>
+
+<tr>
+  <td>2</td>
+  <td>Which repeated questions justify the shortcut?</td>
+  <td>a named query family, such as shape range, load range, or parameter sweep</td>
+  <td>using the stand-in for any question because it is fast</td>
+</tr>
+
+<tr>
+  <td>3</td>
+  <td>What is the stand-in allowed to imitate?</td>
+  <td>training examples tied to the same inputs, outputs, and decision quantity</td>
+  <td>optimizing a neat average while missing the quantity that drives the decision</td>
+</tr>
+
+<tr>
+  <td>4</td>
+  <td>Where is the edge of its use range?</td>
+  <td>comparisons against the trusted source near boundaries, rare cases, and hard regions</td>
+  <td>reporting speed while hiding where the shortcut first fails</td>
+</tr>
+
+<tr>
+  <td>5</td>
+  <td>How is the limit shown with the answer?</td>
+  <td>reported use range, rejected cases, and a rule for when to return to the trusted source</td>
+  <td>letting a fast answer travel farther than the evidence does</td>
+</tr>
+</tbody>
+</table>
 <h2>Why The Concepts Appear In This Order</h2>
 <ul><li>Surrogate modeling comes first because the shortage is cost: the trusted process is too slow to call for every query.</li><li>Deep learning appears as one way to fit the stand-in from many checked examples.</li><li>Operator learning appears when each query and answer is a whole field rather than a few numbers.</li><li>Uncertainty appears because a fast answer without a tested use range can make the wrong decision faster.</li></ul>
 <h2>Evidence Chain To Track</h2>

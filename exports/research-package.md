@@ -144,6 +144,13 @@
 - Optimization appears because fitting is not wishing; the model follows the written error score, including any bad weighting choices.
 - Uncertainty appears last because a fitted field is still only useful inside the changed cases where it has been tested.
 
+#### Route Burden Table
+- Step 1: What is the thing we are trying to know? Evidence needed: a named field such as temperature, pressure, velocity, stress, or concentration Mistake it catches: treating a field problem like a single-number prediction
+- Step 2: What keeps the empty places from being arbitrary? Evidence needed: the equation, boundary data, starting data, and units for the physical case Mistake it catches: using physics words without naming the rule that can reject an answer
+- Step 3: What ties the answer to the real case? Evidence needed: sensor values, measurements, or trusted simulation values at known places Mistake it catches: letting the fitted field drift away from observed evidence
+- Step 4: What checks the places nobody measured? Evidence needed: equation-error checks between measurements and near boundaries or sharp regions Mistake it catches: matching data points while breaking the rule between them
+- Step 5: What would make us stop trusting it? Evidence needed: a changed boundary, source, scale, or hard region held back from fitting Mistake it catches: calling one polished fit a scientific answer before it survives a changed case
+
 #### Evidence Chain To Track
 - which measured values anchor the answer
 - which rule is trusted enough to police the empty places
@@ -172,6 +179,13 @@
 - Surrogate modeling names the practical reason this map matters: repeated solves are too slow for design or exploration.
 - Attention and geometric structure appear when local neighborhoods are not enough to carry the field information.
 - Foundation models appear only after many task families exist, and their burden is proving that a new task shares the structure learned from old tasks.
+
+#### Route Burden Table
+- Step 1: What collection teaches the map? Evidence needed: paired input fields and output fields from trusted solves or measurements Mistake it catches: trying to learn a field-to-field map from isolated examples with no named family
+- Step 2: What is this model allowed to answer? Evidence needed: the equation types, boundaries, geometries, grids, and parameter ranges included Mistake it catches: using the model on a new family because the output looks smooth
+- Step 3: What is being learned? Evidence needed: a map from a new input field to the full output field, not one scalar score Mistake it catches: confusing a single solved case with the reusable object scientists need
+- Step 4: What structure must survive inside the field? Evidence needed: checks for far interactions, local detail, boundary effects, and resolution changes Mistake it catches: choosing an architecture that erases the relation the field depends on
+- Step 5: What rejects the claim? Evidence needed: held-out fields, changed resolution, and physical quantities checked after prediction Mistake it catches: trusting visual similarity while the physical quantity is wrong
 
 #### Evidence Chain To Track
 - which family of equations, boundaries, geometries, grids, and parameters was included
@@ -202,6 +216,13 @@
 - Scientific machine learning keeps the proposed rule tied to measured variables, units, and known scientific constraints.
 - Optimization appears because the search is shaped by the score, the candidate operations, and the penalty for extra terms that do not earn their keep.
 
+#### Route Burden Table
+- Step 1: What changed in the system? Evidence needed: measurements over time, across conditions, or across controlled experiments Mistake it catches: searching for a law before naming the behavior the law must explain
+- Step 2: What could possibly explain that change? Evidence needed: measured variables, units, candidate terms, and known excluded variables Mistake it catches: letting an unmeasured cause hide inside a neat formula
+- Step 3: What candidate rule is being proposed? Evidence needed: a short formula, a learned rate rule, or a named missing term Mistake it catches: settling for next-step prediction when the job asks for a law
+- Step 4: Does the rule survive a new experiment? Evidence needed: changed starts, changed forcing, noise checks, and held-out trajectories Mistake it catches: mistaking one fitted trace for a reusable mechanism
+- Step 5: What did the search never have a chance to see? Evidence needed: a list of missing variables, forbidden terms, and experiments not run Mistake it catches: claiming discovery when the search space could not express the true cause
+
 #### Evidence Chain To Track
 - which variables were actually measured
 - which hidden mechanism or rate rule is being proposed
@@ -230,6 +251,13 @@
 - Deep learning appears as one way to fit the stand-in from many checked examples.
 - Operator learning appears when each query and answer is a whole field rather than a few numbers.
 - Uncertainty appears because a fast answer without a tested use range can make the wrong decision faster.
+
+#### Route Burden Table
+- Step 1: What trusted source is too slow to call every time? Evidence needed: the solver, experiment, or workflow used as the check Mistake it catches: building a fast answer with no source of truth to compare against
+- Step 2: Which repeated questions justify the shortcut? Evidence needed: a named query family, such as shape range, load range, or parameter sweep Mistake it catches: using the stand-in for any question because it is fast
+- Step 3: What is the stand-in allowed to imitate? Evidence needed: training examples tied to the same inputs, outputs, and decision quantity Mistake it catches: optimizing a neat average while missing the quantity that drives the decision
+- Step 4: Where is the edge of its use range? Evidence needed: comparisons against the trusted source near boundaries, rare cases, and hard regions Mistake it catches: reporting speed while hiding where the shortcut first fails
+- Step 5: How is the limit shown with the answer? Evidence needed: reported use range, rejected cases, and a rule for when to return to the trusted source Mistake it catches: letting a fast answer travel farther than the evidence does
 
 #### Evidence Chain To Track
 - which trusted solver, experiment, or workflow the stand-in imitates

@@ -329,6 +329,33 @@ FAMILY_PAGES = [
             "which boundary or starting information defines the physical case",
             "which changed boundary, source, scale, or hard region could reject the result",
         ],
+        "route_burdens": [
+            {
+                "question": "What is the thing we are trying to know?",
+                "evidence": "a named field such as temperature, pressure, velocity, stress, or concentration",
+                "catches": "treating a field problem like a single-number prediction",
+            },
+            {
+                "question": "What keeps the empty places from being arbitrary?",
+                "evidence": "the equation, boundary data, starting data, and units for the physical case",
+                "catches": "using physics words without naming the rule that can reject an answer",
+            },
+            {
+                "question": "What ties the answer to the real case?",
+                "evidence": "sensor values, measurements, or trusted simulation values at known places",
+                "catches": "letting the fitted field drift away from observed evidence",
+            },
+            {
+                "question": "What checks the places nobody measured?",
+                "evidence": "equation-error checks between measurements and near boundaries or sharp regions",
+                "catches": "matching data points while breaking the rule between them",
+            },
+            {
+                "question": "What would make us stop trusting it?",
+                "evidence": "a changed boundary, source, scale, or hard region held back from fitting",
+                "catches": "calling one polished fit a scientific answer before it survives a changed case",
+            },
+        ],
         "what_the_math_buys": "The equation turns empty space between measurements into a checkable demand. The model cannot claim success only by touching the measured points.",
         "failure_boundary": "This family fails when the written equation is incomplete, the boundary information is wrong, or the training process avoids the hard regions where the rule matters most.",
     },
@@ -357,6 +384,33 @@ FAMILY_PAGES = [
             "which full-field quantity the model must return",
             "which field structure the architecture keeps visible",
             "which held-out family or changed resolution could expose a smooth but wrong field",
+        ],
+        "route_burdens": [
+            {
+                "question": "What collection teaches the map?",
+                "evidence": "paired input fields and output fields from trusted solves or measurements",
+                "catches": "trying to learn a field-to-field map from isolated examples with no named family",
+            },
+            {
+                "question": "What is this model allowed to answer?",
+                "evidence": "the equation types, boundaries, geometries, grids, and parameter ranges included",
+                "catches": "using the model on a new family because the output looks smooth",
+            },
+            {
+                "question": "What is being learned?",
+                "evidence": "a map from a new input field to the full output field, not one scalar score",
+                "catches": "confusing a single solved case with the reusable object scientists need",
+            },
+            {
+                "question": "What structure must survive inside the field?",
+                "evidence": "checks for far interactions, local detail, boundary effects, and resolution changes",
+                "catches": "choosing an architecture that erases the relation the field depends on",
+            },
+            {
+                "question": "What rejects the claim?",
+                "evidence": "held-out fields, changed resolution, and physical quantities checked after prediction",
+                "catches": "trusting visual similarity while the physical quantity is wrong",
+            },
         ],
         "what_the_math_buys": "The object being learned is a map between functions. That matters because a field is not a single row of numbers; it is a whole spatial object.",
         "failure_boundary": "This family fails when the new query is outside the learned family, when resolution changes reveal hidden errors, or when the output looks smooth but breaks the physical claim.",
@@ -387,6 +441,33 @@ FAMILY_PAGES = [
             "which operations or learned terms were allowed in the search",
             "which changed experiment, noise check, or missing-variable check could reject the proposed law",
         ],
+        "route_burdens": [
+            {
+                "question": "What changed in the system?",
+                "evidence": "measurements over time, across conditions, or across controlled experiments",
+                "catches": "searching for a law before naming the behavior the law must explain",
+            },
+            {
+                "question": "What could possibly explain that change?",
+                "evidence": "measured variables, units, candidate terms, and known excluded variables",
+                "catches": "letting an unmeasured cause hide inside a neat formula",
+            },
+            {
+                "question": "What candidate rule is being proposed?",
+                "evidence": "a short formula, a learned rate rule, or a named missing term",
+                "catches": "settling for next-step prediction when the job asks for a law",
+            },
+            {
+                "question": "Does the rule survive a new experiment?",
+                "evidence": "changed starts, changed forcing, noise checks, and held-out trajectories",
+                "catches": "mistaking one fitted trace for a reusable mechanism",
+            },
+            {
+                "question": "What did the search never have a chance to see?",
+                "evidence": "a list of missing variables, forbidden terms, and experiments not run",
+                "catches": "claiming discovery when the search space could not express the true cause",
+            },
+        ],
         "what_the_math_buys": "A compact equation is easier to inspect, criticize, and reuse than a large fitted object. The math turns a fit into a candidate explanation.",
         "failure_boundary": "This family fails when the needed variable was not measured, the experiment did not excite the important behavior, or the search space cannot express the true rule.",
     },
@@ -415,6 +496,33 @@ FAMILY_PAGES = [
             "which repeated query family it is allowed to answer",
             "which decision quantity matters more than visual or average error",
             "which edge-of-use comparison sends the user back to the trusted source",
+        ],
+        "route_burdens": [
+            {
+                "question": "What trusted source is too slow to call every time?",
+                "evidence": "the solver, experiment, or workflow used as the check",
+                "catches": "building a fast answer with no source of truth to compare against",
+            },
+            {
+                "question": "Which repeated questions justify the shortcut?",
+                "evidence": "a named query family, such as shape range, load range, or parameter sweep",
+                "catches": "using the stand-in for any question because it is fast",
+            },
+            {
+                "question": "What is the stand-in allowed to imitate?",
+                "evidence": "training examples tied to the same inputs, outputs, and decision quantity",
+                "catches": "optimizing a neat average while missing the quantity that drives the decision",
+            },
+            {
+                "question": "Where is the edge of its use range?",
+                "evidence": "comparisons against the trusted source near boundaries, rare cases, and hard regions",
+                "catches": "reporting speed while hiding where the shortcut first fails",
+            },
+            {
+                "question": "How is the limit shown with the answer?",
+                "evidence": "reported use range, rejected cases, and a rule for when to return to the trusted source",
+                "catches": "letting a fast answer travel farther than the evidence does",
+            },
         ],
         "what_the_math_buys": "The approximation becomes useful only after the input family, output quantity, error measure, and rejected cases are named.",
         "failure_boundary": "This family fails when speed hides missing physics, when users ask new questions the surrogate was not trained for, or when uncertainty is treated as decoration.",
@@ -7242,6 +7350,18 @@ def write_family_page(path: Path, family: dict[str, object]) -> None:
     steps = "".join(f"<div class=\"route-step\">{idx}. {html.escape(step)}</div>" for idx, step in enumerate(family["plain_route"], start=1))
     order_items = "".join(f"<li>{html.escape(str(item))}</li>" for item in family["why_order_matters"])
     tracking_items = "".join(f"<li>{html.escape(str(item))}</li>" for item in family["reader_must_track"])
+    burden_rows = []
+    for idx, item in enumerate(family["route_burdens"], start=1):
+        burden_rows.append(
+            f"""
+<tr>
+  <td>{idx}</td>
+  <td>{html.escape(str(item['question']))}</td>
+  <td>{html.escape(str(item['evidence']))}</td>
+  <td>{html.escape(str(item['catches']))}</td>
+</tr>
+"""
+        )
     concept_rows = []
     concepts_by_slug = {str(item["slug"]): item for item in CONCEPTS}
     for slug in family["concepts"]:
@@ -7269,6 +7389,13 @@ def write_family_page(path: Path, family: dict[str, object]) -> None:
 <p>{html.escape(str(family['concrete_case']))}</p>
 <h2>Route Through The Ideas</h2>
 <div class="route">{steps}</div>
+<h2>Route Burden Table</h2>
+<table>
+  <thead>
+    <tr><th>Step</th><th>Question It Answers</th><th>Evidence Needed</th><th>Mistake It Catches</th></tr>
+  </thead>
+  <tbody>{''.join(burden_rows)}</tbody>
+</table>
 <h2>Why The Concepts Appear In This Order</h2>
 <ul>{order_items}</ul>
 <h2>Evidence Chain To Track</h2>
@@ -7530,6 +7657,9 @@ def write_markdown_export(data: dict[str, object]) -> None:
         lines.append("#### Why The Concepts Appear In This Order")
         for item in family["why_order_matters"]:
             lines.append(f"- {item}")
+        lines.extend(["", "#### Route Burden Table"])
+        for idx, item in enumerate(family["route_burdens"], start=1):
+            lines.append(f"- Step {idx}: {item['question']} Evidence needed: {item['evidence']} Mistake it catches: {item['catches']}")
         lines.extend(["", "#### Evidence Chain To Track"])
         for item in family["reader_must_track"]:
             lines.append(f"- {item}")
@@ -8064,7 +8194,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         if not family_path.exists():
             raise SystemExit(f"missing family page: {family['title']}")
         family_text = family_path.read_text(encoding="utf-8")
-        if "Family Story From First Principles" not in family_text or "Concrete Family Case" not in family_text or "Why The Concepts Appear In This Order" not in family_text or "Evidence Chain To Track" not in family_text or "What Each Concept Does In The Family" not in family_text or "Evidence Needed Before Trusting The Family" not in family_text or "Too Weak" not in family_text:
+        if "Family Story From First Principles" not in family_text or "Concrete Family Case" not in family_text or "Route Burden Table" not in family_text or "Question It Answers" not in family_text or "Mistake It Catches" not in family_text or "Why The Concepts Appear In This Order" not in family_text or "Evidence Chain To Track" not in family_text or "What Each Concept Does In The Family" not in family_text or "Evidence Needed Before Trusting The Family" not in family_text or "Too Weak" not in family_text:
             raise SystemExit(f"family page missing first-principles depth: {family['title']}")
     for comparison in COMPARISON_PAGES:
         comparison_path = SITE / "comparisons" / f"{comparison['slug']}.html"
