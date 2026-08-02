@@ -1409,6 +1409,38 @@ CONCEPT_SKETCHES = [
             {"label": "shifted case", "role": "failure"},
         ],
     },
+    {
+        "slug": "symbolic-regression-law-sketch",
+        "title": "Symbolic Regression: Measurements To A Readable Law",
+        "topic_slugs": ["symbolic-regression"],
+        "input": "measurements of a changing system and a chosen set of possible variables",
+        "output": "a short candidate law that a person can inspect",
+        "kept_rule": "the search is allowed to combine only named measured quantities, so the result must explain what those measurements can actually support",
+        "failure_case": "the law looks simple but leaves out an unmeasured cause, fits noise, or fails in a new experiment",
+        "caption": "Input: measured behavior and candidate variables. Output: readable law. Kept rule: every term must come from evidence the experiment carried. Failure case: simple formula that breaks when the system is changed.",
+        "cells": [
+            {"label": "measurements", "role": "input"},
+            {"label": "candidate variables", "role": "rule"},
+            {"label": "short law", "role": "output"},
+            {"label": "new experiment", "role": "failure"},
+        ],
+    },
+    {
+        "slug": "foundation-pde-transfer-sketch",
+        "title": "Foundation PDE Models: Old Tasks To A New Equation Case",
+        "topic_slugs": ["foundation-models-for-pdes"],
+        "input": "many solved PDE tasks plus one new PDE case",
+        "output": "a proposed solution or useful starting point for the new case",
+        "kept_rule": "the old tasks must share enough field structure with the new case to carry useful evidence",
+        "failure_case": "the new equation, boundary, scale, or target quantity is outside what the old tasks taught",
+        "caption": "Input: many solved PDE tasks and a new case. Output: new field answer or starting point. Kept rule: shared field structure must be real, not assumed. Failure case: broad model fails on the held-out equation family.",
+        "cells": [
+            {"label": "old PDE tasks", "role": "input"},
+            {"label": "shared structure", "role": "rule"},
+            {"label": "new field answer", "role": "output"},
+            {"label": "held-out family", "role": "failure"},
+        ],
+    },
 ]
 
 
@@ -7446,7 +7478,14 @@ def validate(data: dict[str, object] | None = None) -> None:
         raise SystemExit("mathematical sketches not rendered on diagram index")
     if len(data.get("concept_sketches") or []) != len(CONCEPT_SKETCHES):
         raise SystemExit("concept sketch count mismatch")
-    sketch_required_slugs = {"physics-informed-neural-networks", "operator-learning", "surrogate-modeling", "uncertainty-and-generalization", "foundation-models-for-pdes"}
+    sketch_required_slugs = {
+        "physics-informed-neural-networks",
+        "operator-learning",
+        "surrogate-modeling",
+        "uncertainty-and-generalization",
+        "symbolic-regression",
+        "foundation-models-for-pdes",
+    }
     sketched_slugs = {str(slug) for sketch in CONCEPT_SKETCHES for slug in sketch["topic_slugs"]}
     missing_sketches = sorted(sketch_required_slugs - sketched_slugs)
     if missing_sketches:

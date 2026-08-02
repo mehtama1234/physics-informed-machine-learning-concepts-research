@@ -17,7 +17,7 @@
 - formula_guide_count: 14
 - misconception_count: 14
 - diagram_count: 9
-- sketch_count: 4
+- sketch_count: 6
 - learning_path_step_count: 12
 - glossary_term_count: 15
 - domain_guide_count: 9
@@ -1041,6 +1041,20 @@
 - Kept rule: belief should weaken when the new case leaves the evidence range
 - Failure case: the model stays confident where training and validation no longer support confidence
 - Caption: Input: old cases plus new case. Output: prediction with use range. Kept rule: doubt grows near the edge. Failure case: confident answer outside evidence.
+
+### Symbolic Regression: Measurements To A Readable Law
+- Input: measurements of a changing system and a chosen set of possible variables
+- Output: a short candidate law that a person can inspect
+- Kept rule: the search is allowed to combine only named measured quantities, so the result must explain what those measurements can actually support
+- Failure case: the law looks simple but leaves out an unmeasured cause, fits noise, or fails in a new experiment
+- Caption: Input: measured behavior and candidate variables. Output: readable law. Kept rule: every term must come from evidence the experiment carried. Failure case: simple formula that breaks when the system is changed.
+
+### Foundation PDE Models: Old Tasks To A New Equation Case
+- Input: many solved PDE tasks plus one new PDE case
+- Output: a proposed solution or useful starting point for the new case
+- Kept rule: the old tasks must share enough field structure with the new case to carry useful evidence
+- Failure case: the new equation, boundary, scale, or target quantity is outside what the old tasks taught
+- Caption: Input: many solved PDE tasks and a new case. Output: new field answer or starting point. Kept rule: shared field structure must be real, not assumed. Failure case: broad model fails on the held-out equation family.
 
 
 ## Learning Path
