@@ -67,7 +67,7 @@ RESTRICTED_PATTERNS = (
     "many different",
 )
 
-MEATY_GOAL_REQUIREMENT_COUNT = 16
+MEATY_GOAL_REQUIREMENT_COUNT = 17
 
 
 class LinkParser(HTMLParser):
@@ -144,8 +144,8 @@ def check_required_sections() -> list[str]:
         "site/worked-examples/heat-equation-from-few-measurements.html": ("First-Principles Story", "Decision Quantity", "Why Each Step Follows", "Why It Follows From The Evidence", "First Failure Signal", "Example Stress Test", "Passes Only If"),
         "site/worked-examples/fast-fluid-field-surrogate.html": ("First-Principles Story", "Decision Quantity", "Why Each Step Follows", "Why It Follows From The Evidence", "First Failure Signal", "Example Stress Test", "Passes Only If"),
         "site/diagrams.html": ("Mathematical Sketches", "Kept Rule", "Failure Case"),
-        "site/topics/operator-learning.html": ("One Concrete Case From Start To Finish", "Observed Evidence", "Rejection Test", "How This Connects To Nearby Ideas", "Learn Before This", "Confusion It Prevents", "Evidence Needed To Believe This", "Strong Evidence", "Too Weak", "Reject Or Recheck When", "Where This Fits By Domain", "When To Avoid This In A Domain", "Changed-Case Test", "Plain Formula Term By Term", "What It Carries", "Concrete Worked Example", "Concrete Wrong-Use Example", "Test That Catches It", "What Breaks Without This Idea", "Minimum Proof Needed", "Reader Must Be Able To Say", "Acceptance Sentence Filled", "I would test it by changing", "Mathematical Sketch", "Field To Field", "Kept Rule"),
-        "site/topics/surrogate-modeling.html": ("One Concrete Case From Start To Finish", "Observed Evidence", "Rejection Test", "How This Connects To Nearby Ideas", "Learn Before This", "Confusion It Prevents", "Evidence Needed To Believe This", "Strong Evidence", "Too Weak", "Reject Or Recheck When", "Where This Fits By Domain", "When To Avoid This In A Domain", "Changed-Case Test", "Plain Formula Term By Term", "What It Carries", "Concrete Worked Example", "Concrete Wrong-Use Example", "Test That Catches It", "What Breaks Without This Idea", "Minimum Proof Needed", "Reader Must Be Able To Say", "Acceptance Sentence Filled", "I would test it by changing", "Mathematical Sketch", "Fast Stand-In", "Failure Case"),
+        "site/topics/operator-learning.html": ("Big Picture Claim Chain", "Everyday Problem", "Decision Or Quantity At Stake", "Hidden Thing Needed", "First Thing That Can Break The Claim", "One Concrete Case From Start To Finish", "Observed Evidence", "Rejection Test", "How This Connects To Nearby Ideas", "Learn Before This", "Confusion It Prevents", "Evidence Needed To Believe This", "Strong Evidence", "Too Weak", "Reject Or Recheck When", "Where This Fits By Domain", "When To Avoid This In A Domain", "Changed-Case Test", "Plain Formula Term By Term", "What It Carries", "Concrete Worked Example", "Concrete Wrong-Use Example", "Test That Catches It", "What Breaks Without This Idea", "Minimum Proof Needed", "Reader Must Be Able To Say", "Acceptance Sentence Filled", "I would test it by changing", "Mathematical Sketch", "Field To Field", "Kept Rule"),
+        "site/topics/surrogate-modeling.html": ("Big Picture Claim Chain", "Everyday Problem", "Decision Or Quantity At Stake", "Hidden Thing Needed", "First Thing That Can Break The Claim", "One Concrete Case From Start To Finish", "Observed Evidence", "Rejection Test", "How This Connects To Nearby Ideas", "Learn Before This", "Confusion It Prevents", "Evidence Needed To Believe This", "Strong Evidence", "Too Weak", "Reject Or Recheck When", "Where This Fits By Domain", "When To Avoid This In A Domain", "Changed-Case Test", "Plain Formula Term By Term", "What It Carries", "Concrete Worked Example", "Concrete Wrong-Use Example", "Test That Catches It", "What Breaks Without This Idea", "Minimum Proof Needed", "Reader Must Be Able To Say", "Acceptance Sentence Filled", "I would test it by changing", "Mathematical Sketch", "Fast Stand-In", "Failure Case"),
         "site/comparisons/pinns-vs-neural-operators.html": ("How To Decide From First Principles", "Decision Chain From First Principles", "Shortage That Creates The Choice", "Evidence Carried By", "First Wrong Answer To Look For", "Decision Checklist", "Decision Burden Table", "Swap Test", "Evidence Needed To Choose", "Concrete Choice Cases", "Wrong Choice Case", "Evidence That Exposes It"),
         "site/comparisons/solvers-vs-learned-surrogates.html": ("How To Decide From First Principles", "Decision Chain From First Principles", "Shortage That Creates The Choice", "Evidence Carried By", "First Wrong Answer To Look For", "Decision Checklist", "Decision Burden Table", "Swap Test", "Evidence Needed To Choose", "Concrete Choice Cases", "Wrong Choice Case", "Evidence That Exposes It"),
         "site/learning-path/scientific-question-first.html": ("No-Jargon Explanation", "First-Principles Spine", "World:", "Reject it when:"),
@@ -157,7 +157,7 @@ def check_required_sections() -> list[str]:
         "site/misconceptions.html": ("Misconception Map", "Wrong Turn", "Why It Is Tempting", "Repair Sentence", "First-Principles Test"),
         "site/evidence-packets/physics-informed-neural-networks.html": ("Source Strength Audit", "Reviewed Source Anchors", "Broad Transcript Mentions", "Minimum Review Action", "Stronger Proof Needed", "Transcript Evidence vs Scientific Proof", "Transcript Can Support", "Transcript Cannot Support", "Stronger Validation Needed", "First Overclaim To Reject", "Reviewer Action", "Transcript Support", "What This Evidence Does Not Prove", "Review Links"),
         "site/evidence-packets/operator-learning.html": ("Source Strength Audit", "Reviewed Source Anchors", "Broad Transcript Mentions", "Minimum Review Action", "Stronger Proof Needed", "Transcript Evidence vs Scientific Proof", "Transcript Can Support", "Transcript Cannot Support", "Stronger Validation Needed", "First Overclaim To Reject", "Reviewer Action", "Transcript Support", "What This Evidence Does Not Prove", "Review Links"),
-        "site/topics/physics-informed-neural-networks.html": ("First-Principles Essay", "What A Strong Explanation Must Say", "One Concrete Case From Start To Finish", "Observed Evidence", "Rejection Test", "How This Connects To Nearby Ideas", "Learn Before This", "Confusion It Prevents", "Evidence Needed To Believe This", "Strong Evidence", "Too Weak", "Reject Or Recheck When", "Where This Fits By Domain", "When To Avoid This In A Domain", "Changed-Case Test", "Plain Formula Term By Term", "What It Carries", "Concrete Worked Example", "Concrete Wrong-Use Example", "Test That Catches It", "What Breaks Without This Idea", "Minimum Proof Needed", "Reader Must Be Able To Say", "Acceptance Sentence Filled", "I would test it by changing", "Selected Source Anchors", "Claim Anchored", "Limit:"),
+        "site/topics/physics-informed-neural-networks.html": ("Big Picture Claim Chain", "Everyday Problem", "Decision Or Quantity At Stake", "Hidden Thing Needed", "First Thing That Can Break The Claim", "First-Principles Essay", "What A Strong Explanation Must Say", "One Concrete Case From Start To Finish", "Observed Evidence", "Rejection Test", "How This Connects To Nearby Ideas", "Learn Before This", "Confusion It Prevents", "Evidence Needed To Believe This", "Strong Evidence", "Too Weak", "Reject Or Recheck When", "Where This Fits By Domain", "When To Avoid This In A Domain", "Changed-Case Test", "Plain Formula Term By Term", "What It Carries", "Concrete Worked Example", "Concrete Wrong-Use Example", "Test That Catches It", "What Breaks Without This Idea", "Minimum Proof Needed", "Reader Must Be Able To Say", "Acceptance Sentence Filled", "I would test it by changing", "Selected Source Anchors", "Claim Anchored", "Limit:"),
         "site/evidence-packets/foundation-models-for-pdes.html": ("Selected Source Anchors", "Claim Anchored", "Limit:"),
         "site/derivations.html": ("Core Derivations",),
         "site/derivations/physics-informed-neural-networks.html": ("Hand Derivation", "Why It Enters", "Final Line", "Why This Shape And Not Another", "Observed Burden", "Rejection Burden", "Smallest Useful Formula", "First Wrong Simplification"),
@@ -312,6 +312,15 @@ def check_topic_shape_depth() -> list[str]:
     errors: list[str] = []
     concepts = json.loads((ANALYSIS / "concept_atlas.json").read_text(encoding="utf-8"))
     required_terms = (
+        "Big Picture Claim Chain",
+        "Everyday Problem",
+        "Domain Where It Matters",
+        "Decision Or Quantity At Stake",
+        "Evidence In Hand",
+        "Hidden Thing Needed",
+        "Mathematical Move",
+        "First Thing That Can Break The Claim",
+        "Changed Case To Try First",
         "First-Principles Walkthrough",
         "Why This Shape Follows",
         "Why It Has To Be There",
