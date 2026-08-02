@@ -56,14 +56,48 @@
 <h2>Observed And Hidden</h2>
 <p><strong>Observed:</strong> molecular graphs, atom types, bond patterns, shape information, and measured properties from experiments or trusted calculations</p>
 <p><strong>Hidden:</strong> which structural relations control the property for a new molecule</p>
+<p><strong>Decision Quantity:</strong> the molecular property or activity that will guide a chemistry or biology choice</p>
 <h2>Method Route</h2>
 <ul><li><a href="../topics/graphs-and-geometric-learning.html">Graphs And Geometric Learning</a></li><li><a href="../topics/generative-modeling.html">Generative Modeling</a></li><li><a href="../topics/deep-learning.html">Deep Learning</a></li><li><a href="../topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></li></ul>
 <h2>Plain Steps</h2>
 <div class="route"><div class="route-step">1. Represent the molecule as connected parts, not as an unordered list.</div><div class="route-step">2. Let information move along bonds and nearby spatial relations.</div><div class="route-step">3. Predict the target property for a new molecule.</div><div class="route-step">4. Reject the claim if a new scaffold, rare atom type, or changed assay breaks the prediction.</div></div>
+
+<h2>Why Each Step Follows</h2>
+<table>
+  <thead>
+    <tr><th>Step</th><th>Move</th><th>Why It Follows From The Evidence</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <th>1</th>
+  <td>Represent the molecule as connected parts, not as an unordered list.</td>
+  <td>The molecule&#x27;s connections are part of the object, so flattening them can remove the reason the property appears.</td>
+</tr>
+
+<tr>
+  <th>2</th>
+  <td>Let information move along bonds and nearby spatial relations.</td>
+  <td>Information moves along bonds and spatial neighbors because atoms affect one another through structure.</td>
+</tr>
+
+<tr>
+  <th>3</th>
+  <td>Predict the target property for a new molecule.</td>
+  <td>The prediction is useful only when it names the property being used for the next choice.</td>
+</tr>
+
+<tr>
+  <th>4</th>
+  <td>Reject the claim if a new scaffold, rare atom type, or changed assay breaks the prediction.</td>
+  <td>New scaffolds, rare atoms, and changed assays test whether the model learned chemistry or only familiar examples.</td>
+</tr>
+</tbody>
+</table>
+
 <h2>Why This Example Teaches The Field</h2>
 <p>It shows why geometry and connections matter. The scientific object already has structure before the model sees it.</p>
 <h2>Claim Boundary</h2>
-<p>The example supports a method only inside the named scientific job. A wider claim needs a new test, not stronger wording.</p>
+<p>The example supports a method only inside the named scientific job. A wider claim needs a new test, not stronger wording. The first failure signal is: the model works on familiar molecules but fails on a new scaffold, rare atom type, or changed assay.</p>
 
 <h2>Example Stress Test</h2>
 <p>Use this test to decide whether the worked example is a scientific explanation or only a story about a method.</p>
@@ -71,8 +105,10 @@
   <tbody>
     <tr><th>Known Evidence</th><td>molecular graphs, atom types, bond patterns, shape information, and measured properties from experiments or trusted calculations</td></tr>
     <tr><th>Needed Answer</th><td>which structural relations control the property for a new molecule</td></tr>
+    <tr><th>Decision Quantity</th><td>the molecular property or activity that will guide a chemistry or biology choice</td></tr>
     <tr><th>Method Route Under Test</th><td>graphs and geometric learning -&gt; generative modeling -&gt; deep learning -&gt; uncertainty and generalization</td></tr>
     <tr><th>Changed Case To Try</th><td>Reject the claim if a new scaffold, rare atom type, or changed assay breaks the prediction.</td></tr>
+    <tr><th>First Failure Signal</th><td>the model works on familiar molecules but fails on a new scaffold, rare atom type, or changed assay</td></tr>
     <tr><th>Passes Only If</th><td>The route still answers the original question: Can a model predict a useful molecular property without flattening away the structure that causes it?</td></tr>
   </tbody>
 </table>

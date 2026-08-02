@@ -56,14 +56,48 @@
 <h2>Observed And Hidden</h2>
 <p><strong>Observed:</strong> mesh points, connections, boundary labels, local features, and solution fields from prior solves</p>
 <p><strong>Hidden:</strong> how information should move across the irregular geometry for a new case</p>
+<p><strong>Decision Quantity:</strong> the field value on the connected shape, especially near boundaries and refined regions</p>
 <h2>Method Route</h2>
 <ul><li><a href="../topics/graphs-and-geometric-learning.html">Graphs And Geometric Learning</a></li><li><a href="../topics/operator-learning.html">Operator Learning</a></li><li><a href="../topics/attention-for-scientific-fields.html">Attention For Scientific Fields</a></li></ul>
 <h2>Plain Steps</h2>
 <div class="route"><div class="route-step">1. Keep the mesh connections visible.</div><div class="route-step">2. Pass information along nearby and important distant relations.</div><div class="route-step">3. Predict the field on the same kind of geometric object.</div><div class="route-step">4. Test changed meshes, boundaries, rotations, and refined regions before trusting the answer.</div></div>
+
+<h2>Why Each Step Follows</h2>
+<table>
+  <thead>
+    <tr><th>Step</th><th>Move</th><th>Why It Follows From The Evidence</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <th>1</th>
+  <td>Keep the mesh connections visible.</td>
+  <td>Connections tell the model which points can physically or geometrically affect one another.</td>
+</tr>
+
+<tr>
+  <th>2</th>
+  <td>Pass information along nearby and important distant relations.</td>
+  <td>Nearby and distant relations both matter when boundary regions or long paths carry influence.</td>
+</tr>
+
+<tr>
+  <th>3</th>
+  <td>Predict the field on the same kind of geometric object.</td>
+  <td>The prediction must live on the same kind of connected object, not on a shuffled table.</td>
+</tr>
+
+<tr>
+  <th>4</th>
+  <td>Test changed meshes, boundaries, rotations, and refined regions before trusting the answer.</td>
+  <td>Changed meshes and rotations check whether the answer follows the shape rather than the file layout.</td>
+</tr>
+</tbody>
+</table>
+
 <h2>Why This Example Teaches The Field</h2>
 <p>It shows why some scientific data cannot be treated like a flat table. The connections carry part of the physics.</p>
 <h2>Claim Boundary</h2>
-<p>The example supports a method only inside the named scientific job. A wider claim needs a new test, not stronger wording.</p>
+<p>The example supports a method only inside the named scientific job. A wider claim needs a new test, not stronger wording. The first failure signal is: renumbering, refining, rotating, or changing the boundary makes the field answer change for the wrong reason.</p>
 
 <h2>Example Stress Test</h2>
 <p>Use this test to decide whether the worked example is a scientific explanation or only a story about a method.</p>
@@ -71,8 +105,10 @@
   <tbody>
     <tr><th>Known Evidence</th><td>mesh points, connections, boundary labels, local features, and solution fields from prior solves</td></tr>
     <tr><th>Needed Answer</th><td>how information should move across the irregular geometry for a new case</td></tr>
+    <tr><th>Decision Quantity</th><td>the field value on the connected shape, especially near boundaries and refined regions</td></tr>
     <tr><th>Method Route Under Test</th><td>graphs and geometric learning -&gt; operator learning -&gt; attention for scientific fields</td></tr>
     <tr><th>Changed Case To Try</th><td>Test changed meshes, boundaries, rotations, and refined regions before trusting the answer.</td></tr>
+    <tr><th>First Failure Signal</th><td>renumbering, refining, rotating, or changing the boundary makes the field answer change for the wrong reason</td></tr>
     <tr><th>Passes Only If</th><td>The route still answers the original question: How can a model predict a field when the points are connected in an uneven shape instead of a neat grid?</td></tr>
   </tbody>
 </table>

@@ -56,14 +56,48 @@
 <h2>Observed And Hidden</h2>
 <p><strong>Observed:</strong> many prior simulations connecting shape, conditions, and resulting velocity or pressure fields</p>
 <p><strong>Hidden:</strong> the flow field for a new shape or new condition</p>
+<p><strong>Decision Quantity:</strong> velocity, pressure, drag, lift, or another flow quantity used for the design choice</p>
 <h2>Method Route</h2>
 <ul><li><a href="../topics/surrogate-modeling.html">Surrogate Modeling</a></li><li><a href="../topics/operator-learning.html">Operator Learning</a></li><li><a href="../topics/attention-for-scientific-fields.html">Attention For Scientific Fields</a></li></ul>
 <h2>Plain Steps</h2>
 <div class="route"><div class="route-step">1. Name the range of shapes and flow conditions.</div><div class="route-step">2. Train a model on full fields from trusted simulations.</div><div class="route-step">3. Predict a new field quickly.</div><div class="route-step">4. Reject the shortcut if it misses boundary behavior, vortices, or pressure forces that matter.</div></div>
+
+<h2>Why Each Step Follows</h2>
+<table>
+  <thead>
+    <tr><th>Step</th><th>Move</th><th>Why It Follows From The Evidence</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <th>1</th>
+  <td>Name the range of shapes and flow conditions.</td>
+  <td>The range of shapes and conditions defines what the shortcut is allowed to answer.</td>
+</tr>
+
+<tr>
+  <th>2</th>
+  <td>Train a model on full fields from trusted simulations.</td>
+  <td>Full trusted fields teach the shortcut both local details and larger flow patterns.</td>
+</tr>
+
+<tr>
+  <th>3</th>
+  <td>Predict a new field quickly.</td>
+  <td>Fast prediction matters only because the same kind of query must be answered many times.</td>
+</tr>
+
+<tr>
+  <th>4</th>
+  <td>Reject the shortcut if it misses boundary behavior, vortices, or pressure forces that matter.</td>
+  <td>Boundary behavior and forces are checked because they can decide the design even when the picture looks smooth.</td>
+</tr>
+</tbody>
+</table>
+
 <h2>Why This Example Teaches The Field</h2>
 <p>It shows why speed is not the same as trust. The useful claim is a fast answer inside a tested design family.</p>
 <h2>Claim Boundary</h2>
-<p>The example supports a method only inside the named scientific job. A wider claim needs a new test, not stronger wording.</p>
+<p>The example supports a method only inside the named scientific job. A wider claim needs a new test, not stronger wording. The first failure signal is: the shortcut is fast but misses a force, vortex, or boundary effect that changes the engineering choice.</p>
 
 <h2>Example Stress Test</h2>
 <p>Use this test to decide whether the worked example is a scientific explanation or only a story about a method.</p>
@@ -71,8 +105,10 @@
   <tbody>
     <tr><th>Known Evidence</th><td>many prior simulations connecting shape, conditions, and resulting velocity or pressure fields</td></tr>
     <tr><th>Needed Answer</th><td>the flow field for a new shape or new condition</td></tr>
+    <tr><th>Decision Quantity</th><td>velocity, pressure, drag, lift, or another flow quantity used for the design choice</td></tr>
     <tr><th>Method Route Under Test</th><td>surrogate modeling -&gt; operator learning -&gt; attention for scientific fields</td></tr>
     <tr><th>Changed Case To Try</th><td>Reject the shortcut if it misses boundary behavior, vortices, or pressure forces that matter.</td></tr>
+    <tr><th>First Failure Signal</th><td>the shortcut is fast but misses a force, vortex, or boundary effect that changes the engineering choice</td></tr>
     <tr><th>Passes Only If</th><td>The route still answers the original question: How can engineers test many shapes without running a full simulation every time?</td></tr>
   </tbody>
 </table>

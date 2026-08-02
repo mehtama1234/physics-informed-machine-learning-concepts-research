@@ -56,14 +56,48 @@
 <h2>Observed And Hidden</h2>
 <p><strong>Observed:</strong> historical fields, simulation ensembles, forcing conditions, regional measurements, and known physical constraints</p>
 <p><strong>Hidden:</strong> how wrong the prediction may be under a changed climate, rare event, or new regional pattern</p>
+<p><strong>Decision Quantity:</strong> the risk quantity for a region, time window, rare event, or changed forcing condition</p>
 <h2>Method Route</h2>
 <ul><li><a href="../topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></li><li><a href="../topics/surrogate-modeling.html">Surrogate Modeling</a></li><li><a href="../topics/partial-differential-equations.html">Partial Differential Equations</a></li></ul>
 <h2>Plain Steps</h2>
 <div class="route"><div class="route-step">1. Name the risk quantity before choosing a model.</div><div class="route-step">2. Separate familiar held-out cases from truly changed future conditions.</div><div class="route-step">3. Report prediction with the tested use range.</div><div class="route-step">4. Reject confident claims when rare events, regions, or forcing changes have not been checked.</div></div>
+
+<h2>Why Each Step Follows</h2>
+<table>
+  <thead>
+    <tr><th>Step</th><th>Move</th><th>Why It Follows From The Evidence</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <th>1</th>
+  <td>Name the risk quantity before choosing a model.</td>
+  <td>The risk quantity comes first because different risks need different evidence.</td>
+</tr>
+
+<tr>
+  <th>2</th>
+  <td>Separate familiar held-out cases from truly changed future conditions.</td>
+  <td>Familiar held-out cases do not prove behavior under a changed future condition.</td>
+</tr>
+
+<tr>
+  <th>3</th>
+  <td>Report prediction with the tested use range.</td>
+  <td>The use range is part of the answer because it says where the prediction has support.</td>
+</tr>
+
+<tr>
+  <th>4</th>
+  <td>Reject confident claims when rare events, regions, or forcing changes have not been checked.</td>
+  <td>Rare events and changed forcing are checked because they are often where the decision matters most.</td>
+</tr>
+</tbody>
+</table>
+
 <h2>Why This Example Teaches The Field</h2>
 <p>It shows why uncertainty is not an add-on. The use range is part of the scientific answer.</p>
 <h2>Claim Boundary</h2>
-<p>The example supports a method only inside the named scientific job. A wider claim needs a new test, not stronger wording.</p>
+<p>The example supports a method only inside the named scientific job. A wider claim needs a new test, not stronger wording. The first failure signal is: the model reports confident risk while rare events, changed forcing, or the target region were not tested.</p>
 
 <h2>Example Stress Test</h2>
 <p>Use this test to decide whether the worked example is a scientific explanation or only a story about a method.</p>
@@ -71,8 +105,10 @@
   <tbody>
     <tr><th>Known Evidence</th><td>historical fields, simulation ensembles, forcing conditions, regional measurements, and known physical constraints</td></tr>
     <tr><th>Needed Answer</th><td>how wrong the prediction may be under a changed climate, rare event, or new regional pattern</td></tr>
+    <tr><th>Decision Quantity</th><td>the risk quantity for a region, time window, rare event, or changed forcing condition</td></tr>
     <tr><th>Method Route Under Test</th><td>uncertainty and generalization -&gt; surrogate modeling -&gt; partial differential equations</td></tr>
     <tr><th>Changed Case To Try</th><td>Reject confident claims when rare events, regions, or forcing changes have not been checked.</td></tr>
+    <tr><th>First Failure Signal</th><td>the model reports confident risk while rare events, changed forcing, or the target region were not tested</td></tr>
     <tr><th>Passes Only If</th><td>The route still answers the original question: How should a model report risk when the future case is not just another familiar example?</td></tr>
   </tbody>
 </table>

@@ -56,14 +56,48 @@
 <h2>Observed And Hidden</h2>
 <p><strong>Observed:</strong> sample geometry, load conditions, a few measured displacements or strains, and known mechanical balance laws</p>
 <p><strong>Hidden:</strong> the internal stress field and the weak region where failure may begin</p>
+<p><strong>Decision Quantity:</strong> internal stress, strain, or the location where failure may begin</p>
 <h2>Method Route</h2>
 <ul><li><a href="../topics/partial-differential-equations.html">Partial Differential Equations</a></li><li><a href="../topics/physics-informed-neural-networks.html">Physics-Informed Neural Networks</a></li><li><a href="../topics/surrogate-modeling.html">Surrogate Modeling</a></li></ul>
 <h2>Plain Steps</h2>
 <div class="route"><div class="route-step">1. Name the material quantity that matters for the decision.</div><div class="route-step">2. Use sparse measurements as anchors for the unknown field.</div><div class="route-step">3. Use mechanical balance as a check between measured places.</div><div class="route-step">4. Compare against held-out tests, changed loads, and trusted simulations near failure regions.</div></div>
+
+<h2>Why Each Step Follows</h2>
+<table>
+  <thead>
+    <tr><th>Step</th><th>Move</th><th>Why It Follows From The Evidence</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <th>1</th>
+  <td>Name the material quantity that matters for the decision.</td>
+  <td>The decision quantity matters because average error can hide the weak region.</td>
+</tr>
+
+<tr>
+  <th>2</th>
+  <td>Use sparse measurements as anchors for the unknown field.</td>
+  <td>Sparse measurements anchor the unknown field to real tests or trusted simulations.</td>
+</tr>
+
+<tr>
+  <th>3</th>
+  <td>Use mechanical balance as a check between measured places.</td>
+  <td>Mechanical balance limits what can happen between measured places.</td>
+</tr>
+
+<tr>
+  <th>4</th>
+  <td>Compare against held-out tests, changed loads, and trusted simulations near failure regions.</td>
+  <td>Changed loads and near-failure regions check the place where a wrong field would be most costly.</td>
+</tr>
+</tbody>
+</table>
+
 <h2>Why This Example Teaches The Field</h2>
 <p>It connects physics constraints to a practical engineering risk: missing a local stress concentration can matter more than average error.</p>
 <h2>Claim Boundary</h2>
-<p>The example supports a method only inside the named scientific job. A wider claim needs a new test, not stronger wording.</p>
+<p>The example supports a method only inside the named scientific job. A wider claim needs a new test, not stronger wording. The first failure signal is: the model has low average error but misses the local stress concentration that drives failure.</p>
 
 <h2>Example Stress Test</h2>
 <p>Use this test to decide whether the worked example is a scientific explanation or only a story about a method.</p>
@@ -71,8 +105,10 @@
   <tbody>
     <tr><th>Known Evidence</th><td>sample geometry, load conditions, a few measured displacements or strains, and known mechanical balance laws</td></tr>
     <tr><th>Needed Answer</th><td>the internal stress field and the weak region where failure may begin</td></tr>
+    <tr><th>Decision Quantity</th><td>internal stress, strain, or the location where failure may begin</td></tr>
     <tr><th>Method Route Under Test</th><td>partial differential equations -&gt; physics informed neural networks -&gt; surrogate modeling</td></tr>
     <tr><th>Changed Case To Try</th><td>Compare against held-out tests, changed loads, and trusted simulations near failure regions.</td></tr>
+    <tr><th>First Failure Signal</th><td>the model has low average error but misses the local stress concentration that drives failure</td></tr>
     <tr><th>Passes Only If</th><td>The route still answers the original question: How can a model estimate stress inside a material when only a few tests or simulations are available?</td></tr>
   </tbody>
 </table>

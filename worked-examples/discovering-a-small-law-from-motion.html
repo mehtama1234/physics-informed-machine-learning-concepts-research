@@ -56,14 +56,48 @@
 <h2>Observed And Hidden</h2>
 <p><strong>Observed:</strong> measurements of position, speed, concentration, or another changing quantity</p>
 <p><strong>Hidden:</strong> the rate rule that causes the next moment</p>
+<p><strong>Decision Quantity:</strong> the rate rule that explains and predicts the measured change</p>
 <h2>Method Route</h2>
 <ul><li><a href="../topics/symbolic-regression.html">Symbolic Regression And Model Discovery</a></li><li><a href="../topics/neural-differential-equations.html">Neural Differential Equations</a></li><li><a href="../topics/optimization-for-learning.html">Optimization For Learning</a></li></ul>
 <h2>Plain Steps</h2>
 <div class="route"><div class="route-step">1. Measure the variables that might matter.</div><div class="route-step">2. Estimate how they change from moment to moment.</div><div class="route-step">3. Search for a short rule or learn the missing rate.</div><div class="route-step">4. Test on a new experiment, not only the original trace.</div></div>
+
+<h2>Why Each Step Follows</h2>
+<table>
+  <thead>
+    <tr><th>Step</th><th>Move</th><th>Why It Follows From The Evidence</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <th>1</th>
+  <td>Measure the variables that might matter.</td>
+  <td>Only measured variables can fairly appear in the proposed rule.</td>
+</tr>
+
+<tr>
+  <th>2</th>
+  <td>Estimate how they change from moment to moment.</td>
+  <td>Change from moment to moment is the evidence for the missing rate.</td>
+</tr>
+
+<tr>
+  <th>3</th>
+  <td>Search for a short rule or learn the missing rate.</td>
+  <td>A short rule or learned rate is the candidate bridge from the present state to the next one.</td>
+</tr>
+
+<tr>
+  <th>4</th>
+  <td>Test on a new experiment, not only the original trace.</td>
+  <td>A new experiment checks whether the rule is about the system rather than one recorded trace.</td>
+</tr>
+</tbody>
+</table>
+
 <h2>Why This Example Teaches The Field</h2>
 <p>It separates prediction from explanation. A readable rule becomes valuable only when it survives a changed experiment.</p>
 <h2>Claim Boundary</h2>
-<p>The example supports a method only inside the named scientific job. A wider claim needs a new test, not stronger wording.</p>
+<p>The example supports a method only inside the named scientific job. A wider claim needs a new test, not stronger wording. The first failure signal is: the rule fits the original trace but breaks when the starting condition, forcing, or measured setting changes.</p>
 
 <h2>Example Stress Test</h2>
 <p>Use this test to decide whether the worked example is a scientific explanation or only a story about a method.</p>
@@ -71,8 +105,10 @@
   <tbody>
     <tr><th>Known Evidence</th><td>measurements of position, speed, concentration, or another changing quantity</td></tr>
     <tr><th>Needed Answer</th><td>the rate rule that causes the next moment</td></tr>
+    <tr><th>Decision Quantity</th><td>the rate rule that explains and predicts the measured change</td></tr>
     <tr><th>Method Route Under Test</th><td>symbolic regression -&gt; neural differential equations -&gt; optimization for learning</td></tr>
     <tr><th>Changed Case To Try</th><td>Test on a new experiment, not only the original trace.</td></tr>
+    <tr><th>First Failure Signal</th><td>the rule fits the original trace but breaks when the starting condition, forcing, or measured setting changes</td></tr>
     <tr><th>Passes Only If</th><td>The route still answers the original question: Can data reveal a short rule for how the system moves?</td></tr>
   </tbody>
 </table>
