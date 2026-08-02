@@ -3073,6 +3073,7 @@ def build_concept_evidence_packets(topic_treatments: list[dict[str, object]]) ->
                 "evidence_count": len(evidence),
                 "evidence": evidence,
                 "source_anchors": SOURCE_ANCHORS.get(slug, []),
+                "source_strength": concept_source_strength(topic, evidence, SOURCE_ANCHORS.get(slug, [])),
                 "limits": [
                     "Transcript evidence shows the concept appears in this course family.",
                     "It does not prove the method works for every equation, material, geometry, data size, or future case.",
@@ -3083,6 +3084,19 @@ def build_concept_evidence_packets(topic_treatments: list[dict[str, object]]) ->
             }
         )
     return packets
+
+
+def concept_source_strength(topic: dict[str, object], evidence: list[dict[str, object]], anchors: list[dict[str, str]]) -> dict[str, object]:
+    strong_count = len(anchors)
+    broad_count = max(0, len(evidence) - strong_count)
+    return {
+        "strong_anchor_count": strong_count,
+        "broad_mention_count": broad_count,
+        "strong_anchor_meaning": "reviewed source anchors name a specific claim, the lecture page that supports it, and the limit of that support",
+        "broad_mention_meaning": "broad transcript mentions show the concept appears in the playlist family but may not carry the main claim by themselves",
+        "minimum_review_action": f"Check whether the selected anchors support this concept job: {topic['common_problem']}",
+        "stronger_proof_needed": f"To trust the method, add evidence from a changed-case test in {topic['domain']}, not only a lecture mention.",
+    }
 
 
 def formula_parts(formula: str) -> list[str]:
@@ -5079,6 +5093,7 @@ def write_concept_evidence_packet_page(path: Path, packet: dict[str, object]) ->
         for item in packet["review_links"]
     )
     source_anchors = source_anchor_cards(str(packet["slug"]), list(packet["evidence"]), root_prefix="../")
+    strength = packet["source_strength"]
     body = f"""
 <h1>{html.escape(str(packet['title']))}</h1>
 <h2>Concept Job</h2>
@@ -5086,6 +5101,16 @@ def write_concept_evidence_packet_page(path: Path, packet: dict[str, object]) ->
 <p><strong>Domain:</strong> {html.escape(str(packet['domain']))}</p>
 <p><strong>Why it matters:</strong> {html.escape(str(packet['why_it_matters']))}</p>
 {source_anchors}
+<h2>Source Strength Audit</h2>
+<p>This audit keeps source support honest. A lecture mention is useful, but it is not the same as proof that a method works for a new scientific case.</p>
+<table>
+  <tbody>
+    <tr><th>Reviewed Source Anchors</th><td>{html.escape(str(strength['strong_anchor_count']))}: {html.escape(str(strength['strong_anchor_meaning']))}</td></tr>
+    <tr><th>Broad Transcript Mentions</th><td>{html.escape(str(strength['broad_mention_count']))}: {html.escape(str(strength['broad_mention_meaning']))}</td></tr>
+    <tr><th>Minimum Review Action</th><td>{html.escape(str(strength['minimum_review_action']))}</td></tr>
+    <tr><th>Stronger Proof Needed</th><td>{html.escape(str(strength['stronger_proof_needed']))}</td></tr>
+  </tbody>
+</table>
 <h2>Transcript Support</h2>
 <p>This packet has {html.escape(str(packet['evidence_count']))} selected transcript anchors for review.</p>
 <ul>{''.join(evidence_items)}</ul>
@@ -5826,12 +5851,16 @@ def write_markdown_export(data: dict[str, object]) -> None:
         )
     lines.extend(["", "## Concept Evidence Packets"])
     for packet in data["concept_evidence_packets"]:
+        strength = packet["source_strength"]
         lines.extend(
             [
                 f"### {packet['title']}",
                 f"- Problem: {packet['common_problem']}",
                 f"- Domain: {packet['domain']}",
                 f"- Evidence anchors: {packet['evidence_count']}",
+                f"- Reviewed source anchors: {strength['strong_anchor_count']}",
+                f"- Broad transcript mentions: {strength['broad_mention_count']}",
+                f"- Stronger proof needed: {strength['stronger_proof_needed']}",
                 f"- Packet: {packet['packet_href']}",
                 "",
             ]
@@ -6289,9 +6318,13 @@ def validate(data: dict[str, object] | None = None) -> None:
         if not packet_path.exists():
             raise SystemExit(f"missing concept evidence packet: {packet['title']}")
         packet_text = packet_path.read_text(encoding="utf-8")
-        for required in ("Transcript Support", "What This Evidence Does Not Prove", "Review Links"):
+        for required in ("Source Strength Audit", "Reviewed Source Anchors", "Broad Transcript Mentions", "Minimum Review Action", "Stronger Proof Needed", "Transcript Support", "What This Evidence Does Not Prove", "Review Links"):
             if required not in packet_text:
                 raise SystemExit(f"concept evidence packet missing {required}: {packet['title']}")
+        strength = packet.get("source_strength") or {}
+        for field in ("strong_anchor_count", "broad_mention_count", "minimum_review_action", "stronger_proof_needed"):
+            if field not in strength:
+                raise SystemExit(f"concept evidence packet missing source strength {field}: {packet['title']}")
         if int(packet.get("evidence_count") or 0) <= 0:
             raise SystemExit(f"concept evidence packet has no evidence: {packet['title']}")
         for item in packet["review_links"]:
