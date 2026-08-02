@@ -138,6 +138,51 @@
 <p><strong>End With The Claim:</strong> After all that, Physics-Informed Neural Networks is allowed to claim only this: the model is not allowed to match points while freely breaking the equation between those points. The first rejection check is move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements. If a reader can say that whole chain without hiding behind the topic name, the idea has started to become understandable.</p>
 
 
+<h2>Application Claim Ladder</h2>
+<p>Each application has to climb the same ladder before it becomes believable. Name the field use, name the evidence, name the missing answer, name the plain move, and end with the first check that can reject the claim.</p>
+<table>
+  <thead><tr><th>Application Field</th><th>Plain Use</th><th>Evidence To Start From</th><th>Hidden Answer Needed</th><th>First-Principles Move</th><th>Changed Case That Tests It</th></tr></thead>
+  <tbody>
+<tr>
+  <td>Topology and shape</td>
+  <td>Fit a field on a shape while also asking it to obey the rule that should hold inside the shape.</td>
+  <td>some measured values, boundary values, starting values, and a known differential equation</td>
+  <td>the full field value at every point in space and time</td>
+  <td>fit a neural network while also measuring how badly its output violates the known equation</td>
+  <td>Move sensors, change the boundary, or bend the domain and compare the hidden field with trusted values.</td>
+</tr>
+
+<tr>
+  <td>Engineering design</td>
+  <td>Estimate heat, stress, flow, or pressure when tests are sparse but the physical law is known.</td>
+  <td>some measured values, boundary values, starting values, and a known differential equation</td>
+  <td>the full field value at every point in space and time</td>
+  <td>fit a neural network while also measuring how badly its output violates the known equation</td>
+  <td>Inspect sharp regions, edge cases, and held-out sensors near the places where failure would matter.</td>
+</tr>
+
+<tr>
+  <td>Materials, chemistry, and biology</td>
+  <td>Fill in missing concentration, strain, or reaction fields while keeping known balance rules visible.</td>
+  <td>some measured values, boundary values, starting values, and a known differential equation</td>
+  <td>the full field value at every point in space and time</td>
+  <td>fit a neural network while also measuring how badly its output violates the known equation</td>
+  <td>Change material settings, boundary values, or reaction conditions and compare with measurements.</td>
+</tr>
+
+<tr>
+  <td>Climate, fluids, and fields</td>
+  <td>Recover a full field from sparse measurements without ignoring the governing equation.</td>
+  <td>some measured values, boundary values, starting values, and a known differential equation</td>
+  <td>the full field value at every point in space and time</td>
+  <td>fit a neural network while also measuring how badly its output violates the known equation</td>
+  <td>Change source terms, boundaries, or sensor placement and compare against a solver or held-out data.</td>
+</tr>
+</tbody>
+</table>
+<p>Topology and shape are not a side note in this ladder. They are part of the application claim whenever the answer depends on connections, boundaries, holes, distances, mesh, molecule shape, or how information moves across a field.</p>
+
+
 <h2>Plain Big Picture Essay</h2>
 <p>Start with the human problem. Someone needs to act, explain, build, test, or decide, and the answer is not sitting in front of them. For Physics-Informed Neural Networks, the plain problem is this: measurements may be sparse, but the answer must still respect a known physical equation. The course idea is important only because it helps move from what is already known to what still has to be known. If that movement is not clear, the page is only naming a tool. If the movement is clear, the reader can see why the tool enters at all.</p>
 <p>The first-principles path is simple. We have evidence: some measured values, boundary values, starting values, and a known differential equation. We need something hidden: the full field value at every point in space and time. We make a move: fit a neural network while also measuring how badly its output violates the known equation. The move is allowed only because it carries the right part of the evidence toward the missing answer. It is not allowed to claim more than that. The final claim is: the model is not allowed to match points while freely breaking the equation between those points.</p>
