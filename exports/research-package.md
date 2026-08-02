@@ -17,8 +17,8 @@
 - misconception_count: 14
 - diagram_count: 6
 - sketch_count: 4
-- learning_path_step_count: 7
-- glossary_term_count: 10
+- learning_path_step_count: 12
+- glossary_term_count: 15
 - domain_guide_count: 5
 - reader_check_count: 14
 - decision_guide_count: 13
@@ -35,7 +35,7 @@
 - review_search_intent_count: 7
 - review_queue_count: 14
 - review_queue_p0_count: 0
-- review_queue_p1_count: 7
+- review_queue_p1_count: 6
 - editorial_roadmap_count: 7
 - editorial_roadmap_completed_count: 7
 - source_anchor_count: 28
@@ -820,6 +820,41 @@
 - First-principles spine: World: the scientist wants a rule, not only an answer.; Evidence: measured variables and changes over time suggest possible relations.; Missing piece: the governing relation is unknown.; Mathematical move: search for a small rule or learned rate that explains the observations.; Reject it when: the rule fails a new experiment or depends on a missing variable.
 - Checkpoint: You can explain why a short formula still needs a changed-experiment test.
 
+### 8. Learn From Examples Without Forgetting The Boundary
+- Question: What can examples teach, and what can they not teach?
+- Why here: Deep learning is useful when examples carry repeated structure, but the examples also set the edge of the evidence.
+- Goal: Understand a learned predictor as an adjustable rule whose authority comes from checked examples and changed-case tests.
+- First-principles spine: World: many past cases have known inputs and answers.; Evidence: the repeated input-answer pairs show patterns the model can copy.; Missing piece: the answer for a new case is unknown.; Mathematical move: adjust a flexible rule until its answers match checked examples.; Reject it when: the new case changes the source, scale, boundary, or quantity that the examples did not cover.
+- Checkpoint: You can say what the examples prove, what they leave unproved, and what changed case should be tested.
+
+### 9. Generate Many Valid Candidates
+- Question: When is one predicted answer too narrow?
+- Why here: Some scientific jobs need a range of possible fields, designs, or futures instead of one average answer.
+- Goal: Treat generative modeling as candidate-making under evidence and rule checks, not as a source of automatic truth.
+- First-principles spine: World: more than one answer may be possible under the known conditions.; Evidence: old examples show what valid candidates tend to look like.; Missing piece: the set of plausible new candidates is unknown.; Mathematical move: combine known conditions with controlled variation to make candidate examples.; Reject it when: samples look plausible but violate measurements, boundaries, equations, or the tested use family.
+- Checkpoint: You can distinguish a plausible-looking generated candidate from a checked scientific candidate.
+
+### 10. Keep Connected Shapes Connected
+- Question: What changes when the data is a mesh, molecule, surface, or network?
+- Why here: Some scientific objects are not flat tables. Their shape and connections are part of the evidence.
+- Goal: See graph and geometric learning as a way to preserve the object being studied while information moves through it.
+- First-principles spine: World: the object is made of connected points, edges, surfaces, or regions.; Evidence: values live on that connected shape and the connections affect the answer.; Missing piece: the field, label, or property for a new connected object is unknown.; Mathematical move: pass information along the meaningful connections while preserving the shape.; Reject it when: changing point order, mesh resolution, rotation, or boundary regions breaks the claim.
+- Checkpoint: You can explain why the connections are evidence, not decoration.
+
+### 11. Read Training As A Contract
+- Question: What is the model actually being rewarded for?
+- Why here: A model follows the score it is trained on. If that score omits the scientific burden, training can improve the wrong thing.
+- Goal: Understand optimization as repeatedly changing a model to reduce a written error score, then checking whether that score matches the scientific job.
+- First-principles spine: World: the model has adjustable parts.; Evidence: a score says which answers count as better or worse.; Missing piece: the adjusted model that performs the needed job is unknown.; Mathematical move: update the adjustable parts to reduce the score.; Reject it when: the score goes down while the boundary, equation, rare case, or decision quantity fails.
+- Checkpoint: You can name the score, the adjustable parts, and the scientific check the score might miss.
+
+### 12. Ask Which Far-Away Information Matters
+- Question: When can a local prediction depend on distant parts of the field?
+- Why here: Scientific fields can have long-range influence through boundaries, waves, pressure, coherent structures, or global constraints.
+- Goal: Use attention as a way to select relevant field parts, while keeping physical validation separate from visual explanation.
+- First-principles spine: World: a field part may depend on nearby and far-away information.; Evidence: field examples show which parts tend to affect each other.; Missing piece: the relevant information for a new point, patch, or region is unknown.; Mathematical move: compare field parts, weight the ones judged useful, and update the prediction.; Reject it when: the selected relations fail under changed boundaries, resolution, conservation checks, or physical stress tests.
+- Checkpoint: You can explain the difference between useful long-range information and an unvalidated attention picture.
+
 
 ## Plain-Language Glossary
 ### Field
@@ -881,6 +916,36 @@
 - Problem it names: training a new model for every scientific task can be expensive
 - Why it matters: shared structure may reduce repeated training if the new task truly belongs to the learned family
 - Watch for: broad training is not proof that a new regime, boundary, or quantity is covered
+
+### Example-Trained Rule
+- Everyday meaning: a rule shaped by many past input-answer pairs
+- Problem it names: some useful patterns are hard to write down by hand
+- Why it matters: deep learning can turn many checked examples into a reusable predictor
+- Watch for: the predictor has evidence only for the kinds of cases the examples and tests actually cover
+
+### Scientific Target
+- Everyday meaning: the exact quantity the scientist needs to know or decide from
+- Problem it names: a model can optimize a convenient score while missing the quantity that matters
+- Why it matters: scientific machine learning starts to make sense only after the target quantity is named
+- Watch for: phrases like better prediction are too weak unless the measured or decided quantity is explicit
+
+### Candidate Sample
+- Everyday meaning: one possible object made by a model
+- Problem it names: some tasks need many plausible futures, fields, or designs rather than one answer
+- Why it matters: generative modeling is useful only when candidates are checked against conditions and rules
+- Watch for: a candidate that looks realistic may still violate measurements, boundaries, or the tested use family
+
+### Connected Representation
+- Everyday meaning: a way to keep track of which points, parts, or regions are linked
+- Problem it names: meshes, molecules, surfaces, and networks lose meaning when treated as unordered tables
+- Why it matters: graph and geometric learning keeps the shape and connections available to the model
+- Watch for: if changing point order or mesh resolution changes the claim, the representation may not be carrying the right structure
+
+### Relevance Weight
+- Everyday meaning: a learned amount saying how much one part should listen to another part
+- Problem it names: a local field value may depend on distant boundaries, regions, or patterns
+- Why it matters: attention for scientific fields gives the model a way to gather far-away information
+- Watch for: a displayed weight is not an explanation unless the relation survives physical and changed-case tests
 
 
 ## Domain Guides
@@ -1225,10 +1290,19 @@
 
 
 ## Review Queue
+### P1 Optimization For Learning
+- Reviewed source anchors: 2
+- Broad transcript mentions: 4
+- Missing layers: diagram, domain guide
+- Reason: has missing support layers
+- Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Optimization For Learning.
+- Topic: topics/optimization-for-learning.html
+- Evidence packet: evidence-packets/optimization-for-learning.html
+
 ### P1 Deep Learning
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
-- Missing layers: learning path, glossary, domain guide
+- Missing layers: domain guide
 - Reason: has missing support layers
 - Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Deep Learning.
 - Topic: topics/deep-learning.html
@@ -1237,7 +1311,7 @@
 ### P1 Generative Modeling
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
-- Missing layers: diagram, learning path, glossary
+- Missing layers: diagram
 - Reason: has missing support layers
 - Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Generative Modeling.
 - Topic: topics/generative-modeling.html
@@ -1246,38 +1320,11 @@
 ### P1 Graphs And Geometric Learning
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
-- Missing layers: diagram, learning path, glossary
+- Missing layers: diagram
 - Reason: has missing support layers
 - Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Graphs And Geometric Learning.
 - Topic: topics/graphs-and-geometric-learning.html
 - Evidence packet: evidence-packets/graphs-and-geometric-learning.html
-
-### P1 Optimization For Learning
-- Reviewed source anchors: 2
-- Broad transcript mentions: 4
-- Missing layers: diagram, learning path, domain guide
-- Reason: has missing support layers
-- Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Optimization For Learning.
-- Topic: topics/optimization-for-learning.html
-- Evidence packet: evidence-packets/optimization-for-learning.html
-
-### P1 Attention For Scientific Fields
-- Reviewed source anchors: 2
-- Broad transcript mentions: 4
-- Missing layers: learning path, glossary
-- Reason: has missing support layers
-- Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Attention For Scientific Fields.
-- Topic: topics/attention-for-scientific-fields.html
-- Evidence packet: evidence-packets/attention-for-scientific-fields.html
-
-### P1 Scientific Machine Learning
-- Reviewed source anchors: 2
-- Broad transcript mentions: 4
-- Missing layers: glossary, domain guide
-- Reason: has missing support layers
-- Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Scientific Machine Learning.
-- Topic: topics/scientific-machine-learning.html
-- Evidence packet: evidence-packets/scientific-machine-learning.html
 
 ### P1 Neural Differential Equations
 - Reviewed source anchors: 2
@@ -1287,6 +1334,24 @@
 - Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Neural Differential Equations.
 - Topic: topics/neural-differential-equations.html
 - Evidence packet: evidence-packets/neural-differential-equations.html
+
+### P1 Scientific Machine Learning
+- Reviewed source anchors: 2
+- Broad transcript mentions: 4
+- Missing layers: domain guide
+- Reason: has missing support layers
+- Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Scientific Machine Learning.
+- Topic: topics/scientific-machine-learning.html
+- Evidence packet: evidence-packets/scientific-machine-learning.html
+
+### P2 Attention For Scientific Fields
+- Reviewed source anchors: 2
+- Broad transcript mentions: 4
+- Missing layers: none
+- Reason: ready for hand polish
+- Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Attention For Scientific Fields.
+- Topic: topics/attention-for-scientific-fields.html
+- Evidence packet: evidence-packets/attention-for-scientific-fields.html
 
 ### P2 Foundation Models For PDEs
 - Reviewed source anchors: 2

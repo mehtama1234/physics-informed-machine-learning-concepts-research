@@ -217,5 +217,170 @@
       }
     ],
     "checkpoint": "You can explain why a short formula still needs a changed-experiment test."
+  },
+  {
+    "slug": "examples-before-rules",
+    "title": "Learn From Examples Without Forgetting The Boundary",
+    "question": "What can examples teach, and what can they not teach?",
+    "why_first": "Deep learning is useful when examples carry repeated structure, but the examples also set the edge of the evidence.",
+    "plain_goal": "Understand a learned predictor as an adjustable rule whose authority comes from checked examples and changed-case tests.",
+    "first_principles_spine": [
+      "World: many past cases have known inputs and answers.",
+      "Evidence: the repeated input-answer pairs show patterns the model can copy.",
+      "Missing piece: the answer for a new case is unknown.",
+      "Mathematical move: adjust a flexible rule until its answers match checked examples.",
+      "Reject it when: the new case changes the source, scale, boundary, or quantity that the examples did not cover."
+    ],
+    "read": [
+      {
+        "label": "Deep Learning",
+        "href": "topics/deep-learning.html"
+      },
+      {
+        "label": "Deep Learning Derivation",
+        "href": "derivations/deep-learning.html"
+      },
+      {
+        "label": "Data-Only Learning Flow",
+        "href": "diagrams/data-only-learning-flow.html"
+      },
+      {
+        "label": "Many Examples, No Rule",
+        "href": "decision-guide/many-examples-no-rule.html"
+      }
+    ],
+    "checkpoint": "You can say what the examples prove, what they leave unproved, and what changed case should be tested."
+  },
+  {
+    "slug": "many-valid-candidates",
+    "title": "Generate Many Valid Candidates",
+    "question": "When is one predicted answer too narrow?",
+    "why_first": "Some scientific jobs need a range of possible fields, designs, or futures instead of one average answer.",
+    "plain_goal": "Treat generative modeling as candidate-making under evidence and rule checks, not as a source of automatic truth.",
+    "first_principles_spine": [
+      "World: more than one answer may be possible under the known conditions.",
+      "Evidence: old examples show what valid candidates tend to look like.",
+      "Missing piece: the set of plausible new candidates is unknown.",
+      "Mathematical move: combine known conditions with controlled variation to make candidate examples.",
+      "Reject it when: samples look plausible but violate measurements, boundaries, equations, or the tested use family."
+    ],
+    "read": [
+      {
+        "label": "Generative Modeling",
+        "href": "topics/generative-modeling.html"
+      },
+      {
+        "label": "Generative Modeling Derivation",
+        "href": "derivations/generative-modeling.html"
+      },
+      {
+        "label": "Need Many Valid Possibilities",
+        "href": "decision-guide/need-many-valid-possibilities.html"
+      },
+      {
+        "label": "Trust And Failure",
+        "href": "learning-path/trust-and-failure.html"
+      }
+    ],
+    "checkpoint": "You can distinguish a plausible-looking generated candidate from a checked scientific candidate."
+  },
+  {
+    "slug": "connected-shapes",
+    "title": "Keep Connected Shapes Connected",
+    "question": "What changes when the data is a mesh, molecule, surface, or network?",
+    "why_first": "Some scientific objects are not flat tables. Their shape and connections are part of the evidence.",
+    "plain_goal": "See graph and geometric learning as a way to preserve the object being studied while information moves through it.",
+    "first_principles_spine": [
+      "World: the object is made of connected points, edges, surfaces, or regions.",
+      "Evidence: values live on that connected shape and the connections affect the answer.",
+      "Missing piece: the field, label, or property for a new connected object is unknown.",
+      "Mathematical move: pass information along the meaningful connections while preserving the shape.",
+      "Reject it when: changing point order, mesh resolution, rotation, or boundary regions breaks the claim."
+    ],
+    "read": [
+      {
+        "label": "Graphs And Geometric Learning",
+        "href": "topics/graphs-and-geometric-learning.html"
+      },
+      {
+        "label": "Graphs And Geometric Learning Derivation",
+        "href": "derivations/graphs-and-geometric-learning.html"
+      },
+      {
+        "label": "Mesh Field On Irregular Geometry",
+        "href": "worked-examples/mesh-field-on-irregular-geometry.html"
+      },
+      {
+        "label": "Connected Object Matters",
+        "href": "decision-guide/connected-object-matters.html"
+      }
+    ],
+    "checkpoint": "You can explain why the connections are evidence, not decoration."
+  },
+  {
+    "slug": "training-as-contract",
+    "title": "Read Training As A Contract",
+    "question": "What is the model actually being rewarded for?",
+    "why_first": "A model follows the score it is trained on. If that score omits the scientific burden, training can improve the wrong thing.",
+    "plain_goal": "Understand optimization as repeatedly changing a model to reduce a written error score, then checking whether that score matches the scientific job.",
+    "first_principles_spine": [
+      "World: the model has adjustable parts.",
+      "Evidence: a score says which answers count as better or worse.",
+      "Missing piece: the adjusted model that performs the needed job is unknown.",
+      "Mathematical move: update the adjustable parts to reduce the score.",
+      "Reject it when: the score goes down while the boundary, equation, rare case, or decision quantity fails."
+    ],
+    "read": [
+      {
+        "label": "Optimization For Learning",
+        "href": "topics/optimization-for-learning.html"
+      },
+      {
+        "label": "Optimization For Learning Derivation",
+        "href": "derivations/optimization-for-learning.html"
+      },
+      {
+        "label": "Training Score Burden",
+        "href": "decision-guide/training-score-burden.html"
+      },
+      {
+        "label": "Physics-Informed Neural Networks",
+        "href": "topics/physics-informed-neural-networks.html"
+      }
+    ],
+    "checkpoint": "You can name the score, the adjustable parts, and the scientific check the score might miss."
+  },
+  {
+    "slug": "far-field-information",
+    "title": "Ask Which Far-Away Information Matters",
+    "question": "When can a local prediction depend on distant parts of the field?",
+    "why_first": "Scientific fields can have long-range influence through boundaries, waves, pressure, coherent structures, or global constraints.",
+    "plain_goal": "Use attention as a way to select relevant field parts, while keeping physical validation separate from visual explanation.",
+    "first_principles_spine": [
+      "World: a field part may depend on nearby and far-away information.",
+      "Evidence: field examples show which parts tend to affect each other.",
+      "Missing piece: the relevant information for a new point, patch, or region is unknown.",
+      "Mathematical move: compare field parts, weight the ones judged useful, and update the prediction.",
+      "Reject it when: the selected relations fail under changed boundaries, resolution, conservation checks, or physical stress tests."
+    ],
+    "read": [
+      {
+        "label": "Attention For Scientific Fields",
+        "href": "topics/attention-for-scientific-fields.html"
+      },
+      {
+        "label": "Attention For Scientific Fields Derivation",
+        "href": "derivations/attention-for-scientific-fields.html"
+      },
+      {
+        "label": "Operator Learning Flow",
+        "href": "diagrams/operator-learning-flow.html"
+      },
+      {
+        "label": "Far Field Information Matters",
+        "href": "decision-guide/far-field-information-matters.html"
+      }
+    ],
+    "checkpoint": "You can explain the difference between useful long-range information and an unvalidated attention picture."
   }
 ]
