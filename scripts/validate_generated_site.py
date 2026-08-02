@@ -118,7 +118,7 @@ def check_required_sections() -> list[str]:
         "site/reader-checks.html": ("Reader Checks",),
         "site/review-entrypoints.html": ("Review Entrypoints", "End-To-End Test"),
         "site/review-search.html": ("Find Pages By Question", "Review Rule"),
-        "site/review-queue.html": ("Review Queue", "Reviewed Anchors", "Broad Mentions", "Missing Layers", "Next Action", "P0"),
+        "site/review-queue.html": ("Review Queue", "Reviewed Anchors", "Broad Mentions", "Missing Layers", "Next Action", "P1"),
         "site/editorial-roadmap.html": ("Editorial Roadmap", "Status:", "Current Evidence", "Acceptance Check", "locally completed", "Meaty End-To-End Goal"),
         "site/completion-audit.html": ("Completion Audit", "Requirement Evidence", "locally verified"),
         "site/meaty-goal.html": ("Meaty End-To-End Goal", "Done Means", "Every Core Page Must Contain", "Acceptance Sentence", "Not Done If"),

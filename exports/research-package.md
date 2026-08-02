@@ -34,7 +34,8 @@
 - completion_requirement_count: 7
 - review_search_intent_count: 7
 - review_queue_count: 14
-- review_queue_p0_count: 8
+- review_queue_p0_count: 0
+- review_queue_p1_count: 8
 - editorial_roadmap_count: 7
 - editorial_roadmap_completed_count: 7
 - source_anchor_count: 28
@@ -1026,74 +1027,74 @@
 
 
 ## Review Queue
-### P0 Deep Learning
-- Reviewed source anchors: 0
-- Broad transcript mentions: 6
+### P1 Deep Learning
+- Reviewed source anchors: 2
+- Broad transcript mentions: 4
 - Missing layers: deep dive, learning path, glossary, domain guide, decision guide
-- Reason: needs reviewed source anchors
+- Reason: has missing support layers
 - Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Deep Learning.
 - Topic: topics/deep-learning.html
 - Evidence packet: evidence-packets/deep-learning.html
 
-### P0 Generative Modeling
-- Reviewed source anchors: 0
-- Broad transcript mentions: 6
+### P1 Generative Modeling
+- Reviewed source anchors: 2
+- Broad transcript mentions: 4
 - Missing layers: deep dive, diagram, learning path, glossary, decision guide
-- Reason: needs reviewed source anchors
+- Reason: has missing support layers
 - Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Generative Modeling.
 - Topic: topics/generative-modeling.html
 - Evidence packet: evidence-packets/generative-modeling.html
 
-### P0 Graphs And Geometric Learning
-- Reviewed source anchors: 0
-- Broad transcript mentions: 6
+### P1 Graphs And Geometric Learning
+- Reviewed source anchors: 2
+- Broad transcript mentions: 4
 - Missing layers: deep dive, diagram, learning path, glossary, decision guide
-- Reason: needs reviewed source anchors
+- Reason: has missing support layers
 - Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Graphs And Geometric Learning.
 - Topic: topics/graphs-and-geometric-learning.html
 - Evidence packet: evidence-packets/graphs-and-geometric-learning.html
 
-### P0 Optimization For Learning
-- Reviewed source anchors: 0
-- Broad transcript mentions: 6
+### P1 Optimization For Learning
+- Reviewed source anchors: 2
+- Broad transcript mentions: 4
 - Missing layers: deep dive, diagram, learning path, domain guide, decision guide
-- Reason: needs reviewed source anchors
+- Reason: has missing support layers
 - Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Optimization For Learning.
 - Topic: topics/optimization-for-learning.html
 - Evidence packet: evidence-packets/optimization-for-learning.html
 
-### P0 Attention For Scientific Fields
-- Reviewed source anchors: 0
-- Broad transcript mentions: 6
+### P1 Attention For Scientific Fields
+- Reviewed source anchors: 2
+- Broad transcript mentions: 4
 - Missing layers: deep dive, learning path, glossary, decision guide
-- Reason: needs reviewed source anchors
+- Reason: has missing support layers
 - Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Attention For Scientific Fields.
 - Topic: topics/attention-for-scientific-fields.html
 - Evidence packet: evidence-packets/attention-for-scientific-fields.html
 
-### P0 Scientific Machine Learning
-- Reviewed source anchors: 0
-- Broad transcript mentions: 6
+### P1 Scientific Machine Learning
+- Reviewed source anchors: 2
+- Broad transcript mentions: 4
 - Missing layers: deep dive, glossary, domain guide, decision guide
-- Reason: needs reviewed source anchors
+- Reason: has missing support layers
 - Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Scientific Machine Learning.
 - Topic: topics/scientific-machine-learning.html
 - Evidence packet: evidence-packets/scientific-machine-learning.html
 
-### P0 Neural Differential Equations
-- Reviewed source anchors: 0
-- Broad transcript mentions: 6
+### P1 Neural Differential Equations
+- Reviewed source anchors: 2
+- Broad transcript mentions: 4
 - Missing layers: domain guide
-- Reason: needs reviewed source anchors
+- Reason: has missing support layers
 - Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Neural Differential Equations.
 - Topic: topics/neural-differential-equations.html
 - Evidence packet: evidence-packets/neural-differential-equations.html
 
-### P0 Partial Differential Equations
-- Reviewed source anchors: 0
-- Broad transcript mentions: 6
+### P1 Partial Differential Equations
+- Reviewed source anchors: 2
+- Broad transcript mentions: 4
 - Missing layers: decision guide
-- Reason: needs reviewed source anchors
+- Reason: has missing support layers
 - Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Partial Differential Equations.
 - Topic: topics/partial-differential-equations.html
 - Evidence packet: evidence-packets/partial-differential-equations.html
@@ -1324,8 +1325,8 @@
 - Problem: scientists often have examples of behavior but no short rule that predicts the next case
 - Domain: scientific prediction from large measured or simulated data sets
 - Evidence anchors: 6
-- Reviewed source anchors: 0
-- Broad transcript mentions: 6
+- Reviewed source anchors: 2
+- Broad transcript mentions: 4
 - Stronger proof needed: To trust the method, add evidence from a changed-case test in scientific prediction from large measured or simulated data sets, not only a lecture mention.
 - Packet: evidence-packets/deep-learning.html
 
@@ -1342,8 +1343,8 @@
 - Problem: a quantity changes over space and time, so one number is not enough to describe the situation
 - Domain: fluids, heat, waves, mechanics, chemistry, climate, and other changing fields
 - Evidence anchors: 6
-- Reviewed source anchors: 0
-- Broad transcript mentions: 6
+- Reviewed source anchors: 2
+- Broad transcript mentions: 4
 - Stronger proof needed: To trust the method, add evidence from a changed-case test in fluids, heat, waves, mechanics, chemistry, climate, and other changing fields, not only a lecture mention.
 - Packet: evidence-packets/partial-differential-equations.html
 
@@ -1360,8 +1361,8 @@
 - Problem: scientific work needs predictions that respect measurements, equations, uncertainty, and domain limits at the same time
 - Domain: using data-driven models inside scientific workflows
 - Evidence anchors: 6
-- Reviewed source anchors: 0
-- Broad transcript mentions: 6
+- Reviewed source anchors: 2
+- Broad transcript mentions: 4
 - Stronger proof needed: To trust the method, add evidence from a changed-case test in using data-driven models inside scientific workflows, not only a lecture mention.
 - Packet: evidence-packets/scientific-machine-learning.html
 
@@ -1387,8 +1388,8 @@
 - Problem: learning needs a way to decide which model settings are better or worse
 - Domain: turning model fitting into a repeatable computation
 - Evidence anchors: 6
-- Reviewed source anchors: 0
-- Broad transcript mentions: 6
+- Reviewed source anchors: 2
+- Broad transcript mentions: 4
 - Stronger proof needed: To trust the method, add evidence from a changed-case test in turning model fitting into a repeatable computation, not only a lecture mention.
 - Packet: evidence-packets/optimization-for-learning.html
 
@@ -1396,8 +1397,8 @@
 - Problem: some tasks need many possible examples, not one predicted answer
 - Domain: creating plausible scientific samples, fields, or candidate designs
 - Evidence anchors: 6
-- Reviewed source anchors: 0
-- Broad transcript mentions: 6
+- Reviewed source anchors: 2
+- Broad transcript mentions: 4
 - Stronger proof needed: To trust the method, add evidence from a changed-case test in creating plausible scientific samples, fields, or candidate designs, not only a lecture mention.
 - Packet: evidence-packets/generative-modeling.html
 
@@ -1405,8 +1406,8 @@
 - Problem: many scientific objects are not simple rows of numbers; their connections matter
 - Domain: systems made of interacting parts, meshes, molecules, or spatial relations
 - Evidence anchors: 6
-- Reviewed source anchors: 0
-- Broad transcript mentions: 6
+- Reviewed source anchors: 2
+- Broad transcript mentions: 4
 - Stronger proof needed: To trust the method, add evidence from a changed-case test in systems made of interacting parts, meshes, molecules, or spatial relations, not only a lecture mention.
 - Packet: evidence-packets/graphs-and-geometric-learning.html
 
@@ -1414,8 +1415,8 @@
 - Problem: scientists may know that a system changes continuously but not know the exact rule for that change
 - Domain: changing systems where time evolution is part of the model
 - Evidence anchors: 6
-- Reviewed source anchors: 0
-- Broad transcript mentions: 6
+- Reviewed source anchors: 2
+- Broad transcript mentions: 4
 - Stronger proof needed: To trust the method, add evidence from a changed-case test in changing systems where time evolution is part of the model, not only a lecture mention.
 - Packet: evidence-packets/neural-differential-equations.html
 
@@ -1441,13 +1442,27 @@
 - Problem: a local patch of a field may depend on faraway information, but looking everywhere can be expensive
 - Domain: large scientific fields where distant parts may interact
 - Evidence anchors: 6
-- Reviewed source anchors: 0
-- Broad transcript mentions: 6
+- Reviewed source anchors: 2
+- Broad transcript mentions: 4
 - Stronger proof needed: To trust the method, add evidence from a changed-case test in large scientific fields where distant parts may interact, not only a lecture mention.
 - Packet: evidence-packets/attention-for-scientific-fields.html
 
 
 ## Selected Source Anchors
+
+### Deep Learning
+- Source: ETH Zurich AISE 2025: Lecture 2 Introduction to Deep Learning
+- Page: videos/eth-aise-2025-002-eth-zrich-aise-2025-lecture-2-introduction-to-deep-learning.html
+- Claim anchored: Deep learning is the course foundation for fitting flexible models from examples before adding scientific constraints.
+- Why this source: This is the 2025 introduction to deep learning in the local transcript set.
+- Limit: The source anchors the basic model-fitting foundation; it does not prove a fitted model carries the scientific quantity needed in a new domain.
+
+- Source: ETH Zurich AISE 2024: Introduction to Deep Learning Part 1
+- Page: videos/eth-aise-2024-002-eth-zrich-aise-introduction-to-deep-learning-part-1.html
+- Claim anchored: The 2024 deep-learning introduction anchors the shared vocabulary used before PINNs, operators, surrogates, and generative models.
+- Why this source: This lecture starts the 2024 deep-learning block that later methods build on.
+- Limit: The source supports the prerequisite role of deep learning; every later scientific claim still needs its own domain and changed-case test.
+
 
 ### Physics Informed Neural Networks
 - Source: ETH Zurich AISE 2025: Lecture 3 Physics-Informed Neural Networks Introduction
@@ -1461,6 +1476,20 @@
 - Claim anchored: PINNs need theory and failure checks because satisfying a written training score is not the same as proving the field is right everywhere.
 - Why this source: This lecture is the 2025 theory follow-up for PINNs.
 - Limit: The source anchors the need for theoretical care; the page still needs task-specific validation for any scientific claim.
+
+
+### Partial Differential Equations
+- Source: ETH Zurich AISE 2024: Importance of PDEs in Science
+- Page: videos/eth-aise-2024-004-eth-zrich-aise-importance-of-pdes-in-science.html
+- Claim anchored: PDEs are the field language for quantities that change across space and time.
+- Why this source: This lecture is the local source focused on why PDEs matter in scientific settings.
+- Limit: The source anchors why PDEs matter; it does not solve any particular PDE or validate a learned approximation.
+
+- Source: ETH Zurich AISE 2025: Lecture 3 Physics-Informed Neural Networks Introduction
+- Page: videos/eth-aise-2025-003-eth-zrich-aise-2025-lecture-3-physics-informed-neural-networks-introduction.html
+- Claim anchored: PINN lectures depend on PDE residuals because the equation is used as a check on the learned field.
+- Why this source: This lecture places differential equations inside the physics-informed learning route.
+- Limit: The source supports PDEs as a constraint source; it does not prove the equation is complete for every experiment.
 
 
 ### Operator Learning
@@ -1477,6 +1506,20 @@
 - Limit: The source anchors the method family; reliability still depends on the training range, resolution, geometry, and target quantity.
 
 
+### Scientific Machine Learning
+- Source: ETH Zurich AISE 2025: Lecture 1 Course Introduction
+- Page: videos/eth-aise-2025-001-eth-zrich-aise-2025-lecture-1-course-introduction.html
+- Claim anchored: Scientific machine learning combines learned models with scientific quantities, equations, and validation checks.
+- Why this source: This lecture introduces the 2025 course scope: AI in science and engineering.
+- Limit: The source anchors the course-level field framing; it does not prove any one method works for a specific scientific job.
+
+- Source: ETH Zurich AISE 2024: Course Introduction
+- Page: videos/eth-aise-2024-001-eth-zrich-aise-course-introduction.html
+- Claim anchored: The 2024 course introduction anchors the broad route from AI methods to science and engineering applications.
+- Why this source: This is the 2024 starting point for the local playlist family.
+- Limit: The source supports the field-level map; task-level claims still need evidence, domain limits, and changed-case tests.
+
+
 ### Surrogate Modeling
 - Source: ETH Zurich AISE 2024: Introduction to Hybrid Workflows Part 1
 - Page: videos/eth-aise-2024-019-eth-zrich-aise-introduction-to-hybrid-workflows-part-1.html
@@ -1489,6 +1532,76 @@
 - Claim anchored: A learned stand-in remains tied to the trusted source and must be checked where it will be used.
 - Why this source: This lecture continues the hybrid-workflow treatment in the local transcript set.
 - Limit: The source supports the review route; task-level error checks are still needed before using any stand-in for a decision.
+
+
+### Optimization For Learning
+- Source: ETH Zurich AISE 2024: Introduction to Deep Learning Part 2
+- Page: videos/eth-aise-2024-003-eth-zrich-aise-introduction-to-deep-learning-part-2.html
+- Claim anchored: Optimization is the mechanism that turns a written training objective into model settings.
+- Why this source: This lecture continues the deep-learning setup where training and fitting are introduced.
+- Limit: The source anchors optimization as training machinery; it does not prove the optimized score matches the scientific decision.
+
+- Source: ETH Zurich AISE 2025: Lecture 3 Physics-Informed Neural Networks Introduction
+- Page: videos/eth-aise-2025-003-eth-zrich-aise-2025-lecture-3-physics-informed-neural-networks-introduction.html
+- Claim anchored: PINNs make the optimization burden visible because data, equation, and boundary errors are trained together.
+- Why this source: This lecture anchors an example where the loss contains multiple scientific burdens.
+- Limit: The source supports the need to inspect loss terms; it does not guarantee that optimizing those terms finds the right physical field.
+
+
+### Generative Modeling
+- Source: ETH Zurich AISE 2025: Lecture 11 Generative Models for PDEs GenCFD
+- Page: videos/eth-aise-2025-011-eth-zrich-aise-2025-lecture-11-generative-models-for-pdes-gencfd.html
+- Claim anchored: Generative models for PDEs are used when the task needs possible scientific fields, not only one predicted field.
+- Why this source: This is the 2025 lecture dedicated to generative models for PDEs in the local source set.
+- Limit: The source anchors the generative-model topic; generated fields still need conservation, constraint, and downstream-use checks.
+
+- Source: ETH Zurich AISE 2024: Introduction to Diffusion Models
+- Page: videos/eth-aise-2024-022-eth-zrich-aise-introduction-to-diffusion-models.html
+- Claim anchored: Diffusion models are a neighboring generative route for creating samples rather than a single deterministic answer.
+- Why this source: This lecture provides the 2024 generative-model background in the local transcript set.
+- Limit: The source supports the generative route; it does not prove samples are valid scientific objects without domain checks.
+
+
+### Graphs And Geometric Learning
+- Source: ETH Zurich AISE 2025: Lecture 9 Operator Learning Graph-based Models
+- Page: videos/eth-aise-2025-009-eth-zrich-aise-2025-lecture-9-operator-learning-graph-based-models.html
+- Claim anchored: Graph-based operator models keep connections visible when scientific data live on meshes, graphs, or irregular geometry.
+- Why this source: This lecture is the 2025 graph-based operator-learning treatment.
+- Limit: The source anchors graph-based modeling; it does not prove the chosen graph contains every interaction that matters.
+
+- Source: ETH Zurich AISE 2025: Lecture 13 AI in Chemistry Biology Part 1
+- Page: videos/eth-aise-2025-013-eth-zrich-aise-2025-lecture-13-ai-in-chemistry-biology-part-1.html
+- Claim anchored: Applications in chemistry and biology motivate graph and geometric representations because molecules and biological objects have structure.
+- Why this source: This lecture anchors structured scientific objects in chemistry and biology applications.
+- Limit: The source supports the domain motivation; property prediction still needs changed-molecule and held-out-family checks.
+
+
+### Neural Differential Equations
+- Source: ETH Zurich AISE 2024: Neural Differential Equations
+- Page: videos/eth-aise-2024-021-eth-zrich-aise-neural-differential-equations.html
+- Claim anchored: Neural differential equations learn or include a change rule inside a time-evolution calculation.
+- Why this source: This is the local lecture dedicated to neural differential equations.
+- Limit: The source anchors the concept; long-time behavior and changed initial conditions still need separate validation.
+
+- Source: ETH Zurich AISE 2024: Symbolic Regression and Model Discovery
+- Page: videos/eth-aise-2024-024-eth-zrich-aise-symbolic-regression-and-model-discovery.html
+- Claim anchored: Model discovery and symbolic regression are neighboring ideas when the goal is to recover a readable or testable change rule.
+- Why this source: This lecture anchors the related model-discovery route.
+- Limit: The source supports the connection; it does not prove a learned differential equation is stable or physically complete.
+
+
+### Attention For Scientific Fields
+- Source: ETH Zurich AISE 2024: Attention as a Neural Operator
+- Page: videos/eth-aise-2024-017-eth-zrich-aise-attention-as-a-neural-operator.html
+- Claim anchored: Attention is treated as a neural-operator route for moving information across scientific fields.
+- Why this source: This lecture directly connects attention to neural operators in the 2024 source set.
+- Limit: The source anchors the attention-as-operator idea; the chosen attention pattern still needs checks for missed long-range effects.
+
+- Source: ETH Zurich AISE 2024: Windowed Attention and Scaling Laws
+- Page: videos/eth-aise-2024-018-eth-zrich-aise-windowed-attention-and-scaling-laws.html
+- Claim anchored: Windowed attention and scaling choices matter because field models must decide which distant information is worth carrying.
+- Why this source: This lecture follows the attention-as-operator treatment and focuses on windowing and scaling.
+- Limit: The source supports the design pressure; it does not prove a specific window or attention pattern preserves the scientific quantity.
 
 
 ### Uncertainty And Generalization
