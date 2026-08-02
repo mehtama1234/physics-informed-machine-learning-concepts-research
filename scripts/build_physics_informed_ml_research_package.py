@@ -3326,6 +3326,7 @@ MEATY_GOAL_REQUIREMENTS = [
     {"key": "no_jargon_translation", "label": "No-Jargon Translation", "proof_term": "No-Jargon Translation For This Topic"},
     {"key": "plain_retell_drill", "label": "Plain Retell Drill", "proof_term": "Plain Retell Drill"},
     {"key": "field_transfer_check", "label": "Field Transfer Check", "proof_term": "Field Transfer Check In Plain Words"},
+    {"key": "wrong_path_repair", "label": "Wrong Path Repair", "proof_term": "Wrong Path To Right Path Repair"},
     {"key": "field_mini_cases", "label": "Field Mini Cases", "proof_term": "Field Mini Cases In Plain Words"},
     {"key": "hand_teaching_note", "label": "Hand Teaching Note", "proof_term": "Hand Teaching Note"},
     {"key": "case_walkthrough", "label": "Case Walkthrough", "proof_term": "One Concrete Case From Start To Finish"},
@@ -7258,6 +7259,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     no_jargon_translation = topic_no_jargon_translation_html(topic, derivation)
     plain_retell_drill = topic_plain_retell_drill_html(topic, derivation)
     field_transfer_check = topic_field_transfer_check_html(topic, derivation)
+    wrong_path_repair = topic_wrong_path_repair_html(topic, derivation)
     plain_question_answer_script = topic_plain_question_answer_script_html(topic, derivation)
     know_still_test = topic_know_still_test_html(topic, derivation)
     failure_consequence = topic_failure_consequence_html(topic, derivation)
@@ -7304,6 +7306,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
 {no_jargon_translation}
 {plain_retell_drill}
 {field_transfer_check}
+{wrong_path_repair}
 {plain_question_answer_script}
 {know_still_test}
 {failure_consequence}
@@ -8046,6 +8049,30 @@ def topic_field_transfer_check_html(topic: dict[str, object], derivation: dict[s
 <p>The same chain across fields is: start from {html.escape(str(derivation['observed']))}, seek {html.escape(str(derivation['hidden']))}, make this move: {html.escape(str(derivation['move']))}, and reject or narrow the claim with {html.escape(str(derivation['test']))}.</p>
 <h3>Transfer Pass Test</h3>
 <p>A field transfer passes only if the learner can change the field while keeping the evidence, hidden answer, mathematical move, and rejection test visible in everyday words.</p>
+"""
+
+
+def topic_wrong_path_repair_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
+    title = str(topic["title"])
+    wrong = topic_wrong_use(topic)
+    return f"""
+<h2>Wrong Path To Right Path Repair</h2>
+<p>This repair starts with the answer a hurried learner might give, then rebuilds the explanation from the evidence and the missing answer. The goal is to catch the exact step where the claim became too wide.</p>
+<table>
+  <tbody>
+    <tr><th>Tempting Wrong Path</th><td>{html.escape(wrong['mistake'])}</td></tr>
+    <tr><th>Why A Learner Might Say It</th><td>{html.escape(wrong['why_tempting'])}</td></tr>
+    <tr><th>Missing First-Principles Piece</th><td>The answer skipped the link from {html.escape(str(derivation['observed']))} to {html.escape(str(derivation['hidden']))}.</td></tr>
+    <tr><th>Repair Step One</th><td>Start by saying what is visible: {html.escape(str(derivation['observed']))}.</td></tr>
+    <tr><th>Repair Step Two</th><td>Name what is still missing: {html.escape(str(derivation['hidden']))}.</td></tr>
+    <tr><th>Repair Step Three</th><td>Use {html.escape(title)} only for this move: {html.escape(str(derivation['move']))}.</td></tr>
+    <tr><th>Repaired Plain Claim</th><td>{html.escape(str(derivation['meaning']))}</td></tr>
+    <tr><th>Check That Proves The Repair</th><td>{html.escape(wrong['catch_test'])}</td></tr>
+    <tr><th>What Breaks If You Do Not Repair It</th><td>{html.escape(wrong['what_breaks'])}</td></tr>
+  </tbody>
+</table>
+<h3>Repair Pass Test</h3>
+<p>The repair passes only if the learner can point to the skipped evidence, name the hidden answer, restate the allowed move, and give the changed case that would catch the wrong path.</p>
 """
 
 
@@ -10355,6 +10382,16 @@ def validate(data: dict[str, object] | None = None) -> None:
             "Changed Case That Travels",
             "Same Chain Across Fields",
             "Transfer Pass Test",
+            "Wrong Path To Right Path Repair",
+            "Tempting Wrong Path",
+            "Why A Learner Might Say It",
+            "Missing First-Principles Piece",
+            "Repair Step One",
+            "Repair Step Two",
+            "Repair Step Three",
+            "Repaired Plain Claim",
+            "Check That Proves The Repair",
+            "Repair Pass Test",
             "Plain Question To Answer Script",
             "Real question",
             "Evidence sentence",
