@@ -2267,6 +2267,7 @@
 - `git remote -v`
 - `git rev-parse main`
 - `git ls-remote --heads origin main`
+- `python3 scripts/verify_remote_state.py`
 - `git push -u origin main`
 
 ## Review Entrypoints

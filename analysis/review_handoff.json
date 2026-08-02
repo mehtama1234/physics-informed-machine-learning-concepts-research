@@ -87,7 +87,9 @@
   ],
   "validation_commands": [
     "python3 -m py_compile scripts/build_physics_informed_ml_research_package.py",
+    "python3 -m py_compile scripts/verify_remote_state.py",
     "python3 scripts/build_physics_informed_ml_research_package.py --build --validate",
+    "python3 scripts/verify_remote_state.py",
     "run the wording scan for restricted filler terms listed in the editorial quality rubric"
   ],
   "remaining_editorial_work": [
@@ -101,6 +103,7 @@
     "git remote -v",
     "git rev-parse main",
     "git ls-remote --heads origin main",
+    "python3 scripts/verify_remote_state.py",
     "git push -u origin main"
   ],
   "remote_status": "Configured origin is https://github.com/mehtama1234/physics-informed-machine-learning-concepts-research.git. The repository exists, main is pushed, and origin/main should match local main after each final push.",

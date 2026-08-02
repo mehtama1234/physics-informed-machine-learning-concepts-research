@@ -2291,7 +2291,9 @@ REVIEW_HANDOFF = {
     ],
     "validation_commands": [
         "python3 -m py_compile scripts/build_physics_informed_ml_research_package.py",
+        "python3 -m py_compile scripts/verify_remote_state.py",
         "python3 scripts/build_physics_informed_ml_research_package.py --build --validate",
+        "python3 scripts/verify_remote_state.py",
         "run the wording scan for restricted filler terms listed in the editorial quality rubric",
     ],
     "remaining_editorial_work": [
@@ -2305,6 +2307,7 @@ REVIEW_HANDOFF = {
         "git remote -v",
         "git rev-parse main",
         "git ls-remote --heads origin main",
+        "python3 scripts/verify_remote_state.py",
         "git push -u origin main",
     ],
     "remote_status": "Configured origin is https://github.com/mehtama1234/physics-informed-machine-learning-concepts-research.git. The repository exists, main is pushed, and origin/main should match local main after each final push.",
@@ -7399,7 +7402,7 @@ def validate(data: dict[str, object] | None = None) -> None:
                 raise SystemExit(f"meaty goal coverage link missing: {row.get('title')} -> {row[href_field]}")
     handoff_path = SITE / "handoff.html"
     handoff_text = handoff_path.read_text(encoding="utf-8")
-    if "Review Now" not in handoff_text or "http://127.0.0.1:8022/hand-polish.html" not in handoff_text or "Start Here" not in handoff_text or "Remaining Editorial Work" not in handoff_text or "Remote Verification Commands" not in handoff_text:
+    if "Review Now" not in handoff_text or "http://127.0.0.1:8022/hand-polish.html" not in handoff_text or "python3 scripts/verify_remote_state.py" not in handoff_text or "Start Here" not in handoff_text or "Remaining Editorial Work" not in handoff_text or "Remote Verification Commands" not in handoff_text:
         raise SystemExit("handoff page not rendered correctly")
     for command in REVIEW_HANDOFF["remote_finish_commands"]:
         if command not in handoff_text:
