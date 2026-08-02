@@ -2348,6 +2348,8 @@ QUALITY_RUBRIC = [
         "strong_page": "A reader can say what exists in the world, what is measured, what is missing, and why the method is needed.",
         "weak_page": "The page starts by naming a method and assumes the reader already knows why it matters.",
         "check": "Look for sections that name the common problem, domain, observed quantity, hidden quantity, and changed-case test.",
+        "forbidden_shortcut": "Do not open with a method name as if the problem is already obvious.",
+        "replacement_test": "The first paragraph must let a reader fill in: the world has ___, we observe ___, we need ___, so the method must carry ___.",
     },
     {
         "slug": "plain-language",
@@ -2356,6 +2358,8 @@ QUALITY_RUBRIC = [
         "strong_page": "Terms such as field, residual, operator, loss, and generalization are tied to concrete jobs.",
         "weak_page": "The page uses method names, benchmark language, or vague praise instead of explaining the idea.",
         "check": "Look for glossary links, everyday anchors, concrete domain stories, and plain formulas.",
+        "forbidden_shortcut": "Do not use restricted praise words from the wording scan as a substitute for explanation.",
+        "replacement_test": "Replace each praise word with the quantity it helps carry, the evidence it uses, and the failure case it still cannot rule out.",
     },
     {
         "slug": "domain-grounding",
@@ -2364,6 +2368,8 @@ QUALITY_RUBRIC = [
         "strong_page": "The domain, real quantity, and domain-specific failure test are visible.",
         "weak_page": "The page describes a general model but never says what scientific object or quantity it serves.",
         "check": "Look for domain guide links, worked examples, and concrete anchor pages.",
+        "forbidden_shortcut": "Do not say a method is useful in science without naming the scientific quantity and the decision that uses it.",
+        "replacement_test": "The page must name the domain object, the measured evidence, the hidden quantity, and the changed domain case that would reject the claim.",
     },
     {
         "slug": "failure-boundary",
@@ -2372,6 +2378,8 @@ QUALITY_RUBRIC = [
         "strong_page": "A reader sees the use range, red flags, and first failure test.",
         "weak_page": "The page says the method works without stating where it breaks.",
         "check": "Look for failure boundary, red flags, reader checks, and decision guide evidence requirements.",
+        "forbidden_shortcut": "Do not end with confidence, accuracy, or usefulness without a rejection test.",
+        "replacement_test": "The page must say: trust this only inside ___, and reject it first when ___ changes.",
     },
     {
         "slug": "evidence-discipline",
@@ -2380,6 +2388,8 @@ QUALITY_RUBRIC = [
         "strong_page": "Transcript evidence is shown as support that a concept appears, while validation claims require explicit tests.",
         "weak_page": "The page treats a lecture mention as proof that a method works broadly.",
         "check": "Look for transcript evidence, support type, and explicit evidence limits.",
+        "forbidden_shortcut": "Do not treat a source mention as proof that a method works on a new scientific case.",
+        "replacement_test": "Every source-backed claim must state what the transcript supports and what experiment, solve, or changed case would still be needed.",
     },
     {
         "slug": "connected-map",
@@ -2388,6 +2398,8 @@ QUALITY_RUBRIC = [
         "strong_page": "A reader can move from the concept to a route, comparison, diagram, or decision case.",
         "weak_page": "The page is isolated and does not show how the idea fits into the field.",
         "check": "Look for concept links, families, comparisons, visual maps, and coverage matrix entries.",
+        "forbidden_shortcut": "Do not leave a concept as a standalone definition.",
+        "replacement_test": "The page must point to at least one prerequisite, one neighboring method choice, one example, and one check that could reject the claim.",
     },
 ]
 
@@ -6358,6 +6370,10 @@ def write_quality_page(path: Path, item: dict[str, object]) -> None:
 <p>{html.escape(str(item['weak_page']))}</p>
 <h2>Check</h2>
 <p>{html.escape(str(item['check']))}</p>
+<h2>Forbidden Shortcut</h2>
+<p>{html.escape(str(item['forbidden_shortcut']))}</p>
+<h2>Replacement Test</h2>
+<p>{html.escape(str(item['replacement_test']))}</p>
 """
     path.write_text(html_page(str(item["title"]), body, root_prefix="../"), encoding="utf-8")
 
@@ -7282,6 +7298,8 @@ def write_markdown_export(data: dict[str, object]) -> None:
                 f"- Strong page: {item['strong_page']}",
                 f"- Weak page: {item['weak_page']}",
                 f"- Check: {item['check']}",
+                f"- Forbidden shortcut: {item['forbidden_shortcut']}",
+                f"- Replacement test: {item['replacement_test']}",
                 "",
             ]
         )
@@ -7845,8 +7863,11 @@ def validate(data: dict[str, object] | None = None) -> None:
         if not item_path.exists():
             raise SystemExit(f"missing quality rubric page: {item['title']}")
         item_text = item_path.read_text(encoding="utf-8")
-        if "Strong Page" not in item_text or "Weak Page" not in item_text:
+        if "Strong Page" not in item_text or "Weak Page" not in item_text or "Forbidden Shortcut" not in item_text or "Replacement Test" not in item_text:
             raise SystemExit(f"quality rubric page not rendered correctly: {item['title']}")
+        for field in ("forbidden_shortcut", "replacement_test"):
+            if not item.get(field):
+                raise SystemExit(f"quality rubric missing {field}: {item['title']}")
     for item in SYNTHESIS_GUIDES:
         item_path = SITE / "synthesis" / f"{item['slug']}.html"
         if not item_path.exists():

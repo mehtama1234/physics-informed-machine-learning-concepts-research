@@ -2500,36 +2500,48 @@
 - Strong page: A reader can say what exists in the world, what is measured, what is missing, and why the method is needed.
 - Weak page: The page starts by naming a method and assumes the reader already knows why it matters.
 - Check: Look for sections that name the common problem, domain, observed quantity, hidden quantity, and changed-case test.
+- Forbidden shortcut: Do not open with a method name as if the problem is already obvious.
+- Replacement test: The first paragraph must let a reader fill in: the world has ___, we observe ___, we need ___, so the method must carry ___.
 
 ### Plain Language
 - Standard: The page translates technical terms into everyday meaning without hiding the mathematical idea.
 - Strong page: Terms such as field, residual, operator, loss, and generalization are tied to concrete jobs.
 - Weak page: The page uses method names, benchmark language, or vague praise instead of explaining the idea.
 - Check: Look for glossary links, everyday anchors, concrete domain stories, and plain formulas.
+- Forbidden shortcut: Do not use restricted praise words from the wording scan as a substitute for explanation.
+- Replacement test: Replace each praise word with the quantity it helps carry, the evidence it uses, and the failure case it still cannot rule out.
 
 ### Domain Grounding
 - Standard: The page says where the concept matters in science or engineering and what quantity is being predicted or explained.
 - Strong page: The domain, real quantity, and domain-specific failure test are visible.
 - Weak page: The page describes a general model but never says what scientific object or quantity it serves.
 - Check: Look for domain guide links, worked examples, and concrete anchor pages.
+- Forbidden shortcut: Do not say a method is useful in science without naming the scientific quantity and the decision that uses it.
+- Replacement test: The page must name the domain object, the measured evidence, the hidden quantity, and the changed domain case that would reject the claim.
 
 ### Failure Boundary
 - Standard: The page states what the concept does not prove and what changed case could reject the claim.
 - Strong page: A reader sees the use range, red flags, and first failure test.
 - Weak page: The page says the method works without stating where it breaks.
 - Check: Look for failure boundary, red flags, reader checks, and decision guide evidence requirements.
+- Forbidden shortcut: Do not end with confidence, accuracy, or usefulness without a rejection test.
+- Replacement test: The page must say: trust this only inside ___, and reject it first when ___ changes.
 
 ### Evidence Discipline
 - Standard: The page separates transcript support from scientific proof.
 - Strong page: Transcript evidence is shown as support that a concept appears, while validation claims require explicit tests.
 - Weak page: The page treats a lecture mention as proof that a method works broadly.
 - Check: Look for transcript evidence, support type, and explicit evidence limits.
+- Forbidden shortcut: Do not treat a source mention as proof that a method works on a new scientific case.
+- Replacement test: Every source-backed claim must state what the transcript supports and what experiment, solve, or changed case would still be needed.
 
 ### Connected Map
 - Standard: The page connects the concept to nearby concepts, families, diagrams, decisions, or checks.
 - Strong page: A reader can move from the concept to a route, comparison, diagram, or decision case.
 - Weak page: The page is isolated and does not show how the idea fits into the field.
 - Check: Look for concept links, families, comparisons, visual maps, and coverage matrix entries.
+- Forbidden shortcut: Do not leave a concept as a standalone definition.
+- Replacement test: The page must point to at least one prerequisite, one neighboring method choice, one example, and one check that could reject the claim.
 
 
 ## Field Synthesis
