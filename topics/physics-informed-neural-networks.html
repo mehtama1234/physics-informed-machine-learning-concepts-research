@@ -1154,6 +1154,66 @@
 </table>
 
 
+<h2>Reader Mistake Audit</h2>
+<p>This audit catches the mistakes a learner should find in their own explanation before accepting it.</p>
+<table>
+  <thead>
+    <tr><th>Mistake To Look For</th><th>What The Mistake Sounds Like</th><th>Plain Repair Required</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <th>Name-First Mistake</th>
+  <td>The answer starts with the topic name instead of the everyday problem.</td>
+  <td>measurements may be sparse, but the answer must still respect a known physical equation</td>
+</tr>
+
+<tr>
+  <th>Evidence Gap</th>
+  <td>The answer makes a claim before naming what can be seen or checked.</td>
+  <td>some measured values, boundary values, starting values, and a known differential equation</td>
+</tr>
+
+<tr>
+  <th>Missing-Answer Gap</th>
+  <td>The answer never says what is still unknown.</td>
+  <td>the full field value at every point in space and time</td>
+</tr>
+
+<tr>
+  <th>Move Gap</th>
+  <td>The answer says the result appears, but not what move carries evidence toward the missing answer.</td>
+  <td>fit a neural network while also measuring how badly its output violates the known equation</td>
+</tr>
+
+<tr>
+  <th>Shape Gap</th>
+  <td>The answer ignores the relation, boundary, field, graph, surface, or path that carries the claim.</td>
+  <td>Fit a field on a shape while also asking it to obey the rule that should hold inside the shape. Check: Move sensors, change the boundary, or bend the domain and compare the hidden field with trusted values.</td>
+</tr>
+
+<tr>
+  <th>Overclaim Gap</th>
+  <td>The answer sounds true for a wider set of cases than the evidence supports.</td>
+  <td>the equation penalty can look small while the solution is wrong in hard regions, sharp layers, or unseen boundary cases</td>
+</tr>
+
+<tr>
+  <th>Test Gap</th>
+  <td>The answer ends without a changed case that can reject it.</td>
+  <td>move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements</td>
+</tr>
+
+<tr>
+  <th>Likely Wrong Shortcut</th>
+  <td>Use a PINN because sensor data are sparse, even though the boundary values are uncertain and the equation is missing a heat source.</td>
+  <td>Change the boundary, add held-out sensors near the source region, and compare against a trusted solve.</td>
+</tr>
+</tbody>
+</table>
+<h3>Mistake Audit Pass Test</h3>
+<p>The audit passes only if the learner can find and repair name-first wording, missing evidence, missing hidden answer, skipped move, skipped shape issue, overclaim, and missing changed-case test.</p>
+
+
 <h2>Misread Repair Drill</h2>
 <p>This drill catches the common moment when a reader knows the topic name but not the claim. Repair the misunderstanding by replacing the label-first sentence with an evidence-first sentence.</p>
 <table>

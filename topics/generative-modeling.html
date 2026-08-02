@@ -1097,6 +1097,66 @@
 </table>
 
 
+<h2>Reader Mistake Audit</h2>
+<p>This audit catches the mistakes a learner should find in their own explanation before accepting it.</p>
+<table>
+  <thead>
+    <tr><th>Mistake To Look For</th><th>What The Mistake Sounds Like</th><th>Plain Repair Required</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <th>Name-First Mistake</th>
+  <td>The answer starts with the topic name instead of the everyday problem.</td>
+  <td>some tasks need many possible examples, not one predicted answer</td>
+</tr>
+
+<tr>
+  <th>Evidence Gap</th>
+  <td>The answer makes a claim before naming what can be seen or checked.</td>
+  <td>examples of fields, molecules, flows, shapes, or other scientific objects</td>
+</tr>
+
+<tr>
+  <th>Missing-Answer Gap</th>
+  <td>The answer never says what is still unknown.</td>
+  <td>the spread of possible valid objects beyond the examples</td>
+</tr>
+
+<tr>
+  <th>Move Gap</th>
+  <td>The answer says the result appears, but not what move carries evidence toward the missing answer.</td>
+  <td>learn how to sample new candidates that resemble the training family</td>
+</tr>
+
+<tr>
+  <th>Shape Gap</th>
+  <td>The answer ignores the relation, boundary, field, graph, surface, or path that carries the claim.</td>
+  <td>Create candidate shapes or fields while checking holes, connections, and boundaries. Check: Test connected parts, forbidden holes, mesh validity, and downstream use.</td>
+</tr>
+
+<tr>
+  <th>Overclaim Gap</th>
+  <td>The answer sounds true for a wider set of cases than the evidence supports.</td>
+  <td>generated samples can look realistic while breaking constraints, conservation, or rare-event behavior</td>
+</tr>
+
+<tr>
+  <th>Test Gap</th>
+  <td>The answer ends without a changed case that can reject it.</td>
+  <td>measure constraints, rare cases, conservation, and downstream task performance on generated samples</td>
+</tr>
+
+<tr>
+  <th>Likely Wrong Shortcut</th>
+  <td>Accept generated fields, molecules, or designs because they look like the training examples.</td>
+  <td>Check constraints, physical validity, rare-event behavior, and the downstream decision before keeping generated samples.</td>
+</tr>
+</tbody>
+</table>
+<h3>Mistake Audit Pass Test</h3>
+<p>The audit passes only if the learner can find and repair name-first wording, missing evidence, missing hidden answer, skipped move, skipped shape issue, overclaim, and missing changed-case test.</p>
+
+
 <h2>Misread Repair Drill</h2>
 <p>This drill catches the common moment when a reader knows the topic name but not the claim. Repair the misunderstanding by replacing the label-first sentence with an evidence-first sentence.</p>
 <table>

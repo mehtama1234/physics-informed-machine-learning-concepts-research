@@ -1099,6 +1099,66 @@
 </table>
 
 
+<h2>Reader Mistake Audit</h2>
+<p>This audit catches the mistakes a learner should find in their own explanation before accepting it.</p>
+<table>
+  <thead>
+    <tr><th>Mistake To Look For</th><th>What The Mistake Sounds Like</th><th>Plain Repair Required</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <th>Name-First Mistake</th>
+  <td>The answer starts with the topic name instead of the everyday problem.</td>
+  <td>learning needs a way to decide which model settings are better or worse</td>
+</tr>
+
+<tr>
+  <th>Evidence Gap</th>
+  <td>The answer makes a claim before naming what can be seen or checked.</td>
+  <td>a written score that says which model behavior is better or worse</td>
+</tr>
+
+<tr>
+  <th>Missing-Answer Gap</th>
+  <td>The answer never says what is still unknown.</td>
+  <td>whether that score matches the scientific behavior the user actually cares about</td>
+</tr>
+
+<tr>
+  <th>Move Gap</th>
+  <td>The answer says the result appears, but not what move carries evidence toward the missing answer.</td>
+  <td>change model settings to lower the written score</td>
+</tr>
+
+<tr>
+  <th>Shape Gap</th>
+  <td>The answer ignores the relation, boundary, field, graph, surface, or path that carries the claim.</td>
+  <td>Choose a score that rewards the right shape, connection, boundary, or field behavior. Check: Inspect whether the trained answer breaks after relabeling, mesh change, or boundary change.</td>
+</tr>
+
+<tr>
+  <th>Overclaim Gap</th>
+  <td>The answer sounds true for a wider set of cases than the evidence supports.</td>
+  <td>a model can optimize the written score while missing the scientific behavior the score failed to name</td>
+</tr>
+
+<tr>
+  <th>Test Gap</th>
+  <td>The answer ends without a changed case that can reject it.</td>
+  <td>inspect what the score ignores, then check whether the ignored behavior fails after training</td>
+</tr>
+
+<tr>
+  <th>Likely Wrong Shortcut</th>
+  <td>Optimize the written loss and assume the scientific goal improved with it.</td>
+  <td>List what the loss does not penalize, then test those ignored requirements after training.</td>
+</tr>
+</tbody>
+</table>
+<h3>Mistake Audit Pass Test</h3>
+<p>The audit passes only if the learner can find and repair name-first wording, missing evidence, missing hidden answer, skipped move, skipped shape issue, overclaim, and missing changed-case test.</p>
+
+
 <h2>Misread Repair Drill</h2>
 <p>This drill catches the common moment when a reader knows the topic name but not the claim. Repair the misunderstanding by replacing the label-first sentence with an evidence-first sentence.</p>
 <table>
