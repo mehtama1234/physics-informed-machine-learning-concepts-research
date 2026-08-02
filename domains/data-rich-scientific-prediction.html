@@ -69,6 +69,40 @@
 </table>
 <h2>Concepts That Matter</h2>
 <ul><li><a href="../topics/deep-learning.html">Deep Learning</a></li><li><a href="../topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></li><li><a href="../topics/surrogate-modeling.html">Surrogate Modeling</a></li></ul>
+
+<h2>What Each Concept Must Carry In This Domain</h2>
+<p>Each concept earns its place only if it carries part of the domain job. This table states the burden before the method name is allowed to matter.</p>
+<table>
+  <thead>
+    <tr><th>Concept</th><th>Domain Job It Handles</th><th>Evidence It Uses</th><th>What It Carries</th><th>Domain Failure</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <td><a href="../topics/deep-learning.html">Deep Learning</a></td>
+  <td>scientists often have examples of behavior but no short rule that predicts the next case</td>
+  <td>many input-output examples from experiments, simulations, or measurements</td>
+  <td>many adjustable weights that turn inputs into predictions</td>
+  <td>the model can fit familiar examples while failing on a new material, geometry, scale, or boundary condition. In this domain, reject it if this changed-case test fails: hold out a new source, scale, sensor condition, or rare case and check the quantity used for decisions.</td>
+</tr>
+
+<tr>
+  <td><a href="../topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></td>
+  <td>a prediction is not enough unless the user knows when it should be believed</td>
+  <td>training cases, validation cases, prediction errors, and known shifts between cases</td>
+  <td>error checks, changed-case tests, and limits on where the model was trained</td>
+  <td>training error can look good while the model fails under a new geometry, parameter range, sensor, or physical regime. In this domain, reject it if this changed-case test fails: hold out a new source, scale, sensor condition, or rare case and check the quantity used for decisions.</td>
+</tr>
+
+<tr>
+  <td><a href="../topics/surrogate-modeling.html">Surrogate Modeling</a></td>
+  <td>a trusted simulator may be too slow to run for every design, control, or uncertainty question</td>
+  <td>expensive solver inputs and outputs for a limited set of cases</td>
+  <td>the input-output behavior needed for a specified family of queries</td>
+  <td>speed can hide missing physics when the surrogate is used beyond the regime where it was checked. In this domain, reject it if this changed-case test fails: hold out a new source, scale, sensor condition, or rare case and check the quantity used for decisions.</td>
+</tr>
+</tbody>
+</table>
+
 <h2>How The Methods Enter</h2>
 <ul><li>Name what the examples can teach.</li><li>Train the predictor on checked input-answer pairs.</li><li>Use changed-case tests to define where the answer should be trusted.</li></ul>
 <h2>Failure Test</h2>

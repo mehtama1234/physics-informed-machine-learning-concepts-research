@@ -69,6 +69,48 @@
 </table>
 <h2>Concepts That Matter</h2>
 <ul><li><a href="../topics/partial-differential-equations.html">Partial Differential Equations</a></li><li><a href="../topics/surrogate-modeling.html">Surrogate Modeling</a></li><li><a href="../topics/graphs-and-geometric-learning.html">Graphs And Geometric Learning</a></li><li><a href="../topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></li></ul>
+
+<h2>What Each Concept Must Carry In This Domain</h2>
+<p>Each concept earns its place only if it carries part of the domain job. This table states the burden before the method name is allowed to matter.</p>
+<table>
+  <thead>
+    <tr><th>Concept</th><th>Domain Job It Handles</th><th>Evidence It Uses</th><th>What It Carries</th><th>Domain Failure</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <td><a href="../topics/partial-differential-equations.html">Partial Differential Equations</a></td>
+  <td>a quantity changes over space and time, so one number is not enough to describe the situation</td>
+  <td>a field such as temperature, pressure, concentration, velocity, or displacement</td>
+  <td>a field, its rates of change, and the boundary or starting information needed to evolve it</td>
+  <td>a learned shortcut can ignore boundary conditions or conservation behavior that the PDE was carrying. In this domain, reject it if this changed-case test fails: change the load path, defect, mesh, or boundary and check stress near failure regions.</td>
+</tr>
+
+<tr>
+  <td><a href="../topics/surrogate-modeling.html">Surrogate Modeling</a></td>
+  <td>a trusted simulator may be too slow to run for every design, control, or uncertainty question</td>
+  <td>expensive solver inputs and outputs for a limited set of cases</td>
+  <td>the input-output behavior needed for a specified family of queries</td>
+  <td>speed can hide missing physics when the surrogate is used beyond the regime where it was checked. In this domain, reject it if this changed-case test fails: change the load path, defect, mesh, or boundary and check stress near failure regions.</td>
+</tr>
+
+<tr>
+  <td><a href="../topics/graphs-and-geometric-learning.html">Graphs And Geometric Learning</a></td>
+  <td>many scientific objects are not simple rows of numbers; their connections matter</td>
+  <td>objects with parts and connections, such as meshes, molecules, or interacting components</td>
+  <td>nodes, edges, spatial relations, and symmetry rules that should not change the answer</td>
+  <td>the graph can encode the wrong neighborhood, hide missing interactions, or fail when the mesh changes. In this domain, reject it if this changed-case test fails: change the load path, defect, mesh, or boundary and check stress near failure regions.</td>
+</tr>
+
+<tr>
+  <td><a href="../topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></td>
+  <td>a prediction is not enough unless the user knows when it should be believed</td>
+  <td>training cases, validation cases, prediction errors, and known shifts between cases</td>
+  <td>error checks, changed-case tests, and limits on where the model was trained</td>
+  <td>training error can look good while the model fails under a new geometry, parameter range, sensor, or physical regime. In this domain, reject it if this changed-case test fails: change the load path, defect, mesh, or boundary and check stress near failure regions.</td>
+</tr>
+</tbody>
+</table>
+
 <h2>How The Methods Enter</h2>
 <ul><li>Keep geometry and connections visible.</li><li>Compare against trusted simulations or measurements.</li><li>Name the load, material range, and failure quantity.</li></ul>
 <h2>Failure Test</h2>

@@ -69,6 +69,48 @@
 </table>
 <h2>Concepts That Matter</h2>
 <ul><li><a href="../topics/optimization-for-learning.html">Optimization For Learning</a></li><li><a href="../topics/physics-informed-neural-networks.html">Physics-Informed Neural Networks</a></li><li><a href="../topics/deep-learning.html">Deep Learning</a></li><li><a href="../topics/scientific-machine-learning.html">Scientific Machine Learning</a></li></ul>
+
+<h2>What Each Concept Must Carry In This Domain</h2>
+<p>Each concept earns its place only if it carries part of the domain job. This table states the burden before the method name is allowed to matter.</p>
+<table>
+  <thead>
+    <tr><th>Concept</th><th>Domain Job It Handles</th><th>Evidence It Uses</th><th>What It Carries</th><th>Domain Failure</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <td><a href="../topics/optimization-for-learning.html">Optimization For Learning</a></td>
+  <td>learning needs a way to decide which model settings are better or worse</td>
+  <td>a written score that says which model behavior is better or worse</td>
+  <td>a written score that compares model output against data, physics penalties, or design goals</td>
+  <td>a model can optimize the written score while missing the scientific behavior the score failed to name. In this domain, reject it if this changed-case test fails: change the weights, hold out hard regions, and check the physical or decision quantity directly.</td>
+</tr>
+
+<tr>
+  <td><a href="../topics/physics-informed-neural-networks.html">Physics-Informed Neural Networks</a></td>
+  <td>measurements may be sparse, but the answer must still respect a known physical equation</td>
+  <td>some measured values, boundary values, starting values, and a known differential equation</td>
+  <td>a neural network prediction plus a penalty for violating the known equation</td>
+  <td>the equation penalty can look small while the solution is wrong in hard regions, sharp layers, or unseen boundary cases. In this domain, reject it if this changed-case test fails: change the weights, hold out hard regions, and check the physical or decision quantity directly.</td>
+</tr>
+
+<tr>
+  <td><a href="../topics/deep-learning.html">Deep Learning</a></td>
+  <td>scientists often have examples of behavior but no short rule that predicts the next case</td>
+  <td>many input-output examples from experiments, simulations, or measurements</td>
+  <td>many adjustable weights that turn inputs into predictions</td>
+  <td>the model can fit familiar examples while failing on a new material, geometry, scale, or boundary condition. In this domain, reject it if this changed-case test fails: change the weights, hold out hard regions, and check the physical or decision quantity directly.</td>
+</tr>
+
+<tr>
+  <td><a href="../topics/scientific-machine-learning.html">Scientific Machine Learning</a></td>
+  <td>scientific work needs predictions that respect measurements, equations, uncertainty, and domain limits at the same time</td>
+  <td>data, equations, units, simulation outputs, and domain limits</td>
+  <td>data evidence, scientific structure, and validation against changed cases</td>
+  <td>the method becomes a generic fitting tool if the physical quantity, scientific claim, and validation case are not named. In this domain, reject it if this changed-case test fails: change the weights, hold out hard regions, and check the physical or decision quantity directly.</td>
+</tr>
+</tbody>
+</table>
+
 <h2>How The Methods Enter</h2>
 <ul><li>Write each score term in plain language.</li><li>Tie each term to a scientific requirement.</li><li>Check whether lowering the score improves the real target quantity.</li></ul>
 <h2>Failure Test</h2>
