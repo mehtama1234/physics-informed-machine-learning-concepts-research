@@ -3333,6 +3333,7 @@ MEATY_GOAL_REQUIREMENTS = [
     {"key": "next_day_memory_check", "label": "Next-Day Memory Check", "proof_term": "Next-Day Memory Check"},
     {"key": "nearby_topic_comparison", "label": "Nearby Topic Comparison", "proof_term": "Nearby Topic Comparison In Plain Words"},
     {"key": "math_shape_rehearsal", "label": "Math Shape Rehearsal", "proof_term": "Everyday Math Shape Rehearsal"},
+    {"key": "source_to_claim_boundary", "label": "Source-To-Claim Boundary", "proof_term": "Source-To-Claim Boundary In Plain Words"},
     {"key": "field_mini_cases", "label": "Field Mini Cases", "proof_term": "Field Mini Cases In Plain Words"},
     {"key": "hand_teaching_note", "label": "Hand Teaching Note", "proof_term": "Hand Teaching Note"},
     {"key": "case_walkthrough", "label": "Case Walkthrough", "proof_term": "One Concrete Case From Start To Finish"},
@@ -7146,6 +7147,26 @@ def topic_belief_evidence_html(topic: dict[str, object], derivation: dict[str, o
 """
 
 
+def topic_source_to_claim_boundary_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
+    title = str(topic["title"])
+    return f"""
+<h2>Source-To-Claim Boundary In Plain Words</h2>
+<p>This boundary keeps {html.escape(title)} honest. The course can teach the route from evidence to claim, but a real use still needs a checked case in the field where the claim will be used.</p>
+<table>
+  <tbody>
+    <tr><th>Course Evidence Can Support</th><td>The course can support the plain chain from {html.escape(str(derivation['observed']))} to {html.escape(str(derivation['hidden']))} using this move: {html.escape(str(derivation['move']))}.</td></tr>
+    <tr><th>Course Evidence Cannot Prove</th><td>It cannot prove that {html.escape(title)} works on every new case, field, shape, boundary, material, or measurement setting.</td></tr>
+    <tr><th>Claim Allowed On This Page</th><td>{html.escape(str(derivation['meaning']))}</td></tr>
+    <tr><th>Stronger Field Evidence Needed</th><td>A real use needs held-out or newly measured cases in {html.escape(str(topic['domain']))}, especially near this boundary: {html.escape(str(topic['failure_boundary']))}.</td></tr>
+    <tr><th>First Overclaim To Reject</th><td>Reject any claim that says the idea works in the field before naming the evidence, hidden answer, changed case, and failure boundary.</td></tr>
+    <tr><th>Reviewer Action</th><td>Ask for the changed-case test first: {html.escape(str(derivation['test']))}.</td></tr>
+  </tbody>
+</table>
+<h3>Boundary Pass Test</h3>
+<p>The boundary passes only if the learner can say what the course evidence supports, what it cannot prove, what claim is allowed, and what stronger field evidence is still needed.</p>
+"""
+
+
 def topic_breaks_without_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
     wrong = topic_wrong_use(topic)
     title = str(topic["title"])
@@ -7379,6 +7400,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     math_shape_rehearsal = topic_math_shape_rehearsal_html(topic, derivation)
     formula_terms = topic_formula_terms_html(derivation)
     wrong_use = topic_wrong_use_html(topic)
+    source_to_claim_boundary = topic_source_to_claim_boundary_html(topic, derivation)
     belief_evidence = topic_belief_evidence_html(topic, derivation)
     domain_fit = topic_domain_fit_html(topic, derivation)
     worked_examples = topic_worked_examples_html(str(topic["slug"]))
@@ -7445,6 +7467,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
 {derivation_link}
 {worked_examples}
 {wrong_use}
+{source_to_claim_boundary}
 {belief_evidence}
 {claim_review}
 {domain_fit}
@@ -10699,6 +10722,14 @@ def validate(data: dict[str, object] | None = None) -> None:
             "Learn Before This",
             "Confusion It Prevents",
             "Evidence Needed To Believe This",
+            "Source-To-Claim Boundary In Plain Words",
+            "Course Evidence Can Support",
+            "Course Evidence Cannot Prove",
+            "Claim Allowed On This Page",
+            "Stronger Field Evidence Needed",
+            "First Overclaim To Reject",
+            "Reviewer Action",
+            "Boundary Pass Test",
             "Strong Evidence",
             "Too Weak",
             "Reject Or Recheck When",
@@ -11416,7 +11447,7 @@ def validate(data: dict[str, object] | None = None) -> None:
             raise SystemExit(f"meaty goal core page link missing: {item['href']}")
     goal_coverage_path = SITE / "meaty-goal-coverage.html"
     goal_coverage_text = goal_coverage_path.read_text(encoding="utf-8")
-    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Teach From Zero" not in goal_coverage_text or "Application Claim Ladder" not in goal_coverage_text or "Plain Question To Answer Script" not in goal_coverage_text or "Know And Still Test" not in goal_coverage_text or "Failure Consequence" not in goal_coverage_text or "Slow Problem Shape Bridge" not in goal_coverage_text or "Slow Importance Essay" not in goal_coverage_text or "Hand Teaching Note" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Concept Connections" not in goal_coverage_text or "Belief Evidence" not in goal_coverage_text or "Domain Fit" not in goal_coverage_text or "Shape Follows" not in goal_coverage_text or "Reader Answer Parts" not in goal_coverage_text or "Say It Back Check" not in goal_coverage_text or "Misread Repair Drill" not in goal_coverage_text or "Plain-Language Audit" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
+    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Teach From Zero" not in goal_coverage_text or "Application Claim Ladder" not in goal_coverage_text or "Plain Question To Answer Script" not in goal_coverage_text or "Know And Still Test" not in goal_coverage_text or "Failure Consequence" not in goal_coverage_text or "Slow Problem Shape Bridge" not in goal_coverage_text or "Slow Importance Essay" not in goal_coverage_text or "Source-To-Claim Boundary" not in goal_coverage_text or "Hand Teaching Note" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Concept Connections" not in goal_coverage_text or "Belief Evidence" not in goal_coverage_text or "Domain Fit" not in goal_coverage_text or "Shape Follows" not in goal_coverage_text or "Reader Answer Parts" not in goal_coverage_text or "Say It Back Check" not in goal_coverage_text or "Misread Repair Drill" not in goal_coverage_text or "Plain-Language Audit" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
         raise SystemExit("meaty goal coverage audit not rendered correctly")
     goal_coverage_rows = data.get("meaty_goal_coverage") or []
     if len(goal_coverage_rows) != len(data["concept_atlas"]):
