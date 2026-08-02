@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Physics-Informed ML Topology And Shape Guide</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav class="topbar">
+  <a href="index.html">Physics-Informed ML</a>
+  <a href="transcripts.html">Transcripts</a>
+  <a href="concept-atlas.html">Concept Atlas</a>
+  <a href="families.html">Families</a>
+  <a href="comparisons.html">Comparisons</a>
+  <a href="worked-examples.html">Examples</a>
+  <a href="diagrams.html">Diagrams</a>
+  <a href="derivations.html">Derivations</a>
+  <a href="formula-guide.html">Formulas</a>
+  <a href="misconceptions.html">Misreads</a>
+  <a href="course-spine.html">Spine</a>
+  <a href="topology-shape-guide.html">Shape</a>
+  <a href="learning-path.html">Path</a>
+  <a href="glossary.html">Glossary</a>
+  <a href="domains.html">Domains</a>
+  <a href="reader-checks.html">Checks</a>
+  <a href="decision-guide.html">Decide</a>
+  <a href="provenance.html">Provenance</a>
+  <a href="coverage.html">Coverage</a>
+  <a href="dependencies.html">Dependencies</a>
+  <a href="concept-ladder.html">Ladder</a>
+  <a href="evidence-packets.html">Packets</a>
+  <a href="quality.html">Quality</a>
+  <a href="wording-audit.html">Wording</a>
+  <a href="synthesis.html">Synthesis</a>
+  <a href="review-entrypoints.html">Review Map</a>
+  <a href="review-search.html">Find</a>
+  <a href="review-queue.html">Queue</a>
+  <a href="editorial-roadmap.html">Roadmap</a>
+  <a href="completion-audit.html">Audit</a>
+  <a href="handoff.html">Handoff</a>
+  <a href="theme-map.html">Themes</a>
+  <a href="evidence-ledger.html">Evidence</a>
+</nav>
+<main>
+
+<h1>Topology And Shape In Plain Words</h1>
+<h2>The Everyday Meaning</h2>
+<p>Topology is a plain question before it is a math word. It asks what stays connected, what has a hole, what touches what, and what can bend without changing the question. Shape asks where the boundary is, how parts are arranged, and which places can influence each other.</p>
+<p>This matters in physics-informed machine learning because many scientific objects already have structure before a model sees them. A molecule has atoms and bonds. A bridge has connected parts. A wing has a boundary and a surface. A coastline has regions that touch. A field lives on a space, not in a loose pile of numbers.</p>
+<h2>Why It Matters From First Principles</h2>
+<p>The first-principles shortage is simple: the evidence may describe a connected thing, but a careless model can flatten it into a list. Once that happens, the model may lose which parts touch, where the edge is, which hole matters, or which faraway region can change the local answer. The result can look accurate on old cases while answering the wrong scientific question.</p>
+<p>The right check is also simple. Change something about the shape or connection pattern that should matter, then inspect the scientific quantity. Relabeling points should not change a molecule property if the molecule did not change. A new hole, boundary, mesh detail, long-range link, or geometry family should change the answer only for a physical reason.</p>
+<h2>How This Theme Crosses The Course</h2>
+<table>
+  <thead>
+    <tr><th>Topic</th><th>Plain Shape Use</th><th>Why It Matters</th><th>First Shape Check</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <td><a href="topics/deep-learning.html">Deep Learning</a></td>
+  <td>Use examples of shapes, images, or surfaces when the rule is hard to write by hand.</td>
+  <td>Deep learning matters here only if changed shapes still get the right answer for the named task.</td>
+  <td>Hold out a new shape family, camera view, mesh order, or scale and measure the target error.</td>
+</tr>
+
+<tr>
+  <td><a href="topics/physics-informed-neural-networks.html">Physics-Informed Neural Networks</a></td>
+  <td>Fit a field on a shape while also asking it to obey the rule that should hold inside the shape.</td>
+  <td>A PINN matters here when sparse points are not enough but an equation can still guide the missing field.</td>
+  <td>Move sensors, change the boundary, or bend the domain and compare the hidden field with trusted values.</td>
+</tr>
+
+<tr>
+  <td><a href="topics/partial-differential-equations.html">Partial Differential Equations</a></td>
+  <td>Describe how a field moves across a shape, surface, mesh, or region with boundaries.</td>
+  <td>PDEs matter here because shape and boundary decide how local changes spread.</td>
+  <td>Change the boundary, cut a hole, refine the mesh, or bend the region and check conservation.</td>
+</tr>
+
+<tr>
+  <td><a href="topics/operator-learning.html">Operator Learning</a></td>
+  <td>Learn how one whole shape, boundary, or input field maps to a whole output field.</td>
+  <td>Operator learning matters when the question is about a family of field problems, not one solve.</td>
+  <td>Hold out a new geometry class, mesh resolution, boundary type, or coefficient range.</td>
+</tr>
+
+<tr>
+  <td><a href="topics/scientific-machine-learning.html">Scientific Machine Learning</a></td>
+  <td>Combine data with shape, boundary, and connection checks before trusting a prediction.</td>
+  <td>Scientific machine learning matters when the target is a real quantity, not only a fitted score.</td>
+  <td>Change shape, mesh, boundary, or sensor layout and inspect the scientific quantity.</td>
+</tr>
+
+<tr>
+  <td><a href="topics/surrogate-modeling.html">Surrogate Modeling</a></td>
+  <td>Replace slow solves for repeated shape queries inside a named family.</td>
+  <td>A surrogate matters here when shape changes are common and full solves are too slow.</td>
+  <td>Change holes, edges, mesh detail, or shape class and compare with the full solver.</td>
+</tr>
+
+<tr>
+  <td><a href="topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></td>
+  <td>State how belief changes when the shape, mesh, or connection pattern changes.</td>
+  <td>Uncertainty matters here because a prediction can look good on familiar shapes and fail on a new one.</td>
+  <td>Hold out a new shape family, missing connection, or mesh resolution and measure the error.</td>
+</tr>
+
+<tr>
+  <td><a href="topics/optimization-for-learning.html">Optimization For Learning</a></td>
+  <td>Choose a score that rewards the right shape, connection, boundary, or field behavior.</td>
+  <td>Optimization matters here because the model will chase the score even when the score misses the real shape question.</td>
+  <td>Inspect whether the trained answer breaks after relabeling, mesh change, or boundary change.</td>
+</tr>
+
+<tr>
+  <td><a href="topics/generative-modeling.html">Generative Modeling</a></td>
+  <td>Create candidate shapes or fields while checking holes, connections, and boundaries.</td>
+  <td>Generative modeling matters here only if the samples are valid objects, not just plausible pictures.</td>
+  <td>Test connected parts, forbidden holes, mesh validity, and downstream use.</td>
+</tr>
+
+<tr>
+  <td><a href="topics/graphs-and-geometric-learning.html">Graphs And Geometric Learning</a></td>
+  <td>Keep nodes, edges, neighborhoods, holes, surfaces, and symmetries visible to the model.</td>
+  <td>Graphs and geometric learning matters here because the connection pattern is part of the evidence.</td>
+  <td>Relabel nodes, rotate the object, refine the mesh, or add a missing edge and inspect the target.</td>
+</tr>
+
+<tr>
+  <td><a href="topics/neural-differential-equations.html">Neural Differential Equations</a></td>
+  <td>Learn how a state moves over time when the state also lives on a shape or network.</td>
+  <td>Neural differential equations matter here when the missing part is the rule of change.</td>
+  <td>Change the starting state, shape, or connection pattern and run longer than the training window.</td>
+</tr>
+
+<tr>
+  <td><a href="topics/symbolic-regression.html">Symbolic Regression And Model Discovery</a></td>
+  <td>Search for a short relation that includes the right shape or connection measurements.</td>
+  <td>Symbolic regression matters here only if the readable formula keeps the real cause visible.</td>
+  <td>Remove a shape measure, change the mesh, or add a missing variable and test the formula.</td>
+</tr>
+
+<tr>
+  <td><a href="topics/foundation-models-for-pdes.html">Foundation Models For PDEs</a></td>
+  <td>Reuse field knowledge across PDE tasks while checking new shapes, grids, and boundaries.</td>
+  <td>Foundation PDE models matter here only if shared structure carries to the new shape family.</td>
+  <td>Hold out whole geometry families, boundary types, scales, or rare regimes.</td>
+</tr>
+
+<tr>
+  <td><a href="topics/attention-for-scientific-fields.html">Attention For Scientific Fields</a></td>
+  <td>Let distant parts of a shape or field exchange information when local neighbors are not enough.</td>
+  <td>Attention matters here when faraway structure changes the local answer.</td>
+  <td>Change window size, long-range links, boundary regions, or point order.</td>
+</tr>
+</tbody>
+</table>
+<h2>What To Say Before Trusting A Shape Claim</h2>
+<ol>
+  <li>Name the object: mesh, molecule, field, surface, part, graph, network, or region.</li>
+  <li>Name the relation that matters: touching, boundary, hole, neighbor, distance, long-range link, or symmetry.</li>
+  <li>Name the quantity at stake: property, stress, flow, heat, risk, rate, or design answer.</li>
+  <li>Name what would be unchanged: relabeling, rotation, bending, or mesh order when the real object is the same.</li>
+  <li>Name what should be tested: new geometry, new boundary, missing connection, refined mesh, or rare shape family.</li>
+</ol>
+<h2>Reader Test</h2>
+<p>A reader understands the topology and shape theme when they can point to a topic page and say which connected or shaped part is evidence, which scientific quantity uses it, and which changed shape would make the claim too broad.</p>
+
+</main>
+</body>
+</html>
