@@ -3319,6 +3319,7 @@ MEATY_GOAL_REQUIREMENTS = [
     {"key": "start_here_gate", "label": "Start-Here Gate", "proof_term": "Start-Here Gate"},
     {"key": "skeptical_reader_proof", "label": "Skeptical Reader Proof", "proof_term": "Skeptical Reader Proof"},
     {"key": "oral_explanation_script", "label": "Oral Explanation Script", "proof_term": "Oral Explanation Script"},
+    {"key": "before_after_decision", "label": "Before-After Decision", "proof_term": "Before-After Decision Check"},
     {"key": "use_protocol", "label": "End-To-End Use Protocol", "proof_term": "End-To-End Use Protocol"},
     {"key": "before_math_slow_walk", "label": "Before The Math Slow Walk", "proof_term": "Before The Math Slow Walk"},
     {"key": "teach_from_zero", "label": "Teach From Zero", "proof_term": "Teach It From Zero"},
@@ -7300,6 +7301,35 @@ def topic_oral_explanation_script_html(topic: dict[str, object], derivation: dic
 """
 
 
+def topic_before_after_decision_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
+    title = str(topic["title"])
+    applications = topic_plain_applications(topic, derivation)
+    shape = next(row for row in applications if row["field"] == "Topology and shape")
+    engineering = next(row for row in applications if row["field"] == "Engineering design")
+    materials = next(row for row in applications if row["field"] == "Materials, chemistry, and biology")
+    fields = next(row for row in applications if row["field"] == "Climate, fluids, and fields")
+    return f"""
+<h2>Before-After Decision Check</h2>
+<p>This check asks what changes after the learner understands {html.escape(title)}. If no decision changes, the explanation is still only a definition.</p>
+<table>
+  <tbody>
+    <tr><th>Before Learning This</th><td>The learner may see {html.escape(str(derivation['observed']))} but not know how to use it for this missing answer: {html.escape(str(derivation['hidden']))}.</td></tr>
+    <tr><th>After Learning This</th><td>The learner should try this move: {html.escape(str(derivation['move']))}</td></tr>
+    <tr><th>Decision They Can Now Make</th><td>{html.escape(str(topic['why_it_matters']))}</td></tr>
+    <tr><th>Shape Decision That Changes</th><td>{html.escape(str(shape['use']))} Check: {html.escape(str(shape['check']))}</td></tr>
+    <tr><th>Engineering Decision That Changes</th><td>{html.escape(str(engineering['use']))} Check: {html.escape(str(engineering['check']))}</td></tr>
+    <tr><th>Lab Or Biology Decision That Changes</th><td>{html.escape(str(materials['use']))} Check: {html.escape(str(materials['check']))}</td></tr>
+    <tr><th>Field Decision That Changes</th><td>{html.escape(str(fields['use']))} Check: {html.escape(str(fields['check']))}</td></tr>
+    <tr><th>Claim They Can Now Say</th><td>{html.escape(str(derivation['meaning']))}</td></tr>
+    <tr><th>Decision They Must Still Refuse</th><td>{html.escape(str(topic['failure_boundary']))}</td></tr>
+    <tr><th>Changed Case That Decides</th><td>{html.escape(str(derivation['test']))}</td></tr>
+  </tbody>
+</table>
+<h3>Before-After Pass Test</h3>
+<p>The check passes only if the learner can say what decision was impossible before, what decision is possible after, what shape or field issue changes the decision, and what changed case still controls trust.</p>
+"""
+
+
 def topic_before_math_slow_walk_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
     title = str(topic["title"])
     case = topic_case_walkthrough(topic, derivation)
@@ -7656,6 +7686,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     start_here_gate = topic_start_here_gate_html(topic, derivation)
     skeptical_reader_proof = topic_skeptical_reader_proof_html(topic, derivation)
     oral_explanation_script = topic_oral_explanation_script_html(topic, derivation)
+    before_after_decision = topic_before_after_decision_html(topic, derivation)
     use_protocol = topic_use_protocol_html(topic, derivation)
     first_principles_essay = topic_first_principles_essay_html(topic, derivation)
     teach_from_zero = topic_teach_from_zero_html(topic, derivation)
@@ -7726,6 +7757,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
 {start_here_gate}
 {skeptical_reader_proof}
 {oral_explanation_script}
+{before_after_decision}
 {use_protocol}
 {first_principles_essay}
 {teach_from_zero}
@@ -11206,6 +11238,18 @@ def validate(data: dict[str, object] | None = None) -> None:
             "Sentence Seven: Careful Claim",
             "Sentence Eight: Belief Test",
             "Spoken Pass Test",
+            "Before-After Decision Check",
+            "Before Learning This",
+            "After Learning This",
+            "Decision They Can Now Make",
+            "Shape Decision That Changes",
+            "Engineering Decision That Changes",
+            "Lab Or Biology Decision That Changes",
+            "Field Decision That Changes",
+            "Claim They Can Now Say",
+            "Decision They Must Still Refuse",
+            "Changed Case That Decides",
+            "Before-After Pass Test",
             "End-To-End Use Protocol",
             "State The Scientific Job",
             "Name The Decision Quantity",
@@ -12212,7 +12256,7 @@ def validate(data: dict[str, object] | None = None) -> None:
             raise SystemExit(f"meaty goal core page link missing: {item['href']}")
     goal_coverage_path = SITE / "meaty-goal-coverage.html"
     goal_coverage_text = goal_coverage_path.read_text(encoding="utf-8")
-    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Explanation Order" not in goal_coverage_text or "Why Care Before Terms" not in goal_coverage_text or "Workday Decision Rehearsal" not in goal_coverage_text or "Sounds-Right Filter" not in goal_coverage_text or "Draw Before Math" not in goal_coverage_text or "Start-Here Gate" not in goal_coverage_text or "Skeptical Reader Proof" not in goal_coverage_text or "Oral Explanation Script" not in goal_coverage_text or "Teach From Zero" not in goal_coverage_text or "Application Claim Ladder" not in goal_coverage_text or "Field Decision Story" not in goal_coverage_text or "Everyday Vocabulary Bridge" not in goal_coverage_text or "New Case Transfer Rehearsal" not in goal_coverage_text or "Reader Mistake Audit" not in goal_coverage_text or "One-Page Mental Model" not in goal_coverage_text or "Plain Question To Answer Script" not in goal_coverage_text or "Know And Still Test" not in goal_coverage_text or "Failure Consequence" not in goal_coverage_text or "Slow Problem Shape Bridge" not in goal_coverage_text or "Slow Importance Essay" not in goal_coverage_text or "Source-To-Claim Boundary" not in goal_coverage_text or "Teach Someone Handoff" not in goal_coverage_text or "Topology Shape Story" not in goal_coverage_text or "Confusion To Clarity" not in goal_coverage_text or "Hand Teaching Note" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Concept Connections" not in goal_coverage_text or "Belief Evidence" not in goal_coverage_text or "Domain Fit" not in goal_coverage_text or "Shape Follows" not in goal_coverage_text or "Reader Answer Parts" not in goal_coverage_text or "Say It Back Check" not in goal_coverage_text or "Misread Repair Drill" not in goal_coverage_text or "Plain-Language Audit" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
+    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Explanation Order" not in goal_coverage_text or "Why Care Before Terms" not in goal_coverage_text or "Workday Decision Rehearsal" not in goal_coverage_text or "Sounds-Right Filter" not in goal_coverage_text or "Draw Before Math" not in goal_coverage_text or "Start-Here Gate" not in goal_coverage_text or "Skeptical Reader Proof" not in goal_coverage_text or "Oral Explanation Script" not in goal_coverage_text or "Before-After Decision" not in goal_coverage_text or "Teach From Zero" not in goal_coverage_text or "Application Claim Ladder" not in goal_coverage_text or "Field Decision Story" not in goal_coverage_text or "Everyday Vocabulary Bridge" not in goal_coverage_text or "New Case Transfer Rehearsal" not in goal_coverage_text or "Reader Mistake Audit" not in goal_coverage_text or "One-Page Mental Model" not in goal_coverage_text or "Plain Question To Answer Script" not in goal_coverage_text or "Know And Still Test" not in goal_coverage_text or "Failure Consequence" not in goal_coverage_text or "Slow Problem Shape Bridge" not in goal_coverage_text or "Slow Importance Essay" not in goal_coverage_text or "Source-To-Claim Boundary" not in goal_coverage_text or "Teach Someone Handoff" not in goal_coverage_text or "Topology Shape Story" not in goal_coverage_text or "Confusion To Clarity" not in goal_coverage_text or "Hand Teaching Note" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Concept Connections" not in goal_coverage_text or "Belief Evidence" not in goal_coverage_text or "Domain Fit" not in goal_coverage_text or "Shape Follows" not in goal_coverage_text or "Reader Answer Parts" not in goal_coverage_text or "Say It Back Check" not in goal_coverage_text or "Misread Repair Drill" not in goal_coverage_text or "Plain-Language Audit" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
         raise SystemExit("meaty goal coverage audit not rendered correctly")
     goal_coverage_rows = data.get("meaty_goal_coverage") or []
     if len(goal_coverage_rows) != len(data["concept_atlas"]):
