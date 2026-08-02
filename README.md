@@ -1,5 +1,7 @@
 # Physics-Informed Machine Learning Concepts Research
 
+[![check](https://github.com/mehtama1234/physics-informed-machine-learning-concepts-research/actions/workflows/check.yml/badge.svg)](https://github.com/mehtama1234/physics-informed-machine-learning-concepts-research/actions/workflows/check.yml)
+
 Transcript-backed research package for the ETH Zurich AI in the Sciences and Engineering 2024 and 2025 playlists.
 
 The purpose is not to summarize lectures. The purpose is to explain physics-informed machine learning from first principles: the problem each concept solves, the scientific domain it comes from, why the problem matters, what information the method keeps, what it leaves out, and how its claims can fail.
