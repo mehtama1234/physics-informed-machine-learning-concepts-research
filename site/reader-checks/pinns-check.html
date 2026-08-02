@@ -49,6 +49,48 @@
 <ol><li>What is observed?</li><li>What is hidden?</li><li>Which physical rule checks the spaces between sensors?</li><li>What error terms should the training score include?</li><li>What changed case would make you doubt the claim?</li></ol>
 <h2>Strong Answer Should Say</h2>
 <p>Observed: sensor values, starting or boundary values, and the heat equation. Hidden: the full temperature field. The equation residual checks unsensed locations. The score needs data error, equation error, and boundary or starting error. A changed boundary, source, or held-out sensor should test the claim.</p>
+<h2>Strong Answer Broken Into Parts</h2>
+<table>
+  <thead>
+    <tr><th>Part</th><th>Reader Must Say</th><th>Why It Matters</th><th>Weak If</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <td>Observed evidence</td>
+  <td>some measured values, boundary values, starting values, and a known differential equation</td>
+  <td>This is the only evidence the explanation is allowed to start from.</td>
+  <td>The answer starts from the method name or a performance claim.</td>
+</tr>
+
+<tr>
+  <td>Hidden quantity</td>
+  <td>the full field value at every point in space and time</td>
+  <td>This names the missing thing the math has to carry the reader toward.</td>
+  <td>The answer talks about prediction without saying what quantity is still unknown.</td>
+</tr>
+
+<tr>
+  <td>Mathematical move</td>
+  <td>fit a neural network while also measuring how badly its output violates the known equation</td>
+  <td>This is the reason the concept is needed instead of a looser description.</td>
+  <td>The answer uses a label but does not say what work the math does.</td>
+</tr>
+
+<tr>
+  <td>Shape carried</td>
+  <td>the model is not allowed to match points while freely breaking the equation between those points</td>
+  <td>This explains what the formula shape keeps and what claim it is allowed to support.</td>
+  <td>The answer repeats the formula but cannot translate what it carries.</td>
+</tr>
+
+<tr>
+  <td>Changed-case rejection</td>
+  <td>move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements</td>
+  <td>This is the first concrete way to stop trusting the claim.</td>
+  <td>The answer reports a score, fit, or source mention without a failure condition.</td>
+</tr>
+</tbody>
+</table>
 <h2>Weak Answer Warning</h2>
 <p>A weak answer says only that the neural network fits data.</p>
 <h2>Acceptance Sentence</h2>

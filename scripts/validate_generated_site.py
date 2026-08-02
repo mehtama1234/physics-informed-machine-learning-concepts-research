@@ -67,7 +67,7 @@ RESTRICTED_PATTERNS = (
     "many different",
 )
 
-MEATY_GOAL_REQUIREMENT_COUNT = 15
+MEATY_GOAL_REQUIREMENT_COUNT = 16
 
 
 class LinkParser(HTMLParser):
@@ -134,7 +134,7 @@ def check_required_sections() -> list[str]:
         "site/editorial-roadmap.html": ("Editorial Roadmap", "Status:", "Current Evidence", "Acceptance Check", "locally completed", "Meaty End-To-End Goal"),
         "site/completion-audit.html": ("Completion Audit", "Requirement Evidence", "GitHub Actions", "locally verified"),
         "site/meaty-goal.html": ("Meaty End-To-End Goal", "Done Means", "Every Core Page Must Contain", "Acceptance Sentence", "Not Done If"),
-        "site/meaty-goal-coverage.html": ("Meaty Goal Coverage Audit", "First Principles", "Hand Teaching Note", "Case Walkthrough", "Concept Connections", "Belief Evidence", "Domain Fit", "Shape Follows", "Formula Terms", "Breaks Without Idea", "Acceptance Sentence", "Missing Items"),
+        "site/meaty-goal-coverage.html": ("Meaty Goal Coverage Audit", "First Principles", "Hand Teaching Note", "Case Walkthrough", "Concept Connections", "Belief Evidence", "Domain Fit", "Shape Follows", "Formula Terms", "Breaks Without Idea", "Reader Answer Parts", "Acceptance Sentence", "Missing Items"),
         "site/families.html": ("Paper Family Routes",),
         "site/families/physics-constraints-family.html": ("Family Story From First Principles", "Concrete Family Case", "Route Burden Table", "Question It Answers", "Mistake It Catches", "Why The Concepts Appear In This Order", "Evidence Chain To Track", "What Each Concept Does In The Family", "Evidence Needed Before Trusting The Family", "Too Weak"),
         "site/families/neural-operators-family.html": ("Family Story From First Principles", "Concrete Family Case", "Route Burden Table", "Question It Answers", "Mistake It Catches", "Why The Concepts Appear In This Order", "Evidence Chain To Track", "What Each Concept Does In The Family", "Evidence Needed Before Trusting The Family", "Too Weak"),
@@ -240,8 +240,10 @@ def check_reader_check_coverage() -> list[str]:
             errors.append(f"missing reader-check page: site/reader-checks/{check['slug']}.html")
         else:
             check_text = check_path.read_text(encoding="utf-8")
-            if "Strong Answer Should Say" not in check_text or "Weak Answer Warning" not in check_text:
+            if "Strong Answer Should Say" not in check_text or "Strong Answer Broken Into Parts" not in check_text or "Reader Must Say" not in check_text or "Weak If" not in check_text or "Weak Answer Warning" not in check_text:
                 errors.append(f"site/reader-checks/{check['slug']}.html: reader check content missing")
+        if len(check.get("answer_parts") or []) < 5:
+            errors.append(f"reader check missing answer parts: {check['slug']}")
     return errors
 
 

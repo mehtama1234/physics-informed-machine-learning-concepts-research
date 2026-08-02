@@ -3323,6 +3323,7 @@ MEATY_GOAL_REQUIREMENTS = [
     {"key": "failure_boundary", "label": "Failure Boundary", "proof_term": "Failure Boundary"},
     {"key": "source_anchors", "label": "Source Anchors", "proof_term": "Selected Source Anchors"},
     {"key": "reader_check", "label": "Reader Check", "proof_term": "Reader Check"},
+    {"key": "reader_answer_parts", "label": "Reader Answer Parts", "proof_term": "Strong Answer Broken Into Parts"},
     {"key": "acceptance_sentence", "label": "Acceptance Sentence", "proof_term": "Acceptance Sentence Filled"},
 ]
 
@@ -4511,6 +4512,7 @@ def build_meaty_goal_coverage(topic_treatments: list[dict[str, object]], reader_
 
 def build_reader_checks(topic_treatments: list[dict[str, object]]) -> list[dict[str, object]]:
     checks = [dict(check) for check in READER_CHECKS]
+    topics_by_slug = {str(topic["slug"]): topic for topic in topic_treatments}
     covered = {str(check["topic_slug"]) for check in checks}
     for topic in topic_treatments:
         slug = str(topic["slug"])
@@ -4537,13 +4539,67 @@ def build_reader_checks(topic_treatments: list[dict[str, object]]) -> list[dict[
             }
         )
     for check in checks:
-        enrich_reader_check(check)
+        enrich_reader_check(check, topics_by_slug)
     return checks
 
 
-def enrich_reader_check(check: dict[str, object]) -> None:
+def reader_answer_parts(check: dict[str, object], topics_by_slug: dict[str, dict[str, object]]) -> list[dict[str, str]]:
+    slug = str(check["topic_slug"])
+    topic = topics_by_slug.get(slug)
+    if topic:
+        derivation = topic_derivation(topic)
+        return [
+            {
+                "part": "Observed evidence",
+                "reader_must_say": str(derivation["observed"]),
+                "why_it_matters": "This is the only evidence the explanation is allowed to start from.",
+                "weak_if": "The answer starts from the method name or a performance claim.",
+            },
+            {
+                "part": "Hidden quantity",
+                "reader_must_say": str(derivation["hidden"]),
+                "why_it_matters": "This names the missing thing the math has to carry the reader toward.",
+                "weak_if": "The answer talks about prediction without saying what quantity is still unknown.",
+            },
+            {
+                "part": "Mathematical move",
+                "reader_must_say": str(derivation["move"]),
+                "why_it_matters": "This is the reason the concept is needed instead of a looser description.",
+                "weak_if": "The answer uses a label but does not say what work the math does.",
+            },
+            {
+                "part": "Shape carried",
+                "reader_must_say": str(derivation["meaning"]),
+                "why_it_matters": "This explains what the formula shape keeps and what claim it is allowed to support.",
+                "weak_if": "The answer repeats the formula but cannot translate what it carries.",
+            },
+            {
+                "part": "Changed-case rejection",
+                "reader_must_say": str(derivation["test"]),
+                "why_it_matters": "This is the first concrete way to stop trusting the claim.",
+                "weak_if": "The answer reports a score, fit, or source mention without a failure condition.",
+            },
+        ]
+    return [
+        {
+            "part": "Observed evidence",
+            "reader_must_say": "what is known before the method is chosen",
+            "why_it_matters": "The answer must begin from evidence, not from a label.",
+            "weak_if": "The method name is treated as the starting point.",
+        },
+        {
+            "part": "Changed-case rejection",
+            "reader_must_say": "what changed case would make the claim fail",
+            "why_it_matters": "A scientific explanation needs a way to be rejected.",
+            "weak_if": "The answer ends with confidence instead of a test.",
+        },
+    ]
+
+
+def enrich_reader_check(check: dict[str, object], topics_by_slug: dict[str, dict[str, object]]) -> None:
     strong = str(check["strong_answer"])
     weak = str(check["weak_answer_warning"])
+    check["answer_parts"] = reader_answer_parts(check, topics_by_slug)
     check["acceptance_sentence"] = f"A reader passes only if they can say, in ordinary language, {strong}"
     check["scoring_rubric"] = [
         {"criterion": "Observed evidence", "pass": "Names what is actually known before the method is chosen.", "fail": "Starts with the method name."},
@@ -6745,6 +6801,17 @@ def domain_stress_test_html(guide: dict[str, object]) -> str:
 
 def write_reader_check_page(path: Path, check: dict[str, object]) -> None:
     questions = "".join(f"<li>{html.escape(str(question))}</li>" for question in check["questions"])
+    answer_part_rows = "".join(
+        f"""
+<tr>
+  <td>{html.escape(str(item['part']))}</td>
+  <td>{html.escape(str(item['reader_must_say']))}</td>
+  <td>{html.escape(str(item['why_it_matters']))}</td>
+  <td>{html.escape(str(item['weak_if']))}</td>
+</tr>
+"""
+        for item in check["answer_parts"]
+    )
     rubric_rows = "".join(
         f"""
 <tr>
@@ -6764,6 +6831,13 @@ def write_reader_check_page(path: Path, check: dict[str, object]) -> None:
 <ol>{questions}</ol>
 <h2>Strong Answer Should Say</h2>
 <p>{html.escape(str(check['strong_answer']))}</p>
+<h2>Strong Answer Broken Into Parts</h2>
+<table>
+  <thead>
+    <tr><th>Part</th><th>Reader Must Say</th><th>Why It Matters</th><th>Weak If</th></tr>
+  </thead>
+  <tbody>{answer_part_rows}</tbody>
+</table>
 <h2>Weak Answer Warning</h2>
 <p>{html.escape(str(check['weak_answer_warning']))}</p>
 <h2>Acceptance Sentence</h2>
@@ -8429,10 +8503,12 @@ def validate(data: dict[str, object] | None = None) -> None:
         if not check_path.exists():
             raise SystemExit(f"missing reader check page: {check['title']}")
         check_text = check_path.read_text(encoding="utf-8")
-        if "Strong Answer Should Say" not in check_text or "Weak Answer Warning" not in check_text or "Acceptance Sentence" not in check_text or "First-Principles Scoring Rubric" not in check_text or "Changed-case rejection" not in check_text or "Forbidden shortcut" not in check_text:
+        if "Strong Answer Should Say" not in check_text or "Strong Answer Broken Into Parts" not in check_text or "Reader Must Say" not in check_text or "Weak If" not in check_text or "Weak Answer Warning" not in check_text or "Acceptance Sentence" not in check_text or "First-Principles Scoring Rubric" not in check_text or "Changed-case rejection" not in check_text or "Forbidden shortcut" not in check_text:
             raise SystemExit(f"reader check not rendered correctly: {check['title']}")
         if not check.get("acceptance_sentence") or len(check.get("scoring_rubric") or []) < 5:
             raise SystemExit(f"reader check missing acceptance or rubric: {check['title']}")
+        if len(check.get("answer_parts") or []) < 5:
+            raise SystemExit(f"reader check missing answer parts: {check['title']}")
         topic_path = SITE / "topics" / f"{check['topic_slug']}.html"
         if not topic_path.exists():
             raise SystemExit(f"reader check topic missing: {check['title']} -> {check['topic_slug']}")
@@ -8640,7 +8716,7 @@ def validate(data: dict[str, object] | None = None) -> None:
             raise SystemExit(f"meaty goal core page link missing: {item['href']}")
     goal_coverage_path = SITE / "meaty-goal-coverage.html"
     goal_coverage_text = goal_coverage_path.read_text(encoding="utf-8")
-    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Hand Teaching Note" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Concept Connections" not in goal_coverage_text or "Belief Evidence" not in goal_coverage_text or "Domain Fit" not in goal_coverage_text or "Shape Follows" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
+    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Hand Teaching Note" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Concept Connections" not in goal_coverage_text or "Belief Evidence" not in goal_coverage_text or "Domain Fit" not in goal_coverage_text or "Shape Follows" not in goal_coverage_text or "Reader Answer Parts" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
         raise SystemExit("meaty goal coverage audit not rendered correctly")
     goal_coverage_rows = data.get("meaty_goal_coverage") or []
     if len(goal_coverage_rows) != len(data["concept_atlas"]):

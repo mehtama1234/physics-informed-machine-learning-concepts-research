@@ -17,6 +17,38 @@
       "topics/physics-informed-neural-networks.html",
       "worked-examples/heat-equation-from-few-measurements.html"
     ],
+    "answer_parts": [
+      {
+        "part": "Observed evidence",
+        "reader_must_say": "some measured values, boundary values, starting values, and a known differential equation",
+        "why_it_matters": "This is the only evidence the explanation is allowed to start from.",
+        "weak_if": "The answer starts from the method name or a performance claim."
+      },
+      {
+        "part": "Hidden quantity",
+        "reader_must_say": "the full field value at every point in space and time",
+        "why_it_matters": "This names the missing thing the math has to carry the reader toward.",
+        "weak_if": "The answer talks about prediction without saying what quantity is still unknown."
+      },
+      {
+        "part": "Mathematical move",
+        "reader_must_say": "fit a neural network while also measuring how badly its output violates the known equation",
+        "why_it_matters": "This is the reason the concept is needed instead of a looser description.",
+        "weak_if": "The answer uses a label but does not say what work the math does."
+      },
+      {
+        "part": "Shape carried",
+        "reader_must_say": "the model is not allowed to match points while freely breaking the equation between those points",
+        "why_it_matters": "This explains what the formula shape keeps and what claim it is allowed to support.",
+        "weak_if": "The answer repeats the formula but cannot translate what it carries."
+      },
+      {
+        "part": "Changed-case rejection",
+        "reader_must_say": "move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements",
+        "why_it_matters": "This is the first concrete way to stop trusting the claim.",
+        "weak_if": "The answer reports a score, fit, or source mention without a failure condition."
+      }
+    ],
     "acceptance_sentence": "A reader passes only if they can say, in ordinary language, Observed: sensor values, starting or boundary values, and the heat equation. Hidden: the full temperature field. The equation residual checks unsensed locations. The score needs data error, equation error, and boundary or starting error. A changed boundary, source, or held-out sensor should test the claim.",
     "scoring_rubric": [
       {
@@ -63,6 +95,38 @@
     "related": [
       "topics/operator-learning.html",
       "diagrams/operator-learning-flow.html"
+    ],
+    "answer_parts": [
+      {
+        "part": "Observed evidence",
+        "reader_must_say": "many example inputs and their full solution fields",
+        "why_it_matters": "This is the only evidence the explanation is allowed to start from.",
+        "weak_if": "The answer starts from the method name or a performance claim."
+      },
+      {
+        "part": "Hidden quantity",
+        "reader_must_say": "the rule that maps a new input field to its new solution field",
+        "why_it_matters": "This names the missing thing the math has to carry the reader toward.",
+        "weak_if": "The answer talks about prediction without saying what quantity is still unknown."
+      },
+      {
+        "part": "Mathematical move",
+        "reader_must_say": "learn the map from problem input to solution, not only one solution at a time",
+        "why_it_matters": "This is the reason the concept is needed instead of a looser description.",
+        "weak_if": "The answer uses a label but does not say what work the math does."
+      },
+      {
+        "part": "Shape carried",
+        "reader_must_say": "the learned object is a shortcut for a family of solves, so the family must be named",
+        "why_it_matters": "This explains what the formula shape keeps and what claim it is allowed to support.",
+        "weak_if": "The answer repeats the formula but cannot translate what it carries."
+      },
+      {
+        "part": "Changed-case rejection",
+        "reader_must_say": "change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed",
+        "why_it_matters": "This is the first concrete way to stop trusting the claim.",
+        "weak_if": "The answer reports a score, fit, or source mention without a failure condition."
+      }
     ],
     "acceptance_sentence": "A reader passes only if they can say, in ordinary language, The input is a whole field or function, and the output is a whole solution field. The equation, boundary, grid, parameter, and geometry family must be named. The method learns a map between fields, not one field. A new boundary, resolution, parameter range, or equation family should test the claim.",
     "scoring_rubric": [
@@ -111,6 +175,38 @@
       "topics/surrogate-modeling.html",
       "domains/fluids-and-flow.html"
     ],
+    "answer_parts": [
+      {
+        "part": "Observed evidence",
+        "reader_must_say": "expensive solver inputs and outputs for a limited set of cases",
+        "why_it_matters": "This is the only evidence the explanation is allowed to start from.",
+        "weak_if": "The answer starts from the method name or a performance claim."
+      },
+      {
+        "part": "Hidden quantity",
+        "reader_must_say": "the solver answer for every new query someone wants to ask",
+        "why_it_matters": "This names the missing thing the math has to carry the reader toward.",
+        "weak_if": "The answer talks about prediction without saying what quantity is still unknown."
+      },
+      {
+        "part": "Mathematical move",
+        "reader_must_say": "train a cheaper stand-in for the expensive input-output behavior",
+        "why_it_matters": "This is the reason the concept is needed instead of a looser description.",
+        "weak_if": "The answer uses a label but does not say what work the math does."
+      },
+      {
+        "part": "Shape carried",
+        "reader_must_say": "speed is useful only inside the query family where the stand-in was checked",
+        "why_it_matters": "This explains what the formula shape keeps and what claim it is allowed to support.",
+        "weak_if": "The answer repeats the formula but cannot translate what it carries."
+      },
+      {
+        "part": "Changed-case rejection",
+        "reader_must_say": "compare against the full solver on new cases near the edge of the intended use",
+        "why_it_matters": "This is the first concrete way to stop trusting the claim.",
+        "weak_if": "The answer reports a score, fit, or source mention without a failure condition."
+      }
+    ],
     "acceptance_sentence": "A reader passes only if they can say, in ordinary language, The surrogate replaces a named solver or experiment only inside a named query family. Inputs and outputs must match the decision. The stand-in should be checked near the edge of intended use, and the full solver should return when the query leaves that range or when errors affect the decision quantity.",
     "scoring_rubric": [
       {
@@ -157,6 +253,38 @@
     "related": [
       "topics/uncertainty-and-generalization.html",
       "diagrams/surrogate-validation-flow.html"
+    ],
+    "answer_parts": [
+      {
+        "part": "Observed evidence",
+        "reader_must_say": "training cases, validation cases, prediction errors, and known shifts between cases",
+        "why_it_matters": "This is the only evidence the explanation is allowed to start from.",
+        "weak_if": "The answer starts from the method name or a performance claim."
+      },
+      {
+        "part": "Hidden quantity",
+        "reader_must_say": "how wrong the model may be on a case unlike the ones it learned from",
+        "why_it_matters": "This names the missing thing the math has to carry the reader toward.",
+        "weak_if": "The answer talks about prediction without saying what quantity is still unknown."
+      },
+      {
+        "part": "Mathematical move",
+        "reader_must_say": "separate fit on familiar examples from evidence on changed examples",
+        "why_it_matters": "This is the reason the concept is needed instead of a looser description.",
+        "weak_if": "The answer uses a label but does not say what work the math does."
+      },
+      {
+        "part": "Shape carried",
+        "reader_must_say": "a prediction without a use range is not yet a scientific claim",
+        "why_it_matters": "This explains what the formula shape keeps and what claim it is allowed to support.",
+        "weak_if": "The answer repeats the formula but cannot translate what it carries."
+      },
+      {
+        "part": "Changed-case rejection",
+        "reader_must_say": "move one important condition outside the training range and measure the first failure",
+        "why_it_matters": "This is the first concrete way to stop trusting the claim.",
+        "weak_if": "The answer reports a score, fit, or source mention without a failure condition."
+      }
     ],
     "acceptance_sentence": "A reader passes only if they can say, in ordinary language, The answer names the actual shift, such as geometry, parameter range, sensor, scale, boundary, or regime. It measures the error that matters for the scientific decision, states the use range, and names a condition that would stop use.",
     "scoring_rubric": [
@@ -205,6 +333,38 @@
       "topics/symbolic-regression.html",
       "worked-examples/discovering-a-small-law-from-motion.html"
     ],
+    "answer_parts": [
+      {
+        "part": "Observed evidence",
+        "reader_must_say": "measured variables and candidate mathematical ingredients",
+        "why_it_matters": "This is the only evidence the explanation is allowed to start from.",
+        "weak_if": "The answer starts from the method name or a performance claim."
+      },
+      {
+        "part": "Hidden quantity",
+        "reader_must_say": "which short formula, if any, actually explains the measured change",
+        "why_it_matters": "This names the missing thing the math has to carry the reader toward.",
+        "weak_if": "The answer talks about prediction without saying what quantity is still unknown."
+      },
+      {
+        "part": "Mathematical move",
+        "reader_must_say": "search for a readable equation that fits the data and survives a changed case",
+        "why_it_matters": "This is the reason the concept is needed instead of a looser description.",
+        "weak_if": "The answer uses a label but does not say what work the math does."
+      },
+      {
+        "part": "Shape carried",
+        "reader_must_say": "a compact equation is a claim about structure, rather than only a curve through points",
+        "why_it_matters": "This explains what the formula shape keeps and what claim it is allowed to support.",
+        "weak_if": "The answer repeats the formula but cannot translate what it carries."
+      },
+      {
+        "part": "Changed-case rejection",
+        "reader_must_say": "remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts",
+        "why_it_matters": "This is the first concrete way to stop trusting the claim.",
+        "weak_if": "The answer reports a score, fit, or source mention without a failure condition."
+      }
+    ],
     "acceptance_sentence": "A reader passes only if they can say, in ordinary language, The answer lists measured variables, allowed operations or ingredients, and the formula's claim about the system. It names at least one missing variable or untested regime and demands a changed experiment before calling the formula useful.",
     "scoring_rubric": [
       {
@@ -251,6 +411,38 @@
     "related": [
       "topics/foundation-models-for-pdes.html",
       "domains/many-pde-tasks.html"
+    ],
+    "answer_parts": [
+      {
+        "part": "Observed evidence",
+        "reader_must_say": "many PDE problem instances across equations, grids, parameters, or physical settings",
+        "why_it_matters": "This is the only evidence the explanation is allowed to start from.",
+        "weak_if": "The answer starts from the method name or a performance claim."
+      },
+      {
+        "part": "Hidden quantity",
+        "reader_must_say": "which shared structure carries from one scientific task to another",
+        "why_it_matters": "This names the missing thing the math has to carry the reader toward.",
+        "weak_if": "The answer talks about prediction without saying what quantity is still unknown."
+      },
+      {
+        "part": "Mathematical move",
+        "reader_must_say": "train one broad model to reuse structure across many related field-prediction tasks",
+        "why_it_matters": "This is the reason the concept is needed instead of a looser description.",
+        "weak_if": "The answer uses a label but does not say what work the math does."
+      },
+      {
+        "part": "Shape carried",
+        "reader_must_say": "breadth is useful only if the new task shares the structure the model actually learned",
+        "why_it_matters": "This explains what the formula shape keeps and what claim it is allowed to support.",
+        "weak_if": "The answer repeats the formula but cannot translate what it carries."
+      },
+      {
+        "part": "Changed-case rejection",
+        "reader_must_say": "hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver",
+        "why_it_matters": "This is the first concrete way to stop trusting the claim.",
+        "weak_if": "The answer reports a score, fit, or source mention without a failure condition."
+      }
     ],
     "acceptance_sentence": "A reader passes only if they can say, in ordinary language, The answer names included and held-out task families, the shared structure being claimed, and a trusted solver or measurement for checking. It rejects broad claims when new equations, boundaries, scales, or rare regimes were not tested.",
     "scoring_rubric": [
@@ -299,6 +491,38 @@
       "topics/deep-learning.html",
       "concept-ladder.html"
     ],
+    "answer_parts": [
+      {
+        "part": "Observed evidence",
+        "reader_must_say": "many input-output examples from experiments, simulations, or measurements",
+        "why_it_matters": "This is the only evidence the explanation is allowed to start from.",
+        "weak_if": "The answer starts from the method name or a performance claim."
+      },
+      {
+        "part": "Hidden quantity",
+        "reader_must_say": "the exact rule that connects the input to the output",
+        "why_it_matters": "This names the missing thing the math has to carry the reader toward.",
+        "weak_if": "The answer talks about prediction without saying what quantity is still unknown."
+      },
+      {
+        "part": "Mathematical move",
+        "reader_must_say": "adjust many weights until the model maps familiar inputs to the right outputs",
+        "why_it_matters": "This is the reason the concept is needed instead of a looser description.",
+        "weak_if": "The answer uses a label but does not say what work the math does."
+      },
+      {
+        "part": "Shape carried",
+        "reader_must_say": "the model earns attention only when prediction survives examples it did not train on",
+        "why_it_matters": "This explains what the formula shape keeps and what claim it is allowed to support.",
+        "weak_if": "The answer repeats the formula but cannot translate what it carries."
+      },
+      {
+        "part": "Changed-case rejection",
+        "reader_must_say": "hold out a changed material, geometry, parameter range, or sensor condition",
+        "why_it_matters": "This is the first concrete way to stop trusting the claim.",
+        "weak_if": "The answer reports a score, fit, or source mention without a failure condition."
+      }
+    ],
     "acceptance_sentence": "A reader passes only if they can say, in ordinary language, Observed: many input-output examples from experiments, simulations, or measurements. Hidden: the exact rule that connects the input to the output. The mathematical move is to adjust many weights until the model maps familiar inputs to the right outputs. The formula shape means the model earns attention only when prediction survives examples it did not train on. The claim should be tested by this changed case: hold out a changed material, geometry, parameter range, or sensor condition.",
     "scoring_rubric": [
       {
@@ -345,6 +569,38 @@
     "related": [
       "topics/partial-differential-equations.html",
       "concept-ladder.html"
+    ],
+    "answer_parts": [
+      {
+        "part": "Observed evidence",
+        "reader_must_say": "a field such as temperature, pressure, concentration, velocity, or displacement",
+        "why_it_matters": "This is the only evidence the explanation is allowed to start from.",
+        "weak_if": "The answer starts from the method name or a performance claim."
+      },
+      {
+        "part": "Hidden quantity",
+        "reader_must_say": "how every point in the field affects nearby points over time",
+        "why_it_matters": "This names the missing thing the math has to carry the reader toward.",
+        "weak_if": "The answer talks about prediction without saying what quantity is still unknown."
+      },
+      {
+        "part": "Mathematical move",
+        "reader_must_say": "write a local change rule that uses rates across space and time",
+        "why_it_matters": "This is the reason the concept is needed instead of a looser description.",
+        "weak_if": "The answer uses a label but does not say what work the math does."
+      },
+      {
+        "part": "Shape carried",
+        "reader_must_say": "the equation carries how a whole field changes, rather than only how one number changes",
+        "why_it_matters": "This explains what the formula shape keeps and what claim it is allowed to support.",
+        "weak_if": "The answer repeats the formula but cannot translate what it carries."
+      },
+      {
+        "part": "Changed-case rejection",
+        "reader_must_say": "change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error",
+        "why_it_matters": "This is the first concrete way to stop trusting the claim.",
+        "weak_if": "The answer reports a score, fit, or source mention without a failure condition."
+      }
     ],
     "acceptance_sentence": "A reader passes only if they can say, in ordinary language, Observed: a field such as temperature, pressure, concentration, velocity, or displacement. Hidden: how every point in the field affects nearby points over time. The mathematical move is to write a local change rule that uses rates across space and time. The formula shape means the equation carries how a whole field changes, rather than only how one number changes. The claim should be tested by this changed case: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error.",
     "scoring_rubric": [
@@ -393,6 +649,38 @@
       "topics/scientific-machine-learning.html",
       "concept-ladder.html"
     ],
+    "answer_parts": [
+      {
+        "part": "Observed evidence",
+        "reader_must_say": "data, equations, units, simulation outputs, and domain limits",
+        "why_it_matters": "This is the only evidence the explanation is allowed to start from.",
+        "weak_if": "The answer starts from the method name or a performance claim."
+      },
+      {
+        "part": "Hidden quantity",
+        "reader_must_say": "which parts of the scientific system are missing, noisy, or too costly to compute directly",
+        "why_it_matters": "This names the missing thing the math has to carry the reader toward.",
+        "weak_if": "The answer talks about prediction without saying what quantity is still unknown."
+      },
+      {
+        "part": "Mathematical move",
+        "reader_must_say": "combine learned prediction with scientific checks that name what the claim is allowed to mean",
+        "why_it_matters": "This is the reason the concept is needed instead of a looser description.",
+        "weak_if": "The answer uses a label but does not say what work the math does."
+      },
+      {
+        "part": "Shape carried",
+        "reader_must_say": "the model is judged by a scientific job, not by a score floating away from the job",
+        "why_it_matters": "This explains what the formula shape keeps and what claim it is allowed to support.",
+        "weak_if": "The answer repeats the formula but cannot translate what it carries."
+      },
+      {
+        "part": "Changed-case rejection",
+        "reader_must_say": "state the scientific quantity first, then test it under a changed case that matters in that domain",
+        "why_it_matters": "This is the first concrete way to stop trusting the claim.",
+        "weak_if": "The answer reports a score, fit, or source mention without a failure condition."
+      }
+    ],
     "acceptance_sentence": "A reader passes only if they can say, in ordinary language, Observed: data, equations, units, simulation outputs, and domain limits. Hidden: which parts of the scientific system are missing, noisy, or too costly to compute directly. The mathematical move is to combine learned prediction with scientific checks that name what the claim is allowed to mean. The formula shape means the model is judged by a scientific job, not by a score floating away from the job. The claim should be tested by this changed case: state the scientific quantity first, then test it under a changed case that matters in that domain.",
     "scoring_rubric": [
       {
@@ -439,6 +727,38 @@
     "related": [
       "topics/optimization-for-learning.html",
       "concept-ladder.html"
+    ],
+    "answer_parts": [
+      {
+        "part": "Observed evidence",
+        "reader_must_say": "a written score that says which model behavior is better or worse",
+        "why_it_matters": "This is the only evidence the explanation is allowed to start from.",
+        "weak_if": "The answer starts from the method name or a performance claim."
+      },
+      {
+        "part": "Hidden quantity",
+        "reader_must_say": "whether that score matches the scientific behavior the user actually cares about",
+        "why_it_matters": "This names the missing thing the math has to carry the reader toward.",
+        "weak_if": "The answer talks about prediction without saying what quantity is still unknown."
+      },
+      {
+        "part": "Mathematical move",
+        "reader_must_say": "change model settings to lower the written score",
+        "why_it_matters": "This is the reason the concept is needed instead of a looser description.",
+        "weak_if": "The answer uses a label but does not say what work the math does."
+      },
+      {
+        "part": "Shape carried",
+        "reader_must_say": "the model learns the score, so the score must include the scientific burden",
+        "why_it_matters": "This explains what the formula shape keeps and what claim it is allowed to support.",
+        "weak_if": "The answer repeats the formula but cannot translate what it carries."
+      },
+      {
+        "part": "Changed-case rejection",
+        "reader_must_say": "inspect what the score ignores, then check whether the ignored behavior fails after training",
+        "why_it_matters": "This is the first concrete way to stop trusting the claim.",
+        "weak_if": "The answer reports a score, fit, or source mention without a failure condition."
+      }
     ],
     "acceptance_sentence": "A reader passes only if they can say, in ordinary language, Observed: a written score that says which model behavior is better or worse. Hidden: whether that score matches the scientific behavior the user actually cares about. The mathematical move is to change model settings to lower the written score. The formula shape means the model learns the score, so the score must include the scientific burden. The claim should be tested by this changed case: inspect what the score ignores, then check whether the ignored behavior fails after training.",
     "scoring_rubric": [
@@ -487,6 +807,38 @@
       "topics/generative-modeling.html",
       "concept-ladder.html"
     ],
+    "answer_parts": [
+      {
+        "part": "Observed evidence",
+        "reader_must_say": "examples of fields, molecules, flows, shapes, or other scientific objects",
+        "why_it_matters": "This is the only evidence the explanation is allowed to start from.",
+        "weak_if": "The answer starts from the method name or a performance claim."
+      },
+      {
+        "part": "Hidden quantity",
+        "reader_must_say": "the spread of possible valid objects beyond the examples",
+        "why_it_matters": "This names the missing thing the math has to carry the reader toward.",
+        "weak_if": "The answer talks about prediction without saying what quantity is still unknown."
+      },
+      {
+        "part": "Mathematical move",
+        "reader_must_say": "learn how to sample new candidates that resemble the training family",
+        "why_it_matters": "This is the reason the concept is needed instead of a looser description.",
+        "weak_if": "The answer uses a label but does not say what work the math does."
+      },
+      {
+        "part": "Shape carried",
+        "reader_must_say": "a generated object must still pass physics and usefulness checks",
+        "why_it_matters": "This explains what the formula shape keeps and what claim it is allowed to support.",
+        "weak_if": "The answer repeats the formula but cannot translate what it carries."
+      },
+      {
+        "part": "Changed-case rejection",
+        "reader_must_say": "measure constraints, rare cases, conservation, and downstream task performance on generated samples",
+        "why_it_matters": "This is the first concrete way to stop trusting the claim.",
+        "weak_if": "The answer reports a score, fit, or source mention without a failure condition."
+      }
+    ],
     "acceptance_sentence": "A reader passes only if they can say, in ordinary language, Observed: examples of fields, molecules, flows, shapes, or other scientific objects. Hidden: the spread of possible valid objects beyond the examples. The mathematical move is to learn how to sample new candidates that resemble the training family. The formula shape means a generated object must still pass physics and usefulness checks. The claim should be tested by this changed case: measure constraints, rare cases, conservation, and downstream task performance on generated samples.",
     "scoring_rubric": [
       {
@@ -533,6 +885,38 @@
     "related": [
       "topics/graphs-and-geometric-learning.html",
       "concept-ladder.html"
+    ],
+    "answer_parts": [
+      {
+        "part": "Observed evidence",
+        "reader_must_say": "objects with parts and connections, such as meshes, molecules, or interacting components",
+        "why_it_matters": "This is the only evidence the explanation is allowed to start from.",
+        "weak_if": "The answer starts from the method name or a performance claim."
+      },
+      {
+        "part": "Hidden quantity",
+        "reader_must_say": "which neighboring and long-range interactions control the scientific quantity",
+        "why_it_matters": "This names the missing thing the math has to carry the reader toward.",
+        "weak_if": "The answer talks about prediction without saying what quantity is still unknown."
+      },
+      {
+        "part": "Mathematical move",
+        "reader_must_say": "let information move along the object connections instead of flattening the object into a plain row",
+        "why_it_matters": "This is the reason the concept is needed instead of a looser description.",
+        "weak_if": "The answer uses a label but does not say what work the math does."
+      },
+      {
+        "part": "Shape carried",
+        "reader_must_say": "the model keeps the structure of the scientific object visible",
+        "why_it_matters": "This explains what the formula shape keeps and what claim it is allowed to support.",
+        "weak_if": "The answer repeats the formula but cannot translate what it carries."
+      },
+      {
+        "part": "Changed-case rejection",
+        "reader_must_say": "change the mesh, rotate or move the object, or add missing interactions and inspect what breaks",
+        "why_it_matters": "This is the first concrete way to stop trusting the claim.",
+        "weak_if": "The answer reports a score, fit, or source mention without a failure condition."
+      }
     ],
     "acceptance_sentence": "A reader passes only if they can say, in ordinary language, Observed: objects with parts and connections, such as meshes, molecules, or interacting components. Hidden: which neighboring and long-range interactions control the scientific quantity. The mathematical move is to let information move along the object connections instead of flattening the object into a plain row. The formula shape means the model keeps the structure of the scientific object visible. The claim should be tested by this changed case: change the mesh, rotate or move the object, or add missing interactions and inspect what breaks.",
     "scoring_rubric": [
@@ -581,6 +965,38 @@
       "topics/neural-differential-equations.html",
       "concept-ladder.html"
     ],
+    "answer_parts": [
+      {
+        "part": "Observed evidence",
+        "reader_must_say": "measurements of a system changing over time",
+        "why_it_matters": "This is the only evidence the explanation is allowed to start from.",
+        "weak_if": "The answer starts from the method name or a performance claim."
+      },
+      {
+        "part": "Hidden quantity",
+        "reader_must_say": "the rate rule that moves the present value into the future",
+        "why_it_matters": "This names the missing thing the math has to carry the reader toward.",
+        "weak_if": "The answer talks about prediction without saying what quantity is still unknown."
+      },
+      {
+        "part": "Mathematical move",
+        "reader_must_say": "learn the missing rate rule and place it inside a time-evolution calculation",
+        "why_it_matters": "This is the reason the concept is needed instead of a looser description.",
+        "weak_if": "The answer uses a label but does not say what work the math does."
+      },
+      {
+        "part": "Shape carried",
+        "reader_must_say": "learning supplies the unknown change rule while the time update carries the idea of continuous motion",
+        "why_it_matters": "This explains what the formula shape keeps and what claim it is allowed to support.",
+        "weak_if": "The answer repeats the formula but cannot translate what it carries."
+      },
+      {
+        "part": "Changed-case rejection",
+        "reader_must_say": "run longer than the training window and check whether small rate errors accumulate into drift",
+        "why_it_matters": "This is the first concrete way to stop trusting the claim.",
+        "weak_if": "The answer reports a score, fit, or source mention without a failure condition."
+      }
+    ],
     "acceptance_sentence": "A reader passes only if they can say, in ordinary language, Observed: measurements of a system changing over time. Hidden: the rate rule that moves the present value into the future. The mathematical move is to learn the missing rate rule and place it inside a time-evolution calculation. The formula shape means learning supplies the unknown change rule while the time update carries the idea of continuous motion. The claim should be tested by this changed case: run longer than the training window and check whether small rate errors accumulate into drift.",
     "scoring_rubric": [
       {
@@ -627,6 +1043,38 @@
     "related": [
       "topics/attention-for-scientific-fields.html",
       "concept-ladder.html"
+    ],
+    "answer_parts": [
+      {
+        "part": "Observed evidence",
+        "reader_must_say": "large fields where one location may depend on other locations",
+        "why_it_matters": "This is the only evidence the explanation is allowed to start from.",
+        "weak_if": "The answer starts from the method name or a performance claim."
+      },
+      {
+        "part": "Hidden quantity",
+        "reader_must_say": "which distant parts matter for the local prediction",
+        "why_it_matters": "This names the missing thing the math has to carry the reader toward.",
+        "weak_if": "The answer talks about prediction without saying what quantity is still unknown."
+      },
+      {
+        "part": "Mathematical move",
+        "reader_must_say": "let the model choose which parts of the field exchange information",
+        "why_it_matters": "This is the reason the concept is needed instead of a looser description.",
+        "weak_if": "The answer uses a label but does not say what work the math does."
+      },
+      {
+        "part": "Shape carried",
+        "reader_must_say": "attention is a routing rule for information, not proof that the selected route is physically complete",
+        "why_it_matters": "This explains what the formula shape keeps and what claim it is allowed to support.",
+        "weak_if": "The answer repeats the formula but cannot translate what it carries."
+      },
+      {
+        "part": "Changed-case rejection",
+        "reader_must_say": "change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures",
+        "why_it_matters": "This is the first concrete way to stop trusting the claim.",
+        "weak_if": "The answer reports a score, fit, or source mention without a failure condition."
+      }
     ],
     "acceptance_sentence": "A reader passes only if they can say, in ordinary language, Observed: large fields where one location may depend on other locations. Hidden: which distant parts matter for the local prediction. The mathematical move is to let the model choose which parts of the field exchange information. The formula shape means attention is a routing rule for information, not proof that the selected route is physically complete. The claim should be tested by this changed case: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures.",
     "scoring_rubric": [
