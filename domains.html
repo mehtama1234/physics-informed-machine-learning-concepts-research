@@ -40,7 +40,124 @@
   <a href="evidence-ledger.html">Evidence</a>
 </nav>
 <main>
-<h1>Domain Guides</h1><p>These pages ground the concepts in real scientific settings. Each guide names the quantity, what makes the domain hard, which concepts matter, and the failure test.</p><div class="grid"><article class="card"><h3><a href="domains/heat-and-diffusion.html">Heat And Diffusion</a></h3><p>What is happening between sensors, later in time, or under a changed boundary?</p></article><article class="card"><h3><a href="domains/fluids-and-flow.html">Fluids And Flow</a></h3><p>Can we predict flow fields or forces quickly enough for design while still catching important failures?</p></article><article class="card"><h3><a href="domains/materials-and-mechanics.html">Materials And Mechanics</a></h3><p>Can a model predict how a material or structure responds under a new load or shape?</p></article><article class="card"><h3><a href="domains/chemistry-and-biology.html">Chemistry And Biology</a></h3><p>Can learned structure help predict scientific behavior while respecting the object being studied?</p></article><article class="card"><h3><a href="domains/many-pde-tasks.html">Many PDE Tasks</a></h3><p>Can one trained model reuse structure across many related scientific tasks?</p></article><article class="card"><h3><a href="domains/data-rich-scientific-prediction.html">Data-Rich Scientific Prediction</a></h3><p>Can a learned predictor answer a new scientific case without pretending the examples cover every future use?</p></article><article class="card"><h3><a href="domains/scientific-model-building.html">Scientific Model Building</a></h3><p>How should a learned model combine measurements and known rules for a named scientific job?</p></article><article class="card"><h3><a href="domains/learned-time-dynamics.html">Learned Time Dynamics</a></h3><p>Can a model learn the missing rule for how a system changes while keeping time behavior testable?</p></article><article class="card"><h3><a href="domains/training-score-design.html">Training Score Design</a></h3><p>What should the training process reward so the learned answer serves the scientific job?</p></article></div>
+<h1>Domain Guides</h1><p>These pages ground the concepts in real scientific settings. Each guide names the quantity, the decision, the hidden part, and the changed case that can reject the claim.</p><div class="grid">
+<article class="card">
+  <h3><a href="domains/heat-and-diffusion.html">Heat And Diffusion</a></h3>
+  <p>What is happening between sensors, later in time, or under a changed boundary?</p>
+  <table>
+    <tbody>
+      <tr><th>Quantity</th><td>temperature, concentration, or another quantity spreading through space</td></tr>
+      <tr><th>Decision</th><td>decide whether the wall, chip, or sample will exceed a safe temperature</td></tr>
+      <tr><th>Hidden Part</th><td>the temperature at unsensed locations and later times</td></tr>
+      <tr><th>Changed-Case Test</th><td>move the heat source or change the boundary temperature and compare against held-out sensors or a trusted solve</td></tr>
+    </tbody>
+  </table>
+</article>
+
+<article class="card">
+  <h3><a href="domains/fluids-and-flow.html">Fluids And Flow</a></h3>
+  <p>Can we predict flow fields or forces quickly enough for design while still catching important failures?</p>
+  <table>
+    <tbody>
+      <tr><th>Quantity</th><td>velocity, pressure, vorticity, drag, lift, or other flow quantities</td></tr>
+      <tr><th>Decision</th><td>screen designs and decide which cases deserve expensive solver runs</td></tr>
+      <tr><th>Hidden Part</th><td>the field and forces for a new shape near the edge of the design range</td></tr>
+      <tr><th>Changed-Case Test</th><td>hold out a new geometry or flow regime and check drag, lift, boundary behavior, and vortices</td></tr>
+    </tbody>
+  </table>
+</article>
+
+<article class="card">
+  <h3><a href="domains/materials-and-mechanics.html">Materials And Mechanics</a></h3>
+  <p>Can a model predict how a material or structure responds under a new load or shape?</p>
+  <table>
+    <tbody>
+      <tr><th>Quantity</th><td>stress, strain, displacement, failure location, or material response</td></tr>
+      <tr><th>Decision</th><td>decide whether the part is safe enough or needs a changed design</td></tr>
+      <tr><th>Hidden Part</th><td>internal stress and the local region where failure may begin</td></tr>
+      <tr><th>Changed-Case Test</th><td>change the load path, defect, mesh, or boundary and check stress near failure regions</td></tr>
+    </tbody>
+  </table>
+</article>
+
+<article class="card">
+  <h3><a href="domains/chemistry-and-biology.html">Chemistry And Biology</a></h3>
+  <p>Can learned structure help predict scientific behavior while respecting the object being studied?</p>
+  <table>
+    <tbody>
+      <tr><th>Quantity</th><td>molecular property, reaction behavior, concentration, binding, or biological response</td></tr>
+      <tr><th>Decision</th><td>choose which candidate molecules deserve synthesis, testing, or closer calculation</td></tr>
+      <tr><th>Hidden Part</th><td>which structural relations control the property or response in the new molecule</td></tr>
+      <tr><th>Changed-Case Test</th><td>test on a new scaffold, rare atom type, changed assay, or biological condition outside the familiar set</td></tr>
+    </tbody>
+  </table>
+</article>
+
+<article class="card">
+  <h3><a href="domains/many-pde-tasks.html">Many PDE Tasks</a></h3>
+  <p>Can one trained model reuse structure across many related scientific tasks?</p>
+  <table>
+    <tbody>
+      <tr><th>Quantity</th><td>solution fields across many equations, grids, parameters, or boundary settings</td></tr>
+      <tr><th>Decision</th><td>decide whether the broad model is a useful shortcut or whether a task-specific solve is still needed</td></tr>
+      <tr><th>Hidden Part</th><td>which shared structure transfers to the new PDE case and which parts do not</td></tr>
+      <tr><th>Changed-Case Test</th><td>withhold a full equation family, boundary type, scale, or quantity and compare against trusted solves</td></tr>
+    </tbody>
+  </table>
+</article>
+
+<article class="card">
+  <h3><a href="domains/data-rich-scientific-prediction.html">Data-Rich Scientific Prediction</a></h3>
+  <p>Can a learned predictor answer a new scientific case without pretending the examples cover every future use?</p>
+  <table>
+    <tbody>
+      <tr><th>Quantity</th><td>a measured or simulated quantity predicted from many prior examples</td></tr>
+      <tr><th>Decision</th><td>decide whether the prediction is good enough for screening, measurement, or closer simulation</td></tr>
+      <tr><th>Hidden Part</th><td>the answer for a new case whose source, scale, or condition may differ from the old cases</td></tr>
+      <tr><th>Changed-Case Test</th><td>hold out a new source, scale, sensor condition, or rare case and check the quantity used for decisions</td></tr>
+    </tbody>
+  </table>
+</article>
+
+<article class="card">
+  <h3><a href="domains/scientific-model-building.html">Scientific Model Building</a></h3>
+  <p>How should a learned model combine measurements and known rules for a named scientific job?</p>
+  <table>
+    <tbody>
+      <tr><th>Quantity</th><td>the physical or scientific quantity the model is supposed to explain, predict, or support</td></tr>
+      <tr><th>Decision</th><td>decide whether the combined learned-and-scientific model can support a claim, design, or experiment</td></tr>
+      <tr><th>Hidden Part</th><td>the missing relation or field value needed for the scientific question</td></tr>
+      <tr><th>Changed-Case Test</th><td>change the experiment, boundary, scale, or measured variable and verify the scientific target directly</td></tr>
+    </tbody>
+  </table>
+</article>
+
+<article class="card">
+  <h3><a href="domains/learned-time-dynamics.html">Learned Time Dynamics</a></h3>
+  <p>Can a model learn the missing rule for how a system changes while keeping time behavior testable?</p>
+  <table>
+    <tbody>
+      <tr><th>Quantity</th><td>the future state, path, rate of change, or event time of a system</td></tr>
+      <tr><th>Decision</th><td>decide whether the learned dynamics can be used for forecasting, control, or experiment planning</td></tr>
+      <tr><th>Hidden Part</th><td>the missing rate rule and the future path under a new starting condition or input</td></tr>
+      <tr><th>Changed-Case Test</th><td>start from a new condition, run longer than the training window, and check drift, stability, and conserved quantities</td></tr>
+    </tbody>
+  </table>
+</article>
+
+<article class="card">
+  <h3><a href="domains/training-score-design.html">Training Score Design</a></h3>
+  <p>What should the training process reward so the learned answer serves the scientific job?</p>
+  <table>
+    <tbody>
+      <tr><th>Quantity</th><td>the scientific quantity encoded by the terms of the training score</td></tr>
+      <tr><th>Decision</th><td>decide whether the loss is a faithful contract for the claim being made</td></tr>
+      <tr><th>Hidden Part</th><td>whether the trained model is good because the science is right or only because the written score is easy to lower</td></tr>
+      <tr><th>Changed-Case Test</th><td>change the weights, hold out hard regions, and check the physical or decision quantity directly</td></tr>
+    </tbody>
+  </table>
+</article>
+</div>
 </main>
 </body>
 </html>
