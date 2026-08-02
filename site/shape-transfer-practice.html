@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Physics-Informed ML Shape Transfer Practice</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav class="topbar">
+  <a href="index.html">Physics-Informed ML</a>
+  <a href="transcripts.html">Transcripts</a>
+  <a href="concept-atlas.html">Concept Atlas</a>
+  <a href="families.html">Families</a>
+  <a href="comparisons.html">Comparisons</a>
+  <a href="worked-examples.html">Examples</a>
+  <a href="diagrams.html">Diagrams</a>
+  <a href="derivations.html">Derivations</a>
+  <a href="formula-guide.html">Formulas</a>
+  <a href="misconceptions.html">Misreads</a>
+  <a href="course-spine.html">Spine</a>
+  <a href="topology-shape-guide.html">Shape</a>
+  <a href="shape-transfer-practice.html">Shape Practice</a>
+  <a href="question-to-topic-guide.html">Questions</a>
+  <a href="field-application-guide.html">Fields</a>
+  <a href="importance-matrix.html">Importance</a>
+  <a href="end-to-end-walkthrough.html">Walkthrough</a>
+  <a href="example-route-guide.html">Routes</a>
+  <a href="no-jargon-concept-guide.html">No Jargon</a>
+  <a href="learning-path.html">Path</a>
+  <a href="glossary.html">Glossary</a>
+  <a href="domains.html">Domains</a>
+  <a href="reader-checks.html">Checks</a>
+  <a href="plain-explanation-practice.html">Practice</a>
+  <a href="decision-guide.html">Decide</a>
+  <a href="provenance.html">Provenance</a>
+  <a href="coverage.html">Coverage</a>
+  <a href="dependencies.html">Dependencies</a>
+  <a href="concept-ladder.html">Ladder</a>
+  <a href="evidence-packets.html">Packets</a>
+  <a href="quality.html">Quality</a>
+  <a href="wording-audit.html">Wording</a>
+  <a href="plain-essay-review.html">Essays</a>
+  <a href="synthesis.html">Synthesis</a>
+  <a href="review-entrypoints.html">Review Map</a>
+  <a href="review-search.html">Find</a>
+  <a href="review-queue.html">Queue</a>
+  <a href="editorial-roadmap.html">Roadmap</a>
+  <a href="completion-audit.html">Audit</a>
+  <a href="handoff.html">Handoff</a>
+  <a href="theme-map.html">Themes</a>
+  <a href="evidence-ledger.html">Evidence</a>
+</nav>
+<main>
+
+<h1>Shape Transfer Practice</h1>
+<h2>Why This Practice Exists</h2>
+<p>Topology and shape are easier to understand when the learner moves the same idea across several fields. The plain question is always: what relation inside the object carries the answer?</p>
+<h2>Transfer Matrix</h2>
+<table>
+  <thead>
+    <tr><th>Topic</th><th>Plain Shape Use</th><th>Why Shape Matters</th><th>Engineering Transfer</th><th>Materials Or Biology Transfer</th><th>Climate Or Field Transfer</th><th>Shape Test</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <td><a href="topics/deep-learning.html">Deep Learning</a></td>
+  <td>Use examples of shapes, images, or surfaces when the rule is hard to write by hand.</td>
+  <td>Deep learning matters here only if changed shapes still get the right answer for the named task.</td>
+  <td>Sort old test runs so a designer can screen the next part before a costly build.</td>
+  <td>Read images, spectra, molecules, or cell measurements when hand rules are incomplete.</td>
+  <td>Learn repeated field patterns from stored simulations or measurements.</td>
+  <td>Hold out a new shape family, camera view, mesh order, or scale and measure the target error.</td>
+</tr>
+
+<tr>
+  <td><a href="topics/physics-informed-neural-networks.html">Physics-Informed Neural Networks</a></td>
+  <td>Fit a field on a shape while also asking it to obey the rule that should hold inside the shape.</td>
+  <td>A PINN matters here when sparse points are not enough but an equation can still guide the missing field.</td>
+  <td>Estimate heat, stress, flow, or pressure when tests are sparse but the physical law is known.</td>
+  <td>Fill in missing concentration, strain, or reaction fields while keeping known balance rules visible.</td>
+  <td>Recover a full field from sparse measurements without ignoring the governing equation.</td>
+  <td>Move sensors, change the boundary, or bend the domain and compare the hidden field with trusted values.</td>
+</tr>
+
+<tr>
+  <td><a href="topics/partial-differential-equations.html">Partial Differential Equations</a></td>
+  <td>Describe how a field moves across a shape, surface, mesh, or region with boundaries.</td>
+  <td>PDEs matter here because shape and boundary decide how local changes spread.</td>
+  <td>Write the rule for heat, stress, flow, pressure, or waves before choosing a learning method.</td>
+  <td>Track diffusion, reaction, strain, growth, or transport through a material or tissue.</td>
+  <td>Describe wind, heat, concentration, pressure, and water over space and time.</td>
+  <td>Change the boundary, cut a hole, refine the mesh, or bend the region and check conservation.</td>
+</tr>
+
+<tr>
+  <td><a href="topics/operator-learning.html">Operator Learning</a></td>
+  <td>Learn how one whole shape, boundary, or input field maps to a whole output field.</td>
+  <td>Operator learning matters when the question is about a family of field problems, not one solve.</td>
+  <td>Give fast field estimates for repeated wing, device, part, or load queries.</td>
+  <td>Map a material setting, molecular field, or tissue condition to a response field.</td>
+  <td>Map forcing, boundary, or initial fields to future solution fields.</td>
+  <td>Hold out a new geometry class, mesh resolution, boundary type, or coefficient range.</td>
+</tr>
+
+<tr>
+  <td><a href="topics/scientific-machine-learning.html">Scientific Machine Learning</a></td>
+  <td>Combine data with shape, boundary, and connection checks before trusting a prediction.</td>
+  <td>Scientific machine learning matters when the target is a real quantity, not only a fitted score.</td>
+  <td>Use data and scientific checks together when a design decision has a cost.</td>
+  <td>Tie learned predictions to units, mechanisms, measurements, and domain limits.</td>
+  <td>Use learned models only with clear field checks, physical checks, and use ranges.</td>
+  <td>Change shape, mesh, boundary, or sensor layout and inspect the scientific quantity.</td>
+</tr>
+
+<tr>
+  <td><a href="topics/surrogate-modeling.html">Surrogate Modeling</a></td>
+  <td>Replace slow solves for repeated shape queries inside a named family.</td>
+  <td>A surrogate matters here when shape changes are common and full solves are too slow.</td>
+  <td>Screen many candidate parts, wings, devices, or loads before running the costly solve.</td>
+  <td>Use a cheaper stand-in for repeated material, molecule, or tissue simulations.</td>
+  <td>Answer repeated field queries faster than running a full model each time.</td>
+  <td>Change holes, edges, mesh detail, or shape class and compare with the full solver.</td>
+</tr>
+
+<tr>
+  <td><a href="topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></td>
+  <td>State how belief changes when the shape, mesh, or connection pattern changes.</td>
+  <td>Uncertainty matters here because a prediction can look good on familiar shapes and fail on a new one.</td>
+  <td>Attach a use range and warning boundary to a prediction before a design choice.</td>
+  <td>Say when a measured property prediction should weaken under a new lab or sample condition.</td>
+  <td>Separate ordinary test success from success under changed climate, flow, or boundary conditions.</td>
+  <td>Hold out a new shape family, missing connection, or mesh resolution and measure the error.</td>
+</tr>
+
+<tr>
+  <td><a href="topics/optimization-for-learning.html">Optimization For Learning</a></td>
+  <td>Choose a score that rewards the right shape, connection, boundary, or field behavior.</td>
+  <td>Optimization matters here because the model will chase the score even when the score misses the real shape question.</td>
+  <td>Train toward the quantity that drives the design, not only average error.</td>
+  <td>Set the training score so it respects measured properties, units, and known checks.</td>
+  <td>Balance field error, physical checks, and decision costs during training.</td>
+  <td>Inspect whether the trained answer breaks after relabeling, mesh change, or boundary change.</td>
+</tr>
+
+<tr>
+  <td><a href="topics/generative-modeling.html">Generative Modeling</a></td>
+  <td>Create candidate shapes or fields while checking holes, connections, and boundaries.</td>
+  <td>Generative modeling matters here only if the samples are valid objects, not just plausible pictures.</td>
+  <td>Propose candidate parts, layouts, fields, or operating cases for later testing.</td>
+  <td>Suggest molecules, structures, images, or samples that should still obey known rules.</td>
+  <td>Sample possible fields for stress tests, rare cases, or downstream solvers.</td>
+  <td>Test connected parts, forbidden holes, mesh validity, and downstream use.</td>
+</tr>
+
+<tr>
+  <td><a href="topics/graphs-and-geometric-learning.html">Graphs And Geometric Learning</a></td>
+  <td>Keep nodes, edges, neighborhoods, holes, surfaces, and symmetries visible to the model.</td>
+  <td>Graphs and geometric learning matters here because the connection pattern is part of the evidence.</td>
+  <td>Model meshes, parts, sensor networks, or connected components without flattening away contact.</td>
+  <td>Represent atoms, bonds, cells, proteins, grains, or interaction networks as connected objects.</td>
+  <td>Carry information over irregular grids, sensor networks, coastlines, or mesh fields.</td>
+  <td>Relabel nodes, rotate the object, refine the mesh, or add a missing edge and inspect the target.</td>
+</tr>
+
+<tr>
+  <td><a href="topics/neural-differential-equations.html">Neural Differential Equations</a></td>
+  <td>Learn how a state moves over time when the state also lives on a shape or network.</td>
+  <td>Neural differential equations matter here when the missing part is the rule of change.</td>
+  <td>Predict changing heat, motion, wear, control, or flow when the exact rate rule is unknown.</td>
+  <td>Learn reaction, growth, motion, or change rules from measured time traces.</td>
+  <td>Learn missing pieces of a time-update rule for fields.</td>
+  <td>Change the starting state, shape, or connection pattern and run longer than the training window.</td>
+</tr>
+
+<tr>
+  <td><a href="topics/symbolic-regression.html">Symbolic Regression And Model Discovery</a></td>
+  <td>Search for a short relation that includes the right shape or connection measurements.</td>
+  <td>Symbolic regression matters here only if the readable formula keeps the real cause visible.</td>
+  <td>Find a readable equation that links design variables to the decision quantity.</td>
+  <td>Search for compact laws from measured variables, ingredients, and properties.</td>
+  <td>Look for a readable relation inside measured or simulated field behavior.</td>
+  <td>Remove a shape measure, change the mesh, or add a missing variable and test the formula.</td>
+</tr>
+
+<tr>
+  <td><a href="topics/foundation-models-for-pdes.html">Foundation Models For PDEs</a></td>
+  <td>Reuse field knowledge across PDE tasks while checking new shapes, grids, and boundaries.</td>
+  <td>Foundation PDE models matter here only if shared structure carries to the new shape family.</td>
+  <td>Start from a broad PDE model for a new device or part, then verify the design quantity.</td>
+  <td>Transfer learned field behavior across related materials, tissues, or reaction settings.</td>
+  <td>Use one broad field model across related equation settings.</td>
+  <td>Hold out whole geometry families, boundary types, scales, or rare regimes.</td>
+</tr>
+
+<tr>
+  <td><a href="topics/attention-for-scientific-fields.html">Attention For Scientific Fields</a></td>
+  <td>Let distant parts of a shape or field exchange information when local neighbors are not enough.</td>
+  <td>Attention matters here when faraway structure changes the local answer.</td>
+  <td>Route information across a part, surface, or field where distant regions interact.</td>
+  <td>Let distant atoms, cells, residues, or regions influence a local prediction.</td>
+  <td>Route information across fields where one region can affect another.</td>
+  <td>Change window size, long-range links, boundary regions, or point order.</td>
+</tr>
+</tbody>
+</table>
+<h2>Transfer Drills</h2>
+
+<section>
+  <h2>Deep Learning</h2>
+  <ol>
+    <li><strong>Name the shaped object:</strong> Start from the object or field that carries the evidence: many input-output examples from experiments, simulations, or measurements.</li>
+    <li><strong>Name the relation:</strong> Say what must stay visible: Use examples of shapes, images, or surfaces when the rule is hard to write by hand.</li>
+    <li><strong>Name why it matters:</strong> Deep learning matters here only if changed shapes still get the right answer for the named task.</li>
+    <li><strong>Move to engineering:</strong> Sort old test runs so a designer can screen the next part before a costly build.</li>
+    <li><strong>Move to materials, chemistry, or biology:</strong> Read images, spectra, molecules, or cell measurements when hand rules are incomplete.</li>
+    <li><strong>Move to climate, fluids, or fields:</strong> Learn repeated field patterns from stored simulations or measurements.</li>
+    <li><strong>Run the shape test:</strong> Hold out a new shape family, camera view, mesh order, or scale and measure the target error.</li>
+  </ol>
+  <p><strong>Plain transfer sentence:</strong> The same shape idea matters across fields when the answer depends on a relation inside the object, not only on a list of measured values.</p>
+</section>
+
+<section>
+  <h2>Physics-Informed Neural Networks</h2>
+  <ol>
+    <li><strong>Name the shaped object:</strong> Start from the object or field that carries the evidence: some measured values, boundary values, starting values, and a known differential equation.</li>
+    <li><strong>Name the relation:</strong> Say what must stay visible: Fit a field on a shape while also asking it to obey the rule that should hold inside the shape.</li>
+    <li><strong>Name why it matters:</strong> A PINN matters here when sparse points are not enough but an equation can still guide the missing field.</li>
+    <li><strong>Move to engineering:</strong> Estimate heat, stress, flow, or pressure when tests are sparse but the physical law is known.</li>
+    <li><strong>Move to materials, chemistry, or biology:</strong> Fill in missing concentration, strain, or reaction fields while keeping known balance rules visible.</li>
+    <li><strong>Move to climate, fluids, or fields:</strong> Recover a full field from sparse measurements without ignoring the governing equation.</li>
+    <li><strong>Run the shape test:</strong> Move sensors, change the boundary, or bend the domain and compare the hidden field with trusted values.</li>
+  </ol>
+  <p><strong>Plain transfer sentence:</strong> The same shape idea matters across fields when the answer depends on a relation inside the object, not only on a list of measured values.</p>
+</section>
+
+<section>
+  <h2>Partial Differential Equations</h2>
+  <ol>
+    <li><strong>Name the shaped object:</strong> Start from the object or field that carries the evidence: a field such as temperature, pressure, concentration, velocity, or displacement.</li>
+    <li><strong>Name the relation:</strong> Say what must stay visible: Describe how a field moves across a shape, surface, mesh, or region with boundaries.</li>
+    <li><strong>Name why it matters:</strong> PDEs matter here because shape and boundary decide how local changes spread.</li>
+    <li><strong>Move to engineering:</strong> Write the rule for heat, stress, flow, pressure, or waves before choosing a learning method.</li>
+    <li><strong>Move to materials, chemistry, or biology:</strong> Track diffusion, reaction, strain, growth, or transport through a material or tissue.</li>
+    <li><strong>Move to climate, fluids, or fields:</strong> Describe wind, heat, concentration, pressure, and water over space and time.</li>
+    <li><strong>Run the shape test:</strong> Change the boundary, cut a hole, refine the mesh, or bend the region and check conservation.</li>
+  </ol>
+  <p><strong>Plain transfer sentence:</strong> The same shape idea matters across fields when the answer depends on a relation inside the object, not only on a list of measured values.</p>
+</section>
+
+<section>
+  <h2>Operator Learning</h2>
+  <ol>
+    <li><strong>Name the shaped object:</strong> Start from the object or field that carries the evidence: many example inputs and their full solution fields.</li>
+    <li><strong>Name the relation:</strong> Say what must stay visible: Learn how one whole shape, boundary, or input field maps to a whole output field.</li>
+    <li><strong>Name why it matters:</strong> Operator learning matters when the question is about a family of field problems, not one solve.</li>
+    <li><strong>Move to engineering:</strong> Give fast field estimates for repeated wing, device, part, or load queries.</li>
+    <li><strong>Move to materials, chemistry, or biology:</strong> Map a material setting, molecular field, or tissue condition to a response field.</li>
+    <li><strong>Move to climate, fluids, or fields:</strong> Map forcing, boundary, or initial fields to future solution fields.</li>
+    <li><strong>Run the shape test:</strong> Hold out a new geometry class, mesh resolution, boundary type, or coefficient range.</li>
+  </ol>
+  <p><strong>Plain transfer sentence:</strong> The same shape idea matters across fields when the answer depends on a relation inside the object, not only on a list of measured values.</p>
+</section>
+
+<section>
+  <h2>Scientific Machine Learning</h2>
+  <ol>
+    <li><strong>Name the shaped object:</strong> Start from the object or field that carries the evidence: data, equations, units, simulation outputs, and domain limits.</li>
+    <li><strong>Name the relation:</strong> Say what must stay visible: Combine data with shape, boundary, and connection checks before trusting a prediction.</li>
+    <li><strong>Name why it matters:</strong> Scientific machine learning matters when the target is a real quantity, not only a fitted score.</li>
+    <li><strong>Move to engineering:</strong> Use data and scientific checks together when a design decision has a cost.</li>
+    <li><strong>Move to materials, chemistry, or biology:</strong> Tie learned predictions to units, mechanisms, measurements, and domain limits.</li>
+    <li><strong>Move to climate, fluids, or fields:</strong> Use learned models only with clear field checks, physical checks, and use ranges.</li>
+    <li><strong>Run the shape test:</strong> Change shape, mesh, boundary, or sensor layout and inspect the scientific quantity.</li>
+  </ol>
+  <p><strong>Plain transfer sentence:</strong> The same shape idea matters across fields when the answer depends on a relation inside the object, not only on a list of measured values.</p>
+</section>
+
+<section>
+  <h2>Surrogate Modeling</h2>
+  <ol>
+    <li><strong>Name the shaped object:</strong> Start from the object or field that carries the evidence: expensive solver inputs and outputs for a limited set of cases.</li>
+    <li><strong>Name the relation:</strong> Say what must stay visible: Replace slow solves for repeated shape queries inside a named family.</li>
+    <li><strong>Name why it matters:</strong> A surrogate matters here when shape changes are common and full solves are too slow.</li>
+    <li><strong>Move to engineering:</strong> Screen many candidate parts, wings, devices, or loads before running the costly solve.</li>
+    <li><strong>Move to materials, chemistry, or biology:</strong> Use a cheaper stand-in for repeated material, molecule, or tissue simulations.</li>
+    <li><strong>Move to climate, fluids, or fields:</strong> Answer repeated field queries faster than running a full model each time.</li>
+    <li><strong>Run the shape test:</strong> Change holes, edges, mesh detail, or shape class and compare with the full solver.</li>
+  </ol>
+  <p><strong>Plain transfer sentence:</strong> The same shape idea matters across fields when the answer depends on a relation inside the object, not only on a list of measured values.</p>
+</section>
+
+<section>
+  <h2>Uncertainty And Generalization</h2>
+  <ol>
+    <li><strong>Name the shaped object:</strong> Start from the object or field that carries the evidence: training cases, validation cases, prediction errors, and known shifts between cases.</li>
+    <li><strong>Name the relation:</strong> Say what must stay visible: State how belief changes when the shape, mesh, or connection pattern changes.</li>
+    <li><strong>Name why it matters:</strong> Uncertainty matters here because a prediction can look good on familiar shapes and fail on a new one.</li>
+    <li><strong>Move to engineering:</strong> Attach a use range and warning boundary to a prediction before a design choice.</li>
+    <li><strong>Move to materials, chemistry, or biology:</strong> Say when a measured property prediction should weaken under a new lab or sample condition.</li>
+    <li><strong>Move to climate, fluids, or fields:</strong> Separate ordinary test success from success under changed climate, flow, or boundary conditions.</li>
+    <li><strong>Run the shape test:</strong> Hold out a new shape family, missing connection, or mesh resolution and measure the error.</li>
+  </ol>
+  <p><strong>Plain transfer sentence:</strong> The same shape idea matters across fields when the answer depends on a relation inside the object, not only on a list of measured values.</p>
+</section>
+
+<section>
+  <h2>Optimization For Learning</h2>
+  <ol>
+    <li><strong>Name the shaped object:</strong> Start from the object or field that carries the evidence: a written score that says which model behavior is better or worse.</li>
+    <li><strong>Name the relation:</strong> Say what must stay visible: Choose a score that rewards the right shape, connection, boundary, or field behavior.</li>
+    <li><strong>Name why it matters:</strong> Optimization matters here because the model will chase the score even when the score misses the real shape question.</li>
+    <li><strong>Move to engineering:</strong> Train toward the quantity that drives the design, not only average error.</li>
+    <li><strong>Move to materials, chemistry, or biology:</strong> Set the training score so it respects measured properties, units, and known checks.</li>
+    <li><strong>Move to climate, fluids, or fields:</strong> Balance field error, physical checks, and decision costs during training.</li>
+    <li><strong>Run the shape test:</strong> Inspect whether the trained answer breaks after relabeling, mesh change, or boundary change.</li>
+  </ol>
+  <p><strong>Plain transfer sentence:</strong> The same shape idea matters across fields when the answer depends on a relation inside the object, not only on a list of measured values.</p>
+</section>
+
+<section>
+  <h2>Generative Modeling</h2>
+  <ol>
+    <li><strong>Name the shaped object:</strong> Start from the object or field that carries the evidence: examples of fields, molecules, flows, shapes, or other scientific objects.</li>
+    <li><strong>Name the relation:</strong> Say what must stay visible: Create candidate shapes or fields while checking holes, connections, and boundaries.</li>
+    <li><strong>Name why it matters:</strong> Generative modeling matters here only if the samples are valid objects, not just plausible pictures.</li>
+    <li><strong>Move to engineering:</strong> Propose candidate parts, layouts, fields, or operating cases for later testing.</li>
+    <li><strong>Move to materials, chemistry, or biology:</strong> Suggest molecules, structures, images, or samples that should still obey known rules.</li>
+    <li><strong>Move to climate, fluids, or fields:</strong> Sample possible fields for stress tests, rare cases, or downstream solvers.</li>
+    <li><strong>Run the shape test:</strong> Test connected parts, forbidden holes, mesh validity, and downstream use.</li>
+  </ol>
+  <p><strong>Plain transfer sentence:</strong> The same shape idea matters across fields when the answer depends on a relation inside the object, not only on a list of measured values.</p>
+</section>
+
+<section>
+  <h2>Graphs And Geometric Learning</h2>
+  <ol>
+    <li><strong>Name the shaped object:</strong> Start from the object or field that carries the evidence: objects with parts and connections, such as meshes, molecules, or interacting components.</li>
+    <li><strong>Name the relation:</strong> Say what must stay visible: Keep nodes, edges, neighborhoods, holes, surfaces, and symmetries visible to the model.</li>
+    <li><strong>Name why it matters:</strong> Graphs and geometric learning matters here because the connection pattern is part of the evidence.</li>
+    <li><strong>Move to engineering:</strong> Model meshes, parts, sensor networks, or connected components without flattening away contact.</li>
+    <li><strong>Move to materials, chemistry, or biology:</strong> Represent atoms, bonds, cells, proteins, grains, or interaction networks as connected objects.</li>
+    <li><strong>Move to climate, fluids, or fields:</strong> Carry information over irregular grids, sensor networks, coastlines, or mesh fields.</li>
+    <li><strong>Run the shape test:</strong> Relabel nodes, rotate the object, refine the mesh, or add a missing edge and inspect the target.</li>
+  </ol>
+  <p><strong>Plain transfer sentence:</strong> The same shape idea matters across fields when the answer depends on a relation inside the object, not only on a list of measured values.</p>
+</section>
+
+<section>
+  <h2>Neural Differential Equations</h2>
+  <ol>
+    <li><strong>Name the shaped object:</strong> Start from the object or field that carries the evidence: measurements of a system changing over time.</li>
+    <li><strong>Name the relation:</strong> Say what must stay visible: Learn how a state moves over time when the state also lives on a shape or network.</li>
+    <li><strong>Name why it matters:</strong> Neural differential equations matter here when the missing part is the rule of change.</li>
+    <li><strong>Move to engineering:</strong> Predict changing heat, motion, wear, control, or flow when the exact rate rule is unknown.</li>
+    <li><strong>Move to materials, chemistry, or biology:</strong> Learn reaction, growth, motion, or change rules from measured time traces.</li>
+    <li><strong>Move to climate, fluids, or fields:</strong> Learn missing pieces of a time-update rule for fields.</li>
+    <li><strong>Run the shape test:</strong> Change the starting state, shape, or connection pattern and run longer than the training window.</li>
+  </ol>
+  <p><strong>Plain transfer sentence:</strong> The same shape idea matters across fields when the answer depends on a relation inside the object, not only on a list of measured values.</p>
+</section>
+
+<section>
+  <h2>Symbolic Regression And Model Discovery</h2>
+  <ol>
+    <li><strong>Name the shaped object:</strong> Start from the object or field that carries the evidence: measured variables and candidate mathematical ingredients.</li>
+    <li><strong>Name the relation:</strong> Say what must stay visible: Search for a short relation that includes the right shape or connection measurements.</li>
+    <li><strong>Name why it matters:</strong> Symbolic regression matters here only if the readable formula keeps the real cause visible.</li>
+    <li><strong>Move to engineering:</strong> Find a readable equation that links design variables to the decision quantity.</li>
+    <li><strong>Move to materials, chemistry, or biology:</strong> Search for compact laws from measured variables, ingredients, and properties.</li>
+    <li><strong>Move to climate, fluids, or fields:</strong> Look for a readable relation inside measured or simulated field behavior.</li>
+    <li><strong>Run the shape test:</strong> Remove a shape measure, change the mesh, or add a missing variable and test the formula.</li>
+  </ol>
+  <p><strong>Plain transfer sentence:</strong> The same shape idea matters across fields when the answer depends on a relation inside the object, not only on a list of measured values.</p>
+</section>
+
+<section>
+  <h2>Foundation Models For PDEs</h2>
+  <ol>
+    <li><strong>Name the shaped object:</strong> Start from the object or field that carries the evidence: many PDE problem instances across equations, grids, parameters, or physical settings.</li>
+    <li><strong>Name the relation:</strong> Say what must stay visible: Reuse field knowledge across PDE tasks while checking new shapes, grids, and boundaries.</li>
+    <li><strong>Name why it matters:</strong> Foundation PDE models matter here only if shared structure carries to the new shape family.</li>
+    <li><strong>Move to engineering:</strong> Start from a broad PDE model for a new device or part, then verify the design quantity.</li>
+    <li><strong>Move to materials, chemistry, or biology:</strong> Transfer learned field behavior across related materials, tissues, or reaction settings.</li>
+    <li><strong>Move to climate, fluids, or fields:</strong> Use one broad field model across related equation settings.</li>
+    <li><strong>Run the shape test:</strong> Hold out whole geometry families, boundary types, scales, or rare regimes.</li>
+  </ol>
+  <p><strong>Plain transfer sentence:</strong> The same shape idea matters across fields when the answer depends on a relation inside the object, not only on a list of measured values.</p>
+</section>
+
+<section>
+  <h2>Attention For Scientific Fields</h2>
+  <ol>
+    <li><strong>Name the shaped object:</strong> Start from the object or field that carries the evidence: large fields where one location may depend on other locations.</li>
+    <li><strong>Name the relation:</strong> Say what must stay visible: Let distant parts of a shape or field exchange information when local neighbors are not enough.</li>
+    <li><strong>Name why it matters:</strong> Attention matters here when faraway structure changes the local answer.</li>
+    <li><strong>Move to engineering:</strong> Route information across a part, surface, or field where distant regions interact.</li>
+    <li><strong>Move to materials, chemistry, or biology:</strong> Let distant atoms, cells, residues, or regions influence a local prediction.</li>
+    <li><strong>Move to climate, fluids, or fields:</strong> Route information across fields where one region can affect another.</li>
+    <li><strong>Run the shape test:</strong> Change window size, long-range links, boundary regions, or point order.</li>
+  </ol>
+  <p><strong>Plain transfer sentence:</strong> The same shape idea matters across fields when the answer depends on a relation inside the object, not only on a list of measured values.</p>
+</section>
+
+<h2>Pass Standard</h2>
+<p>A learner passes when they can pick any topic and explain how one shape relation travels from a mesh or field into engineering, materials or biology, and climate or fluids. The answer must end with a changed shape, boundary, mesh, connection, or scale test.</p>
+
+</main>
+</body>
+</html>

@@ -26,6 +26,7 @@ REQUIRED_ROOT_PAGES = {
     "misconceptions.html",
     "course-spine.html",
     "topology-shape-guide.html",
+    "shape-transfer-practice.html",
     "question-to-topic-guide.html",
     "field-application-guide.html",
     "importance-matrix.html",
@@ -167,6 +168,7 @@ def check_required_sections() -> list[str]:
         "site/misconceptions.html": ("Misconception Map", "Wrong Turn", "Why It Is Tempting", "Repair Sentence", "First-Principles Test"),
         "site/course-spine.html": ("Course Spine In Plain Words", "The Whole Course In One Human Problem", "First-Principles Route Through The Field", "Why Topology And Shape Belong In The Big Picture", "How Every Topic Fits The Spine", "Reader Test For The Whole Course", "Deep Learning", "Physics-Informed Neural Networks", "Operator Learning", "Topology", "shape", "changed case"),
         "site/topology-shape-guide.html": ("Topology And Shape In Plain Words", "The Everyday Meaning", "Why It Matters From First Principles", "How This Theme Crosses The Course", "Plain Shape Use", "First Shape Check", "What To Say Before Trusting A Shape Claim", "Reader Test", "mesh", "molecule", "boundary", "hole", "Graphs And Geometric Learning"),
+        "site/shape-transfer-practice.html": ("Shape Transfer Practice", "Why This Practice Exists", "Transfer Matrix", "Plain Shape Use", "Why Shape Matters", "Engineering Transfer", "Materials Or Biology Transfer", "Climate Or Field Transfer", "Shape Test", "Transfer Drills", "Name the shaped object", "Name the relation", "Plain transfer sentence", "Pass Standard", "Deep Learning", "Operator Learning", "Graphs And Geometric Learning"),
         "site/question-to-topic-guide.html": ("Question To Topic Guide", "Start With The Need", "Everyday Question", "Open This Topic", "Why This Is The First Stop", "What To Check Before Trusting It", "If Your Question Mentions Shape", "Reader Test", "I have many examples", "I have a few measurements and a known equation", "mesh", "molecule", "changed case"),
         "site/field-application-guide.html": ("Field Application Guide In Plain Words", "Why Fields Need Their Own Map", "Engineering design", "Materials, chemistry, and biology", "Climate, fluids, and fields", "Plain Use", "Why It Matters", "First Field Check", "How To Read An Application Claim", "Reader Test", "stress", "molecule", "climate", "fluids", "changed case"),
         "site/importance-matrix.html": ("Importance Matrix", "Why Each Topic Matters Across Fields", "Concept", "Everyday Problem", "Why It Matters", "Topology Or Shape Link", "Other Fields", "First Test", "How To Use This Matrix", "Plain End-To-End Stories", "Reader Test", "Deep Learning", "Operator Learning", "Graphs And Geometric Learning", "changed case"),
@@ -553,8 +555,8 @@ def validate() -> None:
         errors.append(f"expected 40 videos, found {summary.get('video_count')}")
     if summary.get("concept_count") != 14:
         errors.append(f"expected 14 concepts, found {summary.get('concept_count')}")
-    if len(manifest) != 230:
-        errors.append(f"expected 230 pages, found {len(manifest)}")
+    if len(manifest) != 231:
+        errors.append(f"expected 231 pages, found {len(manifest)}")
 
     errors.extend(check_internal_links(manifest))
     errors.extend(check_required_sections())

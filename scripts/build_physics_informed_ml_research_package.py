@@ -5211,6 +5211,7 @@ def html_page(title: str, body: str, root_prefix: str = "") -> str:
   <a href="{root_prefix}misconceptions.html">Misreads</a>
   <a href="{root_prefix}course-spine.html">Spine</a>
   <a href="{root_prefix}topology-shape-guide.html">Shape</a>
+  <a href="{root_prefix}shape-transfer-practice.html">Shape Practice</a>
   <a href="{root_prefix}question-to-topic-guide.html">Questions</a>
   <a href="{root_prefix}field-application-guide.html">Fields</a>
   <a href="{root_prefix}importance-matrix.html">Importance</a>
@@ -5340,6 +5341,66 @@ def write_topology_shape_guide_page(path: Path, topics: list[dict[str, object]])
 <p>A reader understands the topology and shape theme when they can point to a topic page and say which connected or shaped part is evidence, which scientific quantity uses it, and which changed shape would make the claim too broad.</p>
 """
     path.write_text(html_page("Physics-Informed ML Topology And Shape Guide", body), encoding="utf-8")
+
+
+def write_shape_transfer_practice_page(path: Path, topics: list[dict[str, object]]) -> None:
+    rows = []
+    drills = []
+    for topic in topics:
+        derivation = topic_derivation(topic)
+        applications = topic_plain_applications(topic, derivation)
+        shape = next(row for row in applications if row["field"] == "Topology and shape")
+        engineering = next(row for row in applications if row["field"] == "Engineering design")
+        materials = next(row for row in applications if row["field"] == "Materials, chemistry, and biology")
+        fields = next(row for row in applications if row["field"] == "Climate, fluids, and fields")
+        title = str(topic["title"])
+        rows.append(
+            f"""
+<tr>
+  <td><a href="topics/{html.escape(str(topic['slug']))}.html">{html.escape(title)}</a></td>
+  <td>{html.escape(str(shape['use']))}</td>
+  <td>{html.escape(str(shape['why']))}</td>
+  <td>{html.escape(str(engineering['use']))}</td>
+  <td>{html.escape(str(materials['use']))}</td>
+  <td>{html.escape(str(fields['use']))}</td>
+  <td>{html.escape(str(shape['check']))}</td>
+</tr>
+"""
+        )
+        drills.append(
+            f"""
+<section>
+  <h2>{html.escape(title)}</h2>
+  <ol>
+    <li><strong>Name the shaped object:</strong> Start from the object or field that carries the evidence: {html.escape(str(derivation['observed']))}.</li>
+    <li><strong>Name the relation:</strong> Say what must stay visible: {html.escape(str(shape['use']))}</li>
+    <li><strong>Name why it matters:</strong> {html.escape(str(shape['why']))}</li>
+    <li><strong>Move to engineering:</strong> {html.escape(str(engineering['use']))}</li>
+    <li><strong>Move to materials, chemistry, or biology:</strong> {html.escape(str(materials['use']))}</li>
+    <li><strong>Move to climate, fluids, or fields:</strong> {html.escape(str(fields['use']))}</li>
+    <li><strong>Run the shape test:</strong> {html.escape(str(shape['check']))}</li>
+  </ol>
+  <p><strong>Plain transfer sentence:</strong> The same shape idea matters across fields when the answer depends on a relation inside the object, not only on a list of measured values.</p>
+</section>
+"""
+        )
+    body = f"""
+<h1>Shape Transfer Practice</h1>
+<h2>Why This Practice Exists</h2>
+<p>Topology and shape are easier to understand when the learner moves the same idea across several fields. The plain question is always: what relation inside the object carries the answer?</p>
+<h2>Transfer Matrix</h2>
+<table>
+  <thead>
+    <tr><th>Topic</th><th>Plain Shape Use</th><th>Why Shape Matters</th><th>Engineering Transfer</th><th>Materials Or Biology Transfer</th><th>Climate Or Field Transfer</th><th>Shape Test</th></tr>
+  </thead>
+  <tbody>{''.join(rows)}</tbody>
+</table>
+<h2>Transfer Drills</h2>
+{''.join(drills)}
+<h2>Pass Standard</h2>
+<p>A learner passes when they can pick any topic and explain how one shape relation travels from a mesh or field into engineering, materials or biology, and climate or fluids. The answer must end with a changed shape, boundary, mesh, connection, or scale test.</p>
+"""
+    path.write_text(html_page("Physics-Informed ML Shape Transfer Practice", body), encoding="utf-8")
 
 
 def topic_start_question(topic: dict[str, object]) -> str:
@@ -6044,6 +6105,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Misconceptions", f"{summary['misconception_count']} core wrong turns paired with plain corrections.", "misconceptions.html")}
 {card("Course Spine", "One plain-language first-principles essay tying the whole course together before the topic pages.", "course-spine.html")}
 {card("Topology And Shape", "A plain guide to connected structure, boundaries, holes, meshes, and shape checks across the course.", "topology-shape-guide.html")}
+{card("Shape Transfer Practice", "Learner drills for moving each shape idea across engineering, materials, biology, climate, fluids, and fields.", "shape-transfer-practice.html")}
 {card("Question To Topic Guide", "Start from an everyday scientific question and open the first topic that carries that need.", "question-to-topic-guide.html")}
 {card("Field Application Guide", "A plain map of how each topic enters engineering, materials, biology, climate, fluids, and field problems.", "field-application-guide.html")}
 {card("Importance Matrix", "Every topic compared by everyday problem, reason it matters, shape link, field use, and first test.", "importance-matrix.html")}
@@ -6171,6 +6233,7 @@ def write_site(data: dict[str, object]) -> None:
     write_misconception_map_page(SITE / "misconceptions.html", list(misconception_map))
     write_course_spine_page(SITE / "course-spine.html", list(topics))
     write_topology_shape_guide_page(SITE / "topology-shape-guide.html", list(topics))
+    write_shape_transfer_practice_page(SITE / "shape-transfer-practice.html", list(topics))
     write_question_to_topic_guide_page(SITE / "question-to-topic-guide.html", list(topics))
     write_field_application_guide_page(SITE / "field-application-guide.html", list(topics))
     write_importance_matrix_page(SITE / "importance-matrix.html", list(topics))
@@ -9299,6 +9362,13 @@ def write_markdown_export(data: dict[str, object]) -> None:
             "- Shape check: change geometry, boundary, mesh order, missing connection, long-range link, or shape family and inspect the named quantity.",
         ]
     )
+    lines.extend(
+        [
+            "",
+            "## Shape Transfer Practice",
+            "- See `site/shape-transfer-practice.html` for learner drills that move each topology or shape idea across engineering, materials or biology, and climate or field uses.",
+        ]
+    )
     lines.extend(["", "## Question To Topic Guide"])
     for topic in data["topic_treatments"]:
         derivation = topic_derivation(topic)
@@ -10047,6 +10117,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         SITE / "misconceptions.html",
         SITE / "course-spine.html",
         SITE / "topology-shape-guide.html",
+        SITE / "shape-transfer-practice.html",
         SITE / "question-to-topic-guide.html",
         SITE / "field-application-guide.html",
         SITE / "importance-matrix.html",
@@ -10079,6 +10150,28 @@ def validate(data: dict[str, object] | None = None) -> None:
     ):
         if not path.exists():
             raise SystemExit(f"missing site page: {path}")
+    shape_transfer_text = (SITE / "shape-transfer-practice.html").read_text(encoding="utf-8")
+    for term in (
+        "Shape Transfer Practice",
+        "Why This Practice Exists",
+        "Transfer Matrix",
+        "Plain Shape Use",
+        "Why Shape Matters",
+        "Engineering Transfer",
+        "Materials Or Biology Transfer",
+        "Climate Or Field Transfer",
+        "Shape Test",
+        "Transfer Drills",
+        "Name the shaped object",
+        "Name the relation",
+        "Plain transfer sentence",
+        "Pass Standard",
+        "Deep Learning",
+        "Operator Learning",
+        "Graphs And Geometric Learning",
+    ):
+        if term not in shape_transfer_text:
+            raise SystemExit(f"shape transfer practice missing: {term}")
     question_guide_text = (SITE / "question-to-topic-guide.html").read_text(encoding="utf-8")
     for term in (
         "Question To Topic Guide",

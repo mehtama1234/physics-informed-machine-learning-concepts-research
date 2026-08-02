@@ -58,6 +58,9 @@
 - Main failure: a model can flatten away the relation that carries the scientific quantity, then look good on old cases while failing on a changed shape.
 - Shape check: change geometry, boundary, mesh order, missing connection, long-range link, or shape family and inspect the named quantity.
 
+## Shape Transfer Practice
+- See `site/shape-transfer-practice.html` for learner drills that move each topology or shape idea across engineering, materials or biology, and climate or field uses.
+
 ## Question To Topic Guide
 - Everyday question: I have many examples, but I do not have a short rule. Where do I start? Open this topic: Deep Learning. First stop reason: scientists often have examples of behavior but no short rule that predicts the next case. First check: the model can fit familiar examples while failing on a new material, geometry, scale, or boundary condition. Mathematical move: adjust many weights until the model maps familiar inputs to the right outputs.
 - Everyday question: I have a few measurements and a known equation. How do I make them work together? Open this topic: Physics-Informed Neural Networks. First stop reason: measurements may be sparse, but the answer must still respect a known physical equation. First check: the equation penalty can look small while the solution is wrong in hard regions, sharp layers, or unseen boundary cases. Mathematical move: fit a neural network while also measuring how badly its output violates the known equation.
