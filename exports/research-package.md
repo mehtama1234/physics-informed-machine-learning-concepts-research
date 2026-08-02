@@ -1609,78 +1609,156 @@
 - Situation: You have few measurements, but a trusted equation and boundary or starting information exist.
 - Start with: Physics-informed neural networks
 - Why: The equation can check the fitted field where measurements are missing.
+- Decision shortage: measurements may be sparse, but the answer must still respect a known physical equation
+- Observed evidence: some measured values, boundary values, starting values, and a known differential equation
+- Hidden need: the full field value at every point in space and time
+- Why this starting point earns its place: fit a neural network while also measuring how badly its output violates the known equation
+- What the choice carries: the model is not allowed to match points while freely breaking the equation between those points
+- First rejection test: move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements
 - Evidence needed: held-out measurements, boundary checks, equation residual checks, and comparison against a trusted solve when possible
 
 ### Many Related Simulations
 - Situation: You have many solved examples and need fast answers for new inputs from the same family.
 - Start with: Operator learning
 - Why: The useful object is the map from input fields to output fields, not one solved field.
+- Decision shortage: one simulation answer is not enough when engineers need the whole map from inputs to solution fields
+- Observed evidence: many example inputs and their full solution fields
+- Hidden need: the rule that maps a new input field to its new solution field
+- Why this starting point earns its place: learn the map from problem input to solution, not only one solution at a time
+- What the choice carries: the learned object is a shortcut for a family of solves, so the family must be named
+- First rejection test: change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed
 - Evidence needed: held-out fields, changed resolution tests, boundary tests, and checks on the scientific output quantity
 
 ### Expensive Repeated Decisions
 - Situation: A trusted solver or experiment is too slow for design, search, control, or uncertainty sweeps.
 - Start with: Surrogate modeling
 - Why: A fast stand-in can answer repeated questions if its use range is stated and checked.
+- Decision shortage: a trusted simulator may be too slow to run for every design, control, or uncertainty question
+- Observed evidence: expensive solver inputs and outputs for a limited set of cases
+- Hidden need: the solver answer for every new query someone wants to ask
+- Why this starting point earns its place: train a cheaper stand-in for the expensive input-output behavior
+- What the choice carries: speed is useful only inside the query family where the stand-in was checked
+- First rejection test: compare against the full solver on new cases near the edge of the intended use
 - Evidence needed: full-solver comparisons near the edge of use, decision-metric error, and a stated use range
 
 ### Need A Readable Law
 - Situation: Prediction is not enough; the output should be a formula or mechanism people can inspect.
 - Start with: Symbolic regression or neural differential equations
 - Why: The scientific product is a candidate rule, not only a number returned by a fitted model.
+- Decision shortage: a scientist may need a readable equation, not only a model that predicts well
+- Observed evidence: measured variables and candidate mathematical ingredients
+- Hidden need: which short formula, if any, actually explains the measured change
+- Why this starting point earns its place: search for a readable equation that fits the data and survives a changed case
+- What the choice carries: a compact equation is a claim about structure, rather than only a curve through points
+- First rejection test: remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts
 - Evidence needed: changed-experiment tests, missing-variable checks, noise checks, and scientific inspection of the selected rule
 
 ### New Setting Risk
 - Situation: A model trained in one setting is being used in another setting.
 - Start with: Uncertainty and generalization checks
 - Why: The main question is whether the prediction should be believed under the change.
+- Decision shortage: a prediction is not enough unless the user knows when it should be believed
+- Observed evidence: training cases, validation cases, prediction errors, and known shifts between cases
+- Hidden need: how wrong the model may be on a case unlike the ones it learned from
+- Why this starting point earns its place: separate fit on familiar examples from evidence on changed examples
+- What the choice carries: a prediction without a use range is not yet a scientific claim
+- First rejection test: move one important condition outside the training range and measure the first failure
 - Evidence needed: changed-case tests, use-range statements, error on the decision quantity, and first-failure examples
 
 ### Broad PDE Coverage
 - Situation: One model is proposed for many equations, grids, parameters, or scientific tasks.
 - Start with: Foundation models for PDEs
 - Why: The claim is about shared structure across tasks, so whole task families must be tested.
+- Decision shortage: one trained model may be asked to handle many related equations, grids, parameters, or physical settings
+- Observed evidence: many PDE problem instances across equations, grids, parameters, or physical settings
+- Hidden need: which shared structure carries from one scientific task to another
+- Why this starting point earns its place: train one broad model to reuse structure across many related field-prediction tasks
+- What the choice carries: breadth is useful only if the new task shares the structure the model actually learned
+- First rejection test: hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver
 - Evidence needed: held-out task-family tests, trusted-solver comparisons, boundary and scale tests, and failure reports
 
 ### Many Examples, No Clear Rule
 - Situation: You have many examples, but no trusted equation or readable law yet.
 - Start with: Deep learning
 - Why: The first useful move is to learn a flexible predictor, then test whether it carries the quantity that matters.
+- Decision shortage: scientists often have examples of behavior but no short rule that predicts the next case
+- Observed evidence: many input-output examples from experiments, simulations, or measurements
+- Hidden need: the exact rule that connects the input to the output
+- Why this starting point earns its place: adjust many weights until the model maps familiar inputs to the right outputs
+- What the choice carries: the model earns attention only when prediction survives examples it did not train on
+- First rejection test: hold out a changed material, geometry, parameter range, or sensor condition
 - Evidence needed: held-out examples, changed measurement tests, target-quantity error, and a named first failure
 
 ### Scientific Claim Needs Discipline
 - Situation: A model is being called scientific, but the claim, evidence, and failure boundary are not yet separated.
 - Start with: Scientific machine learning
 - Why: The field-level job is to make the learned answer answerable to evidence, physical quantities, and changed cases.
+- Decision shortage: scientific work needs predictions that respect measurements, equations, uncertainty, and domain limits at the same time
+- Observed evidence: data, equations, units, simulation outputs, and domain limits
+- Hidden need: which parts of the scientific system are missing, noisy, or too costly to compute directly
+- Why this starting point earns its place: combine learned prediction with scientific checks that name what the claim is allowed to mean
+- What the choice carries: the model is judged by a scientific job, not by a score floating away from the job
+- First rejection test: state the scientific quantity first, then test it under a changed case that matters in that domain
 - Evidence needed: source anchors, a named scientific quantity, domain-specific checks, and a changed-case rejection test
 
 ### Training Score Burden
 - Situation: A model improves a written score, but the scientific decision may depend on something the score ignored.
 - Start with: Optimization for learning
 - Why: Training only improves what the objective asks it to improve, so the objective must match the scientific burden.
+- Decision shortage: learning needs a way to decide which model settings are better or worse
+- Observed evidence: a written score that says which model behavior is better or worse
+- Hidden need: whether that score matches the scientific behavior the user actually cares about
+- Why this starting point earns its place: change model settings to lower the written score
+- What the choice carries: the model learns the score, so the score must include the scientific burden
+- First rejection test: inspect what the score ignores, then check whether the ignored behavior fails after training
 - Evidence needed: loss-term inspection, ignored-requirement tests, held-out edge cases, and the decision quantity after training
 
 ### Need Many Valid Possibilities
 - Situation: The task needs many candidate fields, molecules, designs, or futures rather than one answer.
 - Start with: Generative modeling
 - Why: The useful product is a set of possible scientific objects that still obey the rules that matter.
+- Decision shortage: some tasks need many possible examples, not one predicted answer
+- Observed evidence: examples of fields, molecules, flows, shapes, or other scientific objects
+- Hidden need: the spread of possible valid objects beyond the examples
+- Why this starting point earns its place: learn how to sample new candidates that resemble the training family
+- What the choice carries: a generated object must still pass physics and usefulness checks
+- First rejection test: measure constraints, rare cases, conservation, and downstream task performance on generated samples
 - Evidence needed: constraint checks, rare-event checks, downstream-task tests, and examples of rejected samples
 
 ### Connected Object Matters
 - Situation: The object is a molecule, mesh, graph, surface, or network where connections carry part of the scientific meaning.
 - Start with: Graphs and geometric learning
 - Why: Flattening the object can hide which parts influence which other parts.
+- Decision shortage: many scientific objects are not simple rows of numbers; their connections matter
+- Observed evidence: objects with parts and connections, such as meshes, molecules, or interacting components
+- Hidden need: which neighboring and long-range interactions control the scientific quantity
+- Why this starting point earns its place: let information move along the object connections instead of flattening the object into a plain row
+- What the choice carries: the model keeps the structure of the scientific object visible
+- First rejection test: change the mesh, rotate or move the object, or add missing interactions and inspect what breaks
 - Evidence needed: mesh-change tests, symmetry checks, missing-interaction tests, and target-property error on changed objects
 
 ### Far Field Information Matters
 - Situation: A local part of a scientific field depends on distant regions, but carrying every interaction is expensive.
 - Start with: Attention for scientific fields
 - Why: Attention gives a way to route selected information across a field while making the routing choice testable.
+- Decision shortage: a local patch of a field may depend on faraway information, but looking everywhere can be expensive
+- Observed evidence: large fields where one location may depend on other locations
+- Hidden need: which distant parts matter for the local prediction
+- Why this starting point earns its place: let the model choose which parts of the field exchange information
+- What the choice carries: attention is a routing rule for information, not proof that the selected route is physically complete
+- First rejection test: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures
 - Evidence needed: window-change tests, long-range interaction tests, boundary-stress cases, and error on the scientific quantity
 
 ### Field Rule Before Method
 - Situation: A quantity changes across space, time, or both, and one number cannot describe the scientific state.
 - Start with: Partial differential equations
 - Why: The PDE names how local change, movement, sources, and boundaries must fit together before a learned method is trusted.
+- Decision shortage: a quantity changes over space and time, so one number is not enough to describe the situation
+- Observed evidence: a field such as temperature, pressure, concentration, velocity, or displacement
+- Hidden need: how every point in the field affects nearby points over time
+- Why this starting point earns its place: write a local change rule that uses rates across space and time
+- What the choice carries: the equation carries how a whole field changes, rather than only how one number changes
+- First rejection test: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error
 - Evidence needed: boundary tests, source-term checks, conservation or stability checks, and changed-grid or changed-scale cases
 
 

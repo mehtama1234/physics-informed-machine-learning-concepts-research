@@ -295,6 +295,36 @@ def check_topic_shape_depth() -> list[str]:
     return errors
 
 
+def check_decision_guide_depth() -> list[str]:
+    errors: list[str] = []
+    decisions = json.loads((ANALYSIS / "decision_guides.json").read_text(encoding="utf-8"))
+    required_terms = (
+        "Best Starting Point",
+        "Decision Burden From First Principles",
+        "Observed Evidence",
+        "Hidden Need",
+        "Why This Starting Point Earns Its Place",
+        "First Rejection Test",
+        "Choice Must Fail If",
+        "Evidence Needed",
+    )
+    for decision in decisions:
+        slug = str(decision["slug"])
+        burden = decision.get("decision_burden") or {}
+        for field in ("shortage", "observed", "hidden", "move", "carries", "rejection"):
+            if not burden.get(field):
+                errors.append(f"decision guide missing decision_burden.{field}: {slug}")
+        path = ROOT / f"site/decision-guide/{slug}.html"
+        if not path.exists():
+            errors.append(f"missing decision guide page: site/decision-guide/{slug}.html")
+            continue
+        text = path.read_text(encoding="utf-8")
+        for term in required_terms:
+            if term not in text:
+                errors.append(f"site/decision-guide/{slug}.html: missing decision-depth term: {term}")
+    return errors
+
+
 def validate() -> None:
     manifest_path = SITE / "page-manifest.json"
     if not manifest_path.exists():
@@ -330,6 +360,7 @@ def validate() -> None:
     errors.extend(check_reader_check_coverage())
     errors.extend(check_meaty_goal_coverage())
     errors.extend(check_topic_shape_depth())
+    errors.extend(check_decision_guide_depth())
 
     scan_paths = [ROOT / "README.md", ROOT / "exports/research-package.md"]
     scan_paths.extend((ROOT / item) for item in manifest)

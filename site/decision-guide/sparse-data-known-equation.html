@@ -49,6 +49,22 @@
 <p>Physics-informed neural networks</p>
 <h2>Why This Fits</h2>
 <p>The equation can check the fitted field where measurements are missing.</p>
+
+<h2>Decision Burden From First Principles</h2>
+<p>A method choice is justified only when the shortage, evidence, hidden need, mathematical move, and rejection test line up. This table states what the choice has to carry before the starting point is defensible.</p>
+<table>
+  <tbody>
+    <tr><th>Shortage</th><td>measurements may be sparse, but the answer must still respect a known physical equation</td></tr>
+    <tr><th>Observed Evidence</th><td>some measured values, boundary values, starting values, and a known differential equation</td></tr>
+    <tr><th>Hidden Need</th><td>the full field value at every point in space and time</td></tr>
+    <tr><th>Why This Starting Point Earns Its Place</th><td>fit a neural network while also measuring how badly its output violates the known equation</td></tr>
+    <tr><th>What The Choice Carries</th><td>the model is not allowed to match points while freely breaking the equation between those points</td></tr>
+    <tr><th>First Rejection Test</th><td>move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements</td></tr>
+  </tbody>
+</table>
+<h2>Choice Must Fail If</h2>
+<p>Reject this starting point if the situation cannot provide the observed evidence, if the hidden need is not the quantity the decision uses, or if the first rejection test cannot be run.</p>
+
 <h2>Use If</h2>
 <ul><li>the equation is trusted</li><li>the scientific job is one specific field or case</li><li>boundary or starting information can be stated</li></ul>
 <h2>Avoid If</h2>

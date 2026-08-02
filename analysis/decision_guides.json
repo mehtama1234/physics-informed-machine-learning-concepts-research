@@ -20,7 +20,15 @@
       "topics/physics-informed-neural-networks.html",
       "diagrams/physics-informed-learning-flow.html",
       "reader-checks/pinns-check.html"
-    ]
+    ],
+    "decision_burden": {
+      "shortage": "measurements may be sparse, but the answer must still respect a known physical equation",
+      "observed": "some measured values, boundary values, starting values, and a known differential equation",
+      "hidden": "the full field value at every point in space and time",
+      "move": "fit a neural network while also measuring how badly its output violates the known equation",
+      "carries": "the model is not allowed to match points while freely breaking the equation between those points",
+      "rejection": "move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements"
+    }
   },
   {
     "slug": "many-related-simulations",
@@ -43,7 +51,15 @@
       "topics/operator-learning.html",
       "diagrams/operator-learning-flow.html",
       "reader-checks/operator-learning-check.html"
-    ]
+    ],
+    "decision_burden": {
+      "shortage": "one simulation answer is not enough when engineers need the whole map from inputs to solution fields",
+      "observed": "many example inputs and their full solution fields",
+      "hidden": "the rule that maps a new input field to its new solution field",
+      "move": "learn the map from problem input to solution, not only one solution at a time",
+      "carries": "the learned object is a shortcut for a family of solves, so the family must be named",
+      "rejection": "change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed"
+    }
   },
   {
     "slug": "expensive-repeated-decisions",
@@ -66,7 +82,15 @@
       "topics/surrogate-modeling.html",
       "diagrams/surrogate-validation-flow.html",
       "reader-checks/surrogate-check.html"
-    ]
+    ],
+    "decision_burden": {
+      "shortage": "a trusted simulator may be too slow to run for every design, control, or uncertainty question",
+      "observed": "expensive solver inputs and outputs for a limited set of cases",
+      "hidden": "the solver answer for every new query someone wants to ask",
+      "move": "train a cheaper stand-in for the expensive input-output behavior",
+      "carries": "speed is useful only inside the query family where the stand-in was checked",
+      "rejection": "compare against the full solver on new cases near the edge of the intended use"
+    }
   },
   {
     "slug": "need-readable-law",
@@ -89,7 +113,15 @@
       "topics/symbolic-regression.html",
       "topics/neural-differential-equations.html",
       "reader-checks/symbolic-regression-check.html"
-    ]
+    ],
+    "decision_burden": {
+      "shortage": "a scientist may need a readable equation, not only a model that predicts well",
+      "observed": "measured variables and candidate mathematical ingredients",
+      "hidden": "which short formula, if any, actually explains the measured change",
+      "move": "search for a readable equation that fits the data and survives a changed case",
+      "carries": "a compact equation is a claim about structure, rather than only a curve through points",
+      "rejection": "remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts"
+    }
   },
   {
     "slug": "new-setting-risk",
@@ -112,7 +144,15 @@
       "topics/uncertainty-and-generalization.html",
       "reader-checks/uncertainty-check.html",
       "domains/many-pde-tasks.html"
-    ]
+    ],
+    "decision_burden": {
+      "shortage": "a prediction is not enough unless the user knows when it should be believed",
+      "observed": "training cases, validation cases, prediction errors, and known shifts between cases",
+      "hidden": "how wrong the model may be on a case unlike the ones it learned from",
+      "move": "separate fit on familiar examples from evidence on changed examples",
+      "carries": "a prediction without a use range is not yet a scientific claim",
+      "rejection": "move one important condition outside the training range and measure the first failure"
+    }
   },
   {
     "slug": "broad-pde-coverage",
@@ -135,7 +175,15 @@
       "topics/foundation-models-for-pdes.html",
       "reader-checks/foundation-pde-check.html",
       "domains/many-pde-tasks.html"
-    ]
+    ],
+    "decision_burden": {
+      "shortage": "one trained model may be asked to handle many related equations, grids, parameters, or physical settings",
+      "observed": "many PDE problem instances across equations, grids, parameters, or physical settings",
+      "hidden": "which shared structure carries from one scientific task to another",
+      "move": "train one broad model to reuse structure across many related field-prediction tasks",
+      "carries": "breadth is useful only if the new task shares the structure the model actually learned",
+      "rejection": "hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver"
+    }
   },
   {
     "slug": "many-examples-no-rule",
@@ -158,7 +206,15 @@
       "topics/deep-learning.html",
       "reader-checks/deep-learning-check.html",
       "evidence-packets/deep-learning.html"
-    ]
+    ],
+    "decision_burden": {
+      "shortage": "scientists often have examples of behavior but no short rule that predicts the next case",
+      "observed": "many input-output examples from experiments, simulations, or measurements",
+      "hidden": "the exact rule that connects the input to the output",
+      "move": "adjust many weights until the model maps familiar inputs to the right outputs",
+      "carries": "the model earns attention only when prediction survives examples it did not train on",
+      "rejection": "hold out a changed material, geometry, parameter range, or sensor condition"
+    }
   },
   {
     "slug": "scientific-claim-needs-discipline",
@@ -181,7 +237,15 @@
       "topics/scientific-machine-learning.html",
       "reader-checks/scientific-machine-learning-check.html",
       "evidence-packets/scientific-machine-learning.html"
-    ]
+    ],
+    "decision_burden": {
+      "shortage": "scientific work needs predictions that respect measurements, equations, uncertainty, and domain limits at the same time",
+      "observed": "data, equations, units, simulation outputs, and domain limits",
+      "hidden": "which parts of the scientific system are missing, noisy, or too costly to compute directly",
+      "move": "combine learned prediction with scientific checks that name what the claim is allowed to mean",
+      "carries": "the model is judged by a scientific job, not by a score floating away from the job",
+      "rejection": "state the scientific quantity first, then test it under a changed case that matters in that domain"
+    }
   },
   {
     "slug": "training-score-burden",
@@ -204,7 +268,15 @@
       "topics/optimization-for-learning.html",
       "reader-checks/optimization-for-learning-check.html",
       "formula-guide.html"
-    ]
+    ],
+    "decision_burden": {
+      "shortage": "learning needs a way to decide which model settings are better or worse",
+      "observed": "a written score that says which model behavior is better or worse",
+      "hidden": "whether that score matches the scientific behavior the user actually cares about",
+      "move": "change model settings to lower the written score",
+      "carries": "the model learns the score, so the score must include the scientific burden",
+      "rejection": "inspect what the score ignores, then check whether the ignored behavior fails after training"
+    }
   },
   {
     "slug": "need-many-valid-possibilities",
@@ -227,7 +299,15 @@
       "topics/generative-modeling.html",
       "reader-checks/generative-modeling-check.html",
       "evidence-packets/generative-modeling.html"
-    ]
+    ],
+    "decision_burden": {
+      "shortage": "some tasks need many possible examples, not one predicted answer",
+      "observed": "examples of fields, molecules, flows, shapes, or other scientific objects",
+      "hidden": "the spread of possible valid objects beyond the examples",
+      "move": "learn how to sample new candidates that resemble the training family",
+      "carries": "a generated object must still pass physics and usefulness checks",
+      "rejection": "measure constraints, rare cases, conservation, and downstream task performance on generated samples"
+    }
   },
   {
     "slug": "connected-object-matters",
@@ -250,7 +330,15 @@
       "topics/graphs-and-geometric-learning.html",
       "reader-checks/graphs-and-geometric-learning-check.html",
       "worked-examples/molecule-property-from-structure.html"
-    ]
+    ],
+    "decision_burden": {
+      "shortage": "many scientific objects are not simple rows of numbers; their connections matter",
+      "observed": "objects with parts and connections, such as meshes, molecules, or interacting components",
+      "hidden": "which neighboring and long-range interactions control the scientific quantity",
+      "move": "let information move along the object connections instead of flattening the object into a plain row",
+      "carries": "the model keeps the structure of the scientific object visible",
+      "rejection": "change the mesh, rotate or move the object, or add missing interactions and inspect what breaks"
+    }
   },
   {
     "slug": "far-field-information-matters",
@@ -273,7 +361,15 @@
       "topics/attention-for-scientific-fields.html",
       "reader-checks/attention-for-scientific-fields-check.html",
       "diagrams/operator-learning-flow.html"
-    ]
+    ],
+    "decision_burden": {
+      "shortage": "a local patch of a field may depend on faraway information, but looking everywhere can be expensive",
+      "observed": "large fields where one location may depend on other locations",
+      "hidden": "which distant parts matter for the local prediction",
+      "move": "let the model choose which parts of the field exchange information",
+      "carries": "attention is a routing rule for information, not proof that the selected route is physically complete",
+      "rejection": "change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures"
+    }
   },
   {
     "slug": "field-rule-before-method",
@@ -296,6 +392,14 @@
       "topics/partial-differential-equations.html",
       "reader-checks/partial-differential-equations-check.html",
       "derivations/partial-differential-equations.html"
-    ]
+    ],
+    "decision_burden": {
+      "shortage": "a quantity changes over space and time, so one number is not enough to describe the situation",
+      "observed": "a field such as temperature, pressure, concentration, velocity, or displacement",
+      "hidden": "how every point in the field affects nearby points over time",
+      "move": "write a local change rule that uses rates across space and time",
+      "carries": "the equation carries how a whole field changes, rather than only how one number changes",
+      "rejection": "change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error"
+    }
   }
 ]

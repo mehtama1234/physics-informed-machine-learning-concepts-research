@@ -4267,7 +4267,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
         "glossary": GLOSSARY,
         "domain_guides": DOMAIN_GUIDES,
         "reader_checks": reader_checks,
-        "decision_guides": DECISION_GUIDES,
+        "decision_guides": [{**decision, "decision_burden": decision_burden_data(decision)} for decision in DECISION_GUIDES],
         "provenance_guides": PROVENANCE_GUIDES,
         "coverage_matrix": coverage_matrix,
         "dependency_map": dependency_map,
@@ -6855,10 +6855,66 @@ def write_reader_check_page(path: Path, check: dict[str, object]) -> None:
     path.write_text(html_page(str(check["title"]), body, root_prefix="../"), encoding="utf-8")
 
 
+def decision_primary_topic(decision: dict[str, object]) -> dict[str, object] | None:
+    concepts_by_slug = {str(item["slug"]): item for item in CONCEPTS}
+    for href in decision["links"]:
+        href_text = str(href)
+        if not href_text.startswith("topics/") or not href_text.endswith(".html"):
+            continue
+        slug = href_text.removeprefix("topics/").removesuffix(".html")
+        concept = concepts_by_slug.get(slug)
+        if concept:
+            return concept
+    return None
+
+
+def decision_burden_data(decision: dict[str, object]) -> dict[str, str]:
+    topic = decision_primary_topic(decision)
+    if topic:
+        derivation = topic_derivation(topic)
+        return {
+            "shortage": str(topic.get("common_problem") or topic.get("problem") or decision["situation"]),
+            "observed": str(derivation["observed"]),
+            "hidden": str(derivation["hidden"]),
+            "move": str(derivation["move"]),
+            "carries": str(derivation["meaning"]),
+            "rejection": str(derivation["test"]),
+        }
+    return {
+        "shortage": str(decision["situation"]),
+        "observed": "the evidence named in the situation and use-if conditions",
+        "hidden": "the answer, use range, or decision quantity still missing",
+        "move": str(decision["why"]),
+        "carries": "the chosen method must carry the evidence needed for the decision",
+        "rejection": str(decision["evidence_needed"]),
+    }
+
+
+def decision_burden_html(decision: dict[str, object]) -> str:
+    burden = decision_burden_data(decision)
+    return f"""
+<h2>Decision Burden From First Principles</h2>
+<p>A method choice is justified only when the shortage, evidence, hidden need, mathematical move, and rejection test line up. This table states what the choice has to carry before the starting point is defensible.</p>
+<table>
+  <tbody>
+    <tr><th>Shortage</th><td>{html.escape(burden['shortage'])}</td></tr>
+    <tr><th>Observed Evidence</th><td>{html.escape(burden['observed'])}</td></tr>
+    <tr><th>Hidden Need</th><td>{html.escape(burden['hidden'])}</td></tr>
+    <tr><th>Why This Starting Point Earns Its Place</th><td>{html.escape(burden['move'])}</td></tr>
+    <tr><th>What The Choice Carries</th><td>{html.escape(burden['carries'])}</td></tr>
+    <tr><th>First Rejection Test</th><td>{html.escape(burden['rejection'])}</td></tr>
+  </tbody>
+</table>
+<h2>Choice Must Fail If</h2>
+<p>Reject this starting point if the situation cannot provide the observed evidence, if the hidden need is not the quantity the decision uses, or if the first rejection test cannot be run.</p>
+"""
+
+
 def write_decision_page(path: Path, decision: dict[str, object]) -> None:
     use_if = "".join(f"<li>{html.escape(str(item))}</li>" for item in decision["use_if"])
     avoid_if = "".join(f"<li>{html.escape(str(item))}</li>" for item in decision["avoid_if"])
     links = "".join(f"<li><a href=\"../{html.escape(str(href))}\">{html.escape(str(href))}</a></li>" for href in decision["links"])
+    burden = decision_burden_html(decision)
     body = f"""
 <h1>{html.escape(str(decision['title']))}</h1>
 <h2>Situation</h2>
@@ -6867,6 +6923,7 @@ def write_decision_page(path: Path, decision: dict[str, object]) -> None:
 <p>{html.escape(str(decision['best_start']))}</p>
 <h2>Why This Fits</h2>
 <p>{html.escape(str(decision['why']))}</p>
+{burden}
 <h2>Use If</h2>
 <ul>{use_if}</ul>
 <h2>Avoid If</h2>
@@ -7971,12 +8028,19 @@ def write_markdown_export(data: dict[str, object]) -> None:
         lines.append("")
     lines.extend(["", "## Decision Guide"])
     for decision in data["decision_guides"]:
+        burden = decision_burden_data(decision)
         lines.extend(
             [
                 f"### {decision['title']}",
                 f"- Situation: {decision['situation']}",
                 f"- Start with: {decision['best_start']}",
                 f"- Why: {decision['why']}",
+                f"- Decision shortage: {burden['shortage']}",
+                f"- Observed evidence: {burden['observed']}",
+                f"- Hidden need: {burden['hidden']}",
+                f"- Why this starting point earns its place: {burden['move']}",
+                f"- What the choice carries: {burden['carries']}",
+                f"- First rejection test: {burden['rejection']}",
                 f"- Evidence needed: {decision['evidence_needed']}",
                 "",
             ]
@@ -8523,7 +8587,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         if not decision_path.exists():
             raise SystemExit(f"missing decision guide page: {decision['title']}")
         decision_text = decision_path.read_text(encoding="utf-8")
-        if "Best Starting Point" not in decision_text or "Evidence Needed" not in decision_text:
+        if "Best Starting Point" not in decision_text or "Decision Burden From First Principles" not in decision_text or "Observed Evidence" not in decision_text or "Hidden Need" not in decision_text or "Why This Starting Point Earns Its Place" not in decision_text or "First Rejection Test" not in decision_text or "Choice Must Fail If" not in decision_text or "Evidence Needed" not in decision_text:
             raise SystemExit(f"decision guide not rendered correctly: {decision['title']}")
         for href in decision["links"]:
             if not (SITE / str(href)).exists():
