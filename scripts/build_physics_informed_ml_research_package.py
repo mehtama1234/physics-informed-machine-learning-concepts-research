@@ -3321,6 +3321,7 @@ MEATY_GOAL_REQUIREMENTS = [
     {"key": "slow_problem_shape_bridge", "label": "Slow Problem Shape Bridge", "proof_term": "Slow Bridge From Problem To Shape"},
     {"key": "plain_big_picture", "label": "Plain Big Picture Essay", "proof_term": "Plain Big Picture Essay"},
     {"key": "slow_importance_essay", "label": "Slow Importance Essay", "proof_term": "Why This Matters Slowly"},
+    {"key": "long_everyday_importance_essay", "label": "Long Everyday Importance Essay", "proof_term": "Long Everyday Importance Essay"},
     {"key": "hand_teaching_note", "label": "Hand Teaching Note", "proof_term": "Hand Teaching Note"},
     {"key": "case_walkthrough", "label": "Case Walkthrough", "proof_term": "One Concrete Case From Start To Finish"},
     {"key": "course_role", "label": "Course Role", "proof_term": "Course Role In Plain Words"},
@@ -6967,6 +6968,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     slow_problem_shape_bridge = topic_slow_problem_shape_bridge_html(topic, derivation)
     plain_big_picture = topic_plain_big_picture_essay_html(topic, derivation)
     slow_importance = topic_slow_importance_essay_html(topic, derivation)
+    long_everyday_importance = topic_long_everyday_importance_essay_html(topic, derivation)
     teaching_note = topic_teaching_note_html(str(topic["slug"]))
     case_walkthrough = topic_case_walkthrough_html(topic, derivation)
     course_role = topic_course_role_html(topic, derivation)
@@ -7007,6 +7009,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
 {slow_problem_shape_bridge}
 {plain_big_picture}
 {slow_importance}
+{long_everyday_importance}
 {teaching_note}
 {case_walkthrough}
 {course_role}
@@ -7715,6 +7718,48 @@ def topic_slow_importance_essay_html(topic: dict[str, object], derivation: dict[
 <p>In materials, chemistry, and biology, the evidence may be a molecule, sample, image, spectrum, tissue, property measurement, or reaction trace. {html.escape(str(materials['use']))} Why it matters: {html.escape(str(materials['why']))} The first check in that field is: {html.escape(str(materials['check']))}</p>
 <p>In climate, fluids, and other field problems, the answer often lives across space and time. {html.escape(str(fields['use']))} Why it matters: {html.escape(str(fields['why']))} The first field check is: {html.escape(str(fields['check']))}</p>
 <p>The reader should leave this section with one plain sentence: {html.escape(title)} matters when it helps carry {html.escape(str(derivation['observed']))} toward {html.escape(str(derivation['hidden']))}, and it should be narrowed or rejected when this changed case fails: {html.escape(str(derivation['test']))}.</p>
+"""
+
+
+def topic_long_everyday_importance_essay_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
+    title = str(topic["title"])
+    case = topic_case_walkthrough(topic, derivation)
+    applications = topic_plain_applications(topic, derivation)
+    shape = next(row for row in applications if row["field"] == "Topology and shape")
+    engineering = next(row for row in applications if row["field"] == "Engineering design")
+    materials = next(row for row in applications if row["field"] == "Materials, chemistry, and biology")
+    fields = next(row for row in applications if row["field"] == "Climate, fluids, and fields")
+    def trim_period(value: object) -> str:
+        return str(value).strip().rstrip(".")
+
+    def lower_first(value: object) -> str:
+        text = trim_period(value)
+        return text[:1].lower() + text[1:] if text else text
+
+    common_problem = trim_period(topic["common_problem"])
+    setting = trim_period(case["setting"])
+    why_matters = lower_first(topic["why_it_matters"])
+    engineering_why = lower_first(engineering["why"])
+    materials_why = lower_first(materials["why"])
+    fields_why = lower_first(fields["why"])
+    return f"""
+<h2>Long Everyday Importance Essay</h2>
+<h3>Why The Topic Has To Exist</h3>
+<p>Begin with a person who has a real question and no method name yet. The person is facing this shortage: {html.escape(common_problem)}. That shortage is the reason {html.escape(title)} belongs in the course. The topic is not here so the reader can memorize a label. It is here because the reader needs a plain route from evidence to a missing answer, and the route has to say where it can fail.</p>
+<p>In the concrete case, the setting is this: {html.escape(setting)}. The person can see {html.escape(str(case['observed']))}. That is useful evidence, but it does not by itself give {html.escape(str(case['hidden']))}. The real job is to move from the seen part to the missing part without pretending that the answer is stronger than the evidence allows.</p>
+<h3>First-Principles Reason In Plain Words</h3>
+<p>The first-principles reason is the shortest honest chain: what is known, what is missing, what move can carry information between them, and what changed case can reject the result. For this topic, the known evidence is {html.escape(str(derivation['observed']))}. The missing answer is {html.escape(str(derivation['hidden']))}. The move is to {html.escape(str(derivation['move']))}. The claim is allowed to mean this: {html.escape(str(derivation['meaning']))}.</p>
+<p>This is why the mathematical shape appears. The shape is {html.escape(str(derivation['form']))}. Read it as a carrier of information, not as decoration. It keeps {html.escape(str(topic['keeps']))}. It leaves out {html.escape(str(topic['leaves_out']))}. The left-out part is important because it marks the edge of the claim. Past that edge, the topic needs a new test.</p>
+<h3>Topology And Shape In Real Work</h3>
+<p>Topology and shape enter whenever the answer depends on connection, boundary, hole, distance, mesh, molecule form, surface, or how information moves across a field. For this topic, the plain shape use is: {html.escape(str(shape['use']))} The reason it matters is: {html.escape(str(shape['why']))} The first shape test is: {html.escape(str(shape['check']))}</p>
+<p>This matters because a scientific object is often more than a row of numbers. A wing has a boundary and a surface. A molecule has atoms and bonds. A material has grains, defects, and directions. A climate field has regions that touch and regions that influence one another over distance. If the method erases the relation that carries the answer, it may look good on familiar cases and still fail when the shape changes.</p>
+<h3>Applications Beyond The Course</h3>
+<p>In engineering design, the everyday use is: {html.escape(str(engineering['use']))} This matters because {html.escape(engineering_why)}. The first engineering test is: {html.escape(str(engineering['check']))}</p>
+<p>In materials, chemistry, and biology, the everyday use is: {html.escape(str(materials['use']))} This matters because {html.escape(materials_why)}. The first lab or sample test is: {html.escape(str(materials['check']))}</p>
+<p>In climate, fluids, and field problems, the everyday use is: {html.escape(str(fields['use']))} This matters because {html.escape(fields_why)}. The first field test is: {html.escape(str(fields['check']))}</p>
+<h3>Why This Is Important</h3>
+<p>The importance of {html.escape(title)} is not that it sounds technical. Its importance is that it gives a reader one careful way to say what can be known from the evidence at hand. A good explanation should let the reader point to the evidence, name the hidden answer, explain the move, protect the shape or topology that matters, name the field decision, and end with the first changed case.</p>
+<p>For this page, the final everyday sentence is: {html.escape(title)} matters because {html.escape(why_matters)}. It should be trusted only as far as this test survives: {html.escape(str(derivation['test']))}. If that test fails, the honest answer is to narrow the claim, gather better evidence, or choose a different route.</p>
 """
 
 
@@ -9756,6 +9801,12 @@ def validate(data: dict[str, object] | None = None) -> None:
             "Engineering design",
             "Materials, chemistry, and biology",
             "Climate, fluids, and fields",
+            "Long Everyday Importance Essay",
+            "Why The Topic Has To Exist",
+            "First-Principles Reason In Plain Words",
+            "Topology And Shape In Real Work",
+            "Applications Beyond The Course",
+            "Why This Is Important",
             "What A Strong Explanation Must Say",
             "One Concrete Case From Start To Finish",
             "Observed Evidence",
