@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Physics-Informed ML Example Route Guide</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav class="topbar">
+  <a href="index.html">Physics-Informed ML</a>
+  <a href="transcripts.html">Transcripts</a>
+  <a href="concept-atlas.html">Concept Atlas</a>
+  <a href="families.html">Families</a>
+  <a href="comparisons.html">Comparisons</a>
+  <a href="worked-examples.html">Examples</a>
+  <a href="diagrams.html">Diagrams</a>
+  <a href="derivations.html">Derivations</a>
+  <a href="formula-guide.html">Formulas</a>
+  <a href="misconceptions.html">Misreads</a>
+  <a href="course-spine.html">Spine</a>
+  <a href="topology-shape-guide.html">Shape</a>
+  <a href="question-to-topic-guide.html">Questions</a>
+  <a href="field-application-guide.html">Fields</a>
+  <a href="end-to-end-walkthrough.html">Walkthrough</a>
+  <a href="example-route-guide.html">Routes</a>
+  <a href="learning-path.html">Path</a>
+  <a href="glossary.html">Glossary</a>
+  <a href="domains.html">Domains</a>
+  <a href="reader-checks.html">Checks</a>
+  <a href="decision-guide.html">Decide</a>
+  <a href="provenance.html">Provenance</a>
+  <a href="coverage.html">Coverage</a>
+  <a href="dependencies.html">Dependencies</a>
+  <a href="concept-ladder.html">Ladder</a>
+  <a href="evidence-packets.html">Packets</a>
+  <a href="quality.html">Quality</a>
+  <a href="wording-audit.html">Wording</a>
+  <a href="synthesis.html">Synthesis</a>
+  <a href="review-entrypoints.html">Review Map</a>
+  <a href="review-search.html">Find</a>
+  <a href="review-queue.html">Queue</a>
+  <a href="editorial-roadmap.html">Roadmap</a>
+  <a href="completion-audit.html">Audit</a>
+  <a href="handoff.html">Handoff</a>
+  <a href="theme-map.html">Themes</a>
+  <a href="evidence-ledger.html">Evidence</a>
+</nav>
+<main>
+
+<h1>Example Route Guide</h1>
+<h2>Start With A Concrete Job</h2>
+<p>This page connects the course-wide first-principles route to worked examples. Start with the job a scientist or engineer needs to do. Then inspect the evidence, name the hidden answer, follow the topic route, and stop at the first changed case that can reject the claim.</p>
+<h2>Worked Example Routes</h2>
+<table>
+  <thead>
+    <tr><th>Open This Example</th><th>Scientific Job</th><th>Observed Evidence</th><th>Hidden Answer</th><th>Topic Route</th><th>First Failure Signal</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <td><a href="worked-examples/heat-equation-from-few-measurements.html">Heat Equation From Few Measurements</a></td>
+  <td>What is the temperature everywhere if sensors only report a few places?</td>
+  <td>sensor readings, starting temperature, boundary temperature, and the rule that heat flows from hot regions toward cold regions</td>
+  <td>temperature at every unsensed point and later time</td>
+  <td><a href="topics/partial-differential-equations.html">Partial Differential Equations</a> -> <a href="topics/physics-informed-neural-networks.html">Physics-Informed Neural Networks</a> -> <a href="topics/scientific-machine-learning.html">Scientific Machine Learning</a> -> <a href="topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></td>
+  <td>the fitted field matches sensor points but gives the wrong temperature between them or after the starting time</td>
+</tr>
+
+<tr>
+  <td><a href="worked-examples/fast-fluid-field-surrogate.html">Fast Fluid Field Surrogate</a></td>
+  <td>How can engineers test many shapes without running a full simulation every time?</td>
+  <td>many prior simulations connecting shape, conditions, and resulting velocity or pressure fields</td>
+  <td>the flow field for a new shape or new condition</td>
+  <td><a href="topics/surrogate-modeling.html">Surrogate Modeling</a> -> <a href="topics/operator-learning.html">Operator Learning</a> -> <a href="topics/attention-for-scientific-fields.html">Attention For Scientific Fields</a></td>
+  <td>the shortcut is fast but misses a force, vortex, or boundary effect that changes the engineering choice</td>
+</tr>
+
+<tr>
+  <td><a href="worked-examples/discovering-a-small-law-from-motion.html">Discovering A Small Law From Motion</a></td>
+  <td>Can data reveal a short rule for how the system moves?</td>
+  <td>measurements of position, speed, concentration, or another changing quantity</td>
+  <td>the rate rule that causes the next moment</td>
+  <td><a href="topics/symbolic-regression.html">Symbolic Regression And Model Discovery</a> -> <a href="topics/neural-differential-equations.html">Neural Differential Equations</a> -> <a href="topics/optimization-for-learning.html">Optimization For Learning</a></td>
+  <td>the rule fits the original trace but breaks when the starting condition, forcing, or measured setting changes</td>
+</tr>
+
+<tr>
+  <td><a href="worked-examples/molecule-property-from-structure.html">Molecule Property From Structure</a></td>
+  <td>Can a model predict a useful molecular property without flattening away the structure that causes it?</td>
+  <td>molecular graphs, atom types, bond patterns, shape information, and measured properties from experiments or trusted calculations</td>
+  <td>which structural relations control the property for a new molecule</td>
+  <td><a href="topics/graphs-and-geometric-learning.html">Graphs And Geometric Learning</a> -> <a href="topics/generative-modeling.html">Generative Modeling</a> -> <a href="topics/deep-learning.html">Deep Learning</a> -> <a href="topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></td>
+  <td>the model works on familiar molecules but fails on a new scaffold, rare atom type, or changed assay</td>
+</tr>
+
+<tr>
+  <td><a href="worked-examples/material-stress-from-sparse-tests.html">Material Stress From Sparse Tests</a></td>
+  <td>How can a model estimate stress inside a material when only a few tests or simulations are available?</td>
+  <td>sample geometry, load conditions, a few measured displacements or strains, and known mechanical balance laws</td>
+  <td>the internal stress field and the weak region where failure may begin</td>
+  <td><a href="topics/partial-differential-equations.html">Partial Differential Equations</a> -> <a href="topics/physics-informed-neural-networks.html">Physics-Informed Neural Networks</a> -> <a href="topics/surrogate-modeling.html">Surrogate Modeling</a></td>
+  <td>the model has low average error but misses the local stress concentration that drives failure</td>
+</tr>
+
+<tr>
+  <td><a href="worked-examples/mesh-field-on-irregular-geometry.html">Mesh Field On Irregular Geometry</a></td>
+  <td>How can a model predict a field when the points are connected in an uneven shape instead of a neat grid?</td>
+  <td>mesh points, connections, boundary labels, local features, and solution fields from prior solves</td>
+  <td>how information should move across the irregular geometry for a new case</td>
+  <td><a href="topics/graphs-and-geometric-learning.html">Graphs And Geometric Learning</a> -> <a href="topics/operator-learning.html">Operator Learning</a> -> <a href="topics/attention-for-scientific-fields.html">Attention For Scientific Fields</a></td>
+  <td>renumbering, refining, rotating, or changing the boundary makes the field answer change for the wrong reason</td>
+</tr>
+
+<tr>
+  <td><a href="worked-examples/foundation-pde-model-on-new-equation.html">Foundation PDE Model On A New Equation</a></td>
+  <td>When can a model trained on many PDE examples help with a new equation family?</td>
+  <td>many prior equation tasks, grids, parameters, boundary types, and solution fields</td>
+  <td>which shared structure carries to the new equation and which parts do not</td>
+  <td><a href="topics/foundation-models-for-pdes.html">Foundation Models For PDEs</a> -> <a href="topics/operator-learning.html">Operator Learning</a> -> <a href="topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></td>
+  <td>the model looks broad but fails on the held-out equation family, boundary type, scale, or quantity</td>
+</tr>
+
+<tr>
+  <td><a href="worked-examples/climate-risk-under-shifted-conditions.html">Climate Risk Under Shifted Conditions</a></td>
+  <td>How should a model report risk when the future case differs from familiar examples?</td>
+  <td>historical fields, simulation ensembles, forcing conditions, regional measurements, and known physical constraints</td>
+  <td>how wrong the prediction may be under a changed climate, rare event, or new regional pattern</td>
+  <td><a href="topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a> -> <a href="topics/surrogate-modeling.html">Surrogate Modeling</a> -> <a href="topics/partial-differential-equations.html">Partial Differential Equations</a></td>
+  <td>the model reports confident risk while rare events, changed forcing, or the target region were not tested</td>
+</tr>
+</tbody>
+</table>
+<h2>How To Use A Route</h2>
+<ol>
+  <li>Read the scientific job before the topic route.</li>
+  <li>Say what evidence exists and what answer is still hidden.</li>
+  <li>Open each topic only for the work it adds to the route.</li>
+  <li>Check whether shape, boundary, mesh, molecule, field, or time changes the answer.</li>
+  <li>Reject the wider claim when the first failure signal appears.</li>
+</ol>
+<h2>Reader Test</h2>
+<p>A reader understands an example route when they can explain why each topic is present, what would break if that topic were removed, and which changed case would make the final claim too broad.</p>
+
+</main>
+</body>
+</html>
