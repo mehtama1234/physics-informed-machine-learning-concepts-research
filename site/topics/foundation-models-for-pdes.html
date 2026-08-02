@@ -1181,6 +1181,66 @@
 </table>
 
 
+<h2>Reader Mistake Audit</h2>
+<p>This audit catches the mistakes a learner should find in their own explanation before accepting it.</p>
+<table>
+  <thead>
+    <tr><th>Mistake To Look For</th><th>What The Mistake Sounds Like</th><th>Plain Repair Required</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <th>Name-First Mistake</th>
+  <td>The answer starts with the topic name instead of the everyday problem.</td>
+  <td>one trained model may be asked to handle many related equations, grids, parameters, or physical settings</td>
+</tr>
+
+<tr>
+  <th>Evidence Gap</th>
+  <td>The answer makes a claim before naming what can be seen or checked.</td>
+  <td>many PDE problem instances across equations, grids, parameters, or physical settings</td>
+</tr>
+
+<tr>
+  <th>Missing-Answer Gap</th>
+  <td>The answer never says what is still unknown.</td>
+  <td>which shared structure carries from one scientific task to another</td>
+</tr>
+
+<tr>
+  <th>Move Gap</th>
+  <td>The answer says the result appears, but not what move carries evidence toward the missing answer.</td>
+  <td>train one broad model to reuse structure across many related field-prediction tasks</td>
+</tr>
+
+<tr>
+  <th>Shape Gap</th>
+  <td>The answer ignores the relation, boundary, field, graph, surface, or path that carries the claim.</td>
+  <td>Reuse field knowledge across PDE tasks while checking new shapes, grids, and boundaries. Check: Hold out whole geometry families, boundary types, scales, or rare regimes.</td>
+</tr>
+
+<tr>
+  <th>Overclaim Gap</th>
+  <td>The answer sounds true for a wider set of cases than the evidence supports.</td>
+  <td>the model can look broad while missing rare regimes, new boundary conditions, or quantities not represented in training</td>
+</tr>
+
+<tr>
+  <th>Test Gap</th>
+  <td>The answer ends without a changed case that can reject it.</td>
+  <td>hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver</td>
+</tr>
+
+<tr>
+  <th>Likely Wrong Shortcut</th>
+  <td>Assume a broad PDE model covers a new equation because it was trained on many tasks.</td>
+  <td>Hold out whole task families, rather than only random examples, and compare against trusted solves on the new family.</td>
+</tr>
+</tbody>
+</table>
+<h3>Mistake Audit Pass Test</h3>
+<p>The audit passes only if the learner can find and repair name-first wording, missing evidence, missing hidden answer, skipped move, skipped shape issue, overclaim, and missing changed-case test.</p>
+
+
 <h2>Misread Repair Drill</h2>
 <p>This drill catches the common moment when a reader knows the topic name but not the claim. Repair the misunderstanding by replacing the label-first sentence with an evidence-first sentence.</p>
 <table>

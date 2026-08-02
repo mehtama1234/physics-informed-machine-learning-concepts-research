@@ -3357,6 +3357,7 @@ MEATY_GOAL_REQUIREMENTS = [
     {"key": "reader_check", "label": "Reader Check", "proof_term": "Reader Check"},
     {"key": "reader_answer_parts", "label": "Reader Answer Parts", "proof_term": "Strong Answer Broken Into Parts"},
     {"key": "say_it_back_check", "label": "Say It Back Check", "proof_term": "Say It Back Check"},
+    {"key": "reader_mistake_audit", "label": "Reader Mistake Audit", "proof_term": "Reader Mistake Audit"},
     {"key": "misread_repair_drill", "label": "Misread Repair Drill", "proof_term": "Misread Repair Drill"},
     {"key": "plain_language_audit", "label": "Plain-Language Audit", "proof_term": "Plain-Language Audit"},
     {"key": "acceptance_sentence", "label": "Acceptance Sentence", "proof_term": "Acceptance Sentence Filled"},
@@ -7297,6 +7298,43 @@ def topic_say_it_back_check_html(topic: dict[str, object], derivation: dict[str,
 """
 
 
+def topic_reader_mistake_audit_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
+    shape = next(row for row in topic_plain_applications(topic, derivation) if row["field"] == "Topology and shape")
+    wrong = topic_wrong_use(topic)
+    rows = (
+        ("Name-First Mistake", "The answer starts with the topic name instead of the everyday problem.", str(topic["common_problem"])),
+        ("Evidence Gap", "The answer makes a claim before naming what can be seen or checked.", str(derivation["observed"])),
+        ("Missing-Answer Gap", "The answer never says what is still unknown.", str(derivation["hidden"])),
+        ("Move Gap", "The answer says the result appears, but not what move carries evidence toward the missing answer.", str(derivation["move"])),
+        ("Shape Gap", "The answer ignores the relation, boundary, field, graph, surface, or path that carries the claim.", f"{shape['use']} Check: {shape['check']}"),
+        ("Overclaim Gap", "The answer sounds true for a wider set of cases than the evidence supports.", str(topic["failure_boundary"])),
+        ("Test Gap", "The answer ends without a changed case that can reject it.", str(derivation["test"])),
+        ("Likely Wrong Shortcut", str(wrong["mistake"]), str(wrong["catch_test"])),
+    )
+    body = "".join(
+        f"""
+<tr>
+  <th>{html.escape(label)}</th>
+  <td>{html.escape(mistake)}</td>
+  <td>{html.escape(repair)}</td>
+</tr>
+"""
+        for label, mistake, repair in rows
+    )
+    return f"""
+<h2>Reader Mistake Audit</h2>
+<p>This audit catches the mistakes a learner should find in their own explanation before accepting it.</p>
+<table>
+  <thead>
+    <tr><th>Mistake To Look For</th><th>What The Mistake Sounds Like</th><th>Plain Repair Required</th></tr>
+  </thead>
+  <tbody>{body}</tbody>
+</table>
+<h3>Mistake Audit Pass Test</h3>
+<p>The audit passes only if the learner can find and repair name-first wording, missing evidence, missing hidden answer, skipped move, skipped shape issue, overclaim, and missing changed-case test.</p>
+"""
+
+
 def topic_misread_repair_drill_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
     wrong = topic_wrong_use(topic)
     title = str(topic["title"])
@@ -7417,6 +7455,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     domain_fit = topic_domain_fit_html(topic, derivation)
     worked_examples = topic_worked_examples_html(str(topic["slug"]))
     say_it_back = topic_say_it_back_check_html(topic, derivation)
+    reader_mistake_audit = topic_reader_mistake_audit_html(topic, derivation)
     misread_repair_drill = topic_misread_repair_drill_html(topic, derivation)
     plain_language_audit = topic_plain_language_audit_html(topic, derivation)
     acceptance_sentence = topic_acceptance_sentence_html(topic, derivation)
@@ -7490,6 +7529,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
 {claim_review}
 {domain_fit}
 {say_it_back}
+{reader_mistake_audit}
 {misread_repair_drill}
 {plain_language_audit}
 {acceptance_sentence}
@@ -11091,6 +11131,19 @@ def validate(data: dict[str, object] | None = None) -> None:
             "Move I Am Making",
             "Shape Or Topology Issue",
             "Claim I Am Allowed To Make",
+            "Reader Mistake Audit",
+            "Mistake To Look For",
+            "What The Mistake Sounds Like",
+            "Plain Repair Required",
+            "Name-First Mistake",
+            "Evidence Gap",
+            "Missing-Answer Gap",
+            "Move Gap",
+            "Shape Gap",
+            "Overclaim Gap",
+            "Test Gap",
+            "Likely Wrong Shortcut",
+            "Mistake Audit Pass Test",
             "Misread Repair Drill",
             "Likely Misread",
             "Why That Sounds Tempting",
@@ -11775,7 +11828,7 @@ def validate(data: dict[str, object] | None = None) -> None:
             raise SystemExit(f"meaty goal core page link missing: {item['href']}")
     goal_coverage_path = SITE / "meaty-goal-coverage.html"
     goal_coverage_text = goal_coverage_path.read_text(encoding="utf-8")
-    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Teach From Zero" not in goal_coverage_text or "Application Claim Ladder" not in goal_coverage_text or "Field Decision Story" not in goal_coverage_text or "Everyday Vocabulary Bridge" not in goal_coverage_text or "New Case Transfer Rehearsal" not in goal_coverage_text or "Plain Question To Answer Script" not in goal_coverage_text or "Know And Still Test" not in goal_coverage_text or "Failure Consequence" not in goal_coverage_text or "Slow Problem Shape Bridge" not in goal_coverage_text or "Slow Importance Essay" not in goal_coverage_text or "Source-To-Claim Boundary" not in goal_coverage_text or "Teach Someone Handoff" not in goal_coverage_text or "Topology Shape Story" not in goal_coverage_text or "Confusion To Clarity" not in goal_coverage_text or "Hand Teaching Note" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Concept Connections" not in goal_coverage_text or "Belief Evidence" not in goal_coverage_text or "Domain Fit" not in goal_coverage_text or "Shape Follows" not in goal_coverage_text or "Reader Answer Parts" not in goal_coverage_text or "Say It Back Check" not in goal_coverage_text or "Misread Repair Drill" not in goal_coverage_text or "Plain-Language Audit" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
+    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Teach From Zero" not in goal_coverage_text or "Application Claim Ladder" not in goal_coverage_text or "Field Decision Story" not in goal_coverage_text or "Everyday Vocabulary Bridge" not in goal_coverage_text or "New Case Transfer Rehearsal" not in goal_coverage_text or "Reader Mistake Audit" not in goal_coverage_text or "Plain Question To Answer Script" not in goal_coverage_text or "Know And Still Test" not in goal_coverage_text or "Failure Consequence" not in goal_coverage_text or "Slow Problem Shape Bridge" not in goal_coverage_text or "Slow Importance Essay" not in goal_coverage_text or "Source-To-Claim Boundary" not in goal_coverage_text or "Teach Someone Handoff" not in goal_coverage_text or "Topology Shape Story" not in goal_coverage_text or "Confusion To Clarity" not in goal_coverage_text or "Hand Teaching Note" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Concept Connections" not in goal_coverage_text or "Belief Evidence" not in goal_coverage_text or "Domain Fit" not in goal_coverage_text or "Shape Follows" not in goal_coverage_text or "Reader Answer Parts" not in goal_coverage_text or "Say It Back Check" not in goal_coverage_text or "Misread Repair Drill" not in goal_coverage_text or "Plain-Language Audit" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
         raise SystemExit("meaty goal coverage audit not rendered correctly")
     goal_coverage_rows = data.get("meaty_goal_coverage") or []
     if len(goal_coverage_rows) != len(data["concept_atlas"]):

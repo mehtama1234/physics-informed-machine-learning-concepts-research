@@ -1194,6 +1194,66 @@
 </table>
 
 
+<h2>Reader Mistake Audit</h2>
+<p>This audit catches the mistakes a learner should find in their own explanation before accepting it.</p>
+<table>
+  <thead>
+    <tr><th>Mistake To Look For</th><th>What The Mistake Sounds Like</th><th>Plain Repair Required</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <th>Name-First Mistake</th>
+  <td>The answer starts with the topic name instead of the everyday problem.</td>
+  <td>a prediction is not enough unless the user knows when it should be believed</td>
+</tr>
+
+<tr>
+  <th>Evidence Gap</th>
+  <td>The answer makes a claim before naming what can be seen or checked.</td>
+  <td>training cases, validation cases, prediction errors, and known shifts between cases</td>
+</tr>
+
+<tr>
+  <th>Missing-Answer Gap</th>
+  <td>The answer never says what is still unknown.</td>
+  <td>how wrong the model may be on a case unlike the ones it learned from</td>
+</tr>
+
+<tr>
+  <th>Move Gap</th>
+  <td>The answer says the result appears, but not what move carries evidence toward the missing answer.</td>
+  <td>separate fit on familiar examples from evidence on changed examples</td>
+</tr>
+
+<tr>
+  <th>Shape Gap</th>
+  <td>The answer ignores the relation, boundary, field, graph, surface, or path that carries the claim.</td>
+  <td>State how belief changes when the shape, mesh, or connection pattern changes. Check: Hold out a new shape family, missing connection, or mesh resolution and measure the error.</td>
+</tr>
+
+<tr>
+  <th>Overclaim Gap</th>
+  <td>The answer sounds true for a wider set of cases than the evidence supports.</td>
+  <td>training error can look good while the model fails under a new geometry, parameter range, sensor, or physical regime</td>
+</tr>
+
+<tr>
+  <th>Test Gap</th>
+  <td>The answer ends without a changed case that can reject it.</td>
+  <td>move one important condition outside the training range and measure the first failure</td>
+</tr>
+
+<tr>
+  <th>Likely Wrong Shortcut</th>
+  <td>Report a confidence number without testing the changed condition the user actually cares about.</td>
+  <td>Name the real shift, measure error under that shift, and state the first condition where the model should not be used.</td>
+</tr>
+</tbody>
+</table>
+<h3>Mistake Audit Pass Test</h3>
+<p>The audit passes only if the learner can find and repair name-first wording, missing evidence, missing hidden answer, skipped move, skipped shape issue, overclaim, and missing changed-case test.</p>
+
+
 <h2>Misread Repair Drill</h2>
 <p>This drill catches the common moment when a reader knows the topic name but not the claim. Repair the misunderstanding by replacing the label-first sentence with an evidence-first sentence.</p>
 <table>
