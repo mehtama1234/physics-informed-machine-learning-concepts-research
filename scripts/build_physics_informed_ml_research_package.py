@@ -4773,6 +4773,7 @@ def write_domain_page(path: Path, guide: dict[str, object]) -> None:
     method_items = "".join(f"<li>{html.escape(str(item))}</li>" for item in guide["methods"])
     job = guide["domain_job"]
     domain_essay = domain_first_principles_essay_html(guide)
+    stress_test = domain_stress_test_html(guide)
     body = f"""
 <h1>{html.escape(str(guide['title']))}</h1>
 <h2>Real Quantity</h2>
@@ -4798,6 +4799,7 @@ def write_domain_page(path: Path, guide: dict[str, object]) -> None:
 <ul>{method_items}</ul>
 <h2>Failure Test</h2>
 <p>{html.escape(str(guide['failure_test']))}</p>
+{stress_test}
 <h2>Concrete Anchor</h2>
 <p><a href="../{html.escape(str(guide['example']))}">Related page</a></p>
 """
@@ -4814,6 +4816,24 @@ def domain_first_principles_essay_html(guide: dict[str, object]) -> str:
 <p>The bridge matters because someone will make a decision: {html.escape(str(job['decision']))}. That decision gives the math its burden. Average visual similarity is not enough if the decision depends on a boundary layer, a rare event, a peak stress, a force, a concentration, or another local quantity. The domain test must therefore be: {html.escape(str(job['changed_case_test']))}.</p>
 <h3>How The Methods Enter Without Jargon</h3>
 <p>{html.escape(methods)} Read these as jobs, not labels. One method names how the quantity is allowed to change. Another makes a fast stand-in. Another keeps geometry or field structure visible. Another asks where belief should weaken. The right method is the one that carries the missing information needed for the decision and exposes the first condition where it breaks.</p>
+"""
+
+
+def domain_stress_test_html(guide: dict[str, object]) -> str:
+    job = guide["domain_job"]
+    concepts = ", ".join(str(slug).replace("-", " ") for slug in guide["concepts"])
+    return f"""
+<h2>Domain Stress Test</h2>
+<p>Use this as the review check. The domain explanation is not strong enough unless it survives a changed case tied to the real quantity.</p>
+<table>
+  <tbody>
+    <tr><th>Quantity At Risk</th><td>{html.escape(str(guide['real_quantity']))}</td></tr>
+    <tr><th>Decision That Uses It</th><td>{html.escape(str(job['decision']))}</td></tr>
+    <tr><th>Changed Case</th><td>{html.escape(str(job['changed_case_test']))}</td></tr>
+    <tr><th>What Must Still Hold</th><td>The answer must still support {html.escape(str(job['hidden_quantity']))} for the stated scientific job, not only look similar to familiar examples.</td></tr>
+    <tr><th>Concepts Under Pressure</th><td>{html.escape(concepts)}</td></tr>
+  </tbody>
+</table>
 """
 
 
@@ -5457,6 +5477,7 @@ def write_worked_example_page(path: Path, example: dict[str, object]) -> None:
     ]
     flow = "".join(f"<div class=\"flow-node\">{idx}. {html.escape(str(node))}</div>" for idx, node in enumerate(flow_nodes, start=1))
     first_principles_story = worked_example_story_html(example)
+    stress_test = worked_example_stress_test_html(example)
     body = f"""
 <h1>{html.escape(str(example['title']))}</h1>
 <h2>Scientific Job</h2>
@@ -5476,6 +5497,7 @@ def write_worked_example_page(path: Path, example: dict[str, object]) -> None:
 <p>{html.escape(str(example['why_it_teaches']))}</p>
 <h2>Claim Boundary</h2>
 <p>The example supports a method only inside the named scientific job. A wider claim needs a new test, not stronger wording.</p>
+{stress_test}
 """
     path.write_text(html_page(str(example["title"]), body, root_prefix="../"), encoding="utf-8")
 
@@ -5486,6 +5508,24 @@ def worked_example_story_html(example: dict[str, object]) -> str:
 <p>Start with the decision a person is trying to make. The question is: {html.escape(str(example['question']))} The observed evidence is {html.escape(str(example['observed']))}. That evidence is useful, but it is not the whole answer. The hidden part is {html.escape(str(example['hidden']))}.</p>
 <p>The method route is not a list of names. It is the ordered bridge from evidence to hidden quantity: {html.escape(' -> '.join(str(slug).replace('-', ' ') for slug in example['method_route']))}. Each step has to earn its place. If a step does not add a rule, a structure, a cheaper calculation, or a trust check that the job needs, it should not be in the route.</p>
 <p>This example teaches the field for a concrete reason: {html.escape(str(example['why_it_teaches']))} A reader should be able to retell it as a plain chain: what is known, what is missing, what mathematical object carries the missing part, what decision uses the answer, and what changed case would reject the claim.</p>
+"""
+
+
+def worked_example_stress_test_html(example: dict[str, object]) -> str:
+    route = " -> ".join(str(slug).replace("-", " ") for slug in example["method_route"])
+    last_step = str(example["plain_steps"][-1]) if example.get("plain_steps") else "Change the case and inspect the needed quantity."
+    return f"""
+<h2>Example Stress Test</h2>
+<p>Use this test to decide whether the worked example is a scientific explanation or only a story about a method.</p>
+<table>
+  <tbody>
+    <tr><th>Known Evidence</th><td>{html.escape(str(example['observed']))}</td></tr>
+    <tr><th>Needed Answer</th><td>{html.escape(str(example['hidden']))}</td></tr>
+    <tr><th>Method Route Under Test</th><td>{html.escape(route)}</td></tr>
+    <tr><th>Changed Case To Try</th><td>{html.escape(last_step)}</td></tr>
+    <tr><th>Passes Only If</th><td>The route still answers the original question: {html.escape(str(example['question']))}</td></tr>
+  </tbody>
+</table>
 """
 
 
@@ -5986,7 +6026,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         if not example_path.exists():
             raise SystemExit(f"missing worked example page: {example['title']}")
         example_text = example_path.read_text(encoding="utf-8")
-        if "First-Principles Story" not in example_text or "End-To-End Flow" not in example_text or "flow-node" not in example_text or "Claim Boundary" not in example_text:
+        if "First-Principles Story" not in example_text or "End-To-End Flow" not in example_text or "flow-node" not in example_text or "Claim Boundary" not in example_text or "Example Stress Test" not in example_text or "Method Route Under Test" not in example_text or "Passes Only If" not in example_text:
             raise SystemExit(f"worked example not rendered correctly: {example['title']}")
         for slug in example["method_route"]:
             if not (SITE / "topics" / f"{slug}.html").exists():
@@ -6117,7 +6157,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         if not guide_path.exists():
             raise SystemExit(f"missing domain guide page: {guide['title']}")
         guide_text = guide_path.read_text(encoding="utf-8")
-        if "Walk The Domain From Scratch" not in guide_text or "How The Methods Enter Without Jargon" not in guide_text or "Real Quantity" not in guide_text or "Failure Test" not in guide_text or "Concrete Scientific Job" not in guide_text:
+        if "Walk The Domain From Scratch" not in guide_text or "How The Methods Enter Without Jargon" not in guide_text or "Real Quantity" not in guide_text or "Failure Test" not in guide_text or "Concrete Scientific Job" not in guide_text or "Domain Stress Test" not in guide_text or "Quantity At Risk" not in guide_text or "Concepts Under Pressure" not in guide_text:
             raise SystemExit(f"domain guide not rendered correctly: {guide['title']}")
         job = guide.get("domain_job") or {}
         for field in ("scientific_job", "observed_evidence", "hidden_quantity", "decision", "changed_case_test"):

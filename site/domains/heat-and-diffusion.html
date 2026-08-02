@@ -71,6 +71,19 @@
 <ul><li>Use a PDE to name how spreading should behave.</li><li>Use sparse measurements as anchors.</li><li>Use held-out sensors or a trusted solve to check the claim.</li></ul>
 <h2>Failure Test</h2>
 <p>Change the boundary temperature, source strength, or sensor placement and see whether the prediction still follows the physical rule.</p>
+
+<h2>Domain Stress Test</h2>
+<p>Use this as the review check. The domain explanation is not strong enough unless it survives a changed case tied to the real quantity.</p>
+<table>
+  <tbody>
+    <tr><th>Quantity At Risk</th><td>temperature, concentration, or another quantity spreading through space</td></tr>
+    <tr><th>Decision That Uses It</th><td>decide whether the wall, chip, or sample will exceed a safe temperature</td></tr>
+    <tr><th>Changed Case</th><td>move the heat source or change the boundary temperature and compare against held-out sensors or a trusted solve</td></tr>
+    <tr><th>What Must Still Hold</th><td>The answer must still support the temperature at unsensed locations and later times for the stated scientific job, not only look similar to familiar examples.</td></tr>
+    <tr><th>Concepts Under Pressure</th><td>partial differential equations, physics informed neural networks, uncertainty and generalization</td></tr>
+  </tbody>
+</table>
+
 <h2>Concrete Anchor</h2>
 <p><a href="../worked-examples/heat-equation-from-few-measurements.html">Related page</a></p>
 

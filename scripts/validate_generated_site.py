@@ -145,10 +145,12 @@ def check_required_sections() -> list[str]:
         "site/derivations/operator-learning.html": ("Hand Derivation", "Why It Enters", "Final Line"),
         "site/derivations/foundation-models-for-pdes.html": ("Hand Derivation", "Why It Enters", "Final Line"),
         "site/provenance/cross-channel-playbook.html": ("Cross-Channel Replication Playbook", "Process", "Checks"),
-        "site/worked-examples/molecule-property-from-structure.html": ("First-Principles Story", "End-To-End Flow", "Claim Boundary"),
-        "site/worked-examples/foundation-pde-model-on-new-equation.html": ("First-Principles Story", "End-To-End Flow", "Claim Boundary"),
-        "site/domains/chemistry-and-biology.html": ("Walk The Domain From Scratch", "How The Methods Enter Without Jargon", "Concrete Scientific Job", "Observed Evidence", "Changed-Case Test"),
-        "site/domains/materials-and-mechanics.html": ("Walk The Domain From Scratch", "How The Methods Enter Without Jargon", "Concrete Scientific Job", "Hidden Quantity", "Decision"),
+        "site/worked-examples/molecule-property-from-structure.html": ("First-Principles Story", "End-To-End Flow", "Claim Boundary", "Example Stress Test", "Method Route Under Test", "Passes Only If"),
+        "site/worked-examples/foundation-pde-model-on-new-equation.html": ("First-Principles Story", "End-To-End Flow", "Claim Boundary", "Example Stress Test", "Method Route Under Test", "Passes Only If"),
+        "site/worked-examples/fast-fluid-field-surrogate.html": ("First-Principles Story", "End-To-End Flow", "Claim Boundary", "Example Stress Test", "Changed Case To Try", "Passes Only If"),
+        "site/domains/chemistry-and-biology.html": ("Walk The Domain From Scratch", "How The Methods Enter Without Jargon", "Concrete Scientific Job", "Observed Evidence", "Changed-Case Test", "Domain Stress Test", "Quantity At Risk", "Concepts Under Pressure"),
+        "site/domains/materials-and-mechanics.html": ("Walk The Domain From Scratch", "How The Methods Enter Without Jargon", "Concrete Scientific Job", "Hidden Quantity", "Decision", "Domain Stress Test", "Quantity At Risk", "Concepts Under Pressure"),
+        "site/domains/fluids-and-flow.html": ("Walk The Domain From Scratch", "How The Methods Enter Without Jargon", "Concrete Scientific Job", "Changed-Case Test", "Domain Stress Test", "What Must Still Hold", "Concepts Under Pressure"),
     }
     errors: list[str] = []
     for rel_path, terms in required.items():

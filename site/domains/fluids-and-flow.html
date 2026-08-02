@@ -71,6 +71,19 @@
 <ul><li>Name the shape and flow family.</li><li>Train on trusted simulated fields.</li><li>Check forces, boundary behavior, and difficult regimes rather than only visual similarity.</li></ul>
 <h2>Failure Test</h2>
 <p>Hold out a new geometry or flow condition near the edge of the intended design range.</p>
+
+<h2>Domain Stress Test</h2>
+<p>Use this as the review check. The domain explanation is not strong enough unless it survives a changed case tied to the real quantity.</p>
+<table>
+  <tbody>
+    <tr><th>Quantity At Risk</th><td>velocity, pressure, vorticity, drag, lift, or other flow quantities</td></tr>
+    <tr><th>Decision That Uses It</th><td>screen designs and decide which cases deserve expensive solver runs</td></tr>
+    <tr><th>Changed Case</th><td>hold out a new geometry or flow regime and check drag, lift, boundary behavior, and vortices</td></tr>
+    <tr><th>What Must Still Hold</th><td>The answer must still support the field and forces for a new shape near the edge of the design range for the stated scientific job, not only look similar to familiar examples.</td></tr>
+    <tr><th>Concepts Under Pressure</th><td>operator learning, surrogate modeling, attention for scientific fields, uncertainty and generalization</td></tr>
+  </tbody>
+</table>
+
 <h2>Concrete Anchor</h2>
 <p><a href="../worked-examples/fast-fluid-field-surrogate.html">Related page</a></p>
 
