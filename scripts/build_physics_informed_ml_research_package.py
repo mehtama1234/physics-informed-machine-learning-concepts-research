@@ -3318,6 +3318,7 @@ MEATY_GOAL_REQUIREMENTS = [
     {"key": "plain_question_answer_script", "label": "Plain Question To Answer Script", "proof_term": "Plain Question To Answer Script"},
     {"key": "know_still_test", "label": "Know And Still Test", "proof_term": "What I Know And What I Still Test"},
     {"key": "failure_consequence", "label": "Failure Consequence", "proof_term": "Why The Failure Matters"},
+    {"key": "slow_problem_shape_bridge", "label": "Slow Problem Shape Bridge", "proof_term": "Slow Bridge From Problem To Shape"},
     {"key": "plain_big_picture", "label": "Plain Big Picture Essay", "proof_term": "Plain Big Picture Essay"},
     {"key": "slow_importance_essay", "label": "Slow Importance Essay", "proof_term": "Why This Matters Slowly"},
     {"key": "hand_teaching_note", "label": "Hand Teaching Note", "proof_term": "Hand Teaching Note"},
@@ -6882,6 +6883,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     plain_question_answer_script = topic_plain_question_answer_script_html(topic, derivation)
     know_still_test = topic_know_still_test_html(topic, derivation)
     failure_consequence = topic_failure_consequence_html(topic, derivation)
+    slow_problem_shape_bridge = topic_slow_problem_shape_bridge_html(topic, derivation)
     plain_big_picture = topic_plain_big_picture_essay_html(topic, derivation)
     slow_importance = topic_slow_importance_essay_html(topic, derivation)
     teaching_note = topic_teaching_note_html(str(topic["slug"]))
@@ -6920,6 +6922,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
 {plain_question_answer_script}
 {know_still_test}
 {failure_consequence}
+{slow_problem_shape_bridge}
 {plain_big_picture}
 {slow_importance}
 {teaching_note}
@@ -7591,6 +7594,25 @@ def topic_failure_consequence_html(topic: dict[str, object], derivation: dict[st
   </tbody>
 </table>
 <p>The point is simple: a method becomes important only because a real mistake would matter. The first check is not extra work; it is the line between an explanation and an overclaim.</p>
+"""
+
+
+def topic_slow_problem_shape_bridge_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
+    return f"""
+<h2>Slow Bridge From Problem To Shape</h2>
+<p>This bridge explains why the mathematical shape is not arbitrary. Start with the everyday shortage, then ask what kind of answer would remove that shortage, what evidence can carry it, and what shape is the smallest honest carrier.</p>
+<table>
+  <tbody>
+    <tr><th>Everyday Shortage</th><td>{html.escape(str(topic['common_problem']))}</td></tr>
+    <tr><th>Answer Type Needed</th><td>{html.escape(str(derivation['hidden']))}</td></tr>
+    <tr><th>Evidence Carrier</th><td>{html.escape(str(derivation['observed']))}</td></tr>
+    <tr><th>Why A Single Number Is Not Enough</th><td>The answer must still carry the field, shape, rule, rate, property, uncertainty, or use range named by the scientific job.</td></tr>
+    <tr><th>Smallest Honest Shape</th><td>{html.escape(str(derivation['form']))}</td></tr>
+    <tr><th>Why This Shape Follows</th><td>{html.escape(str(derivation['move']))}</td></tr>
+    <tr><th>What Would Make The Shape Too Weak</th><td>{html.escape(str(topic['failure_boundary']))}</td></tr>
+  </tbody>
+</table>
+<p>Read the shape as a sentence, not as a symbol list. It says what evidence enters, what answer leaves, and what changed case decides whether the middle step carried enough.</p>
 """
 
 
@@ -9627,6 +9649,13 @@ def validate(data: dict[str, object] | None = None) -> None:
             "Materials Or Biology Consequence",
             "Climate Or Field Consequence",
             "Smallest Prevention",
+            "Slow Bridge From Problem To Shape",
+            "Everyday Shortage",
+            "Answer Type Needed",
+            "Evidence Carrier",
+            "Why A Single Number Is Not Enough",
+            "Smallest Honest Shape",
+            "What Would Make The Shape Too Weak",
             "Plain Big Picture Essay",
             "Why This Matters Slowly",
             "Topology and shape matter here",
@@ -10240,7 +10269,7 @@ def validate(data: dict[str, object] | None = None) -> None:
             raise SystemExit(f"meaty goal core page link missing: {item['href']}")
     goal_coverage_path = SITE / "meaty-goal-coverage.html"
     goal_coverage_text = goal_coverage_path.read_text(encoding="utf-8")
-    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Teach From Zero" not in goal_coverage_text or "Application Claim Ladder" not in goal_coverage_text or "Plain Question To Answer Script" not in goal_coverage_text or "Know And Still Test" not in goal_coverage_text or "Failure Consequence" not in goal_coverage_text or "Slow Importance Essay" not in goal_coverage_text or "Hand Teaching Note" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Concept Connections" not in goal_coverage_text or "Belief Evidence" not in goal_coverage_text or "Domain Fit" not in goal_coverage_text or "Shape Follows" not in goal_coverage_text or "Reader Answer Parts" not in goal_coverage_text or "Say It Back Check" not in goal_coverage_text or "Plain-Language Audit" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
+    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Teach From Zero" not in goal_coverage_text or "Application Claim Ladder" not in goal_coverage_text or "Plain Question To Answer Script" not in goal_coverage_text or "Know And Still Test" not in goal_coverage_text or "Failure Consequence" not in goal_coverage_text or "Slow Problem Shape Bridge" not in goal_coverage_text or "Slow Importance Essay" not in goal_coverage_text or "Hand Teaching Note" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Concept Connections" not in goal_coverage_text or "Belief Evidence" not in goal_coverage_text or "Domain Fit" not in goal_coverage_text or "Shape Follows" not in goal_coverage_text or "Reader Answer Parts" not in goal_coverage_text or "Say It Back Check" not in goal_coverage_text or "Plain-Language Audit" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
         raise SystemExit("meaty goal coverage audit not rendered correctly")
     goal_coverage_rows = data.get("meaty_goal_coverage") or []
     if len(goal_coverage_rows) != len(data["concept_atlas"]):
