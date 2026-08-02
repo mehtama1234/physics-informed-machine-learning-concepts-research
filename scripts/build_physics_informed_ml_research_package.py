@@ -3332,6 +3332,7 @@ MEATY_GOAL_REQUIREMENTS = [
     {"key": "final_learner_proof", "label": "Final Learner Proof", "proof_term": "Final Learner Proof In Plain Words"},
     {"key": "next_day_memory_check", "label": "Next-Day Memory Check", "proof_term": "Next-Day Memory Check"},
     {"key": "nearby_topic_comparison", "label": "Nearby Topic Comparison", "proof_term": "Nearby Topic Comparison In Plain Words"},
+    {"key": "math_shape_rehearsal", "label": "Math Shape Rehearsal", "proof_term": "Everyday Math Shape Rehearsal"},
     {"key": "field_mini_cases", "label": "Field Mini Cases", "proof_term": "Field Mini Cases In Plain Words"},
     {"key": "hand_teaching_note", "label": "Hand Teaching Note", "proof_term": "Hand Teaching Note"},
     {"key": "case_walkthrough", "label": "Case Walkthrough", "proof_term": "One Concrete Case From Start To Finish"},
@@ -4963,6 +4964,29 @@ def topic_formula_terms_html(derivation: dict[str, object]) -> str:
   </thead>
   <tbody>{''.join(rows)}</tbody>
 </table>
+"""
+
+
+def topic_math_shape_rehearsal_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
+    title = str(topic["title"])
+    parts = formula_parts(str(derivation["form"]))
+    formula_path = " -> ".join(parts)
+    return f"""
+<h2>Everyday Math Shape Rehearsal</h2>
+<p>Read the mathematical shape before reading symbols. For {html.escape(title)}, the shape is a path from what is visible to what must be checked.</p>
+<table>
+  <tbody>
+    <tr><th>Start Object</th><td>{html.escape(str(derivation['observed']))}</td></tr>
+    <tr><th>Missing Object</th><td>{html.escape(str(derivation['hidden']))}</td></tr>
+    <tr><th>Carry Step</th><td>{html.escape(str(derivation['move']))}</td></tr>
+    <tr><th>Formula Path In Plain Words</th><td>{html.escape(formula_path)}</td></tr>
+    <tr><th>What The Shape Allows</th><td>{html.escape(str(derivation['meaning']))}</td></tr>
+    <tr><th>What The Shape Must Not Hide</th><td>{html.escape(str(topic['failure_boundary']))}</td></tr>
+    <tr><th>Check The Shape</th><td>{html.escape(str(derivation['test']))}</td></tr>
+  </tbody>
+</table>
+<h3>Shape Rehearsal Pass Test</h3>
+<p>The rehearsal passes only if the learner can say the start object, missing object, carry step, formula path, allowed claim, hidden risk, and check without treating the formula as decoration.</p>
 """
 
 
@@ -7352,6 +7376,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     nearby_topic_comparison = topic_nearby_topic_comparison_html(topic, derivation)
     connections = topic_connections_html(topic)
     shape_follows = topic_shape_follows_html(str(topic["slug"]), derivation)
+    math_shape_rehearsal = topic_math_shape_rehearsal_html(topic, derivation)
     formula_terms = topic_formula_terms_html(derivation)
     wrong_use = topic_wrong_use_html(topic)
     belief_evidence = topic_belief_evidence_html(topic, derivation)
@@ -7412,6 +7437,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
   <li><strong>Say what it means:</strong> {html.escape(str(derivation['meaning']))}.</li>
 </ol>
 {shape_follows}
+{math_shape_rehearsal}
 {formula_terms}
 {deep_dive}
 {sketches}
@@ -10682,6 +10708,15 @@ def validate(data: dict[str, object] | None = None) -> None:
             "Why This Shape Follows",
             "Why It Has To Be There",
             "First wrong simplification",
+            "Everyday Math Shape Rehearsal",
+            "Start Object",
+            "Missing Object",
+            "Carry Step",
+            "Formula Path In Plain Words",
+            "What The Shape Allows",
+            "What The Shape Must Not Hide",
+            "Check The Shape",
+            "Shape Rehearsal Pass Test",
             "Plain Formula Term By Term",
             "What It Carries",
             "Concrete Worked Example",

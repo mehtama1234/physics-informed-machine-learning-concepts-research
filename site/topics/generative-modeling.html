@@ -741,6 +741,23 @@
 <p><strong>First wrong simplification:</strong> The first wrong shortcut is to keep the part that gives an answer while dropping the part that checks it. That would hide this failure: measure constraints, rare cases, conservation, and downstream task performance on generated samples.</p>
 
 
+<h2>Everyday Math Shape Rehearsal</h2>
+<p>Read the mathematical shape before reading symbols. For Generative Modeling, the shape is a path from what is visible to what must be checked.</p>
+<table>
+  <tbody>
+    <tr><th>Start Object</th><td>examples of fields, molecules, flows, shapes, or other scientific objects</td></tr>
+    <tr><th>Missing Object</th><td>the spread of possible valid objects beyond the examples</td></tr>
+    <tr><th>Carry Step</th><td>learn how to sample new candidates that resemble the training family</td></tr>
+    <tr><th>Formula Path In Plain Words</th><td>random seed + learned sampler -&gt; candidate scientific object</td></tr>
+    <tr><th>What The Shape Allows</th><td>a generated object must still pass physics and usefulness checks</td></tr>
+    <tr><th>What The Shape Must Not Hide</th><td>generated samples can look realistic while breaking constraints, conservation, or rare-event behavior</td></tr>
+    <tr><th>Check The Shape</th><td>measure constraints, rare cases, conservation, and downstream task performance on generated samples</td></tr>
+  </tbody>
+</table>
+<h3>Shape Rehearsal Pass Test</h3>
+<p>The rehearsal passes only if the learner can say the start object, missing object, carry step, formula path, allowed claim, hidden risk, and check without treating the formula as decoration.</p>
+
+
 <h2>Plain Formula Term By Term</h2>
 <p>The formula is not decoration. Each part says what information is being carried from the observed evidence toward the hidden quantity, and what must be checked before the claim is trusted.</p>
 <table>
