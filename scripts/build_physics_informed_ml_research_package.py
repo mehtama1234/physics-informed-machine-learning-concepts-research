@@ -3316,6 +3316,7 @@ MEATY_GOAL_REQUIREMENTS = [
     {"key": "plain_big_picture", "label": "Plain Big Picture Essay", "proof_term": "Plain Big Picture Essay"},
     {"key": "hand_teaching_note", "label": "Hand Teaching Note", "proof_term": "Hand Teaching Note"},
     {"key": "case_walkthrough", "label": "Case Walkthrough", "proof_term": "One Concrete Case From Start To Finish"},
+    {"key": "course_role", "label": "Course Role", "proof_term": "Course Role In Plain Words"},
     {"key": "concept_connections", "label": "Concept Connections", "proof_term": "How This Connects To Nearby Ideas"},
     {"key": "belief_evidence", "label": "Belief Evidence", "proof_term": "Evidence Needed To Believe This"},
     {"key": "domain_fit", "label": "Domain Fit", "proof_term": "Where This Fits By Domain"},
@@ -6108,6 +6109,48 @@ def topic_connections_html(topic: dict[str, object]) -> str:
 """
 
 
+def topic_course_role_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
+    slug = str(topic["slug"])
+    title = str(topic["title"])
+    names = {str(item["slug"]): str(item["name"]) for item in CONCEPTS}
+    dependency = next((item for item in CONCEPT_DEPENDENCIES if item["concept"] == slug), None)
+    learn_first = list(dependency["depends_on"]) if dependency else []
+    used_by = [str(item["concept"]) for item in CONCEPT_DEPENDENCIES if slug in item["depends_on"]]
+    if learn_first:
+        before_text = ", ".join(names.get(dep, dep.replace("-", " ").title()) for dep in learn_first)
+        before_links = "".join(
+            f'<li><a href="{html.escape(dep)}.html">{html.escape(names.get(dep, dep.replace("-", " ").title()))}</a></li>'
+            for dep in learn_first
+        )
+    else:
+        before_text = "the course question itself: what is known, what is missing, and what would reject the answer"
+        before_links = "<li>Start here by naming the real problem, evidence, missing answer, and changed case.</li>"
+    if used_by:
+        later_text = ", ".join(names.get(dep, dep.replace("-", " ").title()) for dep in used_by)
+        later_links = "".join(
+            f'<li><a href="{html.escape(dep)}.html">{html.escape(names.get(dep, dep.replace("-", " ").title()))}</a></li>'
+            for dep in used_by
+        )
+    else:
+        later_text = "the reader's judgment about source limits, changed cases, and field-level claims"
+        later_links = "<li>This topic mainly strengthens how the reader judges later claims, even when no single later topic depends on it.</li>"
+    why = str(dependency["why"]) if dependency else f"{title} is one of the starting ideas because it makes the basic evidence-to-claim shortage visible."
+    confusion = str(dependency["confusion_prevented"]) if dependency else "It prevents the reader from treating later methods as labels before the scientific job is clear."
+    return f"""
+<h2>Course Role In Plain Words</h2>
+<p>This topic appears in the course because it handles a specific job in the route from evidence to scientific claim. For {html.escape(title)}, the job is to move from {html.escape(str(derivation['observed']))} toward {html.escape(str(derivation['hidden']))} without hiding this failure case: {html.escape(str(topic['failure_boundary']))}.</p>
+<table>
+  <tbody>
+    <tr><th>Why It Appears Here</th><td>{html.escape(why)}</td></tr>
+    <tr><th>Read Before This</th><td><ul>{before_links}</ul></td></tr>
+    <tr><th>What It Unlocks Later</th><td><ul>{later_links}</ul></td></tr>
+    <tr><th>Confusion This Prevents</th><td>{html.escape(confusion)}</td></tr>
+    <tr><th>Plain Course Sentence</th><td>After {html.escape(before_text)}, {html.escape(title)} shows why the course uses this move: {html.escape(str(derivation['move']))}. That prepares the reader for {html.escape(later_text)}.</td></tr>
+  </tbody>
+</table>
+"""
+
+
 def topic_wrong_use(topic: dict[str, object]) -> dict[str, str]:
     slug = str(topic["slug"])
     wrong_uses = {
@@ -6480,6 +6523,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     plain_big_picture = topic_plain_big_picture_essay_html(topic, derivation)
     teaching_note = topic_teaching_note_html(str(topic["slug"]))
     case_walkthrough = topic_case_walkthrough_html(topic, derivation)
+    course_role = topic_course_role_html(topic, derivation)
     connections = topic_connections_html(topic)
     shape_follows = topic_shape_follows_html(str(topic["slug"]), derivation)
     formula_terms = topic_formula_terms_html(derivation)
@@ -6509,6 +6553,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
 {plain_big_picture}
 {teaching_note}
 {case_walkthrough}
+{course_role}
 {connections}
 <h2>First-Principles Walkthrough</h2>
 <ol>
@@ -9008,6 +9053,12 @@ def validate(data: dict[str, object] | None = None) -> None:
             "One Concrete Case From Start To Finish",
             "Observed Evidence",
             "Rejection Test",
+            "Course Role In Plain Words",
+            "Why It Appears Here",
+            "Read Before This",
+            "What It Unlocks Later",
+            "Confusion This Prevents",
+            "Plain Course Sentence",
             "How This Connects To Nearby Ideas",
             "Learn Before This",
             "Confusion It Prevents",
