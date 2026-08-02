@@ -2273,6 +2273,14 @@ REVIEW_HANDOFF = {
         {"label": "Decision Guide", "href": "decision-guide.html"},
         {"label": "Provenance", "href": "provenance.html"},
     ],
+    "review_now": [
+        {"label": "Home", "href": "index.html", "why": "Use this to see the full package map and current counts."},
+        {"label": "Hand Polish Audit", "href": "hand-polish.html", "why": "Use this to review the 14 concept-level acceptance checklists."},
+        {"label": "Meaty Goal Coverage", "href": "meaty-goal-coverage.html", "why": "Use this to verify every required teaching-grade part is present."},
+        {"label": "Review Queue", "href": "review-queue.html", "why": "Use this to confirm there are no P0 or P1 support gaps left."},
+        {"label": "Evidence Packets", "href": "evidence-packets.html", "why": "Use this to check source support, source limits, and claim boundaries."},
+        {"label": "Topic Atlas", "href": "concept-atlas.html", "why": "Use this to open individual concept pages."},
+    ],
     "core_review_pages": [
         {"label": "PINNs", "href": "topics/physics-informed-neural-networks.html"},
         {"label": "Operator Learning", "href": "topics/operator-learning.html"},
@@ -2300,6 +2308,7 @@ REVIEW_HANDOFF = {
         "git push -u origin main",
     ],
     "remote_status": "Configured origin is https://github.com/mehtama1234/physics-informed-machine-learning-concepts-research.git. The repository exists, main is pushed, and origin/main should match local main after each final push.",
+    "local_server": "http://127.0.0.1:8022/",
 }
 
 
@@ -6111,6 +6120,19 @@ def write_handoff_page(path: Path, handoff: dict[str, object], summary: dict[str
     commands = "".join(f"<li><code>{html.escape(str(command))}</code></li>" for command in handoff["validation_commands"])
     remote_commands = "".join(f"<li><code>{html.escape(str(command))}</code></li>" for command in handoff["remote_finish_commands"])
     remaining = "".join(f"<li>{html.escape(str(item))}</li>" for item in handoff["remaining_editorial_work"])
+    local_server = str(handoff["local_server"]).rstrip("/") + "/"
+    review_rows = []
+    for item in handoff["review_now"]:
+        href = str(item["href"])
+        review_rows.append(
+            f"""
+<tr>
+  <td><a href="{html.escape(href)}">{html.escape(str(item['label']))}</a></td>
+  <td><a href="{html.escape(local_server + href)}">{html.escape(local_server + href)}</a></td>
+  <td>{html.escape(str(item['why']))}</td>
+</tr>
+"""
+        )
     body = f"""
 <h1>{html.escape(str(handoff['title']))}</h1>
 <h2>Purpose</h2>
@@ -6122,6 +6144,12 @@ def write_handoff_page(path: Path, handoff: dict[str, object], summary: dict[str
   <li>Available transcripts: {html.escape(str(summary['available_transcripts']))}</li>
   <li>Generated guide layers: learning path, glossary, domains, checks, decisions, provenance, coverage, quality, synthesis.</li>
 </ul>
+<h2>Review Now</h2>
+<p>Use these URLs when the local server is running at <code>{html.escape(local_server)}</code>.</p>
+<table>
+  <thead><tr><th>Page</th><th>Local URL</th><th>Why Open It</th></tr></thead>
+  <tbody>{''.join(review_rows)}</tbody>
+</table>
 <h2>Start Here</h2>
 {link_list(list(handoff['start_here']))}
 <h2>Core Review Pages</h2>
@@ -7371,7 +7399,7 @@ def validate(data: dict[str, object] | None = None) -> None:
                 raise SystemExit(f"meaty goal coverage link missing: {row.get('title')} -> {row[href_field]}")
     handoff_path = SITE / "handoff.html"
     handoff_text = handoff_path.read_text(encoding="utf-8")
-    if "Start Here" not in handoff_text or "Remaining Editorial Work" not in handoff_text or "Remote Verification Commands" not in handoff_text:
+    if "Review Now" not in handoff_text or "http://127.0.0.1:8022/hand-polish.html" not in handoff_text or "Start Here" not in handoff_text or "Remaining Editorial Work" not in handoff_text or "Remote Verification Commands" not in handoff_text:
         raise SystemExit("handoff page not rendered correctly")
     for command in REVIEW_HANDOFF["remote_finish_commands"]:
         if command not in handoff_text:
