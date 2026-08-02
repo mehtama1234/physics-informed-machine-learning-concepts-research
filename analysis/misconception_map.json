@@ -9,7 +9,9 @@
       "The equation is known to be incomplete for the experiment.",
       "No comparison is made against held-out measurements or a trusted solver."
     ],
+    "why_tempting": "The shortcut is tempting because it keeps the visible result for Physics-Informed Neural Networks while skipping the evidence boundary: move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements.",
     "plain_correction": "A PINN is a fitted field that must answer to both measured values and a known physical rule.",
+    "repair_sentence": "Say instead: A PINN is a fitted field that must answer to both measured values and a known physical rule. It should be trusted only after this check: move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements.",
     "first_principles_test": "move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements",
     "reader_check_href": "reader-checks/pinns-check.html",
     "derivation_href": "derivations/physics-informed-neural-networks.html",
@@ -25,7 +27,9 @@
       "The grid or resolution changes the conclusion.",
       "Small visual error hides a large error in the quantity people care about."
     ],
+    "why_tempting": "The shortcut is tempting because it keeps the visible result for Partial Differential Equations while skipping the evidence boundary: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error.",
     "plain_correction": "A PDE is a rule for how a whole field changes across space and time.",
+    "repair_sentence": "Say instead: A PDE is a rule for how a whole field changes across space and time. It should be trusted only after this check: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error.",
     "first_principles_test": "change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error",
     "reader_check_href": "reader-checks/partial-differential-equations-check.html",
     "derivation_href": "derivations/partial-differential-equations.html",
@@ -41,7 +45,9 @@
       "The output looks plausible but physical quantities are not checked.",
       "The model is used on a new boundary type without evidence."
     ],
+    "why_tempting": "The shortcut is tempting because it keeps the visible result for Operator Learning while skipping the evidence boundary: change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed.",
     "plain_correction": "Operator learning tries to learn the machine that turns one field into another field.",
+    "repair_sentence": "Say instead: Operator learning tries to learn the machine that turns one field into another field. It should be trusted only after this check: change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed.",
     "first_principles_test": "change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed",
     "reader_check_href": "reader-checks/operator-learning-check.html",
     "derivation_href": "derivations/operator-learning.html",
@@ -57,7 +63,9 @@
       "The output metric ignores the decision people actually make.",
       "The full solver is never used again for spot checks."
     ],
+    "why_tempting": "The shortcut is tempting because it keeps the visible result for Surrogate Modeling while skipping the evidence boundary: compare against the full solver on new cases near the edge of the intended use.",
     "plain_correction": "A surrogate is a faster stand-in for a slower trusted process.",
+    "repair_sentence": "Say instead: A surrogate is a faster stand-in for a slower trusted process. It should be trusted only after this check: compare against the full solver on new cases near the edge of the intended use.",
     "first_principles_test": "compare against the full solver on new cases near the edge of the intended use",
     "reader_check_href": "reader-checks/surrogate-check.html",
     "derivation_href": "derivations/surrogate-modeling.html",
@@ -73,7 +81,9 @@
       "Rare regimes are averaged away.",
       "No one states what condition would make the model unusable."
     ],
+    "why_tempting": "The shortcut is tempting because it keeps the visible result for Uncertainty And Generalization while skipping the evidence boundary: move one important condition outside the training range and measure the first failure.",
     "plain_correction": "This topic asks when a prediction should be believed on a case the model did not learn from.",
+    "repair_sentence": "Say instead: This topic asks when a prediction should be believed on a case the model did not learn from. It should be trusted only after this check: move one important condition outside the training range and measure the first failure.",
     "first_principles_test": "move one important condition outside the training range and measure the first failure",
     "reader_check_href": "reader-checks/uncertainty-check.html",
     "derivation_href": "derivations/uncertainty-and-generalization.html",
@@ -89,7 +99,9 @@
       "Known conservation or stability behavior is not checked.",
       "The learned rate fits noise instead of mechanism."
     ],
+    "why_tempting": "The shortcut is tempting because it keeps the visible result for Neural Differential Equations while skipping the evidence boundary: run longer than the training window and check whether small rate errors accumulate into drift.",
     "plain_correction": "A neural differential equation learns the missing rule for how a system changes.",
+    "repair_sentence": "Say instead: A neural differential equation learns the missing rule for how a system changes. It should be trusted only after this check: run longer than the training window and check whether small rate errors accumulate into drift.",
     "first_principles_test": "run longer than the training window and check whether small rate errors accumulate into drift",
     "reader_check_href": "reader-checks/neural-differential-equations-check.html",
     "derivation_href": "derivations/neural-differential-equations.html",
@@ -105,7 +117,9 @@
       "Noise creates a fake term.",
       "The search space could not express the real mechanism."
     ],
+    "why_tempting": "The shortcut is tempting because it keeps the visible result for Symbolic Regression And Model Discovery while skipping the evidence boundary: remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts.",
     "plain_correction": "Symbolic regression searches for a short formula that explains measured behavior.",
+    "repair_sentence": "Say instead: Symbolic regression searches for a short formula that explains measured behavior. It should be trusted only after this check: remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts.",
     "first_principles_test": "remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts",
     "reader_check_href": "reader-checks/symbolic-regression-check.html",
     "derivation_href": "derivations/symbolic-regression.html",
@@ -121,7 +135,9 @@
       "New boundaries or quantities are assumed rather than tested.",
       "Scale is treated as a substitute for scientific validation."
     ],
+    "why_tempting": "The shortcut is tempting because it keeps the visible result for Foundation Models For PDEs while skipping the evidence boundary: hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver.",
     "plain_correction": "A PDE foundation model tries to reuse structure across many related field-prediction tasks.",
+    "repair_sentence": "Say instead: A PDE foundation model tries to reuse structure across many related field-prediction tasks. It should be trusted only after this check: hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver.",
     "first_principles_test": "hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver",
     "reader_check_href": "reader-checks/foundation-pde-check.html",
     "derivation_href": "derivations/foundation-models-for-pdes.html",
@@ -137,7 +153,9 @@
       "The important scientific quantity is not the quantity being checked.",
       "No one asks what pattern the examples could not possibly teach."
     ],
+    "why_tempting": "The shortcut is tempting because it keeps the visible result for Deep Learning while skipping the evidence boundary: hold out a changed material, geometry, parameter range, or sensor condition.",
     "plain_correction": "Deep learning fits a flexible rule from examples when the useful pattern is hard to write by hand.",
+    "repair_sentence": "Say instead: Deep learning fits a flexible rule from examples when the useful pattern is hard to write by hand. It should be trusted only after this check: hold out a changed material, geometry, parameter range, or sensor condition.",
     "first_principles_test": "hold out a changed material, geometry, parameter range, or sensor condition",
     "reader_check_href": "reader-checks/deep-learning-check.html",
     "derivation_href": "derivations/deep-learning.html",
@@ -153,7 +171,9 @@
       "The learned part can violate conservation, boundaries, or units without penalty.",
       "The result is not compared against a changed experiment or trusted solve."
     ],
+    "why_tempting": "The shortcut is tempting because it keeps the visible result for Scientific Machine Learning while skipping the evidence boundary: state the scientific quantity first, then test it under a changed case that matters in that domain.",
     "plain_correction": "Scientific machine learning uses data and scientific rules together so the answer is useful for a named scientific question.",
+    "repair_sentence": "Say instead: Scientific machine learning uses data and scientific rules together so the answer is useful for a named scientific question. It should be trusted only after this check: state the scientific quantity first, then test it under a changed case that matters in that domain.",
     "first_principles_test": "state the scientific quantity first, then test it under a changed case that matters in that domain",
     "reader_check_href": "reader-checks/scientific-machine-learning-check.html",
     "derivation_href": "derivations/scientific-machine-learning.html",
@@ -169,7 +189,9 @@
       "A hard constraint is treated as a soft suggestion without checking the damage.",
       "Training succeeds while the physical test fails."
     ],
+    "why_tempting": "The shortcut is tempting because it keeps the visible result for Optimization For Learning while skipping the evidence boundary: inspect what the score ignores, then check whether the ignored behavior fails after training.",
     "plain_correction": "Optimization is the process of changing a model until a written error score gets smaller.",
+    "repair_sentence": "Say instead: Optimization is the process of changing a model until a written error score gets smaller. It should be trusted only after this check: inspect what the score ignores, then check whether the ignored behavior fails after training.",
     "first_principles_test": "inspect what the score ignores, then check whether the ignored behavior fails after training",
     "reader_check_href": "reader-checks/optimization-for-learning-check.html",
     "derivation_href": "derivations/optimization-for-learning.html",
@@ -185,7 +207,9 @@
       "The model creates cases outside the evidence family.",
       "The generated object is used as data without marking it as generated."
     ],
+    "why_tempting": "The shortcut is tempting because it keeps the visible result for Generative Modeling while skipping the evidence boundary: measure constraints, rare cases, conservation, and downstream task performance on generated samples.",
     "plain_correction": "Generative modeling learns how to make possible examples, not just score one existing example.",
+    "repair_sentence": "Say instead: Generative modeling learns how to make possible examples, not just score one existing example. It should be trusted only after this check: measure constraints, rare cases, conservation, and downstream task performance on generated samples.",
     "first_principles_test": "measure constraints, rare cases, conservation, and downstream task performance on generated samples",
     "reader_check_href": "reader-checks/generative-modeling-check.html",
     "derivation_href": "derivations/generative-modeling.html",
@@ -201,7 +225,9 @@
       "It is tested only on one mesh resolution.",
       "A rotated or refined shape breaks the result without explanation."
     ],
+    "why_tempting": "The shortcut is tempting because it keeps the visible result for Graphs And Geometric Learning while skipping the evidence boundary: change the mesh, rotate or move the object, or add missing interactions and inspect what breaks.",
     "plain_correction": "Graph and geometric learning keeps the connections and shape of the object visible to the model.",
+    "repair_sentence": "Say instead: Graph and geometric learning keeps the connections and shape of the object visible to the model. It should be trusted only after this check: change the mesh, rotate or move the object, or add missing interactions and inspect what breaks.",
     "first_principles_test": "change the mesh, rotate or move the object, or add missing interactions and inspect what breaks",
     "reader_check_href": "reader-checks/graphs-and-geometric-learning-check.html",
     "derivation_href": "derivations/graphs-and-geometric-learning.html",
@@ -217,7 +243,9 @@
       "It works only at the trained resolution or patch size.",
       "Long-range influence is claimed but not stress-tested."
     ],
+    "why_tempting": "The shortcut is tempting because it keeps the visible result for Attention For Scientific Fields while skipping the evidence boundary: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures.",
     "plain_correction": "Attention lets a model decide which other parts of a field matter for the point or region being predicted.",
+    "repair_sentence": "Say instead: Attention lets a model decide which other parts of a field matter for the point or region being predicted. It should be trusted only after this check: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures.",
     "first_principles_test": "change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures",
     "reader_check_href": "reader-checks/attention-for-scientific-fields-check.html",
     "derivation_href": "derivations/attention-for-scientific-fields.html",

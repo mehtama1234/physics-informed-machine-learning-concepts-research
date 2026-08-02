@@ -4176,7 +4176,9 @@ def build_misconception_map(core_derivations: list[dict[str, object]], reader_ch
                 "slug": slug,
                 "title": str(derivation["title"]),
                 "wrong_turns": wrong_turns,
+                "why_tempting": misconception_why_tempting(derivation),
                 "plain_correction": str(derivation["one_sentence"]),
+                "repair_sentence": misconception_repair_sentence(derivation),
                 "first_principles_test": str(derivation["failure_test"]),
                 "reader_check_href": f"reader-checks/{check['slug']}.html" if check else "",
                 "derivation_href": str(derivation["derivation_href"]),
@@ -4184,6 +4186,20 @@ def build_misconception_map(core_derivations: list[dict[str, object]], reader_ch
             }
         )
     return rows
+
+
+def misconception_why_tempting(derivation: dict[str, object]) -> str:
+    return (
+        f"The shortcut is tempting because it keeps the visible result for {derivation['title']} "
+        f"while skipping the evidence boundary: {derivation['failure_test']}."
+    )
+
+
+def misconception_repair_sentence(derivation: dict[str, object]) -> str:
+    return (
+        f"Say instead: {derivation['one_sentence']} It should be trusted only after this check: "
+        f"{derivation['failure_test']}."
+    )
 
 
 def write_style() -> None:
@@ -5741,7 +5757,9 @@ def write_misconception_map_page(path: Path, rows: list[dict[str, object]]) -> N
 <tr>
   <td><a href="{html.escape(str(row['topic_href']))}">{html.escape(str(row['title']))}</a></td>
   <td><ul>{wrong_turns}</ul></td>
+  <td>{html.escape(str(row['why_tempting']))}</td>
   <td>{html.escape(str(row['plain_correction']))}</td>
+  <td>{html.escape(str(row['repair_sentence']))}</td>
   <td>{html.escape(str(row['first_principles_test']))}</td>
   <td><a href="{html.escape(str(row['derivation_href']))}">derivation</a>{check_link}</td>
 </tr>
@@ -5755,7 +5773,9 @@ def write_misconception_map_page(path: Path, rows: list[dict[str, object]]) -> N
     <tr>
       <th>Concept</th>
       <th>Wrong Turn</th>
+      <th>Why It Is Tempting</th>
       <th>Plain Correction</th>
+      <th>Repair Sentence</th>
       <th>First-Principles Test</th>
       <th>Review Links</th>
     </tr>
@@ -6930,7 +6950,9 @@ def write_markdown_export(data: dict[str, object]) -> None:
         lines.extend(
             [
                 f"### {row['title']}",
+                f"- Why tempting: {row['why_tempting']}",
                 f"- Correction: {row['plain_correction']}",
+                f"- Repair sentence: {row['repair_sentence']}",
                 f"- First-principles test: {row['first_principles_test']}",
                 f"- Wrong turns: {'; '.join(row['wrong_turns'])}",
                 "",
@@ -7464,13 +7486,13 @@ def validate(data: dict[str, object] | None = None) -> None:
                 raise SystemExit(f"formula guide link missing: {row[href_field]}")
     misconception_path = SITE / "misconceptions.html"
     misconception_text = misconception_path.read_text(encoding="utf-8")
-    if "Misconception Map" not in misconception_text or "First-Principles Test" not in misconception_text:
+    if "Misconception Map" not in misconception_text or "Why It Is Tempting" not in misconception_text or "Repair Sentence" not in misconception_text or "First-Principles Test" not in misconception_text:
         raise SystemExit("misconception map not rendered correctly")
     misconception_rows = data.get("misconception_map") or []
     if len(misconception_rows) != len(derivation_rows):
         raise SystemExit("misconception map count does not match derivations")
     for row in misconception_rows:
-        if not row.get("wrong_turns") or not row.get("plain_correction"):
+        if not row.get("wrong_turns") or not row.get("why_tempting") or not row.get("plain_correction") or not row.get("repair_sentence"):
             raise SystemExit(f"misconception row incomplete: {row.get('title')}")
         for href_field in ("topic_href", "derivation_href"):
             if not (SITE / str(row[href_field])).exists():

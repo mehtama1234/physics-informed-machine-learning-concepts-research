@@ -868,72 +868,100 @@
 
 ## Misconception Map
 ### Physics-Informed Neural Networks
+- Why tempting: The shortcut is tempting because it keeps the visible result for Physics-Informed Neural Networks while skipping the evidence boundary: move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements.
 - Correction: A PINN is a fitted field that must answer to both measured values and a known physical rule.
+- Repair sentence: Say instead: A PINN is a fitted field that must answer to both measured values and a known physical rule. It should be trusted only after this check: move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements.
 - First-principles test: move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements
 - Wrong turns: A weak answer says only that the neural network fits data.; The page reports only training error.; The hard region has few check points.; The equation is known to be incomplete for the experiment.; No comparison is made against held-out measurements or a trusted solver.
 
 ### Partial Differential Equations
+- Why tempting: The shortcut is tempting because it keeps the visible result for Partial Differential Equations while skipping the evidence boundary: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error.
 - Correction: A PDE is a rule for how a whole field changes across space and time.
+- Repair sentence: Say instead: A PDE is a rule for how a whole field changes across space and time. It should be trusted only after this check: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error.
 - First-principles test: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error
 - Wrong turns: A weak answer says only that Partial Differential Equations is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.; The boundary condition is vague.; The learned answer ignores conservation.; The grid or resolution changes the conclusion.; Small visual error hides a large error in the quantity people care about.
 
 ### Operator Learning
+- Why tempting: The shortcut is tempting because it keeps the visible result for Operator Learning while skipping the evidence boundary: change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed.
 - Correction: Operator learning tries to learn the machine that turns one field into another field.
+- Repair sentence: Say instead: Operator learning tries to learn the machine that turns one field into another field. It should be trusted only after this check: change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed.
 - First-principles test: change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed
 - Wrong turns: A weak answer says only that the model is fast.; The training family is not named.; Only one resolution is tested.; The output looks plausible but physical quantities are not checked.; The model is used on a new boundary type without evidence.
 
 ### Surrogate Modeling
+- Why tempting: The shortcut is tempting because it keeps the visible result for Surrogate Modeling while skipping the evidence boundary: compare against the full solver on new cases near the edge of the intended use.
 - Correction: A surrogate is a faster stand-in for a slower trusted process.
+- Repair sentence: Say instead: A surrogate is a faster stand-in for a slower trusted process. It should be trusted only after this check: compare against the full solver on new cases near the edge of the intended use.
 - First-principles test: compare against the full solver on new cases near the edge of the intended use
 - Wrong turns: A weak answer treats speed as trust.; The surrogate is described without its use range.; The edge cases are not tested.; The output metric ignores the decision people actually make.; The full solver is never used again for spot checks.
 
 ### Uncertainty And Generalization
+- Why tempting: The shortcut is tempting because it keeps the visible result for Uncertainty And Generalization while skipping the evidence boundary: move one important condition outside the training range and measure the first failure.
 - Correction: This topic asks when a prediction should be believed on a case the model did not learn from.
+- Repair sentence: Say instead: This topic asks when a prediction should be believed on a case the model did not learn from. It should be trusted only after this check: move one important condition outside the training range and measure the first failure.
 - First-principles test: move one important condition outside the training range and measure the first failure
 - Wrong turns: A weak answer reports one score without saying what changed.; Only familiar cases are reported.; The test set differs from training only in name.; Rare regimes are averaged away.; No one states what condition would make the model unusable.
 
 ### Neural Differential Equations
+- Why tempting: The shortcut is tempting because it keeps the visible result for Neural Differential Equations while skipping the evidence boundary: run longer than the training window and check whether small rate errors accumulate into drift.
 - Correction: A neural differential equation learns the missing rule for how a system changes.
+- Repair sentence: Say instead: A neural differential equation learns the missing rule for how a system changes. It should be trusted only after this check: run longer than the training window and check whether small rate errors accumulate into drift.
 - First-principles test: run longer than the training window and check whether small rate errors accumulate into drift
 - Wrong turns: A weak answer says only that Neural Differential Equations is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.; The model is tested only over short times.; Small rate errors accumulate unnoticed.; Known conservation or stability behavior is not checked.; The learned rate fits noise instead of mechanism.
 
 ### Symbolic Regression And Model Discovery
+- Why tempting: The shortcut is tempting because it keeps the visible result for Symbolic Regression And Model Discovery while skipping the evidence boundary: remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts.
 - Correction: Symbolic regression searches for a short formula that explains measured behavior.
+- Repair sentence: Say instead: Symbolic regression searches for a short formula that explains measured behavior. It should be trusted only after this check: remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts.
 - First-principles test: remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts
 - Wrong turns: A weak answer trusts a neat formula because it fits the original data.; Important variables were never measured.; The formula is selected only on the original data.; Noise creates a fake term.; The search space could not express the real mechanism.
 
 ### Foundation Models For PDEs
+- Why tempting: The shortcut is tempting because it keeps the visible result for Foundation Models For PDEs while skipping the evidence boundary: hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver.
 - Correction: A PDE foundation model tries to reuse structure across many related field-prediction tasks.
+- Repair sentence: Say instead: A PDE foundation model tries to reuse structure across many related field-prediction tasks. It should be trusted only after this check: hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver.
 - First-principles test: hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver
 - Wrong turns: A weak answer treats broad training size as proof of broad scientific trust.; The held-out test is too similar to training.; Rare regimes are missing.; New boundaries or quantities are assumed rather than tested.; Scale is treated as a substitute for scientific validation.
 
 ### Deep Learning
+- Why tempting: The shortcut is tempting because it keeps the visible result for Deep Learning while skipping the evidence boundary: hold out a changed material, geometry, parameter range, or sensor condition.
 - Correction: Deep learning fits a flexible rule from examples when the useful pattern is hard to write by hand.
+- Repair sentence: Say instead: Deep learning fits a flexible rule from examples when the useful pattern is hard to write by hand. It should be trusted only after this check: hold out a changed material, geometry, parameter range, or sensor condition.
 - First-principles test: hold out a changed material, geometry, parameter range, or sensor condition
 - Wrong turns: A weak answer says only that Deep Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.; The page talks about accuracy without naming the test cases.; The model is used after the data source or physical scale changes.; The important scientific quantity is not the quantity being checked.; No one asks what pattern the examples could not possibly teach.
 
 ### Scientific Machine Learning
+- Why tempting: The shortcut is tempting because it keeps the visible result for Scientific Machine Learning while skipping the evidence boundary: state the scientific quantity first, then test it under a changed case that matters in that domain.
 - Correction: Scientific machine learning uses data and scientific rules together so the answer is useful for a named scientific question.
+- Repair sentence: Say instead: Scientific machine learning uses data and scientific rules together so the answer is useful for a named scientific question. It should be trusted only after this check: state the scientific quantity first, then test it under a changed case that matters in that domain.
 - First-principles test: state the scientific quantity first, then test it under a changed case that matters in that domain
 - Wrong turns: A weak answer says only that Scientific Machine Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.; The target quantity is vague.; The known rule is mentioned but not actually checked.; The learned part can violate conservation, boundaries, or units without penalty.; The result is not compared against a changed experiment or trusted solve.
 
 ### Optimization For Learning
+- Why tempting: The shortcut is tempting because it keeps the visible result for Optimization For Learning while skipping the evidence boundary: inspect what the score ignores, then check whether the ignored behavior fails after training.
 - Correction: Optimization is the process of changing a model until a written error score gets smaller.
+- Repair sentence: Say instead: Optimization is the process of changing a model until a written error score gets smaller. It should be trusted only after this check: inspect what the score ignores, then check whether the ignored behavior fails after training.
 - First-principles test: inspect what the score ignores, then check whether the ignored behavior fails after training
 - Wrong turns: A weak answer says only that Optimization For Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.; The loss terms are listed but their relative weight is not justified.; Only the final score is reported.; A hard constraint is treated as a soft suggestion without checking the damage.; Training succeeds while the physical test fails.
 
 ### Generative Modeling
+- Why tempting: The shortcut is tempting because it keeps the visible result for Generative Modeling while skipping the evidence boundary: measure constraints, rare cases, conservation, and downstream task performance on generated samples.
 - Correction: Generative modeling learns how to make possible examples, not just score one existing example.
+- Repair sentence: Say instead: Generative modeling learns how to make possible examples, not just score one existing example. It should be trusted only after this check: measure constraints, rare cases, conservation, and downstream task performance on generated samples.
 - First-principles test: measure constraints, rare cases, conservation, and downstream task performance on generated samples
 - Wrong turns: A weak answer says only that Generative Modeling is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.; Samples look realistic but violate a known equation or boundary.; Diversity is reported without saying whether the candidates are valid.; The model creates cases outside the evidence family.; The generated object is used as data without marking it as generated.
 
 ### Graphs And Geometric Learning
+- Why tempting: The shortcut is tempting because it keeps the visible result for Graphs And Geometric Learning while skipping the evidence boundary: change the mesh, rotate or move the object, or add missing interactions and inspect what breaks.
 - Correction: Graph and geometric learning keeps the connections and shape of the object visible to the model.
+- Repair sentence: Say instead: Graph and geometric learning keeps the connections and shape of the object visible to the model. It should be trusted only after this check: change the mesh, rotate or move the object, or add missing interactions and inspect what breaks.
 - First-principles test: change the mesh, rotate or move the object, or add missing interactions and inspect what breaks
 - Wrong turns: A weak answer says only that Graphs And Geometric Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.; Mesh order changes the answer when the geometry did not change.; The model ignores boundaries or long-distance connections that matter physically.; It is tested only on one mesh resolution.; A rotated or refined shape breaks the result without explanation.
 
 ### Attention For Scientific Fields
+- Why tempting: The shortcut is tempting because it keeps the visible result for Attention For Scientific Fields while skipping the evidence boundary: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures.
 - Correction: Attention lets a model decide which other parts of a field matter for the point or region being predicted.
+- Repair sentence: Say instead: Attention lets a model decide which other parts of a field matter for the point or region being predicted. It should be trusted only after this check: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures.
 - First-principles test: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures
 - Wrong turns: A weak answer says only that Attention For Scientific Fields is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.; Attention maps are shown as explanation without validation.; The method ignores conservation or boundary checks.; It works only at the trained resolution or patch size.; Long-range influence is claimed but not stress-tested.
 
