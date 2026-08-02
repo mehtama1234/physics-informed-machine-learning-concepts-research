@@ -3311,6 +3311,7 @@ SOURCE_ANCHORS = {
 MEATY_GOAL_REQUIREMENTS = [
     {"key": "first_principles", "label": "First Principles", "proof_term": "First-Principles Essay"},
     {"key": "claim_chain", "label": "Big Picture Claim Chain", "proof_term": "Big Picture Claim Chain"},
+    {"key": "explanation_order", "label": "Explanation Order", "proof_term": "Explanation Order Matters"},
     {"key": "use_protocol", "label": "End-To-End Use Protocol", "proof_term": "End-To-End Use Protocol"},
     {"key": "before_math_slow_walk", "label": "Before The Math Slow Walk", "proof_term": "Before The Math Slow Walk"},
     {"key": "teach_from_zero", "label": "Teach From Zero", "proof_term": "Teach It From Zero"},
@@ -7067,6 +7068,31 @@ def topic_claim_chain_html(topic: dict[str, object], derivation: dict[str, objec
 """
 
 
+def topic_explanation_order_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
+    return f"""
+<h2>Explanation Order Matters</h2>
+<p>The order is part of the idea. If the page starts with a method name, formula, or claim, the learner can miss why the idea is needed at all.</p>
+<table>
+  <tbody>
+    <tr><th>1. Start With The Problem</th><td>{html.escape(str(topic['common_problem']))}</td></tr>
+    <tr><th>Why This Must Come First</th><td>The problem gives the method a job. Without it, the name can sound important while doing no clear work.</td></tr>
+    <tr><th>2. Then Name The Evidence</th><td>{html.escape(str(derivation['observed']))}</td></tr>
+    <tr><th>Why Evidence Comes Before The Move</th><td>The move can only carry what is actually seen, measured, written, solved, or checked.</td></tr>
+    <tr><th>3. Then Name The Missing Answer</th><td>{html.escape(str(derivation['hidden']))}</td></tr>
+    <tr><th>Why The Missing Answer Comes Before Math</th><td>The math shape is chosen to reach this missing answer, not because the topic name sounds useful.</td></tr>
+    <tr><th>4. Then Make The Plain Move</th><td>{html.escape(str(derivation['move']))}</td></tr>
+    <tr><th>Why The Move Comes Before The Claim</th><td>The claim is allowed only if the move really carries the evidence toward the missing answer.</td></tr>
+    <tr><th>5. Then Check Shape And Field Use</th><td>{html.escape(str(topic['keeps']))}</td></tr>
+    <tr><th>Why Shape Comes Before Trust</th><td>The answer can look right while losing the relation, boundary, graph, field, or use range that carries the real claim.</td></tr>
+    <tr><th>6. End With The Test</th><td>{html.escape(str(derivation['test']))}</td></tr>
+    <tr><th>Why The Test Comes Last</th><td>The final test decides whether to trust, narrow, or reject the claim.</td></tr>
+  </tbody>
+</table>
+<h3>Order Pass Test</h3>
+<p>The order passes only if the learner can explain why problem, evidence, missing answer, move, shape, claim, and test appear in that order.</p>
+"""
+
+
 def topic_before_math_slow_walk_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
     title = str(topic["title"])
     case = topic_case_walkthrough(topic, derivation)
@@ -7415,6 +7441,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     source_anchors = source_anchor_cards(str(topic["slug"]), (list(evidence) if isinstance(evidence, list) else []) + source_anchor_evidence, root_prefix="../")
     before_math = topic_before_math_slow_walk_html(topic, derivation)
     claim_chain = topic_claim_chain_html(topic, derivation)
+    explanation_order = topic_explanation_order_html(topic, derivation)
     use_protocol = topic_use_protocol_html(topic, derivation)
     first_principles_essay = topic_first_principles_essay_html(topic, derivation)
     teach_from_zero = topic_teach_from_zero_html(topic, derivation)
@@ -7477,6 +7504,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
 <p>{html.escape(str(topic['everyday_anchor']))}</p>
 {before_math}
 {claim_chain}
+{explanation_order}
 {use_protocol}
 {first_principles_essay}
 {teach_from_zero}
@@ -11877,7 +11905,7 @@ def validate(data: dict[str, object] | None = None) -> None:
             raise SystemExit(f"meaty goal core page link missing: {item['href']}")
     goal_coverage_path = SITE / "meaty-goal-coverage.html"
     goal_coverage_text = goal_coverage_path.read_text(encoding="utf-8")
-    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Teach From Zero" not in goal_coverage_text or "Application Claim Ladder" not in goal_coverage_text or "Field Decision Story" not in goal_coverage_text or "Everyday Vocabulary Bridge" not in goal_coverage_text or "New Case Transfer Rehearsal" not in goal_coverage_text or "Reader Mistake Audit" not in goal_coverage_text or "One-Page Mental Model" not in goal_coverage_text or "Plain Question To Answer Script" not in goal_coverage_text or "Know And Still Test" not in goal_coverage_text or "Failure Consequence" not in goal_coverage_text or "Slow Problem Shape Bridge" not in goal_coverage_text or "Slow Importance Essay" not in goal_coverage_text or "Source-To-Claim Boundary" not in goal_coverage_text or "Teach Someone Handoff" not in goal_coverage_text or "Topology Shape Story" not in goal_coverage_text or "Confusion To Clarity" not in goal_coverage_text or "Hand Teaching Note" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Concept Connections" not in goal_coverage_text or "Belief Evidence" not in goal_coverage_text or "Domain Fit" not in goal_coverage_text or "Shape Follows" not in goal_coverage_text or "Reader Answer Parts" not in goal_coverage_text or "Say It Back Check" not in goal_coverage_text or "Misread Repair Drill" not in goal_coverage_text or "Plain-Language Audit" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
+    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Explanation Order" not in goal_coverage_text or "Teach From Zero" not in goal_coverage_text or "Application Claim Ladder" not in goal_coverage_text or "Field Decision Story" not in goal_coverage_text or "Everyday Vocabulary Bridge" not in goal_coverage_text or "New Case Transfer Rehearsal" not in goal_coverage_text or "Reader Mistake Audit" not in goal_coverage_text or "One-Page Mental Model" not in goal_coverage_text or "Plain Question To Answer Script" not in goal_coverage_text or "Know And Still Test" not in goal_coverage_text or "Failure Consequence" not in goal_coverage_text or "Slow Problem Shape Bridge" not in goal_coverage_text or "Slow Importance Essay" not in goal_coverage_text or "Source-To-Claim Boundary" not in goal_coverage_text or "Teach Someone Handoff" not in goal_coverage_text or "Topology Shape Story" not in goal_coverage_text or "Confusion To Clarity" not in goal_coverage_text or "Hand Teaching Note" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Concept Connections" not in goal_coverage_text or "Belief Evidence" not in goal_coverage_text or "Domain Fit" not in goal_coverage_text or "Shape Follows" not in goal_coverage_text or "Reader Answer Parts" not in goal_coverage_text or "Say It Back Check" not in goal_coverage_text or "Misread Repair Drill" not in goal_coverage_text or "Plain-Language Audit" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
         raise SystemExit("meaty goal coverage audit not rendered correctly")
     goal_coverage_rows = data.get("meaty_goal_coverage") or []
     if len(goal_coverage_rows) != len(data["concept_atlas"]):
