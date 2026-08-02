@@ -3328,6 +3328,7 @@ MEATY_GOAL_REQUIREMENTS = [
     {"key": "plain_retell_drill", "label": "Plain Retell Drill", "proof_term": "Plain Retell Drill"},
     {"key": "field_transfer_check", "label": "Field Transfer Check", "proof_term": "Field Transfer Check In Plain Words"},
     {"key": "wrong_path_repair", "label": "Wrong Path Repair", "proof_term": "Wrong Path To Right Path Repair"},
+    {"key": "confusion_to_clarity", "label": "Confusion To Clarity", "proof_term": "Confusion To Clarity Story"},
     {"key": "course_bridge", "label": "Course Bridge", "proof_term": "Course Bridge In Plain Words"},
     {"key": "use_or_refuse_gate", "label": "Use Or Refuse Gate", "proof_term": "Use Or Refuse Gate In Plain Words"},
     {"key": "final_learner_proof", "label": "Final Learner Proof", "proof_term": "Final Learner Proof In Plain Words"},
@@ -7384,6 +7385,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     plain_retell_drill = topic_plain_retell_drill_html(topic, derivation)
     field_transfer_check = topic_field_transfer_check_html(topic, derivation)
     wrong_path_repair = topic_wrong_path_repair_html(topic, derivation)
+    confusion_to_clarity = topic_confusion_to_clarity_html(topic, derivation)
     use_or_refuse_gate = topic_use_or_refuse_gate_html(topic, derivation)
     final_learner_proof = topic_final_learner_proof_html(topic, derivation)
     teach_someone_handoff = topic_teach_someone_handoff_html(topic, derivation)
@@ -7441,6 +7443,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
 {plain_retell_drill}
 {field_transfer_check}
 {wrong_path_repair}
+{confusion_to_clarity}
 {use_or_refuse_gate}
 {final_learner_proof}
 {teach_someone_handoff}
@@ -8216,6 +8219,41 @@ def topic_wrong_path_repair_html(topic: dict[str, object], derivation: dict[str,
 </table>
 <h3>Repair Pass Test</h3>
 <p>The repair passes only if the learner can point to the skipped evidence, name the hidden answer, restate the allowed move, and give the changed case that would catch the wrong path.</p>
+"""
+
+
+def topic_confusion_to_clarity_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
+    title = str(topic["title"])
+    wrong = topic_wrong_use(topic)
+    applications = topic_plain_applications(topic, derivation)
+    shape = next(row for row in applications if row["field"] == "Topology and shape")
+    story = (
+        f"A learner may start with this wrong idea: {wrong['mistake']} "
+        f"It sounds tempting because {wrong['why_tempting']} "
+        f"The clear version starts lower down. First say what is visible: {str(derivation['observed'])}. "
+        f"Then say what is missing: {str(derivation['hidden'])}. "
+        f"Only then name {title} as the move: {str(derivation['move'])}. "
+        f"The shape check is {str(shape['check'])}. "
+        f"The claim must shrink when {wrong['catch_test']}."
+    )
+    return f"""
+<h2>Confusion To Clarity Story</h2>
+<p>{html.escape(story)}</p>
+<table>
+  <tbody>
+    <tr><th>Confusing First Thought</th><td>{html.escape(wrong['mistake'])}</td></tr>
+    <tr><th>Why It Feels Reasonable</th><td>{html.escape(wrong['why_tempting'])}</td></tr>
+    <tr><th>Missing Everyday Question</th><td>What can be seen, what is still missing, and what changed case would catch the overclaim?</td></tr>
+    <tr><th>Clear Starting Evidence</th><td>{html.escape(str(derivation['observed']))}</td></tr>
+    <tr><th>Clear Missing Answer</th><td>{html.escape(str(derivation['hidden']))}</td></tr>
+    <tr><th>Clear First-Principles Move</th><td>{html.escape(str(derivation['move']))}</td></tr>
+    <tr><th>Shape Check That Keeps It Honest</th><td>{html.escape(str(shape['check']))}</td></tr>
+    <tr><th>Clear Claim</th><td>{html.escape(str(derivation['meaning']))}</td></tr>
+    <tr><th>Clarity Breaks When</th><td>{html.escape(wrong['what_breaks'])}</td></tr>
+  </tbody>
+</table>
+<h3>Clarity Pass Test</h3>
+<p>The story passes only if the learner can replace the confusing first thought with evidence, missing answer, plain move, shape check, clear claim, and break condition.</p>
 """
 
 
@@ -10746,6 +10784,17 @@ def validate(data: dict[str, object] | None = None) -> None:
             "Repaired Plain Claim",
             "Check That Proves The Repair",
             "Repair Pass Test",
+            "Confusion To Clarity Story",
+            "Confusing First Thought",
+            "Why It Feels Reasonable",
+            "Missing Everyday Question",
+            "Clear Starting Evidence",
+            "Clear Missing Answer",
+            "Clear First-Principles Move",
+            "Shape Check That Keeps It Honest",
+            "Clear Claim",
+            "Clarity Breaks When",
+            "Clarity Pass Test",
             "Use Or Refuse Gate In Plain Words",
             "Use It When",
             "Narrow It When",
@@ -11598,7 +11647,7 @@ def validate(data: dict[str, object] | None = None) -> None:
             raise SystemExit(f"meaty goal core page link missing: {item['href']}")
     goal_coverage_path = SITE / "meaty-goal-coverage.html"
     goal_coverage_text = goal_coverage_path.read_text(encoding="utf-8")
-    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Teach From Zero" not in goal_coverage_text or "Application Claim Ladder" not in goal_coverage_text or "Field Decision Story" not in goal_coverage_text or "Plain Question To Answer Script" not in goal_coverage_text or "Know And Still Test" not in goal_coverage_text or "Failure Consequence" not in goal_coverage_text or "Slow Problem Shape Bridge" not in goal_coverage_text or "Slow Importance Essay" not in goal_coverage_text or "Source-To-Claim Boundary" not in goal_coverage_text or "Teach Someone Handoff" not in goal_coverage_text or "Topology Shape Story" not in goal_coverage_text or "Hand Teaching Note" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Concept Connections" not in goal_coverage_text or "Belief Evidence" not in goal_coverage_text or "Domain Fit" not in goal_coverage_text or "Shape Follows" not in goal_coverage_text or "Reader Answer Parts" not in goal_coverage_text or "Say It Back Check" not in goal_coverage_text or "Misread Repair Drill" not in goal_coverage_text or "Plain-Language Audit" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
+    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Teach From Zero" not in goal_coverage_text or "Application Claim Ladder" not in goal_coverage_text or "Field Decision Story" not in goal_coverage_text or "Plain Question To Answer Script" not in goal_coverage_text or "Know And Still Test" not in goal_coverage_text or "Failure Consequence" not in goal_coverage_text or "Slow Problem Shape Bridge" not in goal_coverage_text or "Slow Importance Essay" not in goal_coverage_text or "Source-To-Claim Boundary" not in goal_coverage_text or "Teach Someone Handoff" not in goal_coverage_text or "Topology Shape Story" not in goal_coverage_text or "Confusion To Clarity" not in goal_coverage_text or "Hand Teaching Note" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Concept Connections" not in goal_coverage_text or "Belief Evidence" not in goal_coverage_text or "Domain Fit" not in goal_coverage_text or "Shape Follows" not in goal_coverage_text or "Reader Answer Parts" not in goal_coverage_text or "Say It Back Check" not in goal_coverage_text or "Misread Repair Drill" not in goal_coverage_text or "Plain-Language Audit" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
         raise SystemExit("meaty goal coverage audit not rendered correctly")
     goal_coverage_rows = data.get("meaty_goal_coverage") or []
     if len(goal_coverage_rows) != len(data["concept_atlas"]):

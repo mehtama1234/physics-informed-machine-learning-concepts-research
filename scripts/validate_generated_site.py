@@ -79,7 +79,7 @@ RESTRICTED_PATTERNS = (
     "many different",
 )
 
-MEATY_GOAL_REQUIREMENT_COUNT = 48
+MEATY_GOAL_REQUIREMENT_COUNT = 49
 
 
 class LinkParser(HTMLParser):
@@ -146,7 +146,7 @@ def check_required_sections() -> list[str]:
         "site/editorial-roadmap.html": ("Editorial Roadmap", "Status:", "Current Evidence", "Acceptance Check", "locally completed", "Meaty End-To-End Goal"),
         "site/completion-audit.html": ("Completion Audit", "Requirement Evidence", "GitHub Actions", "locally verified"),
         "site/meaty-goal.html": ("Meaty End-To-End Goal", "Done Means", "Every Core Page Must Contain", "Acceptance Sentence", "Not Done If"),
-        "site/meaty-goal-coverage.html": ("Meaty Goal Coverage Audit", "First Principles", "Big Picture Claim Chain", "End-To-End Use Protocol", "Before The Math Slow Walk", "Teach From Zero", "Application Claim Ladder", "Field Decision Story", "From Scratch Story", "No-Jargon Translation", "Plain Retell Drill", "Field Transfer Check", "Wrong Path Repair", "Course Bridge", "Use Or Refuse Gate", "Final Learner Proof", "Teach Someone Handoff", "Topology Shape Story", "Next-Day Memory Check", "Nearby Topic Comparison", "Math Shape Rehearsal", "Source-To-Claim Boundary", "Field Mini Cases", "Plain Question To Answer Script", "Know And Still Test", "Failure Consequence", "Slow Problem Shape Bridge", "Plain Big Picture Essay", "Slow Importance Essay", "Long Everyday Importance Essay", "Hand Teaching Note", "Case Walkthrough", "Course Role", "Concept Connections", "Belief Evidence", "Domain Fit", "Shape Follows", "Formula Terms", "Breaks Without Idea", "Reader Answer Parts", "Say It Back Check", "Misread Repair Drill", "Plain-Language Audit", "Acceptance Sentence", "Missing Items"),
+        "site/meaty-goal-coverage.html": ("Meaty Goal Coverage Audit", "First Principles", "Big Picture Claim Chain", "End-To-End Use Protocol", "Before The Math Slow Walk", "Teach From Zero", "Application Claim Ladder", "Field Decision Story", "From Scratch Story", "No-Jargon Translation", "Plain Retell Drill", "Field Transfer Check", "Wrong Path Repair", "Confusion To Clarity", "Course Bridge", "Use Or Refuse Gate", "Final Learner Proof", "Teach Someone Handoff", "Topology Shape Story", "Next-Day Memory Check", "Nearby Topic Comparison", "Math Shape Rehearsal", "Source-To-Claim Boundary", "Field Mini Cases", "Plain Question To Answer Script", "Know And Still Test", "Failure Consequence", "Slow Problem Shape Bridge", "Plain Big Picture Essay", "Slow Importance Essay", "Long Everyday Importance Essay", "Hand Teaching Note", "Case Walkthrough", "Course Role", "Concept Connections", "Belief Evidence", "Domain Fit", "Shape Follows", "Formula Terms", "Breaks Without Idea", "Reader Answer Parts", "Say It Back Check", "Misread Repair Drill", "Plain-Language Audit", "Acceptance Sentence", "Missing Items"),
         "site/families.html": ("Paper Family Routes",),
         "site/families/physics-constraints-family.html": ("Family Story From First Principles", "Concrete Family Case", "Route Burden Table", "Question It Answers", "Mistake It Catches", "Why The Concepts Appear In This Order", "Evidence Chain To Track", "What Each Concept Does In The Family", "Evidence Needed Before Trusting The Family", "Too Weak"),
         "site/families/neural-operators-family.html": ("Family Story From First Principles", "Concrete Family Case", "Route Burden Table", "Question It Answers", "Mistake It Catches", "Why The Concepts Appear In This Order", "Evidence Chain To Track", "What Each Concept Does In The Family", "Evidence Needed Before Trusting The Family", "Too Weak"),
@@ -445,6 +445,17 @@ def check_topic_shape_depth() -> list[str]:
         "Repaired Plain Claim",
         "Check That Proves The Repair",
         "Repair Pass Test",
+        "Confusion To Clarity Story",
+        "Confusing First Thought",
+        "Why It Feels Reasonable",
+        "Missing Everyday Question",
+        "Clear Starting Evidence",
+        "Clear Missing Answer",
+        "Clear First-Principles Move",
+        "Shape Check That Keeps It Honest",
+        "Clear Claim",
+        "Clarity Breaks When",
+        "Clarity Pass Test",
         "Use Or Refuse Gate In Plain Words",
         "Use It When",
         "Narrow It When",
