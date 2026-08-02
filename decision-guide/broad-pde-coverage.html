@@ -49,6 +49,22 @@
 <p>Foundation models for PDEs</p>
 <h2>Why This Fits</h2>
 <p>The claim is about shared structure across tasks, so whole task families must be tested.</p>
+
+<h2>Decision Burden From First Principles</h2>
+<p>A method choice is justified only when the shortage, evidence, hidden need, mathematical move, and rejection test line up. This table states what the choice has to carry before the starting point is defensible.</p>
+<table>
+  <tbody>
+    <tr><th>Shortage</th><td>one trained model may be asked to handle many related equations, grids, parameters, or physical settings</td></tr>
+    <tr><th>Observed Evidence</th><td>many PDE problem instances across equations, grids, parameters, or physical settings</td></tr>
+    <tr><th>Hidden Need</th><td>which shared structure carries from one scientific task to another</td></tr>
+    <tr><th>Why This Starting Point Earns Its Place</th><td>train one broad model to reuse structure across many related field-prediction tasks</td></tr>
+    <tr><th>What The Choice Carries</th><td>breadth is useful only if the new task shares the structure the model actually learned</td></tr>
+    <tr><th>First Rejection Test</th><td>hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver</td></tr>
+  </tbody>
+</table>
+<h2>Choice Must Fail If</h2>
+<p>Reject this starting point if the situation cannot provide the observed evidence, if the hidden need is not the quantity the decision uses, or if the first rejection test cannot be run.</p>
+
 <h2>Use If</h2>
 <ul><li>many task families exist</li><li>shared structure is plausible</li><li>whole families can be held out</li></ul>
 <h2>Avoid If</h2>
