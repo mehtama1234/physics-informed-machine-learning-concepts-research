@@ -3317,6 +3317,7 @@ MEATY_GOAL_REQUIREMENTS = [
     {"key": "application_claim_ladder", "label": "Application Claim Ladder", "proof_term": "Application Claim Ladder"},
     {"key": "plain_question_answer_script", "label": "Plain Question To Answer Script", "proof_term": "Plain Question To Answer Script"},
     {"key": "know_still_test", "label": "Know And Still Test", "proof_term": "What I Know And What I Still Test"},
+    {"key": "failure_consequence", "label": "Failure Consequence", "proof_term": "Why The Failure Matters"},
     {"key": "plain_big_picture", "label": "Plain Big Picture Essay", "proof_term": "Plain Big Picture Essay"},
     {"key": "slow_importance_essay", "label": "Slow Importance Essay", "proof_term": "Why This Matters Slowly"},
     {"key": "hand_teaching_note", "label": "Hand Teaching Note", "proof_term": "Hand Teaching Note"},
@@ -6880,6 +6881,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     application_claim_ladder = topic_application_claim_ladder_html(topic, derivation)
     plain_question_answer_script = topic_plain_question_answer_script_html(topic, derivation)
     know_still_test = topic_know_still_test_html(topic, derivation)
+    failure_consequence = topic_failure_consequence_html(topic, derivation)
     plain_big_picture = topic_plain_big_picture_essay_html(topic, derivation)
     slow_importance = topic_slow_importance_essay_html(topic, derivation)
     teaching_note = topic_teaching_note_html(str(topic["slug"]))
@@ -6917,6 +6919,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
 {application_claim_ladder}
 {plain_question_answer_script}
 {know_still_test}
+{failure_consequence}
 {plain_big_picture}
 {slow_importance}
 {teaching_note}
@@ -7566,6 +7569,28 @@ def topic_know_still_test_html(topic: dict[str, object], derivation: dict[str, o
   </tbody>
 </table>
 <p>If the reader can fill this table from memory in everyday words, the topic is understandable. If they cannot name the test still needed, they may understand the story but not yet the scientific claim.</p>
+"""
+
+
+def topic_failure_consequence_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
+    applications = topic_plain_applications(topic, derivation)
+    engineering = next(row for row in applications if row["field"] == "Engineering design")
+    materials = next(row for row in applications if row["field"] == "Materials, chemistry, and biology")
+    fields = next(row for row in applications if row["field"] == "Climate, fluids, and fields")
+    return f"""
+<h2>Why The Failure Matters</h2>
+<p>A failure boundary is not a warning label at the end of the page. It explains why the first-principles chain matters in real work. If the topic is used past its evidence, the wrong answer can travel into a design choice, experiment, field forecast, or scientific claim.</p>
+<table>
+  <tbody>
+    <tr><th>Missing Piece</th><td>{html.escape(str(topic['leaves_out']))}</td></tr>
+    <tr><th>What Can Go Wrong</th><td>{html.escape(str(topic['failure_boundary']))}</td></tr>
+    <tr><th>Engineering Consequence</th><td>{html.escape(str(engineering['why']))} Check it by: {html.escape(str(engineering['check']))}</td></tr>
+    <tr><th>Materials Or Biology Consequence</th><td>{html.escape(str(materials['why']))} Check it by: {html.escape(str(materials['check']))}</td></tr>
+    <tr><th>Climate Or Field Consequence</th><td>{html.escape(str(fields['why']))} Check it by: {html.escape(str(fields['check']))}</td></tr>
+    <tr><th>Smallest Prevention</th><td>State the evidence, hidden answer, shape issue, and changed case before trusting this claim: {html.escape(str(derivation['meaning']))}.</td></tr>
+  </tbody>
+</table>
+<p>The point is simple: a method becomes important only because a real mistake would matter. The first check is not extra work; it is the line between an explanation and an overclaim.</p>
 """
 
 
@@ -9595,6 +9620,13 @@ def validate(data: dict[str, object] | None = None) -> None:
             "Claim I Can Say Carefully",
             "Test Still Needed",
             "Stop Or Narrow When",
+            "Why The Failure Matters",
+            "Missing Piece",
+            "What Can Go Wrong",
+            "Engineering Consequence",
+            "Materials Or Biology Consequence",
+            "Climate Or Field Consequence",
+            "Smallest Prevention",
             "Plain Big Picture Essay",
             "Why This Matters Slowly",
             "Topology and shape matter here",
@@ -10208,7 +10240,7 @@ def validate(data: dict[str, object] | None = None) -> None:
             raise SystemExit(f"meaty goal core page link missing: {item['href']}")
     goal_coverage_path = SITE / "meaty-goal-coverage.html"
     goal_coverage_text = goal_coverage_path.read_text(encoding="utf-8")
-    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Teach From Zero" not in goal_coverage_text or "Application Claim Ladder" not in goal_coverage_text or "Plain Question To Answer Script" not in goal_coverage_text or "Know And Still Test" not in goal_coverage_text or "Slow Importance Essay" not in goal_coverage_text or "Hand Teaching Note" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Concept Connections" not in goal_coverage_text or "Belief Evidence" not in goal_coverage_text or "Domain Fit" not in goal_coverage_text or "Shape Follows" not in goal_coverage_text or "Reader Answer Parts" not in goal_coverage_text or "Say It Back Check" not in goal_coverage_text or "Plain-Language Audit" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
+    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Teach From Zero" not in goal_coverage_text or "Application Claim Ladder" not in goal_coverage_text or "Plain Question To Answer Script" not in goal_coverage_text or "Know And Still Test" not in goal_coverage_text or "Failure Consequence" not in goal_coverage_text or "Slow Importance Essay" not in goal_coverage_text or "Hand Teaching Note" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Concept Connections" not in goal_coverage_text or "Belief Evidence" not in goal_coverage_text or "Domain Fit" not in goal_coverage_text or "Shape Follows" not in goal_coverage_text or "Reader Answer Parts" not in goal_coverage_text or "Say It Back Check" not in goal_coverage_text or "Plain-Language Audit" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
         raise SystemExit("meaty goal coverage audit not rendered correctly")
     goal_coverage_rows = data.get("meaty_goal_coverage") or []
     if len(goal_coverage_rows) != len(data["concept_atlas"]):
