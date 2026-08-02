@@ -5204,6 +5204,7 @@ def html_page(title: str, body: str, root_prefix: str = "") -> str:
   <a href="{root_prefix}topology-shape-guide.html">Shape</a>
   <a href="{root_prefix}question-to-topic-guide.html">Questions</a>
   <a href="{root_prefix}field-application-guide.html">Fields</a>
+  <a href="{root_prefix}end-to-end-walkthrough.html">Walkthrough</a>
   <a href="{root_prefix}learning-path.html">Path</a>
   <a href="{root_prefix}glossary.html">Glossary</a>
   <a href="{root_prefix}domains.html">Domains</a>
@@ -5431,6 +5432,61 @@ def write_field_application_guide_page(path: Path, topics: list[dict[str, object
 <p>A reader understands the field applications when they can pick one topic and explain how it helps in engineering design, materials or biology, and climate or fluids using ordinary words. The answer should end with a changed case, not with a claim that the method works in general.</p>
 """
     path.write_text(html_page("Physics-Informed ML Field Application Guide", body), encoding="utf-8")
+
+
+def write_end_to_end_walkthrough_page(path: Path, topics: list[dict[str, object]]) -> None:
+    route = [
+        "scientific-machine-learning",
+        "partial-differential-equations",
+        "physics-informed-neural-networks",
+        "operator-learning",
+        "surrogate-modeling",
+        "graphs-and-geometric-learning",
+        "attention-for-scientific-fields",
+        "uncertainty-and-generalization",
+        "optimization-for-learning",
+        "generative-modeling",
+        "neural-differential-equations",
+        "symbolic-regression",
+        "foundation-models-for-pdes",
+        "deep-learning",
+    ]
+    topics_by_slug = {str(topic["slug"]): topic for topic in topics}
+    rows = []
+    for idx, slug in enumerate(route, start=1):
+        topic = topics_by_slug[slug]
+        derivation = topic_derivation(topic)
+        rows.append(
+            f"""
+<tr>
+  <th>{idx}</th>
+  <td><a href="topics/{html.escape(str(topic['slug']))}.html">{html.escape(str(topic['title']))}</a></td>
+  <td>{html.escape(str(topic['common_problem']))}</td>
+  <td>{html.escape(str(derivation['move']))}</td>
+  <td>{html.escape(str(derivation['test']))}</td>
+</tr>
+"""
+        )
+    body = f"""
+<h1>End-To-End Course Walkthrough</h1>
+<h2>One Scientific Job From Start To Finish</h2>
+<p>Imagine a team has sparse measurements from a physical system, a few old simulations, a shaped domain, and a real decision to make. They need a field, property, risk, design answer, or readable rule for a new case. The course route is the plain path from that shortage to a claim that can be tested.</p>
+<p>The route below is not a ranking of topics. It is a way to read the course when the reader wants the big picture first. Each row says the everyday need, the first topic that helps, what that topic adds, and what changed case can reject the claim.</p>
+<h2>The Plain Route</h2>
+<table>
+  <thead>
+    <tr><th>Step</th><th>First Topic To Open</th><th>Everyday Need</th><th>What It Adds</th><th>Rejection Check</th></tr>
+  </thead>
+  <tbody>{''.join(rows)}</tbody>
+</table>
+<h2>Shape And Field Checks</h2>
+<p>Any route through the course should pause when the scientific object has a shape, boundary, mesh, molecule, graph, surface, or field. Ask what relation carries the quantity. Then change that relation: move a boundary, refine a mesh, add a missing link, hold out a molecule family, shift a field region, or test a rare flow case.</p>
+<h2>What The Final Claim Can Say</h2>
+<p>The final claim should be modest and useful. It can say which evidence was used, which answer was needed, which mathematical move carried the answer, which field decision used it, and which changed case was checked. It should not claim that the method works everywhere, or that the course label itself proves anything.</p>
+<h2>Final Say-It-Back Test</h2>
+<p>A reader understands the whole course when they can tell the story without hiding behind a method name: here is the real scientific job, here is the evidence, here is the hidden answer, here is the topic route, here is where shape or topology enters, here is the field where the answer matters, and here is the changed case that can reject the claim.</p>
+"""
+    path.write_text(html_page("Physics-Informed ML End-To-End Course Walkthrough", body), encoding="utf-8")
 
 
 def concept_links(slugs: list[str], root_prefix: str = "") -> str:
@@ -5690,6 +5746,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Topology And Shape", "A plain guide to connected structure, boundaries, holes, meshes, and shape checks across the course.", "topology-shape-guide.html")}
 {card("Question To Topic Guide", "Start from an everyday scientific question and open the first topic that carries that need.", "question-to-topic-guide.html")}
 {card("Field Application Guide", "A plain map of how each topic enters engineering, materials, biology, climate, fluids, and field problems.", "field-application-guide.html")}
+{card("End-To-End Walkthrough", "One plain route from sparse evidence and a scientific job to a bounded claim.", "end-to-end-walkthrough.html")}
 {card("Learning Path", f"{summary['learning_path_step_count']} steps from first question to field-level understanding.", "learning-path.html")}
 {card("Glossary", f"{summary['glossary_term_count']} field terms translated into everyday language.", "glossary.html")}
 {card("Domains", f"{summary['domain_guide_count']} domain guides that ground concepts in real scientific work.", "domains.html")}
@@ -5811,6 +5868,7 @@ def write_site(data: dict[str, object]) -> None:
     write_topology_shape_guide_page(SITE / "topology-shape-guide.html", list(topics))
     write_question_to_topic_guide_page(SITE / "question-to-topic-guide.html", list(topics))
     write_field_application_guide_page(SITE / "field-application-guide.html", list(topics))
+    write_end_to_end_walkthrough_page(SITE / "end-to-end-walkthrough.html", list(topics))
 
     learning_cards = []
     for step in learning_path:
@@ -8702,6 +8760,15 @@ def write_markdown_export(data: dict[str, object]) -> None:
             derivation = topic_derivation(topic)
             app = next(row for row in topic_plain_applications(topic, derivation) if row["field"] == field_name)
             lines.append(f"- {topic['title']}: use: {app['use']} Why: {app['why']} Check: {app['check']}")
+    lines.extend(
+        [
+            "",
+            "## End-To-End Course Walkthrough",
+            "- One scientific job: move from sparse measurements, old simulations, a shaped domain, and a real decision to a bounded scientific claim.",
+            "- Plain route: name the evidence, name the hidden answer, choose topic moves that carry the answer, keep shape and field checks visible, and end with a changed case.",
+            "- Final say-it-back test: state the scientific job, evidence, hidden answer, topic route, shape or topology issue, field use, and changed case without hiding behind a method name.",
+        ]
+    )
     lines.extend(["", "## Concepts"])
     for concept in data["concept_atlas"]:
         lines.extend(
@@ -9341,6 +9408,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         SITE / "topology-shape-guide.html",
         SITE / "question-to-topic-guide.html",
         SITE / "field-application-guide.html",
+        SITE / "end-to-end-walkthrough.html",
         SITE / "learning-path.html",
         SITE / "glossary.html",
         SITE / "domains.html",
@@ -9396,6 +9464,21 @@ def validate(data: dict[str, object] | None = None) -> None:
     ):
         if term not in field_guide_text:
             raise SystemExit(f"field application guide missing: {term}")
+    walkthrough_text = (SITE / "end-to-end-walkthrough.html").read_text(encoding="utf-8")
+    for term in (
+        "End-To-End Course Walkthrough",
+        "One Scientific Job From Start To Finish",
+        "The Plain Route",
+        "First Topic To Open",
+        "Everyday Need",
+        "What It Adds",
+        "Rejection Check",
+        "Shape And Field Checks",
+        "What The Final Claim Can Say",
+        "Final Say-It-Back Test",
+    ):
+        if term not in walkthrough_text:
+            raise SystemExit(f"end-to-end walkthrough missing: {term}")
     for family in FAMILY_PAGES:
         family_path = SITE / "families" / f"{family['slug']}.html"
         if not family_path.exists():

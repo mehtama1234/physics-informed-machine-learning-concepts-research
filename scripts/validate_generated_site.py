@@ -28,6 +28,7 @@ REQUIRED_ROOT_PAGES = {
     "topology-shape-guide.html",
     "question-to-topic-guide.html",
     "field-application-guide.html",
+    "end-to-end-walkthrough.html",
     "learning-path.html",
     "glossary.html",
     "domains.html",
@@ -163,6 +164,7 @@ def check_required_sections() -> list[str]:
         "site/topology-shape-guide.html": ("Topology And Shape In Plain Words", "The Everyday Meaning", "Why It Matters From First Principles", "How This Theme Crosses The Course", "Plain Shape Use", "First Shape Check", "What To Say Before Trusting A Shape Claim", "Reader Test", "mesh", "molecule", "boundary", "hole", "Graphs And Geometric Learning"),
         "site/question-to-topic-guide.html": ("Question To Topic Guide", "Start With The Need", "Everyday Question", "Open This Topic", "Why This Is The First Stop", "What To Check Before Trusting It", "If Your Question Mentions Shape", "Reader Test", "I have many examples", "I have a few measurements and a known equation", "mesh", "molecule", "changed case"),
         "site/field-application-guide.html": ("Field Application Guide In Plain Words", "Why Fields Need Their Own Map", "Engineering design", "Materials, chemistry, and biology", "Climate, fluids, and fields", "Plain Use", "Why It Matters", "First Field Check", "How To Read An Application Claim", "Reader Test", "stress", "molecule", "climate", "fluids", "changed case"),
+        "site/end-to-end-walkthrough.html": ("End-To-End Course Walkthrough", "One Scientific Job From Start To Finish", "The Plain Route", "First Topic To Open", "Everyday Need", "What It Adds", "Rejection Check", "Shape And Field Checks", "What The Final Claim Can Say", "Final Say-It-Back Test", "sparse measurements", "shaped domain", "changed case"),
         "site/evidence-packets/physics-informed-neural-networks.html": ("Source Strength Audit", "Reviewed Source Anchors", "Broad Transcript Mentions", "Minimum Review Action", "Stronger Proof Needed", "Transcript Evidence vs Scientific Proof", "Transcript Can Support", "Transcript Cannot Support", "Stronger Validation Needed", "First Overclaim To Reject", "Reviewer Action", "Transcript Support", "What This Evidence Does Not Prove", "Review Links"),
         "site/evidence-packets/operator-learning.html": ("Source Strength Audit", "Reviewed Source Anchors", "Broad Transcript Mentions", "Minimum Review Action", "Stronger Proof Needed", "Transcript Evidence vs Scientific Proof", "Transcript Can Support", "Transcript Cannot Support", "Stronger Validation Needed", "First Overclaim To Reject", "Reviewer Action", "Transcript Support", "What This Evidence Does Not Prove", "Review Links"),
         "site/topics/physics-informed-neural-networks.html": ("Big Picture Claim Chain", "Before The Math Slow Walk", "Say It Without Jargon", "What We Have", "What We Need", "Why The Idea Enters", "What To Try First", "Stop Trusting It When", "Everyday Problem", "Decision Or Quantity At Stake", "Hidden Thing Needed", "First Thing That Can Break The Claim", "End-To-End Use Protocol", "State The Scientific Job", "Name The Decision Quantity", "Inventory The Evidence", "Choose The Mathematical Carrier", "Build The Smallest Working Case", "Run The Changed-Case Test", "Reject Or Narrow The Claim When", "Final Claim Allowed", "Plain Big Picture Essay", "Why This Matters Slowly", "Topology and shape matter here", "The reader should leave this section with one plain sentence", "Applications In Everyday Words", "Topology and shape", "Engineering design", "Materials, chemistry, and biology", "Climate, fluids, and fields", "First-Principles Essay", "What A Strong Explanation Must Say", "One Concrete Case From Start To Finish", "Observed Evidence", "Rejection Test", "Course Role In Plain Words", "Why It Appears Here", "Read Before This", "What It Unlocks Later", "Confusion This Prevents", "Plain Course Sentence", "How This Connects To Nearby Ideas", "Learn Before This", "Confusion It Prevents", "Evidence Needed To Believe This", "Strong Evidence", "Too Weak", "Reject Or Recheck When", "Where This Fits By Domain", "When To Avoid This In A Domain", "Changed-Case Test", "Plain Formula Term By Term", "What It Carries", "Concrete Worked Example", "Concrete Wrong-Use Example", "Test That Catches It", "What Breaks Without This Idea", "Minimum Proof Needed", "Reader Must Be Able To Say", "Say It Back Check", "Real Problem", "Evidence I Have", "Answer I Need", "Shape Or Topology Issue", "Claim I Am Allowed To Make", "Acceptance Sentence Filled", "I would test it by changing", "Selected Source Anchors", "Claim Anchored", "Limit:"),
@@ -480,8 +482,8 @@ def validate() -> None:
         errors.append(f"expected 40 videos, found {summary.get('video_count')}")
     if summary.get("concept_count") != 14:
         errors.append(f"expected 14 concepts, found {summary.get('concept_count')}")
-    if len(manifest) != 224:
-        errors.append(f"expected 224 pages, found {len(manifest)}")
+    if len(manifest) != 225:
+        errors.append(f"expected 225 pages, found {len(manifest)}")
 
     errors.extend(check_internal_links(manifest))
     errors.extend(check_required_sections())

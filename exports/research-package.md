@@ -121,6 +121,11 @@
 - Foundation Models For PDEs: use: Use one broad field model across related equation settings. Why: The useful claim is coverage over named tasks, not coverage over every possible PDE. Check: Compare against trusted solvers for new equation families, grids, and boundaries.
 - Attention For Scientific Fields: use: Route information across fields where one region can affect another. Why: The field answer may need faraway signals without looking everywhere equally. Check: Change storms, fronts, boundaries, and long-range interactions and inspect the field.
 
+## End-To-End Course Walkthrough
+- One scientific job: move from sparse measurements, old simulations, a shaped domain, and a real decision to a bounded scientific claim.
+- Plain route: name the evidence, name the hidden answer, choose topic moves that carry the answer, keep shape and field checks visible, and end with a changed case.
+- Final say-it-back test: state the scientific job, evidence, hidden answer, topic route, shape or topology issue, field use, and changed case without hiding behind a method name.
+
 ## Concepts
 ### Deep Learning
 - Problem: scientists often have examples of behavior but no short rule that predicts the next case
