@@ -5295,18 +5295,50 @@ def write_completion_audit_page(path: Path, requirements: list[dict[str, object]
 
 def write_family_page(path: Path, family: dict[str, object]) -> None:
     steps = "".join(f"<div class=\"route-step\">{idx}. {html.escape(step)}</div>" for idx, step in enumerate(family["plain_route"], start=1))
+    concept_rows = []
+    concepts_by_slug = {str(item["slug"]): item for item in CONCEPTS}
+    for slug in family["concepts"]:
+        concept = concepts_by_slug[str(slug)]
+        concept_rows.append(
+            f"""
+<tr>
+  <td><a href="../topics/{html.escape(str(slug))}.html">{html.escape(str(concept['name']))}</a></td>
+  <td>{html.escape(str(concept['problem']))}</td>
+  <td>{html.escape(str(concept['keeps']))}</td>
+  <td>{html.escape(str(concept['failure']))}</td>
+</tr>
+"""
+        )
     body = f"""
 <h1>{html.escape(str(family['title']))}</h1>
 <h2>Problem This Family Solves</h2>
 <p>{html.escape(str(family['central_problem']))}</p>
 <h2>Where It Shows Up</h2>
 <p>{html.escape(str(family['domain']))}</p>
+<h2>Family Story From First Principles</h2>
+<p>Start with the scientific job, not the method names. This family exists because {html.escape(str(family['central_problem']))} The route is useful only when the input evidence, output quantity, kept rule or structure, and changed-case test are all named before choosing a method.</p>
+<p>The domain setting is {html.escape(str(family['domain']))}. In that setting, the family is asking what information must be carried from observed evidence to a usable answer, and what evidence would make the answer fail.</p>
 <h2>Route Through The Ideas</h2>
 <div class="route">{steps}</div>
 <h2>Concepts In This Family</h2>
 {concept_links(list(family['concepts']), root_prefix="../")}
+<h2>What Each Concept Does In The Family</h2>
+<table>
+  <thead>
+    <tr><th>Concept</th><th>Problem It Handles</th><th>Information It Keeps</th><th>Family-Level Failure</th></tr>
+  </thead>
+  <tbody>{''.join(concept_rows)}</tbody>
+</table>
 <h2>What The Math Buys</h2>
 <p>{html.escape(str(family['what_the_math_buys']))}</p>
+<h2>Evidence Needed Before Trusting The Family</h2>
+<table>
+  <tbody>
+    <tr><th>Strong Evidence</th><td>The route names the scientific quantity, the input family, the output quantity, and a changed case that was not used to shape the answer.</td></tr>
+    <tr><th>Too Weak</th><td>A page says the family is powerful, fast, broad, or accurate without saying what changed case could reject the claim.</td></tr>
+    <tr><th>Reader Test</th><td>Explain why each concept is needed in the route and what would break if that concept were removed.</td></tr>
+  </tbody>
+</table>
 <h2>Failure Boundary</h2>
 <p>{html.escape(str(family['failure_boundary']))}</p>
 <h2>Reader Check</h2>
@@ -5431,16 +5463,23 @@ def write_markdown_export(data: dict[str, object]) -> None:
         )
     lines.extend(["", "## Paper Family Routes"])
     for family in data["family_pages"]:
+        concepts_by_slug = {str(item["slug"]): item for item in CONCEPTS}
         lines.extend(
             [
                 f"### {family['title']}",
                 f"- Problem: {family['central_problem']}",
                 f"- Domain: {family['domain']}",
+                f"- Family story: This family starts from the scientific job before method names. It asks what evidence must be carried, what answer is needed, and what changed case could reject the claim.",
                 f"- What the math buys: {family['what_the_math_buys']}",
                 f"- Failure boundary: {family['failure_boundary']}",
                 "",
             ]
         )
+        lines.append("#### Concept Responsibilities")
+        for slug in family["concepts"]:
+            concept = concepts_by_slug[str(slug)]
+            lines.append(f"- {concept['name']}: handles {concept['problem']} Keeps: {concept['keeps']} Failure: {concept['failure']}")
+        lines.extend(["", "#### Evidence Needed Before Trusting The Family", "- Strong evidence: the route names the scientific quantity, input family, output quantity, and changed-case test.", "- Too weak: the family is described as powerful, fast, broad, or accurate without a rejecting changed case.", ""])
     lines.extend(["", "## Comparisons"])
     for comparison in data["comparison_pages"]:
         lines.extend(
@@ -5879,8 +5918,12 @@ def validate(data: dict[str, object] | None = None) -> None:
         if not path.exists():
             raise SystemExit(f"missing site page: {path}")
     for family in FAMILY_PAGES:
-        if not (SITE / "families" / f"{family['slug']}.html").exists():
+        family_path = SITE / "families" / f"{family['slug']}.html"
+        if not family_path.exists():
             raise SystemExit(f"missing family page: {family['title']}")
+        family_text = family_path.read_text(encoding="utf-8")
+        if "Family Story From First Principles" not in family_text or "What Each Concept Does In The Family" not in family_text or "Evidence Needed Before Trusting The Family" not in family_text or "Too Weak" not in family_text:
+            raise SystemExit(f"family page missing first-principles depth: {family['title']}")
     for comparison in COMPARISON_PAGES:
         comparison_path = SITE / "comparisons" / f"{comparison['slug']}.html"
         if not comparison_path.exists():

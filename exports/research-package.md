@@ -129,26 +129,70 @@
 ### Physics Constraints Family
 - Problem: You have some observations, but the answer must also obey a rule scientists already trust.
 - Domain: heat flow, fluids, waves, elasticity, reaction systems, and other systems described by differential equations
+- Family story: This family starts from the scientific job before method names. It asks what evidence must be carried, what answer is needed, and what changed case could reject the claim.
 - What the math buys: The equation turns empty space between measurements into a checkable demand. The model cannot claim success only by touching the measured points.
 - Failure boundary: This family fails when the written equation is incomplete, the boundary information is wrong, or the training process avoids the hard regions where the rule matters most.
+
+#### Concept Responsibilities
+- Partial Differential Equations: handles a quantity changes over space and time, so one number is not enough to describe the situation Keeps: a field, its rates of change, and the boundary or starting information needed to evolve it Failure: a learned shortcut can ignore boundary conditions or conservation behavior that the PDE was carrying
+- Physics-Informed Neural Networks: handles measurements may be sparse, but the answer must still respect a known physical equation Keeps: a neural network prediction plus a penalty for violating the known equation Failure: the equation penalty can look small while the solution is wrong in hard regions, sharp layers, or unseen boundary cases
+- Optimization For Learning: handles learning needs a way to decide which model settings are better or worse Keeps: a written score that compares model output against data, physics penalties, or design goals Failure: a model can optimize the written score while missing the scientific behavior the score failed to name
+- Uncertainty And Generalization: handles a prediction is not enough unless the user knows when it should be believed Keeps: error checks, changed-case tests, and limits on where the model was trained Failure: training error can look good while the model fails under a new geometry, parameter range, sensor, or physical regime
+
+#### Evidence Needed Before Trusting The Family
+- Strong evidence: the route names the scientific quantity, input family, output quantity, and changed-case test.
+- Too weak: the family is described as powerful, fast, broad, or accurate without a rejecting changed case.
 
 ### Neural Operators Family
 - Problem: One solved simulation is not enough; the scientific job needs the map from many inputs to many full fields.
 - Domain: repeated PDE solves, design sweeps, weather-like fields, fluids, materials, and parameter studies
+- Family story: This family starts from the scientific job before method names. It asks what evidence must be carried, what answer is needed, and what changed case could reject the claim.
 - What the math buys: The object being learned is a map between functions. That matters because a field is not a single row of numbers; it is a whole spatial object.
 - Failure boundary: This family fails when the new query is outside the learned family, when resolution changes reveal hidden errors, or when the output looks smooth but breaks the physical claim.
+
+#### Concept Responsibilities
+- Operator Learning: handles one simulation answer is not enough when engineers need the whole map from inputs to solution fields Keeps: a learned map from a forcing, coefficient, shape, or starting field to a solution field Failure: the learned map can give plausible-looking fields that violate the equation or fail on a shifted input family
+- Surrogate Modeling: handles a trusted simulator may be too slow to run for every design, control, or uncertainty question Keeps: the input-output behavior needed for a specified family of queries Failure: speed can hide missing physics when the surrogate is used beyond the regime where it was checked
+- Attention For Scientific Fields: handles a local patch of a field may depend on faraway information, but looking everywhere can be expensive Keeps: selected interactions between parts of the input field Failure: windowing or scaling choices can miss long-range effects that matter for the scientific quantity being predicted
+- Foundation Models For PDEs: handles one trained model may be asked to handle many related equations, grids, parameters, or physical settings Keeps: shared structure across many scientific problem instances Failure: the model can look broad while missing rare regimes, new boundary conditions, or quantities not represented in training
+
+#### Evidence Needed Before Trusting The Family
+- Strong evidence: the route names the scientific quantity, input family, output quantity, and changed-case test.
+- Too weak: the family is described as powerful, fast, broad, or accurate without a rejecting changed case.
 
 ### Model Discovery Family
 - Problem: Prediction alone is not enough when the scientist needs a readable law or missing change rule.
 - Domain: mechanism discovery, dynamics, lab measurements, simplified physical laws, and interpretable scientific modeling
+- Family story: This family starts from the scientific job before method names. It asks what evidence must be carried, what answer is needed, and what changed case could reject the claim.
 - What the math buys: A compact equation is easier to inspect, criticize, and reuse than a large fitted object. The math turns a fit into a candidate explanation.
 - Failure boundary: This family fails when the needed variable was not measured, the experiment did not excite the important behavior, or the search space cannot express the true rule.
+
+#### Concept Responsibilities
+- Symbolic Regression And Model Discovery: handles a scientist may need a readable equation, not only a model that predicts well Keeps: candidate formulas that can be written, checked, and compared Failure: a neat formula can fit the training data while using the wrong variables or failing on a changed experiment
+- Neural Differential Equations: handles scientists may know that a system changes continuously but not know the exact rule for that change Keeps: a learned rate rule inside a time-stepping calculation Failure: small learned-rate errors can accumulate until long-time predictions drift away from the real system
+- Scientific Machine Learning: handles scientific work needs predictions that respect measurements, equations, uncertainty, and domain limits at the same time Keeps: data evidence, scientific structure, and validation against changed cases Failure: the method becomes a generic fitting tool if the physical quantity, scientific claim, and validation case are not named
+- Optimization For Learning: handles learning needs a way to decide which model settings are better or worse Keeps: a written score that compares model output against data, physics penalties, or design goals Failure: a model can optimize the written score while missing the scientific behavior the score failed to name
+
+#### Evidence Needed Before Trusting The Family
+- Strong evidence: the route names the scientific quantity, input family, output quantity, and changed-case test.
+- Too weak: the family is described as powerful, fast, broad, or accurate without a rejecting changed case.
 
 ### Scientific Surrogates Family
 - Problem: The trusted simulator is too slow for repeated decisions, but a fast answer is dangerous if nobody states where it is valid.
 - Domain: engineering design, uncertainty sweeps, control loops, inverse problems, and expensive simulation workflows
+- Family story: This family starts from the scientific job before method names. It asks what evidence must be carried, what answer is needed, and what changed case could reject the claim.
 - What the math buys: The approximation becomes useful only after the input family, output quantity, error measure, and rejected cases are named.
 - Failure boundary: This family fails when speed hides missing physics, when users ask new questions the surrogate was not trained for, or when uncertainty is treated as decoration.
+
+#### Concept Responsibilities
+- Surrogate Modeling: handles a trusted simulator may be too slow to run for every design, control, or uncertainty question Keeps: the input-output behavior needed for a specified family of queries Failure: speed can hide missing physics when the surrogate is used beyond the regime where it was checked
+- Deep Learning: handles scientists often have examples of behavior but no short rule that predicts the next case Keeps: many adjustable weights that turn inputs into predictions Failure: the model can fit familiar examples while failing on a new material, geometry, scale, or boundary condition
+- Operator Learning: handles one simulation answer is not enough when engineers need the whole map from inputs to solution fields Keeps: a learned map from a forcing, coefficient, shape, or starting field to a solution field Failure: the learned map can give plausible-looking fields that violate the equation or fail on a shifted input family
+- Uncertainty And Generalization: handles a prediction is not enough unless the user knows when it should be believed Keeps: error checks, changed-case tests, and limits on where the model was trained Failure: training error can look good while the model fails under a new geometry, parameter range, sensor, or physical regime
+
+#### Evidence Needed Before Trusting The Family
+- Strong evidence: the route names the scientific quantity, input family, output quantity, and changed-case test.
+- Too weak: the family is described as powerful, fast, broad, or accurate without a rejecting changed case.
 
 
 ## Comparisons

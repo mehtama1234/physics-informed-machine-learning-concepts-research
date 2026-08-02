@@ -45,12 +45,58 @@
 <p>Prediction alone is not enough when the scientist needs a readable law or missing change rule.</p>
 <h2>Where It Shows Up</h2>
 <p>mechanism discovery, dynamics, lab measurements, simplified physical laws, and interpretable scientific modeling</p>
+<h2>Family Story From First Principles</h2>
+<p>Start with the scientific job, not the method names. This family exists because Prediction alone is not enough when the scientist needs a readable law or missing change rule. The route is useful only when the input evidence, output quantity, kept rule or structure, and changed-case test are all named before choosing a method.</p>
+<p>The domain setting is mechanism discovery, dynamics, lab measurements, simplified physical laws, and interpretable scientific modeling. In that setting, the family is asking what information must be carried from observed evidence to a usable answer, and what evidence would make the answer fail.</p>
 <h2>Route Through The Ideas</h2>
 <div class="route"><div class="route-step">1. Start with measurements of a system changing.</div><div class="route-step">2. Decide which quantities could explain that change.</div><div class="route-step">3. Search for a short rule or learn the missing rate rule.</div><div class="route-step">4. Check whether the rule predicts a changed experiment.</div><div class="route-step">5. Keep the rule only if it is both useful and honest about what was not measured.</div></div>
 <h2>Concepts In This Family</h2>
 <ul><li><a href="../topics/symbolic-regression.html">Symbolic Regression And Model Discovery</a></li><li><a href="../topics/neural-differential-equations.html">Neural Differential Equations</a></li><li><a href="../topics/scientific-machine-learning.html">Scientific Machine Learning</a></li><li><a href="../topics/optimization-for-learning.html">Optimization For Learning</a></li></ul>
+<h2>What Each Concept Does In The Family</h2>
+<table>
+  <thead>
+    <tr><th>Concept</th><th>Problem It Handles</th><th>Information It Keeps</th><th>Family-Level Failure</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <td><a href="../topics/symbolic-regression.html">Symbolic Regression And Model Discovery</a></td>
+  <td>a scientist may need a readable equation, not only a model that predicts well</td>
+  <td>candidate formulas that can be written, checked, and compared</td>
+  <td>a neat formula can fit the training data while using the wrong variables or failing on a changed experiment</td>
+</tr>
+
+<tr>
+  <td><a href="../topics/neural-differential-equations.html">Neural Differential Equations</a></td>
+  <td>scientists may know that a system changes continuously but not know the exact rule for that change</td>
+  <td>a learned rate rule inside a time-stepping calculation</td>
+  <td>small learned-rate errors can accumulate until long-time predictions drift away from the real system</td>
+</tr>
+
+<tr>
+  <td><a href="../topics/scientific-machine-learning.html">Scientific Machine Learning</a></td>
+  <td>scientific work needs predictions that respect measurements, equations, uncertainty, and domain limits at the same time</td>
+  <td>data evidence, scientific structure, and validation against changed cases</td>
+  <td>the method becomes a generic fitting tool if the physical quantity, scientific claim, and validation case are not named</td>
+</tr>
+
+<tr>
+  <td><a href="../topics/optimization-for-learning.html">Optimization For Learning</a></td>
+  <td>learning needs a way to decide which model settings are better or worse</td>
+  <td>a written score that compares model output against data, physics penalties, or design goals</td>
+  <td>a model can optimize the written score while missing the scientific behavior the score failed to name</td>
+</tr>
+</tbody>
+</table>
 <h2>What The Math Buys</h2>
 <p>A compact equation is easier to inspect, criticize, and reuse than a large fitted object. The math turns a fit into a candidate explanation.</p>
+<h2>Evidence Needed Before Trusting The Family</h2>
+<table>
+  <tbody>
+    <tr><th>Strong Evidence</th><td>The route names the scientific quantity, the input family, the output quantity, and a changed case that was not used to shape the answer.</td></tr>
+    <tr><th>Too Weak</th><td>A page says the family is powerful, fast, broad, or accurate without saying what changed case could reject the claim.</td></tr>
+    <tr><th>Reader Test</th><td>Explain why each concept is needed in the route and what would break if that concept were removed.</td></tr>
+  </tbody>
+</table>
 <h2>Failure Boundary</h2>
 <p>This family fails when the needed variable was not measured, the experiment did not excite the important behavior, or the search space cannot express the true rule.</p>
 <h2>Reader Check</h2>
