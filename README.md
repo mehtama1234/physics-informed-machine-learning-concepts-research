@@ -36,6 +36,10 @@ The purpose is not to summarize lectures. The purpose is to explain physics-info
 - `site/synthesis.html`: field-level synthesis tying the concepts together
 - `site/review-entrypoints.html`: end-to-end review route through the package
 - `site/review-search.html`: reviewer-question index for finding the right page
+- `site/review-queue.html`: concept support queue; currently no P0 or P1 support gaps
+- `site/hand-polish.html`: per-concept final editorial acceptance checks
+- `site/meaty-goal.html`: end-to-end teaching-grade finish standard
+- `site/meaty-goal-coverage.html`: proof that each concept has the required teaching-grade page parts
 - `site/editorial-roadmap.html`: prioritized roadmap for taking the first pass to hand-written depth
 - `site/completion-audit.html`: requirement-by-requirement local completion evidence
 - `site/handoff.html`: review route, validation commands, and remaining editorial work
@@ -50,6 +54,9 @@ The purpose is not to summarize lectures. The purpose is to explain physics-info
 - `raw-material/metadata/`: per-video metadata from `yt-dlp`
 - `raw-material/transcripts/`: raw VTT captions and clean transcript text
 - `analysis/`: generated JSON research maps
+- `analysis/topic_teaching_notes.json`: hand-written plain problem, math reason, and say-it-back sentence for every concept
+- `analysis/hand_polish_reviews.json`: per-concept hand-polish acceptance checks
+- `analysis/meaty_goal_coverage.json`: per-concept proof surface for the teaching-grade goal
 - `exports/`: portable Markdown export
 - `scripts/build_physics_informed_ml_research_package.py`: downloader, builder, and validator
 - `scripts/validate_generated_site.py`: standalone generated-site link and content validator
@@ -92,12 +99,22 @@ To run local validation and confirm `origin/main` matches local `main`:
 make audit
 ```
 
+The fastest review path is:
+
+```text
+http://127.0.0.1:8022/handoff.html
+http://127.0.0.1:8022/hand-polish.html
+http://127.0.0.1:8022/meaty-goal-coverage.html
+http://127.0.0.1:8022/review-queue.html
+```
+
 ## Current Coverage
 
 - 2 playlists
 - 40 videos
 - 40 available transcripts
 - concept atlas
+- 219 generated site pages
 - paper-family routes
 - comparison pages
 - 8 worked examples
@@ -117,11 +134,16 @@ make audit
 - concept dependency map
 - concept ladder
 - concept evidence packets
+- claim-boundary reviews for all concepts
+- hand teaching notes for all 14 concepts
+- hand-polish acceptance checks for all 14 concepts
+- meaty-goal coverage with 14 required parts per concept and zero missing items
 - selected source anchors for core concepts
 - editorial quality rubric
 - field synthesis
 - review entrypoint map
 - reviewer-question index
+- review queue with no P0 or P1 rows
 - editorial roadmap
 - completion audit
 - review handoff
