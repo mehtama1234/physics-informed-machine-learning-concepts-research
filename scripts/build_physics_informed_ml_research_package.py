@@ -3324,6 +3324,7 @@ MEATY_GOAL_REQUIREMENTS = [
     {"key": "long_everyday_importance_essay", "label": "Long Everyday Importance Essay", "proof_term": "Long Everyday Importance Essay"},
     {"key": "from_scratch_story", "label": "From Scratch Story", "proof_term": "From Scratch Story In Plain Words"},
     {"key": "no_jargon_translation", "label": "No-Jargon Translation", "proof_term": "No-Jargon Translation For This Topic"},
+    {"key": "plain_retell_drill", "label": "Plain Retell Drill", "proof_term": "Plain Retell Drill"},
     {"key": "field_mini_cases", "label": "Field Mini Cases", "proof_term": "Field Mini Cases In Plain Words"},
     {"key": "hand_teaching_note", "label": "Hand Teaching Note", "proof_term": "Hand Teaching Note"},
     {"key": "case_walkthrough", "label": "Case Walkthrough", "proof_term": "One Concrete Case From Start To Finish"},
@@ -7254,6 +7255,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     field_mini_cases = topic_field_mini_cases_html(topic, derivation)
     from_scratch_story = topic_from_scratch_story_html(topic, derivation)
     no_jargon_translation = topic_no_jargon_translation_html(topic, derivation)
+    plain_retell_drill = topic_plain_retell_drill_html(topic, derivation)
     plain_question_answer_script = topic_plain_question_answer_script_html(topic, derivation)
     know_still_test = topic_know_still_test_html(topic, derivation)
     failure_consequence = topic_failure_consequence_html(topic, derivation)
@@ -7298,6 +7300,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
 {field_mini_cases}
 {from_scratch_story}
 {no_jargon_translation}
+{plain_retell_drill}
 {plain_question_answer_script}
 {know_still_test}
 {failure_consequence}
@@ -7958,6 +7961,58 @@ def topic_no_jargon_translation_html(topic: dict[str, object], derivation: dict[
   </thead>
   <tbody>{body}</tbody>
 </table>
+"""
+
+
+def topic_plain_retell_drill_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
+    title = str(topic["title"])
+    case = topic_case_walkthrough(topic, derivation)
+    shape = topic_plain_applications(topic, derivation)[0]
+    shape_use = str(shape["use"]).rstrip(".")
+    setting = str(case["setting"]).rstrip(".")
+    shape_sentence = shape_use[:1].lower() + shape_use[1:]
+    setting_sentence = setting[:1].lower() + setting[1:]
+    filled_answer = (
+        f"{title} begins because {str(topic['common_problem'])}. "
+        f"The evidence I can point to is {str(derivation['observed'])}. "
+        f"The hidden answer is {str(derivation['hidden'])}. "
+        f"The first-principles move is to {str(derivation['move'])}. "
+        f"Shape or topology matters because {shape_sentence}. "
+        f"In one concrete setting, {setting_sentence}. "
+        f"The useful answer is {case['answer']}. "
+        f"I should narrow the claim when {str(topic['failure_boundary'])}. "
+        f"The first changed case I would try is {str(derivation['test'])}."
+    )
+    rows = (
+        ("Start With The Shortage", str(topic["common_problem"])),
+        ("Name The Evidence", str(derivation["observed"])),
+        ("Name The Hidden Answer", str(derivation["hidden"])),
+        ("Say The First-Principles Move", str(derivation["move"])),
+        ("Bring In Shape Or Topology", str(shape["use"])),
+        ("Ground It In One Case", str(case["setting"])),
+        ("State The Useful Answer", str(case["answer"])),
+        ("Name The Trust Boundary", str(topic["failure_boundary"])),
+        ("End With A Changed Case", str(derivation["test"])),
+    )
+    body = "".join(
+        f"""
+<tr>
+  <th>{html.escape(label)}</th>
+  <td>{html.escape(answer)}</td>
+</tr>
+"""
+        for label, answer in rows
+    )
+    return f"""
+<h2>Plain Retell Drill</h2>
+<p>Close the page and try to say the topic from the real problem to the changed-case test. The goal is not to repeat a definition. The goal is to rebuild the reason the idea exists.</p>
+<table>
+  <tbody>{body}</tbody>
+</table>
+<h3>Filled Retell Answer</h3>
+<p>{html.escape(filled_answer)}</p>
+<h3>Retell Pass Test</h3>
+<p>A retell passes only if it names the shortage, evidence, hidden answer, first-principles move, shape or topology issue, one concrete case, useful answer, trust boundary, and changed case without using the topic name as the reason.</p>
 """
 
 
@@ -10247,6 +10302,18 @@ def validate(data: dict[str, object] | None = None) -> None:
             "Hidden Answer",
             "Math Move",
             "Trust Boundary",
+            "Plain Retell Drill",
+            "Start With The Shortage",
+            "Name The Evidence",
+            "Name The Hidden Answer",
+            "Say The First-Principles Move",
+            "Bring In Shape Or Topology",
+            "Ground It In One Case",
+            "State The Useful Answer",
+            "Name The Trust Boundary",
+            "End With A Changed Case",
+            "Filled Retell Answer",
+            "Retell Pass Test",
             "Plain Question To Answer Script",
             "Real question",
             "Evidence sentence",
