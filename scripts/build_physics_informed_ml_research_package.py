@@ -3879,7 +3879,22 @@ def build_reader_checks(topic_treatments: list[dict[str, object]]) -> list[dict[
                 "related": [f"topics/{slug}.html", "concept-ladder.html"],
             }
         )
+    for check in checks:
+        enrich_reader_check(check)
     return checks
+
+
+def enrich_reader_check(check: dict[str, object]) -> None:
+    strong = str(check["strong_answer"])
+    weak = str(check["weak_answer_warning"])
+    check["acceptance_sentence"] = f"A reader passes only if they can say, in ordinary language, {strong}"
+    check["scoring_rubric"] = [
+        {"criterion": "Observed evidence", "pass": "Names what is actually known before the method is chosen.", "fail": "Starts with the method name."},
+        {"criterion": "Hidden quantity", "pass": "Names the field, rule, answer, or use range still missing.", "fail": "Treats the prediction as if it were already known."},
+        {"criterion": "Mathematical move", "pass": "Explains what the math carries from evidence to missing quantity.", "fail": "Uses a label without saying what job the math does."},
+        {"criterion": "Changed-case rejection", "pass": "Names a changed case that could make the claim fail.", "fail": "Reports a score without a failure condition."},
+        {"criterion": "Forbidden shortcut", "pass": f"Avoids this weak answer: {weak}", "fail": weak},
+    ]
 
 
 def build_dependency_map() -> list[dict[str, object]]:
@@ -5900,6 +5915,16 @@ def domain_stress_test_html(guide: dict[str, object]) -> str:
 
 def write_reader_check_page(path: Path, check: dict[str, object]) -> None:
     questions = "".join(f"<li>{html.escape(str(question))}</li>" for question in check["questions"])
+    rubric_rows = "".join(
+        f"""
+<tr>
+  <td>{html.escape(str(item['criterion']))}</td>
+  <td>{html.escape(str(item['pass']))}</td>
+  <td>{html.escape(str(item['fail']))}</td>
+</tr>
+"""
+        for item in check["scoring_rubric"]
+    )
     related = "".join(f"<li><a href=\"../{html.escape(str(href))}\">{html.escape(str(href))}</a></li>" for href in check["related"])
     body = f"""
 <h1>{html.escape(str(check['title']))}</h1>
@@ -5911,6 +5936,15 @@ def write_reader_check_page(path: Path, check: dict[str, object]) -> None:
 <p>{html.escape(str(check['strong_answer']))}</p>
 <h2>Weak Answer Warning</h2>
 <p>{html.escape(str(check['weak_answer_warning']))}</p>
+<h2>Acceptance Sentence</h2>
+<p>{html.escape(str(check['acceptance_sentence']))}</p>
+<h2>First-Principles Scoring Rubric</h2>
+<table>
+  <thead>
+    <tr><th>Criterion</th><th>Pass</th><th>Fail</th></tr>
+  </thead>
+  <tbody>{rubric_rows}</tbody>
+</table>
 <h2>Related Pages</h2>
 <ul>{related}</ul>
 """
@@ -6977,9 +7011,14 @@ def write_markdown_export(data: dict[str, object]) -> None:
                 f"- Setup: {check['setup']}",
                 f"- Strong answer: {check['strong_answer']}",
                 f"- Weak answer warning: {check['weak_answer_warning']}",
+                f"- Acceptance sentence: {check['acceptance_sentence']}",
                 "",
             ]
         )
+        lines.append("#### First-Principles Scoring Rubric")
+        for item in check["scoring_rubric"]:
+            lines.append(f"- {item['criterion']}: pass if {item['pass']} Fail if {item['fail']}")
+        lines.append("")
     lines.extend(["", "## Decision Guide"])
     for decision in data["decision_guides"]:
         lines.extend(
@@ -7494,8 +7533,10 @@ def validate(data: dict[str, object] | None = None) -> None:
         if not check_path.exists():
             raise SystemExit(f"missing reader check page: {check['title']}")
         check_text = check_path.read_text(encoding="utf-8")
-        if "Strong Answer Should Say" not in check_text or "Weak Answer Warning" not in check_text:
+        if "Strong Answer Should Say" not in check_text or "Weak Answer Warning" not in check_text or "Acceptance Sentence" not in check_text or "First-Principles Scoring Rubric" not in check_text or "Changed-case rejection" not in check_text or "Forbidden shortcut" not in check_text:
             raise SystemExit(f"reader check not rendered correctly: {check['title']}")
+        if not check.get("acceptance_sentence") or len(check.get("scoring_rubric") or []) < 5:
+            raise SystemExit(f"reader check missing acceptance or rubric: {check['title']}")
         topic_path = SITE / "topics" / f"{check['topic_slug']}.html"
         if not topic_path.exists():
             raise SystemExit(f"reader check topic missing: {check['title']} -> {check['topic_slug']}")

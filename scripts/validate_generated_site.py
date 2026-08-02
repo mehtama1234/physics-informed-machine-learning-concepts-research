@@ -125,6 +125,7 @@ def check_required_sections() -> list[str]:
         "site/decision-guide/field-rule-before-method.html": ("Best Starting Point", "Evidence Needed", "Partial differential equations"),
         "site/decision-guide/need-many-valid-possibilities.html": ("Best Starting Point", "Evidence Needed", "Generative modeling"),
         "site/reader-checks.html": ("Reader Checks",),
+        "site/reader-checks/pinns-check.html": ("Strong Answer Should Say", "Weak Answer Warning", "Acceptance Sentence", "First-Principles Scoring Rubric", "Changed-case rejection", "Forbidden shortcut"),
         "site/review-entrypoints.html": ("Review Entrypoints", "End-To-End Test"),
         "site/review-search.html": ("Find Pages By Question", "Review Rule"),
         "site/review-queue.html": ("Review Queue", "Reviewed Anchors", "Broad Mentions", "Missing Layers", "Next Action", "P1"),

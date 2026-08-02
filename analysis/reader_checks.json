@@ -16,6 +16,34 @@
     "related": [
       "topics/physics-informed-neural-networks.html",
       "worked-examples/heat-equation-from-few-measurements.html"
+    ],
+    "acceptance_sentence": "A reader passes only if they can say, in ordinary language, Observed: sensor values, starting or boundary values, and the heat equation. Hidden: the full temperature field. The equation residual checks unsensed locations. The score needs data error, equation error, and boundary or starting error. A changed boundary, source, or held-out sensor should test the claim.",
+    "scoring_rubric": [
+      {
+        "criterion": "Observed evidence",
+        "pass": "Names what is actually known before the method is chosen.",
+        "fail": "Starts with the method name."
+      },
+      {
+        "criterion": "Hidden quantity",
+        "pass": "Names the field, rule, answer, or use range still missing.",
+        "fail": "Treats the prediction as if it were already known."
+      },
+      {
+        "criterion": "Mathematical move",
+        "pass": "Explains what the math carries from evidence to missing quantity.",
+        "fail": "Uses a label without saying what job the math does."
+      },
+      {
+        "criterion": "Changed-case rejection",
+        "pass": "Names a changed case that could make the claim fail.",
+        "fail": "Reports a score without a failure condition."
+      },
+      {
+        "criterion": "Forbidden shortcut",
+        "pass": "Avoids this weak answer: A weak answer says only that the neural network fits data.",
+        "fail": "A weak answer says only that the neural network fits data."
+      }
     ]
   },
   {
@@ -35,6 +63,34 @@
     "related": [
       "topics/operator-learning.html",
       "diagrams/operator-learning-flow.html"
+    ],
+    "acceptance_sentence": "A reader passes only if they can say, in ordinary language, The input is a whole field or function, and the output is a whole solution field. The equation, boundary, grid, parameter, and geometry family must be named. The method learns a map between fields, not one field. A new boundary, resolution, parameter range, or equation family should test the claim.",
+    "scoring_rubric": [
+      {
+        "criterion": "Observed evidence",
+        "pass": "Names what is actually known before the method is chosen.",
+        "fail": "Starts with the method name."
+      },
+      {
+        "criterion": "Hidden quantity",
+        "pass": "Names the field, rule, answer, or use range still missing.",
+        "fail": "Treats the prediction as if it were already known."
+      },
+      {
+        "criterion": "Mathematical move",
+        "pass": "Explains what the math carries from evidence to missing quantity.",
+        "fail": "Uses a label without saying what job the math does."
+      },
+      {
+        "criterion": "Changed-case rejection",
+        "pass": "Names a changed case that could make the claim fail.",
+        "fail": "Reports a score without a failure condition."
+      },
+      {
+        "criterion": "Forbidden shortcut",
+        "pass": "Avoids this weak answer: A weak answer says only that the model is fast.",
+        "fail": "A weak answer says only that the model is fast."
+      }
     ]
   },
   {
@@ -54,6 +110,34 @@
     "related": [
       "topics/surrogate-modeling.html",
       "domains/fluids-and-flow.html"
+    ],
+    "acceptance_sentence": "A reader passes only if they can say, in ordinary language, The surrogate replaces a named solver or experiment only inside a named query family. Inputs and outputs must match the decision. The stand-in should be checked near the edge of intended use, and the full solver should return when the query leaves that range or when errors affect the decision quantity.",
+    "scoring_rubric": [
+      {
+        "criterion": "Observed evidence",
+        "pass": "Names what is actually known before the method is chosen.",
+        "fail": "Starts with the method name."
+      },
+      {
+        "criterion": "Hidden quantity",
+        "pass": "Names the field, rule, answer, or use range still missing.",
+        "fail": "Treats the prediction as if it were already known."
+      },
+      {
+        "criterion": "Mathematical move",
+        "pass": "Explains what the math carries from evidence to missing quantity.",
+        "fail": "Uses a label without saying what job the math does."
+      },
+      {
+        "criterion": "Changed-case rejection",
+        "pass": "Names a changed case that could make the claim fail.",
+        "fail": "Reports a score without a failure condition."
+      },
+      {
+        "criterion": "Forbidden shortcut",
+        "pass": "Avoids this weak answer: A weak answer treats speed as trust.",
+        "fail": "A weak answer treats speed as trust."
+      }
     ]
   },
   {
@@ -73,6 +157,34 @@
     "related": [
       "topics/uncertainty-and-generalization.html",
       "diagrams/surrogate-validation-flow.html"
+    ],
+    "acceptance_sentence": "A reader passes only if they can say, in ordinary language, The answer names the actual shift, such as geometry, parameter range, sensor, scale, boundary, or regime. It measures the error that matters for the scientific decision, states the use range, and names a condition that would stop use.",
+    "scoring_rubric": [
+      {
+        "criterion": "Observed evidence",
+        "pass": "Names what is actually known before the method is chosen.",
+        "fail": "Starts with the method name."
+      },
+      {
+        "criterion": "Hidden quantity",
+        "pass": "Names the field, rule, answer, or use range still missing.",
+        "fail": "Treats the prediction as if it were already known."
+      },
+      {
+        "criterion": "Mathematical move",
+        "pass": "Explains what the math carries from evidence to missing quantity.",
+        "fail": "Uses a label without saying what job the math does."
+      },
+      {
+        "criterion": "Changed-case rejection",
+        "pass": "Names a changed case that could make the claim fail.",
+        "fail": "Reports a score without a failure condition."
+      },
+      {
+        "criterion": "Forbidden shortcut",
+        "pass": "Avoids this weak answer: A weak answer reports one score without saying what changed.",
+        "fail": "A weak answer reports one score without saying what changed."
+      }
     ]
   },
   {
@@ -92,6 +204,34 @@
     "related": [
       "topics/symbolic-regression.html",
       "worked-examples/discovering-a-small-law-from-motion.html"
+    ],
+    "acceptance_sentence": "A reader passes only if they can say, in ordinary language, The answer lists measured variables, allowed operations or ingredients, and the formula's claim about the system. It names at least one missing variable or untested regime and demands a changed experiment before calling the formula useful.",
+    "scoring_rubric": [
+      {
+        "criterion": "Observed evidence",
+        "pass": "Names what is actually known before the method is chosen.",
+        "fail": "Starts with the method name."
+      },
+      {
+        "criterion": "Hidden quantity",
+        "pass": "Names the field, rule, answer, or use range still missing.",
+        "fail": "Treats the prediction as if it were already known."
+      },
+      {
+        "criterion": "Mathematical move",
+        "pass": "Explains what the math carries from evidence to missing quantity.",
+        "fail": "Uses a label without saying what job the math does."
+      },
+      {
+        "criterion": "Changed-case rejection",
+        "pass": "Names a changed case that could make the claim fail.",
+        "fail": "Reports a score without a failure condition."
+      },
+      {
+        "criterion": "Forbidden shortcut",
+        "pass": "Avoids this weak answer: A weak answer trusts a neat formula because it fits the original data.",
+        "fail": "A weak answer trusts a neat formula because it fits the original data."
+      }
     ]
   },
   {
@@ -111,6 +251,34 @@
     "related": [
       "topics/foundation-models-for-pdes.html",
       "domains/many-pde-tasks.html"
+    ],
+    "acceptance_sentence": "A reader passes only if they can say, in ordinary language, The answer names included and held-out task families, the shared structure being claimed, and a trusted solver or measurement for checking. It rejects broad claims when new equations, boundaries, scales, or rare regimes were not tested.",
+    "scoring_rubric": [
+      {
+        "criterion": "Observed evidence",
+        "pass": "Names what is actually known before the method is chosen.",
+        "fail": "Starts with the method name."
+      },
+      {
+        "criterion": "Hidden quantity",
+        "pass": "Names the field, rule, answer, or use range still missing.",
+        "fail": "Treats the prediction as if it were already known."
+      },
+      {
+        "criterion": "Mathematical move",
+        "pass": "Explains what the math carries from evidence to missing quantity.",
+        "fail": "Uses a label without saying what job the math does."
+      },
+      {
+        "criterion": "Changed-case rejection",
+        "pass": "Names a changed case that could make the claim fail.",
+        "fail": "Reports a score without a failure condition."
+      },
+      {
+        "criterion": "Forbidden shortcut",
+        "pass": "Avoids this weak answer: A weak answer treats broad training size as proof of broad scientific trust.",
+        "fail": "A weak answer treats broad training size as proof of broad scientific trust."
+      }
     ]
   },
   {
@@ -130,6 +298,34 @@
     "related": [
       "topics/deep-learning.html",
       "concept-ladder.html"
+    ],
+    "acceptance_sentence": "A reader passes only if they can say, in ordinary language, Observed: many input-output examples from experiments, simulations, or measurements. Hidden: the exact rule that connects the input to the output. The mathematical move is to adjust many weights until the model maps familiar inputs to the right outputs. The formula shape means the model earns attention only when prediction survives examples it did not train on. The claim should be tested by this changed case: hold out a changed material, geometry, parameter range, or sensor condition.",
+    "scoring_rubric": [
+      {
+        "criterion": "Observed evidence",
+        "pass": "Names what is actually known before the method is chosen.",
+        "fail": "Starts with the method name."
+      },
+      {
+        "criterion": "Hidden quantity",
+        "pass": "Names the field, rule, answer, or use range still missing.",
+        "fail": "Treats the prediction as if it were already known."
+      },
+      {
+        "criterion": "Mathematical move",
+        "pass": "Explains what the math carries from evidence to missing quantity.",
+        "fail": "Uses a label without saying what job the math does."
+      },
+      {
+        "criterion": "Changed-case rejection",
+        "pass": "Names a changed case that could make the claim fail.",
+        "fail": "Reports a score without a failure condition."
+      },
+      {
+        "criterion": "Forbidden shortcut",
+        "pass": "Avoids this weak answer: A weak answer says only that Deep Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.",
+        "fail": "A weak answer says only that Deep Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test."
+      }
     ]
   },
   {
@@ -149,6 +345,34 @@
     "related": [
       "topics/partial-differential-equations.html",
       "concept-ladder.html"
+    ],
+    "acceptance_sentence": "A reader passes only if they can say, in ordinary language, Observed: a field such as temperature, pressure, concentration, velocity, or displacement. Hidden: how every point in the field affects nearby points over time. The mathematical move is to write a local change rule that uses rates across space and time. The formula shape means the equation carries how a whole field changes, not just how one number changes. The claim should be tested by this changed case: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error.",
+    "scoring_rubric": [
+      {
+        "criterion": "Observed evidence",
+        "pass": "Names what is actually known before the method is chosen.",
+        "fail": "Starts with the method name."
+      },
+      {
+        "criterion": "Hidden quantity",
+        "pass": "Names the field, rule, answer, or use range still missing.",
+        "fail": "Treats the prediction as if it were already known."
+      },
+      {
+        "criterion": "Mathematical move",
+        "pass": "Explains what the math carries from evidence to missing quantity.",
+        "fail": "Uses a label without saying what job the math does."
+      },
+      {
+        "criterion": "Changed-case rejection",
+        "pass": "Names a changed case that could make the claim fail.",
+        "fail": "Reports a score without a failure condition."
+      },
+      {
+        "criterion": "Forbidden shortcut",
+        "pass": "Avoids this weak answer: A weak answer says only that Partial Differential Equations is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.",
+        "fail": "A weak answer says only that Partial Differential Equations is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test."
+      }
     ]
   },
   {
@@ -168,6 +392,34 @@
     "related": [
       "topics/scientific-machine-learning.html",
       "concept-ladder.html"
+    ],
+    "acceptance_sentence": "A reader passes only if they can say, in ordinary language, Observed: data, equations, units, simulation outputs, and domain limits. Hidden: which parts of the scientific system are missing, noisy, or too costly to compute directly. The mathematical move is to combine learned prediction with scientific checks that name what the claim is allowed to mean. The formula shape means the model is judged by a scientific job, not by a score floating away from the job. The claim should be tested by this changed case: state the scientific quantity first, then test it under a changed case that matters in that domain.",
+    "scoring_rubric": [
+      {
+        "criterion": "Observed evidence",
+        "pass": "Names what is actually known before the method is chosen.",
+        "fail": "Starts with the method name."
+      },
+      {
+        "criterion": "Hidden quantity",
+        "pass": "Names the field, rule, answer, or use range still missing.",
+        "fail": "Treats the prediction as if it were already known."
+      },
+      {
+        "criterion": "Mathematical move",
+        "pass": "Explains what the math carries from evidence to missing quantity.",
+        "fail": "Uses a label without saying what job the math does."
+      },
+      {
+        "criterion": "Changed-case rejection",
+        "pass": "Names a changed case that could make the claim fail.",
+        "fail": "Reports a score without a failure condition."
+      },
+      {
+        "criterion": "Forbidden shortcut",
+        "pass": "Avoids this weak answer: A weak answer says only that Scientific Machine Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.",
+        "fail": "A weak answer says only that Scientific Machine Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test."
+      }
     ]
   },
   {
@@ -187,6 +439,34 @@
     "related": [
       "topics/optimization-for-learning.html",
       "concept-ladder.html"
+    ],
+    "acceptance_sentence": "A reader passes only if they can say, in ordinary language, Observed: a written score that says which model behavior is better or worse. Hidden: whether that score matches the scientific behavior the user actually cares about. The mathematical move is to change model settings to lower the written score. The formula shape means the model learns the score, so the score must include the scientific burden. The claim should be tested by this changed case: inspect what the score ignores, then check whether the ignored behavior fails after training.",
+    "scoring_rubric": [
+      {
+        "criterion": "Observed evidence",
+        "pass": "Names what is actually known before the method is chosen.",
+        "fail": "Starts with the method name."
+      },
+      {
+        "criterion": "Hidden quantity",
+        "pass": "Names the field, rule, answer, or use range still missing.",
+        "fail": "Treats the prediction as if it were already known."
+      },
+      {
+        "criterion": "Mathematical move",
+        "pass": "Explains what the math carries from evidence to missing quantity.",
+        "fail": "Uses a label without saying what job the math does."
+      },
+      {
+        "criterion": "Changed-case rejection",
+        "pass": "Names a changed case that could make the claim fail.",
+        "fail": "Reports a score without a failure condition."
+      },
+      {
+        "criterion": "Forbidden shortcut",
+        "pass": "Avoids this weak answer: A weak answer says only that Optimization For Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.",
+        "fail": "A weak answer says only that Optimization For Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test."
+      }
     ]
   },
   {
@@ -206,6 +486,34 @@
     "related": [
       "topics/generative-modeling.html",
       "concept-ladder.html"
+    ],
+    "acceptance_sentence": "A reader passes only if they can say, in ordinary language, Observed: examples of fields, molecules, flows, shapes, or other scientific objects. Hidden: the spread of possible valid objects beyond the examples. The mathematical move is to learn how to sample new candidates that resemble the training family. The formula shape means a generated object must still pass physics and usefulness checks. The claim should be tested by this changed case: measure constraints, rare cases, conservation, and downstream task performance on generated samples.",
+    "scoring_rubric": [
+      {
+        "criterion": "Observed evidence",
+        "pass": "Names what is actually known before the method is chosen.",
+        "fail": "Starts with the method name."
+      },
+      {
+        "criterion": "Hidden quantity",
+        "pass": "Names the field, rule, answer, or use range still missing.",
+        "fail": "Treats the prediction as if it were already known."
+      },
+      {
+        "criterion": "Mathematical move",
+        "pass": "Explains what the math carries from evidence to missing quantity.",
+        "fail": "Uses a label without saying what job the math does."
+      },
+      {
+        "criterion": "Changed-case rejection",
+        "pass": "Names a changed case that could make the claim fail.",
+        "fail": "Reports a score without a failure condition."
+      },
+      {
+        "criterion": "Forbidden shortcut",
+        "pass": "Avoids this weak answer: A weak answer says only that Generative Modeling is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.",
+        "fail": "A weak answer says only that Generative Modeling is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test."
+      }
     ]
   },
   {
@@ -225,6 +533,34 @@
     "related": [
       "topics/graphs-and-geometric-learning.html",
       "concept-ladder.html"
+    ],
+    "acceptance_sentence": "A reader passes only if they can say, in ordinary language, Observed: objects with parts and connections, such as meshes, molecules, or interacting components. Hidden: which neighboring and long-range interactions control the scientific quantity. The mathematical move is to let information move along the object connections instead of flattening the object into a plain row. The formula shape means the model keeps the structure of the scientific object visible. The claim should be tested by this changed case: change the mesh, rotate or move the object, or add missing interactions and inspect what breaks.",
+    "scoring_rubric": [
+      {
+        "criterion": "Observed evidence",
+        "pass": "Names what is actually known before the method is chosen.",
+        "fail": "Starts with the method name."
+      },
+      {
+        "criterion": "Hidden quantity",
+        "pass": "Names the field, rule, answer, or use range still missing.",
+        "fail": "Treats the prediction as if it were already known."
+      },
+      {
+        "criterion": "Mathematical move",
+        "pass": "Explains what the math carries from evidence to missing quantity.",
+        "fail": "Uses a label without saying what job the math does."
+      },
+      {
+        "criterion": "Changed-case rejection",
+        "pass": "Names a changed case that could make the claim fail.",
+        "fail": "Reports a score without a failure condition."
+      },
+      {
+        "criterion": "Forbidden shortcut",
+        "pass": "Avoids this weak answer: A weak answer says only that Graphs And Geometric Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.",
+        "fail": "A weak answer says only that Graphs And Geometric Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test."
+      }
     ]
   },
   {
@@ -244,6 +580,34 @@
     "related": [
       "topics/neural-differential-equations.html",
       "concept-ladder.html"
+    ],
+    "acceptance_sentence": "A reader passes only if they can say, in ordinary language, Observed: measurements of a system changing over time. Hidden: the rate rule that moves the present value into the future. The mathematical move is to learn the missing rate rule and place it inside a time-evolution calculation. The formula shape means learning supplies the unknown change rule while the time update carries the idea of continuous motion. The claim should be tested by this changed case: run longer than the training window and check whether small rate errors accumulate into drift.",
+    "scoring_rubric": [
+      {
+        "criterion": "Observed evidence",
+        "pass": "Names what is actually known before the method is chosen.",
+        "fail": "Starts with the method name."
+      },
+      {
+        "criterion": "Hidden quantity",
+        "pass": "Names the field, rule, answer, or use range still missing.",
+        "fail": "Treats the prediction as if it were already known."
+      },
+      {
+        "criterion": "Mathematical move",
+        "pass": "Explains what the math carries from evidence to missing quantity.",
+        "fail": "Uses a label without saying what job the math does."
+      },
+      {
+        "criterion": "Changed-case rejection",
+        "pass": "Names a changed case that could make the claim fail.",
+        "fail": "Reports a score without a failure condition."
+      },
+      {
+        "criterion": "Forbidden shortcut",
+        "pass": "Avoids this weak answer: A weak answer says only that Neural Differential Equations is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.",
+        "fail": "A weak answer says only that Neural Differential Equations is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test."
+      }
     ]
   },
   {
@@ -263,6 +627,34 @@
     "related": [
       "topics/attention-for-scientific-fields.html",
       "concept-ladder.html"
+    ],
+    "acceptance_sentence": "A reader passes only if they can say, in ordinary language, Observed: large fields where one location may depend on other locations. Hidden: which distant parts matter for the local prediction. The mathematical move is to let the model choose which parts of the field exchange information. The formula shape means attention is a routing rule for information, not proof that the selected route is physically complete. The claim should be tested by this changed case: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures.",
+    "scoring_rubric": [
+      {
+        "criterion": "Observed evidence",
+        "pass": "Names what is actually known before the method is chosen.",
+        "fail": "Starts with the method name."
+      },
+      {
+        "criterion": "Hidden quantity",
+        "pass": "Names the field, rule, answer, or use range still missing.",
+        "fail": "Treats the prediction as if it were already known."
+      },
+      {
+        "criterion": "Mathematical move",
+        "pass": "Explains what the math carries from evidence to missing quantity.",
+        "fail": "Uses a label without saying what job the math does."
+      },
+      {
+        "criterion": "Changed-case rejection",
+        "pass": "Names a changed case that could make the claim fail.",
+        "fail": "Reports a score without a failure condition."
+      },
+      {
+        "criterion": "Forbidden shortcut",
+        "pass": "Avoids this weak answer: A weak answer says only that Attention For Scientific Fields is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.",
+        "fail": "A weak answer says only that Attention For Scientific Fields is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test."
+      }
     ]
   }
 ]

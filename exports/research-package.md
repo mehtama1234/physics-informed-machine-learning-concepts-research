@@ -1299,71 +1299,183 @@
 - Setup: A wall has only a few temperature sensors, but the heat equation is trusted.
 - Strong answer: Observed: sensor values, starting or boundary values, and the heat equation. Hidden: the full temperature field. The equation residual checks unsensed locations. The score needs data error, equation error, and boundary or starting error. A changed boundary, source, or held-out sensor should test the claim.
 - Weak answer warning: A weak answer says only that the neural network fits data.
+- Acceptance sentence: A reader passes only if they can say, in ordinary language, Observed: sensor values, starting or boundary values, and the heat equation. Hidden: the full temperature field. The equation residual checks unsensed locations. The score needs data error, equation error, and boundary or starting error. A changed boundary, source, or held-out sensor should test the claim.
+
+#### First-Principles Scoring Rubric
+- Observed evidence: pass if Names what is actually known before the method is chosen. Fail if Starts with the method name.
+- Hidden quantity: pass if Names the field, rule, answer, or use range still missing. Fail if Treats the prediction as if it were already known.
+- Mathematical move: pass if Explains what the math carries from evidence to missing quantity. Fail if Uses a label without saying what job the math does.
+- Changed-case rejection: pass if Names a changed case that could make the claim fail. Fail if Reports a score without a failure condition.
+- Forbidden shortcut: pass if Avoids this weak answer: A weak answer says only that the neural network fits data. Fail if A weak answer says only that the neural network fits data.
 
 ### Operator Learning Reader Check
 - Setup: You have many solved PDE examples and want fast predictions for new input fields.
 - Strong answer: The input is a whole field or function, and the output is a whole solution field. The equation, boundary, grid, parameter, and geometry family must be named. The method learns a map between fields, not one field. A new boundary, resolution, parameter range, or equation family should test the claim.
 - Weak answer warning: A weak answer says only that the model is fast.
+- Acceptance sentence: A reader passes only if they can say, in ordinary language, The input is a whole field or function, and the output is a whole solution field. The equation, boundary, grid, parameter, and geometry family must be named. The method learns a map between fields, not one field. A new boundary, resolution, parameter range, or equation family should test the claim.
+
+#### First-Principles Scoring Rubric
+- Observed evidence: pass if Names what is actually known before the method is chosen. Fail if Starts with the method name.
+- Hidden quantity: pass if Names the field, rule, answer, or use range still missing. Fail if Treats the prediction as if it were already known.
+- Mathematical move: pass if Explains what the math carries from evidence to missing quantity. Fail if Uses a label without saying what job the math does.
+- Changed-case rejection: pass if Names a changed case that could make the claim fail. Fail if Reports a score without a failure condition.
+- Forbidden shortcut: pass if Avoids this weak answer: A weak answer says only that the model is fast. Fail if A weak answer says only that the model is fast.
 
 ### Surrogate Reader Check
 - Setup: A trusted simulation is too slow for a design loop.
 - Strong answer: The surrogate replaces a named solver or experiment only inside a named query family. Inputs and outputs must match the decision. The stand-in should be checked near the edge of intended use, and the full solver should return when the query leaves that range or when errors affect the decision quantity.
 - Weak answer warning: A weak answer treats speed as trust.
+- Acceptance sentence: A reader passes only if they can say, in ordinary language, The surrogate replaces a named solver or experiment only inside a named query family. Inputs and outputs must match the decision. The stand-in should be checked near the edge of intended use, and the full solver should return when the query leaves that range or when errors affect the decision quantity.
+
+#### First-Principles Scoring Rubric
+- Observed evidence: pass if Names what is actually known before the method is chosen. Fail if Starts with the method name.
+- Hidden quantity: pass if Names the field, rule, answer, or use range still missing. Fail if Treats the prediction as if it were already known.
+- Mathematical move: pass if Explains what the math carries from evidence to missing quantity. Fail if Uses a label without saying what job the math does.
+- Changed-case rejection: pass if Names a changed case that could make the claim fail. Fail if Reports a score without a failure condition.
+- Forbidden shortcut: pass if Avoids this weak answer: A weak answer treats speed as trust. Fail if A weak answer treats speed as trust.
 
 ### Uncertainty Reader Check
 - Setup: A model works on familiar examples and is now proposed for a new scientific setting.
 - Strong answer: The answer names the actual shift, such as geometry, parameter range, sensor, scale, boundary, or regime. It measures the error that matters for the scientific decision, states the use range, and names a condition that would stop use.
 - Weak answer warning: A weak answer reports one score without saying what changed.
+- Acceptance sentence: A reader passes only if they can say, in ordinary language, The answer names the actual shift, such as geometry, parameter range, sensor, scale, boundary, or regime. It measures the error that matters for the scientific decision, states the use range, and names a condition that would stop use.
+
+#### First-Principles Scoring Rubric
+- Observed evidence: pass if Names what is actually known before the method is chosen. Fail if Starts with the method name.
+- Hidden quantity: pass if Names the field, rule, answer, or use range still missing. Fail if Treats the prediction as if it were already known.
+- Mathematical move: pass if Explains what the math carries from evidence to missing quantity. Fail if Uses a label without saying what job the math does.
+- Changed-case rejection: pass if Names a changed case that could make the claim fail. Fail if Reports a score without a failure condition.
+- Forbidden shortcut: pass if Avoids this weak answer: A weak answer reports one score without saying what changed. Fail if A weak answer reports one score without saying what changed.
 
 ### Symbolic Regression Reader Check
 - Setup: Measurements suggest there may be a short law behind a changing system.
 - Strong answer: The answer lists measured variables, allowed operations or ingredients, and the formula's claim about the system. It names at least one missing variable or untested regime and demands a changed experiment before calling the formula useful.
 - Weak answer warning: A weak answer trusts a neat formula because it fits the original data.
+- Acceptance sentence: A reader passes only if they can say, in ordinary language, The answer lists measured variables, allowed operations or ingredients, and the formula's claim about the system. It names at least one missing variable or untested regime and demands a changed experiment before calling the formula useful.
+
+#### First-Principles Scoring Rubric
+- Observed evidence: pass if Names what is actually known before the method is chosen. Fail if Starts with the method name.
+- Hidden quantity: pass if Names the field, rule, answer, or use range still missing. Fail if Treats the prediction as if it were already known.
+- Mathematical move: pass if Explains what the math carries from evidence to missing quantity. Fail if Uses a label without saying what job the math does.
+- Changed-case rejection: pass if Names a changed case that could make the claim fail. Fail if Reports a score without a failure condition.
+- Forbidden shortcut: pass if Avoids this weak answer: A weak answer trusts a neat formula because it fits the original data. Fail if A weak answer trusts a neat formula because it fits the original data.
 
 ### Foundation PDE Model Reader Check
 - Setup: One broad model is trained across many PDE tasks.
 - Strong answer: The answer names included and held-out task families, the shared structure being claimed, and a trusted solver or measurement for checking. It rejects broad claims when new equations, boundaries, scales, or rare regimes were not tested.
 - Weak answer warning: A weak answer treats broad training size as proof of broad scientific trust.
+- Acceptance sentence: A reader passes only if they can say, in ordinary language, The answer names included and held-out task families, the shared structure being claimed, and a trusted solver or measurement for checking. It rejects broad claims when new equations, boundaries, scales, or rare regimes were not tested.
+
+#### First-Principles Scoring Rubric
+- Observed evidence: pass if Names what is actually known before the method is chosen. Fail if Starts with the method name.
+- Hidden quantity: pass if Names the field, rule, answer, or use range still missing. Fail if Treats the prediction as if it were already known.
+- Mathematical move: pass if Explains what the math carries from evidence to missing quantity. Fail if Uses a label without saying what job the math does.
+- Changed-case rejection: pass if Names a changed case that could make the claim fail. Fail if Reports a score without a failure condition.
+- Forbidden shortcut: pass if Avoids this weak answer: A weak answer treats broad training size as proof of broad scientific trust. Fail if A weak answer treats broad training size as proof of broad scientific trust.
 
 ### Deep Learning Reader Check
 - Setup: A reader is deciding whether Deep Learning fits a scientific job in scientific prediction from large measured or simulated data sets.
 - Strong answer: Observed: many input-output examples from experiments, simulations, or measurements. Hidden: the exact rule that connects the input to the output. The mathematical move is to adjust many weights until the model maps familiar inputs to the right outputs. The formula shape means the model earns attention only when prediction survives examples it did not train on. The claim should be tested by this changed case: hold out a changed material, geometry, parameter range, or sensor condition.
 - Weak answer warning: A weak answer says only that Deep Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.
+- Acceptance sentence: A reader passes only if they can say, in ordinary language, Observed: many input-output examples from experiments, simulations, or measurements. Hidden: the exact rule that connects the input to the output. The mathematical move is to adjust many weights until the model maps familiar inputs to the right outputs. The formula shape means the model earns attention only when prediction survives examples it did not train on. The claim should be tested by this changed case: hold out a changed material, geometry, parameter range, or sensor condition.
+
+#### First-Principles Scoring Rubric
+- Observed evidence: pass if Names what is actually known before the method is chosen. Fail if Starts with the method name.
+- Hidden quantity: pass if Names the field, rule, answer, or use range still missing. Fail if Treats the prediction as if it were already known.
+- Mathematical move: pass if Explains what the math carries from evidence to missing quantity. Fail if Uses a label without saying what job the math does.
+- Changed-case rejection: pass if Names a changed case that could make the claim fail. Fail if Reports a score without a failure condition.
+- Forbidden shortcut: pass if Avoids this weak answer: A weak answer says only that Deep Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test. Fail if A weak answer says only that Deep Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.
 
 ### Partial Differential Equations Reader Check
 - Setup: A reader is deciding whether Partial Differential Equations fits a scientific job in fluids, heat, waves, mechanics, chemistry, climate, and other changing fields.
 - Strong answer: Observed: a field such as temperature, pressure, concentration, velocity, or displacement. Hidden: how every point in the field affects nearby points over time. The mathematical move is to write a local change rule that uses rates across space and time. The formula shape means the equation carries how a whole field changes, not just how one number changes. The claim should be tested by this changed case: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error.
 - Weak answer warning: A weak answer says only that Partial Differential Equations is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.
+- Acceptance sentence: A reader passes only if they can say, in ordinary language, Observed: a field such as temperature, pressure, concentration, velocity, or displacement. Hidden: how every point in the field affects nearby points over time. The mathematical move is to write a local change rule that uses rates across space and time. The formula shape means the equation carries how a whole field changes, not just how one number changes. The claim should be tested by this changed case: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error.
+
+#### First-Principles Scoring Rubric
+- Observed evidence: pass if Names what is actually known before the method is chosen. Fail if Starts with the method name.
+- Hidden quantity: pass if Names the field, rule, answer, or use range still missing. Fail if Treats the prediction as if it were already known.
+- Mathematical move: pass if Explains what the math carries from evidence to missing quantity. Fail if Uses a label without saying what job the math does.
+- Changed-case rejection: pass if Names a changed case that could make the claim fail. Fail if Reports a score without a failure condition.
+- Forbidden shortcut: pass if Avoids this weak answer: A weak answer says only that Partial Differential Equations is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test. Fail if A weak answer says only that Partial Differential Equations is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.
 
 ### Scientific Machine Learning Reader Check
 - Setup: A reader is deciding whether Scientific Machine Learning fits a scientific job in using data-driven models inside scientific workflows.
 - Strong answer: Observed: data, equations, units, simulation outputs, and domain limits. Hidden: which parts of the scientific system are missing, noisy, or too costly to compute directly. The mathematical move is to combine learned prediction with scientific checks that name what the claim is allowed to mean. The formula shape means the model is judged by a scientific job, not by a score floating away from the job. The claim should be tested by this changed case: state the scientific quantity first, then test it under a changed case that matters in that domain.
 - Weak answer warning: A weak answer says only that Scientific Machine Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.
+- Acceptance sentence: A reader passes only if they can say, in ordinary language, Observed: data, equations, units, simulation outputs, and domain limits. Hidden: which parts of the scientific system are missing, noisy, or too costly to compute directly. The mathematical move is to combine learned prediction with scientific checks that name what the claim is allowed to mean. The formula shape means the model is judged by a scientific job, not by a score floating away from the job. The claim should be tested by this changed case: state the scientific quantity first, then test it under a changed case that matters in that domain.
+
+#### First-Principles Scoring Rubric
+- Observed evidence: pass if Names what is actually known before the method is chosen. Fail if Starts with the method name.
+- Hidden quantity: pass if Names the field, rule, answer, or use range still missing. Fail if Treats the prediction as if it were already known.
+- Mathematical move: pass if Explains what the math carries from evidence to missing quantity. Fail if Uses a label without saying what job the math does.
+- Changed-case rejection: pass if Names a changed case that could make the claim fail. Fail if Reports a score without a failure condition.
+- Forbidden shortcut: pass if Avoids this weak answer: A weak answer says only that Scientific Machine Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test. Fail if A weak answer says only that Scientific Machine Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.
 
 ### Optimization For Learning Reader Check
 - Setup: A reader is deciding whether Optimization For Learning fits a scientific job in turning model fitting into a repeatable computation.
 - Strong answer: Observed: a written score that says which model behavior is better or worse. Hidden: whether that score matches the scientific behavior the user actually cares about. The mathematical move is to change model settings to lower the written score. The formula shape means the model learns the score, so the score must include the scientific burden. The claim should be tested by this changed case: inspect what the score ignores, then check whether the ignored behavior fails after training.
 - Weak answer warning: A weak answer says only that Optimization For Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.
+- Acceptance sentence: A reader passes only if they can say, in ordinary language, Observed: a written score that says which model behavior is better or worse. Hidden: whether that score matches the scientific behavior the user actually cares about. The mathematical move is to change model settings to lower the written score. The formula shape means the model learns the score, so the score must include the scientific burden. The claim should be tested by this changed case: inspect what the score ignores, then check whether the ignored behavior fails after training.
+
+#### First-Principles Scoring Rubric
+- Observed evidence: pass if Names what is actually known before the method is chosen. Fail if Starts with the method name.
+- Hidden quantity: pass if Names the field, rule, answer, or use range still missing. Fail if Treats the prediction as if it were already known.
+- Mathematical move: pass if Explains what the math carries from evidence to missing quantity. Fail if Uses a label without saying what job the math does.
+- Changed-case rejection: pass if Names a changed case that could make the claim fail. Fail if Reports a score without a failure condition.
+- Forbidden shortcut: pass if Avoids this weak answer: A weak answer says only that Optimization For Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test. Fail if A weak answer says only that Optimization For Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.
 
 ### Generative Modeling Reader Check
 - Setup: A reader is deciding whether Generative Modeling fits a scientific job in creating plausible scientific samples, fields, or candidate designs.
 - Strong answer: Observed: examples of fields, molecules, flows, shapes, or other scientific objects. Hidden: the spread of possible valid objects beyond the examples. The mathematical move is to learn how to sample new candidates that resemble the training family. The formula shape means a generated object must still pass physics and usefulness checks. The claim should be tested by this changed case: measure constraints, rare cases, conservation, and downstream task performance on generated samples.
 - Weak answer warning: A weak answer says only that Generative Modeling is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.
+- Acceptance sentence: A reader passes only if they can say, in ordinary language, Observed: examples of fields, molecules, flows, shapes, or other scientific objects. Hidden: the spread of possible valid objects beyond the examples. The mathematical move is to learn how to sample new candidates that resemble the training family. The formula shape means a generated object must still pass physics and usefulness checks. The claim should be tested by this changed case: measure constraints, rare cases, conservation, and downstream task performance on generated samples.
+
+#### First-Principles Scoring Rubric
+- Observed evidence: pass if Names what is actually known before the method is chosen. Fail if Starts with the method name.
+- Hidden quantity: pass if Names the field, rule, answer, or use range still missing. Fail if Treats the prediction as if it were already known.
+- Mathematical move: pass if Explains what the math carries from evidence to missing quantity. Fail if Uses a label without saying what job the math does.
+- Changed-case rejection: pass if Names a changed case that could make the claim fail. Fail if Reports a score without a failure condition.
+- Forbidden shortcut: pass if Avoids this weak answer: A weak answer says only that Generative Modeling is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test. Fail if A weak answer says only that Generative Modeling is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.
 
 ### Graphs And Geometric Learning Reader Check
 - Setup: A reader is deciding whether Graphs And Geometric Learning fits a scientific job in systems made of interacting parts, meshes, molecules, or spatial relations.
 - Strong answer: Observed: objects with parts and connections, such as meshes, molecules, or interacting components. Hidden: which neighboring and long-range interactions control the scientific quantity. The mathematical move is to let information move along the object connections instead of flattening the object into a plain row. The formula shape means the model keeps the structure of the scientific object visible. The claim should be tested by this changed case: change the mesh, rotate or move the object, or add missing interactions and inspect what breaks.
 - Weak answer warning: A weak answer says only that Graphs And Geometric Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.
+- Acceptance sentence: A reader passes only if they can say, in ordinary language, Observed: objects with parts and connections, such as meshes, molecules, or interacting components. Hidden: which neighboring and long-range interactions control the scientific quantity. The mathematical move is to let information move along the object connections instead of flattening the object into a plain row. The formula shape means the model keeps the structure of the scientific object visible. The claim should be tested by this changed case: change the mesh, rotate or move the object, or add missing interactions and inspect what breaks.
+
+#### First-Principles Scoring Rubric
+- Observed evidence: pass if Names what is actually known before the method is chosen. Fail if Starts with the method name.
+- Hidden quantity: pass if Names the field, rule, answer, or use range still missing. Fail if Treats the prediction as if it were already known.
+- Mathematical move: pass if Explains what the math carries from evidence to missing quantity. Fail if Uses a label without saying what job the math does.
+- Changed-case rejection: pass if Names a changed case that could make the claim fail. Fail if Reports a score without a failure condition.
+- Forbidden shortcut: pass if Avoids this weak answer: A weak answer says only that Graphs And Geometric Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test. Fail if A weak answer says only that Graphs And Geometric Learning is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.
 
 ### Neural Differential Equations Reader Check
 - Setup: A reader is deciding whether Neural Differential Equations fits a scientific job in changing systems where time evolution is part of the model.
 - Strong answer: Observed: measurements of a system changing over time. Hidden: the rate rule that moves the present value into the future. The mathematical move is to learn the missing rate rule and place it inside a time-evolution calculation. The formula shape means learning supplies the unknown change rule while the time update carries the idea of continuous motion. The claim should be tested by this changed case: run longer than the training window and check whether small rate errors accumulate into drift.
 - Weak answer warning: A weak answer says only that Neural Differential Equations is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.
+- Acceptance sentence: A reader passes only if they can say, in ordinary language, Observed: measurements of a system changing over time. Hidden: the rate rule that moves the present value into the future. The mathematical move is to learn the missing rate rule and place it inside a time-evolution calculation. The formula shape means learning supplies the unknown change rule while the time update carries the idea of continuous motion. The claim should be tested by this changed case: run longer than the training window and check whether small rate errors accumulate into drift.
+
+#### First-Principles Scoring Rubric
+- Observed evidence: pass if Names what is actually known before the method is chosen. Fail if Starts with the method name.
+- Hidden quantity: pass if Names the field, rule, answer, or use range still missing. Fail if Treats the prediction as if it were already known.
+- Mathematical move: pass if Explains what the math carries from evidence to missing quantity. Fail if Uses a label without saying what job the math does.
+- Changed-case rejection: pass if Names a changed case that could make the claim fail. Fail if Reports a score without a failure condition.
+- Forbidden shortcut: pass if Avoids this weak answer: A weak answer says only that Neural Differential Equations is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test. Fail if A weak answer says only that Neural Differential Equations is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.
 
 ### Attention For Scientific Fields Reader Check
 - Setup: A reader is deciding whether Attention For Scientific Fields fits a scientific job in large scientific fields where distant parts may interact.
 - Strong answer: Observed: large fields where one location may depend on other locations. Hidden: which distant parts matter for the local prediction. The mathematical move is to let the model choose which parts of the field exchange information. The formula shape means attention is a routing rule for information, not proof that the selected route is physically complete. The claim should be tested by this changed case: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures.
 - Weak answer warning: A weak answer says only that Attention For Scientific Fields is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.
+- Acceptance sentence: A reader passes only if they can say, in ordinary language, Observed: large fields where one location may depend on other locations. Hidden: which distant parts matter for the local prediction. The mathematical move is to let the model choose which parts of the field exchange information. The formula shape means attention is a routing rule for information, not proof that the selected route is physically complete. The claim should be tested by this changed case: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures.
+
+#### First-Principles Scoring Rubric
+- Observed evidence: pass if Names what is actually known before the method is chosen. Fail if Starts with the method name.
+- Hidden quantity: pass if Names the field, rule, answer, or use range still missing. Fail if Treats the prediction as if it were already known.
+- Mathematical move: pass if Explains what the math carries from evidence to missing quantity. Fail if Uses a label without saying what job the math does.
+- Changed-case rejection: pass if Names a changed case that could make the claim fail. Fail if Reports a score without a failure condition.
+- Forbidden shortcut: pass if Avoids this weak answer: A weak answer says only that Attention For Scientific Fields is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test. Fail if A weak answer says only that Attention For Scientific Fields is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.
 
 
 ## Decision Guide
