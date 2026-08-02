@@ -5201,6 +5201,7 @@ def html_page(title: str, body: str, root_prefix: str = "") -> str:
   <a href="{root_prefix}course-spine.html">Spine</a>
   <a href="{root_prefix}topology-shape-guide.html">Shape</a>
   <a href="{root_prefix}question-to-topic-guide.html">Questions</a>
+  <a href="{root_prefix}field-application-guide.html">Fields</a>
   <a href="{root_prefix}learning-path.html">Path</a>
   <a href="{root_prefix}glossary.html">Glossary</a>
   <a href="{root_prefix}domains.html">Domains</a>
@@ -5375,6 +5376,59 @@ def write_question_to_topic_guide_page(path: Path, topics: list[dict[str, object
 <p>A reader understands the first-principles route when they can start with one everyday question, choose one topic, and say why that topic is the first stop without using the method name as the reason. The answer should name the evidence in hand, the hidden thing needed, the mathematical move, and the changed case that could reject the claim.</p>
 """
     path.write_text(html_page("Physics-Informed ML Question To Topic Guide", body), encoding="utf-8")
+
+
+def write_field_application_guide_page(path: Path, topics: list[dict[str, object]]) -> None:
+    field_names = (
+        "Engineering design",
+        "Materials, chemistry, and biology",
+        "Climate, fluids, and fields",
+    )
+    sections = []
+    for field_name in field_names:
+        rows = []
+        for topic in topics:
+            derivation = topic_derivation(topic)
+            app = next(row for row in topic_plain_applications(topic, derivation) if row["field"] == field_name)
+            rows.append(
+                f"""
+<tr>
+  <td><a href="topics/{html.escape(str(topic['slug']))}.html">{html.escape(str(topic['title']))}</a></td>
+  <td>{html.escape(str(app['use']))}</td>
+  <td>{html.escape(str(app['why']))}</td>
+  <td>{html.escape(str(app['check']))}</td>
+</tr>
+"""
+            )
+        sections.append(
+            f"""
+<h2>{html.escape(field_name)}</h2>
+<table>
+  <thead>
+    <tr><th>Topic</th><th>Plain Use</th><th>Why It Matters</th><th>First Field Check</th></tr>
+  </thead>
+  <tbody>{''.join(rows)}</tbody>
+</table>
+"""
+        )
+    body = f"""
+<h1>Field Application Guide In Plain Words</h1>
+<h2>Why Fields Need Their Own Map</h2>
+<p>A method does not matter because it has a name. It matters because a person in a field has a quantity to decide: stress, heat, flow, risk, molecule property, material behavior, climate pattern, or a design answer. This page starts from those field needs and shows what each topic is allowed to help with.</p>
+<p>Read each row as a promise that still needs a check. The use says where the idea enters. The reason says what shortage it answers. The check says the first changed case that can make the field claim too wide.</p>
+{''.join(sections)}
+<h2>How To Read An Application Claim</h2>
+<ol>
+  <li>Name the field quantity before naming the method.</li>
+  <li>Name the evidence the field actually gives you.</li>
+  <li>Name the hidden answer the field needs next.</li>
+  <li>Name the physical, chemical, biological, or design condition that must still hold.</li>
+  <li>Try the first changed case before trusting the wider claim.</li>
+</ol>
+<h2>Reader Test</h2>
+<p>A reader understands the field applications when they can pick one topic and explain how it helps in engineering design, materials or biology, and climate or fluids using ordinary words. The answer should end with a changed case, not with a claim that the method works in general.</p>
+"""
+    path.write_text(html_page("Physics-Informed ML Field Application Guide", body), encoding="utf-8")
 
 
 def concept_links(slugs: list[str], root_prefix: str = "") -> str:
@@ -5633,6 +5687,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Course Spine", "One plain-language first-principles essay tying the whole course together before the topic pages.", "course-spine.html")}
 {card("Topology And Shape", "A plain guide to connected structure, boundaries, holes, meshes, and shape checks across the course.", "topology-shape-guide.html")}
 {card("Question To Topic Guide", "Start from an everyday scientific question and open the first topic that carries that need.", "question-to-topic-guide.html")}
+{card("Field Application Guide", "A plain map of how each topic enters engineering, materials, biology, climate, fluids, and field problems.", "field-application-guide.html")}
 {card("Learning Path", f"{summary['learning_path_step_count']} steps from first question to field-level understanding.", "learning-path.html")}
 {card("Glossary", f"{summary['glossary_term_count']} field terms translated into everyday language.", "glossary.html")}
 {card("Domains", f"{summary['domain_guide_count']} domain guides that ground concepts in real scientific work.", "domains.html")}
@@ -5753,6 +5808,7 @@ def write_site(data: dict[str, object]) -> None:
     write_course_spine_page(SITE / "course-spine.html", list(topics))
     write_topology_shape_guide_page(SITE / "topology-shape-guide.html", list(topics))
     write_question_to_topic_guide_page(SITE / "question-to-topic-guide.html", list(topics))
+    write_field_application_guide_page(SITE / "field-application-guide.html", list(topics))
 
     learning_cards = []
     for step in learning_path:
@@ -8594,6 +8650,13 @@ def write_markdown_export(data: dict[str, object]) -> None:
     for topic in data["topic_treatments"]:
         derivation = topic_derivation(topic)
         lines.append(f"- Everyday question: {topic_start_question(topic)} Open this topic: {topic['title']}. First stop reason: {topic['common_problem']}. First check: {topic['failure_boundary']}. Mathematical move: {derivation['move']}.")
+    lines.extend(["", "## Field Application Guide In Plain Words"])
+    for field_name in ("Engineering design", "Materials, chemistry, and biology", "Climate, fluids, and fields"):
+        lines.append(f"### {field_name}")
+        for topic in data["topic_treatments"]:
+            derivation = topic_derivation(topic)
+            app = next(row for row in topic_plain_applications(topic, derivation) if row["field"] == field_name)
+            lines.append(f"- {topic['title']}: use: {app['use']} Why: {app['why']} Check: {app['check']}")
     lines.extend(["", "## Concepts"])
     for concept in data["concept_atlas"]:
         lines.extend(
@@ -9222,6 +9285,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         SITE / "course-spine.html",
         SITE / "topology-shape-guide.html",
         SITE / "question-to-topic-guide.html",
+        SITE / "field-application-guide.html",
         SITE / "learning-path.html",
         SITE / "glossary.html",
         SITE / "domains.html",
@@ -9262,6 +9326,21 @@ def validate(data: dict[str, object] | None = None) -> None:
     ):
         if term not in question_guide_text:
             raise SystemExit(f"question-to-topic guide missing: {term}")
+    field_guide_text = (SITE / "field-application-guide.html").read_text(encoding="utf-8")
+    for term in (
+        "Field Application Guide In Plain Words",
+        "Why Fields Need Their Own Map",
+        "Engineering design",
+        "Materials, chemistry, and biology",
+        "Climate, fluids, and fields",
+        "Plain Use",
+        "Why It Matters",
+        "First Field Check",
+        "How To Read An Application Claim",
+        "Reader Test",
+    ):
+        if term not in field_guide_text:
+            raise SystemExit(f"field application guide missing: {term}")
     for family in FAMILY_PAGES:
         family_path = SITE / "families" / f"{family['slug']}.html"
         if not family_path.exists():
