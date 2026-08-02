@@ -150,7 +150,7 @@
 <h2>Concrete Domain Story</h2>
 <p>A model trained across many simulated fields may help on a new field task, but only if the new task shares the structure it learned.</p>
 <h2>Mathematical Shape Without Jargon</h2>
-<div class="route"><div class="route-step">1. Gather many field-prediction tasks.</div><div class="route-step">2. Train one model to keep shared structure across those tasks.</div><div class="route-step">3. Adapt or query it on a new task.</div><div class="route-step">4. Compare against trusted solves or measurements.</div><div class="route-step">5. Hold out whole task families, not just random examples.</div></div>
+<div class="route"><div class="route-step">1. Gather many field-prediction tasks.</div><div class="route-step">2. Train one model to keep shared structure across those tasks.</div><div class="route-step">3. Adapt or query it on a new task.</div><div class="route-step">4. Compare against trusted solves or measurements.</div><div class="route-step">5. Hold out whole task families, rather than only random examples.</div></div>
 <p><strong>Plain formula:</strong> many PDE tasks -&gt; shared learned structure -&gt; new task prediction</p>
 <h2>Why This Matters</h2>
 <p>If it works, broad training could reduce repeated model-building for related scientific problems.</p>
@@ -273,7 +273,7 @@
     <tr><th>Mistake</th><td>Assume a broad PDE model covers a new equation because it was trained on many tasks.</td></tr>
     <tr><th>Why It Is Tempting</th><td>Scale and breadth can sound like coverage.</td></tr>
     <tr><th>What Breaks</th><td>The model may not have learned the structure needed for a rare regime, boundary type, scale, or output quantity.</td></tr>
-    <tr><th>Test That Catches It</th><td>Hold out whole task families, not just random examples, and compare against trusted solves on the new family.</td></tr>
+    <tr><th>Test That Catches It</th><td>Hold out whole task families, rather than only random examples, and compare against trusted solves on the new family.</td></tr>
   </tbody>
 </table>
 
@@ -296,7 +296,7 @@
   <td>The mathematical move carries the right information.</td>
   <td>The move is checked as train one broad model to reuse structure across many related field-prediction tasks, and the formula shape is read as many PDE tasks -&gt; shared learned representation -&gt; new task prediction.</td>
   <td>A score improves, but nobody checks what the score ignored.</td>
-  <td>Hold out whole task families, not just random examples, and compare against trusted solves on the new family.</td>
+  <td>Hold out whole task families, rather than only random examples, and compare against trusted solves on the new family.</td>
 </tr>
 
 <tr>
@@ -322,7 +322,7 @@
 
 
 <h2>Where This Fits By Domain</h2>
-<p>A concept is not generally useful just because the method works somewhere. It fits a domain when the real quantity, observed evidence, hidden target, and changed-case test line up.</p>
+<p>A concept fits a domain only when the real quantity, observed evidence, hidden target, and changed-case test line up.</p>
 <table>
   <thead>
     <tr><th>Domain</th><th>Real Quantity</th><th>Scientific Job</th><th>Observed Evidence</th><th>Changed-Case Test</th></tr>
