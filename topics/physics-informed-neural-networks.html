@@ -54,6 +54,24 @@
 <h2>Everyday Anchor</h2>
 <p>A student drawing a bridge cannot ignore gravity. A PINN is similar: the fitted curve is pushed to obey the equation, not only the measured dots.</p>
 
+<h2>Before The Math Slow Walk</h2>
+<p>Read this before any formula. Physics-Informed Neural Networks starts with an ordinary shortage: measurements may be sparse, but the answer must still respect a known physical equation. That shortage matters because someone has to use the answer in differential equations in science and engineering. The reader should be able to explain the need for the idea without naming the method first.</p>
+<p>The everyday picture is this: A student drawing a bridge cannot ignore gravity. A PINN is similar: the fitted curve is pushed to obey the equation, not only the measured dots. The point of the picture is not to make the idea cute. It is to slow the question down. We know something, but not enough. We need a bridge from the known part to the missing part, and we need a way to tell when the bridge stops carrying the truth.</p>
+<p>For this topic, the known part is some measured values, boundary values, starting values, and a known differential equation. The missing part is the full field value at every point in space and time. If a reader cannot say those two pieces plainly, the later math has no job yet. The method becomes meaningful only after the shortage is visible.</p>
+<p>The first useful move is to fit a neural network while also measuring how badly its output violates the known equation. In everyday words, that means the page is choosing what information is allowed to travel from evidence to answer. It keeps a neural network prediction plus a penalty for violating the known equation. It leaves out guaranteed accuracy when the equation, boundary data, or training points are poor. The left-out part is where overconfidence usually enters.</p>
+<p>A concrete setting makes the idea harder to fake. A heat plate has only a few temperature sensors, but the heat equation and boundary temperatures are partly known. The useful answer is a full temperature field that can be inspected between the sensors. That answer should be trusted only until this kind of case breaks it: held-out sensors near sharp heat changes disagree or a trusted numerical solve shows a different field.</p>
+<h3>Say It Without Jargon</h3>
+<table>
+  <tbody>
+    <tr><th>What We Have</th><td>some measured values, boundary values, starting values, and a known differential equation</td></tr>
+    <tr><th>What We Need</th><td>the full field value at every point in space and time</td></tr>
+    <tr><th>Why The Idea Enters</th><td>it lets known physics push the fit toward physically possible behavior instead of treating data points as the only evidence</td></tr>
+    <tr><th>What To Try First</th><td>move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements</td></tr>
+    <tr><th>Stop Trusting It When</th><td>the equation penalty can look small while the solution is wrong in hard regions, sharp layers, or unseen boundary cases</td></tr>
+  </tbody>
+</table>
+
+
 <h2>Big Picture Claim Chain</h2>
 <p>Read this row by row before trusting the method name. The concept earns its place only if each link carries the next one.</p>
 <table>
