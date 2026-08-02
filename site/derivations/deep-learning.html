@@ -66,6 +66,38 @@
 </table>
 
 
+<h2>Hand Derivation</h2>
+<p>Start with many examples and no short hand-written rule. The model needs adjustable parts because the useful relation is not known before training.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Term</th>
+      <th>Why It Enters</th>
+      <th>Check</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+  <td>examples</td>
+  <td>Examples are the evidence the model is allowed to learn from.</td>
+  <td>If the examples miss the important case, the learned pattern may fail exactly where it is needed.</td>
+</tr>
+
+<tr>
+  <td>adjustable weights</td>
+  <td>The weights give the model room to shape a relation that was not written down by hand.</td>
+  <td>If the model has room to fit noise, a low training error is not enough.</td>
+</tr>
+
+<tr>
+  <td>held-out test</td>
+  <td>The claim is about a new case, so some evidence must be kept aside from fitting.</td>
+  <td>If the test looks too much like training, the model may only be repeating familiar cases.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Final Line:</strong> Deep learning trades a hand-written rule for an adjustable rule, so the proof burden moves to examples, tests, and the boundary of use.</p>
+
 <h2>Plain Formula</h2>
 <p>input example -&gt; adjustable rule -&gt; predicted answer -&gt; error check</p>
 <h2>Smallest Useful Formula</h2>

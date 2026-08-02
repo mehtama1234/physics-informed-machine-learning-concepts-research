@@ -66,6 +66,38 @@
 </table>
 
 
+<h2>Hand Derivation</h2>
+<p>Start with an object whose parts and connections matter: a molecule, mesh, material, body, or network. The arrangement is part of the evidence.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Term</th>
+      <th>Why It Enters</th>
+      <th>Check</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+  <td>parts</td>
+  <td>The model needs the pieces whose values, features, or positions carry the scientific quantity.</td>
+  <td>If important parts are missing, the graph cannot recover their influence.</td>
+</tr>
+
+<tr>
+  <td>connections</td>
+  <td>Connections say which parts can directly affect one another.</td>
+  <td>If the graph connects the wrong neighbors, the model can learn the wrong interaction pattern.</td>
+</tr>
+
+<tr>
+  <td>geometry or symmetry check</td>
+  <td>The answer should not change for reasons that are only artifacts of mesh order, rotation, or labeling.</td>
+  <td>If relabeling, rotation, or mesh changes break the result, the model may be learning bookkeeping instead of structure.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Final Line:</strong> Graph and geometric learning starts from the fact that the scientific object is connected, not just listed.</p>
+
 <h2>Plain Formula</h2>
 <p>connected shape + local values -&gt; relation-aware updates -&gt; field or object answer</p>
 <h2>Smallest Useful Formula</h2>

@@ -1085,6 +1085,174 @@ TOPIC_TEACHING_NOTES = {
 
 
 HAND_DERIVATIONS = {
+    "partial-differential-equations": {
+        "plain_start": "Start with a quantity spread across space, such as temperature, pressure, concentration, velocity, or displacement. One value cannot describe it because each location is tied to nearby locations, sources, and boundaries.",
+        "line_steps": [
+            {
+                "term": "field value",
+                "why_it_enters": "The object being described is a value at many places, not one number for the whole system.",
+                "check": "If the field is reduced to independent points, movement, flow, stress, or diffusion can be lost.",
+            },
+            {
+                "term": "change rates",
+                "why_it_enters": "The equation must say how the field changes in time or across space, because that is where the physical rule lives.",
+                "check": "If the rates are wrong, the equation can look neat while giving the wrong evolution.",
+            },
+            {
+                "term": "sources and boundaries",
+                "why_it_enters": "A field can obey the same local rule but behave differently when heat, force, material, or edge conditions change.",
+                "check": "If sources or boundaries are vague, the equation may describe a different physical problem.",
+            },
+        ],
+        "final_line": "A PDE is a compact way to say how a field, its local changes, its sources, and its boundaries must agree.",
+    },
+    "deep-learning": {
+        "plain_start": "Start with many examples and no short hand-written rule. The model needs adjustable parts because the useful relation is not known before training.",
+        "line_steps": [
+            {
+                "term": "examples",
+                "why_it_enters": "Examples are the evidence the model is allowed to learn from.",
+                "check": "If the examples miss the important case, the learned pattern may fail exactly where it is needed.",
+            },
+            {
+                "term": "adjustable weights",
+                "why_it_enters": "The weights give the model room to shape a relation that was not written down by hand.",
+                "check": "If the model has room to fit noise, a low training error is not enough.",
+            },
+            {
+                "term": "held-out test",
+                "why_it_enters": "The claim is about a new case, so some evidence must be kept aside from fitting.",
+                "check": "If the test looks too much like training, the model may only be repeating familiar cases.",
+            },
+        ],
+        "final_line": "Deep learning trades a hand-written rule for an adjustable rule, so the proof burden moves to examples, tests, and the boundary of use.",
+    },
+    "scientific-machine-learning": {
+        "plain_start": "Start with a scientific question where data, equations, simulations, and uncertainty each carry part of the answer. No single piece is enough by itself.",
+        "line_steps": [
+            {
+                "term": "measured evidence",
+                "why_it_enters": "Measurements tie the answer to the world rather than only to a modeler's preference.",
+                "check": "If measurements are ignored, the result may satisfy a rule but miss the experiment.",
+            },
+            {
+                "term": "scientific rule",
+                "why_it_enters": "Known physics or chemistry can reject answers that fit data points but break the system between them.",
+                "check": "If the rule is wrong or incomplete, adding it can make the answer confidently wrong.",
+            },
+            {
+                "term": "changed-case validation",
+                "why_it_enters": "The scientific claim matters in a use case that can differ from the examples used to build it.",
+                "check": "If no changed case is named, the page has not separated evidence from hope.",
+            },
+        ],
+        "final_line": "Scientific machine learning is the discipline of saying which evidence is carried, which rule is kept, and which changed case can reject the claim.",
+    },
+    "optimization-for-learning": {
+        "plain_start": "Start with a model that can be adjusted and a score that says which answers look better. Training is the repeated act of changing the model to reduce that score.",
+        "line_steps": [
+            {
+                "term": "adjustable model parts",
+                "why_it_enters": "Something must be changeable, or there is nothing for training to improve.",
+                "check": "If the adjustable parts cannot express the needed behavior, optimization cannot invent it.",
+            },
+            {
+                "term": "training score",
+                "why_it_enters": "The score tells the optimizer what better means.",
+                "check": "If the score ignores the scientific quantity, training can improve the score while harming the job.",
+            },
+            {
+                "term": "update rule",
+                "why_it_enters": "The model needs a way to use local score information to choose the next setting.",
+                "check": "If the updates stall or chase the wrong term, the final model may reflect optimization failure rather than scientific truth.",
+            },
+        ],
+        "final_line": "Optimization is not proof; it is a way to obey a written score, so the score must match the scientific burden.",
+    },
+    "generative-modeling": {
+        "plain_start": "Start with a task that needs many possible fields, designs, molecules, or futures. One average answer can hide the variety the scientist must inspect.",
+        "line_steps": [
+            {
+                "term": "source of variation",
+                "why_it_enters": "The model needs a way to produce different candidates instead of the same answer every time.",
+                "check": "If variation is only visual noise, the samples may not represent real possibilities.",
+            },
+            {
+                "term": "conditioning information",
+                "why_it_enters": "The candidates must answer the actual prompt, boundary, geometry, property, or physical setting.",
+                "check": "If the condition is ignored, plausible samples can be useless for the scientific job.",
+            },
+            {
+                "term": "constraint check",
+                "why_it_enters": "A generated object is only usable if it satisfies the rule or property the domain requires.",
+                "check": "If samples are judged only by appearance, invalid candidates can look convincing.",
+            },
+        ],
+        "final_line": "Generative modeling is useful when many candidates matter, but each candidate still has to answer to the domain rule.",
+    },
+    "graphs-and-geometric-learning": {
+        "plain_start": "Start with an object whose parts and connections matter: a molecule, mesh, material, body, or network. The arrangement is part of the evidence.",
+        "line_steps": [
+            {
+                "term": "parts",
+                "why_it_enters": "The model needs the pieces whose values, features, or positions carry the scientific quantity.",
+                "check": "If important parts are missing, the graph cannot recover their influence.",
+            },
+            {
+                "term": "connections",
+                "why_it_enters": "Connections say which parts can directly affect one another.",
+                "check": "If the graph connects the wrong neighbors, the model can learn the wrong interaction pattern.",
+            },
+            {
+                "term": "geometry or symmetry check",
+                "why_it_enters": "The answer should not change for reasons that are only artifacts of mesh order, rotation, or labeling.",
+                "check": "If relabeling, rotation, or mesh changes break the result, the model may be learning bookkeeping instead of structure.",
+            },
+        ],
+        "final_line": "Graph and geometric learning starts from the fact that the scientific object is connected, not just listed.",
+    },
+    "neural-differential-equations": {
+        "plain_start": "Start with a system observed over time and an incomplete rule for how it changes. The missing object is the rate that moves the present state forward.",
+        "line_steps": [
+            {
+                "term": "state",
+                "why_it_enters": "The state is the information carried from the present into the next moment.",
+                "check": "If the state leaves out an important variable, the learned rate may compensate in a false way.",
+            },
+            {
+                "term": "learned rate",
+                "why_it_enters": "The unknown change rule is placed where a differential equation needs a rate.",
+                "check": "If the rate is only right over a short window, long-time behavior can drift.",
+            },
+            {
+                "term": "time solver",
+                "why_it_enters": "The rate has to be accumulated through time to produce a path.",
+                "check": "If the solver amplifies small rate errors, the path can look right at first and then fail.",
+            },
+        ],
+        "final_line": "A neural differential equation learns a missing rate, then exposes that rate to the discipline of time evolution.",
+    },
+    "attention-for-scientific-fields": {
+        "plain_start": "Start with a field where a local prediction may depend on distant parts: a boundary, forcing pattern, large structure, or rare event.",
+        "line_steps": [
+            {
+                "term": "query location",
+                "why_it_enters": "The model needs to know which local place is asking for information.",
+                "check": "If the query is poorly tied to the target quantity, attention can gather irrelevant signals.",
+            },
+            {
+                "term": "candidate source locations",
+                "why_it_enters": "The useful information may live far from the query location.",
+                "check": "If distant or boundary information is excluded, the local answer may miss the real cause.",
+            },
+            {
+                "term": "weighted gathering",
+                "why_it_enters": "The model needs a way to combine the parts judged relevant for the local prediction.",
+                "check": "If the gathered pattern fails boundary or long-range tests, the attention pattern is not scientific evidence.",
+            },
+        ],
+        "final_line": "Attention is a gathering rule for field information; it becomes scientific only when the gathered information survives changed-case checks.",
+    },
     "physics-informed-neural-networks": {
         "plain_start": "Start with an unknown field u. A few measurements tell us u at some points. The equation tells us what u should do between those points. The boundary tells us what must happen at the edge.",
         "line_steps": [
@@ -7782,7 +7950,6 @@ def validate(data: dict[str, object] | None = None) -> None:
     derivation_rows = data.get("core_derivations") or []
     if len(derivation_rows) != len(TOPIC_DEEP_DIVES):
         raise SystemExit("core derivation count does not match deep dives")
-    hand_required_slugs = {"physics-informed-neural-networks", "operator-learning", "foundation-models-for-pdes"}
     for item in derivation_rows:
         derivation_path = SITE / str(item["derivation_href"])
         if not derivation_path.exists():
@@ -7794,13 +7961,12 @@ def validate(data: dict[str, object] | None = None) -> None:
         for field in ("smallest_useful_formula", "first_wrong_simplification"):
             if not item.get(field):
                 raise SystemExit(f"derivation missing {field}: {item['title']}")
-        if item["slug"] in hand_required_slugs:
-            hand = item.get("hand_derivation")
-            if not isinstance(hand, dict) or len(hand.get("line_steps") or []) < 3:
-                raise SystemExit(f"core derivation missing hand derivation: {item['title']}")
-            for required in ("Hand Derivation", "Why It Enters", "Final Line"):
-                if required not in derivation_text:
-                    raise SystemExit(f"hand derivation page missing {required}: {item['title']}")
+        hand = item.get("hand_derivation")
+        if not isinstance(hand, dict) or len(hand.get("line_steps") or []) < 3:
+            raise SystemExit(f"core derivation missing hand derivation: {item['title']}")
+        for required in ("Hand Derivation", "Why It Enters", "Final Line"):
+            if required not in derivation_text:
+                raise SystemExit(f"hand derivation page missing {required}: {item['title']}")
         topic_path = SITE / str(item["topic_href"])
         if not topic_path.exists():
             raise SystemExit(f"derivation topic link missing: {item['topic_href']}")

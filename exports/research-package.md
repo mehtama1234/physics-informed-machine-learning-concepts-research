@@ -624,6 +624,13 @@
 - Failure test: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error
 - Page: derivations/partial-differential-equations.html
 
+#### Hand Derivation For Partial Differential Equations
+- Start: Start with a quantity spread across space, such as temperature, pressure, concentration, velocity, or displacement. One value cannot describe it because each location is tied to nearby locations, sources, and boundaries.
+- field value: The object being described is a value at many places, not one number for the whole system. Check: If the field is reduced to independent points, movement, flow, stress, or diffusion can be lost.
+- change rates: The equation must say how the field changes in time or across space, because that is where the physical rule lives. Check: If the rates are wrong, the equation can look neat while giving the wrong evolution.
+- sources and boundaries: A field can obey the same local rule but behave differently when heat, force, material, or edge conditions change. Check: If sources or boundaries are vague, the equation may describe a different physical problem.
+- Final line: A PDE is a compact way to say how a field, its local changes, its sources, and its boundaries must agree.
+
 ### Operator Learning
 - Problem: one simulation answer is not enough when engineers need the whole map from inputs to solution fields
 - Observed: many example inputs and their full solution fields
@@ -685,6 +692,13 @@
 - Failure test: run longer than the training window and check whether small rate errors accumulate into drift
 - Page: derivations/neural-differential-equations.html
 
+#### Hand Derivation For Neural Differential Equations
+- Start: Start with a system observed over time and an incomplete rule for how it changes. The missing object is the rate that moves the present state forward.
+- state: The state is the information carried from the present into the next moment. Check: If the state leaves out an important variable, the learned rate may compensate in a false way.
+- learned rate: The unknown change rule is placed where a differential equation needs a rate. Check: If the rate is only right over a short window, long-time behavior can drift.
+- time solver: The rate has to be accumulated through time to produce a path. Check: If the solver amplifies small rate errors, the path can look right at first and then fail.
+- Final line: A neural differential equation learns a missing rate, then exposes that rate to the discipline of time evolution.
+
 ### Symbolic Regression And Model Discovery
 - Problem: a scientist may need a readable equation, not only a model that predicts well
 - Observed: measured variables and candidate mathematical ingredients
@@ -729,6 +743,13 @@
 - Failure test: hold out a changed material, geometry, parameter range, or sensor condition
 - Page: derivations/deep-learning.html
 
+#### Hand Derivation For Deep Learning
+- Start: Start with many examples and no short hand-written rule. The model needs adjustable parts because the useful relation is not known before training.
+- examples: Examples are the evidence the model is allowed to learn from. Check: If the examples miss the important case, the learned pattern may fail exactly where it is needed.
+- adjustable weights: The weights give the model room to shape a relation that was not written down by hand. Check: If the model has room to fit noise, a low training error is not enough.
+- held-out test: The claim is about a new case, so some evidence must be kept aside from fitting. Check: If the test looks too much like training, the model may only be repeating familiar cases.
+- Final line: Deep learning trades a hand-written rule for an adjustable rule, so the proof burden moves to examples, tests, and the boundary of use.
+
 ### Scientific Machine Learning
 - Problem: scientific work needs predictions that respect measurements, equations, uncertainty, and domain limits at the same time
 - Observed: data, equations, units, simulation outputs, and domain limits
@@ -738,6 +759,13 @@
 - First wrong simplification: The first wrong shortcut is to keep the part that gives an answer while dropping the part that checks it. That would hide this failure: state the scientific quantity first, then test it under a changed case that matters in that domain.
 - Failure test: state the scientific quantity first, then test it under a changed case that matters in that domain
 - Page: derivations/scientific-machine-learning.html
+
+#### Hand Derivation For Scientific Machine Learning
+- Start: Start with a scientific question where data, equations, simulations, and uncertainty each carry part of the answer. No single piece is enough by itself.
+- measured evidence: Measurements tie the answer to the world rather than only to a modeler's preference. Check: If measurements are ignored, the result may satisfy a rule but miss the experiment.
+- scientific rule: Known physics or chemistry can reject answers that fit data points but break the system between them. Check: If the rule is wrong or incomplete, adding it can make the answer confidently wrong.
+- changed-case validation: The scientific claim matters in a use case that can differ from the examples used to build it. Check: If no changed case is named, the page has not separated evidence from hope.
+- Final line: Scientific machine learning is the discipline of saying which evidence is carried, which rule is kept, and which changed case can reject the claim.
 
 ### Optimization For Learning
 - Problem: learning needs a way to decide which model settings are better or worse
@@ -749,6 +777,13 @@
 - Failure test: inspect what the score ignores, then check whether the ignored behavior fails after training
 - Page: derivations/optimization-for-learning.html
 
+#### Hand Derivation For Optimization For Learning
+- Start: Start with a model that can be adjusted and a score that says which answers look better. Training is the repeated act of changing the model to reduce that score.
+- adjustable model parts: Something must be changeable, or there is nothing for training to improve. Check: If the adjustable parts cannot express the needed behavior, optimization cannot invent it.
+- training score: The score tells the optimizer what better means. Check: If the score ignores the scientific quantity, training can improve the score while harming the job.
+- update rule: The model needs a way to use local score information to choose the next setting. Check: If the updates stall or chase the wrong term, the final model may reflect optimization failure rather than scientific truth.
+- Final line: Optimization is not proof; it is a way to obey a written score, so the score must match the scientific burden.
+
 ### Generative Modeling
 - Problem: some tasks need many possible examples, not one predicted answer
 - Observed: examples of fields, molecules, flows, shapes, or other scientific objects
@@ -758,6 +793,13 @@
 - First wrong simplification: The first wrong shortcut is to keep the part that gives an answer while dropping the part that checks it. That would hide this failure: measure constraints, rare cases, conservation, and downstream task performance on generated samples.
 - Failure test: measure constraints, rare cases, conservation, and downstream task performance on generated samples
 - Page: derivations/generative-modeling.html
+
+#### Hand Derivation For Generative Modeling
+- Start: Start with a task that needs many possible fields, designs, molecules, or futures. One average answer can hide the variety the scientist must inspect.
+- source of variation: The model needs a way to produce different candidates instead of the same answer every time. Check: If variation is only visual noise, the samples may not represent real possibilities.
+- conditioning information: The candidates must answer the actual prompt, boundary, geometry, property, or physical setting. Check: If the condition is ignored, plausible samples can be useless for the scientific job.
+- constraint check: A generated object is only usable if it satisfies the rule or property the domain requires. Check: If samples are judged only by appearance, invalid candidates can look convincing.
+- Final line: Generative modeling is useful when many candidates matter, but each candidate still has to answer to the domain rule.
 
 ### Graphs And Geometric Learning
 - Problem: many scientific objects are not simple rows of numbers; their connections matter
@@ -769,6 +811,13 @@
 - Failure test: change the mesh, rotate or move the object, or add missing interactions and inspect what breaks
 - Page: derivations/graphs-and-geometric-learning.html
 
+#### Hand Derivation For Graphs And Geometric Learning
+- Start: Start with an object whose parts and connections matter: a molecule, mesh, material, body, or network. The arrangement is part of the evidence.
+- parts: The model needs the pieces whose values, features, or positions carry the scientific quantity. Check: If important parts are missing, the graph cannot recover their influence.
+- connections: Connections say which parts can directly affect one another. Check: If the graph connects the wrong neighbors, the model can learn the wrong interaction pattern.
+- geometry or symmetry check: The answer should not change for reasons that are only artifacts of mesh order, rotation, or labeling. Check: If relabeling, rotation, or mesh changes break the result, the model may be learning bookkeeping instead of structure.
+- Final line: Graph and geometric learning starts from the fact that the scientific object is connected, not just listed.
+
 ### Attention For Scientific Fields
 - Problem: a local patch of a field may depend on faraway information, but looking everywhere can be expensive
 - Observed: large fields where one location may depend on other locations
@@ -778,6 +827,13 @@
 - First wrong simplification: The first wrong shortcut is to keep the part that gives an answer while dropping the part that checks it. That would hide this failure: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures.
 - Failure test: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures
 - Page: derivations/attention-for-scientific-fields.html
+
+#### Hand Derivation For Attention For Scientific Fields
+- Start: Start with a field where a local prediction may depend on distant parts: a boundary, forcing pattern, large structure, or rare event.
+- query location: The model needs to know which local place is asking for information. Check: If the query is poorly tied to the target quantity, attention can gather irrelevant signals.
+- candidate source locations: The useful information may live far from the query location. Check: If distant or boundary information is excluded, the local answer may miss the real cause.
+- weighted gathering: The model needs a way to combine the parts judged relevant for the local prediction. Check: If the gathered pattern fails boundary or long-range tests, the attention pattern is not scientific evidence.
+- Final line: Attention is a gathering rule for field information; it becomes scientific only when the gathered information survives changed-case checks.
 
 
 ## Plain Formula Guide
