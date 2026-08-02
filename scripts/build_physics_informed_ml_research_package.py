@@ -3329,6 +3329,7 @@ MEATY_GOAL_REQUIREMENTS = [
     {"key": "wrong_path_repair", "label": "Wrong Path Repair", "proof_term": "Wrong Path To Right Path Repair"},
     {"key": "course_bridge", "label": "Course Bridge", "proof_term": "Course Bridge In Plain Words"},
     {"key": "use_or_refuse_gate", "label": "Use Or Refuse Gate", "proof_term": "Use Or Refuse Gate In Plain Words"},
+    {"key": "final_learner_proof", "label": "Final Learner Proof", "proof_term": "Final Learner Proof In Plain Words"},
     {"key": "field_mini_cases", "label": "Field Mini Cases", "proof_term": "Field Mini Cases In Plain Words"},
     {"key": "hand_teaching_note", "label": "Hand Teaching Note", "proof_term": "Hand Teaching Note"},
     {"key": "case_walkthrough", "label": "Case Walkthrough", "proof_term": "One Concrete Case From Start To Finish"},
@@ -7293,6 +7294,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     field_transfer_check = topic_field_transfer_check_html(topic, derivation)
     wrong_path_repair = topic_wrong_path_repair_html(topic, derivation)
     use_or_refuse_gate = topic_use_or_refuse_gate_html(topic, derivation)
+    final_learner_proof = topic_final_learner_proof_html(topic, derivation)
     plain_question_answer_script = topic_plain_question_answer_script_html(topic, derivation)
     know_still_test = topic_know_still_test_html(topic, derivation)
     failure_consequence = topic_failure_consequence_html(topic, derivation)
@@ -7342,6 +7344,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
 {field_transfer_check}
 {wrong_path_repair}
 {use_or_refuse_gate}
+{final_learner_proof}
 {plain_question_answer_script}
 {know_still_test}
 {failure_consequence}
@@ -8131,6 +8134,47 @@ def topic_use_or_refuse_gate_html(topic: dict[str, object], derivation: dict[str
 </table>
 <h3>Refusal Pass Test</h3>
 <p>The gate passes only if the learner can explain one reason to use the topic, one reason to narrow it, and one reason to refuse it before making a scientific claim.</p>
+"""
+
+
+def topic_final_learner_proof_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
+    title = str(topic["title"])
+    case = topic_case_walkthrough(topic, derivation)
+    shape = topic_plain_applications(topic, derivation)[0]
+    shape_text = str(shape["use"]).rstrip(".")
+    case_text = str(case["setting"]).rstrip(".")
+    shape_sentence = shape_text[:1].lower() + shape_text[1:]
+    case_sentence = case_text[:1].lower() + case_text[1:]
+    proof_sentence = (
+        f"{title} is needed because {str(topic['common_problem'])}. "
+        f"I can start from {str(derivation['observed'])}. "
+        f"I still need {str(derivation['hidden'])}. "
+        f"The allowed move is to {str(derivation['move'])}. "
+        f"The shape issue is {shape_sentence}. "
+        f"A concrete case is {case_sentence}. "
+        f"The useful answer is {str(case['answer'])}. "
+        f"I use it only when the changed-case test is named: {str(derivation['test'])}. "
+        f"I refuse or narrow it when {str(topic['failure_boundary'])}."
+    )
+    return f"""
+<h2>Final Learner Proof In Plain Words</h2>
+<p>This is the smallest proof that the topic has become understandable. The learner should be able to say this without looking at the page.</p>
+<table>
+  <tbody>
+    <tr><th>Problem Proof</th><td>{html.escape(str(topic['common_problem']))}</td></tr>
+    <tr><th>Evidence Proof</th><td>{html.escape(str(derivation['observed']))}</td></tr>
+    <tr><th>Hidden-Answer Proof</th><td>{html.escape(str(derivation['hidden']))}</td></tr>
+    <tr><th>Move Proof</th><td>{html.escape(str(derivation['move']))}</td></tr>
+    <tr><th>Shape Proof</th><td>{html.escape(str(shape['use']))}</td></tr>
+    <tr><th>Case Proof</th><td>{html.escape(str(case['setting']))}</td></tr>
+    <tr><th>Use Proof</th><td>{html.escape(str(case['answer']))}</td></tr>
+    <tr><th>Refusal Proof</th><td>{html.escape(str(topic['failure_boundary']))}</td></tr>
+  </tbody>
+</table>
+<h3>Accepted Final Answer</h3>
+<p>{html.escape(proof_sentence)}</p>
+<h3>Final Proof Pass Test</h3>
+<p>The final proof passes only if the learner can say the problem, evidence, hidden answer, move, shape issue, concrete case, useful answer, changed-case test, and refusal boundary in one ordinary-language answer.</p>
 """
 
 
@@ -10459,6 +10503,17 @@ def validate(data: dict[str, object] | None = None) -> None:
             "First Changed Case Required",
             "Plain Final Decision",
             "Refusal Pass Test",
+            "Final Learner Proof In Plain Words",
+            "Problem Proof",
+            "Evidence Proof",
+            "Hidden-Answer Proof",
+            "Move Proof",
+            "Shape Proof",
+            "Case Proof",
+            "Use Proof",
+            "Refusal Proof",
+            "Accepted Final Answer",
+            "Final Proof Pass Test",
             "Plain Question To Answer Script",
             "Real question",
             "Evidence sentence",
