@@ -79,7 +79,7 @@ RESTRICTED_PATTERNS = (
     "many different",
 )
 
-MEATY_GOAL_REQUIREMENT_COUNT = 65
+MEATY_GOAL_REQUIREMENT_COUNT = 66
 
 
 class LinkParser(HTMLParser):
@@ -146,7 +146,7 @@ def check_required_sections() -> list[str]:
         "site/editorial-roadmap.html": ("Editorial Roadmap", "Status:", "Current Evidence", "Acceptance Check", "locally completed", "Meaty End-To-End Goal"),
         "site/completion-audit.html": ("Completion Audit", "Requirement Evidence", "GitHub Actions", "locally verified"),
         "site/meaty-goal.html": ("Meaty End-To-End Goal", "Done Means", "Every Core Page Must Contain", "Acceptance Sentence", "Not Done If"),
-        "site/meaty-goal-coverage.html": ("Meaty Goal Coverage Audit", "First Principles", "Big Picture Claim Chain", "Explanation Order", "Why Care Before Terms", "Workday Decision Rehearsal", "Sounds-Right Filter", "Draw Before Math", "Start-Here Gate", "Skeptical Reader Proof", "Oral Explanation Script", "Before-After Decision", "Outside-Classroom Use", "Learner Notebook Note", "Tiny Invented Case", "End-To-End Use Protocol", "Before The Math Slow Walk", "Teach From Zero", "Application Claim Ladder", "Field Decision Story", "From Scratch Story", "No-Jargon Translation", "Everyday Vocabulary Bridge", "Plain Retell Drill", "Field Transfer Check", "New Case Transfer Rehearsal", "Wrong Path Repair", "Confusion To Clarity", "Course Bridge", "Use Or Refuse Gate", "Final Learner Proof", "Teach Someone Handoff", "Topology Shape Story", "One-Page Mental Model", "Next-Day Memory Check", "Nearby Topic Comparison", "Math Shape Rehearsal", "Source-To-Claim Boundary", "Field Mini Cases", "Plain Question To Answer Script", "Know And Still Test", "Failure Consequence", "Slow Problem Shape Bridge", "Plain Big Picture Essay", "Slow Importance Essay", "Long Everyday Importance Essay", "Hand Teaching Note", "Case Walkthrough", "Course Role", "Concept Connections", "Belief Evidence", "Domain Fit", "Shape Follows", "Formula Terms", "Breaks Without Idea", "Reader Answer Parts", "Say It Back Check", "Reader Mistake Audit", "Misread Repair Drill", "Plain-Language Audit", "Acceptance Sentence", "Missing Items"),
+        "site/meaty-goal-coverage.html": ("Meaty Goal Coverage Audit", "First Principles", "Big Picture Claim Chain", "Explanation Order", "Why Care Before Terms", "Workday Decision Rehearsal", "Sounds-Right Filter", "Draw Before Math", "Start-Here Gate", "Skeptical Reader Proof", "Oral Explanation Script", "Before-After Decision", "Outside-Classroom Use", "Learner Notebook Note", "Tiny Invented Case", "End-To-End Use Protocol", "Before The Math Slow Walk", "Teach From Zero", "Application Claim Ladder", "Field Decision Story", "From Scratch Story", "No-Jargon Translation", "Everyday Vocabulary Bridge", "Plain Retell Drill", "Field Transfer Check", "New Case Transfer Rehearsal", "Wrong Path Repair", "Confusion To Clarity", "Course Bridge", "Use Or Refuse Gate", "Final Learner Proof", "Teach Someone Handoff", "Topology Shape Story", "One-Page Mental Model", "Next-Day Memory Check", "Nearby Topic Comparison", "Math Shape Rehearsal", "Source-To-Claim Boundary", "Field Mini Cases", "Plain Question To Answer Script", "Know And Still Test", "Failure Consequence", "Slow Problem Shape Bridge", "Plain Big Picture Essay", "Slow Importance Essay", "Long Everyday Importance Essay", "Across Fields Long Walk", "Hand Teaching Note", "Case Walkthrough", "Course Role", "Concept Connections", "Belief Evidence", "Domain Fit", "Shape Follows", "Formula Terms", "Breaks Without Idea", "Reader Answer Parts", "Say It Back Check", "Reader Mistake Audit", "Misread Repair Drill", "Plain-Language Audit", "Acceptance Sentence", "Missing Items"),
         "site/families.html": ("Paper Family Routes",),
         "site/families/physics-constraints-family.html": ("Family Story From First Principles", "Concrete Family Case", "Route Burden Table", "Question It Answers", "Mistake It Catches", "Why The Concepts Appear In This Order", "Evidence Chain To Track", "What Each Concept Does In The Family", "Evidence Needed Before Trusting The Family", "Too Weak"),
         "site/families/neural-operators-family.html": ("Family Story From First Principles", "Concrete Family Case", "Route Burden Table", "Question It Answers", "Mistake It Catches", "Why The Concepts Appear In This Order", "Evidence Chain To Track", "What Each Concept Does In The Family", "Evidence Needed Before Trusting The Family", "Too Weak"),
@@ -728,6 +728,13 @@ def check_topic_shape_depth() -> list[str]:
         "Topology And Shape In Real Work",
         "Applications Beyond The Course",
         "Why This Is Important",
+        "Across Fields Long Walk",
+        "One Plain Need Across Fields",
+        "Topology And Shape Walk",
+        "Engineering Walk",
+        "Materials Chemistry Biology Walk",
+        "Climate Fluids Fields Walk",
+        "Across Fields Pass Test",
         "First-Principles Walkthrough",
         "Course Role In Plain Words",
         "Why It Appears Here",
