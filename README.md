@@ -61,6 +61,7 @@ The purpose is not to summarize lectures. The purpose is to explain physics-info
 - `scripts/build_physics_informed_ml_research_package.py`: downloader, builder, and validator
 - `scripts/validate_generated_site.py`: standalone generated-site link and content validator
 - `scripts/verify_remote_state.py`: local-vs-remote branch verification
+- `.github/workflows/check.yml`: GitHub Actions workflow that runs `make check`
 
 ## Commands
 
@@ -98,6 +99,8 @@ To run local validation and confirm `origin/main` matches local `main`:
 ```bash
 make audit
 ```
+
+GitHub Actions runs `make check` on pushes and pull requests.
 
 The fastest review path is:
 
