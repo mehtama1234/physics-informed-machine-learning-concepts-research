@@ -3336,6 +3336,7 @@ MEATY_GOAL_REQUIREMENTS = [
     {"key": "final_learner_proof", "label": "Final Learner Proof", "proof_term": "Final Learner Proof In Plain Words"},
     {"key": "teach_someone_handoff", "label": "Teach Someone Handoff", "proof_term": "Teach Someone Else Handoff"},
     {"key": "topology_shape_story", "label": "Topology Shape Story", "proof_term": "Topology And Shape Story In Plain Words"},
+    {"key": "one_page_mental_model", "label": "One-Page Mental Model", "proof_term": "One-Page Mental Model"},
     {"key": "next_day_memory_check", "label": "Next-Day Memory Check", "proof_term": "Next-Day Memory Check"},
     {"key": "nearby_topic_comparison", "label": "Nearby Topic Comparison", "proof_term": "Nearby Topic Comparison In Plain Words"},
     {"key": "math_shape_rehearsal", "label": "Math Shape Rehearsal", "proof_term": "Everyday Math Shape Rehearsal"},
@@ -7432,6 +7433,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     final_learner_proof = topic_final_learner_proof_html(topic, derivation)
     teach_someone_handoff = topic_teach_someone_handoff_html(topic, derivation)
     topology_shape_story = topic_topology_shape_story_html(topic, derivation)
+    one_page_mental_model = topic_one_page_mental_model_html(topic, derivation)
     next_day_memory_check = topic_next_day_memory_check_html(topic, derivation)
     plain_question_answer_script = topic_plain_question_answer_script_html(topic, derivation)
     know_still_test = topic_know_still_test_html(topic, derivation)
@@ -7493,6 +7495,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
 {final_learner_proof}
 {teach_someone_handoff}
 {topology_shape_story}
+{one_page_mental_model}
 {next_day_memory_check}
 {plain_question_answer_script}
 {know_still_test}
@@ -8531,6 +8534,41 @@ def topic_topology_shape_story_html(topic: dict[str, object], derivation: dict[s
 </table>
 <h3>Shape Story Pass Test</h3>
 <p>The story passes only if the learner can name the relation to preserve, the field use, the concrete picture, and the changed shape that would test whether the claim is too broad.</p>
+"""
+
+
+def topic_one_page_mental_model_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
+    title = str(topic["title"])
+    case = topic_case_walkthrough(topic, derivation)
+    shape = next(row for row in topic_plain_applications(topic, derivation) if row["field"] == "Topology and shape")
+    model = (
+        f"{title} is a route from {str(derivation['observed'])} to {str(derivation['hidden'])}. "
+        f"The route exists because {str(topic['common_problem'])}. "
+        f"The move is {str(derivation['move'])}. "
+        f"The shape issue is {str(shape['use'])}. "
+        f"A concrete picture is {str(case['setting'])}. "
+        f"The allowed claim is {str(derivation['meaning'])}. "
+        f"The first test is {str(derivation['test'])}."
+    )
+    return f"""
+<h2>One-Page Mental Model</h2>
+<p>{html.escape(model)}</p>
+<table>
+  <tbody>
+    <tr><th>Need</th><td>{html.escape(str(topic['common_problem']))}</td></tr>
+    <tr><th>Evidence</th><td>{html.escape(str(derivation['observed']))}</td></tr>
+    <tr><th>Missing Answer</th><td>{html.escape(str(derivation['hidden']))}</td></tr>
+    <tr><th>Plain Move</th><td>{html.escape(str(derivation['move']))}</td></tr>
+    <tr><th>Shape To Keep</th><td>{html.escape(str(shape['use']))}</td></tr>
+    <tr><th>Field Reason</th><td>{html.escape(str(topic['why_it_matters']))}</td></tr>
+    <tr><th>Concrete Picture</th><td>{html.escape(str(case['setting']))}</td></tr>
+    <tr><th>Allowed Claim</th><td>{html.escape(str(derivation['meaning']))}</td></tr>
+    <tr><th>First Test</th><td>{html.escape(str(derivation['test']))}</td></tr>
+    <tr><th>Stop Point</th><td>{html.escape(str(topic['failure_boundary']))}</td></tr>
+  </tbody>
+</table>
+<h3>Mental Model Pass Test</h3>
+<p>The mental model passes only if the learner can redraw this route from memory as need, evidence, missing answer, move, shape, field reason, concrete picture, allowed claim, first test, and stop point.</p>
 """
 
 
@@ -11003,6 +11041,17 @@ def validate(data: dict[str, object] | None = None) -> None:
             "Changed Shape To Try",
             "Claim After The Shape Check",
             "Shape Story Pass Test",
+            "One-Page Mental Model",
+            "Need",
+            "Evidence",
+            "Missing Answer",
+            "Plain Move",
+            "Shape To Keep",
+            "Field Reason",
+            "Allowed Claim",
+            "First Test",
+            "Stop Point",
+            "Mental Model Pass Test",
             "Next-Day Memory Check",
             "Remember The Need",
             "Remember The Evidence",
@@ -11828,7 +11877,7 @@ def validate(data: dict[str, object] | None = None) -> None:
             raise SystemExit(f"meaty goal core page link missing: {item['href']}")
     goal_coverage_path = SITE / "meaty-goal-coverage.html"
     goal_coverage_text = goal_coverage_path.read_text(encoding="utf-8")
-    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Teach From Zero" not in goal_coverage_text or "Application Claim Ladder" not in goal_coverage_text or "Field Decision Story" not in goal_coverage_text or "Everyday Vocabulary Bridge" not in goal_coverage_text or "New Case Transfer Rehearsal" not in goal_coverage_text or "Reader Mistake Audit" not in goal_coverage_text or "Plain Question To Answer Script" not in goal_coverage_text or "Know And Still Test" not in goal_coverage_text or "Failure Consequence" not in goal_coverage_text or "Slow Problem Shape Bridge" not in goal_coverage_text or "Slow Importance Essay" not in goal_coverage_text or "Source-To-Claim Boundary" not in goal_coverage_text or "Teach Someone Handoff" not in goal_coverage_text or "Topology Shape Story" not in goal_coverage_text or "Confusion To Clarity" not in goal_coverage_text or "Hand Teaching Note" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Concept Connections" not in goal_coverage_text or "Belief Evidence" not in goal_coverage_text or "Domain Fit" not in goal_coverage_text or "Shape Follows" not in goal_coverage_text or "Reader Answer Parts" not in goal_coverage_text or "Say It Back Check" not in goal_coverage_text or "Misread Repair Drill" not in goal_coverage_text or "Plain-Language Audit" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
+    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Teach From Zero" not in goal_coverage_text or "Application Claim Ladder" not in goal_coverage_text or "Field Decision Story" not in goal_coverage_text or "Everyday Vocabulary Bridge" not in goal_coverage_text or "New Case Transfer Rehearsal" not in goal_coverage_text or "Reader Mistake Audit" not in goal_coverage_text or "One-Page Mental Model" not in goal_coverage_text or "Plain Question To Answer Script" not in goal_coverage_text or "Know And Still Test" not in goal_coverage_text or "Failure Consequence" not in goal_coverage_text or "Slow Problem Shape Bridge" not in goal_coverage_text or "Slow Importance Essay" not in goal_coverage_text or "Source-To-Claim Boundary" not in goal_coverage_text or "Teach Someone Handoff" not in goal_coverage_text or "Topology Shape Story" not in goal_coverage_text or "Confusion To Clarity" not in goal_coverage_text or "Hand Teaching Note" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Concept Connections" not in goal_coverage_text or "Belief Evidence" not in goal_coverage_text or "Domain Fit" not in goal_coverage_text or "Shape Follows" not in goal_coverage_text or "Reader Answer Parts" not in goal_coverage_text or "Say It Back Check" not in goal_coverage_text or "Misread Repair Drill" not in goal_coverage_text or "Plain-Language Audit" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
         raise SystemExit("meaty goal coverage audit not rendered correctly")
     goal_coverage_rows = data.get("meaty_goal_coverage") or []
     if len(goal_coverage_rows) != len(data["concept_atlas"]):
