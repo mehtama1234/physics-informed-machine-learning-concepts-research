@@ -741,6 +741,23 @@
 <p><strong>First wrong simplification:</strong> The first wrong shortcut is to keep the part that gives an answer while dropping the part that checks it. That would hide this failure: run longer than the training window and check whether small rate errors accumulate into drift.</p>
 
 
+<h2>Everyday Math Shape Rehearsal</h2>
+<p>Read the mathematical shape before reading symbols. For Neural Differential Equations, the shape is a path from what is visible to what must be checked.</p>
+<table>
+  <tbody>
+    <tr><th>Start Object</th><td>measurements of a system changing over time</td></tr>
+    <tr><th>Missing Object</th><td>the rate rule that moves the present value into the future</td></tr>
+    <tr><th>Carry Step</th><td>learn the missing rate rule and place it inside a time-evolution calculation</td></tr>
+    <tr><th>Formula Path In Plain Words</th><td>current state -&gt; learned rate -&gt; next state</td></tr>
+    <tr><th>What The Shape Allows</th><td>learning supplies the unknown change rule while the time update carries the idea of continuous motion</td></tr>
+    <tr><th>What The Shape Must Not Hide</th><td>small learned-rate errors can accumulate until long-time predictions drift away from the real system</td></tr>
+    <tr><th>Check The Shape</th><td>run longer than the training window and check whether small rate errors accumulate into drift</td></tr>
+  </tbody>
+</table>
+<h3>Shape Rehearsal Pass Test</h3>
+<p>The rehearsal passes only if the learner can say the start object, missing object, carry step, formula path, allowed claim, hidden risk, and check without treating the formula as decoration.</p>
+
+
 <h2>Plain Formula Term By Term</h2>
 <p>The formula is not decoration. Each part says what information is being carried from the observed evidence toward the hidden quantity, and what must be checked before the claim is trusted.</p>
 <table>

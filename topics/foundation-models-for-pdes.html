@@ -741,6 +741,23 @@
 <p><strong>First wrong simplification:</strong> The first wrong shortcut is to keep the part that gives an answer while dropping the part that checks it. That would hide this failure: hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver.</p>
 
 
+<h2>Everyday Math Shape Rehearsal</h2>
+<p>Read the mathematical shape before reading symbols. For Foundation Models For PDEs, the shape is a path from what is visible to what must be checked.</p>
+<table>
+  <tbody>
+    <tr><th>Start Object</th><td>many PDE problem instances across equations, grids, parameters, or physical settings</td></tr>
+    <tr><th>Missing Object</th><td>which shared structure carries from one scientific task to another</td></tr>
+    <tr><th>Carry Step</th><td>train one broad model to reuse structure across many related field-prediction tasks</td></tr>
+    <tr><th>Formula Path In Plain Words</th><td>many PDE tasks -&gt; shared learned representation -&gt; new task prediction</td></tr>
+    <tr><th>What The Shape Allows</th><td>breadth is useful only if the new task shares the structure the model actually learned</td></tr>
+    <tr><th>What The Shape Must Not Hide</th><td>the model can look broad while missing rare regimes, new boundary conditions, or quantities not represented in training</td></tr>
+    <tr><th>Check The Shape</th><td>hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver</td></tr>
+  </tbody>
+</table>
+<h3>Shape Rehearsal Pass Test</h3>
+<p>The rehearsal passes only if the learner can say the start object, missing object, carry step, formula path, allowed claim, hidden risk, and check without treating the formula as decoration.</p>
+
+
 <h2>Plain Formula Term By Term</h2>
 <p>The formula is not decoration. Each part says what information is being carried from the observed evidence toward the hidden quantity, and what must be checked before the claim is trusted.</p>
 <table>
