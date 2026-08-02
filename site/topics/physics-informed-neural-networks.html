@@ -498,6 +498,26 @@
 <p>A field transfer passes only if the learner can change the field while keeping the evidence, hidden answer, mathematical move, and rejection test visible in everyday words.</p>
 
 
+<h2>New Case Transfer Rehearsal</h2>
+<p>This rehearsal asks whether the idea survives a move from the worked case to a new case. The learner should keep the first-principles chain visible instead of copying the old answer.</p>
+<table>
+  <tbody>
+    <tr><th>Original Case</th><td>A heat plate has only a few temperature sensors, but the heat equation and boundary temperatures are partly known.</td></tr>
+    <tr><th>Original Evidence</th><td>sensor readings, boundary values, starting values, and the equation residual</td></tr>
+    <tr><th>Original Missing Answer</th><td>the temperature at unsensed points inside the plate</td></tr>
+    <tr><th>New Case To Try</th><td>move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements</td></tr>
+    <tr><th>Evidence That Must Still Be Named</th><td>some measured values, boundary values, starting values, and a known differential equation</td></tr>
+    <tr><th>Missing Answer In The New Case</th><td>the full field value at every point in space and time</td></tr>
+    <tr><th>Move That Should Stay The Same</th><td>fit a neural network while also measuring how badly its output violates the known equation</td></tr>
+    <tr><th>Shape Or Boundary That May Change</th><td>Move sensors, change the boundary, or bend the domain and compare the hidden field with trusted values.</td></tr>
+    <tr><th>Claim Allowed After Transfer</th><td>the model is not allowed to match points while freely breaking the equation between those points</td></tr>
+    <tr><th>First Transfer Rejection Signal</th><td>held-out sensors near sharp heat changes disagree or a trusted numerical solve shows a different field</td></tr>
+  </tbody>
+</table>
+<h3>Transfer Rehearsal Pass Test</h3>
+<p>The rehearsal passes only if the learner can move from the original case to the new case while naming the evidence, missing answer, same move, changed shape or boundary, allowed claim, and rejection signal.</p>
+
+
 <h2>Wrong Path To Right Path Repair</h2>
 <p>This repair starts with the answer a hurried learner might give, then rebuilds the explanation from the evidence and the missing answer. The goal is to catch the exact step where the claim became too wide.</p>
 <table>
