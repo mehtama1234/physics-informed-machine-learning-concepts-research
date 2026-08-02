@@ -3328,6 +3328,7 @@ MEATY_GOAL_REQUIREMENTS = [
     {"key": "field_transfer_check", "label": "Field Transfer Check", "proof_term": "Field Transfer Check In Plain Words"},
     {"key": "wrong_path_repair", "label": "Wrong Path Repair", "proof_term": "Wrong Path To Right Path Repair"},
     {"key": "course_bridge", "label": "Course Bridge", "proof_term": "Course Bridge In Plain Words"},
+    {"key": "use_or_refuse_gate", "label": "Use Or Refuse Gate", "proof_term": "Use Or Refuse Gate In Plain Words"},
     {"key": "field_mini_cases", "label": "Field Mini Cases", "proof_term": "Field Mini Cases In Plain Words"},
     {"key": "hand_teaching_note", "label": "Hand Teaching Note", "proof_term": "Hand Teaching Note"},
     {"key": "case_walkthrough", "label": "Case Walkthrough", "proof_term": "One Concrete Case From Start To Finish"},
@@ -7291,6 +7292,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     plain_retell_drill = topic_plain_retell_drill_html(topic, derivation)
     field_transfer_check = topic_field_transfer_check_html(topic, derivation)
     wrong_path_repair = topic_wrong_path_repair_html(topic, derivation)
+    use_or_refuse_gate = topic_use_or_refuse_gate_html(topic, derivation)
     plain_question_answer_script = topic_plain_question_answer_script_html(topic, derivation)
     know_still_test = topic_know_still_test_html(topic, derivation)
     failure_consequence = topic_failure_consequence_html(topic, derivation)
@@ -7339,6 +7341,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
 {plain_retell_drill}
 {field_transfer_check}
 {wrong_path_repair}
+{use_or_refuse_gate}
 {plain_question_answer_script}
 {know_still_test}
 {failure_consequence}
@@ -8106,6 +8109,28 @@ def topic_wrong_path_repair_html(topic: dict[str, object], derivation: dict[str,
 </table>
 <h3>Repair Pass Test</h3>
 <p>The repair passes only if the learner can point to the skipped evidence, name the hidden answer, restate the allowed move, and give the changed case that would catch the wrong path.</p>
+"""
+
+
+def topic_use_or_refuse_gate_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
+    title = str(topic["title"])
+    wrong = topic_wrong_use(topic)
+    return f"""
+<h2>Use Or Refuse Gate In Plain Words</h2>
+<p>This is the final decision gate for {html.escape(title)}. The learner should not leave with a warm feeling about the topic. They should leave knowing when the idea is allowed, when the claim must shrink, and when the idea should be refused for the case in front of them.</p>
+<table>
+  <tbody>
+    <tr><th>Use It When</th><td>The case starts from {html.escape(str(derivation['observed']))}, needs {html.escape(str(derivation['hidden']))}, and the allowed move is {html.escape(str(derivation['move']))}.</td></tr>
+    <tr><th>Narrow It When</th><td>The topic helps part of the job, but this boundary is close: {html.escape(str(topic['failure_boundary']))}.</td></tr>
+    <tr><th>Refuse It When</th><td>{html.escape(wrong['mistake'])}</td></tr>
+    <tr><th>Evidence Required Before Use</th><td>{html.escape(str(derivation['observed']))}</td></tr>
+    <tr><th>Hidden Answer Required Before Use</th><td>{html.escape(str(derivation['hidden']))}</td></tr>
+    <tr><th>First Changed Case Required</th><td>{html.escape(str(derivation['test']))}</td></tr>
+    <tr><th>Plain Final Decision</th><td>Use {html.escape(title)} only when the evidence, hidden answer, move, field use, and changed-case test can all be said in everyday words.</td></tr>
+  </tbody>
+</table>
+<h3>Refusal Pass Test</h3>
+<p>The gate passes only if the learner can explain one reason to use the topic, one reason to narrow it, and one reason to refuse it before making a scientific claim.</p>
 """
 
 
@@ -10425,6 +10450,15 @@ def validate(data: dict[str, object] | None = None) -> None:
             "Repaired Plain Claim",
             "Check That Proves The Repair",
             "Repair Pass Test",
+            "Use Or Refuse Gate In Plain Words",
+            "Use It When",
+            "Narrow It When",
+            "Refuse It When",
+            "Evidence Required Before Use",
+            "Hidden Answer Required Before Use",
+            "First Changed Case Required",
+            "Plain Final Decision",
+            "Refusal Pass Test",
             "Plain Question To Answer Script",
             "Real question",
             "Evidence sentence",
