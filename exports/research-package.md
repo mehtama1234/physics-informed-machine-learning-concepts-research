@@ -2616,6 +2616,9 @@
 
 ### I need the big picture first.
 - Look for: central problem, field map, learning order, and completion state
+- Open first: Completion Audit (completion-audit.html)
+- Prove before moving on: The pages Completion Audit, Editorial Roadmap, Field Synthesis must answer this intent with central problem, field map, learning order, and completion state.
+- Reject the route if: The route names pages but never reaches a source, quantity, formula shape, changed-case test, or acceptance check.
 - Completion Audit: completion-audit.html
 - Editorial Roadmap: editorial-roadmap.html
 - Field Synthesis: synthesis.html
@@ -2624,6 +2627,9 @@
 
 ### I need to know the next serious goal.
 - Look for: priorities, hand-written depth tasks, target pages, and acceptance checks
+- Open first: Review Queue (review-queue.html)
+- Prove before moving on: The pages Review Queue, Editorial Roadmap, Review Entrypoints must answer this intent with priorities, hand-written depth tasks, target pages, and acceptance checks.
+- Reject the route if: The route names pages but never reaches a source, quantity, formula shape, changed-case test, or acceptance check.
 - Review Queue: review-queue.html
 - Editorial Roadmap: editorial-roadmap.html
 - Review Entrypoints: review-entrypoints.html
@@ -2632,6 +2638,9 @@
 
 ### I need to understand a concept from first principles.
 - Look for: problem, observed evidence, hidden quantity, formula shape, and failure test
+- Open first: Concept Ladder (concept-ladder.html)
+- Prove before moving on: The pages Concept Ladder, Dependency Map, Formula Guide must answer this intent with problem, observed evidence, hidden quantity, formula shape, and failure test.
+- Reject the route if: The route names pages but never reaches a source, quantity, formula shape, changed-case test, or acceptance check.
 - Concept Ladder: concept-ladder.html
 - Dependency Map: dependencies.html
 - Formula Guide: formula-guide.html
@@ -2639,6 +2648,9 @@
 
 ### I need transcript support for a claim.
 - Look for: source video, transcript excerpt, support limit, and review links
+- Open first: Review Queue (review-queue.html)
+- Prove before moving on: The pages Review Queue, Evidence Packets, Evidence Ledger must answer this intent with source video, transcript excerpt, support limit, and review links.
+- Reject the route if: The route names pages but never reaches a source, quantity, formula shape, changed-case test, or acceptance check.
 - Review Queue: review-queue.html
 - Evidence Packets: evidence-packets.html
 - Evidence Ledger: evidence-ledger.html
@@ -2647,6 +2659,9 @@
 
 ### I need to choose a method for a scientific job.
 - Look for: domain, quantity, method route, use range, and required evidence
+- Open first: Decision Guide (decision-guide.html)
+- Prove before moving on: The pages Decision Guide, Domain Guides, Worked Examples must answer this intent with domain, quantity, method route, use range, and required evidence.
+- Reject the route if: The route names pages but never reaches a source, quantity, formula shape, changed-case test, or acceptance check.
 - Decision Guide: decision-guide.html
 - Domain Guides: domains.html
 - Worked Examples: worked-examples.html
@@ -2654,6 +2669,9 @@
 
 ### I need to audit quality.
 - Look for: plain language, failure boundary, evidence discipline, and connected map
+- Open first: Quality Rubric (quality.html)
+- Prove before moving on: The pages Quality Rubric, Reader Checks, Misconception Map must answer this intent with plain language, failure boundary, evidence discipline, and connected map.
+- Reject the route if: The route names pages but never reaches a source, quantity, formula shape, changed-case test, or acceptance check.
 - Quality Rubric: quality.html
 - Reader Checks: reader-checks.html
 - Misconception Map: misconceptions.html
@@ -2661,6 +2679,9 @@
 
 ### I need another CLI to reproduce this for a different channel.
 - Look for: source capture, transcript extraction, analysis build, site generation, and review gates
+- Open first: Cross-Channel Playbook (provenance/cross-channel-playbook.html)
+- Prove before moving on: The pages Cross-Channel Playbook, CLI Reproduction Checklist, Transcript Extraction must answer this intent with source capture, transcript extraction, analysis build, site generation, and review gates.
+- Reject the route if: The route names pages but never reaches a source, quantity, formula shape, changed-case test, or acceptance check.
 - Cross-Channel Playbook: provenance/cross-channel-playbook.html
 - CLI Reproduction Checklist: provenance/cli-reproduction.html
 - Transcript Extraction: provenance/transcript-extraction.html

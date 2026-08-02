@@ -6444,6 +6444,7 @@ def write_review_entrypoints_page(path: Path, groups: list[dict[str, object]]) -
 def write_review_search_page(path: Path, rows: list[dict[str, object]]) -> None:
     cards = []
     for row in rows:
+        review_route = review_search_route(row)
         pages = "".join(
             f"<li><a href=\"{html.escape(str(item['href']))}\">{html.escape(str(item['label']))}</a></li>"
             for item in row["pages"]
@@ -6453,6 +6454,9 @@ def write_review_search_page(path: Path, rows: list[dict[str, object]]) -> None:
 <article class="card">
   <h3>{html.escape(str(row['intent']))}</h3>
   <p><strong>Look for:</strong> {html.escape(str(row['look_for']))}</p>
+  <p><strong>Open First:</strong> {html.escape(str(review_route['open_first']))}</p>
+  <p><strong>Prove Before Moving On:</strong> {html.escape(str(review_route['prove']))}</p>
+  <p><strong>Reject The Route If:</strong> {html.escape(str(review_route['reject_if']))}</p>
   <ul>{pages}</ul>
 </article>
 """
@@ -6465,6 +6469,17 @@ def write_review_search_page(path: Path, rows: list[dict[str, object]]) -> None:
 <p>Start from the question, open the page group, then follow links until the claim has a source, a domain, a formula shape, and a failure test.</p>
 """
     path.write_text(html_page("Physics-Informed ML Review Search", body), encoding="utf-8")
+
+
+def review_search_route(row: dict[str, object]) -> dict[str, str]:
+    pages = list(row["pages"])
+    first = pages[0] if pages else {"label": "the first linked page", "href": ""}
+    labels = ", ".join(str(item["label"]) for item in pages[:3])
+    return {
+        "open_first": f"{first['label']} ({first['href']})",
+        "prove": f"The pages {labels} must answer this intent with {row['look_for']}.",
+        "reject_if": "The route names pages but never reaches a source, quantity, formula shape, changed-case test, or acceptance check.",
+    }
 
 
 def write_editorial_roadmap_page(path: Path, rows: list[dict[str, object]]) -> None:
@@ -7205,7 +7220,15 @@ def write_markdown_export(data: dict[str, object]) -> None:
             lines.append(f"- {item['label']}: {item['href']} | {item['question']}")
     lines.extend(["", "## Find Pages By Question"])
     for row in data["review_search_index"]:
+        review_route = review_search_route(row)
         lines.extend(["", f"### {row['intent']}", f"- Look for: {row['look_for']}"])
+        lines.extend(
+            [
+                f"- Open first: {review_route['open_first']}",
+                f"- Prove before moving on: {review_route['prove']}",
+                f"- Reject the route if: {review_route['reject_if']}",
+            ]
+        )
         for item in row["pages"]:
             lines.append(f"- {item['label']}: {item['href']}")
     goal = data["meaty_goal"]
@@ -7766,7 +7789,7 @@ def validate(data: dict[str, object] | None = None) -> None:
                 raise SystemExit(f"review entrypoint link missing: {item['href']}")
     review_search_path = SITE / "review-search.html"
     review_search_text = review_search_path.read_text(encoding="utf-8")
-    if "Find Pages By Question" not in review_search_text or "Review Rule" not in review_search_text:
+    if "Find Pages By Question" not in review_search_text or "Review Rule" not in review_search_text or "Open First" not in review_search_text or "Prove Before Moving On" not in review_search_text or "Reject The Route If" not in review_search_text:
         raise SystemExit("review search page not rendered correctly")
     review_search_rows = data.get("review_search_index") or []
     if len(review_search_rows) != len(REVIEW_SEARCH_INDEX):

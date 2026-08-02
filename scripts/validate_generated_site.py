@@ -127,7 +127,7 @@ def check_required_sections() -> list[str]:
         "site/reader-checks.html": ("Reader Checks",),
         "site/reader-checks/pinns-check.html": ("Strong Answer Should Say", "Weak Answer Warning", "Acceptance Sentence", "First-Principles Scoring Rubric", "Changed-case rejection", "Forbidden shortcut"),
         "site/review-entrypoints.html": ("Review Entrypoints", "End-To-End Test"),
-        "site/review-search.html": ("Find Pages By Question", "Review Rule"),
+        "site/review-search.html": ("Find Pages By Question", "Open First", "Prove Before Moving On", "Reject The Route If", "Review Rule"),
         "site/review-queue.html": ("Review Queue", "Reviewed Anchors", "Broad Mentions", "Missing Layers", "Next Action", "P1"),
         "site/hand-polish.html": ("Hand Polish Audit", "Acceptance Checks", "Overclaim To Avoid", "First Rejection Test"),
         "site/editorial-roadmap.html": ("Editorial Roadmap", "Status:", "Current Evidence", "Acceptance Check", "locally completed", "Meaty End-To-End Goal"),
