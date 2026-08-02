@@ -3331,6 +3331,7 @@ MEATY_GOAL_REQUIREMENTS = [
     {"key": "reader_check", "label": "Reader Check", "proof_term": "Reader Check"},
     {"key": "reader_answer_parts", "label": "Reader Answer Parts", "proof_term": "Strong Answer Broken Into Parts"},
     {"key": "say_it_back_check", "label": "Say It Back Check", "proof_term": "Say It Back Check"},
+    {"key": "plain_language_audit", "label": "Plain-Language Audit", "proof_term": "Plain-Language Audit"},
     {"key": "acceptance_sentence", "label": "Acceptance Sentence", "proof_term": "Acceptance Sentence Filled"},
 ]
 
@@ -6717,6 +6718,26 @@ def topic_say_it_back_check_html(topic: dict[str, object], derivation: dict[str,
 """
 
 
+def topic_plain_language_audit_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
+    title = str(topic["title"])
+    return f"""
+<h2>Plain-Language Audit</h2>
+<p>This audit checks whether {html.escape(title)} can be taught without empty praise or label-first wording. A sentence passes only when it names the real thing in the world, the evidence in hand, the answer needed, and the first way to reject the claim.</p>
+<table>
+  <tbody>
+    <tr><th>Do Not Say</th><td>A method is good, broad, or modern without naming the scientific job.</td></tr>
+    <tr><th>Say Instead</th><td>{html.escape(title)} is used here because {html.escape(str(topic['common_problem']))}.</td></tr>
+    <tr><th>Evidence Words Required</th><td>{html.escape(str(derivation['observed']))}</td></tr>
+    <tr><th>Hidden Answer Words Required</th><td>{html.escape(str(derivation['hidden']))}</td></tr>
+    <tr><th>Field Words Required</th><td>{html.escape(str(topic['domain']))}; {html.escape(str(topic['why_it_matters']))}</td></tr>
+    <tr><th>Shape Words Required</th><td>Name shape, boundary, mesh, molecule, graph, surface, field, or say why none of those carries the claim.</td></tr>
+    <tr><th>Failure Words Required</th><td>{html.escape(str(topic['failure_boundary']))}</td></tr>
+    <tr><th>Rewrite Test</th><td>Rewrite the claim as: because we observe ___ and need ___, we {html.escape(str(derivation['move']))}. Trust it only after this check: {html.escape(str(derivation['test']))}.</td></tr>
+  </tbody>
+</table>
+"""
+
+
 def topic_quality_gate_html() -> str:
     rows = []
     for item in QUALITY_RUBRIC:
@@ -6772,6 +6793,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     domain_fit = topic_domain_fit_html(topic, derivation)
     worked_examples = topic_worked_examples_html(str(topic["slug"]))
     say_it_back = topic_say_it_back_check_html(topic, derivation)
+    plain_language_audit = topic_plain_language_audit_html(topic, derivation)
     acceptance_sentence = topic_acceptance_sentence_html(topic, derivation)
     breaks_without = topic_breaks_without_html(topic, derivation)
     claim_review = claim_boundary_review_html(claim_boundary_review(topic, derivation))
@@ -6817,6 +6839,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
 {claim_review}
 {domain_fit}
 {say_it_back}
+{plain_language_audit}
 {acceptance_sentence}
 {breaks_without}
 <h2>Deeper Mathematical Why</h2>
@@ -9378,6 +9401,11 @@ def validate(data: dict[str, object] | None = None) -> None:
             "Move I Am Making",
             "Shape Or Topology Issue",
             "Claim I Am Allowed To Make",
+            "Plain-Language Audit",
+            "Do Not Say",
+            "Say Instead",
+            "Evidence Words Required",
+            "Rewrite Test",
             "Acceptance Sentence Filled",
             "I would test it by changing",
             "Core Idea In One Sentence",
@@ -9905,7 +9933,7 @@ def validate(data: dict[str, object] | None = None) -> None:
             raise SystemExit(f"meaty goal core page link missing: {item['href']}")
     goal_coverage_path = SITE / "meaty-goal-coverage.html"
     goal_coverage_text = goal_coverage_path.read_text(encoding="utf-8")
-    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Slow Importance Essay" not in goal_coverage_text or "Hand Teaching Note" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Concept Connections" not in goal_coverage_text or "Belief Evidence" not in goal_coverage_text or "Domain Fit" not in goal_coverage_text or "Shape Follows" not in goal_coverage_text or "Reader Answer Parts" not in goal_coverage_text or "Say It Back Check" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
+    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Slow Importance Essay" not in goal_coverage_text or "Hand Teaching Note" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Concept Connections" not in goal_coverage_text or "Belief Evidence" not in goal_coverage_text or "Domain Fit" not in goal_coverage_text or "Shape Follows" not in goal_coverage_text or "Reader Answer Parts" not in goal_coverage_text or "Say It Back Check" not in goal_coverage_text or "Plain-Language Audit" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
         raise SystemExit("meaty goal coverage audit not rendered correctly")
     goal_coverage_rows = data.get("meaty_goal_coverage") or []
     if len(goal_coverage_rows) != len(data["concept_atlas"]):

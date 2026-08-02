@@ -446,6 +446,22 @@
 </table>
 
 
+<h2>Plain-Language Audit</h2>
+<p>This audit checks whether Attention For Scientific Fields can be taught without empty praise or label-first wording. A sentence passes only when it names the real thing in the world, the evidence in hand, the answer needed, and the first way to reject the claim.</p>
+<table>
+  <tbody>
+    <tr><th>Do Not Say</th><td>A method is good, broad, or modern without naming the scientific job.</td></tr>
+    <tr><th>Say Instead</th><td>Attention For Scientific Fields is used here because a local patch of a field may depend on faraway information, but looking everywhere can be expensive.</td></tr>
+    <tr><th>Evidence Words Required</th><td>large fields where one location may depend on other locations</td></tr>
+    <tr><th>Hidden Answer Words Required</th><td>which distant parts matter for the local prediction</td></tr>
+    <tr><th>Field Words Required</th><td>large scientific fields where distant parts may interact; it gives the model a way to move information across a field without treating every location as isolated</td></tr>
+    <tr><th>Shape Words Required</th><td>Name shape, boundary, mesh, molecule, graph, surface, field, or say why none of those carries the claim.</td></tr>
+    <tr><th>Failure Words Required</th><td>windowing or scaling choices can miss long-range effects that matter for the scientific quantity being predicted</td></tr>
+    <tr><th>Rewrite Test</th><td>Rewrite the claim as: because we observe ___ and need ___, we let the model choose which parts of the field exchange information. Trust it only after this check: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures.</td></tr>
+  </tbody>
+</table>
+
+
 <h2>Acceptance Sentence Filled</h2>
 <p>This concept exists because scientists need an answer in a case where a local patch of a field may depend on faraway information, but looking everywhere can be expensive. The available evidence is large fields where one location may depend on other locations. The hidden thing is which distant parts matter for the local prediction. The math does let the model choose which parts of the field exchange information because attention is a routing rule for information, not proof that the selected route is physically complete. It matters in large scientific fields where distant parts may interact because it gives the model a way to move information across a field without treating every location as isolated. It fails when windowing or scaling choices can miss long-range effects that matter for the scientific quantity being predicted. I would test it by changing the case this way: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures.</p>
 

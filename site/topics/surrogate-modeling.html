@@ -480,6 +480,22 @@
 </table>
 
 
+<h2>Plain-Language Audit</h2>
+<p>This audit checks whether Surrogate Modeling can be taught without empty praise or label-first wording. A sentence passes only when it names the real thing in the world, the evidence in hand, the answer needed, and the first way to reject the claim.</p>
+<table>
+  <tbody>
+    <tr><th>Do Not Say</th><td>A method is good, broad, or modern without naming the scientific job.</td></tr>
+    <tr><th>Say Instead</th><td>Surrogate Modeling is used here because a trusted simulator may be too slow to run for every design, control, or uncertainty question.</td></tr>
+    <tr><th>Evidence Words Required</th><td>expensive solver inputs and outputs for a limited set of cases</td></tr>
+    <tr><th>Hidden Answer Words Required</th><td>the solver answer for every new query someone wants to ask</td></tr>
+    <tr><th>Field Words Required</th><td>expensive simulation and design loops; it makes repeated scientific decisions possible when full simulation cost would stop the workflow</td></tr>
+    <tr><th>Shape Words Required</th><td>Name shape, boundary, mesh, molecule, graph, surface, field, or say why none of those carries the claim.</td></tr>
+    <tr><th>Failure Words Required</th><td>speed can hide missing physics when the surrogate is used beyond the regime where it was checked</td></tr>
+    <tr><th>Rewrite Test</th><td>Rewrite the claim as: because we observe ___ and need ___, we train a cheaper stand-in for the expensive input-output behavior. Trust it only after this check: compare against the full solver on new cases near the edge of the intended use.</td></tr>
+  </tbody>
+</table>
+
+
 <h2>Acceptance Sentence Filled</h2>
 <p>This concept exists because scientists need an answer in a case where a trusted simulator may be too slow to run for every design, control, or uncertainty question. The available evidence is expensive solver inputs and outputs for a limited set of cases. The hidden thing is the solver answer for every new query someone wants to ask. The math does train a cheaper stand-in for the expensive input-output behavior because speed is useful only inside the query family where the stand-in was checked. It matters in expensive simulation and design loops because it makes repeated scientific decisions possible when full simulation cost would stop the workflow. It fails when speed can hide missing physics when the surrogate is used beyond the regime where it was checked. I would test it by changing the case this way: compare against the full solver on new cases near the edge of the intended use.</p>
 
