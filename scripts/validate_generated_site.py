@@ -129,7 +129,7 @@ def check_required_sections() -> list[str]:
         "site/review-queue.html": ("Review Queue", "Reviewed Anchors", "Broad Mentions", "Missing Layers", "Next Action", "P1"),
         "site/hand-polish.html": ("Hand Polish Audit", "Acceptance Checks", "Overclaim To Avoid", "First Rejection Test"),
         "site/editorial-roadmap.html": ("Editorial Roadmap", "Status:", "Current Evidence", "Acceptance Check", "locally completed", "Meaty End-To-End Goal"),
-        "site/completion-audit.html": ("Completion Audit", "Requirement Evidence", "locally verified"),
+        "site/completion-audit.html": ("Completion Audit", "Requirement Evidence", "GitHub Actions", "locally verified"),
         "site/meaty-goal.html": ("Meaty End-To-End Goal", "Done Means", "Every Core Page Must Contain", "Acceptance Sentence", "Not Done If"),
         "site/meaty-goal-coverage.html": ("Meaty Goal Coverage Audit", "First Principles", "Hand Teaching Note", "Case Walkthrough", "Concept Connections", "Belief Evidence", "Domain Fit", "Formula Terms", "Breaks Without Idea", "Acceptance Sentence", "Missing Items"),
         "site/families.html": ("Paper Family Routes",),

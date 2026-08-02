@@ -3057,6 +3057,13 @@ COMPLETION_REQUIREMENTS = [
         "status": "locally verified",
         "links": ["handoff.html", "provenance/cli-reproduction.html"],
     },
+    {
+        "slug": "remote-ci-validation",
+        "requirement": "Run the generated-site checks in GitHub Actions for pushed commits.",
+        "local_evidence": "the check workflow runs make check on push and pull request; make ci-check verifies the current commit's workflow run through the GitHub Actions API.",
+        "status": "locally verified",
+        "links": ["https://github.com/mehtama1234/physics-informed-machine-learning-concepts-research/actions/workflows/check.yml", "handoff.html", "provenance/cli-reproduction.html"],
+    },
 ]
 
 
@@ -7462,13 +7469,15 @@ def validate(data: dict[str, object] | None = None) -> None:
                 raise SystemExit(f"editorial roadmap proof link missing: {row['title']} -> {href}")
     audit_path = SITE / "completion-audit.html"
     audit_text = audit_path.read_text(encoding="utf-8")
-    if "Completion Audit" not in audit_text or "Requirement Evidence" not in audit_text or "locally verified" not in audit_text:
+    if "Completion Audit" not in audit_text or "Requirement Evidence" not in audit_text or "GitHub Actions" not in audit_text or "locally verified" not in audit_text:
         raise SystemExit("completion audit page not rendered correctly")
     requirements = data.get("completion_requirements") or []
     if len(requirements) != len(COMPLETION_REQUIREMENTS):
         raise SystemExit("completion requirement count mismatch")
     for item in requirements:
         for link in item["links"]:
+            if str(link).startswith(("http://", "https://")):
+                continue
             if not (SITE / str(link)).exists():
                 raise SystemExit(f"completion audit link missing: {link}")
     manifest_path = SITE / "page-manifest.json"

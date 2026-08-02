@@ -32,7 +32,7 @@
 - synthesis_guide_count: 4
 - review_handoff_count: 1
 - review_entrypoint_count: 29
-- completion_requirement_count: 7
+- completion_requirement_count: 8
 - review_search_intent_count: 7
 - review_queue_count: 14
 - review_queue_p0_count: 0
@@ -2617,4 +2617,8 @@
 ### Create or verify the GitHub remote repository and push main.
 - Status: locally verified
 - Evidence: origin is configured at https://github.com/mehtama1234/physics-informed-machine-learning-concepts-research.git; main has been pushed and can be verified with git ls-remote --heads origin main.
+
+### Run the generated-site checks in GitHub Actions for pushed commits.
+- Status: locally verified
+- Evidence: the check workflow runs make check on push and pull request; make ci-check verifies the current commit's workflow run through the GitHub Actions API.
 
