@@ -878,6 +878,80 @@ TOPIC_DEEP_DIVES = {
 }
 
 
+TOPIC_TEACHING_NOTES = {
+    "deep-learning": {
+        "plain_problem": "The world gives many examples, but not a hand-written rule for the next one. Deep learning is the attempt to shape a rule from those examples without pretending the examples cover every future case.",
+        "why_math_follows": "The adjustable layers are useful because the relation from input to answer may be too tangled to write directly. The training score is only evidence inside the world represented by the examples and tests.",
+        "say_back": "Deep learning is example-shaped prediction; its boundary is the first new case where the examples no longer carry the target quantity.",
+    },
+    "physics-informed-neural-networks": {
+        "plain_problem": "The scientist wants a whole field, but measurements cover only a few places. A known equation can check the empty places if the equation is trusted for that case.",
+        "why_math_follows": "The loss needs data error because sensors matter, equation error because unsensed points still have rules, and boundary error because the edge defines the physical problem.",
+        "say_back": "A PINN fits a field that must satisfy both observed values and a known rule, then earns trust only through held-out physical checks.",
+    },
+    "partial-differential-equations": {
+        "plain_problem": "Some quantities live across space and time, so one point cannot be understood apart from neighbors, boundaries, sources, and rates of change.",
+        "why_math_follows": "A PDE appears because the question is about local change inside a connected field. The formula states how time change, spatial movement, sources, and boundaries constrain one another.",
+        "say_back": "A PDE is the bookkeeping rule for a changing field, and it fails when the field breaks conservation, boundaries, or measured behavior.",
+    },
+    "operator-learning": {
+        "plain_problem": "The job is not one solved field. The job is many related solves, where each new input field needs its own output field.",
+        "why_math_follows": "The learned object must be a map from function to function because the input and output are whole fields. Testing must change the input field while staying inside the named family.",
+        "say_back": "Operator learning learns a reusable field-to-field map, not proof that the map works outside the tested equation, boundary, grid, or parameter family.",
+    },
+    "scientific-machine-learning": {
+        "plain_problem": "Scientific data alone may be thin, and scientific rules alone may be partial or slow. The page must say exactly which scientific quantity the learned part supports.",
+        "why_math_follows": "The math joins measured evidence, known rules, and a learned missing part because none of those pieces is enough by itself for the named scientific job.",
+        "say_back": "Scientific machine learning is useful only when the target quantity, trusted rule, learned part, and changed-case test are all named.",
+    },
+    "surrogate-modeling": {
+        "plain_problem": "A trusted simulation or experiment may be too slow to call thousands of times, but the decision still needs many answers.",
+        "why_math_follows": "A surrogate is trained as a cheap stand-in because repeated queries are the bottleneck. Its authority comes from comparison against the trusted source, especially near the edge of use.",
+        "say_back": "A surrogate is a fast checked replacement for repeated use, not a replacement for the trusted source outside its tested range.",
+    },
+    "uncertainty-and-generalization": {
+        "plain_problem": "A model can be most tempting exactly where old evidence is weakest: a new regime, rare case, or changed condition.",
+        "why_math_follows": "The answer must include both prediction and use range because the missing quantity is not only what will happen, but how much support the old evidence gives the new case.",
+        "say_back": "Uncertainty is the warning boundary around a prediction, and it must be tied to changed-case tests rather than a confident-looking number.",
+    },
+    "optimization-for-learning": {
+        "plain_problem": "Training changes a model to satisfy a score, but the score may not be the same thing as the scientific burden.",
+        "why_math_follows": "The update rule follows the written score because the model has no access to the reader's hopes. Every loss term is a contract term that should correspond to a scientific requirement.",
+        "say_back": "Optimization makes the model obey the training score, so the score must include the quantity, boundary, rule, and failure case that matter.",
+    },
+    "generative-modeling": {
+        "plain_problem": "Some scientific jobs need many possible fields, designs, or futures, not just a single average answer.",
+        "why_math_follows": "The model needs a source of variation because the output is a set of candidates. Each candidate still needs condition checks, rule checks, and use-range checks.",
+        "say_back": "Generative modeling makes possible candidates; science begins when those candidates are tested against measurements, rules, and the intended use family.",
+    },
+    "graphs-and-geometric-learning": {
+        "plain_problem": "Meshes, molecules, surfaces, and networks are not unordered bags of values. Their connections are part of the scientific object.",
+        "why_math_follows": "The model passes information along connections because the answer often depends on which parts touch, which parts are nearby, and how shape carries physical influence.",
+        "say_back": "Graph and geometric learning keeps shape and connection evidence visible, then must survive changed meshes, rotations, and boundary cases.",
+    },
+    "neural-differential-equations": {
+        "plain_problem": "The current state is observed over time, but the exact rule that moves it forward may be missing.",
+        "why_math_follows": "A learned rate enters because time evolution needs a change rule at each moment. The time solver then exposes whether small rate errors accumulate.",
+        "say_back": "A neural differential equation learns the missing change rule, and long-time or changed-start tests decide whether that rule is usable.",
+    },
+    "symbolic-regression": {
+        "plain_problem": "Sometimes the desired output is not only an answer but a small rule people can inspect, question, and reuse.",
+        "why_math_follows": "The search over formulas follows from not knowing which measured variables and operations form the relation. Smallness matters because an unreadable formula can hide memorization.",
+        "say_back": "Symbolic regression proposes a readable law, but the law is not scientific until it survives noise, missing-variable checks, and a changed experiment.",
+    },
+    "foundation-models-for-pdes": {
+        "plain_problem": "A broad PDE model is useful only if old equation tasks carry structure that the new task truly shares.",
+        "why_math_follows": "Many tasks are used to learn shared field behavior, but the proof burden is a held-out equation family, boundary type, scale, or quantity.",
+        "say_back": "A PDE foundation model reuses shared structure across tasks, and the first question is what the new task shares with the old ones.",
+    },
+    "attention-for-scientific-fields": {
+        "plain_problem": "A local field value may depend on distant boundaries, forcing patterns, or large structures, not only nearby cells.",
+        "why_math_follows": "Attention compares one part of the field with other parts because relevant information may be far away. The comparison is useful only if physical tests confirm the relation.",
+        "say_back": "Attention is a way to gather relevant field information, not proof that the displayed weights explain the physics.",
+    },
+}
+
+
 HAND_DERIVATIONS = {
     "physics-informed-neural-networks": {
         "plain_start": "Start with an unknown field u. A few measurements tell us u at some points. The equation tells us what u should do between those points. The boundary tells us what must happen at the edge.",
@@ -3354,6 +3428,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
             "comparison_count": len(COMPARISON_PAGES),
             "worked_example_count": len(WORKED_EXAMPLES),
             "deep_dive_count": len(TOPIC_DEEP_DIVES),
+            "teaching_note_count": len(TOPIC_TEACHING_NOTES),
             "core_derivation_count": len(core_derivations),
             "formula_guide_count": len(formula_guide),
             "misconception_count": len(misconception_map),
@@ -3394,6 +3469,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
         "comparison_pages": COMPARISON_PAGES,
         "worked_examples": WORKED_EXAMPLES,
         "topic_deep_dives": TOPIC_DEEP_DIVES,
+        "topic_teaching_notes": TOPIC_TEACHING_NOTES,
         "core_derivations": core_derivations,
         "formula_guide": formula_guide,
         "misconception_map": misconception_map,
@@ -5197,6 +5273,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     derivation_link = topic_derivation_link_html(str(topic["slug"]))
     source_anchors = source_anchor_cards(str(topic["slug"]), list(evidence) if isinstance(evidence, list) else [], root_prefix="../")
     first_principles_essay = topic_first_principles_essay_html(topic, derivation)
+    teaching_note = topic_teaching_note_html(str(topic["slug"]))
     case_walkthrough = topic_case_walkthrough_html(topic, derivation)
     connections = topic_connections_html(topic)
     formula_terms = topic_formula_terms_html(derivation)
@@ -5219,6 +5296,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
 <h2>Everyday Anchor</h2>
 <p>{html.escape(str(topic['everyday_anchor']))}</p>
 {first_principles_essay}
+{teaching_note}
 {case_walkthrough}
 {connections}
 <h2>First-Principles Walkthrough</h2>
@@ -5269,6 +5347,18 @@ def claim_boundary_review_html(review: dict[str, str]) -> str:
     <tr><th>First Rejection Test</th><td>{html.escape(str(review['first_rejection_test']))}</td></tr>
   </tbody>
 </table>
+"""
+
+
+def topic_teaching_note_html(slug: str) -> str:
+    note = TOPIC_TEACHING_NOTES.get(slug)
+    if not note:
+        return ""
+    return f"""
+<h2>Hand Teaching Note</h2>
+<p><strong>Plain problem:</strong> {html.escape(str(note['plain_problem']))}</p>
+<p><strong>Why the math follows:</strong> {html.escape(str(note['why_math_follows']))}</p>
+<p><strong>Say it back:</strong> {html.escape(str(note['say_back']))}</p>
 """
 
 
@@ -6456,6 +6546,17 @@ def write_markdown_export(data: dict[str, object]) -> None:
                 "",
             ]
         )
+    lines.extend(["", "## Hand Teaching Notes"])
+    for slug, note in data["topic_teaching_notes"].items():
+        lines.extend(
+            [
+                f"### {slug.replace('-', ' ').title()}",
+                f"- Plain problem: {note['plain_problem']}",
+                f"- Why the math follows: {note['why_math_follows']}",
+                f"- Say it back: {note['say_back']}",
+                "",
+            ]
+        )
     lines.extend(["", "## Core Derivations"])
     for item in data["core_derivations"]:
         lines.extend(
@@ -6985,6 +7086,20 @@ def validate(data: dict[str, object] | None = None) -> None:
             raise SystemExit(f"derivation topic link missing: {item['topic_href']}")
         if str(item["derivation_href"]) not in topic_path.read_text(encoding="utf-8"):
             raise SystemExit(f"topic missing derivation link: {item['topic_href']}")
+    teaching_notes = data.get("topic_teaching_notes") or {}
+    if len(teaching_notes) != len(data["concept_atlas"]):
+        raise SystemExit("teaching note count does not match concept atlas")
+    for concept in data["concept_atlas"]:
+        slug = str(concept["slug"])
+        note = teaching_notes.get(slug)
+        if not isinstance(note, dict):
+            raise SystemExit(f"missing teaching note: {slug}")
+        for field in ("plain_problem", "why_math_follows", "say_back"):
+            if not note.get(field):
+                raise SystemExit(f"teaching note missing {field}: {slug}")
+        topic_text = (SITE / "topics" / f"{slug}.html").read_text(encoding="utf-8")
+        if "Hand Teaching Note" not in topic_text or "Say it back:" not in topic_text:
+            raise SystemExit(f"teaching note not rendered on topic: {slug}")
     formula_path = SITE / "formula-guide.html"
     formula_text = formula_path.read_text(encoding="utf-8")
     if "Plain Formula Guide" not in formula_text or "Common Misread" not in formula_text or "Do not read the loss as proof" not in formula_text or "Do not read broad training as coverage" not in formula_text:

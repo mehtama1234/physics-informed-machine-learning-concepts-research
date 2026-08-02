@@ -12,6 +12,7 @@
 - comparison_count: 4
 - worked_example_count: 8
 - deep_dive_count: 14
+- teaching_note_count: 14
 - core_derivation_count: 14
 - formula_guide_count: 14
 - misconception_count: 14
@@ -393,6 +394,78 @@
 - Do not use when: Do not treat attention weights as scientific proof unless the learned relations survive physical and changed-case tests.
 - Plain formula: current field part + relevant other parts -> weighted information -> updated field part
 - Why it matters: Scientific fields often have nonlocal influence, and a purely local rule can miss how far-away structure changes the answer.
+
+
+## Hand Teaching Notes
+### Deep Learning
+- Plain problem: The world gives many examples, but not a hand-written rule for the next one. Deep learning is the attempt to shape a rule from those examples without pretending the examples cover every future case.
+- Why the math follows: The adjustable layers are useful because the relation from input to answer may be too tangled to write directly. The training score is only evidence inside the world represented by the examples and tests.
+- Say it back: Deep learning is example-shaped prediction; its boundary is the first new case where the examples no longer carry the target quantity.
+
+### Physics Informed Neural Networks
+- Plain problem: The scientist wants a whole field, but measurements cover only a few places. A known equation can check the empty places if the equation is trusted for that case.
+- Why the math follows: The loss needs data error because sensors matter, equation error because unsensed points still have rules, and boundary error because the edge defines the physical problem.
+- Say it back: A PINN fits a field that must satisfy both observed values and a known rule, then earns trust only through held-out physical checks.
+
+### Partial Differential Equations
+- Plain problem: Some quantities live across space and time, so one point cannot be understood apart from neighbors, boundaries, sources, and rates of change.
+- Why the math follows: A PDE appears because the question is about local change inside a connected field. The formula states how time change, spatial movement, sources, and boundaries constrain one another.
+- Say it back: A PDE is the bookkeeping rule for a changing field, and it fails when the field breaks conservation, boundaries, or measured behavior.
+
+### Operator Learning
+- Plain problem: The job is not one solved field. The job is many related solves, where each new input field needs its own output field.
+- Why the math follows: The learned object must be a map from function to function because the input and output are whole fields. Testing must change the input field while staying inside the named family.
+- Say it back: Operator learning learns a reusable field-to-field map, not proof that the map works outside the tested equation, boundary, grid, or parameter family.
+
+### Scientific Machine Learning
+- Plain problem: Scientific data alone may be thin, and scientific rules alone may be partial or slow. The page must say exactly which scientific quantity the learned part supports.
+- Why the math follows: The math joins measured evidence, known rules, and a learned missing part because none of those pieces is enough by itself for the named scientific job.
+- Say it back: Scientific machine learning is useful only when the target quantity, trusted rule, learned part, and changed-case test are all named.
+
+### Surrogate Modeling
+- Plain problem: A trusted simulation or experiment may be too slow to call thousands of times, but the decision still needs many answers.
+- Why the math follows: A surrogate is trained as a cheap stand-in because repeated queries are the bottleneck. Its authority comes from comparison against the trusted source, especially near the edge of use.
+- Say it back: A surrogate is a fast checked replacement for repeated use, not a replacement for the trusted source outside its tested range.
+
+### Uncertainty And Generalization
+- Plain problem: A model can be most tempting exactly where old evidence is weakest: a new regime, rare case, or changed condition.
+- Why the math follows: The answer must include both prediction and use range because the missing quantity is not only what will happen, but how much support the old evidence gives the new case.
+- Say it back: Uncertainty is the warning boundary around a prediction, and it must be tied to changed-case tests rather than a confident-looking number.
+
+### Optimization For Learning
+- Plain problem: Training changes a model to satisfy a score, but the score may not be the same thing as the scientific burden.
+- Why the math follows: The update rule follows the written score because the model has no access to the reader's hopes. Every loss term is a contract term that should correspond to a scientific requirement.
+- Say it back: Optimization makes the model obey the training score, so the score must include the quantity, boundary, rule, and failure case that matter.
+
+### Generative Modeling
+- Plain problem: Some scientific jobs need many possible fields, designs, or futures, not just a single average answer.
+- Why the math follows: The model needs a source of variation because the output is a set of candidates. Each candidate still needs condition checks, rule checks, and use-range checks.
+- Say it back: Generative modeling makes possible candidates; science begins when those candidates are tested against measurements, rules, and the intended use family.
+
+### Graphs And Geometric Learning
+- Plain problem: Meshes, molecules, surfaces, and networks are not unordered bags of values. Their connections are part of the scientific object.
+- Why the math follows: The model passes information along connections because the answer often depends on which parts touch, which parts are nearby, and how shape carries physical influence.
+- Say it back: Graph and geometric learning keeps shape and connection evidence visible, then must survive changed meshes, rotations, and boundary cases.
+
+### Neural Differential Equations
+- Plain problem: The current state is observed over time, but the exact rule that moves it forward may be missing.
+- Why the math follows: A learned rate enters because time evolution needs a change rule at each moment. The time solver then exposes whether small rate errors accumulate.
+- Say it back: A neural differential equation learns the missing change rule, and long-time or changed-start tests decide whether that rule is usable.
+
+### Symbolic Regression
+- Plain problem: Sometimes the desired output is not only an answer but a small rule people can inspect, question, and reuse.
+- Why the math follows: The search over formulas follows from not knowing which measured variables and operations form the relation. Smallness matters because an unreadable formula can hide memorization.
+- Say it back: Symbolic regression proposes a readable law, but the law is not scientific until it survives noise, missing-variable checks, and a changed experiment.
+
+### Foundation Models For Pdes
+- Plain problem: A broad PDE model is useful only if old equation tasks carry structure that the new task truly shares.
+- Why the math follows: Many tasks are used to learn shared field behavior, but the proof burden is a held-out equation family, boundary type, scale, or quantity.
+- Say it back: A PDE foundation model reuses shared structure across tasks, and the first question is what the new task shares with the old ones.
+
+### Attention For Scientific Fields
+- Plain problem: A local field value may depend on distant boundaries, forcing patterns, or large structures, not only nearby cells.
+- Why the math follows: Attention compares one part of the field with other parts because relevant information may be far away. The comparison is useful only if physical tests confirm the relation.
+- Say it back: Attention is a way to gather relevant field information, not proof that the displayed weights explain the physics.
 
 
 ## Core Derivations
