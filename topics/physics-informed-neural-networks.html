@@ -257,6 +257,26 @@
 <p>The spoken answer passes only if another person can hear the need, evidence, missing answer, move, shape issue, field transfer, careful claim, and belief test in that order.</p>
 
 
+<h2>Before-After Decision Check</h2>
+<p>This check asks what changes after the learner understands Physics-Informed Neural Networks. If no decision changes, the explanation is still only a definition.</p>
+<table>
+  <tbody>
+    <tr><th>Before Learning This</th><td>The learner may see some measured values, boundary values, starting values, and a known differential equation but not know how to use it for this missing answer: the full field value at every point in space and time.</td></tr>
+    <tr><th>After Learning This</th><td>The learner should try this move: fit a neural network while also measuring how badly its output violates the known equation</td></tr>
+    <tr><th>Decision They Can Now Make</th><td>it lets known physics push the fit toward physically possible behavior instead of treating data points as the only evidence</td></tr>
+    <tr><th>Shape Decision That Changes</th><td>Fit a field on a shape while also asking it to obey the rule that should hold inside the shape. Check: Move sensors, change the boundary, or bend the domain and compare the hidden field with trusted values.</td></tr>
+    <tr><th>Engineering Decision That Changes</th><td>Estimate heat, stress, flow, or pressure when tests are sparse but the physical law is known. Check: Inspect sharp regions, edge cases, and held-out sensors near the places where failure would matter.</td></tr>
+    <tr><th>Lab Or Biology Decision That Changes</th><td>Fill in missing concentration, strain, or reaction fields while keeping known balance rules visible. Check: Change material settings, boundary values, or reaction conditions and compare with measurements.</td></tr>
+    <tr><th>Field Decision That Changes</th><td>Recover a full field from sparse measurements without ignoring the governing equation. Check: Change source terms, boundaries, or sensor placement and compare against a solver or held-out data.</td></tr>
+    <tr><th>Claim They Can Now Say</th><td>the model is not allowed to match points while freely breaking the equation between those points</td></tr>
+    <tr><th>Decision They Must Still Refuse</th><td>the equation penalty can look small while the solution is wrong in hard regions, sharp layers, or unseen boundary cases</td></tr>
+    <tr><th>Changed Case That Decides</th><td>move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements</td></tr>
+  </tbody>
+</table>
+<h3>Before-After Pass Test</h3>
+<p>The check passes only if the learner can say what decision was impossible before, what decision is possible after, what shape or field issue changes the decision, and what changed case still controls trust.</p>
+
+
 <h2>End-To-End Use Protocol</h2>
 <p>Use this as the smallest complete path from a real scientific question to a claim that can be rejected.</p>
 <table>
