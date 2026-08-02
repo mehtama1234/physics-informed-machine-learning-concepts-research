@@ -5200,6 +5200,7 @@ def html_page(title: str, body: str, root_prefix: str = "") -> str:
   <a href="{root_prefix}misconceptions.html">Misreads</a>
   <a href="{root_prefix}course-spine.html">Spine</a>
   <a href="{root_prefix}topology-shape-guide.html">Shape</a>
+  <a href="{root_prefix}question-to-topic-guide.html">Questions</a>
   <a href="{root_prefix}learning-path.html">Path</a>
   <a href="{root_prefix}glossary.html">Glossary</a>
   <a href="{root_prefix}domains.html">Domains</a>
@@ -5321,6 +5322,59 @@ def write_topology_shape_guide_page(path: Path, topics: list[dict[str, object]])
 <p>A reader understands the topology and shape theme when they can point to a topic page and say which connected or shaped part is evidence, which scientific quantity uses it, and which changed shape would make the claim too broad.</p>
 """
     path.write_text(html_page("Physics-Informed ML Topology And Shape Guide", body), encoding="utf-8")
+
+
+def topic_start_question(topic: dict[str, object]) -> str:
+    questions = {
+        "deep-learning": "I have many examples, but I do not have a short rule. Where do I start?",
+        "physics-informed-neural-networks": "I have a few measurements and a known equation. How do I make them work together?",
+        "partial-differential-equations": "My quantity changes across space and time. What language describes that change?",
+        "operator-learning": "I need the whole answer field for new inputs, not only one solved case. What carries that map?",
+        "scientific-machine-learning": "I need data, equations, units, and checks to live in one scientific claim. What is the broad home for that?",
+        "surrogate-modeling": "My trusted solver is too slow to run for every design or control question. What is the first shortcut to study?",
+        "uncertainty-and-generalization": "I have a prediction, but I need to know when to believe it. What topic handles that?",
+        "optimization-for-learning": "The model is changing its settings. How do I know what it is being asked to improve?",
+        "generative-modeling": "I need several possible fields, molecules, shapes, or scenarios, not one answer. Where do I start?",
+        "graphs-and-geometric-learning": "My object has parts, neighbors, bonds, mesh points, or shape. Which topic keeps those relations visible?",
+        "neural-differential-equations": "A system changes over time, but the rate rule is partly unknown. What topic should I open?",
+        "symbolic-regression": "I want a readable equation from measured variables. What topic is about that search?",
+        "foundation-models-for-pdes": "I want one field model to help across related PDE tasks. What should I read first?",
+        "attention-for-scientific-fields": "Faraway parts of a field may affect the local answer. What topic explains that information route?",
+    }
+    return questions.get(str(topic["slug"]), f"What real problem makes {topic['title']} the right first topic?")
+
+
+def write_question_to_topic_guide_page(path: Path, topics: list[dict[str, object]]) -> None:
+    rows = []
+    for topic in topics:
+        derivation = topic_derivation(topic)
+        rows.append(
+            f"""
+<tr>
+  <td>{html.escape(topic_start_question(topic))}</td>
+  <td><a href="topics/{html.escape(str(topic['slug']))}.html">{html.escape(str(topic['title']))}</a></td>
+  <td>{html.escape(str(topic['common_problem']))}. The first move is to {html.escape(str(derivation['move']))}.</td>
+  <td>{html.escape(str(topic['failure_boundary']))}</td>
+</tr>
+"""
+        )
+    body = f"""
+<h1>Question To Topic Guide</h1>
+<h2>Start With The Need</h2>
+<p>Use this page before choosing a method name. Say the ordinary scientific need first: what you can see, what you need next, and what would make the answer fail. Then open the first topic that carries that need.</p>
+<p>The point is not to memorize labels. The point is to learn the route from a real shortage to a claim you can test. If the route cannot name the evidence, the missing quantity, and the first changed case, the explanation is not ready.</p>
+<table>
+  <thead>
+    <tr><th>Everyday Question</th><th>Open This Topic</th><th>Why This Is The First Stop</th><th>What To Check Before Trusting It</th></tr>
+  </thead>
+  <tbody>{''.join(rows)}</tbody>
+</table>
+<h2>If Your Question Mentions Shape</h2>
+<p>If the question mentions a mesh, molecule, graph, boundary, surface, hole, neighborhood, or connected part, slow down before flattening the object into a plain row. Ask what relation carries the scientific quantity. Then open the shape guide and the topic row above that names the same relation.</p>
+<h2>Reader Test</h2>
+<p>A reader understands the first-principles route when they can start with one everyday question, choose one topic, and say why that topic is the first stop without using the method name as the reason. The answer should name the evidence in hand, the hidden thing needed, the mathematical move, and the changed case that could reject the claim.</p>
+"""
+    path.write_text(html_page("Physics-Informed ML Question To Topic Guide", body), encoding="utf-8")
 
 
 def concept_links(slugs: list[str], root_prefix: str = "") -> str:
@@ -5578,6 +5632,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Misconceptions", f"{summary['misconception_count']} core wrong turns paired with plain corrections.", "misconceptions.html")}
 {card("Course Spine", "One plain-language first-principles essay tying the whole course together before the topic pages.", "course-spine.html")}
 {card("Topology And Shape", "A plain guide to connected structure, boundaries, holes, meshes, and shape checks across the course.", "topology-shape-guide.html")}
+{card("Question To Topic Guide", "Start from an everyday scientific question and open the first topic that carries that need.", "question-to-topic-guide.html")}
 {card("Learning Path", f"{summary['learning_path_step_count']} steps from first question to field-level understanding.", "learning-path.html")}
 {card("Glossary", f"{summary['glossary_term_count']} field terms translated into everyday language.", "glossary.html")}
 {card("Domains", f"{summary['domain_guide_count']} domain guides that ground concepts in real scientific work.", "domains.html")}
@@ -5697,6 +5752,7 @@ def write_site(data: dict[str, object]) -> None:
     write_misconception_map_page(SITE / "misconceptions.html", list(misconception_map))
     write_course_spine_page(SITE / "course-spine.html", list(topics))
     write_topology_shape_guide_page(SITE / "topology-shape-guide.html", list(topics))
+    write_question_to_topic_guide_page(SITE / "question-to-topic-guide.html", list(topics))
 
     learning_cards = []
     for step in learning_path:
@@ -8534,6 +8590,10 @@ def write_markdown_export(data: dict[str, object]) -> None:
             "- Shape check: change geometry, boundary, mesh order, missing connection, long-range link, or shape family and inspect the named quantity.",
         ]
     )
+    lines.extend(["", "## Question To Topic Guide"])
+    for topic in data["topic_treatments"]:
+        derivation = topic_derivation(topic)
+        lines.append(f"- Everyday question: {topic_start_question(topic)} Open this topic: {topic['title']}. First stop reason: {topic['common_problem']}. First check: {topic['failure_boundary']}. Mathematical move: {derivation['move']}.")
     lines.extend(["", "## Concepts"])
     for concept in data["concept_atlas"]:
         lines.extend(
@@ -9161,6 +9221,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         SITE / "misconceptions.html",
         SITE / "course-spine.html",
         SITE / "topology-shape-guide.html",
+        SITE / "question-to-topic-guide.html",
         SITE / "learning-path.html",
         SITE / "glossary.html",
         SITE / "domains.html",
@@ -9185,6 +9246,22 @@ def validate(data: dict[str, object] | None = None) -> None:
     ):
         if not path.exists():
             raise SystemExit(f"missing site page: {path}")
+    question_guide_text = (SITE / "question-to-topic-guide.html").read_text(encoding="utf-8")
+    for term in (
+        "Question To Topic Guide",
+        "Start With The Need",
+        "Everyday Question",
+        "Open This Topic",
+        "Why This Is The First Stop",
+        "What To Check Before Trusting It",
+        "If Your Question Mentions Shape",
+        "Reader Test",
+        "I have many examples",
+        "I have a few measurements and a known equation",
+        "changed case",
+    ):
+        if term not in question_guide_text:
+            raise SystemExit(f"question-to-topic guide missing: {term}")
     for family in FAMILY_PAGES:
         family_path = SITE / "families" / f"{family['slug']}.html"
         if not family_path.exists():
