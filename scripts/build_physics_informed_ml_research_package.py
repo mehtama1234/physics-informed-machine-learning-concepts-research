@@ -3953,6 +3953,8 @@ def build_core_derivations(topic_treatments: list[dict[str, object]]) -> list[di
                 "math_shape": list(deep["math_shape"]),
                 "hand_derivation": HAND_DERIVATIONS.get(slug),
                 "plain_formula": str(deep["plain_formula"]),
+                "smallest_useful_formula": smallest_useful_formula_text(derivation),
+                "first_wrong_simplification": first_wrong_simplification_text(derivation),
                 "why_it_matters": str(deep["important_because"]),
                 "failure_test": str(derivation["test"]),
                 "red_flags": list(deep["red_flags"]),
@@ -3962,6 +3964,20 @@ def build_core_derivations(topic_treatments: list[dict[str, object]]) -> list[di
             }
         )
     return rows
+
+
+def smallest_useful_formula_text(derivation: dict[str, object]) -> str:
+    return (
+        f"The smallest useful formula must start from {derivation['observed']}, "
+        f"carry the answer toward {derivation['hidden']}, and include a check that can fail: {derivation['test']}."
+    )
+
+
+def first_wrong_simplification_text(derivation: dict[str, object]) -> str:
+    return (
+        f"The first wrong shortcut is to keep the part that gives an answer while dropping the part that checks it. "
+        f"That would hide this failure: {derivation['test']}."
+    )
 
 
 def build_concept_evidence_packets(topic_treatments: list[dict[str, object]]) -> list[dict[str, object]]:
@@ -5629,6 +5645,10 @@ def write_core_derivation_page(path: Path, derivation: dict[str, object]) -> Non
 {hand_block}
 <h2>Plain Formula</h2>
 <p>{html.escape(str(derivation['plain_formula']))}</p>
+<h2>Smallest Useful Formula</h2>
+<p>{html.escape(str(derivation['smallest_useful_formula']))}</p>
+<h2>First Wrong Simplification</h2>
+<p>{html.escape(str(derivation['first_wrong_simplification']))}</p>
 <h2>Why This Matters</h2>
 <p>{html.escape(str(derivation['why_it_matters']))}</p>
 <h2>Failure Test</h2>
@@ -6828,6 +6848,8 @@ def write_markdown_export(data: dict[str, object]) -> None:
                 f"- Observed: {item['observed']}",
                 f"- Hidden: {item['hidden']}",
                 f"- Plain formula: {item['plain_formula']}",
+                f"- Smallest useful formula: {item['smallest_useful_formula']}",
+                f"- First wrong simplification: {item['first_wrong_simplification']}",
                 f"- Failure test: {item['failure_test']}",
                 f"- Page: {item['derivation_href']}",
                 "",
@@ -7338,9 +7360,12 @@ def validate(data: dict[str, object] | None = None) -> None:
         if not derivation_path.exists():
             raise SystemExit(f"missing derivation page: {item['title']}")
         derivation_text = derivation_path.read_text(encoding="utf-8")
-        for required in ("Start With What Is Observed", "Build The Mathematical Shape", "Why This Shape And Not Another", "Observed Burden", "Rejection Burden", "Failure Test", "Red Flags"):
+        for required in ("Start With What Is Observed", "Build The Mathematical Shape", "Why This Shape And Not Another", "Observed Burden", "Rejection Burden", "Smallest Useful Formula", "First Wrong Simplification", "Failure Test", "Red Flags"):
             if required not in derivation_text:
                 raise SystemExit(f"derivation page missing {required}: {item['title']}")
+        for field in ("smallest_useful_formula", "first_wrong_simplification"):
+            if not item.get(field):
+                raise SystemExit(f"derivation missing {field}: {item['title']}")
         if item["slug"] in hand_required_slugs:
             hand = item.get("hand_derivation")
             if not isinstance(hand, dict) or len(hand.get("line_steps") or []) < 3:

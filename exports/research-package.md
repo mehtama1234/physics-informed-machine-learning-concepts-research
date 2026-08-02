@@ -602,6 +602,8 @@
 - Observed: some measured values, boundary values, starting values, and a known differential equation
 - Hidden: the full field value at every point in space and time
 - Plain formula: total error = data error + equation error + boundary error
+- Smallest useful formula: The smallest useful formula must start from some measured values, boundary values, starting values, and a known differential equation, carry the answer toward the full field value at every point in space and time, and include a check that can fail: move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements.
+- First wrong simplification: The first wrong shortcut is to keep the part that gives an answer while dropping the part that checks it. That would hide this failure: move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements.
 - Failure test: move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements
 - Page: derivations/physics-informed-neural-networks.html
 
@@ -617,6 +619,8 @@
 - Observed: a field such as temperature, pressure, concentration, velocity, or displacement
 - Hidden: how every point in the field affects nearby points over time
 - Plain formula: change over time = movement through space + sources + boundary effects
+- Smallest useful formula: The smallest useful formula must start from a field such as temperature, pressure, concentration, velocity, or displacement, carry the answer toward how every point in the field affects nearby points over time, and include a check that can fail: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error.
+- First wrong simplification: The first wrong shortcut is to keep the part that gives an answer while dropping the part that checks it. That would hide this failure: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error.
 - Failure test: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error
 - Page: derivations/partial-differential-equations.html
 
@@ -625,6 +629,8 @@
 - Observed: many example inputs and their full solution fields
 - Hidden: the rule that maps a new input field to its new solution field
 - Plain formula: input field -> learned field-to-field map -> output field
+- Smallest useful formula: The smallest useful formula must start from many example inputs and their full solution fields, carry the answer toward the rule that maps a new input field to its new solution field, and include a check that can fail: change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed.
+- First wrong simplification: The first wrong shortcut is to keep the part that gives an answer while dropping the part that checks it. That would hide this failure: change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed.
 - Failure test: change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed
 - Page: derivations/operator-learning.html
 
@@ -640,6 +646,8 @@
 - Observed: expensive solver inputs and outputs for a limited set of cases
 - Hidden: the solver answer for every new query someone wants to ask
 - Plain formula: new query -> fast stand-in -> approximate answer with a stated use range
+- Smallest useful formula: The smallest useful formula must start from expensive solver inputs and outputs for a limited set of cases, carry the answer toward the solver answer for every new query someone wants to ask, and include a check that can fail: compare against the full solver on new cases near the edge of the intended use.
+- First wrong simplification: The first wrong shortcut is to keep the part that gives an answer while dropping the part that checks it. That would hide this failure: compare against the full solver on new cases near the edge of the intended use.
 - Failure test: compare against the full solver on new cases near the edge of the intended use
 - Page: derivations/surrogate-modeling.html
 
@@ -655,6 +663,8 @@
 - Observed: training cases, validation cases, prediction errors, and known shifts between cases
 - Hidden: how wrong the model may be on a case unlike the ones it learned from
 - Plain formula: prediction + tested use range + failure evidence
+- Smallest useful formula: The smallest useful formula must start from training cases, validation cases, prediction errors, and known shifts between cases, carry the answer toward how wrong the model may be on a case unlike the ones it learned from, and include a check that can fail: move one important condition outside the training range and measure the first failure.
+- First wrong simplification: The first wrong shortcut is to keep the part that gives an answer while dropping the part that checks it. That would hide this failure: move one important condition outside the training range and measure the first failure.
 - Failure test: move one important condition outside the training range and measure the first failure
 - Page: derivations/uncertainty-and-generalization.html
 
@@ -670,6 +680,8 @@
 - Observed: measurements of a system changing over time
 - Hidden: the rate rule that moves the present value into the future
 - Plain formula: current state -> learned change rate -> next state
+- Smallest useful formula: The smallest useful formula must start from measurements of a system changing over time, carry the answer toward the rate rule that moves the present value into the future, and include a check that can fail: run longer than the training window and check whether small rate errors accumulate into drift.
+- First wrong simplification: The first wrong shortcut is to keep the part that gives an answer while dropping the part that checks it. That would hide this failure: run longer than the training window and check whether small rate errors accumulate into drift.
 - Failure test: run longer than the training window and check whether small rate errors accumulate into drift
 - Page: derivations/neural-differential-equations.html
 
@@ -678,6 +690,8 @@
 - Observed: measured variables and candidate mathematical ingredients
 - Hidden: which short formula, if any, actually explains the measured change
 - Plain formula: candidate ingredients -> searched formulas -> tested small law
+- Smallest useful formula: The smallest useful formula must start from measured variables and candidate mathematical ingredients, carry the answer toward which short formula, if any, actually explains the measured change, and include a check that can fail: remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts.
+- First wrong simplification: The first wrong shortcut is to keep the part that gives an answer while dropping the part that checks it. That would hide this failure: remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts.
 - Failure test: remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts
 - Page: derivations/symbolic-regression.html
 
@@ -693,6 +707,8 @@
 - Observed: many PDE problem instances across equations, grids, parameters, or physical settings
 - Hidden: which shared structure carries from one scientific task to another
 - Plain formula: many PDE tasks -> shared learned structure -> new task prediction
+- Smallest useful formula: The smallest useful formula must start from many PDE problem instances across equations, grids, parameters, or physical settings, carry the answer toward which shared structure carries from one scientific task to another, and include a check that can fail: hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver.
+- First wrong simplification: The first wrong shortcut is to keep the part that gives an answer while dropping the part that checks it. That would hide this failure: hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver.
 - Failure test: hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver
 - Page: derivations/foundation-models-for-pdes.html
 
@@ -708,6 +724,8 @@
 - Observed: many input-output examples from experiments, simulations, or measurements
 - Hidden: the exact rule that connects the input to the output
 - Plain formula: input example -> adjustable rule -> predicted answer -> error check
+- Smallest useful formula: The smallest useful formula must start from many input-output examples from experiments, simulations, or measurements, carry the answer toward the exact rule that connects the input to the output, and include a check that can fail: hold out a changed material, geometry, parameter range, or sensor condition.
+- First wrong simplification: The first wrong shortcut is to keep the part that gives an answer while dropping the part that checks it. That would hide this failure: hold out a changed material, geometry, parameter range, or sensor condition.
 - Failure test: hold out a changed material, geometry, parameter range, or sensor condition
 - Page: derivations/deep-learning.html
 
@@ -716,6 +734,8 @@
 - Observed: data, equations, units, simulation outputs, and domain limits
 - Hidden: which parts of the scientific system are missing, noisy, or too costly to compute directly
 - Plain formula: measurements + known rule + learned missing part -> checked scientific answer
+- Smallest useful formula: The smallest useful formula must start from data, equations, units, simulation outputs, and domain limits, carry the answer toward which parts of the scientific system are missing, noisy, or too costly to compute directly, and include a check that can fail: state the scientific quantity first, then test it under a changed case that matters in that domain.
+- First wrong simplification: The first wrong shortcut is to keep the part that gives an answer while dropping the part that checks it. That would hide this failure: state the scientific quantity first, then test it under a changed case that matters in that domain.
 - Failure test: state the scientific quantity first, then test it under a changed case that matters in that domain
 - Page: derivations/scientific-machine-learning.html
 
@@ -724,6 +744,8 @@
 - Observed: a written score that says which model behavior is better or worse
 - Hidden: whether that score matches the scientific behavior the user actually cares about
 - Plain formula: current model -> error score -> change model -> check again
+- Smallest useful formula: The smallest useful formula must start from a written score that says which model behavior is better or worse, carry the answer toward whether that score matches the scientific behavior the user actually cares about, and include a check that can fail: inspect what the score ignores, then check whether the ignored behavior fails after training.
+- First wrong simplification: The first wrong shortcut is to keep the part that gives an answer while dropping the part that checks it. That would hide this failure: inspect what the score ignores, then check whether the ignored behavior fails after training.
 - Failure test: inspect what the score ignores, then check whether the ignored behavior fails after training
 - Page: derivations/optimization-for-learning.html
 
@@ -732,6 +754,8 @@
 - Observed: examples of fields, molecules, flows, shapes, or other scientific objects
 - Hidden: the spread of possible valid objects beyond the examples
 - Plain formula: known conditions + variation -> candidate example -> realism and rule checks
+- Smallest useful formula: The smallest useful formula must start from examples of fields, molecules, flows, shapes, or other scientific objects, carry the answer toward the spread of possible valid objects beyond the examples, and include a check that can fail: measure constraints, rare cases, conservation, and downstream task performance on generated samples.
+- First wrong simplification: The first wrong shortcut is to keep the part that gives an answer while dropping the part that checks it. That would hide this failure: measure constraints, rare cases, conservation, and downstream task performance on generated samples.
 - Failure test: measure constraints, rare cases, conservation, and downstream task performance on generated samples
 - Page: derivations/generative-modeling.html
 
@@ -740,6 +764,8 @@
 - Observed: objects with parts and connections, such as meshes, molecules, or interacting components
 - Hidden: which neighboring and long-range interactions control the scientific quantity
 - Plain formula: connected shape + local values -> relation-aware updates -> field or object answer
+- Smallest useful formula: The smallest useful formula must start from objects with parts and connections, such as meshes, molecules, or interacting components, carry the answer toward which neighboring and long-range interactions control the scientific quantity, and include a check that can fail: change the mesh, rotate or move the object, or add missing interactions and inspect what breaks.
+- First wrong simplification: The first wrong shortcut is to keep the part that gives an answer while dropping the part that checks it. That would hide this failure: change the mesh, rotate or move the object, or add missing interactions and inspect what breaks.
 - Failure test: change the mesh, rotate or move the object, or add missing interactions and inspect what breaks
 - Page: derivations/graphs-and-geometric-learning.html
 
@@ -748,6 +774,8 @@
 - Observed: large fields where one location may depend on other locations
 - Hidden: which distant parts matter for the local prediction
 - Plain formula: current field part + relevant other parts -> weighted information -> updated field part
+- Smallest useful formula: The smallest useful formula must start from large fields where one location may depend on other locations, carry the answer toward which distant parts matter for the local prediction, and include a check that can fail: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures.
+- First wrong simplification: The first wrong shortcut is to keep the part that gives an answer while dropping the part that checks it. That would hide this failure: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures.
 - Failure test: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures
 - Page: derivations/attention-for-scientific-fields.html
 
