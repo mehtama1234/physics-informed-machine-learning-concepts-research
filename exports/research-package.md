@@ -2303,12 +2303,14 @@
 - Page: videos/eth-aise-2025-002-eth-zrich-aise-2025-lecture-2-introduction-to-deep-learning.html
 - Claim anchored: Deep learning is the course foundation for fitting flexible models from examples before adding scientific constraints.
 - Why this source: This is the 2025 introduction to deep learning in the local transcript set.
+- Transcript excerpt to inspect: stopped in the last lecture are neural networks because this is sort of the key point or the key sort of foundation
 - Limit: The source anchors the basic model-fitting foundation; it does not prove a fitted model carries the scientific quantity needed in a new domain.
 
 - Source: ETH Zurich AISE 2024: Introduction to Deep Learning Part 1
 - Page: videos/eth-aise-2024-002-eth-zrich-aise-introduction-to-deep-learning-part-1.html
 - Claim anchored: The 2024 deep-learning introduction anchors the shared vocabulary used before PINNs, operators, surrogates, and generative models.
 - Why this source: This lecture starts the 2024 deep-learning block that later methods build on.
+- Transcript excerpt to inspect: going to be covering an introduction to deep learning and so this is uh the first part of two lectures on this
 - Limit: The source supports the prerequisite role of deep learning; every later scientific claim still needs its own domain and changed-case test.
 
 
@@ -2317,12 +2319,14 @@
 - Page: videos/eth-aise-2025-003-eth-zrich-aise-2025-lecture-3-physics-informed-neural-networks-introduction.html
 - Claim anchored: PINNs are introduced as learned fields checked against both measured data and physical equations.
 - Why this source: This is the 2025 introductory PINNs lecture in the local transcript set.
+- Transcript excerpt to inspect: which is that we want to learn physics modeled by PTE from data using neural networks So these are the four sort
 - Limit: The source supports the course placement and core idea; it does not prove performance on every PDE or boundary setting.
 
 - Source: ETH Zurich AISE 2025: Lecture 4 PINNs Theoretical Insights
 - Page: videos/eth-aise-2025-004-eth-zrich-aise-2025-lecture-4-pinns-theoretical-insights.html
 - Claim anchored: PINNs need theory and failure checks because satisfying a written training score is not the same as proving the field is right everywhere.
 - Why this source: This lecture is the 2025 theory follow-up for PINNs.
+- Transcript excerpt to inspect: is good news right that we have a theory which tries to explain that if you have a small training error the
 - Limit: The source anchors the need for theoretical care; the page still needs task-specific validation for any scientific claim.
 
 
@@ -2331,12 +2335,14 @@
 - Page: videos/eth-aise-2024-004-eth-zrich-aise-importance-of-pdes-in-science.html
 - Claim anchored: PDEs are the field language for quantities that change across space and time.
 - Why this source: This lecture is the local source focused on why PDEs matter in scientific settings.
+- Transcript excerpt to inspect: how things change right how things change in time is given by the temporal derivative how things change in space is given
 - Limit: The source anchors why PDEs matter; it does not solve any particular PDE or validate a learned approximation.
 
 - Source: ETH Zurich AISE 2025: Lecture 3 Physics-Informed Neural Networks Introduction
 - Page: videos/eth-aise-2025-003-eth-zrich-aise-2025-lecture-3-physics-informed-neural-networks-introduction.html
 - Claim anchored: PINN lectures depend on PDE residuals because the equation is used as a check on the learned field.
 - Why this source: This lecture places differential equations inside the physics-informed learning route.
+- Transcript excerpt to inspect: what I have written down here So can neural networks this is our main objective Can they be used to solve PTE
 - Limit: The source supports PDEs as a constraint source; it does not prove the equation is complete for every experiment.
 
 
@@ -2345,12 +2351,14 @@
 - Page: videos/eth-aise-2025-005-eth-zrich-aise-2025-lecture-5-operator-learning-introduction.html
 - Claim anchored: Operator learning is about learning maps from whole input fields or functions to whole output fields or functions.
 - Why this source: This is the 2025 introduction to the operator-learning block.
+- Transcript excerpt to inspect: and it moves things from the input space to the output space Why is it an operator It's an operator because this
 - Limit: The source supports the object being learned; it does not prove the learned map works outside the named input family.
 
 - Source: ETH Zurich AISE 2025: Lecture 6 Operator Learning FNO
 - Page: videos/eth-aise-2025-006-eth-zrich-aise-2025-lecture-6-operator-learning-fno.html
 - Claim anchored: Fourier neural operators are one route for learning field-to-field maps in PDE settings.
 - Why this source: This lecture is the 2025 FNO treatment inside the operator-learning sequence.
+- Transcript excerpt to inspect: essentially just like neural networks are universal oper universal approximators of functions neural operators particularly fia neural operator is a universal approximator
 - Limit: The source anchors the method family; reliability still depends on the training range, resolution, geometry, and target quantity.
 
 
@@ -2359,12 +2367,14 @@
 - Page: videos/eth-aise-2025-001-eth-zrich-aise-2025-lecture-1-course-introduction.html
 - Claim anchored: Scientific machine learning combines learned models with scientific quantities, equations, and validation checks.
 - Why this source: This lecture introduces the 2025 course scope: AI in science and engineering.
+- Transcript excerpt to inspect: some natural phenomena to find the differential equations for processes that produce the phenomena So this has been what Newton introduced with
 - Limit: The source anchors the course-level field framing; it does not prove any one method works for a specific scientific job.
 
 - Source: ETH Zurich AISE 2024: Course Introduction
 - Page: videos/eth-aise-2024-001-eth-zrich-aise-course-introduction.html
 - Claim anchored: The 2024 course introduction anchors the broad route from AI methods to science and engineering applications.
 - Why this source: This is the 2024 starting point for the local playlist family.
+- Transcript excerpt to inspect: Okay good morning everyone Welcome to the first lecture of AI in the science and engineering My name is Sid Mishra and
 - Limit: The source supports the field-level map; task-level claims still need evidence, domain limits, and changed-case tests.
 
 
@@ -2373,13 +2383,31 @@
 - Page: videos/eth-aise-2024-019-eth-zrich-aise-introduction-to-hybrid-workflows-part-1.html
 - Claim anchored: Surrogates are useful when repeated scientific choices need answers faster than a trusted simulation or experiment can provide them.
 - Why this source: This lecture starts the local hybrid-workflow block where learned components are placed next to trusted scientific tools.
+- Transcript excerpt to inspect: can be very expensive but once you've trained your operator these are often orders of magnitude faster than traditional simulation it's what
 - Limit: The source supports the need for faster learned components; it does not prove a surrogate is valid outside checked cases.
 
 - Source: ETH Zurich AISE 2024: Introduction to Hybrid Workflows Part 2
 - Page: videos/eth-aise-2024-020-eth-zrich-aise-introduction-to-hybrid-workflows-part-2.html
 - Claim anchored: A learned stand-in remains tied to the trusted source and must be checked where it will be used.
 - Why this source: This lecture continues the hybrid-workflow treatment in the local transcript set.
+- Transcript excerpt to inspect: up methods that we've talked about Okay so I'm going to move on to now the second part of hybrid workflows Um
 - Limit: The source supports the review route; task-level error checks are still needed before using any stand-in for a decision.
+
+
+### Uncertainty And Generalization
+- Source: ETH Zurich AISE 2024: Windowed Attention and Scaling Laws
+- Page: videos/eth-aise-2024-018-eth-zrich-aise-windowed-attention-and-scaling-laws.html
+- Claim anchored: Trust depends on changed-case behavior, not only on matching familiar examples.
+- Why this source: This source sits in the sequence where model behavior is discussed beyond a single training case.
+- Transcript excerpt to inspect: of the basic idea here and now you can imagine that uh attention is only happening at the level of the windows
+- Limit: The source anchors the need to discuss scale and changed behavior; it does not certify uncertainty estimates for a specific domain.
+
+- Source: ETH Zurich AISE 2025: Lecture 12 Foundation Models for PDEs Poseidon
+- Page: videos/eth-aise-2025-012-eth-zrich-aise-2025-lecture-12-foundation-models-for-pdes-poseidon.html
+- Claim anchored: Foundation and operator-style PDE models need evaluation on held-out scientific cases before broad use.
+- Why this source: This lecture anchors the broad PDE-model part of the 2025 playlist.
+- Transcript excerpt to inspect: are millions of books right which are of different types for instance So now uh each time you need the PDEs and
+- Limit: The source supports the need for held-out case checks; it does not prove broad transfer for every equation family.
 
 
 ### Optimization For Learning
@@ -2387,12 +2415,14 @@
 - Page: videos/eth-aise-2024-003-eth-zrich-aise-introduction-to-deep-learning-part-2.html
 - Claim anchored: Optimization is the mechanism that turns a written training objective into model settings.
 - Why this source: This lecture continues the deep-learning setup where training and fitting are introduced.
+- Transcript excerpt to inspect: so the first introduction to deep learning um and my take-home message for you that I try to impress on you is
 - Limit: The source anchors optimization as training machinery; it does not prove the optimized score matches the scientific decision.
 
 - Source: ETH Zurich AISE 2025: Lecture 3 Physics-Informed Neural Networks Introduction
 - Page: videos/eth-aise-2025-003-eth-zrich-aise-2025-lecture-3-physics-informed-neural-networks-introduction.html
 - Claim anchored: PINNs make the optimization burden visible because data, equation, and boundary errors are trained together.
 - Why this source: This lecture anchors an example where the loss contains multiple scientific burdens.
+- Transcript excerpt to inspect: which is that we want to learn physics modeled by PTE from data using neural networks So these are the four sort
 - Limit: The source supports the need to inspect loss terms; it does not guarantee that optimizing those terms finds the right physical field.
 
 
@@ -2401,12 +2431,14 @@
 - Page: videos/eth-aise-2025-011-eth-zrich-aise-2025-lecture-11-generative-models-for-pdes-gencfd.html
 - Claim anchored: Generative models for PDEs are used when the task needs possible scientific fields, not only one predicted field.
 - Why this source: This is the 2025 lecture dedicated to generative models for PDEs in the local source set.
+- Transcript excerpt to inspect: that you should try to make the gradients as close to one as possible because when you put different layers together powers
 - Limit: The source anchors the generative-model topic; generated fields still need conservation, constraint, and downstream-use checks.
 
 - Source: ETH Zurich AISE 2024: Introduction to Diffusion Models
 - Page: videos/eth-aise-2024-022-eth-zrich-aise-introduction-to-diffusion-models.html
 - Claim anchored: Diffusion models are a neighboring generative route for creating samples rather than a single deterministic answer.
 - Why this source: This lecture provides the 2024 generative-model background in the local transcript set.
+- Transcript excerpt to inspect: the generative model that's doing the best so far or is the most popular at the moment are these diffusion models um
 - Limit: The source supports the generative route; it does not prove samples are valid scientific objects without domain checks.
 
 
@@ -2415,12 +2447,14 @@
 - Page: videos/eth-aise-2025-009-eth-zrich-aise-2025-lecture-9-operator-learning-graph-based-models.html
 - Claim anchored: Graph-based operator models keep connections visible when scientific data live on meshes, graphs, or irregular geometry.
 - Why this source: This lecture is the 2025 graph-based operator-learning treatment.
+- Transcript excerpt to inspect: operators of PDS from data And to do that we are going to use operator learning and we have seen lots and
 - Limit: The source anchors graph-based modeling; it does not prove the chosen graph contains every interaction that matters.
 
 - Source: ETH Zurich AISE 2025: Lecture 13 AI in Chemistry Biology Part 1
 - Page: videos/eth-aise-2025-013-eth-zrich-aise-2025-lecture-13-ai-in-chemistry-biology-part-1.html
 - Claim anchored: Applications in chemistry and biology motivate graph and geometric representations because molecules and biological objects have structure.
 - Why this source: This lecture anchors structured scientific objects in chemistry and biology applications.
+- Transcript excerpt to inspect: as well and I will talk today about some applications of AI in chemistry and biology Um this is a super dynamic
 - Limit: The source supports the domain motivation; property prediction still needs changed-molecule and held-out-family checks.
 
 
@@ -2429,41 +2463,15 @@
 - Page: videos/eth-aise-2024-021-eth-zrich-aise-neural-differential-equations.html
 - Claim anchored: Neural differential equations learn or include a change rule inside a time-evolution calculation.
 - Why this source: This is the local lecture dedicated to neural differential equations.
+- Transcript excerpt to inspect: can actually just use neural differential equations to solve machine learning tasks rather than just to learn these underlying dynamics We can
 - Limit: The source anchors the concept; long-time behavior and changed initial conditions still need separate validation.
 
 - Source: ETH Zurich AISE 2024: Symbolic Regression and Model Discovery
 - Page: videos/eth-aise-2024-024-eth-zrich-aise-symbolic-regression-and-model-discovery.html
 - Claim anchored: Model discovery and symbolic regression are neighboring ideas when the goal is to recover a readable or testable change rule.
 - Why this source: This lecture anchors the related model-discovery route.
+- Transcript excerpt to inspect: guest lectures next week and so what we're going to talk about is um symbolic regression and model Discovery uh
 - Limit: The source supports the connection; it does not prove a learned differential equation is stable or physically complete.
-
-
-### Attention For Scientific Fields
-- Source: ETH Zurich AISE 2024: Attention as a Neural Operator
-- Page: videos/eth-aise-2024-017-eth-zrich-aise-attention-as-a-neural-operator.html
-- Claim anchored: Attention is treated as a neural-operator route for moving information across scientific fields.
-- Why this source: This lecture directly connects attention to neural operators in the 2024 source set.
-- Limit: The source anchors the attention-as-operator idea; the chosen attention pattern still needs checks for missed long-range effects.
-
-- Source: ETH Zurich AISE 2024: Windowed Attention and Scaling Laws
-- Page: videos/eth-aise-2024-018-eth-zrich-aise-windowed-attention-and-scaling-laws.html
-- Claim anchored: Windowed attention and scaling choices matter because field models must decide which distant information is worth carrying.
-- Why this source: This lecture follows the attention-as-operator treatment and focuses on windowing and scaling.
-- Limit: The source supports the design pressure; it does not prove a specific window or attention pattern preserves the scientific quantity.
-
-
-### Uncertainty And Generalization
-- Source: ETH Zurich AISE 2024: Windowed Attention and Scaling Laws
-- Page: videos/eth-aise-2024-018-eth-zrich-aise-windowed-attention-and-scaling-laws.html
-- Claim anchored: Trust depends on changed-case behavior, not only on matching familiar examples.
-- Why this source: This source sits in the sequence where model behavior is discussed beyond a single training case.
-- Limit: The source anchors the need to discuss scale and changed behavior; it does not certify uncertainty estimates for a specific domain.
-
-- Source: ETH Zurich AISE 2025: Lecture 12 Foundation Models for PDEs Poseidon
-- Page: videos/eth-aise-2025-012-eth-zrich-aise-2025-lecture-12-foundation-models-for-pdes-poseidon.html
-- Claim anchored: Foundation and operator-style PDE models need evaluation on held-out scientific cases before broad use.
-- Why this source: This lecture anchors the broad PDE-model part of the 2025 playlist.
-- Limit: The source supports the need for held-out case checks; it does not prove broad transfer for every equation family.
 
 
 ### Symbolic Regression
@@ -2471,12 +2479,14 @@
 - Page: videos/eth-aise-2024-024-eth-zrich-aise-symbolic-regression-and-model-discovery.html
 - Claim anchored: Symbolic regression aims for a readable candidate law, not just a fitted prediction.
 - Why this source: This is the local lecture dedicated to symbolic regression and model discovery.
+- Transcript excerpt to inspect: we're going to talk about is um symbolic regression and model Discovery uh yeah so like I said we just we
 - Limit: The source supports the concept and goal; a discovered law still needs a new-experiment test and measured variables that cover the real cause.
 
 - Source: ETH Zurich AISE 2024: Neural Differential Equations
 - Page: videos/eth-aise-2024-021-eth-zrich-aise-neural-differential-equations.html
 - Claim anchored: Neural differential equations are a related route when the unknown object is the rate or rule of change.
 - Why this source: This lecture anchors the neighboring model-discovery route in the source set.
+- Transcript excerpt to inspect: time when you solve the differential equation Cool So uh summary of neural differential equations So this is the key idea Use
 - Limit: The source supports the relation between learned dynamics and model discovery; it does not prove interpretability by itself.
 
 
@@ -2485,13 +2495,31 @@
 - Page: videos/eth-aise-2025-012-eth-zrich-aise-2025-lecture-12-foundation-models-for-pdes-poseidon.html
 - Claim anchored: Foundation PDE models try to carry structure from many PDE tasks into a new PDE case.
 - Why this source: This lecture is the 2025 source page for foundation models for PDEs.
+- Transcript excerpt to inspect: foundation model what you do for down for downstream tasks or fine-tuning FT so you zero which is from the
 - Limit: The source anchors the ambition and lecture treatment; the page must still state which new PDE case was held out and what failed.
 
 - Source: ETH Zurich AISE 2025: Lecture 5 Operator Learning Introduction
 - Page: videos/eth-aise-2025-005-eth-zrich-aise-2025-lecture-5-operator-learning-introduction.html
 - Claim anchored: Broad PDE models build on operator-learning ideas because both care about maps between fields across many cases.
 - Why this source: This lecture anchors the operator-learning prerequisite for later broad PDE models.
+- Transcript excerpt to inspect: So when an operator is ill or a matrix is ill conditioned then you have to do something called preconditioning and many
 - Limit: The source supports the dependency; it does not imply that a broad model works on every PDE family.
+
+
+### Attention For Scientific Fields
+- Source: ETH Zurich AISE 2024: Attention as a Neural Operator
+- Page: videos/eth-aise-2024-017-eth-zrich-aise-attention-as-a-neural-operator.html
+- Claim anchored: Attention is treated as a neural-operator route for moving information across scientific fields.
+- Why this source: This lecture directly connects attention to neural operators in the 2024 source set.
+- Transcript excerpt to inspect: the last lecture was to use Transformers so let me use this so use Transformers to do operator learning right so I'm
+- Limit: The source anchors the attention-as-operator idea; the chosen attention pattern still needs checks for missed long-range effects.
+
+- Source: ETH Zurich AISE 2024: Windowed Attention and Scaling Laws
+- Page: videos/eth-aise-2024-018-eth-zrich-aise-windowed-attention-and-scaling-laws.html
+- Claim anchored: Windowed attention and scaling choices matter because field models must decide which distant information is worth carrying.
+- Why this source: This lecture follows the attention-as-operator treatment and focuses on windowing and scaling.
+- Transcript excerpt to inspect: the risk now is that all this nice things about attention This Global mixing This Global Information propagation that goes out of
+- Limit: The source supports the design pressure; it does not prove a specific window or attention pattern preserves the scientific quantity.
 
 
 ## Editorial Quality Rubric

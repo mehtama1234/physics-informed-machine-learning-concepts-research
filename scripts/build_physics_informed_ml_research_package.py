@@ -3589,6 +3589,137 @@ def record_to_dict(record: TranscriptRecord) -> dict[str, object]:
     }
 
 
+def video_href(record: TranscriptRecord) -> str:
+    return f"videos/{record.playlist_slug}-{record.index:03d}-{slugify(record.title)}.html"
+
+
+ANCHOR_EXCERPT_STOP_WORDS = {
+    "about",
+    "across",
+    "after",
+    "again",
+    "against",
+    "because",
+    "before",
+    "being",
+    "between",
+    "broad",
+    "course",
+    "every",
+    "examples",
+    "field",
+    "fields",
+    "inside",
+    "lecture",
+    "learned",
+    "learning",
+    "models",
+    "rather",
+    "route",
+    "scientific",
+    "source",
+    "still",
+    "their",
+    "there",
+    "these",
+    "thing",
+    "those",
+    "through",
+    "trust",
+    "using",
+    "where",
+    "which",
+    "whole",
+}
+
+
+def anchor_query_terms(anchor: dict[str, object]) -> set[str]:
+    text = f"{anchor.get('claim', '')} {anchor.get('source', '')}"
+    terms = set()
+    for term in re.findall(r"[A-Za-z][A-Za-z0-9-]{3,}", text.lower()):
+        if term not in ANCHOR_EXCERPT_STOP_WORDS:
+            terms.add(term.replace("-", ""))
+    return terms
+
+
+def clean_transcript_window(words: list[str], max_words: int = 22) -> str:
+    cleaned: list[str] = []
+    i = 0
+    while i < len(words) and len(cleaned) < max_words:
+        token = words[i]
+        normalized = re.sub(r"[^a-z0-9]", "", token.lower())
+        if cleaned and normalized == re.sub(r"[^a-z0-9]", "", cleaned[-1].lower()):
+            i += 1
+            continue
+        if len(cleaned) >= 3 and i + 2 < len(words):
+            previous = [re.sub(r"[^a-z0-9]", "", word.lower()) for word in cleaned[-3:]]
+            current = [re.sub(r"[^a-z0-9]", "", word.lower()) for word in words[i : i + 3]]
+            if previous == current:
+                i += 3
+                continue
+        if len(cleaned) >= 2 and i + 1 < len(words):
+            previous = [re.sub(r"[^a-z0-9]", "", word.lower()) for word in cleaned[-2:]]
+            current = [re.sub(r"[^a-z0-9]", "", word.lower()) for word in words[i : i + 2]]
+            if previous == current:
+                i += 2
+                continue
+        cleaned.append(token)
+        i += 1
+    return " ".join(cleaned)
+
+
+def source_anchor_excerpt(record: TranscriptRecord, anchor: dict[str, object]) -> str:
+    fallback = short_excerpt(record.evidence_excerpt)
+    if not record.clean_txt:
+        return fallback
+    path = ROOT / record.clean_txt
+    if not path.exists():
+        return fallback
+    lines = [line.strip() for line in path.read_text(encoding="utf-8", errors="ignore").splitlines()]
+    deduped_lines: list[str] = []
+    for line in lines:
+        if line and (not deduped_lines or line != deduped_lines[-1]):
+            deduped_lines.append(line)
+    words = re.findall(r"[A-Za-z0-9][A-Za-z0-9'-]*", " ".join(deduped_lines))
+    if not words:
+        return fallback
+    query_terms = anchor_query_terms(anchor)
+    if not query_terms:
+        return fallback
+    best_start = 0
+    best_score = -1
+    window = 22
+    for start in range(0, max(1, len(words) - window + 1), 8):
+        segment = words[start : start + window]
+        normalized = {re.sub(r"[^a-z0-9]", "", word.lower()) for word in segment}
+        score = sum(1 for term in query_terms if term in normalized)
+        if score > best_score:
+            best_score = score
+            best_start = start
+    if best_score <= 0:
+        return fallback
+    return clean_transcript_window(words[best_start : best_start + window])
+
+
+def source_anchor_evidence_for_slug(slug: str, records: list[TranscriptRecord]) -> list[dict[str, object]]:
+    anchors_by_href = {str(item["href"]): item for item in SOURCE_ANCHORS.get(slug, [])}
+    rows = []
+    for record in records:
+        href = video_href(record)
+        anchor = anchors_by_href.get(href)
+        if anchor:
+            rows.append(
+                {
+                    "title": record.title,
+                    "url": record.url,
+                    "video_href": href,
+                    "clean_txt": record.clean_txt,
+                    "excerpt": source_anchor_excerpt(record, anchor),
+                }
+            )
+    return rows
+
+
 def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
     ANALYSIS.mkdir(parents=True, exist_ok=True)
     EXPORTS.mkdir(parents=True, exist_ok=True)
@@ -3664,6 +3795,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
                 "failure_boundary": concept["failure"],
                 "everyday_anchor": everyday_anchor(str(concept["slug"])),
                 "evidence": concept["evidence"],
+                "source_anchor_evidence": source_anchor_evidence_for_slug(str(concept["slug"]), records),
             }
         )
 
@@ -3673,6 +3805,13 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
     coverage_matrix = build_coverage_matrix(concept_atlas, reader_checks)
     core_derivations = build_core_derivations(topic_treatments)
     concept_evidence_packets = build_concept_evidence_packets(topic_treatments)
+    source_anchors = {
+        str(topic["slug"]): enrich_source_anchors(
+            str(topic["slug"]),
+            list(topic.get("evidence") or []) + list(topic.get("source_anchor_evidence") or []),
+        )
+        for topic in topic_treatments
+    }
     review_queue = build_review_queue(coverage_matrix, concept_evidence_packets)
     hand_polish_reviews = build_hand_polish_reviews(review_queue, concept_evidence_packets)
     meaty_goal_coverage = build_meaty_goal_coverage(topic_treatments, reader_checks, concept_evidence_packets)
@@ -3765,7 +3904,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
         "review_search_index": REVIEW_SEARCH_INDEX,
         "review_queue": review_queue,
         "editorial_roadmap": editorial_roadmap,
-        "source_anchors": SOURCE_ANCHORS,
+        "source_anchors": source_anchors,
     }
     for name, value in data.items():
         if name == "summary":
@@ -3792,8 +3931,22 @@ def everyday_anchor(slug: str) -> str:
     return anchors.get(slug, "Start with the observed object, name what must be predicted, then test the claim on a changed case.")
 
 
-def source_anchor_cards(slug: str, evidence: list[dict[str, object]] | None = None, root_prefix: str = "") -> str:
-    anchors = list(SOURCE_ANCHORS.get(slug, []))
+def short_excerpt(text: object, max_words: int = 22) -> str:
+    words = str(text or "").split()
+    if len(words) <= max_words:
+        return " ".join(words)
+    return " ".join(words[:max_words]) + " ..."
+
+
+def enrich_source_anchors(slug: str, evidence: list[dict[str, object]] | None = None) -> list[dict[str, object]]:
+    evidence = evidence or []
+    anchors = [dict(item) for item in SOURCE_ANCHORS.get(slug, [])]
+    evidence_by_href = {str(row.get("video_href") or row.get("url") or ""): row for row in evidence}
+    for item in anchors:
+        row = evidence_by_href.get(str(item.get("href") or ""))
+        if row and row.get("excerpt"):
+            item["transcript_excerpt"] = short_excerpt(row.get("excerpt"))
+            item["transcript_file"] = str(row.get("clean_txt") or "")
     if not anchors and evidence:
         concept_name = next((str(item["name"]) for item in CONCEPTS if item["slug"] == slug), slug.replace("-", " ").title())
         for row in evidence[:2]:
@@ -3804,20 +3957,38 @@ def source_anchor_cards(slug: str, evidence: list[dict[str, object]] | None = No
                     "href": str(row.get("video_href") or row.get("url") or ""),
                     "why_this_source": "This source is selected from the local transcript evidence for this concept.",
                     "limit": "The source shows where the concept appears in the course material; it does not prove the method works for every domain, data set, equation, or changed case.",
+                    "transcript_excerpt": short_excerpt(row.get("excerpt")),
+                    "transcript_file": str(row.get("clean_txt") or ""),
                 }
             )
+    return anchors
+
+
+def source_anchor_cards(
+    slug: str,
+    evidence: list[dict[str, object]] | None = None,
+    root_prefix: str = "",
+    anchors: list[dict[str, object]] | None = None,
+) -> str:
+    anchors = [dict(item) for item in anchors] if anchors is not None else enrich_source_anchors(slug, evidence)
     if not anchors:
         return ""
     cards = []
     for item in anchors:
         href = str(item["href"])
         linked_href = href if href.startswith(("http://", "https://")) else f"{root_prefix}{href}"
+        excerpt = ""
+        if item.get("transcript_excerpt"):
+            excerpt = f"""
+  <p><strong>Transcript Excerpt To Inspect:</strong> {html.escape(str(item['transcript_excerpt']))}</p>
+"""
         cards.append(
             f"""
 <article class="card">
   <h3><a href="{html.escape(linked_href)}">{html.escape(str(item['source']))}</a></h3>
   <p><strong>Claim Anchored:</strong> {html.escape(str(item['claim']))}</p>
   <p><strong>Why this source:</strong> {html.escape(str(item['why_this_source']))}</p>
+{excerpt}
   <p><strong>Limit:</strong> {html.escape(str(item['limit']))}</p>
 </article>
 """
@@ -4115,6 +4286,7 @@ def build_concept_evidence_packets(topic_treatments: list[dict[str, object]]) ->
     for topic in topic_treatments:
         slug = str(topic["slug"])
         evidence = list(topic.get("evidence") or [])
+        source_anchor_evidence = list(topic.get("source_anchor_evidence") or [])
         derivation = topic_derivation(topic)
         links = [
             {"label": "Topic Page", "href": f"topics/{slug}.html"},
@@ -4125,6 +4297,7 @@ def build_concept_evidence_packets(topic_treatments: list[dict[str, object]]) ->
         if slug in TOPIC_DEEP_DIVES:
             links.append({"label": "Derivation", "href": f"derivations/{slug}.html"})
         links.extend(example_links.get(slug, [])[:3])
+        source_anchors = enrich_source_anchors(slug, evidence + source_anchor_evidence)
         packets.append(
             {
                 "slug": slug,
@@ -4134,8 +4307,8 @@ def build_concept_evidence_packets(topic_treatments: list[dict[str, object]]) ->
                 "why_it_matters": str(topic["why_it_matters"]),
                 "evidence_count": len(evidence),
                 "evidence": evidence,
-                "source_anchors": SOURCE_ANCHORS.get(slug, []),
-                "source_strength": concept_source_strength(topic, evidence, SOURCE_ANCHORS.get(slug, [])),
+                "source_anchors": source_anchors,
+                "source_strength": concept_source_strength(topic, evidence, source_anchors),
                 "limits": [
                     "Transcript evidence shows the concept appears in this course family.",
                     "It does not prove the method works for every equation, material, geometry, data size, or future case.",
@@ -5601,6 +5774,7 @@ def topic_quality_gate_html() -> str:
 
 def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[dict[str, object]]) -> None:
     evidence = topic.get("evidence", [])
+    source_anchor_evidence = list(topic.get("source_anchor_evidence") or [])
     evidence_items = []
     if isinstance(evidence, list):
         for row in evidence:
@@ -5611,7 +5785,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     diagrams = topic_diagrams_html(str(topic["slug"]))
     reader_check = topic_reader_check_html(str(topic["slug"]), reader_checks)
     derivation_link = topic_derivation_link_html(str(topic["slug"]))
-    source_anchors = source_anchor_cards(str(topic["slug"]), list(evidence) if isinstance(evidence, list) else [], root_prefix="../")
+    source_anchors = source_anchor_cards(str(topic["slug"]), (list(evidence) if isinstance(evidence, list) else []) + source_anchor_evidence, root_prefix="../")
     first_principles_essay = topic_first_principles_essay_html(topic, derivation)
     teaching_note = topic_teaching_note_html(str(topic["slug"]))
     case_walkthrough = topic_case_walkthrough_html(topic, derivation)
@@ -6356,7 +6530,7 @@ def write_concept_evidence_packet_page(path: Path, packet: dict[str, object]) ->
         f"<li><a href=\"../{html.escape(str(item['href']))}\">{html.escape(str(item['label']))}</a></li>"
         for item in packet["review_links"]
     )
-    source_anchors = source_anchor_cards(str(packet["slug"]), list(packet["evidence"]), root_prefix="../")
+    source_anchors = source_anchor_cards(str(packet["slug"]), list(packet["evidence"]), root_prefix="../", anchors=list(packet.get("source_anchors") or []))
     strength = packet["source_strength"]
     claim_review = claim_boundary_review_html(dict(packet["claim_review"]))
     body = f"""
@@ -7314,6 +7488,7 @@ def write_markdown_export(data: dict[str, object]) -> None:
                     f"- Page: {item['href']}",
                     f"- Claim anchored: {item['claim']}",
                     f"- Why this source: {item['why_this_source']}",
+                    f"- Transcript excerpt to inspect: {item.get('transcript_excerpt', 'not selected')}",
                     f"- Limit: {item['limit']}",
                     "",
                 ]
@@ -7869,6 +8044,8 @@ def validate(data: dict[str, object] | None = None) -> None:
             page_text = page_path.read_text(encoding="utf-8")
             if "Selected Source Anchors" not in page_text or page_text.count("Claim Anchored") < 2:
                 raise SystemExit(f"source anchors not rendered on page: {page_path}")
+            if page_text.count("Transcript Excerpt To Inspect") < 2:
+                raise SystemExit(f"source anchor transcript excerpts not rendered on page: {page_path}")
             if "Claim Boundary Review" not in page_text or "Overclaim To Avoid" not in page_text:
                 raise SystemExit(f"claim boundary review not rendered on page: {page_path}")
     for slug, anchors in source_anchors.items():
@@ -7877,6 +8054,9 @@ def validate(data: dict[str, object] | None = None) -> None:
             if not target.exists():
                 raise SystemExit(f"source anchor link missing: {slug} -> {item['href']}")
             for field in ("claim", "source", "why_this_source", "limit"):
+                if not item.get(field):
+                    raise SystemExit(f"source anchor missing {field}: {slug}")
+            for field in ("transcript_excerpt", "transcript_file"):
                 if not item.get(field):
                     raise SystemExit(f"source anchor missing {field}: {slug}")
     by_slug = {row["slug"]: row for row in coverage_rows}
