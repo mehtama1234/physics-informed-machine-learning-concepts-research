@@ -5572,6 +5572,30 @@ def topic_acceptance_sentence_html(topic: dict[str, object], derivation: dict[st
 """
 
 
+def topic_quality_gate_html() -> str:
+    rows = []
+    for item in QUALITY_RUBRIC:
+        rows.append(
+            f"""
+<tr>
+  <td><a href="../quality/{html.escape(str(item['slug']))}.html">{html.escape(str(item['title']))}</a></td>
+  <td>{html.escape(str(item['forbidden_shortcut']))}</td>
+  <td>{html.escape(str(item['replacement_test']))}</td>
+</tr>
+"""
+        )
+    return f"""
+<h2>Quality Gate Before Review</h2>
+<p>Use this table as a stop-test before treating the page as finished. If a row fails, revise the explanation before trusting the claim.</p>
+<table>
+  <thead>
+    <tr><th>Standard</th><th>Forbidden Shortcut</th><th>Replacement Test</th></tr>
+  </thead>
+  <tbody>{''.join(rows)}</tbody>
+</table>
+"""
+
+
 def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[dict[str, object]]) -> None:
     evidence = topic.get("evidence", [])
     evidence_items = []
@@ -5597,6 +5621,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     acceptance_sentence = topic_acceptance_sentence_html(topic, derivation)
     breaks_without = topic_breaks_without_html(topic, derivation)
     claim_review = claim_boundary_review_html(claim_boundary_review(topic, derivation))
+    quality_gate = topic_quality_gate_html()
     body = f"""
 <h1>{html.escape(str(topic['title']))}</h1>
 <h2>Common Problem This Solves</h2>
@@ -5634,6 +5659,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
 {breaks_without}
 <h2>Deeper Mathematical Why</h2>
 <p>The mathematical point is to decide what information is allowed to carry the scientific claim. If the carried information is too small, the model misses the behavior that matters. If it is too broad, the page may claim more than the evidence supports. The useful middle is a named object, a named scientific job, and a changed case that can reject the claim.</p>
+{quality_gate}
 {reader_check}
 <h2>Reader Test</h2>
 <p>A reader understands this concept only if they can say what is observed, what is hidden, what is kept, what is ignored, and why this changed-case test matters: {html.escape(str(derivation['test']))}.</p>
@@ -7450,7 +7476,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         if not topic_path.exists():
             raise SystemExit(f"deep dive missing topic page: {slug}")
         topic_text = topic_path.read_text(encoding="utf-8")
-        if "First-Principles Essay" not in topic_text or "What A Strong Explanation Must Say" not in topic_text or "One Concrete Case From Start To Finish" not in topic_text or "Observed Evidence" not in topic_text or "Rejection Test" not in topic_text or "How This Connects To Nearby Ideas" not in topic_text or "Learn Before This" not in topic_text or "Confusion It Prevents" not in topic_text or "Evidence Needed To Believe This" not in topic_text or "Strong Evidence" not in topic_text or "Too Weak" not in topic_text or "Reject Or Recheck When" not in topic_text or "Where This Fits By Domain" not in topic_text or "When To Avoid This In A Domain" not in topic_text or "Changed-Case Test" not in topic_text or "Plain Formula Term By Term" not in topic_text or "What It Carries" not in topic_text or "Concrete Worked Example" not in topic_text or "Concrete Wrong-Use Example" not in topic_text or "Test That Catches It" not in topic_text or "What Breaks Without This Idea" not in topic_text or "Minimum Proof Needed" not in topic_text or "Reader Must Be Able To Say" not in topic_text or "Acceptance Sentence Filled" not in topic_text or "I would test it by changing" not in topic_text or "Core Idea In One Sentence" not in topic_text or "Mathematical Shape Without Jargon" not in topic_text:
+        if "First-Principles Essay" not in topic_text or "What A Strong Explanation Must Say" not in topic_text or "One Concrete Case From Start To Finish" not in topic_text or "Observed Evidence" not in topic_text or "Rejection Test" not in topic_text or "How This Connects To Nearby Ideas" not in topic_text or "Learn Before This" not in topic_text or "Confusion It Prevents" not in topic_text or "Evidence Needed To Believe This" not in topic_text or "Strong Evidence" not in topic_text or "Too Weak" not in topic_text or "Reject Or Recheck When" not in topic_text or "Where This Fits By Domain" not in topic_text or "When To Avoid This In A Domain" not in topic_text or "Changed-Case Test" not in topic_text or "Plain Formula Term By Term" not in topic_text or "What It Carries" not in topic_text or "Concrete Worked Example" not in topic_text or "Concrete Wrong-Use Example" not in topic_text or "Test That Catches It" not in topic_text or "What Breaks Without This Idea" not in topic_text or "Minimum Proof Needed" not in topic_text or "Reader Must Be Able To Say" not in topic_text or "Acceptance Sentence Filled" not in topic_text or "I would test it by changing" not in topic_text or "Core Idea In One Sentence" not in topic_text or "Mathematical Shape Without Jargon" not in topic_text or "Quality Gate Before Review" not in topic_text or "Forbidden Shortcut" not in topic_text or "Replacement Test" not in topic_text:
             raise SystemExit(f"deep dive not rendered on topic page: {slug}")
     worked_example_slugs = {str(slug) for example in WORKED_EXAMPLES for slug in example["method_route"]}
     concepts_without_examples = sorted(concept_slugs - worked_example_slugs)
