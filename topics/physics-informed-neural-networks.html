@@ -480,6 +480,22 @@
 </table>
 
 
+<h2>Plain-Language Audit</h2>
+<p>This audit checks whether Physics-Informed Neural Networks can be taught without empty praise or label-first wording. A sentence passes only when it names the real thing in the world, the evidence in hand, the answer needed, and the first way to reject the claim.</p>
+<table>
+  <tbody>
+    <tr><th>Do Not Say</th><td>A method is good, broad, or modern without naming the scientific job.</td></tr>
+    <tr><th>Say Instead</th><td>Physics-Informed Neural Networks is used here because measurements may be sparse, but the answer must still respect a known physical equation.</td></tr>
+    <tr><th>Evidence Words Required</th><td>some measured values, boundary values, starting values, and a known differential equation</td></tr>
+    <tr><th>Hidden Answer Words Required</th><td>the full field value at every point in space and time</td></tr>
+    <tr><th>Field Words Required</th><td>differential equations in science and engineering; it lets known physics push the fit toward physically possible behavior instead of treating data points as the only evidence</td></tr>
+    <tr><th>Shape Words Required</th><td>Name shape, boundary, mesh, molecule, graph, surface, field, or say why none of those carries the claim.</td></tr>
+    <tr><th>Failure Words Required</th><td>the equation penalty can look small while the solution is wrong in hard regions, sharp layers, or unseen boundary cases</td></tr>
+    <tr><th>Rewrite Test</th><td>Rewrite the claim as: because we observe ___ and need ___, we fit a neural network while also measuring how badly its output violates the known equation. Trust it only after this check: move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements.</td></tr>
+  </tbody>
+</table>
+
+
 <h2>Acceptance Sentence Filled</h2>
 <p>This concept exists because scientists need an answer in a case where measurements may be sparse, but the answer must still respect a known physical equation. The available evidence is some measured values, boundary values, starting values, and a known differential equation. The hidden thing is the full field value at every point in space and time. The math does fit a neural network while also measuring how badly its output violates the known equation because the model is not allowed to match points while freely breaking the equation between those points. It matters in differential equations in science and engineering because it lets known physics push the fit toward physically possible behavior instead of treating data points as the only evidence. It fails when the equation penalty can look small while the solution is wrong in hard regions, sharp layers, or unseen boundary cases. I would test it by changing the case this way: move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements.</p>
 

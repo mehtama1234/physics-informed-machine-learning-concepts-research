@@ -429,6 +429,22 @@
 </table>
 
 
+<h2>Plain-Language Audit</h2>
+<p>This audit checks whether Neural Differential Equations can be taught without empty praise or label-first wording. A sentence passes only when it names the real thing in the world, the evidence in hand, the answer needed, and the first way to reject the claim.</p>
+<table>
+  <tbody>
+    <tr><th>Do Not Say</th><td>A method is good, broad, or modern without naming the scientific job.</td></tr>
+    <tr><th>Say Instead</th><td>Neural Differential Equations is used here because scientists may know that a system changes continuously but not know the exact rule for that change.</td></tr>
+    <tr><th>Evidence Words Required</th><td>measurements of a system changing over time</td></tr>
+    <tr><th>Hidden Answer Words Required</th><td>the rate rule that moves the present value into the future</td></tr>
+    <tr><th>Field Words Required</th><td>changing systems where time evolution is part of the model; it lets learning focus on the missing change rule while the time update still carries the idea of continuous evolution</td></tr>
+    <tr><th>Shape Words Required</th><td>Name shape, boundary, mesh, molecule, graph, surface, field, or say why none of those carries the claim.</td></tr>
+    <tr><th>Failure Words Required</th><td>small learned-rate errors can accumulate until long-time predictions drift away from the real system</td></tr>
+    <tr><th>Rewrite Test</th><td>Rewrite the claim as: because we observe ___ and need ___, we learn the missing rate rule and place it inside a time-evolution calculation. Trust it only after this check: run longer than the training window and check whether small rate errors accumulate into drift.</td></tr>
+  </tbody>
+</table>
+
+
 <h2>Acceptance Sentence Filled</h2>
 <p>This concept exists because scientists need an answer in a case where scientists may know that a system changes continuously but not know the exact rule for that change. The available evidence is measurements of a system changing over time. The hidden thing is the rate rule that moves the present value into the future. The math does learn the missing rate rule and place it inside a time-evolution calculation because learning supplies the unknown change rule while the time update carries the idea of continuous motion. It matters in changing systems where time evolution is part of the model because it lets learning focus on the missing change rule while the time update still carries the idea of continuous evolution. It fails when small learned-rate errors can accumulate until long-time predictions drift away from the real system. I would test it by changing the case this way: run longer than the training window and check whether small rate errors accumulate into drift.</p>
 

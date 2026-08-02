@@ -423,6 +423,22 @@
 </table>
 
 
+<h2>Plain-Language Audit</h2>
+<p>This audit checks whether Generative Modeling can be taught without empty praise or label-first wording. A sentence passes only when it names the real thing in the world, the evidence in hand, the answer needed, and the first way to reject the claim.</p>
+<table>
+  <tbody>
+    <tr><th>Do Not Say</th><td>A method is good, broad, or modern without naming the scientific job.</td></tr>
+    <tr><th>Say Instead</th><td>Generative Modeling is used here because some tasks need many possible examples, not one predicted answer.</td></tr>
+    <tr><th>Evidence Words Required</th><td>examples of fields, molecules, flows, shapes, or other scientific objects</td></tr>
+    <tr><th>Hidden Answer Words Required</th><td>the spread of possible valid objects beyond the examples</td></tr>
+    <tr><th>Field Words Required</th><td>creating plausible scientific samples, fields, or candidate designs; it can explore candidate fields, shapes, or scenarios when direct enumeration is impossible</td></tr>
+    <tr><th>Shape Words Required</th><td>Name shape, boundary, mesh, molecule, graph, surface, field, or say why none of those carries the claim.</td></tr>
+    <tr><th>Failure Words Required</th><td>generated samples can look realistic while breaking constraints, conservation, or rare-event behavior</td></tr>
+    <tr><th>Rewrite Test</th><td>Rewrite the claim as: because we observe ___ and need ___, we learn how to sample new candidates that resemble the training family. Trust it only after this check: measure constraints, rare cases, conservation, and downstream task performance on generated samples.</td></tr>
+  </tbody>
+</table>
+
+
 <h2>Acceptance Sentence Filled</h2>
 <p>This concept exists because scientists need an answer in a case where some tasks need many possible examples, not one predicted answer. The available evidence is examples of fields, molecules, flows, shapes, or other scientific objects. The hidden thing is the spread of possible valid objects beyond the examples. The math does learn how to sample new candidates that resemble the training family because a generated object must still pass physics and usefulness checks. It matters in creating plausible scientific samples, fields, or candidate designs because it can explore candidate fields, shapes, or scenarios when direct enumeration is impossible. It fails when generated samples can look realistic while breaking constraints, conservation, or rare-event behavior. I would test it by changing the case this way: measure constraints, rare cases, conservation, and downstream task performance on generated samples.</p>
 
