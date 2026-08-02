@@ -45,12 +45,58 @@
 <p>The trusted simulator is too slow for repeated decisions, but a fast answer is dangerous if nobody states where it is valid.</p>
 <h2>Where It Shows Up</h2>
 <p>engineering design, uncertainty sweeps, control loops, inverse problems, and expensive simulation workflows</p>
+<h2>Family Story From First Principles</h2>
+<p>Start with the scientific job, not the method names. This family exists because The trusted simulator is too slow for repeated decisions, but a fast answer is dangerous if nobody states where it is valid. The route is useful only when the input evidence, output quantity, kept rule or structure, and changed-case test are all named before choosing a method.</p>
+<p>The domain setting is engineering design, uncertainty sweeps, control loops, inverse problems, and expensive simulation workflows. In that setting, the family is asking what information must be carried from observed evidence to a usable answer, and what evidence would make the answer fail.</p>
 <h2>Route Through The Ideas</h2>
 <div class="route"><div class="route-step">1. Start with an expensive solver or experiment.</div><div class="route-step">2. Name the repeated questions people need to ask.</div><div class="route-step">3. Train a cheaper stand-in only for those questions.</div><div class="route-step">4. Compare against the trusted source near the edge of intended use.</div><div class="route-step">5. Report the use range with the answer, not after the answer.</div></div>
 <h2>Concepts In This Family</h2>
 <ul><li><a href="../topics/surrogate-modeling.html">Surrogate Modeling</a></li><li><a href="../topics/deep-learning.html">Deep Learning</a></li><li><a href="../topics/operator-learning.html">Operator Learning</a></li><li><a href="../topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></li></ul>
+<h2>What Each Concept Does In The Family</h2>
+<table>
+  <thead>
+    <tr><th>Concept</th><th>Problem It Handles</th><th>Information It Keeps</th><th>Family-Level Failure</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <td><a href="../topics/surrogate-modeling.html">Surrogate Modeling</a></td>
+  <td>a trusted simulator may be too slow to run for every design, control, or uncertainty question</td>
+  <td>the input-output behavior needed for a specified family of queries</td>
+  <td>speed can hide missing physics when the surrogate is used beyond the regime where it was checked</td>
+</tr>
+
+<tr>
+  <td><a href="../topics/deep-learning.html">Deep Learning</a></td>
+  <td>scientists often have examples of behavior but no short rule that predicts the next case</td>
+  <td>many adjustable weights that turn inputs into predictions</td>
+  <td>the model can fit familiar examples while failing on a new material, geometry, scale, or boundary condition</td>
+</tr>
+
+<tr>
+  <td><a href="../topics/operator-learning.html">Operator Learning</a></td>
+  <td>one simulation answer is not enough when engineers need the whole map from inputs to solution fields</td>
+  <td>a learned map from a forcing, coefficient, shape, or starting field to a solution field</td>
+  <td>the learned map can give plausible-looking fields that violate the equation or fail on a shifted input family</td>
+</tr>
+
+<tr>
+  <td><a href="../topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></td>
+  <td>a prediction is not enough unless the user knows when it should be believed</td>
+  <td>error checks, changed-case tests, and limits on where the model was trained</td>
+  <td>training error can look good while the model fails under a new geometry, parameter range, sensor, or physical regime</td>
+</tr>
+</tbody>
+</table>
 <h2>What The Math Buys</h2>
 <p>The approximation becomes useful only after the input family, output quantity, error measure, and rejected cases are named.</p>
+<h2>Evidence Needed Before Trusting The Family</h2>
+<table>
+  <tbody>
+    <tr><th>Strong Evidence</th><td>The route names the scientific quantity, the input family, the output quantity, and a changed case that was not used to shape the answer.</td></tr>
+    <tr><th>Too Weak</th><td>A page says the family is powerful, fast, broad, or accurate without saying what changed case could reject the claim.</td></tr>
+    <tr><th>Reader Test</th><td>Explain why each concept is needed in the route and what would break if that concept were removed.</td></tr>
+  </tbody>
+</table>
 <h2>Failure Boundary</h2>
 <p>This family fails when speed hides missing physics, when users ask new questions the surrogate was not trained for, or when uncertainty is treated as decoration.</p>
 <h2>Reader Check</h2>

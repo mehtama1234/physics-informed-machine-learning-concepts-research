@@ -45,12 +45,58 @@
 <p>You have some observations, but the answer must also obey a rule scientists already trust.</p>
 <h2>Where It Shows Up</h2>
 <p>heat flow, fluids, waves, elasticity, reaction systems, and other systems described by differential equations</p>
+<h2>Family Story From First Principles</h2>
+<p>Start with the scientific job, not the method names. This family exists because You have some observations, but the answer must also obey a rule scientists already trust. The route is useful only when the input evidence, output quantity, kept rule or structure, and changed-case test are all named before choosing a method.</p>
+<p>The domain setting is heat flow, fluids, waves, elasticity, reaction systems, and other systems described by differential equations. In that setting, the family is asking what information must be carried from observed evidence to a usable answer, and what evidence would make the answer fail.</p>
 <h2>Route Through The Ideas</h2>
 <div class="route"><div class="route-step">1. Start with a quantity that changes across space or time.</div><div class="route-step">2. Write the rule that says how the quantity is allowed to change.</div><div class="route-step">3. Fit the unknown field to the measured values.</div><div class="route-step">4. Also check whether the fitted field breaks the rule between measured values.</div><div class="route-step">5. Test a changed boundary, changed source, or changed scale before trusting the result.</div></div>
 <h2>Concepts In This Family</h2>
 <ul><li><a href="../topics/partial-differential-equations.html">Partial Differential Equations</a></li><li><a href="../topics/physics-informed-neural-networks.html">Physics-Informed Neural Networks</a></li><li><a href="../topics/optimization-for-learning.html">Optimization For Learning</a></li><li><a href="../topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></li></ul>
+<h2>What Each Concept Does In The Family</h2>
+<table>
+  <thead>
+    <tr><th>Concept</th><th>Problem It Handles</th><th>Information It Keeps</th><th>Family-Level Failure</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <td><a href="../topics/partial-differential-equations.html">Partial Differential Equations</a></td>
+  <td>a quantity changes over space and time, so one number is not enough to describe the situation</td>
+  <td>a field, its rates of change, and the boundary or starting information needed to evolve it</td>
+  <td>a learned shortcut can ignore boundary conditions or conservation behavior that the PDE was carrying</td>
+</tr>
+
+<tr>
+  <td><a href="../topics/physics-informed-neural-networks.html">Physics-Informed Neural Networks</a></td>
+  <td>measurements may be sparse, but the answer must still respect a known physical equation</td>
+  <td>a neural network prediction plus a penalty for violating the known equation</td>
+  <td>the equation penalty can look small while the solution is wrong in hard regions, sharp layers, or unseen boundary cases</td>
+</tr>
+
+<tr>
+  <td><a href="../topics/optimization-for-learning.html">Optimization For Learning</a></td>
+  <td>learning needs a way to decide which model settings are better or worse</td>
+  <td>a written score that compares model output against data, physics penalties, or design goals</td>
+  <td>a model can optimize the written score while missing the scientific behavior the score failed to name</td>
+</tr>
+
+<tr>
+  <td><a href="../topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></td>
+  <td>a prediction is not enough unless the user knows when it should be believed</td>
+  <td>error checks, changed-case tests, and limits on where the model was trained</td>
+  <td>training error can look good while the model fails under a new geometry, parameter range, sensor, or physical regime</td>
+</tr>
+</tbody>
+</table>
 <h2>What The Math Buys</h2>
 <p>The equation turns empty space between measurements into a checkable demand. The model cannot claim success only by touching the measured points.</p>
+<h2>Evidence Needed Before Trusting The Family</h2>
+<table>
+  <tbody>
+    <tr><th>Strong Evidence</th><td>The route names the scientific quantity, the input family, the output quantity, and a changed case that was not used to shape the answer.</td></tr>
+    <tr><th>Too Weak</th><td>A page says the family is powerful, fast, broad, or accurate without saying what changed case could reject the claim.</td></tr>
+    <tr><th>Reader Test</th><td>Explain why each concept is needed in the route and what would break if that concept were removed.</td></tr>
+  </tbody>
+</table>
 <h2>Failure Boundary</h2>
 <p>This family fails when the written equation is incomplete, the boundary information is wrong, or the training process avoids the hard regions where the rule matters most.</p>
 <h2>Reader Check</h2>
