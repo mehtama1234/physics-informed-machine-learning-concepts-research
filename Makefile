@@ -1,4 +1,4 @@
-.PHONY: build validate check serve remote-check review audit
+.PHONY: build validate check serve remote-check ci-check review audit
 
 build:
 	python3 scripts/build_physics_informed_ml_research_package.py --build
@@ -10,6 +10,7 @@ check:
 	python3 -m py_compile scripts/build_physics_informed_ml_research_package.py
 	python3 -m py_compile scripts/validate_generated_site.py
 	python3 -m py_compile scripts/verify_remote_state.py
+	python3 -m py_compile scripts/verify_ci_status.py
 	python3 scripts/build_physics_informed_ml_research_package.py --build --validate
 	python3 scripts/validate_generated_site.py
 
@@ -18,6 +19,9 @@ serve:
 
 remote-check:
 	python3 scripts/verify_remote_state.py
+
+ci-check:
+	python3 scripts/verify_ci_status.py
 
 review:
 	@printf '%s\n' \

@@ -63,6 +63,7 @@ The purpose is not to summarize lectures. The purpose is to explain physics-info
 - `scripts/build_physics_informed_ml_research_package.py`: downloader, builder, and validator
 - `scripts/validate_generated_site.py`: standalone generated-site link and content validator
 - `scripts/verify_remote_state.py`: local-vs-remote branch verification
+- `scripts/verify_ci_status.py`: GitHub Actions status check for the current commit
 - `.github/workflows/check.yml`: GitHub Actions workflow that runs `make check`
 
 ## Commands
@@ -70,6 +71,7 @@ The purpose is not to summarize lectures. The purpose is to explain physics-info
 ```bash
 make check
 make remote-check
+make ci-check
 ```
 
 To refresh YouTube captions and metadata:
@@ -103,6 +105,7 @@ make audit
 ```
 
 GitHub Actions runs `make check` on pushes and pull requests.
+After the pushed workflow finishes, `make ci-check` verifies that the current commit's remote check completed successfully.
 
 The fastest review path is:
 

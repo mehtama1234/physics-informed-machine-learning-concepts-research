@@ -114,7 +114,7 @@ def check_internal_links(manifest: list[str]) -> list[str]:
 
 def check_required_sections() -> list[str]:
     required = {
-        "site/handoff.html": ("Review Now", "http://127.0.0.1:8022/hand-polish.html", "make review", "make remote-check", "python3 scripts/verify_remote_state.py", "Start Here", "Remote Verification Commands", "git push -u origin main", "Remaining Editorial Work"),
+        "site/handoff.html": ("Review Now", "http://127.0.0.1:8022/hand-polish.html", "make review", "make remote-check", "make ci-check", "python3 scripts/verify_remote_state.py", "python3 scripts/verify_ci_status.py", "Start Here", "Remote Verification Commands", "git push -u origin main", "Remaining Editorial Work"),
         "site/coverage.html": ("Coverage Matrix", "Reader Check"),
         "site/synthesis.html": ("Field Synthesis",),
         "site/quality.html": ("Editorial Quality Rubric",),

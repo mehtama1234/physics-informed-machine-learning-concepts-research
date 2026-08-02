@@ -97,11 +97,14 @@
       "Run build validation and a wording scan before committing.",
       "Before remote handoff, run git status --short --branch and make check.",
       "After pushing, run make remote-check or make audit to compare local main with origin/main.",
+      "After GitHub Actions finishes, run make ci-check to verify the workflow result for the current commit.",
       "Create or grant access to the GitHub repository configured as origin.",
       "Run git push -u origin main, then verify git ls-remote --heads origin main matches git rev-parse main."
     ],
     "local_files": [
       "scripts/build_physics_informed_ml_research_package.py",
+      "scripts/verify_remote_state.py",
+      "scripts/verify_ci_status.py",
       "README.md",
       "Makefile"
     ],
@@ -111,7 +114,8 @@
       "generated pages are validated",
       "commits are small enough to review",
       "remote main hash matches local main after push",
-      "make review prints the strongest local review URLs"
+      "make review prints the strongest local review URLs",
+      "make ci-check verifies the current commit's GitHub Actions run after CI completes"
     ]
   },
   {
