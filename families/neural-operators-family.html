@@ -54,6 +54,48 @@
 <p>A research group has thousands of solved flow cases for different inlet shapes. The next useful object is not one more solved flow; it is a checked way to turn a new inlet field into the whole resulting flow field.</p>
 <h2>Route Through The Ideas</h2>
 <div class="route"><div class="route-step">1. Start with many examples of input fields and output fields.</div><div class="route-step">2. Name the family: which equations, boundaries, geometries, grids, and parameter ranges are included.</div><div class="route-step">3. Learn the map from a new input field to a new output field.</div><div class="route-step">4. Use structure such as frequency, graph connections, or attention when the field needs it.</div><div class="route-step">5. Reject broad claims unless the model survives new cases from the intended family.</div></div>
+<h2>Route Burden Table</h2>
+<table>
+  <thead>
+    <tr><th>Step</th><th>Question It Answers</th><th>Evidence Needed</th><th>Mistake It Catches</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <td>1</td>
+  <td>What collection teaches the map?</td>
+  <td>paired input fields and output fields from trusted solves or measurements</td>
+  <td>trying to learn a field-to-field map from isolated examples with no named family</td>
+</tr>
+
+<tr>
+  <td>2</td>
+  <td>What is this model allowed to answer?</td>
+  <td>the equation types, boundaries, geometries, grids, and parameter ranges included</td>
+  <td>using the model on a new family because the output looks smooth</td>
+</tr>
+
+<tr>
+  <td>3</td>
+  <td>What is being learned?</td>
+  <td>a map from a new input field to the full output field, not one scalar score</td>
+  <td>confusing a single solved case with the reusable object scientists need</td>
+</tr>
+
+<tr>
+  <td>4</td>
+  <td>What structure must survive inside the field?</td>
+  <td>checks for far interactions, local detail, boundary effects, and resolution changes</td>
+  <td>choosing an architecture that erases the relation the field depends on</td>
+</tr>
+
+<tr>
+  <td>5</td>
+  <td>What rejects the claim?</td>
+  <td>held-out fields, changed resolution, and physical quantities checked after prediction</td>
+  <td>trusting visual similarity while the physical quantity is wrong</td>
+</tr>
+</tbody>
+</table>
 <h2>Why The Concepts Appear In This Order</h2>
 <ul><li>Operator learning comes first because the thing being learned is the whole input-field to output-field map.</li><li>Surrogate modeling names the practical reason this map matters: repeated solves are too slow for design or exploration.</li><li>Attention and geometric structure appear when local neighborhoods are not enough to carry the field information.</li><li>Foundation models appear only after many task families exist, and their burden is proving that a new task shares the structure learned from old tasks.</li></ul>
 <h2>Evidence Chain To Track</h2>

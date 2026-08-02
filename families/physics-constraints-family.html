@@ -54,6 +54,48 @@
 <p>A lab wants the temperature inside a wall, but sensors only touch a few points. The heat equation is not extra decoration; it is the reason the unsensed middle is not free to take any shape it wants.</p>
 <h2>Route Through The Ideas</h2>
 <div class="route"><div class="route-step">1. Start with a quantity that changes across space or time.</div><div class="route-step">2. Write the rule that says how the quantity is allowed to change.</div><div class="route-step">3. Fit the unknown field to the measured values.</div><div class="route-step">4. Also check whether the fitted field breaks the rule between measured values.</div><div class="route-step">5. Test a changed boundary, changed source, or changed scale before trusting the result.</div></div>
+<h2>Route Burden Table</h2>
+<table>
+  <thead>
+    <tr><th>Step</th><th>Question It Answers</th><th>Evidence Needed</th><th>Mistake It Catches</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <td>1</td>
+  <td>What is the thing we are trying to know?</td>
+  <td>a named field such as temperature, pressure, velocity, stress, or concentration</td>
+  <td>treating a field problem like a single-number prediction</td>
+</tr>
+
+<tr>
+  <td>2</td>
+  <td>What keeps the empty places from being arbitrary?</td>
+  <td>the equation, boundary data, starting data, and units for the physical case</td>
+  <td>using physics words without naming the rule that can reject an answer</td>
+</tr>
+
+<tr>
+  <td>3</td>
+  <td>What ties the answer to the real case?</td>
+  <td>sensor values, measurements, or trusted simulation values at known places</td>
+  <td>letting the fitted field drift away from observed evidence</td>
+</tr>
+
+<tr>
+  <td>4</td>
+  <td>What checks the places nobody measured?</td>
+  <td>equation-error checks between measurements and near boundaries or sharp regions</td>
+  <td>matching data points while breaking the rule between them</td>
+</tr>
+
+<tr>
+  <td>5</td>
+  <td>What would make us stop trusting it?</td>
+  <td>a changed boundary, source, scale, or hard region held back from fitting</td>
+  <td>calling one polished fit a scientific answer before it survives a changed case</td>
+</tr>
+</tbody>
+</table>
 <h2>Why The Concepts Appear In This Order</h2>
 <ul><li>The PDE comes first because it says what kind of object the answer is: a field tied together by neighbors, time, and boundaries.</li><li>The PINN appears next because the field is unknown and must be fitted while still answering to the equation.</li><li>Optimization appears because fitting is not wishing; the model follows the written error score, including any bad weighting choices.</li><li>Uncertainty appears last because a fitted field is still only useful inside the changed cases where it has been tested.</li></ul>
 <h2>Evidence Chain To Track</h2>
