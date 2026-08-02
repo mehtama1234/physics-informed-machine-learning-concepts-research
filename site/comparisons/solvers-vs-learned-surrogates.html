@@ -70,6 +70,25 @@
   <li>Choose the side whose burden matches the job, not the side with the more impressive label.</li>
 </ol>
 
+
+<h2>Decision Burden Table</h2>
+<p>This table states what must be true before choosing either side. It keeps the comparison tied to the scientific job rather than the method name.</p>
+<table>
+  <thead>
+    <tr><th>Question</th><th>Trusted numerical solvers</th><th>Learned surrogates</th></tr>
+  </thead>
+  <tbody>
+    <tr><th>Use When</th><td>Use this side when correctness, conservation, and known numerical behavior matter more than speed.</td><td>Use this side when many repeated queries make the full solver too costly and the query family is narrow enough to test.</td></tr>
+    <tr><th>Evidence Burden</th><td>The evidence must show the left-side assumptions match the named scientific quantity and use range.</td><td>The evidence must show the right-side assumptions match the named scientific quantity and use range.</td></tr>
+    <tr><th>Strong Case</th><td>A safety decision depends on a stress peak near a crack. Use the trusted solver because the local failure quantity matters more than speed.</td><td>A design team needs to screen thousands of similar wing shapes before choosing a few expensive solver runs. Use a surrogate inside that named shape family.</td></tr>
+    <tr><th>Failure To Check</th><td colspan="2">Compare against the solver near the design boundary and inspect the decision quantity, such as drag, lift, stress peak, or failure location.</td></tr>
+  </tbody>
+</table>
+<h2>Swap Test</h2>
+<p>Swap the choice deliberately. If choosing the other side would break the named scientific quantity, use range, or changed-case test, the difference is real. If both sides still sound interchangeable, the problem has not been stated clearly enough.</p>
+<h2>Evidence Needed To Choose</h2>
+<p>Choose only after naming the observed evidence, hidden quantity, decision quantity, cost of a wrong answer, and the changed case that would reject the choice.</p>
+
 <h2>Concrete Choice Cases</h2>
 <table>
   <tbody>

@@ -204,6 +204,8 @@
 - Wrong choice case: Using an operator model from one family on a boundary type it never saw, or using a PINN when the real need is thousands of fast repeated solves.
 - Evidence that exposes it: Hold out a changed boundary or input-field family and compare the full field and the scientific quantity, not only visual similarity.
 - Wrong turn: Do not use either word as a badge of trust. Ask what changed case was tested.
+- Decision burden: name the observed evidence, hidden quantity, decision quantity, use range, and changed case before choosing either side.
+- Swap test: if swapping sides does not break a named claim, the comparison is still too vague.
 
 ### Solvers vs Learned Surrogates
 - Shared problem: Both produce answers for scientific or engineering questions.
@@ -213,6 +215,8 @@
 - Wrong choice case: Replacing the solver everywhere because the surrogate is fast, including edge cases where no solver comparison exists.
 - Evidence that exposes it: Compare against the solver near the design boundary and inspect the decision quantity, such as drag, lift, stress peak, or failure location.
 - Wrong turn: A fast surrogate is not a replacement for the solver outside the cases where it was checked.
+- Decision burden: name the observed evidence, hidden quantity, decision quantity, use range, and changed case before choosing either side.
+- Swap test: if swapping sides does not break a named claim, the comparison is still too vague.
 
 ### Symbolic Regression vs Large Fitted Prediction
 - Shared problem: Both use data to make future or unseen cases easier to understand.
@@ -222,6 +226,8 @@
 - Wrong choice case: Treating a neat formula as a law when an important variable was never measured, or demanding a tiny formula for a pattern that needs richer structure.
 - Evidence that exposes it: Run a changed experiment, add missing-variable checks, and compare error on cases that differ from the data that selected the formula.
 - Wrong turn: A neat formula is not automatically true; it must survive changed data and missing-variable checks.
+- Decision burden: name the observed evidence, hidden quantity, decision quantity, use range, and changed case before choosing either side.
+- Swap test: if swapping sides does not break a named claim, the comparison is still too vague.
 
 ### Data-Only vs Physics-Informed Learning
 - Shared problem: Both try to turn examples into predictions.
@@ -231,6 +237,8 @@
 - Wrong choice case: Adding a physical rule that is incomplete or wrong for the experiment, or ignoring a trusted rule when data are sparse.
 - Evidence that exposes it: Compare changed cases where the rule matters: boundaries, conservation, units, symmetry, or regions between measurements.
 - Wrong turn: Adding physics language does not help if the added rule is wrong, too weak, or never tested against the claim.
+- Decision burden: name the observed evidence, hidden quantity, decision quantity, use range, and changed case before choosing either side.
+- Swap test: if swapping sides does not break a named claim, the comparison is still too vague.
 
 
 ## Worked Examples

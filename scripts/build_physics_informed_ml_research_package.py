@@ -5349,6 +5349,7 @@ def write_family_page(path: Path, family: dict[str, object]) -> None:
 
 def write_comparison_page(path: Path, comparison: dict[str, object]) -> None:
     decision_essay = comparison_decision_essay_html(comparison)
+    decision_burden = comparison_decision_burden_html(comparison)
     body = f"""
 <h1>{html.escape(str(comparison['title']))}</h1>
 <h2>Shared Problem</h2>
@@ -5366,6 +5367,7 @@ def write_comparison_page(path: Path, comparison: dict[str, object]) -> None:
 <h2>Key Difference</h2>
 <p>{html.escape(str(comparison['key_difference']))}</p>
 {decision_essay}
+{decision_burden}
 <h2>Concrete Choice Cases</h2>
 <table>
   <tbody>
@@ -5381,6 +5383,28 @@ def write_comparison_page(path: Path, comparison: dict[str, object]) -> None:
 <p>Before choosing a side, name the scientific quantity, the available evidence, the use range, and the changed case that would expose a bad answer.</p>
 """
     path.write_text(html_page(str(comparison["title"]), body, root_prefix="../"), encoding="utf-8")
+
+
+def comparison_decision_burden_html(comparison: dict[str, object]) -> str:
+    return f"""
+<h2>Decision Burden Table</h2>
+<p>This table states what must be true before choosing either side. It keeps the comparison tied to the scientific job rather than the method name.</p>
+<table>
+  <thead>
+    <tr><th>Question</th><th>{html.escape(str(comparison['left']))}</th><th>{html.escape(str(comparison['right']))}</th></tr>
+  </thead>
+  <tbody>
+    <tr><th>Use When</th><td>{html.escape(str(comparison['left_when']))}</td><td>{html.escape(str(comparison['right_when']))}</td></tr>
+    <tr><th>Evidence Burden</th><td>The evidence must show the left-side assumptions match the named scientific quantity and use range.</td><td>The evidence must show the right-side assumptions match the named scientific quantity and use range.</td></tr>
+    <tr><th>Strong Case</th><td>{html.escape(str(comparison['left_case']))}</td><td>{html.escape(str(comparison['right_case']))}</td></tr>
+    <tr><th>Failure To Check</th><td colspan="2">{html.escape(str(comparison['evidence_that_exposes_it']))}</td></tr>
+  </tbody>
+</table>
+<h2>Swap Test</h2>
+<p>Swap the choice deliberately. If choosing the other side would break the named scientific quantity, use range, or changed-case test, the difference is real. If both sides still sound interchangeable, the problem has not been stated clearly enough.</p>
+<h2>Evidence Needed To Choose</h2>
+<p>Choose only after naming the observed evidence, hidden quantity, decision quantity, cost of a wrong answer, and the changed case that would reject the choice.</p>
+"""
 
 
 def comparison_decision_essay_html(comparison: dict[str, object]) -> str:
@@ -5492,6 +5516,8 @@ def write_markdown_export(data: dict[str, object]) -> None:
                 f"- Wrong choice case: {comparison['wrong_choice_case']}",
                 f"- Evidence that exposes it: {comparison['evidence_that_exposes_it']}",
                 f"- Wrong turn: {comparison['wrong_turn']}",
+                f"- Decision burden: name the observed evidence, hidden quantity, decision quantity, use range, and changed case before choosing either side.",
+                f"- Swap test: if swapping sides does not break a named claim, the comparison is still too vague.",
                 "",
             ]
         )
@@ -5929,7 +5955,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         if not comparison_path.exists():
             raise SystemExit(f"missing comparison page: {comparison['title']}")
         comparison_text = comparison_path.read_text(encoding="utf-8")
-        if "How To Decide From First Principles" not in comparison_text or "Decision Checklist" not in comparison_text or "Concrete Choice Cases" not in comparison_text or "Wrong Choice Case" not in comparison_text or "Evidence That Exposes It" not in comparison_text:
+        if "How To Decide From First Principles" not in comparison_text or "Decision Checklist" not in comparison_text or "Decision Burden Table" not in comparison_text or "Swap Test" not in comparison_text or "Evidence Needed To Choose" not in comparison_text or "Concrete Choice Cases" not in comparison_text or "Wrong Choice Case" not in comparison_text or "Evidence That Exposes It" not in comparison_text:
             raise SystemExit(f"comparison page missing concrete cases: {comparison['title']}")
         for field in ("left_case", "right_case", "wrong_choice_case", "evidence_that_exposes_it"):
             if not comparison.get(field):
