@@ -62,7 +62,7 @@ RESTRICTED_PATTERNS = (
     "cutting edge",
 )
 
-MEATY_GOAL_REQUIREMENT_COUNT = 13
+MEATY_GOAL_REQUIREMENT_COUNT = 14
 
 
 class LinkParser(HTMLParser):
@@ -127,7 +127,7 @@ def check_required_sections() -> list[str]:
         "site/editorial-roadmap.html": ("Editorial Roadmap", "Status:", "Current Evidence", "Acceptance Check", "locally completed", "Meaty End-To-End Goal"),
         "site/completion-audit.html": ("Completion Audit", "Requirement Evidence", "locally verified"),
         "site/meaty-goal.html": ("Meaty End-To-End Goal", "Done Means", "Every Core Page Must Contain", "Acceptance Sentence", "Not Done If"),
-        "site/meaty-goal-coverage.html": ("Meaty Goal Coverage Audit", "First Principles", "Case Walkthrough", "Concept Connections", "Belief Evidence", "Domain Fit", "Formula Terms", "Breaks Without Idea", "Acceptance Sentence", "Missing Items"),
+        "site/meaty-goal-coverage.html": ("Meaty Goal Coverage Audit", "First Principles", "Hand Teaching Note", "Case Walkthrough", "Concept Connections", "Belief Evidence", "Domain Fit", "Formula Terms", "Breaks Without Idea", "Acceptance Sentence", "Missing Items"),
         "site/families.html": ("Paper Family Routes",),
         "site/families/physics-constraints-family.html": ("Family Story From First Principles", "What Each Concept Does In The Family", "Evidence Needed Before Trusting The Family", "Too Weak"),
         "site/families/neural-operators-family.html": ("Family Story From First Principles", "What Each Concept Does In The Family", "Evidence Needed Before Trusting The Family", "Too Weak"),
