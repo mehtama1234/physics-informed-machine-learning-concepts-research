@@ -316,6 +316,19 @@ FAMILY_PAGES = [
             "Also check whether the fitted field breaks the rule between measured values.",
             "Test a changed boundary, changed source, or changed scale before trusting the result.",
         ],
+        "concrete_case": "A lab wants the temperature inside a wall, but sensors only touch a few points. The heat equation is not extra decoration; it is the reason the unsensed middle is not free to take any shape it wants.",
+        "why_order_matters": [
+            "The PDE comes first because it says what kind of object the answer is: a field tied together by neighbors, time, and boundaries.",
+            "The PINN appears next because the field is unknown and must be fitted while still answering to the equation.",
+            "Optimization appears because fitting is not wishing; the model follows the written error score, including any bad weighting choices.",
+            "Uncertainty appears last because a fitted field is still only useful inside the changed cases where it has been tested.",
+        ],
+        "reader_must_track": [
+            "which measured values anchor the answer",
+            "which rule is trusted enough to police the empty places",
+            "which boundary or starting information defines the physical case",
+            "which changed boundary, source, scale, or hard region could reject the result",
+        ],
         "what_the_math_buys": "The equation turns empty space between measurements into a checkable demand. The model cannot claim success only by touching the measured points.",
         "failure_boundary": "This family fails when the written equation is incomplete, the boundary information is wrong, or the training process avoids the hard regions where the rule matters most.",
     },
@@ -331,6 +344,19 @@ FAMILY_PAGES = [
             "Learn the map from a new input field to a new output field.",
             "Use structure such as frequency, graph connections, or attention when the field needs it.",
             "Reject broad claims unless the model survives new cases from the intended family.",
+        ],
+        "concrete_case": "A research group has thousands of solved flow cases for different inlet shapes. The next useful object is not one more solved flow; it is a checked way to turn a new inlet field into the whole resulting flow field.",
+        "why_order_matters": [
+            "Operator learning comes first because the thing being learned is the whole input-field to output-field map.",
+            "Surrogate modeling names the practical reason this map matters: repeated solves are too slow for design or exploration.",
+            "Attention and geometric structure appear when local neighborhoods are not enough to carry the field information.",
+            "Foundation models appear only after many task families exist, and their burden is proving that a new task shares the structure learned from old tasks.",
+        ],
+        "reader_must_track": [
+            "which family of equations, boundaries, geometries, grids, and parameters was included",
+            "which full-field quantity the model must return",
+            "which field structure the architecture keeps visible",
+            "which held-out family or changed resolution could expose a smooth but wrong field",
         ],
         "what_the_math_buys": "The object being learned is a map between functions. That matters because a field is not a single row of numbers; it is a whole spatial object.",
         "failure_boundary": "This family fails when the new query is outside the learned family, when resolution changes reveal hidden errors, or when the output looks smooth but breaks the physical claim.",
@@ -348,6 +374,19 @@ FAMILY_PAGES = [
             "Check whether the rule predicts a changed experiment.",
             "Keep the rule only if it is both useful and honest about what was not measured.",
         ],
+        "concrete_case": "A scientist records how a chemical concentration changes but does not know the rate law. The goal is not merely to predict the next measurement; the goal is to find a small candidate rule that can be argued about and tested in a new experiment.",
+        "why_order_matters": [
+            "Symbolic regression appears when the desired answer is a readable formula, not only a large fitted predictor.",
+            "Neural differential equations appear when the missing object is a rate rule that moves the state through time.",
+            "Scientific machine learning keeps the proposed rule tied to measured variables, units, and known scientific constraints.",
+            "Optimization appears because the search is shaped by the score, the candidate operations, and the penalty for extra terms that do not earn their keep.",
+        ],
+        "reader_must_track": [
+            "which variables were actually measured",
+            "which hidden mechanism or rate rule is being proposed",
+            "which operations or learned terms were allowed in the search",
+            "which changed experiment, noise check, or missing-variable check could reject the proposed law",
+        ],
         "what_the_math_buys": "A compact equation is easier to inspect, criticize, and reuse than a large fitted object. The math turns a fit into a candidate explanation.",
         "failure_boundary": "This family fails when the needed variable was not measured, the experiment did not excite the important behavior, or the search space cannot express the true rule.",
     },
@@ -363,6 +402,19 @@ FAMILY_PAGES = [
             "Train a cheaper stand-in only for those questions.",
             "Compare against the trusted source near the edge of intended use.",
             "Report the use range with the answer, not after the answer.",
+        ],
+        "concrete_case": "An engineering team needs to screen many wing shapes, but each trusted flow solve is expensive. A surrogate is useful only if it stays tied to the same shape family and to the actual decision quantity, such as drag, lift, or a stress peak.",
+        "why_order_matters": [
+            "Surrogate modeling comes first because the shortage is cost: the trusted process is too slow to call for every query.",
+            "Deep learning appears as one way to fit the stand-in from many checked examples.",
+            "Operator learning appears when each query and answer is a whole field rather than a few numbers.",
+            "Uncertainty appears because a fast answer without a tested use range can make the wrong decision faster.",
+        ],
+        "reader_must_track": [
+            "which trusted solver, experiment, or workflow the stand-in imitates",
+            "which repeated query family it is allowed to answer",
+            "which decision quantity matters more than visual or average error",
+            "which edge-of-use comparison sends the user back to the trusted source",
         ],
         "what_the_math_buys": "The approximation becomes useful only after the input family, output quantity, error measure, and rejected cases are named.",
         "failure_boundary": "This family fails when speed hides missing physics, when users ask new questions the surrogate was not trained for, or when uncertainty is treated as decoration.",
@@ -6325,6 +6377,8 @@ def write_completion_audit_page(path: Path, requirements: list[dict[str, object]
 
 def write_family_page(path: Path, family: dict[str, object]) -> None:
     steps = "".join(f"<div class=\"route-step\">{idx}. {html.escape(step)}</div>" for idx, step in enumerate(family["plain_route"], start=1))
+    order_items = "".join(f"<li>{html.escape(str(item))}</li>" for item in family["why_order_matters"])
+    tracking_items = "".join(f"<li>{html.escape(str(item))}</li>" for item in family["reader_must_track"])
     concept_rows = []
     concepts_by_slug = {str(item["slug"]): item for item in CONCEPTS}
     for slug in family["concepts"]:
@@ -6346,10 +6400,17 @@ def write_family_page(path: Path, family: dict[str, object]) -> None:
 <h2>Where It Shows Up</h2>
 <p>{html.escape(str(family['domain']))}</p>
 <h2>Family Story From First Principles</h2>
-<p>Start with the scientific job, not the method names. This family exists because {html.escape(str(family['central_problem']))} The route is useful only when the input evidence, output quantity, kept rule or structure, and changed-case test are all named before choosing a method.</p>
+<p>Start with the scientific job, not the method names. The problem is plain: {html.escape(str(family['central_problem']))} The route is useful only when the input evidence, output quantity, kept rule or structure, and changed-case test are all named before choosing a method.</p>
 <p>The domain setting is {html.escape(str(family['domain']))}. In that setting, the family is asking what information must be carried from observed evidence to a usable answer, and what evidence would make the answer fail.</p>
+<h2>Concrete Family Case</h2>
+<p>{html.escape(str(family['concrete_case']))}</p>
 <h2>Route Through The Ideas</h2>
 <div class="route">{steps}</div>
+<h2>Why The Concepts Appear In This Order</h2>
+<ul>{order_items}</ul>
+<h2>Evidence Chain To Track</h2>
+<p>A reader should be able to track these pieces before trusting the family name:</p>
+<ul>{tracking_items}</ul>
 <h2>Concepts In This Family</h2>
 {concept_links(list(family['concepts']), root_prefix="../")}
 <h2>What Each Concept Does In The Family</h2>
@@ -6543,12 +6604,19 @@ def write_markdown_export(data: dict[str, object]) -> None:
                 f"### {family['title']}",
                 f"- Problem: {family['central_problem']}",
                 f"- Domain: {family['domain']}",
-                f"- Family story: This family starts from the scientific job before method names. It asks what evidence must be carried, what answer is needed, and what changed case could reject the claim.",
+                f"- Concrete family case: {family['concrete_case']}",
                 f"- What the math buys: {family['what_the_math_buys']}",
                 f"- Failure boundary: {family['failure_boundary']}",
                 "",
             ]
         )
+        lines.append("#### Why The Concepts Appear In This Order")
+        for item in family["why_order_matters"]:
+            lines.append(f"- {item}")
+        lines.extend(["", "#### Evidence Chain To Track"])
+        for item in family["reader_must_track"]:
+            lines.append(f"- {item}")
+        lines.append("")
         lines.append("#### Concept Responsibilities")
         for slug in family["concepts"]:
             concept = concepts_by_slug[str(slug)]
@@ -7045,7 +7113,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         if not family_path.exists():
             raise SystemExit(f"missing family page: {family['title']}")
         family_text = family_path.read_text(encoding="utf-8")
-        if "Family Story From First Principles" not in family_text or "What Each Concept Does In The Family" not in family_text or "Evidence Needed Before Trusting The Family" not in family_text or "Too Weak" not in family_text:
+        if "Family Story From First Principles" not in family_text or "Concrete Family Case" not in family_text or "Why The Concepts Appear In This Order" not in family_text or "Evidence Chain To Track" not in family_text or "What Each Concept Does In The Family" not in family_text or "Evidence Needed Before Trusting The Family" not in family_text or "Too Weak" not in family_text:
             raise SystemExit(f"family page missing first-principles depth: {family['title']}")
     for comparison in COMPARISON_PAGES:
         comparison_path = SITE / "comparisons" / f"{comparison['slug']}.html"

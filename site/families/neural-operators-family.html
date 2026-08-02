@@ -47,10 +47,17 @@
 <h2>Where It Shows Up</h2>
 <p>repeated PDE solves, design sweeps, weather-like fields, fluids, materials, and parameter studies</p>
 <h2>Family Story From First Principles</h2>
-<p>Start with the scientific job, not the method names. This family exists because One solved simulation is not enough; the scientific job needs the map from many inputs to many full fields. The route is useful only when the input evidence, output quantity, kept rule or structure, and changed-case test are all named before choosing a method.</p>
+<p>Start with the scientific job, not the method names. The problem is plain: One solved simulation is not enough; the scientific job needs the map from many inputs to many full fields. The route is useful only when the input evidence, output quantity, kept rule or structure, and changed-case test are all named before choosing a method.</p>
 <p>The domain setting is repeated PDE solves, design sweeps, weather-like fields, fluids, materials, and parameter studies. In that setting, the family is asking what information must be carried from observed evidence to a usable answer, and what evidence would make the answer fail.</p>
+<h2>Concrete Family Case</h2>
+<p>A research group has thousands of solved flow cases for different inlet shapes. The next useful object is not one more solved flow; it is a checked way to turn a new inlet field into the whole resulting flow field.</p>
 <h2>Route Through The Ideas</h2>
 <div class="route"><div class="route-step">1. Start with many examples of input fields and output fields.</div><div class="route-step">2. Name the family: which equations, boundaries, geometries, grids, and parameter ranges are included.</div><div class="route-step">3. Learn the map from a new input field to a new output field.</div><div class="route-step">4. Use structure such as frequency, graph connections, or attention when the field needs it.</div><div class="route-step">5. Reject broad claims unless the model survives new cases from the intended family.</div></div>
+<h2>Why The Concepts Appear In This Order</h2>
+<ul><li>Operator learning comes first because the thing being learned is the whole input-field to output-field map.</li><li>Surrogate modeling names the practical reason this map matters: repeated solves are too slow for design or exploration.</li><li>Attention and geometric structure appear when local neighborhoods are not enough to carry the field information.</li><li>Foundation models appear only after many task families exist, and their burden is proving that a new task shares the structure learned from old tasks.</li></ul>
+<h2>Evidence Chain To Track</h2>
+<p>A reader should be able to track these pieces before trusting the family name:</p>
+<ul><li>which family of equations, boundaries, geometries, grids, and parameters was included</li><li>which full-field quantity the model must return</li><li>which field structure the architecture keeps visible</li><li>which held-out family or changed resolution could expose a smooth but wrong field</li></ul>
 <h2>Concepts In This Family</h2>
 <ul><li><a href="../topics/operator-learning.html">Operator Learning</a></li><li><a href="../topics/surrogate-modeling.html">Surrogate Modeling</a></li><li><a href="../topics/attention-for-scientific-fields.html">Attention For Scientific Fields</a></li><li><a href="../topics/foundation-models-for-pdes.html">Foundation Models For PDEs</a></li></ul>
 <h2>What Each Concept Does In The Family</h2>
