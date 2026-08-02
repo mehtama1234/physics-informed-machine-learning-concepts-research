@@ -109,6 +109,37 @@
   <li><strong>Say what it means:</strong> a generated object must still pass physics and usefulness checks.</li>
 </ol>
 
+<h2>Why This Shape Follows</h2>
+<p>Start with a task that needs many possible fields, designs, molecules, or futures. One average answer can hide the variety the scientist must inspect.</p>
+<table>
+  <thead>
+    <tr><th>Piece</th><th>Why It Has To Be There</th><th>What Breaks Without It</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <td>source of variation</td>
+  <td>The model needs a way to produce different candidates instead of the same answer every time.</td>
+  <td>If variation is only visual noise, the samples may not represent real possibilities.</td>
+</tr>
+
+<tr>
+  <td>conditioning information</td>
+  <td>The candidates must answer the actual prompt, boundary, geometry, property, or physical setting.</td>
+  <td>If the condition is ignored, plausible samples can be useless for the scientific job.</td>
+</tr>
+
+<tr>
+  <td>constraint check</td>
+  <td>A generated object is only usable if it satisfies the rule or property the domain requires.</td>
+  <td>If samples are judged only by appearance, invalid candidates can look convincing.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Plain final line:</strong> Generative modeling is useful when many candidates matter, but each candidate still has to answer to the domain rule.</p>
+<p><strong>Smallest useful formula:</strong> The smallest useful formula must start from examples of fields, molecules, flows, shapes, or other scientific objects, carry the answer toward the spread of possible valid objects beyond the examples, and include a check that can fail: measure constraints, rare cases, conservation, and downstream task performance on generated samples.</p>
+<p><strong>First wrong simplification:</strong> The first wrong shortcut is to keep the part that gives an answer while dropping the part that checks it. That would hide this failure: measure constraints, rare cases, conservation, and downstream task performance on generated samples.</p>
+
+
 <h2>Plain Formula Term By Term</h2>
 <p>The formula is not decoration. Each part says what information is being carried from the observed evidence toward the hidden quantity, and what must be checked before the claim is trusted.</p>
 <table>

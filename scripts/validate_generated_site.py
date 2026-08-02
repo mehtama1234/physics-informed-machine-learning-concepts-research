@@ -67,7 +67,7 @@ RESTRICTED_PATTERNS = (
     "many different",
 )
 
-MEATY_GOAL_REQUIREMENT_COUNT = 14
+MEATY_GOAL_REQUIREMENT_COUNT = 15
 
 
 class LinkParser(HTMLParser):
@@ -134,7 +134,7 @@ def check_required_sections() -> list[str]:
         "site/editorial-roadmap.html": ("Editorial Roadmap", "Status:", "Current Evidence", "Acceptance Check", "locally completed", "Meaty End-To-End Goal"),
         "site/completion-audit.html": ("Completion Audit", "Requirement Evidence", "GitHub Actions", "locally verified"),
         "site/meaty-goal.html": ("Meaty End-To-End Goal", "Done Means", "Every Core Page Must Contain", "Acceptance Sentence", "Not Done If"),
-        "site/meaty-goal-coverage.html": ("Meaty Goal Coverage Audit", "First Principles", "Hand Teaching Note", "Case Walkthrough", "Concept Connections", "Belief Evidence", "Domain Fit", "Formula Terms", "Breaks Without Idea", "Acceptance Sentence", "Missing Items"),
+        "site/meaty-goal-coverage.html": ("Meaty Goal Coverage Audit", "First Principles", "Hand Teaching Note", "Case Walkthrough", "Concept Connections", "Belief Evidence", "Domain Fit", "Shape Follows", "Formula Terms", "Breaks Without Idea", "Acceptance Sentence", "Missing Items"),
         "site/families.html": ("Paper Family Routes",),
         "site/families/physics-constraints-family.html": ("Family Story From First Principles", "Concrete Family Case", "Route Burden Table", "Question It Answers", "Mistake It Catches", "Why The Concepts Appear In This Order", "Evidence Chain To Track", "What Each Concept Does In The Family", "Evidence Needed Before Trusting The Family", "Too Weak"),
         "site/families/neural-operators-family.html": ("Family Story From First Principles", "Concrete Family Case", "Route Burden Table", "Question It Answers", "Mistake It Catches", "Why The Concepts Appear In This Order", "Evidence Chain To Track", "What Each Concept Does In The Family", "Evidence Needed Before Trusting The Family", "Too Weak"),
@@ -267,6 +267,32 @@ def check_meaty_goal_coverage() -> list[str]:
     return errors
 
 
+def check_topic_shape_depth() -> list[str]:
+    errors: list[str] = []
+    concepts = json.loads((ANALYSIS / "concept_atlas.json").read_text(encoding="utf-8"))
+    required_terms = (
+        "First-Principles Walkthrough",
+        "Why This Shape Follows",
+        "Why It Has To Be There",
+        "What Breaks Without It",
+        "Plain final line",
+        "Smallest useful formula",
+        "First wrong simplification",
+        "Plain Formula Term By Term",
+    )
+    for concept in concepts:
+        slug = str(concept["slug"])
+        path = ROOT / f"site/topics/{slug}.html"
+        if not path.exists():
+            errors.append(f"missing topic page for shape-depth check: site/topics/{slug}.html")
+            continue
+        text = path.read_text(encoding="utf-8")
+        for term in required_terms:
+            if term not in text:
+                errors.append(f"site/topics/{slug}.html: missing shape-depth term: {term}")
+    return errors
+
+
 def validate() -> None:
     manifest_path = SITE / "page-manifest.json"
     if not manifest_path.exists():
@@ -301,6 +327,7 @@ def validate() -> None:
     errors.extend(check_source_anchor_coverage())
     errors.extend(check_reader_check_coverage())
     errors.extend(check_meaty_goal_coverage())
+    errors.extend(check_topic_shape_depth())
 
     scan_paths = [ROOT / "README.md", ROOT / "exports/research-package.md"]
     scan_paths.extend((ROOT / item) for item in manifest)

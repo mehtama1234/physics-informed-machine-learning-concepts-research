@@ -109,6 +109,37 @@
   <li><strong>Say what it means:</strong> breadth is useful only if the new task shares the structure the model actually learned.</li>
 </ol>
 
+<h2>Why This Shape Follows</h2>
+<p>Start with many PDE tasks. Each task teaches something about fields, equations, boundaries, or solution patterns. The new task is useful only if it shares structure the model actually learned.</p>
+<table>
+  <thead>
+    <tr><th>Piece</th><th>Why It Has To Be There</th><th>What Breaks Without It</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <td>many PDE tasks</td>
+  <td>Broad training is the source of shared experience across equations or parameter ranges.</td>
+  <td>If the tasks are narrow, the model may only be broad in name.</td>
+</tr>
+
+<tr>
+  <td>shared learned structure</td>
+  <td>The model must keep something reusable, such as field patterns, operator behavior, or equation-family regularities.</td>
+  <td>If the shared structure is not named, transfer to a new task is only a hope.</td>
+</tr>
+
+<tr>
+  <td>new task prediction</td>
+  <td>The point is to use old task experience on a held-out scientific case.</td>
+  <td>If the held-out task is too similar to training, the broad claim is not tested.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Plain final line:</strong> The derivation makes the transfer burden visible: old PDE tasks must carry something real into the new task, and the new task must be different enough to test that claim.</p>
+<p><strong>Smallest useful formula:</strong> The smallest useful formula must start from many PDE problem instances across equations, grids, parameters, or physical settings, carry the answer toward which shared structure carries from one scientific task to another, and include a check that can fail: hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver.</p>
+<p><strong>First wrong simplification:</strong> The first wrong shortcut is to keep the part that gives an answer while dropping the part that checks it. That would hide this failure: hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver.</p>
+
+
 <h2>Plain Formula Term By Term</h2>
 <p>The formula is not decoration. Each part says what information is being carried from the observed evidence toward the hidden quantity, and what must be checked before the claim is trusted.</p>
 <table>
