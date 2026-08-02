@@ -114,30 +114,30 @@
   <tbody>
 <tr>
   <td>Topology and shape</td>
-  <td>Ask what stays connected, what has a hole, what touches what, and what can bend without changing the real question.</td>
-  <td>Physics-Informed Neural Networks matters here when the answer depends on shape evidence, not only on a row of numbers.</td>
-  <td>Change the mesh, bend the shape, relabel points, or add a missing connection and see whether the claim still follows.</td>
+  <td>Fit a field on a shape while also asking it to obey the rule that should hold inside the shape.</td>
+  <td>A PINN matters here when sparse points are not enough but an equation can still guide the missing field.</td>
+  <td>Move sensors, change the boundary, or bend the domain and compare the hidden field with trusted values.</td>
 </tr>
 
 <tr>
   <td>Engineering design</td>
-  <td>Ask whether a wing, bridge, part, battery, or device will work before every costly test is run.</td>
-  <td>Physics-Informed Neural Networks matters here because the answer must guide a build, a redesign, or a stop decision.</td>
-  <td>Move the design near the edge of the planned use and compare with a trusted solve or measurement.</td>
+  <td>Estimate heat, stress, flow, or pressure when tests are sparse but the physical law is known.</td>
+  <td>The design answer is useful only if the fitted field respects the law between measured points.</td>
+  <td>Inspect sharp regions, edge cases, and held-out sensors near the places where failure would matter.</td>
 </tr>
 
 <tr>
   <td>Materials, chemistry, and biology</td>
-  <td>Ask how small parts, bonds, cells, grains, or local regions add up to a property people care about.</td>
-  <td>Physics-Informed Neural Networks matters here because the useful answer is about the thing itself, not only about fitting old examples.</td>
-  <td>Hold out a new molecule, material setting, tissue type, or lab condition and inspect the target quantity.</td>
+  <td>Fill in missing concentration, strain, or reaction fields while keeping known balance rules visible.</td>
+  <td>The method helps when measurements are expensive and the known rule should constrain the answer.</td>
+  <td>Change material settings, boundary values, or reaction conditions and compare with measurements.</td>
 </tr>
 
 <tr>
   <td>Climate, fluids, and fields</td>
-  <td>Ask how a value spread over space changes when wind, heat, pressure, flow, or a boundary changes.</td>
-  <td>Physics-Informed Neural Networks matters here because one number is not enough when the decision depends on a whole field.</td>
-  <td>Change a boundary, source, scale, region, or rare event and test the field where the decision is made.</td>
+  <td>Recover a full field from sparse measurements without ignoring the governing equation.</td>
+  <td>The important claim is not a smooth picture; it is whether the field follows the physical rule.</td>
+  <td>Change source terms, boundaries, or sensor placement and compare against a solver or held-out data.</td>
 </tr>
 </tbody>
 </table>

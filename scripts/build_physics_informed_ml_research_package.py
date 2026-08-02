@@ -6552,35 +6552,410 @@ def topic_first_principles_essay_html(topic: dict[str, object], derivation: dict
 """
 
 
+def topic_plain_applications(topic: dict[str, object], derivation: dict[str, object]) -> list[dict[str, str]]:
+    title = str(topic["title"])
+    slug = str(topic["slug"])
+    applications = {
+        "deep-learning": [
+            {
+                "field": "Topology and shape",
+                "use": "Use examples of shapes, images, or surfaces when the rule is hard to write by hand.",
+                "why": "Deep learning matters here only if changed shapes still get the right answer for the named task.",
+                "check": "Hold out a new shape family, camera view, mesh order, or scale and measure the target error.",
+            },
+            {
+                "field": "Engineering design",
+                "use": "Sort old test runs so a designer can screen the next part before a costly build.",
+                "why": "The learned pattern saves time only inside the kind of cases it has actually survived.",
+                "check": "Test a new material, sensor, or part size before using the prediction for a build decision.",
+            },
+            {
+                "field": "Materials, chemistry, and biology",
+                "use": "Read images, spectra, molecules, or cell measurements when hand rules are incomplete.",
+                "why": "The answer matters when it flags a property or risk that a person must inspect.",
+                "check": "Hold out a lab, instrument, molecule family, or cell type and compare the measured property.",
+            },
+            {
+                "field": "Climate, fluids, and fields",
+                "use": "Learn repeated field patterns from stored simulations or measurements.",
+                "why": "The model is useful only when the learned pattern still answers the field question people care about.",
+                "check": "Change the region, forcing, boundary, or rare event and inspect where the field fails first.",
+            },
+        ],
+        "physics-informed-neural-networks": [
+            {
+                "field": "Topology and shape",
+                "use": "Fit a field on a shape while also asking it to obey the rule that should hold inside the shape.",
+                "why": "A PINN matters here when sparse points are not enough but an equation can still guide the missing field.",
+                "check": "Move sensors, change the boundary, or bend the domain and compare the hidden field with trusted values.",
+            },
+            {
+                "field": "Engineering design",
+                "use": "Estimate heat, stress, flow, or pressure when tests are sparse but the physical law is known.",
+                "why": "The design answer is useful only if the fitted field respects the law between measured points.",
+                "check": "Inspect sharp regions, edge cases, and held-out sensors near the places where failure would matter.",
+            },
+            {
+                "field": "Materials, chemistry, and biology",
+                "use": "Fill in missing concentration, strain, or reaction fields while keeping known balance rules visible.",
+                "why": "The method helps when measurements are expensive and the known rule should constrain the answer.",
+                "check": "Change material settings, boundary values, or reaction conditions and compare with measurements.",
+            },
+            {
+                "field": "Climate, fluids, and fields",
+                "use": "Recover a full field from sparse measurements without ignoring the governing equation.",
+                "why": "The important claim is not a smooth picture; it is whether the field follows the physical rule.",
+                "check": "Change source terms, boundaries, or sensor placement and compare against a solver or held-out data.",
+            },
+        ],
+        "partial-differential-equations": [
+            {
+                "field": "Topology and shape",
+                "use": "Describe how a field moves across a shape, surface, mesh, or region with boundaries.",
+                "why": "PDEs matter here because shape and boundary decide how local changes spread.",
+                "check": "Change the boundary, cut a hole, refine the mesh, or bend the region and check conservation.",
+            },
+            {
+                "field": "Engineering design",
+                "use": "Write the rule for heat, stress, flow, pressure, or waves before choosing a learning method.",
+                "why": "The equation states what must be true for the design quantity to be believable.",
+                "check": "Change load, source, geometry, or scale and inspect the quantity used for the decision.",
+            },
+            {
+                "field": "Materials, chemistry, and biology",
+                "use": "Track diffusion, reaction, strain, growth, or transport through a material or tissue.",
+                "why": "The field answer matters because local change can create a global effect.",
+                "check": "Change a coefficient, source, boundary, or sample shape and compare with measurements.",
+            },
+            {
+                "field": "Climate, fluids, and fields",
+                "use": "Describe wind, heat, concentration, pressure, and water over space and time.",
+                "why": "A single number cannot carry the decision when the whole field changes.",
+                "check": "Check mass, energy, boundary behavior, stability, and measured error under a changed case.",
+            },
+        ],
+        "operator-learning": [
+            {
+                "field": "Topology and shape",
+                "use": "Learn how one whole shape, boundary, or input field maps to a whole output field.",
+                "why": "Operator learning matters when the question is about a family of field problems, not one solve.",
+                "check": "Hold out a new geometry class, mesh resolution, boundary type, or coefficient range.",
+            },
+            {
+                "field": "Engineering design",
+                "use": "Give fast field estimates for repeated wing, device, part, or load queries.",
+                "why": "The shortcut is useful only if it keeps the design quantity accurate across the tested family.",
+                "check": "Compare lift, drag, stress, heat, or pressure against trusted solves near the design edge.",
+            },
+            {
+                "field": "Materials, chemistry, and biology",
+                "use": "Map a material setting, molecular field, or tissue condition to a response field.",
+                "why": "The method helps when each new query would otherwise need a slow solve.",
+                "check": "Hold out a new material range, molecule type, or biological condition and inspect the response.",
+            },
+            {
+                "field": "Climate, fluids, and fields",
+                "use": "Map forcing, boundary, or initial fields to future solution fields.",
+                "why": "The value is speed across a named family, not proof across all possible fields.",
+                "check": "Change forcing, scale, resolution, or rare regimes and compare with trusted simulations.",
+            },
+        ],
+        "scientific-machine-learning": [
+            {
+                "field": "Topology and shape",
+                "use": "Combine data with shape, boundary, and connection checks before trusting a prediction.",
+                "why": "Scientific machine learning matters when the target is a real quantity, not only a fitted score.",
+                "check": "Change shape, mesh, boundary, or sensor layout and inspect the scientific quantity.",
+            },
+            {
+                "field": "Engineering design",
+                "use": "Use data and scientific checks together when a design decision has a cost.",
+                "why": "The method is useful only if it names the decision and the failure condition.",
+                "check": "Test near the build limit, load limit, safety limit, or operating limit.",
+            },
+            {
+                "field": "Materials, chemistry, and biology",
+                "use": "Tie learned predictions to units, mechanisms, measurements, and domain limits.",
+                "why": "The answer matters when it changes an experiment, a screening choice, or a safety claim.",
+                "check": "Hold out a new lab setting, material range, molecule family, or measured condition.",
+            },
+            {
+                "field": "Climate, fluids, and fields",
+                "use": "Use learned models only with clear field checks, physical checks, and use ranges.",
+                "why": "A field prediction is useful when it survives the changed case that matters to the user.",
+                "check": "Change region, season, boundary, forcing, or resolution and measure the decision quantity.",
+            },
+        ],
+        "surrogate-modeling": [
+            {
+                "field": "Topology and shape",
+                "use": "Replace slow solves for repeated shape queries inside a named family.",
+                "why": "A surrogate matters here when shape changes are common and full solves are too slow.",
+                "check": "Change holes, edges, mesh detail, or shape class and compare with the full solver.",
+            },
+            {
+                "field": "Engineering design",
+                "use": "Screen many candidate parts, wings, devices, or loads before running the costly solve.",
+                "why": "Speed matters only when the shortcut preserves the quantity that drives the design choice.",
+                "check": "Test near peaks, boundaries, rare regimes, and cases where the decision changes.",
+            },
+            {
+                "field": "Materials, chemistry, and biology",
+                "use": "Use a cheaper stand-in for repeated material, molecule, or tissue simulations.",
+                "why": "The stand-in helps when it stays inside the checked query range.",
+                "check": "Compare with trusted simulations or measurements on new settings near the use boundary.",
+            },
+            {
+                "field": "Climate, fluids, and fields",
+                "use": "Answer repeated field queries faster than running a full model each time.",
+                "why": "The shortcut is useful only where the field behavior was checked against trusted runs.",
+                "check": "Hold out storms, flow regimes, boundary cases, or regional shifts and compare key fields.",
+            },
+        ],
+        "uncertainty-and-generalization": [
+            {
+                "field": "Topology and shape",
+                "use": "State how belief changes when the shape, mesh, or connection pattern changes.",
+                "why": "Uncertainty matters here because a prediction can look good on familiar shapes and fail on a new one.",
+                "check": "Hold out a new shape family, missing connection, or mesh resolution and measure the error.",
+            },
+            {
+                "field": "Engineering design",
+                "use": "Attach a use range and warning boundary to a prediction before a design choice.",
+                "why": "A confident answer is dangerous when the design is outside the checked range.",
+                "check": "Move load, material, size, or boundary beyond training and measure the first failure.",
+            },
+            {
+                "field": "Materials, chemistry, and biology",
+                "use": "Say when a measured property prediction should weaken under a new lab or sample condition.",
+                "why": "The claim matters only if the user knows where belief should stop.",
+                "check": "Hold out a new instrument, molecule family, tissue type, or material batch.",
+            },
+            {
+                "field": "Climate, fluids, and fields",
+                "use": "Separate ordinary test success from success under changed climate, flow, or boundary conditions.",
+                "why": "The field answer must include where it may be wrong, not only what it predicts.",
+                "check": "Test a shifted region, rare event, changed forcing, or new sensor pattern.",
+            },
+        ],
+        "optimization-for-learning": [
+            {
+                "field": "Topology and shape",
+                "use": "Choose a score that rewards the right shape, connection, boundary, or field behavior.",
+                "why": "Optimization matters here because the model will chase the score even when the score misses the real shape question.",
+                "check": "Inspect whether the trained answer breaks after relabeling, mesh change, or boundary change.",
+            },
+            {
+                "field": "Engineering design",
+                "use": "Train toward the quantity that drives the design, not only average error.",
+                "why": "The score decides what the model learns to care about.",
+                "check": "Check rare loads, edge cases, constraints, and the final design quantity after training.",
+            },
+            {
+                "field": "Materials, chemistry, and biology",
+                "use": "Set the training score so it respects measured properties, units, and known checks.",
+                "why": "A low score is useful only if it includes the scientific burden.",
+                "check": "Inspect what the score ignored, then test the ignored behavior on new samples.",
+            },
+            {
+                "field": "Climate, fluids, and fields",
+                "use": "Balance field error, physical checks, and decision costs during training.",
+                "why": "The field can look good on average while failing where the decision is made.",
+                "check": "Test boundaries, rare events, conserved quantities, and high-cost regions.",
+            },
+        ],
+        "generative-modeling": [
+            {
+                "field": "Topology and shape",
+                "use": "Create candidate shapes or fields while checking holes, connections, and boundaries.",
+                "why": "Generative modeling matters here only if the samples are valid objects, not just plausible pictures.",
+                "check": "Test connected parts, forbidden holes, mesh validity, and downstream use.",
+            },
+            {
+                "field": "Engineering design",
+                "use": "Propose candidate parts, layouts, fields, or operating cases for later testing.",
+                "why": "The generated candidate is useful only if it can pass the design checks.",
+                "check": "Run constraints, full solves, stress tests, and use-case checks on generated candidates.",
+            },
+            {
+                "field": "Materials, chemistry, and biology",
+                "use": "Suggest molecules, structures, images, or samples that should still obey known rules.",
+                "why": "A sample matters when it can be measured, built, or screened for a real property.",
+                "check": "Reject samples that break chemistry rules, material limits, or biological measurements.",
+            },
+            {
+                "field": "Climate, fluids, and fields",
+                "use": "Sample possible fields for stress tests, rare cases, or downstream solvers.",
+                "why": "The samples are useful only if they carry the field behavior needed by the next task.",
+                "check": "Measure conservation, rare-event rates, boundary behavior, and downstream task performance.",
+            },
+        ],
+        "graphs-and-geometric-learning": [
+            {
+                "field": "Topology and shape",
+                "use": "Keep nodes, edges, neighborhoods, holes, surfaces, and symmetries visible to the model.",
+                "why": "Graphs and geometric learning matters here because the connection pattern is part of the evidence.",
+                "check": "Relabel nodes, rotate the object, refine the mesh, or add a missing edge and inspect the target.",
+            },
+            {
+                "field": "Engineering design",
+                "use": "Model meshes, parts, sensor networks, or connected components without flattening away contact.",
+                "why": "The design answer can depend on which parts touch, not only on the part list.",
+                "check": "Change mesh resolution, contact regions, or boundary connections and compare the design quantity.",
+            },
+            {
+                "field": "Materials, chemistry, and biology",
+                "use": "Represent atoms, bonds, cells, proteins, grains, or interaction networks as connected objects.",
+                "why": "The property often depends on neighbors and long-range interactions.",
+                "check": "Hold out new structures, rotations, missing interactions, or graph sizes.",
+            },
+            {
+                "field": "Climate, fluids, and fields",
+                "use": "Carry information over irregular grids, sensor networks, coastlines, or mesh fields.",
+                "why": "The field may live on a shape where plain rows erase the needed relation.",
+                "check": "Change grid order, mesh detail, boundary regions, or long-range links.",
+            },
+        ],
+        "neural-differential-equations": [
+            {
+                "field": "Topology and shape",
+                "use": "Learn how a state moves over time when the state also lives on a shape or network.",
+                "why": "Neural differential equations matter here when the missing part is the rule of change.",
+                "check": "Change the starting state, shape, or connection pattern and run longer than the training window.",
+            },
+            {
+                "field": "Engineering design",
+                "use": "Predict changing heat, motion, wear, control, or flow when the exact rate rule is unknown.",
+                "why": "The rate rule matters because small errors can grow over time.",
+                "check": "Test long-time drift, stability, conservation, and changed starting conditions.",
+            },
+            {
+                "field": "Materials, chemistry, and biology",
+                "use": "Learn reaction, growth, motion, or change rules from measured time traces.",
+                "why": "The model is useful when it explains how the next state follows from the present state.",
+                "check": "Hold out time ranges, doses, reaction settings, or starting conditions.",
+            },
+            {
+                "field": "Climate, fluids, and fields",
+                "use": "Learn missing pieces of a time-update rule for fields.",
+                "why": "The field forecast depends on repeated updates, so small rate errors matter.",
+                "check": "Run past the training window and inspect drift, conservation, and boundary behavior.",
+            },
+        ],
+        "symbolic-regression": [
+            {
+                "field": "Topology and shape",
+                "use": "Search for a short relation that includes the right shape or connection measurements.",
+                "why": "Symbolic regression matters here only if the readable formula keeps the real cause visible.",
+                "check": "Remove a shape measure, change the mesh, or add a missing variable and test the formula.",
+            },
+            {
+                "field": "Engineering design",
+                "use": "Find a readable equation that links design variables to the decision quantity.",
+                "why": "The equation is useful when people can inspect, test, and reject it.",
+                "check": "Run a changed design case and reject formulas that only fit old designs.",
+            },
+            {
+                "field": "Materials, chemistry, and biology",
+                "use": "Search for compact laws from measured variables, ingredients, and properties.",
+                "why": "A short equation matters only if it survives new measurements.",
+                "check": "Add noise, hold out a condition, or test a missing variable.",
+            },
+            {
+                "field": "Climate, fluids, and fields",
+                "use": "Look for a readable relation inside measured or simulated field behavior.",
+                "why": "The formula helps when it explains a quantity, not when it only draws a curve through old points.",
+                "check": "Test a new region, forcing, scale, or event and compare the predicted quantity.",
+            },
+        ],
+        "foundation-models-for-pdes": [
+            {
+                "field": "Topology and shape",
+                "use": "Reuse field knowledge across PDE tasks while checking new shapes, grids, and boundaries.",
+                "why": "Foundation PDE models matter here only if shared structure carries to the new shape family.",
+                "check": "Hold out whole geometry families, boundary types, scales, or rare regimes.",
+            },
+            {
+                "field": "Engineering design",
+                "use": "Start from a broad PDE model for a new device or part, then verify the design quantity.",
+                "why": "Breadth helps only when it reduces work without hiding a failed design case.",
+                "check": "Compare with trusted solves on new designs near the intended use boundary.",
+            },
+            {
+                "field": "Materials, chemistry, and biology",
+                "use": "Transfer learned field behavior across related materials, tissues, or reaction settings.",
+                "why": "The model matters when the new task shares the structure it actually learned.",
+                "check": "Hold out a task family, material range, tissue setting, or coefficient regime.",
+            },
+            {
+                "field": "Climate, fluids, and fields",
+                "use": "Use one broad field model across related equation settings.",
+                "why": "The useful claim is coverage over named tasks, not coverage over every possible PDE.",
+                "check": "Compare against trusted solvers for new equation families, grids, and boundaries.",
+            },
+        ],
+        "attention-for-scientific-fields": [
+            {
+                "field": "Topology and shape",
+                "use": "Let distant parts of a shape or field exchange information when local neighbors are not enough.",
+                "why": "Attention matters here when faraway structure changes the local answer.",
+                "check": "Change window size, long-range links, boundary regions, or point order.",
+            },
+            {
+                "field": "Engineering design",
+                "use": "Route information across a part, surface, or field where distant regions interact.",
+                "why": "The design quantity may depend on faraway pressure, heat, load, or flow behavior.",
+                "check": "Stress long-range cases and compare the design quantity near hard regions.",
+            },
+            {
+                "field": "Materials, chemistry, and biology",
+                "use": "Let distant atoms, cells, residues, or regions influence a local prediction.",
+                "why": "The method helps when the local property depends on nonlocal context.",
+                "check": "Remove long-range context, change structure, or hold out larger objects.",
+            },
+            {
+                "field": "Climate, fluids, and fields",
+                "use": "Route information across fields where one region can affect another.",
+                "why": "The field answer may need faraway signals without looking everywhere equally.",
+                "check": "Change storms, fronts, boundaries, and long-range interactions and inspect the field.",
+            },
+        ],
+    }
+    return applications.get(
+        slug,
+        [
+            {
+                "field": "Topology and shape",
+                "use": f"Ask whether {title} keeps the shape evidence needed for the claim.",
+                "why": f"{title} matters here when the answer depends on what stays connected, what touches what, or where the boundary sits.",
+                "check": "Change the shape, mesh, boundary, or connection pattern and inspect the named quantity.",
+            },
+            {
+                "field": "Engineering design",
+                "use": f"Use {title} only after the design quantity and failure case are named.",
+                "why": "The method matters when it helps a real build, redesign, or stop decision.",
+                "check": str(derivation["test"]),
+            },
+            {
+                "field": "Materials, chemistry, and biology",
+                "use": f"Ask whether {title} carries the measured property, structure, or change that matters.",
+                "why": "The answer is useful only when it survives a new sample or condition.",
+                "check": "Hold out a new molecule, material, tissue, lab setting, or measured case.",
+            },
+            {
+                "field": "Climate, fluids, and fields",
+                "use": f"Ask whether {title} carries field behavior across space, time, or conditions.",
+                "why": "The claim matters only where the field quantity is checked.",
+                "check": "Change a boundary, region, source, scale, or rare event and inspect the field.",
+            },
+        ],
+    )
+
+
 def topic_plain_big_picture_essay_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
     title = str(topic["title"])
     case = topic_case_walkthrough(topic, derivation)
-    applications = [
-        {
-            "field": "Topology and shape",
-            "use": "Ask what stays connected, what has a hole, what touches what, and what can bend without changing the real question.",
-            "why": f"{title} matters here when the answer depends on shape evidence, not only on a row of numbers.",
-            "check": "Change the mesh, bend the shape, relabel points, or add a missing connection and see whether the claim still follows.",
-        },
-        {
-            "field": "Engineering design",
-            "use": "Ask whether a wing, bridge, part, battery, or device will work before every costly test is run.",
-            "why": f"{title} matters here because the answer must guide a build, a redesign, or a stop decision.",
-            "check": "Move the design near the edge of the planned use and compare with a trusted solve or measurement.",
-        },
-        {
-            "field": "Materials, chemistry, and biology",
-            "use": "Ask how small parts, bonds, cells, grains, or local regions add up to a property people care about.",
-            "why": f"{title} matters here because the useful answer is about the thing itself, not only about fitting old examples.",
-            "check": "Hold out a new molecule, material setting, tissue type, or lab condition and inspect the target quantity.",
-        },
-        {
-            "field": "Climate, fluids, and fields",
-            "use": "Ask how a value spread over space changes when wind, heat, pressure, flow, or a boundary changes.",
-            "why": f"{title} matters here because one number is not enough when the decision depends on a whole field.",
-            "check": "Change a boundary, source, scale, region, or rare event and test the field where the decision is made.",
-        },
-    ]
+    applications = topic_plain_applications(topic, derivation)
     rows = "".join(
         f"""
 <tr>
@@ -8534,7 +8909,6 @@ def validate(data: dict[str, object] | None = None) -> None:
             "Plain Big Picture Essay",
             "Applications In Everyday Words",
             "Topology and shape",
-            "what stays connected",
             "Engineering design",
             "Materials, chemistry, and biology",
             "Climate, fluids, and fields",

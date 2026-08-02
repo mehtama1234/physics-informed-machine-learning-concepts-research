@@ -114,30 +114,30 @@
   <tbody>
 <tr>
   <td>Topology and shape</td>
-  <td>Ask what stays connected, what has a hole, what touches what, and what can bend without changing the real question.</td>
-  <td>Surrogate Modeling matters here when the answer depends on shape evidence, not only on a row of numbers.</td>
-  <td>Change the mesh, bend the shape, relabel points, or add a missing connection and see whether the claim still follows.</td>
+  <td>Replace slow solves for repeated shape queries inside a named family.</td>
+  <td>A surrogate matters here when shape changes are common and full solves are too slow.</td>
+  <td>Change holes, edges, mesh detail, or shape class and compare with the full solver.</td>
 </tr>
 
 <tr>
   <td>Engineering design</td>
-  <td>Ask whether a wing, bridge, part, battery, or device will work before every costly test is run.</td>
-  <td>Surrogate Modeling matters here because the answer must guide a build, a redesign, or a stop decision.</td>
-  <td>Move the design near the edge of the planned use and compare with a trusted solve or measurement.</td>
+  <td>Screen many candidate parts, wings, devices, or loads before running the costly solve.</td>
+  <td>Speed matters only when the shortcut preserves the quantity that drives the design choice.</td>
+  <td>Test near peaks, boundaries, rare regimes, and cases where the decision changes.</td>
 </tr>
 
 <tr>
   <td>Materials, chemistry, and biology</td>
-  <td>Ask how small parts, bonds, cells, grains, or local regions add up to a property people care about.</td>
-  <td>Surrogate Modeling matters here because the useful answer is about the thing itself, not only about fitting old examples.</td>
-  <td>Hold out a new molecule, material setting, tissue type, or lab condition and inspect the target quantity.</td>
+  <td>Use a cheaper stand-in for repeated material, molecule, or tissue simulations.</td>
+  <td>The stand-in helps when it stays inside the checked query range.</td>
+  <td>Compare with trusted simulations or measurements on new settings near the use boundary.</td>
 </tr>
 
 <tr>
   <td>Climate, fluids, and fields</td>
-  <td>Ask how a value spread over space changes when wind, heat, pressure, flow, or a boundary changes.</td>
-  <td>Surrogate Modeling matters here because one number is not enough when the decision depends on a whole field.</td>
-  <td>Change a boundary, source, scale, region, or rare event and test the field where the decision is made.</td>
+  <td>Answer repeated field queries faster than running a full model each time.</td>
+  <td>The shortcut is useful only where the field behavior was checked against trusted runs.</td>
+  <td>Hold out storms, flow regimes, boundary cases, or regional shifts and compare key fields.</td>
 </tr>
 </tbody>
 </table>
