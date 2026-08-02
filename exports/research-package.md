@@ -44,6 +44,14 @@
 - meaty_goal_count: 1
 - meaty_goal_coverage_count: 14
 
+## Course Spine In Plain Words
+- Whole course problem: move from partial evidence to a scientific answer without hiding what would make the answer fail.
+- Evidence can be measurements, equations, solved cases, simulations, geometry, shape, topology, previous examples, or source support.
+- Missing answers can be fields, future states, properties, design answers, readable rules, maps, or trust boundaries.
+- First-principles route: name the decision, name the evidence, name the missing thing, choose the carrier, keep the boundary visible, and end with a changed case.
+- Topology and shape matter because meshes, molecules, bridges, wings, coastlines, proteins, sensor networks, and fields have structure before a model sees them.
+- Reader test: open any topic and say the real problem, evidence, missing answer, mathematical move, allowed claim, left-out part, and first changed case in everyday words.
+
 ## Concepts
 ### Deep Learning
 - Problem: scientists often have examples of behavior but no short rule that predicts the next case

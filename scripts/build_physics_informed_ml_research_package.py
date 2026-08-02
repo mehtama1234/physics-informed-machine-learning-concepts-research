@@ -5196,6 +5196,7 @@ def html_page(title: str, body: str, root_prefix: str = "") -> str:
   <a href="{root_prefix}derivations.html">Derivations</a>
   <a href="{root_prefix}formula-guide.html">Formulas</a>
   <a href="{root_prefix}misconceptions.html">Misreads</a>
+  <a href="{root_prefix}course-spine.html">Spine</a>
   <a href="{root_prefix}learning-path.html">Path</a>
   <a href="{root_prefix}glossary.html">Glossary</a>
   <a href="{root_prefix}domains.html">Domains</a>
@@ -5229,6 +5230,50 @@ def html_page(title: str, body: str, root_prefix: str = "") -> str:
 def card(title: str, text: str, href: str = "") -> str:
     heading = f'<h3><a href="{html.escape(href)}">{html.escape(title)}</a></h3>' if href else f"<h3>{html.escape(title)}</h3>"
     return f'<article class="card">{heading}<p>{html.escape(text)}</p></article>'
+
+
+def write_course_spine_page(path: Path, topics: list[dict[str, object]]) -> None:
+    topic_rows = []
+    for topic in topics:
+        derivation = topic_derivation(topic)
+        topic_rows.append(
+            f"""
+<tr>
+  <td><a href="topics/{html.escape(str(topic['slug']))}.html">{html.escape(str(topic['title']))}</a></td>
+  <td>{html.escape(str(topic['common_problem']))}</td>
+  <td>{html.escape(str(derivation['move']))}</td>
+  <td>{html.escape(str(derivation['test']))}</td>
+</tr>
+"""
+        )
+    body = f"""
+<h1>Course Spine In Plain Words</h1>
+<h2>The Whole Course In One Human Problem</h2>
+<p>A scientist or engineer often has only part of the truth. They may have a few measurements, a known equation, old simulations, a mesh, a molecule, a shape, a time trace, or a pile of examples. What they need is usually something not directly measured: a full field, a future state, a property, a design answer, a readable rule, or a warning about when belief should stop.</p>
+<p>The course matters because it teaches how to move from the part we can see to the part we need, without pretending the answer is stronger than the evidence. The method name comes later. First comes the plain shortage: what do we know, what is missing, what carries the missing part, what did we leave out, and what changed case would make us reject the claim?</p>
+<h2>First-Principles Route Through The Field</h2>
+<ol>
+  <li><strong>Start with the decision.</strong> Name the field, force, property, risk, design answer, or rule someone needs.</li>
+  <li><strong>Name the evidence.</strong> Say whether the evidence is measurements, equations, solved cases, simulations, geometry, shape, topology, previous examples, or source support.</li>
+  <li><strong>Name the missing thing.</strong> Say what is not directly known: the whole field, the map from inputs to fields, the rate of change, the formula, or the trust boundary.</li>
+  <li><strong>Choose the carrier.</strong> Pick the mathematical move that can carry the right information from evidence to answer.</li>
+  <li><strong>Keep the boundary visible.</strong> Say what the move leaves out before making a wider claim.</li>
+  <li><strong>End with a changed case.</strong> Change a boundary, shape, mesh, material, sensor, region, equation family, or time range and inspect the failure.</li>
+</ol>
+<h2>Why Topology And Shape Belong In The Big Picture</h2>
+<p>Topology, in everyday words, asks what stays connected, what has a hole, what touches what, and what can bend without changing the real question. That matters in this course because many scientific objects are not plain rows of numbers. A mesh, molecule, bridge, wing, coastline, protein, sensor network, or field has structure before a model sees it. If a method loses that structure, it may answer the wrong question while still looking tidy on old examples.</p>
+<p>That is why shape checks appear again and again. A claim should survive relabeled mesh points when the physical object did not change. It should react when a boundary moves, a hole appears, a long-range connection is missing, or a new geometry changes the quantity at stake. Shape is not decoration. It is evidence.</p>
+<h2>How Every Topic Fits The Spine</h2>
+<table>
+  <thead>
+    <tr><th>Topic</th><th>Plain Problem</th><th>First-Principles Move</th><th>First Changed-Case Check</th></tr>
+  </thead>
+  <tbody>{''.join(topic_rows)}</tbody>
+</table>
+<h2>Reader Test For The Whole Course</h2>
+<p>A reader understands the course when they can open any topic and say the same chain in everyday words: here is the real problem, here is the evidence, here is the missing answer, here is the mathematical move, here is the claim allowed, here is what was left out, and here is the first changed case that could make the claim fail.</p>
+"""
+    path.write_text(html_page("Physics-Informed ML Course Spine", body), encoding="utf-8")
 
 
 def concept_links(slugs: list[str], root_prefix: str = "") -> str:
@@ -5484,6 +5529,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Derivations", f"{summary['core_derivation_count']} core walkthroughs from observed evidence to formula shape and failure test.", "derivations.html")}
 {card("Formula Guide", f"{summary['formula_guide_count']} plain formula shapes translated into everyday meaning.", "formula-guide.html")}
 {card("Misconceptions", f"{summary['misconception_count']} core wrong turns paired with plain corrections.", "misconceptions.html")}
+{card("Course Spine", "One plain-language first-principles essay tying the whole course together before the topic pages.", "course-spine.html")}
 {card("Learning Path", f"{summary['learning_path_step_count']} steps from first question to field-level understanding.", "learning-path.html")}
 {card("Glossary", f"{summary['glossary_term_count']} field terms translated into everyday language.", "glossary.html")}
 {card("Domains", f"{summary['domain_guide_count']} domain guides that ground concepts in real scientific work.", "domains.html")}
@@ -5601,6 +5647,7 @@ def write_site(data: dict[str, object]) -> None:
 
     write_formula_guide_page(SITE / "formula-guide.html", list(formula_guide))
     write_misconception_map_page(SITE / "misconceptions.html", list(misconception_map))
+    write_course_spine_page(SITE / "course-spine.html", list(topics))
 
     learning_cards = []
     for step in learning_path:
@@ -8351,6 +8398,18 @@ def write_markdown_export(data: dict[str, object]) -> None:
     lines.append("## Summary")
     for key, value in data["summary"].items():
         lines.append(f"- {key}: {value}")
+    lines.extend(
+        [
+            "",
+            "## Course Spine In Plain Words",
+            "- Whole course problem: move from partial evidence to a scientific answer without hiding what would make the answer fail.",
+            "- Evidence can be measurements, equations, solved cases, simulations, geometry, shape, topology, previous examples, or source support.",
+            "- Missing answers can be fields, future states, properties, design answers, readable rules, maps, or trust boundaries.",
+            "- First-principles route: name the decision, name the evidence, name the missing thing, choose the carrier, keep the boundary visible, and end with a changed case.",
+            "- Topology and shape matter because meshes, molecules, bridges, wings, coastlines, proteins, sensor networks, and fields have structure before a model sees them.",
+            "- Reader test: open any topic and say the real problem, evidence, missing answer, mathematical move, allowed claim, left-out part, and first changed case in everyday words.",
+        ]
+    )
     lines.extend(["", "## Concepts"])
     for concept in data["concept_atlas"]:
         lines.extend(
@@ -8963,6 +9022,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         SITE / "derivations.html",
         SITE / "formula-guide.html",
         SITE / "misconceptions.html",
+        SITE / "course-spine.html",
         SITE / "learning-path.html",
         SITE / "glossary.html",
         SITE / "domains.html",

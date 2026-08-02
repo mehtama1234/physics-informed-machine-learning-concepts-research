@@ -24,6 +24,7 @@ REQUIRED_ROOT_PAGES = {
     "derivations.html",
     "formula-guide.html",
     "misconceptions.html",
+    "course-spine.html",
     "learning-path.html",
     "glossary.html",
     "domains.html",
@@ -155,6 +156,7 @@ def check_required_sections() -> list[str]:
         "site/evidence-packets.html": ("Concept Evidence Packets",),
         "site/formula-guide.html": ("Plain Formula Guide", "Common Misread", "What To Check", "Do not read the loss as proof", "Do not read broad training as coverage"),
         "site/misconceptions.html": ("Misconception Map", "Wrong Turn", "Why It Is Tempting", "Repair Sentence", "First-Principles Test"),
+        "site/course-spine.html": ("Course Spine In Plain Words", "The Whole Course In One Human Problem", "First-Principles Route Through The Field", "Why Topology And Shape Belong In The Big Picture", "How Every Topic Fits The Spine", "Reader Test For The Whole Course", "Deep Learning", "Physics-Informed Neural Networks", "Operator Learning", "Topology", "shape", "changed case"),
         "site/evidence-packets/physics-informed-neural-networks.html": ("Source Strength Audit", "Reviewed Source Anchors", "Broad Transcript Mentions", "Minimum Review Action", "Stronger Proof Needed", "Transcript Evidence vs Scientific Proof", "Transcript Can Support", "Transcript Cannot Support", "Stronger Validation Needed", "First Overclaim To Reject", "Reviewer Action", "Transcript Support", "What This Evidence Does Not Prove", "Review Links"),
         "site/evidence-packets/operator-learning.html": ("Source Strength Audit", "Reviewed Source Anchors", "Broad Transcript Mentions", "Minimum Review Action", "Stronger Proof Needed", "Transcript Evidence vs Scientific Proof", "Transcript Can Support", "Transcript Cannot Support", "Stronger Validation Needed", "First Overclaim To Reject", "Reviewer Action", "Transcript Support", "What This Evidence Does Not Prove", "Review Links"),
         "site/topics/physics-informed-neural-networks.html": ("Big Picture Claim Chain", "Everyday Problem", "Decision Or Quantity At Stake", "Hidden Thing Needed", "First Thing That Can Break The Claim", "End-To-End Use Protocol", "State The Scientific Job", "Name The Decision Quantity", "Inventory The Evidence", "Choose The Mathematical Carrier", "Build The Smallest Working Case", "Run The Changed-Case Test", "Reject Or Narrow The Claim When", "Final Claim Allowed", "Plain Big Picture Essay", "Applications In Everyday Words", "Topology and shape", "Engineering design", "Materials, chemistry, and biology", "Climate, fluids, and fields", "First-Principles Essay", "What A Strong Explanation Must Say", "One Concrete Case From Start To Finish", "Observed Evidence", "Rejection Test", "How This Connects To Nearby Ideas", "Learn Before This", "Confusion It Prevents", "Evidence Needed To Believe This", "Strong Evidence", "Too Weak", "Reject Or Recheck When", "Where This Fits By Domain", "When To Avoid This In A Domain", "Changed-Case Test", "Plain Formula Term By Term", "What It Carries", "Concrete Worked Example", "Concrete Wrong-Use Example", "Test That Catches It", "What Breaks Without This Idea", "Minimum Proof Needed", "Reader Must Be Able To Say", "Acceptance Sentence Filled", "I would test it by changing", "Selected Source Anchors", "Claim Anchored", "Limit:"),
@@ -449,8 +451,8 @@ def validate() -> None:
         errors.append(f"expected 40 videos, found {summary.get('video_count')}")
     if summary.get("concept_count") != 14:
         errors.append(f"expected 14 concepts, found {summary.get('concept_count')}")
-    if len(manifest) != 220:
-        errors.append(f"expected 220 pages, found {len(manifest)}")
+    if len(manifest) != 221:
+        errors.append(f"expected 221 pages, found {len(manifest)}")
 
     errors.extend(check_internal_links(manifest))
     errors.extend(check_required_sections())
