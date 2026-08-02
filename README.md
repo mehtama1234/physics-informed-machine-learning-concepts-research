@@ -35,6 +35,7 @@ The purpose is not to summarize lectures. The purpose is to explain physics-info
 - `site/concept-ladder.html`: first-principles concept ladder from evidence to failure test
 - `site/evidence-packets.html`: per-concept source support and review links
 - `site/quality.html`: editorial quality rubric whose forbidden shortcuts and replacement tests are embedded in topic pages
+- `site/wording-audit.html`: wording audit for hard-stop terms, soft review terms, and replacement tests
 - `site/synthesis.html`: field-level synthesis tying the concepts together
 - `site/review-entrypoints.html`: end-to-end review route through the package
 - `site/review-search.html`: reviewer-question index for finding the right page
@@ -114,6 +115,7 @@ http://127.0.0.1:8022/handoff.html
 http://127.0.0.1:8022/hand-polish.html
 http://127.0.0.1:8022/meaty-goal-coverage.html
 http://127.0.0.1:8022/quality.html
+http://127.0.0.1:8022/wording-audit.html
 http://127.0.0.1:8022/concept-atlas.html
 http://127.0.0.1:8022/review-queue.html
 ```
@@ -124,7 +126,7 @@ http://127.0.0.1:8022/review-queue.html
 - 40 videos
 - 40 available transcripts
 - concept atlas
-- 219 generated site pages
+- 220 generated site pages
 - paper-family routes
 - comparison pages
 - 8 worked examples

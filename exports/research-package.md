@@ -31,7 +31,7 @@
 - quality_rubric_count: 6
 - synthesis_guide_count: 4
 - review_handoff_count: 1
-- review_entrypoint_count: 29
+- review_entrypoint_count: 30
 - completion_requirement_count: 8
 - review_search_intent_count: 7
 - review_queue_count: 14
@@ -2628,6 +2628,9 @@
 - Replacement test: The page must point to at least one prerequisite, one neighboring method choice, one example, and one check that could reject the claim.
 
 
+## Wording Audit
+- See `site/wording-audit.html` for hard-stop terms, review terms, current page hits, and replacement tests.
+
 ## Field Synthesis
 ### Central Problem
 - Claim: Physics-informed machine learning asks how a learned answer can stay tied to the real scientific problem when measurements are sparse, equations are partial, simulations are costly, and future cases are different.
@@ -2725,6 +2728,7 @@
 - Evidence Ledger: evidence-ledger.html | What does the transcript support, and what does it not prove?
 - Evidence Packets: evidence-packets.html | Can a reviewer audit one concept without hunting through the whole site?
 - Quality Rubric: quality.html | Does each page avoid empty language and explain the real problem?
+- Wording Audit: wording-audit.html | Which words still need a reviewer to confirm they carry evidence, quantity, domain, and failure test?
 - Provenance: provenance.html | Could another CLI rebuild this package from the same sources?
 - Cross-Channel Playbook: provenance/cross-channel-playbook.html | What exact source, concept, evidence, page, and validation steps should the next build follow?
 
@@ -3031,7 +3035,7 @@
 
 ### Explain mathematical concepts from first principles without assuming prior jargon.
 - Status: locally verified
-- Evidence: topic pages embed Quality Gate Before Review tables and, with the concept ladder, glossary, derivations, and quality rubric, require problem, domain, observed evidence, hidden quantity, formula shape, and failure test.
+- Evidence: topic pages embed Quality Gate Before Review tables and, with the concept ladder, glossary, derivations, quality rubric, and wording audit, require problem, domain, observed evidence, hidden quantity, formula shape, risky-word replacement tests, and failure test.
 
 ### Connect concepts to real domains and concrete scientific jobs.
 - Status: locally verified
@@ -3047,7 +3051,7 @@
 
 ### Run local checks proving generated pages, links, counts, and wording gates are coherent.
 - Status: locally verified
-- Evidence: make check runs Python compile, build validation, and standalone generated-site validation; validator expects the manifest page count and required sections.
+- Evidence: make check runs Python compile, build validation, and standalone generated-site validation; validator expects the manifest page count, wording audit page, and required sections.
 
 ### Create or verify the GitHub remote repository and push main.
 - Status: locally verified

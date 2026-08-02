@@ -35,6 +35,7 @@ REQUIRED_ROOT_PAGES = {
     "concept-ladder.html",
     "evidence-packets.html",
     "quality.html",
+    "wording-audit.html",
     "synthesis.html",
     "review-entrypoints.html",
     "review-search.html",
@@ -160,6 +161,7 @@ def check_required_sections() -> list[str]:
         "site/derivations/physics-informed-neural-networks.html": ("Hand Derivation", "Why It Enters", "Final Line", "Why This Shape And Not Another", "Observed Burden", "Rejection Burden", "Smallest Useful Formula", "First Wrong Simplification"),
         "site/derivations/operator-learning.html": ("Hand Derivation", "Why It Enters", "Final Line", "Why This Shape And Not Another", "Observed Burden", "Rejection Burden", "Smallest Useful Formula", "First Wrong Simplification"),
         "site/derivations/foundation-models-for-pdes.html": ("Hand Derivation", "Why It Enters", "Final Line", "Why This Shape And Not Another", "Observed Burden", "Rejection Burden"),
+        "site/wording-audit.html": ("Wording Audit", "Severity", "Replacement Test", "Current Pages"),
         "site/provenance/cross-channel-playbook.html": ("Cross-Channel Replication Playbook", "Process", "Checks"),
         "site/worked-examples/molecule-property-from-structure.html": ("First-Principles Story", "End-To-End Flow", "Claim Boundary", "Example Stress Test", "Method Route Under Test", "Passes Only If"),
         "site/worked-examples/foundation-pde-model-on-new-equation.html": ("First-Principles Story", "End-To-End Flow", "Claim Boundary", "Example Stress Test", "Method Route Under Test", "Passes Only If"),
@@ -185,6 +187,8 @@ def check_restricted_words(paths: list[Path]) -> list[str]:
     errors: list[str] = []
     pattern = re.compile("|".join(re.escape(item) for item in RESTRICTED_PATTERNS), re.IGNORECASE)
     for path in paths:
+        if path.relative_to(ROOT).as_posix() == "site/wording-audit.html":
+            continue
         text = path.read_text(encoding="utf-8", errors="ignore")
         for match in pattern.finditer(text):
             line_no = text.count("\n", 0, match.start()) + 1
@@ -287,8 +291,8 @@ def validate() -> None:
         errors.append(f"expected 40 videos, found {summary.get('video_count')}")
     if summary.get("concept_count") != 14:
         errors.append(f"expected 14 concepts, found {summary.get('concept_count')}")
-    if len(manifest) != 219:
-        errors.append(f"expected 219 pages, found {len(manifest)}")
+    if len(manifest) != 220:
+        errors.append(f"expected 220 pages, found {len(manifest)}")
 
     errors.extend(check_internal_links(manifest))
     errors.extend(check_required_sections())

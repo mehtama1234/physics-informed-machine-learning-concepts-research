@@ -2571,6 +2571,63 @@ QUALITY_RUBRIC = [
     },
 ]
 
+WORDING_AUDIT_TERMS = [
+    {
+        "term": "framework",
+        "severity": "hard stop",
+        "reason": "Often names a container without explaining the real object, evidence, or failure test.",
+        "replacement": "Name the actual parts being connected and the scientific job they serve.",
+    },
+    {
+        "term": "leverage",
+        "severity": "hard stop",
+        "reason": "Usually hides what information is being used.",
+        "replacement": "Say what evidence, rule, or previous case is being used.",
+    },
+    {
+        "term": "paradigm",
+        "severity": "hard stop",
+        "reason": "Sounds broad while avoiding the concrete problem.",
+        "replacement": "Name the shortage: sparse data, costly solves, changed cases, missing law, or many candidates.",
+    },
+    {
+        "term": "utilize",
+        "severity": "hard stop",
+        "reason": "Adds formality without adding meaning.",
+        "replacement": "Use 'use' and then name what is being used.",
+    },
+    {
+        "term": "robust",
+        "severity": "hard stop",
+        "reason": "Claims strength without naming the changed case survived.",
+        "replacement": "State the changed boundary, grid, noise, geometry, or held-out regime tested.",
+    },
+    {
+        "term": "powerful",
+        "severity": "hard stop",
+        "reason": "Praises a method instead of explaining what burden it carries.",
+        "replacement": "Name the quantity it helps predict, explain, generate, or check.",
+    },
+    {
+        "term": "just",
+        "severity": "review",
+        "reason": "Can make a hard mathematical burden sound smaller than it is.",
+        "replacement": "Delete it, or replace it with the exact condition that makes the step valid.",
+    },
+    {
+        "term": "magic",
+        "severity": "review",
+        "reason": "Useful only as a warning; dangerous if used to explain.",
+        "replacement": "Name the data, equation, map, score, or test doing the work.",
+    },
+    {
+        "term": "generally useful",
+        "severity": "review",
+        "reason": "Can drift into vague praise unless the use range is named.",
+        "replacement": "State the domain, target quantity, and first changed case that would reject the claim.",
+    },
+]
+
 
 SYNTHESIS_GUIDES = [
     {
@@ -2624,6 +2681,7 @@ REVIEW_HANDOFF = {
         {"label": "Hand Polish Audit", "href": "hand-polish.html", "why": "Use this to review the 14 concept-level acceptance checklists."},
         {"label": "Meaty Goal Coverage", "href": "meaty-goal-coverage.html", "why": "Use this to verify every required teaching-grade part is present."},
         {"label": "Quality Rubric", "href": "quality.html", "why": "Use this to inspect the forbidden shortcuts and replacement tests embedded in each topic page."},
+        {"label": "Wording Audit", "href": "wording-audit.html", "why": "Use this to inspect hard-stop terms, soft wording risks, and concrete replacement tests."},
         {"label": "Review Queue", "href": "review-queue.html", "why": "Use this to confirm there are no P0 or P1 support gaps left."},
         {"label": "Evidence Packets", "href": "evidence-packets.html", "why": "Use this to check source support, source limits, and claim boundaries."},
         {"label": "Topic Atlas", "href": "concept-atlas.html", "why": "Use this to open individual concept pages and apply the embedded Quality Gate Before Review."},
@@ -3346,6 +3404,12 @@ REVIEW_ENTRYPOINTS = [
                 "question": "Does each page avoid empty language and explain the real problem?",
             },
             {
+                "label": "Wording Audit",
+                "href": "wording-audit.html",
+                "why": "Maps risky words to current pages and gives replacement tests.",
+                "question": "Which words still need a reviewer to confirm they carry evidence, quantity, domain, and failure test?",
+            },
+            {
                 "label": "Provenance",
                 "href": "provenance.html",
                 "why": "Documents source playlists, caption extraction, local files, and reproduction commands.",
@@ -3373,9 +3437,9 @@ COMPLETION_REQUIREMENTS = [
     {
         "slug": "plain-first-principles-concepts",
         "requirement": "Explain mathematical concepts from first principles without assuming prior jargon.",
-        "local_evidence": "topic pages embed Quality Gate Before Review tables and, with the concept ladder, glossary, derivations, and quality rubric, require problem, domain, observed evidence, hidden quantity, formula shape, and failure test.",
+        "local_evidence": "topic pages embed Quality Gate Before Review tables and, with the concept ladder, glossary, derivations, quality rubric, and wording audit, require problem, domain, observed evidence, hidden quantity, formula shape, risky-word replacement tests, and failure test.",
         "status": "locally verified",
-        "links": ["concept-atlas.html", "concept-ladder.html", "derivations.html", "quality.html"],
+        "links": ["concept-atlas.html", "concept-ladder.html", "derivations.html", "quality.html", "wording-audit.html"],
     },
     {
         "slug": "domains-and-examples",
@@ -3401,7 +3465,7 @@ COMPLETION_REQUIREMENTS = [
     {
         "slug": "local-validation",
         "requirement": "Run local checks proving generated pages, links, counts, and wording gates are coherent.",
-        "local_evidence": "make check runs Python compile, build validation, and standalone generated-site validation; validator expects the manifest page count and required sections.",
+        "local_evidence": "make check runs Python compile, build validation, and standalone generated-site validation; validator expects the manifest page count, wording audit page, and required sections.",
         "status": "locally verified",
         "links": ["provenance/site-generation.html", "provenance/analysis-build.html"],
     },
@@ -4065,6 +4129,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
         "meaty_goal": MEATY_END_TO_END_GOAL,
         "meaty_goal_coverage": meaty_goal_coverage,
         "quality_rubric": QUALITY_RUBRIC,
+        "wording_audit_terms": WORDING_AUDIT_TERMS,
         "synthesis_guides": SYNTHESIS_GUIDES,
         "review_handoff": REVIEW_HANDOFF,
         "review_entrypoints": REVIEW_ENTRYPOINTS,
@@ -4503,6 +4568,82 @@ def concept_source_strength(topic: dict[str, object], evidence: list[dict[str, o
     }
 
 
+def visible_text_from_html(text: str) -> str:
+    text = re.sub(r"<script.*?</script>", " ", text, flags=re.IGNORECASE | re.DOTALL)
+    text = re.sub(r"<style.*?</style>", " ", text, flags=re.IGNORECASE | re.DOTALL)
+    text = re.sub(r"<[^>]+>", " ", text)
+    return html.unescape(re.sub(r"\s+", " ", text))
+
+
+def build_wording_audit() -> list[dict[str, object]]:
+    scan_roots = [
+        SITE / "topics",
+        SITE / "derivations",
+        SITE / "worked-examples",
+        SITE / "domains",
+        SITE / "decision-guide",
+        SITE / "reader-checks",
+    ]
+    rows = []
+    for policy in WORDING_AUDIT_TERMS:
+        term = str(policy["term"])
+        pattern = re.compile(rf"\b{re.escape(term)}\b", re.IGNORECASE)
+        matches = []
+        for root in scan_roots:
+            if not root.exists():
+                continue
+            for path in sorted(root.glob("*.html")):
+                text = visible_text_from_html(path.read_text(encoding="utf-8", errors="ignore"))
+                count = len(pattern.findall(text))
+                if count:
+                    matches.append({"page": str(path.relative_to(SITE)), "count": count})
+        rows.append(
+            {
+                "term": term,
+                "severity": str(policy["severity"]),
+                "reason": str(policy["reason"]),
+                "replacement": str(policy["replacement"]),
+                "count": sum(int(item["count"]) for item in matches),
+                "pages": matches[:12],
+            }
+        )
+    return rows
+
+
+def write_wording_audit_page(path: Path, rows: list[dict[str, object]]) -> None:
+    table_rows = []
+    for row in rows:
+        page_list = "".join(
+            f"<li><a href=\"{html.escape(str(item['page']))}\">{html.escape(str(item['page']))}</a> ({html.escape(str(item['count']))})</li>"
+            for item in row["pages"]
+        )
+        if not page_list:
+            page_list = "<li>No current page hits.</li>"
+        table_rows.append(
+            f"""
+<tr>
+  <td>{html.escape(str(row['term']))}</td>
+  <td>{html.escape(str(row['severity']))}</td>
+  <td>{html.escape(str(row['count']))}</td>
+  <td>{html.escape(str(row['reason']))}</td>
+  <td>{html.escape(str(row['replacement']))}</td>
+  <td><ul>{page_list}</ul></td>
+</tr>
+"""
+        )
+    body = f"""
+<h1>Wording Audit</h1>
+<p>This page turns the plain-language rule into a concrete review surface. Hard-stop terms are blocked on content pages by validation. Review terms are not automatically wrong, but each hit should earn its place by naming evidence, quantity, domain, and failure test.</p>
+<table>
+  <thead>
+    <tr><th>Term</th><th>Severity</th><th>Hits</th><th>Why It Is Risky</th><th>Replacement Test</th><th>Current Pages</th></tr>
+  </thead>
+  <tbody>{''.join(table_rows)}</tbody>
+</table>
+"""
+    path.write_text(html_page("Physics-Informed ML Wording Audit", body), encoding="utf-8")
+
+
 def claim_boundary_review(topic: dict[str, object], derivation: dict[str, object]) -> dict[str, str]:
     title = str(topic["title"])
     return {
@@ -4805,6 +4946,7 @@ def html_page(title: str, body: str, root_prefix: str = "") -> str:
   <a href="{root_prefix}concept-ladder.html">Ladder</a>
   <a href="{root_prefix}evidence-packets.html">Packets</a>
   <a href="{root_prefix}quality.html">Quality</a>
+  <a href="{root_prefix}wording-audit.html">Wording</a>
   <a href="{root_prefix}synthesis.html">Synthesis</a>
   <a href="{root_prefix}review-entrypoints.html">Review Map</a>
   <a href="{root_prefix}review-search.html">Find</a>
@@ -5092,6 +5234,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Concept Ladder", f"{summary['concept_ladder_count']} concepts laid out from observed evidence to failure test.", "concept-ladder.html")}
 {card("Evidence Packets", f"{summary['concept_evidence_packet_count']} concept packets tying source support to review pages.", "evidence-packets.html")}
 {card("Quality Rubric", f"{summary['quality_rubric_count']} editorial standards for first-principles pages.", "quality.html")}
+{card("Wording Audit", "Hard-stop and review wording terms mapped to current pages and replacement tests.", "wording-audit.html")}
 {card("Synthesis", f"{summary['synthesis_guide_count']} pages tying the field into one argument.", "synthesis.html")}
 {card("Meaty Goal", "End-to-end done criteria for turning the package into a teaching-grade first-principles research guide.", "meaty-goal.html")}
 {card("Meaty Goal Coverage", f"{summary['meaty_goal_coverage_count']} concepts checked against the required teaching-grade page parts.", "meaty-goal-coverage.html")}
@@ -5275,6 +5418,9 @@ def write_site(data: dict[str, object]) -> None:
         html_page("Physics-Informed ML Quality Rubric", f"<h1>Editorial Quality Rubric</h1><p>This rubric defines what a strong page must do: start from first principles, use plain language, name the domain, state failure boundaries, separate evidence from proof, and connect the concept to the rest of the field.</p><div class=\"grid\">{''.join(quality_cards)}</div>"),
         encoding="utf-8",
     )
+    wording_audit = build_wording_audit()
+    (ANALYSIS / "wording_audit.json").write_text(json.dumps(wording_audit, indent=2) + "\n", encoding="utf-8")
+    write_wording_audit_page(SITE / "wording-audit.html", wording_audit)
 
     synthesis_cards = []
     for item in synthesis_guides:
@@ -7675,6 +7821,7 @@ def write_markdown_export(data: dict[str, object]) -> None:
                 "",
             ]
         )
+    lines.extend(["", "## Wording Audit", "- See `site/wording-audit.html` for hard-stop terms, review terms, current page hits, and replacement tests."])
     lines.extend(["", "## Field Synthesis"])
     for item in data["synthesis_guides"]:
         lines.extend(
@@ -8243,6 +8390,18 @@ def validate(data: dict[str, object] | None = None) -> None:
         for field in ("forbidden_shortcut", "replacement_test"):
             if not item.get(field):
                 raise SystemExit(f"quality rubric missing {field}: {item['title']}")
+    wording_audit_path = SITE / "wording-audit.html"
+    wording_audit_json = ANALYSIS / "wording_audit.json"
+    if not wording_audit_path.exists() or not wording_audit_json.exists():
+        raise SystemExit("wording audit page or analysis file missing")
+    wording_text = wording_audit_path.read_text(encoding="utf-8")
+    if "Wording Audit" not in wording_text or "Replacement Test" not in wording_text or "hard stop" not in wording_text or "review" not in wording_text:
+        raise SystemExit("wording audit page not rendered correctly")
+    wording_rows = json.loads(wording_audit_json.read_text(encoding="utf-8"))
+    if len(wording_rows) != len(WORDING_AUDIT_TERMS):
+        raise SystemExit("wording audit term count mismatch")
+    if not any(row.get("severity") == "review" and int(row.get("count") or 0) > 0 for row in wording_rows):
+        raise SystemExit("wording audit has no review-term hits to inspect")
     for item in SYNTHESIS_GUIDES:
         item_path = SITE / "synthesis" / f"{item['slug']}.html"
         if not item_path.exists():

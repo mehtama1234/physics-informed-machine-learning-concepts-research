@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Physics-Informed ML Wording Audit</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav class="topbar">
+  <a href="index.html">Physics-Informed ML</a>
+  <a href="transcripts.html">Transcripts</a>
+  <a href="concept-atlas.html">Concept Atlas</a>
+  <a href="families.html">Families</a>
+  <a href="comparisons.html">Comparisons</a>
+  <a href="worked-examples.html">Examples</a>
+  <a href="diagrams.html">Diagrams</a>
+  <a href="derivations.html">Derivations</a>
+  <a href="formula-guide.html">Formulas</a>
+  <a href="misconceptions.html">Misreads</a>
+  <a href="learning-path.html">Path</a>
+  <a href="glossary.html">Glossary</a>
+  <a href="domains.html">Domains</a>
+  <a href="reader-checks.html">Checks</a>
+  <a href="decision-guide.html">Decide</a>
+  <a href="provenance.html">Provenance</a>
+  <a href="coverage.html">Coverage</a>
+  <a href="dependencies.html">Dependencies</a>
+  <a href="concept-ladder.html">Ladder</a>
+  <a href="evidence-packets.html">Packets</a>
+  <a href="quality.html">Quality</a>
+  <a href="wording-audit.html">Wording</a>
+  <a href="synthesis.html">Synthesis</a>
+  <a href="review-entrypoints.html">Review Map</a>
+  <a href="review-search.html">Find</a>
+  <a href="review-queue.html">Queue</a>
+  <a href="editorial-roadmap.html">Roadmap</a>
+  <a href="completion-audit.html">Audit</a>
+  <a href="handoff.html">Handoff</a>
+  <a href="theme-map.html">Themes</a>
+  <a href="evidence-ledger.html">Evidence</a>
+</nav>
+<main>
+
+<h1>Wording Audit</h1>
+<p>This page turns the plain-language rule into a concrete review surface. Hard-stop terms are blocked on content pages by validation. Review terms are not automatically wrong, but each hit should earn its place by naming evidence, quantity, domain, and failure test.</p>
+<table>
+  <thead>
+    <tr><th>Term</th><th>Severity</th><th>Hits</th><th>Why It Is Risky</th><th>Replacement Test</th><th>Current Pages</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <td>framework</td>
+  <td>hard stop</td>
+  <td>0</td>
+  <td>Often names a container without explaining the real object, evidence, or failure test.</td>
+  <td>Name the actual parts being connected and the scientific job they serve.</td>
+  <td><ul><li>No current page hits.</li></ul></td>
+</tr>
+
+<tr>
+  <td>leverage</td>
+  <td>hard stop</td>
+  <td>0</td>
+  <td>Usually hides what information is being used.</td>
+  <td>Say what evidence, rule, or previous case is being used.</td>
+  <td><ul><li>No current page hits.</li></ul></td>
+</tr>
+
+<tr>
+  <td>paradigm</td>
+  <td>hard stop</td>
+  <td>0</td>
+  <td>Sounds broad while avoiding the concrete problem.</td>
+  <td>Name the shortage: sparse data, costly solves, changed cases, missing law, or many candidates.</td>
+  <td><ul><li>No current page hits.</li></ul></td>
+</tr>
+
+<tr>
+  <td>utilize</td>
+  <td>hard stop</td>
+  <td>0</td>
+  <td>Adds formality without adding meaning.</td>
+  <td>Use &#x27;use&#x27; and then name what is being used.</td>
+  <td><ul><li>No current page hits.</li></ul></td>
+</tr>
+
+<tr>
+  <td>robust</td>
+  <td>hard stop</td>
+  <td>0</td>
+  <td>Claims strength without naming the changed case survived.</td>
+  <td>State the changed boundary, grid, noise, geometry, or held-out regime tested.</td>
+  <td><ul><li>No current page hits.</li></ul></td>
+</tr>
+
+<tr>
+  <td>powerful</td>
+  <td>hard stop</td>
+  <td>0</td>
+  <td>Praises a method instead of explaining what burden it carries.</td>
+  <td>Name the quantity it helps predict, explain, generate, or check.</td>
+  <td><ul><li>No current page hits.</li></ul></td>
+</tr>
+
+<tr>
+  <td>just</td>
+  <td>review</td>
+  <td>61</td>
+  <td>Can make a hard mathematical burden sound smaller than it is.</td>
+  <td>Delete it, or replace it with the exact condition that makes the step valid.</td>
+  <td><ul><li><a href="topics/attention-for-scientific-fields.html">topics/attention-for-scientific-fields.html</a> (2)</li><li><a href="topics/deep-learning.html">topics/deep-learning.html</a> (1)</li><li><a href="topics/foundation-models-for-pdes.html">topics/foundation-models-for-pdes.html</a> (5)</li><li><a href="topics/generative-modeling.html">topics/generative-modeling.html</a> (3)</li><li><a href="topics/graphs-and-geometric-learning.html">topics/graphs-and-geometric-learning.html</a> (5)</li><li><a href="topics/neural-differential-equations.html">topics/neural-differential-equations.html</a> (5)</li><li><a href="topics/operator-learning.html">topics/operator-learning.html</a> (3)</li><li><a href="topics/optimization-for-learning.html">topics/optimization-for-learning.html</a> (1)</li><li><a href="topics/partial-differential-equations.html">topics/partial-differential-equations.html</a> (8)</li><li><a href="topics/physics-informed-neural-networks.html">topics/physics-informed-neural-networks.html</a> (3)</li><li><a href="topics/scientific-machine-learning.html">topics/scientific-machine-learning.html</a> (4)</li><li><a href="topics/surrogate-modeling.html">topics/surrogate-modeling.html</a> (1)</li></ul></td>
+</tr>
+
+<tr>
+  <td>magic</td>
+  <td>review</td>
+  <td>1</td>
+  <td>Useful only as a warning; dangerous if used to explain.</td>
+  <td>Name the data, equation, map, score, or test doing the work.</td>
+  <td><ul><li><a href="topics/physics-informed-neural-networks.html">topics/physics-informed-neural-networks.html</a> (1)</li></ul></td>
+</tr>
+
+<tr>
+  <td>generally useful</td>
+  <td>review</td>
+  <td>14</td>
+  <td>Can drift into vague praise unless the use range is named.</td>
+  <td>State the domain, target quantity, and first changed case that would reject the claim.</td>
+  <td><ul><li><a href="topics/attention-for-scientific-fields.html">topics/attention-for-scientific-fields.html</a> (1)</li><li><a href="topics/deep-learning.html">topics/deep-learning.html</a> (1)</li><li><a href="topics/foundation-models-for-pdes.html">topics/foundation-models-for-pdes.html</a> (1)</li><li><a href="topics/generative-modeling.html">topics/generative-modeling.html</a> (1)</li><li><a href="topics/graphs-and-geometric-learning.html">topics/graphs-and-geometric-learning.html</a> (1)</li><li><a href="topics/neural-differential-equations.html">topics/neural-differential-equations.html</a> (1)</li><li><a href="topics/operator-learning.html">topics/operator-learning.html</a> (1)</li><li><a href="topics/optimization-for-learning.html">topics/optimization-for-learning.html</a> (1)</li><li><a href="topics/partial-differential-equations.html">topics/partial-differential-equations.html</a> (1)</li><li><a href="topics/physics-informed-neural-networks.html">topics/physics-informed-neural-networks.html</a> (1)</li><li><a href="topics/scientific-machine-learning.html">topics/scientific-machine-learning.html</a> (1)</li><li><a href="topics/surrogate-modeling.html">topics/surrogate-modeling.html</a> (1)</li></ul></td>
+</tr>
+</tbody>
+</table>
+
+</main>
+</body>
+</html>
