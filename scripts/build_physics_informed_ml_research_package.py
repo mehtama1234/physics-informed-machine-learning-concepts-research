@@ -3323,6 +3323,7 @@ MEATY_GOAL_REQUIREMENTS = [
     {"key": "slow_importance_essay", "label": "Slow Importance Essay", "proof_term": "Why This Matters Slowly"},
     {"key": "long_everyday_importance_essay", "label": "Long Everyday Importance Essay", "proof_term": "Long Everyday Importance Essay"},
     {"key": "from_scratch_story", "label": "From Scratch Story", "proof_term": "From Scratch Story In Plain Words"},
+    {"key": "no_jargon_translation", "label": "No-Jargon Translation", "proof_term": "No-Jargon Translation For This Topic"},
     {"key": "field_mini_cases", "label": "Field Mini Cases", "proof_term": "Field Mini Cases In Plain Words"},
     {"key": "hand_teaching_note", "label": "Hand Teaching Note", "proof_term": "Hand Teaching Note"},
     {"key": "case_walkthrough", "label": "Case Walkthrough", "proof_term": "One Concrete Case From Start To Finish"},
@@ -7252,6 +7253,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     application_claim_ladder = topic_application_claim_ladder_html(topic, derivation)
     field_mini_cases = topic_field_mini_cases_html(topic, derivation)
     from_scratch_story = topic_from_scratch_story_html(topic, derivation)
+    no_jargon_translation = topic_no_jargon_translation_html(topic, derivation)
     plain_question_answer_script = topic_plain_question_answer_script_html(topic, derivation)
     know_still_test = topic_know_still_test_html(topic, derivation)
     failure_consequence = topic_failure_consequence_html(topic, derivation)
@@ -7295,6 +7297,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
 {application_claim_ladder}
 {field_mini_cases}
 {from_scratch_story}
+{no_jargon_translation}
 {plain_question_answer_script}
 {know_still_test}
 {failure_consequence}
@@ -7885,6 +7888,76 @@ def topic_from_scratch_story_html(topic: dict[str, object], derivation: dict[str
 <p>The same idea also has to make sense away from the shape example. In engineering, the plain use is: {html.escape(engineering['use'])} In materials, chemistry, or biology, the plain use is: {html.escape(lab['use'])} In climate, fluids, or other field problems, the plain use is: {html.escape(fields['use'])} These uses are not praise for the topic. They are checks that the learner can translate the same first-principles shortage into more than one real setting.</p>
 <p>A concrete case makes the story honest. Here, the setting is {html.escape(setting)}. The observed evidence is {html.escape(case['observed'])}. The hidden target is {html.escape(case['hidden'])}. The move is {html.escape(case['move'])}. The usable answer is {html.escape(case['answer'])}. The first changed case is {html.escape(case['rejection'])}. If that changed case fails, the right response is not to defend the method name. The right response is to narrow the claim, gather stronger evidence, or choose a better starting point.</p>
 <p>The plain ending is this: {html.escape(title)} matters because {html.escape(str(topic['why_it_matters']))}. It keeps {html.escape(str(topic['keeps']))}. It leaves out {html.escape(str(topic['leaves_out']))}. It should stop being trusted, or be narrowed, when {html.escape(str(topic['failure_boundary']))}. A learner understands the topic only when they can say that whole chain without hiding behind the topic name.</p>
+"""
+
+
+def topic_no_jargon_translation_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
+    title = str(topic["title"])
+    shape_use = topic_plain_applications(topic, derivation)[0]["use"]
+    rows = (
+        (
+            "Topic Name",
+            title,
+            f"A name for the move used when {str(topic['common_problem'])}.",
+            "What real shortage made this idea necessary?",
+        ),
+        (
+            "Evidence",
+            str(derivation["observed"]),
+            "The part of the situation the learner can point to before making a claim.",
+            "What can be measured, written down, simulated, or checked right now?",
+        ),
+        (
+            "Hidden Answer",
+            str(derivation["hidden"]),
+            "The answer people need but cannot read directly from the starting evidence.",
+            "What are we trying to recover, predict, explain, control, design, or test?",
+        ),
+        (
+            "Math Move",
+            str(derivation["move"]),
+            "The smallest information-carrying step from the visible side to the missing side.",
+            "Why does this move follow from the shortage rather than from the topic name?",
+        ),
+        (
+            "Shape Or Topology",
+            shape_use,
+            "The part about connections, boundaries, holes, surfaces, meshes, graphs, molecules, or fields that the answer must keep.",
+            "What shaped part would make the answer wrong if it were changed?",
+        ),
+        (
+            "Field Use",
+            str(topic["why_it_matters"]),
+            "The real-world reason a person would care about the answer.",
+            "Which decision or quantity changes if the answer is right?",
+        ),
+        (
+            "Trust Boundary",
+            str(topic["failure_boundary"]),
+            "The first place the claim should shrink or stop.",
+            "What changed case would make a careful reader recheck the answer?",
+        ),
+    )
+    body = "".join(
+        f"""
+<tr>
+  <th>{html.escape(label)}</th>
+  <td>{html.escape(phrase)}</td>
+  <td>{html.escape(plain_meaning)}</td>
+  <td>{html.escape(reader_question)}</td>
+</tr>
+"""
+        for label, phrase, plain_meaning, reader_question in rows
+    )
+    return f"""
+<h2>No-Jargon Translation For This Topic</h2>
+<p>This box turns the topic into everyday questions. A learner should be able to cover the middle column and still explain the right-hand column in ordinary speech.</p>
+<table>
+  <thead>
+    <tr><th>Course Phrase</th><th>Page Wording</th><th>Everyday Meaning</th><th>Reader Question</th></tr>
+  </thead>
+  <tbody>{body}</tbody>
+</table>
 """
 
 
@@ -10165,6 +10238,15 @@ def validate(data: dict[str, object] | None = None) -> None:
             "The same idea also has to make sense",
             "A concrete case makes the story honest",
             "The plain ending is this",
+            "No-Jargon Translation For This Topic",
+            "Course Phrase",
+            "Page Wording",
+            "Everyday Meaning",
+            "Reader Question",
+            "Topic Name",
+            "Hidden Answer",
+            "Math Move",
+            "Trust Boundary",
             "Plain Question To Answer Script",
             "Real question",
             "Evidence sentence",
