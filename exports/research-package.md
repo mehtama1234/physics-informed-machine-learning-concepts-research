@@ -146,7 +146,7 @@
 
 #### Evidence Needed Before Trusting The Family
 - Strong evidence: the route names the scientific quantity, input family, output quantity, and changed-case test.
-- Too weak: the family is described as powerful, fast, broad, or accurate without a rejecting changed case.
+- Too weak: the family is described as useful, fast, broad, or accurate without a rejecting changed case.
 
 ### Neural Operators Family
 - Problem: One solved simulation is not enough; the scientific job needs the map from many inputs to many full fields.
@@ -163,7 +163,7 @@
 
 #### Evidence Needed Before Trusting The Family
 - Strong evidence: the route names the scientific quantity, input family, output quantity, and changed-case test.
-- Too weak: the family is described as powerful, fast, broad, or accurate without a rejecting changed case.
+- Too weak: the family is described as useful, fast, broad, or accurate without a rejecting changed case.
 
 ### Model Discovery Family
 - Problem: Prediction alone is not enough when the scientist needs a readable law or missing change rule.
@@ -180,7 +180,7 @@
 
 #### Evidence Needed Before Trusting The Family
 - Strong evidence: the route names the scientific quantity, input family, output quantity, and changed-case test.
-- Too weak: the family is described as powerful, fast, broad, or accurate without a rejecting changed case.
+- Too weak: the family is described as useful, fast, broad, or accurate without a rejecting changed case.
 
 ### Scientific Surrogates Family
 - Problem: The trusted simulator is too slow for repeated decisions, but a fast answer is dangerous if nobody states where it is valid.
@@ -197,7 +197,7 @@
 
 #### Evidence Needed Before Trusting The Family
 - Strong evidence: the route names the scientific quantity, input family, output quantity, and changed-case test.
-- Too weak: the family is described as powerful, fast, broad, or accurate without a rejecting changed case.
+- Too weak: the family is described as useful, fast, broad, or accurate without a rejecting changed case.
 
 
 ## Comparisons

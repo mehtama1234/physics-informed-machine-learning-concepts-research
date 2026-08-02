@@ -60,6 +60,10 @@ RESTRICTED_PATTERNS = (
     "black-box",
     "state of the art",
     "cutting edge",
+    "powerful",
+    "advanced",
+    "complex",
+    "many different",
 )
 
 MEATY_GOAL_REQUIREMENT_COUNT = 14

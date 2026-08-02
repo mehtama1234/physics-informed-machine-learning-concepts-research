@@ -408,7 +408,7 @@ COMPARISON_PAGES = [
         "right": "Large fitted prediction",
         "shared_problem": "Both use data to make future or unseen cases easier to understand.",
         "left_when": "Use this side when the user needs a short equation that can be inspected and argued over.",
-        "right_when": "Use this side when predictive accuracy on a complex pattern matters more than a compact human-readable rule.",
+        "right_when": "Use this side when predictive accuracy on a tangled pattern matters more than a compact human-readable rule.",
         "left_case": "A lab tracks a simple motion and wants a small equation that explains the rate of change. Use symbolic regression and test the law on a new experiment.",
         "right_case": "A molecular property depends on many structural details and the goal is accurate screening. Use a larger fitted predictor with clear use-range checks.",
         "wrong_choice_case": "Treating a neat formula as a law when an important variable was never measured, or demanding a tiny formula for a pattern that needs richer structure.",
@@ -1946,7 +1946,7 @@ DECISION_GUIDES = [
         "best_start": "Physics-informed neural networks",
         "why": "The equation can check the fitted field where measurements are missing.",
         "use_if": ["the equation is trusted", "the scientific job is one specific field or case", "boundary or starting information can be stated"],
-        "avoid_if": ["the equation is incomplete", "the hard regions are not checked", "the claim needs many different input fields"],
+        "avoid_if": ["the equation is incomplete", "the hard regions are not checked", "the claim needs a full input-to-output field map"],
         "evidence_needed": "held-out measurements, boundary checks, equation residual checks, and comparison against a trusted solve when possible",
         "links": ["topics/physics-informed-neural-networks.html", "diagrams/physics-informed-learning-flow.html", "reader-checks/pinns-check.html"],
     },
@@ -1979,7 +1979,7 @@ DECISION_GUIDES = [
         "best_start": "Symbolic regression or neural differential equations",
         "why": "The scientific product is a candidate rule, not only a number returned by a fitted model.",
         "use_if": ["important variables are measured", "a changed experiment is available", "a compact rule would be useful for science"],
-        "avoid_if": ["key variables are missing", "the formula is selected only on original data", "the system is too complex for the allowed ingredients"],
+        "avoid_if": ["key variables are missing", "the formula is selected only on original data", "the allowed ingredients cannot express the system's behavior"],
         "evidence_needed": "changed-experiment tests, missing-variable checks, noise checks, and scientific inspection of the selected rule",
         "links": ["topics/symbolic-regression.html", "topics/neural-differential-equations.html", "reader-checks/symbolic-regression-check.html"],
     },
@@ -6316,7 +6316,7 @@ def write_family_page(path: Path, family: dict[str, object]) -> None:
 <table>
   <tbody>
     <tr><th>Strong Evidence</th><td>The route names the scientific quantity, the input family, the output quantity, and a changed case that was not used to shape the answer.</td></tr>
-    <tr><th>Too Weak</th><td>A page says the family is powerful, fast, broad, or accurate without saying what changed case could reject the claim.</td></tr>
+    <tr><th>Too Weak</th><td>A page says the family is useful, fast, broad, or accurate without saying what changed case could reject the claim.</td></tr>
     <tr><th>Reader Test</th><td>Explain why each concept is needed in the route and what would break if that concept were removed.</td></tr>
   </tbody>
 </table>
@@ -6391,7 +6391,7 @@ def comparison_decision_burden_html(comparison: dict[str, object]) -> str:
 def comparison_decision_essay_html(comparison: dict[str, object]) -> str:
     return f"""
 <h2>How To Decide From First Principles</h2>
-<p>Do not start by asking which side sounds more advanced. Start by asking what shortage creates the problem. The shared problem is: {html.escape(str(comparison['shared_problem']))} The two sides are different because they carry different evidence and fail in different places.</p>
+<p>Do not start by asking which side sounds more impressive. Start by asking what shortage creates the problem. The shared problem is: {html.escape(str(comparison['shared_problem']))} The two sides are different because they carry different evidence and fail in different places.</p>
 <p>Use {html.escape(str(comparison['left']))} when this is the situation: {html.escape(str(comparison['left_when']))} In plain terms, this side is chosen when its evidence matches the job and its failure boundary can be tested. The concrete version is: {html.escape(str(comparison['left_case']))}</p>
 <p>Use {html.escape(str(comparison['right']))} when this is the situation: {html.escape(str(comparison['right_when']))} In plain terms, this side is chosen when the scientific task asks for the kind of shortcut, rule, or evidence this side actually provides. The concrete version is: {html.escape(str(comparison['right_case']))}</p>
 <p>The dangerous middle is the wrong-choice case: {html.escape(str(comparison['wrong_choice_case']))} This is where a shallow writeup usually fails. It names a method but does not name the quantity, use range, or changed case. The evidence that exposes the mistake is: {html.escape(str(comparison['evidence_that_exposes_it']))}</p>
@@ -6504,7 +6504,7 @@ def write_markdown_export(data: dict[str, object]) -> None:
         for slug in family["concepts"]:
             concept = concepts_by_slug[str(slug)]
             lines.append(f"- {concept['name']}: handles {concept['problem']} Keeps: {concept['keeps']} Failure: {concept['failure']}")
-        lines.extend(["", "#### Evidence Needed Before Trusting The Family", "- Strong evidence: the route names the scientific quantity, input family, output quantity, and changed-case test.", "- Too weak: the family is described as powerful, fast, broad, or accurate without a rejecting changed case.", ""])
+        lines.extend(["", "#### Evidence Needed Before Trusting The Family", "- Strong evidence: the route names the scientific quantity, input family, output quantity, and changed-case test.", "- Too weak: the family is described as useful, fast, broad, or accurate without a rejecting changed case.", ""])
     lines.extend(["", "## Comparisons"])
     for comparison in data["comparison_pages"]:
         lines.extend(
