@@ -54,6 +54,24 @@
 <h2>Everyday Anchor</h2>
 <p>A map is useful only if you know where it ends. Model uncertainty marks the edge of the map instead of pretending every road is known.</p>
 
+<h2>Before The Math Slow Walk</h2>
+<p>Read this before any formula. Uncertainty And Generalization starts with an ordinary shortage: a prediction is not enough unless the user knows when it should be believed. That shortage matters because someone has to use the answer in model use under new conditions. The reader should be able to explain the need for the idea without naming the method first.</p>
+<p>The everyday picture is this: A map is useful only if you know where it ends. Model uncertainty marks the edge of the map instead of pretending every road is known. The point of the picture is not to make the idea cute. It is to slow the question down. We know something, but not enough. We need a bridge from the known part to the missing part, and we need a way to tell when the bridge stops carrying the truth.</p>
+<p>For this topic, the known part is training cases, validation cases, prediction errors, and known shifts between cases. The missing part is how wrong the model may be on a case unlike the ones it learned from. If a reader cannot say those two pieces plainly, the later math has no job yet. The method becomes meaningful only after the shortage is visible.</p>
+<p>The first useful move is to separate fit on familiar examples from evidence on changed examples. In everyday words, that means the page is choosing what information is allowed to travel from evidence to answer. It keeps error checks, changed-case tests, and limits on where the model was trained. It leaves out confidence in cases that were never tested. The left-out part is where overconfidence usually enters.</p>
+<p>A concrete setting makes the idea harder to fake. A flood-risk model trained on past storms is used for a warmer future storm pattern. The useful answer is a prediction with a use range and warning boundary. That answer should be trusted only until this kind of case breaks it: the shifted storm cases fail even though ordinary held-out cases looked accurate.</p>
+<h3>Say It Without Jargon</h3>
+<table>
+  <tbody>
+    <tr><th>What We Have</th><td>training cases, validation cases, prediction errors, and known shifts between cases</td></tr>
+    <tr><th>What We Need</th><td>how wrong the model may be on a case unlike the ones it learned from</td></tr>
+    <tr><th>Why The Idea Enters</th><td>scientific models are used to make decisions, so the cost of being confidently wrong can be high</td></tr>
+    <tr><th>What To Try First</th><td>move one important condition outside the training range and measure the first failure</td></tr>
+    <tr><th>Stop Trusting It When</th><td>training error can look good while the model fails under a new geometry, parameter range, sensor, or physical regime</td></tr>
+  </tbody>
+</table>
+
+
 <h2>Big Picture Claim Chain</h2>
 <p>Read this row by row before trusting the method name. The concept earns its place only if each link carries the next one.</p>
 <table>

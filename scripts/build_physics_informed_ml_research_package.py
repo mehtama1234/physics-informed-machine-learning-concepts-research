@@ -3312,6 +3312,7 @@ MEATY_GOAL_REQUIREMENTS = [
     {"key": "first_principles", "label": "First Principles", "proof_term": "First-Principles Essay"},
     {"key": "claim_chain", "label": "Big Picture Claim Chain", "proof_term": "Big Picture Claim Chain"},
     {"key": "use_protocol", "label": "End-To-End Use Protocol", "proof_term": "End-To-End Use Protocol"},
+    {"key": "before_math_slow_walk", "label": "Before The Math Slow Walk", "proof_term": "Before The Math Slow Walk"},
     {"key": "plain_big_picture", "label": "Plain Big Picture Essay", "proof_term": "Plain Big Picture Essay"},
     {"key": "hand_teaching_note", "label": "Hand Teaching Note", "proof_term": "Hand Teaching Note"},
     {"key": "case_walkthrough", "label": "Case Walkthrough", "proof_term": "One Concrete Case From Start To Finish"},
@@ -6242,6 +6243,29 @@ def topic_claim_chain_html(topic: dict[str, object], derivation: dict[str, objec
 """
 
 
+def topic_before_math_slow_walk_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
+    title = str(topic["title"])
+    case = topic_case_walkthrough(topic, derivation)
+    return f"""
+<h2>Before The Math Slow Walk</h2>
+<p>Read this before any formula. {html.escape(title)} starts with an ordinary shortage: {html.escape(str(topic['common_problem']))}. That shortage matters because someone has to use the answer in {html.escape(str(topic['domain']))}. The reader should be able to explain the need for the idea without naming the method first.</p>
+<p>The everyday picture is this: {html.escape(str(topic['everyday_anchor']))} The point of the picture is not to make the idea cute. It is to slow the question down. We know something, but not enough. We need a bridge from the known part to the missing part, and we need a way to tell when the bridge stops carrying the truth.</p>
+<p>For this topic, the known part is {html.escape(str(derivation['observed']))}. The missing part is {html.escape(str(derivation['hidden']))}. If a reader cannot say those two pieces plainly, the later math has no job yet. The method becomes meaningful only after the shortage is visible.</p>
+<p>The first useful move is to {html.escape(str(derivation['move']))}. In everyday words, that means the page is choosing what information is allowed to travel from evidence to answer. It keeps {html.escape(str(topic['keeps']))}. It leaves out {html.escape(str(topic['leaves_out']))}. The left-out part is where overconfidence usually enters.</p>
+<p>A concrete setting makes the idea harder to fake. {html.escape(str(case['setting']))} The useful answer is {html.escape(str(case['answer']))}. That answer should be trusted only until this kind of case breaks it: {html.escape(str(case['rejection']))}.</p>
+<h3>Say It Without Jargon</h3>
+<table>
+  <tbody>
+    <tr><th>What We Have</th><td>{html.escape(str(derivation['observed']))}</td></tr>
+    <tr><th>What We Need</th><td>{html.escape(str(derivation['hidden']))}</td></tr>
+    <tr><th>Why The Idea Enters</th><td>{html.escape(str(topic['why_it_matters']))}</td></tr>
+    <tr><th>What To Try First</th><td>{html.escape(str(derivation['test']))}</td></tr>
+    <tr><th>Stop Trusting It When</th><td>{html.escape(str(topic['failure_boundary']))}</td></tr>
+  </tbody>
+</table>
+"""
+
+
 def topic_use_protocol_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
     wrong = topic_wrong_use(topic)
     return f"""
@@ -6449,6 +6473,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     reader_check = topic_reader_check_html(str(topic["slug"]), reader_checks)
     derivation_link = topic_derivation_link_html(str(topic["slug"]))
     source_anchors = source_anchor_cards(str(topic["slug"]), (list(evidence) if isinstance(evidence, list) else []) + source_anchor_evidence, root_prefix="../")
+    before_math = topic_before_math_slow_walk_html(topic, derivation)
     claim_chain = topic_claim_chain_html(topic, derivation)
     use_protocol = topic_use_protocol_html(topic, derivation)
     first_principles_essay = topic_first_principles_essay_html(topic, derivation)
@@ -6477,6 +6502,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
 <p><strong>What it leaves out:</strong> {html.escape(str(topic['leaves_out']))}</p>
 <h2>Everyday Anchor</h2>
 <p>{html.escape(str(topic['everyday_anchor']))}</p>
+{before_math}
 {claim_chain}
 {use_protocol}
 {first_principles_essay}
@@ -8951,6 +8977,13 @@ def validate(data: dict[str, object] | None = None) -> None:
         topic_text = topic_path.read_text(encoding="utf-8")
         required_topic_terms = (
             "Big Picture Claim Chain",
+            "Before The Math Slow Walk",
+            "Say It Without Jargon",
+            "What We Have",
+            "What We Need",
+            "Why The Idea Enters",
+            "What To Try First",
+            "Stop Trusting It When",
             "Everyday Problem",
             "Decision Or Quantity At Stake",
             "Hidden Thing Needed",

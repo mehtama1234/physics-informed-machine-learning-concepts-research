@@ -54,6 +54,24 @@
 <h2>Everyday Anchor</h2>
 <p>A wind-tunnel test is expensive. A surrogate is a cheaper stand-in that can be used only after showing which wind-tunnel questions it still answers.</p>
 
+<h2>Before The Math Slow Walk</h2>
+<p>Read this before any formula. Surrogate Modeling starts with an ordinary shortage: a trusted simulator may be too slow to run for every design, control, or uncertainty question. That shortage matters because someone has to use the answer in expensive simulation and design loops. The reader should be able to explain the need for the idea without naming the method first.</p>
+<p>The everyday picture is this: A wind-tunnel test is expensive. A surrogate is a cheaper stand-in that can be used only after showing which wind-tunnel questions it still answers. The point of the picture is not to make the idea cute. It is to slow the question down. We know something, but not enough. We need a bridge from the known part to the missing part, and we need a way to tell when the bridge stops carrying the truth.</p>
+<p>For this topic, the known part is expensive solver inputs and outputs for a limited set of cases. The missing part is the solver answer for every new query someone wants to ask. If a reader cannot say those two pieces plainly, the later math has no job yet. The method becomes meaningful only after the shortage is visible.</p>
+<p>The first useful move is to train a cheaper stand-in for the expensive input-output behavior. In everyday words, that means the page is choosing what information is allowed to travel from evidence to answer. It keeps the input-output behavior needed for a specified family of queries. It leaves out full simulation detail outside the tested query family. The left-out part is where overconfidence usually enters.</p>
+<p>A concrete setting makes the idea harder to fake. A design team needs thousands of drag estimates, but each trusted fluid solve is expensive. The useful answer is a cheaper answer for repeated queries inside the tested range. That answer should be trusted only until this kind of case breaks it: the shortcut fails near peaks, rare regimes, or design boundaries where decisions change.</p>
+<h3>Say It Without Jargon</h3>
+<table>
+  <tbody>
+    <tr><th>What We Have</th><td>expensive solver inputs and outputs for a limited set of cases</td></tr>
+    <tr><th>What We Need</th><td>the solver answer for every new query someone wants to ask</td></tr>
+    <tr><th>Why The Idea Enters</th><td>it makes repeated scientific decisions possible when full simulation cost would stop the workflow</td></tr>
+    <tr><th>What To Try First</th><td>compare against the full solver on new cases near the edge of the intended use</td></tr>
+    <tr><th>Stop Trusting It When</th><td>speed can hide missing physics when the surrogate is used beyond the regime where it was checked</td></tr>
+  </tbody>
+</table>
+
+
 <h2>Big Picture Claim Chain</h2>
 <p>Read this row by row before trusting the method name. The concept earns its place only if each link carries the next one.</p>
 <table>

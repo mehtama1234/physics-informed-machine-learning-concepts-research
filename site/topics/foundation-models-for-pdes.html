@@ -54,6 +54,24 @@
 <h2>Everyday Anchor</h2>
 <p>Start with the observed object, name what must be predicted, then test the claim on a changed case.</p>
 
+<h2>Before The Math Slow Walk</h2>
+<p>Read this before any formula. Foundation Models For PDEs starts with an ordinary shortage: one trained model may be asked to handle many related equations, grids, parameters, or physical settings. That shortage matters because someone has to use the answer in broad families of PDE problems and scientific fields. The reader should be able to explain the need for the idea without naming the method first.</p>
+<p>The everyday picture is this: Start with the observed object, name what must be predicted, then test the claim on a changed case. The point of the picture is not to make the idea cute. It is to slow the question down. We know something, but not enough. We need a bridge from the known part to the missing part, and we need a way to tell when the bridge stops carrying the truth.</p>
+<p>For this topic, the known part is many PDE problem instances across equations, grids, parameters, or physical settings. The missing part is which shared structure carries from one scientific task to another. If a reader cannot say those two pieces plainly, the later math has no job yet. The method becomes meaningful only after the shortage is visible.</p>
+<p>The first useful move is to train one broad model to reuse structure across many related field-prediction tasks. In everyday words, that means the page is choosing what information is allowed to travel from evidence to answer. It keeps shared structure across many scientific problem instances. It leaves out certainty that shared training structure covers the new scientific case. The left-out part is where overconfidence usually enters.</p>
+<p>A concrete setting makes the idea harder to fake. A broad PDE model trained on many tasks is proposed for a new equation family. The useful answer is a fast prediction for a new task family with a stated boundary. That answer should be trusted only until this kind of case breaks it: the held-out equation family, boundary type, scale, or rare regime fails against a trusted solver.</p>
+<h3>Say It Without Jargon</h3>
+<table>
+  <tbody>
+    <tr><th>What We Have</th><td>many PDE problem instances across equations, grids, parameters, or physical settings</td></tr>
+    <tr><th>What We Need</th><td>which shared structure carries from one scientific task to another</td></tr>
+    <tr><th>Why The Idea Enters</th><td>a broad model could reduce repeated training cost if it keeps the physical features that matter across tasks</td></tr>
+    <tr><th>What To Try First</th><td>hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver</td></tr>
+    <tr><th>Stop Trusting It When</th><td>the model can look broad while missing rare regimes, new boundary conditions, or quantities not represented in training</td></tr>
+  </tbody>
+</table>
+
+
 <h2>Big Picture Claim Chain</h2>
 <p>Read this row by row before trusting the method name. The concept earns its place only if each link carries the next one.</p>
 <table>

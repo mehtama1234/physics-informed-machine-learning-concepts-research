@@ -54,6 +54,24 @@
 <h2>Everyday Anchor</h2>
 <p>Training is like grading many drafts with one rubric. The model improves the rubric score, so the rubric must match the scientific goal.</p>
 
+<h2>Before The Math Slow Walk</h2>
+<p>Read this before any formula. Optimization For Learning starts with an ordinary shortage: learning needs a way to decide which model settings are better or worse. That shortage matters because someone has to use the answer in turning model fitting into a repeatable computation. The reader should be able to explain the need for the idea without naming the method first.</p>
+<p>The everyday picture is this: Training is like grading many drafts with one rubric. The model improves the rubric score, so the rubric must match the scientific goal. The point of the picture is not to make the idea cute. It is to slow the question down. We know something, but not enough. We need a bridge from the known part to the missing part, and we need a way to tell when the bridge stops carrying the truth.</p>
+<p>For this topic, the known part is a written score that says which model behavior is better or worse. The missing part is whether that score matches the scientific behavior the user actually cares about. If a reader cannot say those two pieces plainly, the later math has no job yet. The method becomes meaningful only after the shortage is visible.</p>
+<p>The first useful move is to change model settings to lower the written score. In everyday words, that means the page is choosing what information is allowed to travel from evidence to answer. It keeps a written score that compares model output against data, physics penalties, or design goals. It leaves out everything the score forgot to penalize. The left-out part is where overconfidence usually enters.</p>
+<p>A concrete setting makes the idea harder to fake. A model is trained to predict a field, but the training score only measures average point error. The useful answer is trained settings that are useful only if the score captured the real burden. That answer should be trusted only until this kind of case breaks it: boundaries, rare cases, units, or conservation fail because they were not part of the score.</p>
+<h3>Say It Without Jargon</h3>
+<table>
+  <tbody>
+    <tr><th>What We Have</th><td>a written score that says which model behavior is better or worse</td></tr>
+    <tr><th>What We Need</th><td>whether that score matches the scientific behavior the user actually cares about</td></tr>
+    <tr><th>Why The Idea Enters</th><td>the model only learns what the training score asks it to improve</td></tr>
+    <tr><th>What To Try First</th><td>inspect what the score ignores, then check whether the ignored behavior fails after training</td></tr>
+    <tr><th>Stop Trusting It When</th><td>a model can optimize the written score while missing the scientific behavior the score failed to name</td></tr>
+  </tbody>
+</table>
+
+
 <h2>Big Picture Claim Chain</h2>
 <p>Read this row by row before trusting the method name. The concept earns its place only if each link carries the next one.</p>
 <table>
