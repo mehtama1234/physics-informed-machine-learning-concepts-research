@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Scientific Model Building</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<nav class="topbar">
+  <a href="../index.html">Physics-Informed ML</a>
+  <a href="../transcripts.html">Transcripts</a>
+  <a href="../concept-atlas.html">Concept Atlas</a>
+  <a href="../families.html">Families</a>
+  <a href="../comparisons.html">Comparisons</a>
+  <a href="../worked-examples.html">Examples</a>
+  <a href="../diagrams.html">Diagrams</a>
+  <a href="../derivations.html">Derivations</a>
+  <a href="../formula-guide.html">Formulas</a>
+  <a href="../misconceptions.html">Misreads</a>
+  <a href="../learning-path.html">Path</a>
+  <a href="../glossary.html">Glossary</a>
+  <a href="../domains.html">Domains</a>
+  <a href="../reader-checks.html">Checks</a>
+  <a href="../decision-guide.html">Decide</a>
+  <a href="../provenance.html">Provenance</a>
+  <a href="../coverage.html">Coverage</a>
+  <a href="../dependencies.html">Dependencies</a>
+  <a href="../concept-ladder.html">Ladder</a>
+  <a href="../evidence-packets.html">Packets</a>
+  <a href="../quality.html">Quality</a>
+  <a href="../synthesis.html">Synthesis</a>
+  <a href="../review-entrypoints.html">Review Map</a>
+  <a href="../review-search.html">Find</a>
+  <a href="../review-queue.html">Queue</a>
+  <a href="../editorial-roadmap.html">Roadmap</a>
+  <a href="../completion-audit.html">Audit</a>
+  <a href="../handoff.html">Handoff</a>
+  <a href="../theme-map.html">Themes</a>
+  <a href="../evidence-ledger.html">Evidence</a>
+</nav>
+<main>
+
+<h1>Scientific Model Building</h1>
+<h2>Real Quantity</h2>
+<p>the physical or scientific quantity the model is supposed to explain, predict, or support</p>
+<h2>Why This Domain Is Hard</h2>
+<p>data, equations, and training scores can point in different directions unless the scientific target is explicit</p>
+<h2>Common Question</h2>
+<p>How should a learned model combine measurements and known rules for a named scientific job?</p>
+
+<h2>Walk The Domain From Scratch</h2>
+<p>Begin with the quantity, not the algorithm. In this domain the quantity is the physical or scientific quantity the model is supposed to explain, predict, or support. A useful page has to say where that quantity lives, how it is observed, and why a wrong estimate would matter. The hard part is not that the domain has technical vocabulary. The hard part is that data, equations, and training scores can point in different directions unless the scientific target is explicit.</p>
+<p>The concrete job is: Build a model for a named scientific quantity when neither data alone nor a hand-written rule is enough. The evidence available is measurements, partial equations, known units, boundaries, trusted simulations, and known failure modes. The hidden quantity is the missing relation or field value needed for the scientific question. This is the first-principles chain: evidence is partial, the needed quantity is larger than the evidence, and the method is only a bridge between the two.</p>
+<p>The bridge matters because someone will make a decision: decide whether the combined learned-and-scientific model can support a claim, design, or experiment. That decision gives the math its burden. Average visual similarity is not enough if the decision depends on a boundary layer, a rare event, a peak stress, a force, a concentration, or another local quantity. The domain test must therefore be: change the experiment, boundary, scale, or measured variable and verify the scientific target directly.</p>
+<h3>How The Methods Enter Without Jargon</h3>
+<p>Name the target quantity before the method. State which rule is fixed and which part is learned. Reject the model when the scientific target fails under a changed case. Read these as jobs, not labels. One method names how the quantity is allowed to change. Another makes a fast stand-in. Another keeps geometry or field structure visible. Another asks where belief should weaken. The right method is the one that carries the missing information needed for the decision and exposes the first condition where it breaks.</p>
+
+<h2>Concrete Scientific Job</h2>
+<table>
+  <tbody>
+    <tr><th>Scientific Job</th><td>Build a model for a named scientific quantity when neither data alone nor a hand-written rule is enough.</td></tr>
+    <tr><th>Observed Evidence</th><td>measurements, partial equations, known units, boundaries, trusted simulations, and known failure modes</td></tr>
+    <tr><th>Hidden Quantity</th><td>the missing relation or field value needed for the scientific question</td></tr>
+    <tr><th>Decision</th><td>decide whether the combined learned-and-scientific model can support a claim, design, or experiment</td></tr>
+    <tr><th>Changed-Case Test</th><td>change the experiment, boundary, scale, or measured variable and verify the scientific target directly</td></tr>
+  </tbody>
+</table>
+<h2>Concepts That Matter</h2>
+<ul><li><a href="../topics/scientific-machine-learning.html">Scientific Machine Learning</a></li><li><a href="../topics/physics-informed-neural-networks.html">Physics-Informed Neural Networks</a></li><li><a href="../topics/symbolic-regression.html">Symbolic Regression And Model Discovery</a></li><li><a href="../topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></li></ul>
+<h2>How The Methods Enter</h2>
+<ul><li>Name the target quantity before the method.</li><li>State which rule is fixed and which part is learned.</li><li>Reject the model when the scientific target fails under a changed case.</li></ul>
+<h2>Failure Test</h2>
+<p>Change the experimental setting or target quantity and check whether the claimed scientific answer still survives.</p>
+
+<h2>Domain Stress Test</h2>
+<p>Use this as the review check. The domain explanation is not strong enough unless it survives a changed case tied to the real quantity.</p>
+<table>
+  <tbody>
+    <tr><th>Quantity At Risk</th><td>the physical or scientific quantity the model is supposed to explain, predict, or support</td></tr>
+    <tr><th>Decision That Uses It</th><td>decide whether the combined learned-and-scientific model can support a claim, design, or experiment</td></tr>
+    <tr><th>Changed Case</th><td>change the experiment, boundary, scale, or measured variable and verify the scientific target directly</td></tr>
+    <tr><th>What Must Still Hold</th><td>The answer must still support the missing relation or field value needed for the scientific question for the stated scientific job, not only look similar to familiar examples.</td></tr>
+    <tr><th>Concepts Under Pressure</th><td>scientific machine learning, physics informed neural networks, symbolic regression, uncertainty and generalization</td></tr>
+  </tbody>
+</table>
+
+<h2>Concrete Anchor</h2>
+<p><a href="../worked-examples/material-stress-from-sparse-tests.html">Related page</a></p>
+
+</main>
+</body>
+</html>

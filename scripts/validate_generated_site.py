@@ -276,8 +276,8 @@ def validate() -> None:
         errors.append(f"expected 40 videos, found {summary.get('video_count')}")
     if summary.get("concept_count") != 14:
         errors.append(f"expected 14 concepts, found {summary.get('concept_count')}")
-    if len(manifest) != 211:
-        errors.append(f"expected 211 pages, found {len(manifest)}")
+    if len(manifest) != 218:
+        errors.append(f"expected 218 pages, found {len(manifest)}")
 
     errors.extend(check_internal_links(manifest))
     errors.extend(check_required_sections())

@@ -157,7 +157,7 @@
 <article class="card">
   <h3><a href="../diagrams/data-only-learning-flow.html">Data-Only Learning Flow</a></h3>
   <p>Show what a model sees when examples are the only source of correction.</p>
-  
+
 <div class="flow"><div class="flow-node">1. past examples</div><div class="flow-node">2. adjustable model</div><div class="flow-node">3. prediction</div><div class="flow-node">4. compare with known answers</div><div class="flow-node">5. test on a changed case</div></div>
 <p class="diagram-note"><strong>Watch for:</strong> If the changed case is too similar to the past examples, the test says little about scientific use.</p>
 
@@ -232,11 +232,19 @@
   </thead>
   <tbody>
 <tr>
-  <td>scientific prediction from large measured or simulated data sets</td>
-  <td>the exact rule that connects the input to the output</td>
-  <td>scientists often have examples of behavior but no short rule that predicts the next case</td>
-  <td>many input-output examples from experiments, simulations, or measurements</td>
-  <td>hold out a changed material, geometry, parameter range, or sensor condition</td>
+  <td><a href="../domains/data-rich-scientific-prediction.html">Data-Rich Scientific Prediction</a></td>
+  <td>a measured or simulated quantity predicted from many prior examples</td>
+  <td>Predict a property, field summary, or class for a new case using many checked examples.</td>
+  <td>past inputs, known answers, data source details, measurement conditions, and held-out examples</td>
+  <td>hold out a new source, scale, sensor condition, or rare case and check the quantity used for decisions</td>
+</tr>
+
+<tr>
+  <td><a href="../domains/training-score-design.html">Training Score Design</a></td>
+  <td>the scientific quantity encoded by the terms of the training score</td>
+  <td>Choose training terms that reward the behavior needed by the scientific claim.</td>
+  <td>data errors, equation errors, boundary errors, weights between terms, constraints, and held-out checks</td>
+  <td>change the weights, hold out hard regions, and check the physical or decision quantity directly</td>
 </tr>
 </tbody>
 </table>

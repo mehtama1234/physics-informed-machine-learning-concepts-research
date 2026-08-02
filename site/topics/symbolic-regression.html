@@ -157,7 +157,7 @@
 <article class="card">
   <h3><a href="../diagrams/model-discovery-flow.html">Model Discovery Flow</a></h3>
   <p>Show how measurements can lead to a candidate rule rather than only a prediction.</p>
-  
+
 <div class="flow"><div class="flow-node">1. measured motion</div><div class="flow-node">2. candidate variables</div><div class="flow-node">3. searched rule or learned rate</div><div class="flow-node">4. readable law</div><div class="flow-node">5. new experiment check</div></div>
 <p class="diagram-note"><strong>Watch for:</strong> A short law can be wrong if important variables were never measured.</p>
 
@@ -237,6 +237,22 @@
   <td>Predict a molecule property or biological activity for a new structure.</td>
   <td>atoms, bonds, shape, assay conditions, measured properties, and trusted calculations where available</td>
   <td>test on a new scaffold, rare atom type, changed assay, or biological condition outside the familiar set</td>
+</tr>
+
+<tr>
+  <td><a href="../domains/scientific-model-building.html">Scientific Model Building</a></td>
+  <td>the physical or scientific quantity the model is supposed to explain, predict, or support</td>
+  <td>Build a model for a named scientific quantity when neither data alone nor a hand-written rule is enough.</td>
+  <td>measurements, partial equations, known units, boundaries, trusted simulations, and known failure modes</td>
+  <td>change the experiment, boundary, scale, or measured variable and verify the scientific target directly</td>
+</tr>
+
+<tr>
+  <td><a href="../domains/learned-time-dynamics.html">Learned Time Dynamics</a></td>
+  <td>the future state, path, rate of change, or event time of a system</td>
+  <td>Predict how a measured system evolves when part of the rate law is unknown.</td>
+  <td>state histories, time stamps, known conservation or stability facts, controls, and measured changes</td>
+  <td>start from a new condition, run longer than the training window, and check drift, stability, and conserved quantities</td>
 </tr>
 </tbody>
 </table>

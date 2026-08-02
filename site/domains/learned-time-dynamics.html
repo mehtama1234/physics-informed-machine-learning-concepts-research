@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Learned Time Dynamics</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<nav class="topbar">
+  <a href="../index.html">Physics-Informed ML</a>
+  <a href="../transcripts.html">Transcripts</a>
+  <a href="../concept-atlas.html">Concept Atlas</a>
+  <a href="../families.html">Families</a>
+  <a href="../comparisons.html">Comparisons</a>
+  <a href="../worked-examples.html">Examples</a>
+  <a href="../diagrams.html">Diagrams</a>
+  <a href="../derivations.html">Derivations</a>
+  <a href="../formula-guide.html">Formulas</a>
+  <a href="../misconceptions.html">Misreads</a>
+  <a href="../learning-path.html">Path</a>
+  <a href="../glossary.html">Glossary</a>
+  <a href="../domains.html">Domains</a>
+  <a href="../reader-checks.html">Checks</a>
+  <a href="../decision-guide.html">Decide</a>
+  <a href="../provenance.html">Provenance</a>
+  <a href="../coverage.html">Coverage</a>
+  <a href="../dependencies.html">Dependencies</a>
+  <a href="../concept-ladder.html">Ladder</a>
+  <a href="../evidence-packets.html">Packets</a>
+  <a href="../quality.html">Quality</a>
+  <a href="../synthesis.html">Synthesis</a>
+  <a href="../review-entrypoints.html">Review Map</a>
+  <a href="../review-search.html">Find</a>
+  <a href="../review-queue.html">Queue</a>
+  <a href="../editorial-roadmap.html">Roadmap</a>
+  <a href="../completion-audit.html">Audit</a>
+  <a href="../handoff.html">Handoff</a>
+  <a href="../theme-map.html">Themes</a>
+  <a href="../evidence-ledger.html">Evidence</a>
+</nav>
+<main>
+
+<h1>Learned Time Dynamics</h1>
+<h2>Real Quantity</h2>
+<p>the future state, path, rate of change, or event time of a system</p>
+<h2>Why This Domain Is Hard</h2>
+<p>small errors in the learned change rule can grow as the system is marched forward</p>
+<h2>Common Question</h2>
+<p>Can a model learn the missing rule for how a system changes while keeping time behavior testable?</p>
+
+<h2>Walk The Domain From Scratch</h2>
+<p>Begin with the quantity, not the algorithm. In this domain the quantity is the future state, path, rate of change, or event time of a system. A useful page has to say where that quantity lives, how it is observed, and why a wrong estimate would matter. The hard part is not that the domain has technical vocabulary. The hard part is that small errors in the learned change rule can grow as the system is marched forward.</p>
+<p>The concrete job is: Predict how a measured system evolves when part of the rate law is unknown. The evidence available is state histories, time stamps, known conservation or stability facts, controls, and measured changes. The hidden quantity is the missing rate rule and the future path under a new starting condition or input. This is the first-principles chain: evidence is partial, the needed quantity is larger than the evidence, and the method is only a bridge between the two.</p>
+<p>The bridge matters because someone will make a decision: decide whether the learned dynamics can be used for forecasting, control, or experiment planning. That decision gives the math its burden. Average visual similarity is not enough if the decision depends on a boundary layer, a rare event, a peak stress, a force, a concentration, or another local quantity. The domain test must therefore be: start from a new condition, run longer than the training window, and check drift, stability, and conserved quantities.</p>
+<h3>How The Methods Enter Without Jargon</h3>
+<p>Name the state that carries the system forward. Learn or search for the missing change rule. Test long-time behavior and changed starting conditions. Read these as jobs, not labels. One method names how the quantity is allowed to change. Another makes a fast stand-in. Another keeps geometry or field structure visible. Another asks where belief should weaken. The right method is the one that carries the missing information needed for the decision and exposes the first condition where it breaks.</p>
+
+<h2>Concrete Scientific Job</h2>
+<table>
+  <tbody>
+    <tr><th>Scientific Job</th><td>Predict how a measured system evolves when part of the rate law is unknown.</td></tr>
+    <tr><th>Observed Evidence</th><td>state histories, time stamps, known conservation or stability facts, controls, and measured changes</td></tr>
+    <tr><th>Hidden Quantity</th><td>the missing rate rule and the future path under a new starting condition or input</td></tr>
+    <tr><th>Decision</th><td>decide whether the learned dynamics can be used for forecasting, control, or experiment planning</td></tr>
+    <tr><th>Changed-Case Test</th><td>start from a new condition, run longer than the training window, and check drift, stability, and conserved quantities</td></tr>
+  </tbody>
+</table>
+<h2>Concepts That Matter</h2>
+<ul><li><a href="../topics/neural-differential-equations.html">Neural Differential Equations</a></li><li><a href="../topics/symbolic-regression.html">Symbolic Regression And Model Discovery</a></li><li><a href="../topics/optimization-for-learning.html">Optimization For Learning</a></li><li><a href="../topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></li></ul>
+<h2>How The Methods Enter</h2>
+<ul><li>Name the state that carries the system forward.</li><li>Learn or search for the missing change rule.</li><li>Test long-time behavior and changed starting conditions.</li></ul>
+<h2>Failure Test</h2>
+<p>Run beyond the training window or change the starting state and check accumulated error, stability, and known invariants.</p>
+
+<h2>Domain Stress Test</h2>
+<p>Use this as the review check. The domain explanation is not strong enough unless it survives a changed case tied to the real quantity.</p>
+<table>
+  <tbody>
+    <tr><th>Quantity At Risk</th><td>the future state, path, rate of change, or event time of a system</td></tr>
+    <tr><th>Decision That Uses It</th><td>decide whether the learned dynamics can be used for forecasting, control, or experiment planning</td></tr>
+    <tr><th>Changed Case</th><td>start from a new condition, run longer than the training window, and check drift, stability, and conserved quantities</td></tr>
+    <tr><th>What Must Still Hold</th><td>The answer must still support the missing rate rule and the future path under a new starting condition or input for the stated scientific job, not only look similar to familiar examples.</td></tr>
+    <tr><th>Concepts Under Pressure</th><td>neural differential equations, symbolic regression, optimization for learning, uncertainty and generalization</td></tr>
+  </tbody>
+</table>
+
+<h2>Concrete Anchor</h2>
+<p><a href="../worked-examples/discovering-a-small-law-from-motion.html">Related page</a></p>
+
+</main>
+</body>
+</html>

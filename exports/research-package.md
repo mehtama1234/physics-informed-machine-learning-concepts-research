@@ -15,11 +15,11 @@
 - core_derivation_count: 14
 - formula_guide_count: 14
 - misconception_count: 14
-- diagram_count: 6
+- diagram_count: 9
 - sketch_count: 4
 - learning_path_step_count: 12
 - glossary_term_count: 15
-- domain_guide_count: 5
+- domain_guide_count: 9
 - reader_check_count: 14
 - decision_guide_count: 13
 - provenance_guide_count: 6
@@ -35,7 +35,7 @@
 - review_search_intent_count: 7
 - review_queue_count: 14
 - review_queue_p0_count: 0
-- review_queue_p1_count: 6
+- review_queue_p1_count: 0
 - editorial_roadmap_count: 7
 - editorial_roadmap_completed_count: 7
 - source_anchor_count: 28
@@ -739,6 +739,21 @@
 - Flow: measured motion -> candidate variables -> searched rule or learned rate -> readable law -> new experiment check
 - Watch for: A short law can be wrong if important variables were never measured.
 
+### Training Score Flow
+- Purpose: Show that training follows the written score, so the score must match the scientific job.
+- Flow: scientific quantity -> error terms -> adjustable model -> lower training score -> changed-case check
+- Watch for: A lower score is not enough if the score leaves out the boundary, equation, rare case, or decision quantity.
+
+### Candidate Generation Flow
+- Purpose: Show how a model makes possible candidates that still need scientific checks.
+- Flow: known conditions -> source of variation -> generated candidate -> measurement and rule checks -> accepted or rejected candidate
+- Watch for: A candidate that looks familiar can still break the equation, boundary, measurement, or intended use family.
+
+### Connected Geometry Flow
+- Purpose: Show why meshes, molecules, surfaces, and networks must keep their connections visible.
+- Flow: connected object -> values on points or edges -> information moves through connections -> field or property prediction -> changed mesh or shape test
+- Watch for: If changing point order, mesh detail, rotation, or boundary region changes the claim without a physical reason, the structure is not being handled correctly.
+
 
 ## Mathematical Sketches
 ### PINNs: Points Plus Rule Checks
@@ -1004,6 +1019,50 @@
 - Changed-case test: withhold a full equation family, boundary type, scale, or quantity and compare against trusted solves
 - Failure test: Withhold a full equation family, boundary type, or scale and check whether the model still earns the claim.
 
+### Data-Rich Scientific Prediction
+- Real quantity: a measured or simulated quantity predicted from many prior examples
+- Why hard: many examples can teach repeated patterns but cannot prove the next case belongs to the same evidence range
+- Common question: Can a learned predictor answer a new scientific case without pretending the examples cover every future use?
+- Scientific job: Predict a property, field summary, or class for a new case using many checked examples.
+- Observed evidence: past inputs, known answers, data source details, measurement conditions, and held-out examples
+- Hidden quantity: the answer for a new case whose source, scale, or condition may differ from the old cases
+- Decision: decide whether the prediction is good enough for screening, measurement, or closer simulation
+- Changed-case test: hold out a new source, scale, sensor condition, or rare case and check the quantity used for decisions
+- Failure test: Change the source, scale, or measured condition and check whether the target quantity still holds.
+
+### Scientific Model Building
+- Real quantity: the physical or scientific quantity the model is supposed to explain, predict, or support
+- Why hard: data, equations, and training scores can point in different directions unless the scientific target is explicit
+- Common question: How should a learned model combine measurements and known rules for a named scientific job?
+- Scientific job: Build a model for a named scientific quantity when neither data alone nor a hand-written rule is enough.
+- Observed evidence: measurements, partial equations, known units, boundaries, trusted simulations, and known failure modes
+- Hidden quantity: the missing relation or field value needed for the scientific question
+- Decision: decide whether the combined learned-and-scientific model can support a claim, design, or experiment
+- Changed-case test: change the experiment, boundary, scale, or measured variable and verify the scientific target directly
+- Failure test: Change the experimental setting or target quantity and check whether the claimed scientific answer still survives.
+
+### Learned Time Dynamics
+- Real quantity: the future state, path, rate of change, or event time of a system
+- Why hard: small errors in the learned change rule can grow as the system is marched forward
+- Common question: Can a model learn the missing rule for how a system changes while keeping time behavior testable?
+- Scientific job: Predict how a measured system evolves when part of the rate law is unknown.
+- Observed evidence: state histories, time stamps, known conservation or stability facts, controls, and measured changes
+- Hidden quantity: the missing rate rule and the future path under a new starting condition or input
+- Decision: decide whether the learned dynamics can be used for forecasting, control, or experiment planning
+- Changed-case test: start from a new condition, run longer than the training window, and check drift, stability, and conserved quantities
+- Failure test: Run beyond the training window or change the starting state and check accumulated error, stability, and known invariants.
+
+### Training Score Design
+- Real quantity: the scientific quantity encoded by the terms of the training score
+- Why hard: the model reduces the written score even when that score leaves out the real scientific burden
+- Common question: What should the training process reward so the learned answer serves the scientific job?
+- Scientific job: Choose training terms that reward the behavior needed by the scientific claim.
+- Observed evidence: data errors, equation errors, boundary errors, weights between terms, constraints, and held-out checks
+- Hidden quantity: whether the trained model is good because the science is right or only because the written score is easy to lower
+- Decision: decide whether the loss is a faithful contract for the claim being made
+- Changed-case test: change the weights, hold out hard regions, and check the physical or decision quantity directly
+- Failure test: Lower the training score while checking a hard held-out region; reject the setup if the scientific quantity gets worse.
+
 
 ## Reader Checks
 ### PINNs Reader Check
@@ -1242,21 +1301,21 @@
 ### Optimization For Learning
 - Videos: 40
 - Deep dive: yes
-- Diagram: no
+- Diagram: yes
 - Reader check: yes
 - Evidence items: 6
 
 ### Generative Modeling
 - Videos: 33
 - Deep dive: yes
-- Diagram: no
+- Diagram: yes
 - Reader check: yes
 - Evidence items: 6
 
 ### Graphs And Geometric Learning
 - Videos: 31
 - Deep dive: yes
-- Diagram: no
+- Diagram: yes
 - Reader check: yes
 - Evidence items: 6
 
@@ -1290,60 +1349,6 @@
 
 
 ## Review Queue
-### P1 Optimization For Learning
-- Reviewed source anchors: 2
-- Broad transcript mentions: 4
-- Missing layers: diagram, domain guide
-- Reason: has missing support layers
-- Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Optimization For Learning.
-- Topic: topics/optimization-for-learning.html
-- Evidence packet: evidence-packets/optimization-for-learning.html
-
-### P1 Deep Learning
-- Reviewed source anchors: 2
-- Broad transcript mentions: 4
-- Missing layers: domain guide
-- Reason: has missing support layers
-- Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Deep Learning.
-- Topic: topics/deep-learning.html
-- Evidence packet: evidence-packets/deep-learning.html
-
-### P1 Generative Modeling
-- Reviewed source anchors: 2
-- Broad transcript mentions: 4
-- Missing layers: diagram
-- Reason: has missing support layers
-- Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Generative Modeling.
-- Topic: topics/generative-modeling.html
-- Evidence packet: evidence-packets/generative-modeling.html
-
-### P1 Graphs And Geometric Learning
-- Reviewed source anchors: 2
-- Broad transcript mentions: 4
-- Missing layers: diagram
-- Reason: has missing support layers
-- Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Graphs And Geometric Learning.
-- Topic: topics/graphs-and-geometric-learning.html
-- Evidence packet: evidence-packets/graphs-and-geometric-learning.html
-
-### P1 Neural Differential Equations
-- Reviewed source anchors: 2
-- Broad transcript mentions: 4
-- Missing layers: domain guide
-- Reason: has missing support layers
-- Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Neural Differential Equations.
-- Topic: topics/neural-differential-equations.html
-- Evidence packet: evidence-packets/neural-differential-equations.html
-
-### P1 Scientific Machine Learning
-- Reviewed source anchors: 2
-- Broad transcript mentions: 4
-- Missing layers: domain guide
-- Reason: has missing support layers
-- Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Scientific Machine Learning.
-- Topic: topics/scientific-machine-learning.html
-- Evidence packet: evidence-packets/scientific-machine-learning.html
-
 ### P2 Attention For Scientific Fields
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
@@ -1352,6 +1357,15 @@
 - Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Attention For Scientific Fields.
 - Topic: topics/attention-for-scientific-fields.html
 - Evidence packet: evidence-packets/attention-for-scientific-fields.html
+
+### P2 Deep Learning
+- Reviewed source anchors: 2
+- Broad transcript mentions: 4
+- Missing layers: none
+- Reason: ready for hand polish
+- Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Deep Learning.
+- Topic: topics/deep-learning.html
+- Evidence packet: evidence-packets/deep-learning.html
 
 ### P2 Foundation Models For PDEs
 - Reviewed source anchors: 2
@@ -1362,6 +1376,33 @@
 - Topic: topics/foundation-models-for-pdes.html
 - Evidence packet: evidence-packets/foundation-models-for-pdes.html
 
+### P2 Generative Modeling
+- Reviewed source anchors: 2
+- Broad transcript mentions: 4
+- Missing layers: none
+- Reason: ready for hand polish
+- Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Generative Modeling.
+- Topic: topics/generative-modeling.html
+- Evidence packet: evidence-packets/generative-modeling.html
+
+### P2 Graphs And Geometric Learning
+- Reviewed source anchors: 2
+- Broad transcript mentions: 4
+- Missing layers: none
+- Reason: ready for hand polish
+- Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Graphs And Geometric Learning.
+- Topic: topics/graphs-and-geometric-learning.html
+- Evidence packet: evidence-packets/graphs-and-geometric-learning.html
+
+### P2 Neural Differential Equations
+- Reviewed source anchors: 2
+- Broad transcript mentions: 4
+- Missing layers: none
+- Reason: ready for hand polish
+- Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Neural Differential Equations.
+- Topic: topics/neural-differential-equations.html
+- Evidence packet: evidence-packets/neural-differential-equations.html
+
 ### P2 Operator Learning
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
@@ -1370,6 +1411,15 @@
 - Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Operator Learning.
 - Topic: topics/operator-learning.html
 - Evidence packet: evidence-packets/operator-learning.html
+
+### P2 Optimization For Learning
+- Reviewed source anchors: 2
+- Broad transcript mentions: 4
+- Missing layers: none
+- Reason: ready for hand polish
+- Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Optimization For Learning.
+- Topic: topics/optimization-for-learning.html
+- Evidence packet: evidence-packets/optimization-for-learning.html
 
 ### P2 Partial Differential Equations
 - Reviewed source anchors: 2
@@ -1388,6 +1438,15 @@
 - Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Physics-Informed Neural Networks.
 - Topic: topics/physics-informed-neural-networks.html
 - Evidence packet: evidence-packets/physics-informed-neural-networks.html
+
+### P2 Scientific Machine Learning
+- Reviewed source anchors: 2
+- Broad transcript mentions: 4
+- Missing layers: none
+- Reason: ready for hand polish
+- Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Scientific Machine Learning.
+- Topic: topics/scientific-machine-learning.html
+- Evidence packet: evidence-packets/scientific-machine-learning.html
 
 ### P2 Surrogate Modeling
 - Reviewed source anchors: 2

@@ -183,7 +183,7 @@
 <article class="card">
   <h3><a href="../diagrams/physics-informed-learning-flow.html">Physics-Informed Learning Flow</a></h3>
   <p>Show how measured data and a known physical rule both push on the fitted field.</p>
-  
+
 <div class="flow"><div class="flow-node">1. sparse measurements</div><div class="flow-node">2. known equation</div><div class="flow-node">3. fitted field</div><div class="flow-node">4. data check plus equation check</div><div class="flow-node">5. held-out sensor or trusted solve</div></div>
 <p class="diagram-note"><strong>Watch for:</strong> The equation check must be hard enough to catch mistakes between measured points.</p>
 
@@ -272,6 +272,22 @@
   <td>Estimate the full temperature field inside a wall after a boundary temperature changes.</td>
   <td>a few sensor readings, starting temperature, boundary temperature, material constants, and the heat equation</td>
   <td>move the heat source or change the boundary temperature and compare against held-out sensors or a trusted solve</td>
+</tr>
+
+<tr>
+  <td><a href="../domains/scientific-model-building.html">Scientific Model Building</a></td>
+  <td>the physical or scientific quantity the model is supposed to explain, predict, or support</td>
+  <td>Build a model for a named scientific quantity when neither data alone nor a hand-written rule is enough.</td>
+  <td>measurements, partial equations, known units, boundaries, trusted simulations, and known failure modes</td>
+  <td>change the experiment, boundary, scale, or measured variable and verify the scientific target directly</td>
+</tr>
+
+<tr>
+  <td><a href="../domains/training-score-design.html">Training Score Design</a></td>
+  <td>the scientific quantity encoded by the terms of the training score</td>
+  <td>Choose training terms that reward the behavior needed by the scientific claim.</td>
+  <td>data errors, equation errors, boundary errors, weights between terms, constraints, and held-out checks</td>
+  <td>change the weights, hold out hard regions, and check the physical or decision quantity directly</td>
 </tr>
 </tbody>
 </table>

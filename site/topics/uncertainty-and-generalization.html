@@ -183,7 +183,7 @@
 <article class="card">
   <h3><a href="../diagrams/surrogate-validation-flow.html">Surrogate Validation Flow</a></h3>
   <p>Show how a fast stand-in earns trust only by being checked against the slow source.</p>
-  
+
 <div class="flow"><div class="flow-node">1. expensive solver</div><div class="flow-node">2. training cases</div><div class="flow-node">3. fast stand-in</div><div class="flow-node">4. edge-case comparison</div><div class="flow-node">5. stated use range</div></div>
 <p class="diagram-note"><strong>Watch for:</strong> A speed claim is incomplete until the use range and failure case are stated.</p>
 
@@ -304,6 +304,30 @@
   <td>Use a broad PDE model on a new equation case without pretending breadth is proof.</td>
   <td>many prior PDE tasks, fields, grids, parameters, boundary types, and trusted solution fields</td>
   <td>withhold a full equation family, boundary type, scale, or quantity and compare against trusted solves</td>
+</tr>
+
+<tr>
+  <td><a href="../domains/data-rich-scientific-prediction.html">Data-Rich Scientific Prediction</a></td>
+  <td>a measured or simulated quantity predicted from many prior examples</td>
+  <td>Predict a property, field summary, or class for a new case using many checked examples.</td>
+  <td>past inputs, known answers, data source details, measurement conditions, and held-out examples</td>
+  <td>hold out a new source, scale, sensor condition, or rare case and check the quantity used for decisions</td>
+</tr>
+
+<tr>
+  <td><a href="../domains/scientific-model-building.html">Scientific Model Building</a></td>
+  <td>the physical or scientific quantity the model is supposed to explain, predict, or support</td>
+  <td>Build a model for a named scientific quantity when neither data alone nor a hand-written rule is enough.</td>
+  <td>measurements, partial equations, known units, boundaries, trusted simulations, and known failure modes</td>
+  <td>change the experiment, boundary, scale, or measured variable and verify the scientific target directly</td>
+</tr>
+
+<tr>
+  <td><a href="../domains/learned-time-dynamics.html">Learned Time Dynamics</a></td>
+  <td>the future state, path, rate of change, or event time of a system</td>
+  <td>Predict how a measured system evolves when part of the rate law is unknown.</td>
+  <td>state histories, time stamps, known conservation or stability facts, controls, and measured changes</td>
+  <td>start from a new condition, run longer than the training window, and check drift, stability, and conserved quantities</td>
 </tr>
 </tbody>
 </table>

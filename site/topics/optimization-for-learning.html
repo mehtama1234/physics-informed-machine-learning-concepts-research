@@ -141,6 +141,15 @@
 <ul><li><a href="../topics/physics-informed-neural-networks.html">Physics-Informed Neural Networks</a></li><li><a href="../topics/neural-differential-equations.html">Neural Differential Equations</a></li><li><a href="../topics/deep-learning.html">Deep Learning</a></li></ul>
 
 
+<h2>Visual Map</h2>
+<article class="card">
+  <h3><a href="../diagrams/training-score-flow.html">Training Score Flow</a></h3>
+  <p>Show that training follows the written score, so the score must match the scientific job.</p>
+
+<div class="flow"><div class="flow-node">1. scientific quantity</div><div class="flow-node">2. error terms</div><div class="flow-node">3. adjustable model</div><div class="flow-node">4. lower training score</div><div class="flow-node">5. changed-case check</div></div>
+<p class="diagram-note"><strong>Watch for:</strong> A lower score is not enough if the score leaves out the boundary, equation, rare case, or decision quantity.</p>
+
+</article>
 
 
 <h2>Full Derivation Walkthrough</h2>
@@ -211,11 +220,19 @@
   </thead>
   <tbody>
 <tr>
-  <td>turning model fitting into a repeatable computation</td>
-  <td>whether that score matches the scientific behavior the user actually cares about</td>
-  <td>learning needs a way to decide which model settings are better or worse</td>
-  <td>a written score that says which model behavior is better or worse</td>
-  <td>inspect what the score ignores, then check whether the ignored behavior fails after training</td>
+  <td><a href="../domains/learned-time-dynamics.html">Learned Time Dynamics</a></td>
+  <td>the future state, path, rate of change, or event time of a system</td>
+  <td>Predict how a measured system evolves when part of the rate law is unknown.</td>
+  <td>state histories, time stamps, known conservation or stability facts, controls, and measured changes</td>
+  <td>start from a new condition, run longer than the training window, and check drift, stability, and conserved quantities</td>
+</tr>
+
+<tr>
+  <td><a href="../domains/training-score-design.html">Training Score Design</a></td>
+  <td>the scientific quantity encoded by the terms of the training score</td>
+  <td>Choose training terms that reward the behavior needed by the scientific claim.</td>
+  <td>data errors, equation errors, boundary errors, weights between terms, constraints, and held-out checks</td>
+  <td>change the weights, hold out hard regions, and check the physical or decision quantity directly</td>
 </tr>
 </tbody>
 </table>

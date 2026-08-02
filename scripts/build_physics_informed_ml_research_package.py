@@ -1093,6 +1093,48 @@ DIAGRAMS = [
         ],
         "watch_for": "A short law can be wrong if important variables were never measured.",
     },
+    {
+        "slug": "training-score-flow",
+        "title": "Training Score Flow",
+        "topic_slugs": ["optimization-for-learning"],
+        "purpose": "Show that training follows the written score, so the score must match the scientific job.",
+        "nodes": [
+            "scientific quantity",
+            "error terms",
+            "adjustable model",
+            "lower training score",
+            "changed-case check",
+        ],
+        "watch_for": "A lower score is not enough if the score leaves out the boundary, equation, rare case, or decision quantity.",
+    },
+    {
+        "slug": "candidate-generation-flow",
+        "title": "Candidate Generation Flow",
+        "topic_slugs": ["generative-modeling"],
+        "purpose": "Show how a model makes possible candidates that still need scientific checks.",
+        "nodes": [
+            "known conditions",
+            "source of variation",
+            "generated candidate",
+            "measurement and rule checks",
+            "accepted or rejected candidate",
+        ],
+        "watch_for": "A candidate that looks familiar can still break the equation, boundary, measurement, or intended use family.",
+    },
+    {
+        "slug": "connected-geometry-flow",
+        "title": "Connected Geometry Flow",
+        "topic_slugs": ["graphs-and-geometric-learning"],
+        "purpose": "Show why meshes, molecules, surfaces, and networks must keep their connections visible.",
+        "nodes": [
+            "connected object",
+            "values on points or edges",
+            "information moves through connections",
+            "field or property prediction",
+            "changed mesh or shape test",
+        ],
+        "watch_for": "If changing point order, mesh detail, rotation, or boundary region changes the claim without a physical reason, the structure is not being handled correctly.",
+    },
 ]
 
 
@@ -1646,6 +1688,78 @@ DOMAIN_GUIDES = [
         "methods": ["Train across many tasks.", "Hold out whole task families.", "Compare against trusted solves on changed equations, boundaries, and scales."],
         "failure_test": "Withhold a full equation family, boundary type, or scale and check whether the model still earns the claim.",
         "example": "worked-examples/foundation-pde-model-on-new-equation.html",
+    },
+    {
+        "slug": "data-rich-scientific-prediction",
+        "title": "Data-Rich Scientific Prediction",
+        "real_quantity": "a measured or simulated quantity predicted from many prior examples",
+        "why_hard": "many examples can teach repeated patterns but cannot prove the next case belongs to the same evidence range",
+        "common_question": "Can a learned predictor answer a new scientific case without pretending the examples cover every future use?",
+        "concepts": ["deep-learning", "uncertainty-and-generalization", "surrogate-modeling"],
+        "domain_job": {
+            "scientific_job": "Predict a property, field summary, or class for a new case using many checked examples.",
+            "observed_evidence": "past inputs, known answers, data source details, measurement conditions, and held-out examples",
+            "hidden_quantity": "the answer for a new case whose source, scale, or condition may differ from the old cases",
+            "decision": "decide whether the prediction is good enough for screening, measurement, or closer simulation",
+            "changed_case_test": "hold out a new source, scale, sensor condition, or rare case and check the quantity used for decisions",
+        },
+        "methods": ["Name what the examples can teach.", "Train the predictor on checked input-answer pairs.", "Use changed-case tests to define where the answer should be trusted."],
+        "failure_test": "Change the source, scale, or measured condition and check whether the target quantity still holds.",
+        "example": "worked-examples/climate-risk-under-shifted-conditions.html",
+    },
+    {
+        "slug": "scientific-model-building",
+        "title": "Scientific Model Building",
+        "real_quantity": "the physical or scientific quantity the model is supposed to explain, predict, or support",
+        "why_hard": "data, equations, and training scores can point in different directions unless the scientific target is explicit",
+        "common_question": "How should a learned model combine measurements and known rules for a named scientific job?",
+        "concepts": ["scientific-machine-learning", "physics-informed-neural-networks", "symbolic-regression", "uncertainty-and-generalization"],
+        "domain_job": {
+            "scientific_job": "Build a model for a named scientific quantity when neither data alone nor a hand-written rule is enough.",
+            "observed_evidence": "measurements, partial equations, known units, boundaries, trusted simulations, and known failure modes",
+            "hidden_quantity": "the missing relation or field value needed for the scientific question",
+            "decision": "decide whether the combined learned-and-scientific model can support a claim, design, or experiment",
+            "changed_case_test": "change the experiment, boundary, scale, or measured variable and verify the scientific target directly",
+        },
+        "methods": ["Name the target quantity before the method.", "State which rule is fixed and which part is learned.", "Reject the model when the scientific target fails under a changed case."],
+        "failure_test": "Change the experimental setting or target quantity and check whether the claimed scientific answer still survives.",
+        "example": "worked-examples/material-stress-from-sparse-tests.html",
+    },
+    {
+        "slug": "learned-time-dynamics",
+        "title": "Learned Time Dynamics",
+        "real_quantity": "the future state, path, rate of change, or event time of a system",
+        "why_hard": "small errors in the learned change rule can grow as the system is marched forward",
+        "common_question": "Can a model learn the missing rule for how a system changes while keeping time behavior testable?",
+        "concepts": ["neural-differential-equations", "symbolic-regression", "optimization-for-learning", "uncertainty-and-generalization"],
+        "domain_job": {
+            "scientific_job": "Predict how a measured system evolves when part of the rate law is unknown.",
+            "observed_evidence": "state histories, time stamps, known conservation or stability facts, controls, and measured changes",
+            "hidden_quantity": "the missing rate rule and the future path under a new starting condition or input",
+            "decision": "decide whether the learned dynamics can be used for forecasting, control, or experiment planning",
+            "changed_case_test": "start from a new condition, run longer than the training window, and check drift, stability, and conserved quantities",
+        },
+        "methods": ["Name the state that carries the system forward.", "Learn or search for the missing change rule.", "Test long-time behavior and changed starting conditions."],
+        "failure_test": "Run beyond the training window or change the starting state and check accumulated error, stability, and known invariants.",
+        "example": "worked-examples/discovering-a-small-law-from-motion.html",
+    },
+    {
+        "slug": "training-score-design",
+        "title": "Training Score Design",
+        "real_quantity": "the scientific quantity encoded by the terms of the training score",
+        "why_hard": "the model reduces the written score even when that score leaves out the real scientific burden",
+        "common_question": "What should the training process reward so the learned answer serves the scientific job?",
+        "concepts": ["optimization-for-learning", "physics-informed-neural-networks", "deep-learning", "scientific-machine-learning"],
+        "domain_job": {
+            "scientific_job": "Choose training terms that reward the behavior needed by the scientific claim.",
+            "observed_evidence": "data errors, equation errors, boundary errors, weights between terms, constraints, and held-out checks",
+            "hidden_quantity": "whether the trained model is good because the science is right or only because the written score is easy to lower",
+            "decision": "decide whether the loss is a faithful contract for the claim being made",
+            "changed_case_test": "change the weights, hold out hard regions, and check the physical or decision quantity directly",
+        },
+        "methods": ["Write each score term in plain language.", "Tie each term to a scientific requirement.", "Check whether lowering the score improves the real target quantity."],
+        "failure_test": "Lower the training score while checking a hard held-out region; reject the setup if the scientific quantity gets worse.",
+        "example": "worked-examples/heat-equation-from-few-measurements.html",
     },
 ]
 
@@ -4017,7 +4131,7 @@ def topic_diagrams_html(slug: str) -> str:
 <article class="card">
   <h3><a href="../diagrams/{html.escape(str(diagram['slug']))}.html">{html.escape(str(diagram['title']))}</a></h3>
   <p>{html.escape(str(diagram['purpose']))}</p>
-  {diagram_flow_html(diagram)}
+{diagram_flow_html(diagram)}
 </article>
 """
         )
