@@ -4742,10 +4742,10 @@ def write_site(data: dict[str, object]) -> None:
     domain_cards = []
     for guide in domain_guides:
         href = f"domains/{guide['slug']}.html"
-        domain_cards.append(card(str(guide["title"]), str(guide["common_question"]), href))
+        domain_cards.append(domain_index_card(guide, href))
         write_domain_page(domain_dir / f"{guide['slug']}.html", guide)
     (SITE / "domains.html").write_text(
-        html_page("Physics-Informed ML Domain Guides", f"<h1>Domain Guides</h1><p>These pages ground the concepts in real scientific settings. Each guide names the quantity, what makes the domain hard, which concepts matter, and the failure test.</p><div class=\"grid\">{''.join(domain_cards)}</div>"),
+        html_page("Physics-Informed ML Domain Guides", f"<h1>Domain Guides</h1><p>These pages ground the concepts in real scientific settings. Each guide names the quantity, the decision, the hidden part, and the changed case that can reject the claim.</p><div class=\"grid\">{''.join(domain_cards)}</div>"),
         encoding="utf-8",
     )
 
@@ -5847,6 +5847,24 @@ def write_domain_page(path: Path, guide: dict[str, object]) -> None:
 <p><a href="../{html.escape(str(guide['example']))}">Related page</a></p>
 """
     path.write_text(html_page(str(guide["title"]), body, root_prefix="../"), encoding="utf-8")
+
+
+def domain_index_card(guide: dict[str, object], href: str) -> str:
+    job = guide["domain_job"]
+    return f"""
+<article class="card">
+  <h3><a href="{html.escape(href)}">{html.escape(str(guide['title']))}</a></h3>
+  <p>{html.escape(str(guide['common_question']))}</p>
+  <table>
+    <tbody>
+      <tr><th>Quantity</th><td>{html.escape(str(guide['real_quantity']))}</td></tr>
+      <tr><th>Decision</th><td>{html.escape(str(job['decision']))}</td></tr>
+      <tr><th>Hidden Part</th><td>{html.escape(str(job['hidden_quantity']))}</td></tr>
+      <tr><th>Changed-Case Test</th><td>{html.escape(str(job['changed_case_test']))}</td></tr>
+    </tbody>
+  </table>
+</article>
+"""
 
 
 def domain_first_principles_essay_html(guide: dict[str, object]) -> str:
@@ -7464,6 +7482,10 @@ def validate(data: dict[str, object] | None = None) -> None:
                 raise SystemExit(f"domain concept missing: {guide['title']} -> {slug}")
         if not (SITE / str(guide["example"])).exists():
             raise SystemExit(f"domain anchor missing: {guide['title']} -> {guide['example']}")
+    domain_index_text = (SITE / "domains.html").read_text(encoding="utf-8")
+    for required in ("Domain Guides", "Quantity", "Decision", "Hidden Part", "Changed-Case Test"):
+        if required not in domain_index_text:
+            raise SystemExit(f"domain index missing {required}")
     reader_check_rows = data.get("reader_checks") or []
     if len(reader_check_rows) != len(data["concept_atlas"]):
         raise SystemExit("reader check count does not match concept atlas")

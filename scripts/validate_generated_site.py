@@ -118,6 +118,7 @@ def check_required_sections() -> list[str]:
         "site/coverage.html": ("Coverage Matrix", "Reader Check"),
         "site/synthesis.html": ("Field Synthesis",),
         "site/quality.html": ("Editorial Quality Rubric",),
+        "site/domains.html": ("Domain Guides", "Quantity", "Decision", "Hidden Part", "Changed-Case Test"),
         "site/provenance.html": ("Provenance And Reproduction",),
         "site/decision-guide.html": ("Decision Guide",),
         "site/decision-guide/many-examples-no-rule.html": ("Best Starting Point", "Evidence Needed", "Deep learning"),
