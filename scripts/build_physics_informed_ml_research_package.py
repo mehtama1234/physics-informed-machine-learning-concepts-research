@@ -3338,6 +3338,7 @@ MEATY_GOAL_REQUIREMENTS = [
     {"key": "across_fields_long_walk", "label": "Across Fields Long Walk", "proof_term": "Across Fields Long Walk"},
     {"key": "daily_work_importance_story", "label": "Daily Work Importance Story", "proof_term": "Why It Matters In Daily Work"},
     {"key": "why_not_simpler_answer", "label": "Why Not Simpler Answer", "proof_term": "Why Not The Simpler Answer"},
+    {"key": "self_diagnosis_check", "label": "Self-Diagnosis Check", "proof_term": "Self-Diagnosis Check"},
     {"key": "from_scratch_story", "label": "From Scratch Story", "proof_term": "From Scratch Story In Plain Words"},
     {"key": "no_jargon_translation", "label": "No-Jargon Translation", "proof_term": "No-Jargon Translation For This Topic"},
     {"key": "everyday_vocabulary_bridge", "label": "Everyday Vocabulary Bridge", "proof_term": "Everyday Vocabulary Bridge"},
@@ -7807,6 +7808,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     across_fields_long_walk = topic_across_fields_long_walk_html(topic, derivation)
     daily_work_importance_story = topic_daily_work_importance_story_html(topic, derivation)
     why_not_simpler_answer = topic_why_not_simpler_answer_html(topic, derivation)
+    self_diagnosis_check = topic_self_diagnosis_check_html(topic, derivation)
     teaching_note = topic_teaching_note_html(str(topic["slug"]))
     case_walkthrough = topic_case_walkthrough_html(topic, derivation)
     course_role = topic_course_role_html(topic, derivation)
@@ -7884,6 +7886,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
 {across_fields_long_walk}
 {daily_work_importance_story}
 {why_not_simpler_answer}
+{self_diagnosis_check}
 {teaching_note}
 {case_walkthrough}
 {course_role}
@@ -9319,6 +9322,66 @@ def topic_why_not_simpler_answer_html(topic: dict[str, object], derivation: dict
 <p>The simpler answer is enough only when it can name the evidence, name the missing answer, preserve the shape or field relation, and survive the changed case. If it can do all of that, the topic may only be a careful way to say the same thing. If it cannot, the shortcut is not an explanation yet.</p>
 <h3>Simpler Answer Pass Test</h3>
 <p>The pass test is this: try the simpler answer first, then change one thing using this test: {html.escape(str(derivation['test']))}. If the answer breaks, the learner must explain why {html.escape(title)} is needed and limit the final claim to this: {html.escape(str(derivation['meaning']))}</p>
+"""
+
+
+def topic_self_diagnosis_check_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
+    title = str(topic["title"])
+    applications = topic_plain_applications(topic, derivation)
+    shape = next(row for row in applications if row["field"] == "Topology and shape")
+    fields = next(row for row in applications if row["field"] == "Climate, fluids, and fields")
+    rows = [
+        (
+            "I only named the topic",
+            f"Start with the shortage: {str(topic['common_problem'])}",
+        ),
+        (
+            "I did not name the evidence",
+            f"Add what is seen: {str(derivation['observed'])}",
+        ),
+        (
+            "I did not name the missing answer",
+            f"Add what is needed: {str(derivation['hidden'])}",
+        ),
+        (
+            "I skipped the move",
+            f"Add the plain move: {str(derivation['move'])}",
+        ),
+        (
+            "I ignored shape or topology",
+            f"Add the shape stake: {str(shape['use'])}",
+        ),
+        (
+            "I ignored field use",
+            f"Add the field stake: {str(fields['use'])}",
+        ),
+        (
+            "I made the claim too broad",
+            f"Limit the claim to: {str(derivation['meaning'])}",
+        ),
+        (
+            "I ended without a test",
+            f"End with the changed case: {str(derivation['test'])}",
+        ),
+    ]
+    body_rows = "".join(
+        f"""
+<tr>
+  <td>{html.escape(symptom)}</td>
+  <td>{html.escape(repair)}</td>
+</tr>
+"""
+        for symptom, repair in rows
+    )
+    return f"""
+<h2>Self-Diagnosis Check</h2>
+<p>Use this check after trying to explain {html.escape(title)} from memory. Do not ask whether the answer sounds smart. Ask which sentence is missing. A plain explanation is strong only when each missing sentence has been repaired.</p>
+<table>
+  <thead><tr><th>Weak Sentence Symptom</th><th>Repair Sentence To Add</th></tr></thead>
+  <tbody>{body_rows}</tbody>
+</table>
+<h3>Self-Diagnosis Pass Test</h3>
+<p>The self-diagnosis passes only if the learner can find the missing sentence, add it in everyday words, and then say the whole chain again: shortage, evidence, missing answer, move, shape stake, field stake, careful claim, and changed-case test.</p>
 """
 
 
@@ -11724,6 +11787,18 @@ def validate(data: dict[str, object] | None = None) -> None:
             "Work The Shortcut Can Mislead",
             "When The Simpler Answer Is Enough",
             "Simpler Answer Pass Test",
+            "Self-Diagnosis Check",
+            "Weak Sentence Symptom",
+            "Repair Sentence To Add",
+            "I only named the topic",
+            "I did not name the evidence",
+            "I did not name the missing answer",
+            "I skipped the move",
+            "I ignored shape or topology",
+            "I ignored field use",
+            "I made the claim too broad",
+            "I ended without a test",
+            "Self-Diagnosis Pass Test",
             "What A Strong Explanation Must Say",
             "One Concrete Case From Start To Finish",
             "Observed Evidence",
@@ -12484,7 +12559,7 @@ def validate(data: dict[str, object] | None = None) -> None:
             raise SystemExit(f"meaty goal core page link missing: {item['href']}")
     goal_coverage_path = SITE / "meaty-goal-coverage.html"
     goal_coverage_text = goal_coverage_path.read_text(encoding="utf-8")
-    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Explanation Order" not in goal_coverage_text or "Why Care Before Terms" not in goal_coverage_text or "Workday Decision Rehearsal" not in goal_coverage_text or "Sounds-Right Filter" not in goal_coverage_text or "Draw Before Math" not in goal_coverage_text or "Start-Here Gate" not in goal_coverage_text or "Skeptical Reader Proof" not in goal_coverage_text or "Oral Explanation Script" not in goal_coverage_text or "Before-After Decision" not in goal_coverage_text or "Outside-Classroom Use" not in goal_coverage_text or "Learner Notebook Note" not in goal_coverage_text or "Tiny Invented Case" not in goal_coverage_text or "Teach From Zero" not in goal_coverage_text or "Application Claim Ladder" not in goal_coverage_text or "Field Decision Story" not in goal_coverage_text or "Everyday Vocabulary Bridge" not in goal_coverage_text or "New Case Transfer Rehearsal" not in goal_coverage_text or "Reader Mistake Audit" not in goal_coverage_text or "One-Page Mental Model" not in goal_coverage_text or "Plain Question To Answer Script" not in goal_coverage_text or "Know And Still Test" not in goal_coverage_text or "Failure Consequence" not in goal_coverage_text or "Slow Problem Shape Bridge" not in goal_coverage_text or "Slow Importance Essay" not in goal_coverage_text or "Across Fields Long Walk" not in goal_coverage_text or "Daily Work Importance Story" not in goal_coverage_text or "Why Not Simpler Answer" not in goal_coverage_text or "Source-To-Claim Boundary" not in goal_coverage_text or "Teach Someone Handoff" not in goal_coverage_text or "Topology Shape Story" not in goal_coverage_text or "Confusion To Clarity" not in goal_coverage_text or "Hand Teaching Note" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Concept Connections" not in goal_coverage_text or "Belief Evidence" not in goal_coverage_text or "Domain Fit" not in goal_coverage_text or "Shape Follows" not in goal_coverage_text or "Reader Answer Parts" not in goal_coverage_text or "Say It Back Check" not in goal_coverage_text or "Misread Repair Drill" not in goal_coverage_text or "Plain-Language Audit" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
+    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Explanation Order" not in goal_coverage_text or "Why Care Before Terms" not in goal_coverage_text or "Workday Decision Rehearsal" not in goal_coverage_text or "Sounds-Right Filter" not in goal_coverage_text or "Draw Before Math" not in goal_coverage_text or "Start-Here Gate" not in goal_coverage_text or "Skeptical Reader Proof" not in goal_coverage_text or "Oral Explanation Script" not in goal_coverage_text or "Before-After Decision" not in goal_coverage_text or "Outside-Classroom Use" not in goal_coverage_text or "Learner Notebook Note" not in goal_coverage_text or "Tiny Invented Case" not in goal_coverage_text or "Teach From Zero" not in goal_coverage_text or "Application Claim Ladder" not in goal_coverage_text or "Field Decision Story" not in goal_coverage_text or "Everyday Vocabulary Bridge" not in goal_coverage_text or "New Case Transfer Rehearsal" not in goal_coverage_text or "Reader Mistake Audit" not in goal_coverage_text or "One-Page Mental Model" not in goal_coverage_text or "Plain Question To Answer Script" not in goal_coverage_text or "Know And Still Test" not in goal_coverage_text or "Failure Consequence" not in goal_coverage_text or "Slow Problem Shape Bridge" not in goal_coverage_text or "Slow Importance Essay" not in goal_coverage_text or "Across Fields Long Walk" not in goal_coverage_text or "Daily Work Importance Story" not in goal_coverage_text or "Why Not Simpler Answer" not in goal_coverage_text or "Self-Diagnosis Check" not in goal_coverage_text or "Source-To-Claim Boundary" not in goal_coverage_text or "Teach Someone Handoff" not in goal_coverage_text or "Topology Shape Story" not in goal_coverage_text or "Confusion To Clarity" not in goal_coverage_text or "Hand Teaching Note" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Concept Connections" not in goal_coverage_text or "Belief Evidence" not in goal_coverage_text or "Domain Fit" not in goal_coverage_text or "Shape Follows" not in goal_coverage_text or "Reader Answer Parts" not in goal_coverage_text or "Say It Back Check" not in goal_coverage_text or "Misread Repair Drill" not in goal_coverage_text or "Plain-Language Audit" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
         raise SystemExit("meaty goal coverage audit not rendered correctly")
     goal_coverage_rows = data.get("meaty_goal_coverage") or []
     if len(goal_coverage_rows) != len(data["concept_atlas"]):

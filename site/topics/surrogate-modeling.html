@@ -1085,6 +1085,56 @@
 <p>The pass test is this: try the simpler answer first, then change one thing using this test: compare against the full solver on new cases near the edge of the intended use. If the answer breaks, the learner must explain why Surrogate Modeling is needed and limit the final claim to this: speed is useful only inside the query family where the stand-in was checked</p>
 
 
+<h2>Self-Diagnosis Check</h2>
+<p>Use this check after trying to explain Surrogate Modeling from memory. Do not ask whether the answer sounds smart. Ask which sentence is missing. A plain explanation is strong only when each missing sentence has been repaired.</p>
+<table>
+  <thead><tr><th>Weak Sentence Symptom</th><th>Repair Sentence To Add</th></tr></thead>
+  <tbody>
+<tr>
+  <td>I only named the topic</td>
+  <td>Start with the shortage: a trusted simulator may be too slow to run for every design, control, or uncertainty question</td>
+</tr>
+
+<tr>
+  <td>I did not name the evidence</td>
+  <td>Add what is seen: expensive solver inputs and outputs for a limited set of cases</td>
+</tr>
+
+<tr>
+  <td>I did not name the missing answer</td>
+  <td>Add what is needed: the solver answer for every new query someone wants to ask</td>
+</tr>
+
+<tr>
+  <td>I skipped the move</td>
+  <td>Add the plain move: train a cheaper stand-in for the expensive input-output behavior</td>
+</tr>
+
+<tr>
+  <td>I ignored shape or topology</td>
+  <td>Add the shape stake: Replace slow solves for repeated shape queries inside a named family.</td>
+</tr>
+
+<tr>
+  <td>I ignored field use</td>
+  <td>Add the field stake: Answer repeated field queries faster than running a full model each time.</td>
+</tr>
+
+<tr>
+  <td>I made the claim too broad</td>
+  <td>Limit the claim to: speed is useful only inside the query family where the stand-in was checked</td>
+</tr>
+
+<tr>
+  <td>I ended without a test</td>
+  <td>End with the changed case: compare against the full solver on new cases near the edge of the intended use</td>
+</tr>
+</tbody>
+</table>
+<h3>Self-Diagnosis Pass Test</h3>
+<p>The self-diagnosis passes only if the learner can find the missing sentence, add it in everyday words, and then say the whole chain again: shortage, evidence, missing answer, move, shape stake, field stake, careful claim, and changed-case test.</p>
+
+
 <h2>Hand Teaching Note</h2>
 <p><strong>Plain problem:</strong> A trusted simulation or experiment may be too slow to call thousands of times, but the decision still needs many answers.</p>
 <p><strong>Why the math follows:</strong> A surrogate is trained as a cheap stand-in because repeated queries are the bottleneck. Its authority comes from comparison against the trusted source, especially near the edge of use.</p>
