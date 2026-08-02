@@ -66,6 +66,38 @@
 </table>
 
 
+<h2>Hand Derivation</h2>
+<p>Start with a system observed over time and an incomplete rule for how it changes. The missing object is the rate that moves the present state forward.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Term</th>
+      <th>Why It Enters</th>
+      <th>Check</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+  <td>state</td>
+  <td>The state is the information carried from the present into the next moment.</td>
+  <td>If the state leaves out an important variable, the learned rate may compensate in a false way.</td>
+</tr>
+
+<tr>
+  <td>learned rate</td>
+  <td>The unknown change rule is placed where a differential equation needs a rate.</td>
+  <td>If the rate is only right over a short window, long-time behavior can drift.</td>
+</tr>
+
+<tr>
+  <td>time solver</td>
+  <td>The rate has to be accumulated through time to produce a path.</td>
+  <td>If the solver amplifies small rate errors, the path can look right at first and then fail.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Final Line:</strong> A neural differential equation learns a missing rate, then exposes that rate to the discipline of time evolution.</p>
+
 <h2>Plain Formula</h2>
 <p>current state -&gt; learned change rate -&gt; next state</p>
 <h2>Smallest Useful Formula</h2>

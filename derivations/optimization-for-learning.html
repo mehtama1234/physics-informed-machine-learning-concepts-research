@@ -66,6 +66,38 @@
 </table>
 
 
+<h2>Hand Derivation</h2>
+<p>Start with a model that can be adjusted and a score that says which answers look better. Training is the repeated act of changing the model to reduce that score.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Term</th>
+      <th>Why It Enters</th>
+      <th>Check</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+  <td>adjustable model parts</td>
+  <td>Something must be changeable, or there is nothing for training to improve.</td>
+  <td>If the adjustable parts cannot express the needed behavior, optimization cannot invent it.</td>
+</tr>
+
+<tr>
+  <td>training score</td>
+  <td>The score tells the optimizer what better means.</td>
+  <td>If the score ignores the scientific quantity, training can improve the score while harming the job.</td>
+</tr>
+
+<tr>
+  <td>update rule</td>
+  <td>The model needs a way to use local score information to choose the next setting.</td>
+  <td>If the updates stall or chase the wrong term, the final model may reflect optimization failure rather than scientific truth.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Final Line:</strong> Optimization is not proof; it is a way to obey a written score, so the score must match the scientific burden.</p>
+
 <h2>Plain Formula</h2>
 <p>current model -&gt; error score -&gt; change model -&gt; check again</p>
 <h2>Smallest Useful Formula</h2>

@@ -66,6 +66,38 @@
 </table>
 
 
+<h2>Hand Derivation</h2>
+<p>Start with a field where a local prediction may depend on distant parts: a boundary, forcing pattern, large structure, or rare event.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Term</th>
+      <th>Why It Enters</th>
+      <th>Check</th>
+    </tr>
+  </thead>
+  <tbody>
+<tr>
+  <td>query location</td>
+  <td>The model needs to know which local place is asking for information.</td>
+  <td>If the query is poorly tied to the target quantity, attention can gather irrelevant signals.</td>
+</tr>
+
+<tr>
+  <td>candidate source locations</td>
+  <td>The useful information may live far from the query location.</td>
+  <td>If distant or boundary information is excluded, the local answer may miss the real cause.</td>
+</tr>
+
+<tr>
+  <td>weighted gathering</td>
+  <td>The model needs a way to combine the parts judged relevant for the local prediction.</td>
+  <td>If the gathered pattern fails boundary or long-range tests, the attention pattern is not scientific evidence.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Final Line:</strong> Attention is a gathering rule for field information; it becomes scientific only when the gathered information survives changed-case checks.</p>
+
 <h2>Plain Formula</h2>
 <p>current field part + relevant other parts -&gt; weighted information -&gt; updated field part</p>
 <h2>Smallest Useful Formula</h2>
