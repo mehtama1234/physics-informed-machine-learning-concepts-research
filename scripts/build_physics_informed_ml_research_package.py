@@ -3315,6 +3315,7 @@ MEATY_GOAL_REQUIREMENTS = [
     {"key": "before_math_slow_walk", "label": "Before The Math Slow Walk", "proof_term": "Before The Math Slow Walk"},
     {"key": "teach_from_zero", "label": "Teach From Zero", "proof_term": "Teach It From Zero"},
     {"key": "application_claim_ladder", "label": "Application Claim Ladder", "proof_term": "Application Claim Ladder"},
+    {"key": "plain_question_answer_script", "label": "Plain Question To Answer Script", "proof_term": "Plain Question To Answer Script"},
     {"key": "plain_big_picture", "label": "Plain Big Picture Essay", "proof_term": "Plain Big Picture Essay"},
     {"key": "slow_importance_essay", "label": "Slow Importance Essay", "proof_term": "Why This Matters Slowly"},
     {"key": "hand_teaching_note", "label": "Hand Teaching Note", "proof_term": "Hand Teaching Note"},
@@ -6876,6 +6877,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     first_principles_essay = topic_first_principles_essay_html(topic, derivation)
     teach_from_zero = topic_teach_from_zero_html(topic, derivation)
     application_claim_ladder = topic_application_claim_ladder_html(topic, derivation)
+    plain_question_answer_script = topic_plain_question_answer_script_html(topic, derivation)
     plain_big_picture = topic_plain_big_picture_essay_html(topic, derivation)
     slow_importance = topic_slow_importance_essay_html(topic, derivation)
     teaching_note = topic_teaching_note_html(str(topic["slug"]))
@@ -6911,6 +6913,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
 {first_principles_essay}
 {teach_from_zero}
 {application_claim_ladder}
+{plain_question_answer_script}
 {plain_big_picture}
 {slow_importance}
 {teaching_note}
@@ -7513,6 +7516,31 @@ def topic_application_claim_ladder_html(topic: dict[str, object], derivation: di
   <tbody>{''.join(rows)}</tbody>
 </table>
 <p>Topology and shape are not a side note in this ladder. They are part of the application claim whenever the answer depends on connections, boundaries, holes, distances, mesh, molecule shape, or how information moves across a field.</p>
+"""
+
+
+def topic_plain_question_answer_script_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
+    title = str(topic["title"])
+    case = topic_case_walkthrough(topic, derivation)
+    applications = topic_plain_applications(topic, derivation)
+    shape = next(row for row in applications if row["field"] == "Topology and shape")
+    field_use = next(row for row in applications if row["field"] == "Climate, fluids, and fields")
+    field_use_text = str(field_use["use"]).strip()
+    field_use_text = field_use_text[:1].lower() + field_use_text[1:]
+    return f"""
+<h2>Plain Question To Answer Script</h2>
+<p>Use this script as a full spoken answer. It starts with the real question, not the topic name, and it ends with the condition that can reject the claim.</p>
+<ol>
+  <li><strong>Real question:</strong> In this setting: {html.escape(str(case['setting']))}</li>
+  <li><strong>Evidence sentence:</strong> I can start from {html.escape(str(derivation['observed']))}.</li>
+  <li><strong>Missing-answer sentence:</strong> I still need {html.escape(str(derivation['hidden']))}.</li>
+  <li><strong>Why {html.escape(title)} enters:</strong> It enters because the plain move is to {html.escape(str(derivation['move']))}.</li>
+  <li><strong>Shape or topology sentence:</strong> I must check shape because {html.escape(str(shape['why']))} The shape check is: {html.escape(str(shape['check']))}</li>
+  <li><strong>Field-use sentence:</strong> In field problems, {html.escape(field_use_text)} The field check is: {html.escape(str(field_use['check']))}</li>
+  <li><strong>Allowed-answer sentence:</strong> The answer is allowed to mean only this: {html.escape(str(derivation['meaning']))}.</li>
+  <li><strong>Stop sentence:</strong> I should stop or narrow the claim when this fails: {html.escape(str(derivation['test']))}.</li>
+</ol>
+<p>A reader who cannot say this script in everyday words is not done with the topic yet. The missing part is usually the hidden answer, the shape issue, or the changed case that would prove the answer is not ready.</p>
 """
 
 
@@ -9526,6 +9554,13 @@ def validate(data: dict[str, object] | None = None) -> None:
             "Evidence To Start From",
             "Hidden Answer Needed",
             "Changed Case That Tests It",
+            "Plain Question To Answer Script",
+            "Real question",
+            "Evidence sentence",
+            "Missing-answer sentence",
+            "Shape or topology sentence",
+            "Allowed-answer sentence",
+            "Stop sentence",
             "Plain Big Picture Essay",
             "Why This Matters Slowly",
             "Topology and shape matter here",
@@ -10139,7 +10174,7 @@ def validate(data: dict[str, object] | None = None) -> None:
             raise SystemExit(f"meaty goal core page link missing: {item['href']}")
     goal_coverage_path = SITE / "meaty-goal-coverage.html"
     goal_coverage_text = goal_coverage_path.read_text(encoding="utf-8")
-    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Teach From Zero" not in goal_coverage_text or "Application Claim Ladder" not in goal_coverage_text or "Slow Importance Essay" not in goal_coverage_text or "Hand Teaching Note" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Concept Connections" not in goal_coverage_text or "Belief Evidence" not in goal_coverage_text or "Domain Fit" not in goal_coverage_text or "Shape Follows" not in goal_coverage_text or "Reader Answer Parts" not in goal_coverage_text or "Say It Back Check" not in goal_coverage_text or "Plain-Language Audit" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
+    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Teach From Zero" not in goal_coverage_text or "Application Claim Ladder" not in goal_coverage_text or "Plain Question To Answer Script" not in goal_coverage_text or "Slow Importance Essay" not in goal_coverage_text or "Hand Teaching Note" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Concept Connections" not in goal_coverage_text or "Belief Evidence" not in goal_coverage_text or "Domain Fit" not in goal_coverage_text or "Shape Follows" not in goal_coverage_text or "Reader Answer Parts" not in goal_coverage_text or "Say It Back Check" not in goal_coverage_text or "Plain-Language Audit" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
         raise SystemExit("meaty goal coverage audit not rendered correctly")
     goal_coverage_rows = data.get("meaty_goal_coverage") or []
     if len(goal_coverage_rows) != len(data["concept_atlas"]):
