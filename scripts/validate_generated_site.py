@@ -31,6 +31,7 @@ REQUIRED_ROOT_PAGES = {
     "field-application-guide.html",
     "importance-matrix.html",
     "end-to-end-walkthrough.html",
+    "plain-capstone.html",
     "example-route-guide.html",
     "no-jargon-concept-guide.html",
     "learning-path.html",
@@ -172,6 +173,7 @@ def check_required_sections() -> list[str]:
         "site/question-to-topic-guide.html": ("Question To Topic Guide", "Start With The Need", "Everyday Question", "Open This Topic", "Why This Is The First Stop", "What To Check Before Trusting It", "If Your Question Mentions Shape", "Reader Test", "I have many examples", "I have a few measurements and a known equation", "mesh", "molecule", "changed case"),
         "site/field-application-guide.html": ("Field Application Guide In Plain Words", "Why Fields Need Their Own Map", "Engineering design", "Materials, chemistry, and biology", "Climate, fluids, and fields", "Plain Use", "Why It Matters", "First Field Check", "How To Read An Application Claim", "Reader Test", "stress", "molecule", "climate", "fluids", "changed case"),
         "site/importance-matrix.html": ("Importance Matrix", "Why Each Topic Matters Across Fields", "Concept", "Everyday Problem", "Why It Matters", "Topology Or Shape Link", "Other Fields", "First Test", "How To Use This Matrix", "Plain End-To-End Stories", "Reader Test", "Deep Learning", "Operator Learning", "Graphs And Geometric Learning", "changed case"),
+        "site/plain-capstone.html": ("Plain Capstone", "Final Proof Of Understanding", "Capstone Answer Template", "Capstone Proof Table", "Everyday Need", "Evidence", "Hidden Answer", "First-Principles Move", "Shape Check", "Rejection Test", "Topic Capstone Prompts", "Final Answer Prompt", "Pass Standard", "Deep Learning", "Operator Learning", "Graphs And Geometric Learning"),
         "site/plain-essay-review.html": ("Plain Essay Review", "Teacher Review Goal", "Review Matrix", "Everyday Need", "First-Principles Chain", "Shape Or Topology", "Other Field Uses", "First Changed Case", "Review Method", "Per-Topic Review Burden", "Everyday Opening To Find", "Weak Spot To Inspect First", "Reader Pass Test", "Deep Learning", "Operator Learning", "Graphs And Geometric Learning"),
         "site/plain-explanation-practice.html": ("Plain Explanation Practice", "Practice Goal", "Quick Checklist", "Everyday Need", "Missing Answer", "Shape Check", "Changed Case", "Explanation Drills", "Everyday opening", "Evidence sentence", "Missing-answer sentence", "Shape or topology sentence", "Field transfer sentence", "Rewrite Task", "Pass Standard", "Deep Learning", "Operator Learning", "Graphs And Geometric Learning"),
         "site/end-to-end-walkthrough.html": ("End-To-End Course Walkthrough", "One Scientific Job From Start To Finish", "The Plain Route", "First Topic To Open", "Everyday Need", "What It Adds", "Rejection Check", "Shape And Field Checks", "What The Final Claim Can Say", "Final Say-It-Back Test", "sparse measurements", "shaped domain", "changed case"),
@@ -555,8 +557,8 @@ def validate() -> None:
         errors.append(f"expected 40 videos, found {summary.get('video_count')}")
     if summary.get("concept_count") != 14:
         errors.append(f"expected 14 concepts, found {summary.get('concept_count')}")
-    if len(manifest) != 231:
-        errors.append(f"expected 231 pages, found {len(manifest)}")
+    if len(manifest) != 232:
+        errors.append(f"expected 232 pages, found {len(manifest)}")
 
     errors.extend(check_internal_links(manifest))
     errors.extend(check_required_sections())

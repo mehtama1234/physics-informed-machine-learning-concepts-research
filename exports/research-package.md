@@ -145,6 +145,9 @@
 - Plain route: name the evidence, name the hidden answer, choose topic moves that carry the answer, keep shape and field checks visible, and end with a changed case.
 - Final say-it-back test: state the scientific job, evidence, hidden answer, topic route, shape or topology issue, field use, and changed case without hiding behind a method name.
 
+## Plain Capstone
+- See `site/plain-capstone.html` for final learner prompts that prove each topic from everyday need to bounded field claim.
+
 ## Example Route Guide
 - Heat Equation From Few Measurements: job: What is the temperature everywhere if sensors only report a few places? Observed: sensor readings, starting temperature, boundary temperature, and the rule that heat flows from hot regions toward cold regions Hidden: temperature at every unsensed point and later time Route: partial differential equations -> physics informed neural networks -> scientific machine learning -> uncertainty and generalization. First failure: the fitted field matches sensor points but gives the wrong temperature between them or after the starting time
 - Fast Fluid Field Surrogate: job: How can engineers test many shapes without running a full simulation every time? Observed: many prior simulations connecting shape, conditions, and resulting velocity or pressure fields Hidden: the flow field for a new shape or new condition Route: surrogate modeling -> operator learning -> attention for scientific fields. First failure: the shortcut is fast but misses a force, vortex, or boundary effect that changes the engineering choice

@@ -5216,6 +5216,7 @@ def html_page(title: str, body: str, root_prefix: str = "") -> str:
   <a href="{root_prefix}field-application-guide.html">Fields</a>
   <a href="{root_prefix}importance-matrix.html">Importance</a>
   <a href="{root_prefix}end-to-end-walkthrough.html">Walkthrough</a>
+  <a href="{root_prefix}plain-capstone.html">Capstone</a>
   <a href="{root_prefix}example-route-guide.html">Routes</a>
   <a href="{root_prefix}no-jargon-concept-guide.html">No Jargon</a>
   <a href="{root_prefix}learning-path.html">Path</a>
@@ -5709,6 +5710,78 @@ def write_plain_explanation_practice_page(path: Path, topics: list[dict[str, obj
     path.write_text(html_page("Physics-Informed ML Plain Explanation Practice", body), encoding="utf-8")
 
 
+def write_plain_capstone_page(path: Path, topics: list[dict[str, object]]) -> None:
+    rows = []
+    prompts = []
+    for topic in topics:
+        derivation = topic_derivation(topic)
+        applications = topic_plain_applications(topic, derivation)
+        shape = next(row for row in applications if row["field"] == "Topology and shape")
+        engineering = next(row for row in applications if row["field"] == "Engineering design")
+        materials = next(row for row in applications if row["field"] == "Materials, chemistry, and biology")
+        fields = next(row for row in applications if row["field"] == "Climate, fluids, and fields")
+        title = str(topic["title"])
+        rows.append(
+            f"""
+<tr>
+  <td><a href="topics/{html.escape(str(topic['slug']))}.html">{html.escape(title)}</a></td>
+  <td>{html.escape(str(topic['common_problem']))}</td>
+  <td>{html.escape(str(derivation['observed']))}</td>
+  <td>{html.escape(str(derivation['hidden']))}</td>
+  <td>{html.escape(str(derivation['move']))}</td>
+  <td>{html.escape(str(shape['check']))}</td>
+  <td>{html.escape(str(derivation['test']))}</td>
+</tr>
+"""
+        )
+        prompts.append(
+            f"""
+<section>
+  <h2>{html.escape(title)}</h2>
+  <p><strong>Final Answer Prompt:</strong> Explain why this topic matters without starting from its name.</p>
+  <ol>
+    <li>Start with the everyday need: {html.escape(str(topic['common_problem']))}.</li>
+    <li>Name the evidence: {html.escape(str(derivation['observed']))}.</li>
+    <li>Name the missing answer: {html.escape(str(derivation['hidden']))}.</li>
+    <li>Name the first-principles move: {html.escape(str(derivation['move']))}.</li>
+    <li>Name the topology or shape check: {html.escape(str(shape['check']))}</li>
+    <li>Name one engineering use: {html.escape(str(engineering['use']))}</li>
+    <li>Name one materials, chemistry, or biology use: {html.escape(str(materials['use']))}</li>
+    <li>Name one climate, fluids, or field use: {html.escape(str(fields['use']))}</li>
+    <li>End with the rejection test: {html.escape(str(derivation['test']))}.</li>
+  </ol>
+</section>
+"""
+        )
+    body = f"""
+<h1>Plain Capstone</h1>
+<h2>Final Proof Of Understanding</h2>
+<p>This is the final learner-facing route through the course. A learner passes only when they can explain a topic from everyday need to bounded claim, then transfer the same idea through shape, topology, and field use.</p>
+<h2>Capstone Answer Template</h2>
+<ol>
+  <li>A person needs an answer because an everyday scientific shortage appears.</li>
+  <li>The evidence in hand is named before the method.</li>
+  <li>The hidden answer is named before the formula.</li>
+  <li>The first-principles move says how evidence can carry the missing answer.</li>
+  <li>The shape or topology check names what relation must not be lost.</li>
+  <li>The field transfer names how the same idea appears in engineering, materials or biology, and climate or fields.</li>
+  <li>The final sentence names the changed case that can narrow the claim.</li>
+</ol>
+<h2>Capstone Proof Table</h2>
+<table>
+  <thead>
+    <tr><th>Topic</th><th>Everyday Need</th><th>Evidence</th><th>Hidden Answer</th><th>First-Principles Move</th><th>Shape Check</th><th>Rejection Test</th></tr>
+  </thead>
+  <tbody>{''.join(rows)}</tbody>
+</table>
+<h2>Topic Capstone Prompts</h2>
+{''.join(prompts)}
+<h2>Pass Standard</h2>
+<p>A learner passes the capstone when they can choose any three topics, including one shape-heavy topic such as Graphs And Geometric Learning or Operator Learning, and give a plain answer that includes evidence, hidden answer, first-principles move, topology or shape check, field transfer, and rejection test.</p>
+"""
+    path.write_text(html_page("Physics-Informed ML Plain Capstone", body), encoding="utf-8")
+
+
 def write_end_to_end_walkthrough_page(path: Path, topics: list[dict[str, object]]) -> None:
     route = [
         "scientific-machine-learning",
@@ -6110,6 +6183,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Field Application Guide", "A plain map of how each topic enters engineering, materials, biology, climate, fluids, and field problems.", "field-application-guide.html")}
 {card("Importance Matrix", "Every topic compared by everyday problem, reason it matters, shape link, field use, and first test.", "importance-matrix.html")}
 {card("End-To-End Walkthrough", "One plain route from sparse evidence and a scientific job to a bounded claim.", "end-to-end-walkthrough.html")}
+{card("Plain Capstone", "Final learner prompts for proving each topic from everyday need to bounded field claim.", "plain-capstone.html")}
 {card("Example Route Guide", "Concrete worked examples mapped from scientific job to topic route and first failure signal.", "example-route-guide.html")}
 {card("No-Jargon Concept Guide", "Every concept label translated into the everyday job, evidence, hidden answer, move, and rejection check.", "no-jargon-concept-guide.html")}
 {card("Learning Path", f"{summary['learning_path_step_count']} steps from first question to field-level understanding.", "learning-path.html")}
@@ -6238,6 +6312,7 @@ def write_site(data: dict[str, object]) -> None:
     write_field_application_guide_page(SITE / "field-application-guide.html", list(topics))
     write_importance_matrix_page(SITE / "importance-matrix.html", list(topics))
     write_end_to_end_walkthrough_page(SITE / "end-to-end-walkthrough.html", list(topics))
+    write_plain_capstone_page(SITE / "plain-capstone.html", list(topics))
     write_example_route_guide_page(SITE / "example-route-guide.html", list(worked_examples))
     write_no_jargon_concept_guide_page(SITE / "no-jargon-concept-guide.html", list(topics))
 
@@ -9397,6 +9472,13 @@ def write_markdown_export(data: dict[str, object]) -> None:
             "- Final say-it-back test: state the scientific job, evidence, hidden answer, topic route, shape or topology issue, field use, and changed case without hiding behind a method name.",
         ]
     )
+    lines.extend(
+        [
+            "",
+            "## Plain Capstone",
+            "- See `site/plain-capstone.html` for final learner prompts that prove each topic from everyday need to bounded field claim.",
+        ]
+    )
     lines.extend(["", "## Example Route Guide"])
     for example in data["worked_examples"]:
         route = " -> ".join(str(slug).replace("-", " ") for slug in example["method_route"])
@@ -10122,6 +10204,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         SITE / "field-application-guide.html",
         SITE / "importance-matrix.html",
         SITE / "end-to-end-walkthrough.html",
+        SITE / "plain-capstone.html",
         SITE / "example-route-guide.html",
         SITE / "no-jargon-concept-guide.html",
         SITE / "learning-path.html",
@@ -10222,6 +10305,27 @@ def validate(data: dict[str, object] | None = None) -> None:
     ):
         if term not in importance_matrix_text:
             raise SystemExit(f"importance matrix missing: {term}")
+    capstone_text = (SITE / "plain-capstone.html").read_text(encoding="utf-8")
+    for term in (
+        "Plain Capstone",
+        "Final Proof Of Understanding",
+        "Capstone Answer Template",
+        "Capstone Proof Table",
+        "Everyday Need",
+        "Evidence",
+        "Hidden Answer",
+        "First-Principles Move",
+        "Shape Check",
+        "Rejection Test",
+        "Topic Capstone Prompts",
+        "Final Answer Prompt",
+        "Pass Standard",
+        "Deep Learning",
+        "Operator Learning",
+        "Graphs And Geometric Learning",
+    ):
+        if term not in capstone_text:
+            raise SystemExit(f"plain capstone missing: {term}")
     plain_essay_review_text = (SITE / "plain-essay-review.html").read_text(encoding="utf-8")
     for term in (
         "Plain Essay Review",
