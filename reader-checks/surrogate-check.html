@@ -49,6 +49,48 @@
 <ol><li>What trusted source does the surrogate replace?</li><li>Which inputs will be varied?</li><li>What output quantity matters for decisions?</li><li>Where was the fast stand-in checked?</li><li>When should the full solver be used again?</li></ol>
 <h2>Strong Answer Should Say</h2>
 <p>The surrogate replaces a named solver or experiment only inside a named query family. Inputs and outputs must match the decision. The stand-in should be checked near the edge of intended use, and the full solver should return when the query leaves that range or when errors affect the decision quantity.</p>
+<h2>Strong Answer Broken Into Parts</h2>
+<table>
+  <thead>
+    <tr><th>Part</th><th>Reader Must Say</th><th>Why It Matters</th><th>Weak If</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <td>Observed evidence</td>
+  <td>expensive solver inputs and outputs for a limited set of cases</td>
+  <td>This is the only evidence the explanation is allowed to start from.</td>
+  <td>The answer starts from the method name or a performance claim.</td>
+</tr>
+
+<tr>
+  <td>Hidden quantity</td>
+  <td>the solver answer for every new query someone wants to ask</td>
+  <td>This names the missing thing the math has to carry the reader toward.</td>
+  <td>The answer talks about prediction without saying what quantity is still unknown.</td>
+</tr>
+
+<tr>
+  <td>Mathematical move</td>
+  <td>train a cheaper stand-in for the expensive input-output behavior</td>
+  <td>This is the reason the concept is needed instead of a looser description.</td>
+  <td>The answer uses a label but does not say what work the math does.</td>
+</tr>
+
+<tr>
+  <td>Shape carried</td>
+  <td>speed is useful only inside the query family where the stand-in was checked</td>
+  <td>This explains what the formula shape keeps and what claim it is allowed to support.</td>
+  <td>The answer repeats the formula but cannot translate what it carries.</td>
+</tr>
+
+<tr>
+  <td>Changed-case rejection</td>
+  <td>compare against the full solver on new cases near the edge of the intended use</td>
+  <td>This is the first concrete way to stop trusting the claim.</td>
+  <td>The answer reports a score, fit, or source mention without a failure condition.</td>
+</tr>
+</tbody>
+</table>
 <h2>Weak Answer Warning</h2>
 <p>A weak answer treats speed as trust.</p>
 <h2>Acceptance Sentence</h2>
