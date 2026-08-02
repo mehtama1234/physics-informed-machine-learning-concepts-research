@@ -60,6 +60,8 @@ RESTRICTED_PATTERNS = (
     "cutting edge",
 )
 
+MEATY_GOAL_REQUIREMENT_COUNT = 13
+
 
 class LinkParser(HTMLParser):
     def __init__(self) -> None:
@@ -118,13 +120,13 @@ def check_required_sections() -> list[str]:
         "site/editorial-roadmap.html": ("Editorial Roadmap", "Status:", "Current Evidence", "Acceptance Check", "locally completed", "Meaty End-To-End Goal"),
         "site/completion-audit.html": ("Completion Audit", "Requirement Evidence", "locally verified"),
         "site/meaty-goal.html": ("Meaty End-To-End Goal", "Done Means", "Every Core Page Must Contain", "Acceptance Sentence", "Not Done If"),
-        "site/meaty-goal-coverage.html": ("Meaty Goal Coverage Audit", "First Principles", "Case Walkthrough", "Concept Connections", "Belief Evidence", "Domain Fit", "Formula Terms", "Acceptance Sentence", "Missing Items"),
+        "site/meaty-goal-coverage.html": ("Meaty Goal Coverage Audit", "First Principles", "Case Walkthrough", "Concept Connections", "Belief Evidence", "Domain Fit", "Formula Terms", "Breaks Without Idea", "Acceptance Sentence", "Missing Items"),
         "site/families.html": ("Paper Family Routes",),
         "site/families/physics-constraints-family.html": ("Family Story From First Principles", "What Each Concept Does In The Family", "Evidence Needed Before Trusting The Family", "Too Weak"),
         "site/families/neural-operators-family.html": ("Family Story From First Principles", "What Each Concept Does In The Family", "Evidence Needed Before Trusting The Family", "Too Weak"),
         "site/diagrams.html": ("Mathematical Sketches", "Kept Rule", "Failure Case"),
-        "site/topics/operator-learning.html": ("One Concrete Case From Start To Finish", "Observed Evidence", "Rejection Test", "How This Connects To Nearby Ideas", "Learn Before This", "Confusion It Prevents", "Evidence Needed To Believe This", "Strong Evidence", "Too Weak", "Reject Or Recheck When", "Where This Fits By Domain", "When To Avoid This In A Domain", "Changed-Case Test", "Plain Formula Term By Term", "What It Carries", "Concrete Worked Example", "Concrete Wrong-Use Example", "Test That Catches It", "Acceptance Sentence Filled", "I would test it by changing", "Mathematical Sketch", "Field To Field", "Kept Rule"),
-        "site/topics/surrogate-modeling.html": ("One Concrete Case From Start To Finish", "Observed Evidence", "Rejection Test", "How This Connects To Nearby Ideas", "Learn Before This", "Confusion It Prevents", "Evidence Needed To Believe This", "Strong Evidence", "Too Weak", "Reject Or Recheck When", "Where This Fits By Domain", "When To Avoid This In A Domain", "Changed-Case Test", "Plain Formula Term By Term", "What It Carries", "Concrete Worked Example", "Concrete Wrong-Use Example", "Test That Catches It", "Acceptance Sentence Filled", "I would test it by changing", "Mathematical Sketch", "Fast Stand-In", "Failure Case"),
+        "site/topics/operator-learning.html": ("One Concrete Case From Start To Finish", "Observed Evidence", "Rejection Test", "How This Connects To Nearby Ideas", "Learn Before This", "Confusion It Prevents", "Evidence Needed To Believe This", "Strong Evidence", "Too Weak", "Reject Or Recheck When", "Where This Fits By Domain", "When To Avoid This In A Domain", "Changed-Case Test", "Plain Formula Term By Term", "What It Carries", "Concrete Worked Example", "Concrete Wrong-Use Example", "Test That Catches It", "What Breaks Without This Idea", "Minimum Proof Needed", "Reader Must Be Able To Say", "Acceptance Sentence Filled", "I would test it by changing", "Mathematical Sketch", "Field To Field", "Kept Rule"),
+        "site/topics/surrogate-modeling.html": ("One Concrete Case From Start To Finish", "Observed Evidence", "Rejection Test", "How This Connects To Nearby Ideas", "Learn Before This", "Confusion It Prevents", "Evidence Needed To Believe This", "Strong Evidence", "Too Weak", "Reject Or Recheck When", "Where This Fits By Domain", "When To Avoid This In A Domain", "Changed-Case Test", "Plain Formula Term By Term", "What It Carries", "Concrete Worked Example", "Concrete Wrong-Use Example", "Test That Catches It", "What Breaks Without This Idea", "Minimum Proof Needed", "Reader Must Be Able To Say", "Acceptance Sentence Filled", "I would test it by changing", "Mathematical Sketch", "Fast Stand-In", "Failure Case"),
         "site/comparisons/pinns-vs-neural-operators.html": ("How To Decide From First Principles", "Decision Checklist", "Decision Burden Table", "Swap Test", "Evidence Needed To Choose", "Concrete Choice Cases", "Wrong Choice Case", "Evidence That Exposes It"),
         "site/comparisons/solvers-vs-learned-surrogates.html": ("How To Decide From First Principles", "Decision Checklist", "Decision Burden Table", "Swap Test", "Evidence Needed To Choose", "Concrete Choice Cases", "Wrong Choice Case", "Evidence That Exposes It"),
         "site/learning-path/scientific-question-first.html": ("No-Jargon Explanation", "First-Principles Spine", "World:", "Reject it when:"),
@@ -136,7 +138,7 @@ def check_required_sections() -> list[str]:
         "site/misconceptions.html": ("Misconception Map", "Wrong Turn", "First-Principles Test"),
         "site/evidence-packets/physics-informed-neural-networks.html": ("Transcript Support", "What This Evidence Does Not Prove", "Review Links"),
         "site/evidence-packets/operator-learning.html": ("Transcript Support", "What This Evidence Does Not Prove", "Review Links"),
-        "site/topics/physics-informed-neural-networks.html": ("First-Principles Essay", "What A Strong Explanation Must Say", "One Concrete Case From Start To Finish", "Observed Evidence", "Rejection Test", "How This Connects To Nearby Ideas", "Learn Before This", "Confusion It Prevents", "Evidence Needed To Believe This", "Strong Evidence", "Too Weak", "Reject Or Recheck When", "Where This Fits By Domain", "When To Avoid This In A Domain", "Changed-Case Test", "Plain Formula Term By Term", "What It Carries", "Concrete Worked Example", "Concrete Wrong-Use Example", "Test That Catches It", "Acceptance Sentence Filled", "I would test it by changing", "Selected Source Anchors", "Claim Anchored", "Limit:"),
+        "site/topics/physics-informed-neural-networks.html": ("First-Principles Essay", "What A Strong Explanation Must Say", "One Concrete Case From Start To Finish", "Observed Evidence", "Rejection Test", "How This Connects To Nearby Ideas", "Learn Before This", "Confusion It Prevents", "Evidence Needed To Believe This", "Strong Evidence", "Too Weak", "Reject Or Recheck When", "Where This Fits By Domain", "When To Avoid This In A Domain", "Changed-Case Test", "Plain Formula Term By Term", "What It Carries", "Concrete Worked Example", "Concrete Wrong-Use Example", "Test That Catches It", "What Breaks Without This Idea", "Minimum Proof Needed", "Reader Must Be Able To Say", "Acceptance Sentence Filled", "I would test it by changing", "Selected Source Anchors", "Claim Anchored", "Limit:"),
         "site/evidence-packets/foundation-models-for-pdes.html": ("Selected Source Anchors", "Claim Anchored", "Limit:"),
         "site/derivations.html": ("Core Derivations",),
         "site/derivations/physics-informed-neural-networks.html": ("Hand Derivation", "Why It Enters", "Final Line"),
@@ -229,7 +231,7 @@ def check_meaty_goal_coverage() -> list[str]:
         title = str(row.get("title"))
         if row.get("missing"):
             errors.append(f"meaty goal coverage has missing items: {title} -> {row.get('missing')}")
-        if len(row.get("requirements") or []) != 12:
+        if len(row.get("requirements") or []) != MEATY_GOAL_REQUIREMENT_COUNT:
             errors.append(f"meaty goal coverage requirement count mismatch: {title}")
         for href_field in ("topic_href", "evidence_packet_href", "reader_check_href"):
             href = str(row.get(href_field) or "")

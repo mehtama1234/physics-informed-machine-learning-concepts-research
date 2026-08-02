@@ -2098,6 +2098,7 @@ MEATY_GOAL_REQUIREMENTS = [
     {"key": "formula_terms", "label": "Formula Terms", "proof_term": "Plain Formula Term By Term"},
     {"key": "worked_example", "label": "Worked Example", "proof_term": "Concrete Worked Example"},
     {"key": "wrong_use", "label": "Wrong-Use Example", "proof_term": "Concrete Wrong-Use Example"},
+    {"key": "breaks_without", "label": "Breaks Without Idea", "proof_term": "What Breaks Without This Idea"},
     {"key": "failure_boundary", "label": "Failure Boundary", "proof_term": "Failure Boundary"},
     {"key": "source_anchors", "label": "Source Anchors", "proof_term": "Selected Source Anchors"},
     {"key": "reader_check", "label": "Reader Check", "proof_term": "Reader Check"},
@@ -4342,6 +4343,24 @@ def topic_belief_evidence_html(topic: dict[str, object], derivation: dict[str, o
 """
 
 
+def topic_breaks_without_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
+    wrong = topic_wrong_use(topic)
+    title = str(topic["title"])
+    return f"""
+<h2>What Breaks Without This Idea</h2>
+<p>This section removes the concept on purpose. If the page still sounds complete without it, the explanation has not yet named the real job.</p>
+<table>
+  <tbody>
+    <tr><th>Without {html.escape(title)}</th><td>The reader is left with {html.escape(str(derivation['observed']))}, but no disciplined way to carry that evidence to {html.escape(str(derivation['hidden']))}.</td></tr>
+    <tr><th>What Goes Wrong</th><td>{html.escape(wrong['what_breaks'])}</td></tr>
+    <tr><th>Why The Problem Matters</th><td>{html.escape(str(topic['why_it_matters']))}</td></tr>
+    <tr><th>Minimum Proof Needed</th><td>{html.escape(str(derivation['test']))}</td></tr>
+    <tr><th>Reader Must Be Able To Say</th><td>This idea is needed here to {html.escape(str(derivation['move']))}; otherwise the answer can fail this way: {html.escape(wrong['what_breaks'])}</td></tr>
+  </tbody>
+</table>
+"""
+
+
 def topic_domain_fit_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
     slug = str(topic["slug"])
     matched_guides = [guide for guide in DOMAIN_GUIDES if slug in guide["concepts"]]
@@ -4450,6 +4469,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     domain_fit = topic_domain_fit_html(topic, derivation)
     worked_examples = topic_worked_examples_html(str(topic["slug"]))
     acceptance_sentence = topic_acceptance_sentence_html(topic, derivation)
+    breaks_without = topic_breaks_without_html(topic, derivation)
     body = f"""
 <h1>{html.escape(str(topic['title']))}</h1>
 <h2>Common Problem This Solves</h2>
@@ -4482,6 +4502,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
 {belief_evidence}
 {domain_fit}
 {acceptance_sentence}
+{breaks_without}
 <h2>Deeper Mathematical Why</h2>
 <p>The mathematical point is to decide what information is allowed to carry the scientific claim. If the carried information is too small, the model misses the behavior that matters. If it is too broad, the page may claim more than the evidence supports. The useful middle is a named object, a named scientific job, and a changed case that can reject the claim.</p>
 {reader_check}
@@ -5902,7 +5923,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         if not topic_path.exists():
             raise SystemExit(f"deep dive missing topic page: {slug}")
         topic_text = topic_path.read_text(encoding="utf-8")
-        if "First-Principles Essay" not in topic_text or "What A Strong Explanation Must Say" not in topic_text or "One Concrete Case From Start To Finish" not in topic_text or "Observed Evidence" not in topic_text or "Rejection Test" not in topic_text or "How This Connects To Nearby Ideas" not in topic_text or "Learn Before This" not in topic_text or "Confusion It Prevents" not in topic_text or "Evidence Needed To Believe This" not in topic_text or "Strong Evidence" not in topic_text or "Too Weak" not in topic_text or "Reject Or Recheck When" not in topic_text or "Where This Fits By Domain" not in topic_text or "When To Avoid This In A Domain" not in topic_text or "Changed-Case Test" not in topic_text or "Plain Formula Term By Term" not in topic_text or "What It Carries" not in topic_text or "Concrete Worked Example" not in topic_text or "Concrete Wrong-Use Example" not in topic_text or "Test That Catches It" not in topic_text or "Acceptance Sentence Filled" not in topic_text or "I would test it by changing" not in topic_text or "Core Idea In One Sentence" not in topic_text or "Mathematical Shape Without Jargon" not in topic_text:
+        if "First-Principles Essay" not in topic_text or "What A Strong Explanation Must Say" not in topic_text or "One Concrete Case From Start To Finish" not in topic_text or "Observed Evidence" not in topic_text or "Rejection Test" not in topic_text or "How This Connects To Nearby Ideas" not in topic_text or "Learn Before This" not in topic_text or "Confusion It Prevents" not in topic_text or "Evidence Needed To Believe This" not in topic_text or "Strong Evidence" not in topic_text or "Too Weak" not in topic_text or "Reject Or Recheck When" not in topic_text or "Where This Fits By Domain" not in topic_text or "When To Avoid This In A Domain" not in topic_text or "Changed-Case Test" not in topic_text or "Plain Formula Term By Term" not in topic_text or "What It Carries" not in topic_text or "Concrete Worked Example" not in topic_text or "Concrete Wrong-Use Example" not in topic_text or "Test That Catches It" not in topic_text or "What Breaks Without This Idea" not in topic_text or "Minimum Proof Needed" not in topic_text or "Reader Must Be Able To Say" not in topic_text or "Acceptance Sentence Filled" not in topic_text or "I would test it by changing" not in topic_text or "Core Idea In One Sentence" not in topic_text or "Mathematical Shape Without Jargon" not in topic_text:
             raise SystemExit(f"deep dive not rendered on topic page: {slug}")
     worked_example_slugs = {str(slug) for example in WORKED_EXAMPLES for slug in example["method_route"]}
     concepts_without_examples = sorted(concept_slugs - worked_example_slugs)
