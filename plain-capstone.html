@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Physics-Informed ML Plain Capstone</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav class="topbar">
+  <a href="index.html">Physics-Informed ML</a>
+  <a href="transcripts.html">Transcripts</a>
+  <a href="concept-atlas.html">Concept Atlas</a>
+  <a href="families.html">Families</a>
+  <a href="comparisons.html">Comparisons</a>
+  <a href="worked-examples.html">Examples</a>
+  <a href="diagrams.html">Diagrams</a>
+  <a href="derivations.html">Derivations</a>
+  <a href="formula-guide.html">Formulas</a>
+  <a href="misconceptions.html">Misreads</a>
+  <a href="course-spine.html">Spine</a>
+  <a href="topology-shape-guide.html">Shape</a>
+  <a href="shape-transfer-practice.html">Shape Practice</a>
+  <a href="question-to-topic-guide.html">Questions</a>
+  <a href="field-application-guide.html">Fields</a>
+  <a href="importance-matrix.html">Importance</a>
+  <a href="end-to-end-walkthrough.html">Walkthrough</a>
+  <a href="plain-capstone.html">Capstone</a>
+  <a href="example-route-guide.html">Routes</a>
+  <a href="no-jargon-concept-guide.html">No Jargon</a>
+  <a href="learning-path.html">Path</a>
+  <a href="glossary.html">Glossary</a>
+  <a href="domains.html">Domains</a>
+  <a href="reader-checks.html">Checks</a>
+  <a href="plain-explanation-practice.html">Practice</a>
+  <a href="decision-guide.html">Decide</a>
+  <a href="provenance.html">Provenance</a>
+  <a href="coverage.html">Coverage</a>
+  <a href="dependencies.html">Dependencies</a>
+  <a href="concept-ladder.html">Ladder</a>
+  <a href="evidence-packets.html">Packets</a>
+  <a href="quality.html">Quality</a>
+  <a href="wording-audit.html">Wording</a>
+  <a href="plain-essay-review.html">Essays</a>
+  <a href="synthesis.html">Synthesis</a>
+  <a href="review-entrypoints.html">Review Map</a>
+  <a href="review-search.html">Find</a>
+  <a href="review-queue.html">Queue</a>
+  <a href="editorial-roadmap.html">Roadmap</a>
+  <a href="completion-audit.html">Audit</a>
+  <a href="handoff.html">Handoff</a>
+  <a href="theme-map.html">Themes</a>
+  <a href="evidence-ledger.html">Evidence</a>
+</nav>
+<main>
+
+<h1>Plain Capstone</h1>
+<h2>Final Proof Of Understanding</h2>
+<p>This is the final learner-facing route through the course. A learner passes only when they can explain a topic from everyday need to bounded claim, then transfer the same idea through shape, topology, and field use.</p>
+<h2>Capstone Answer Template</h2>
+<ol>
+  <li>A person needs an answer because an everyday scientific shortage appears.</li>
+  <li>The evidence in hand is named before the method.</li>
+  <li>The hidden answer is named before the formula.</li>
+  <li>The first-principles move says how evidence can carry the missing answer.</li>
+  <li>The shape or topology check names what relation must not be lost.</li>
+  <li>The field transfer names how the same idea appears in engineering, materials or biology, and climate or fields.</li>
+  <li>The final sentence names the changed case that can narrow the claim.</li>
+</ol>
+<h2>Capstone Proof Table</h2>
+<table>
+  <thead>
+    <tr><th>Topic</th><th>Everyday Need</th><th>Evidence</th><th>Hidden Answer</th><th>First-Principles Move</th><th>Shape Check</th><th>Rejection Test</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <td><a href="topics/deep-learning.html">Deep Learning</a></td>
+  <td>scientists often have examples of behavior but no short rule that predicts the next case</td>
+  <td>many input-output examples from experiments, simulations, or measurements</td>
+  <td>the exact rule that connects the input to the output</td>
+  <td>adjust many weights until the model maps familiar inputs to the right outputs</td>
+  <td>Hold out a new shape family, camera view, mesh order, or scale and measure the target error.</td>
+  <td>hold out a changed material, geometry, parameter range, or sensor condition</td>
+</tr>
+
+<tr>
+  <td><a href="topics/physics-informed-neural-networks.html">Physics-Informed Neural Networks</a></td>
+  <td>measurements may be sparse, but the answer must still respect a known physical equation</td>
+  <td>some measured values, boundary values, starting values, and a known differential equation</td>
+  <td>the full field value at every point in space and time</td>
+  <td>fit a neural network while also measuring how badly its output violates the known equation</td>
+  <td>Move sensors, change the boundary, or bend the domain and compare the hidden field with trusted values.</td>
+  <td>move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements</td>
+</tr>
+
+<tr>
+  <td><a href="topics/partial-differential-equations.html">Partial Differential Equations</a></td>
+  <td>a quantity changes over space and time, so one number is not enough to describe the situation</td>
+  <td>a field such as temperature, pressure, concentration, velocity, or displacement</td>
+  <td>how every point in the field affects nearby points over time</td>
+  <td>write a local change rule that uses rates across space and time</td>
+  <td>Change the boundary, cut a hole, refine the mesh, or bend the region and check conservation.</td>
+  <td>change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error</td>
+</tr>
+
+<tr>
+  <td><a href="topics/operator-learning.html">Operator Learning</a></td>
+  <td>one simulation answer is not enough when engineers need the whole map from inputs to solution fields</td>
+  <td>many example inputs and their full solution fields</td>
+  <td>the rule that maps a new input field to its new solution field</td>
+  <td>learn the map from problem input to solution, not only one solution at a time</td>
+  <td>Hold out a new geometry class, mesh resolution, boundary type, or coefficient range.</td>
+  <td>change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed</td>
+</tr>
+
+<tr>
+  <td><a href="topics/scientific-machine-learning.html">Scientific Machine Learning</a></td>
+  <td>scientific work needs predictions that respect measurements, equations, uncertainty, and domain limits at the same time</td>
+  <td>data, equations, units, simulation outputs, and domain limits</td>
+  <td>which parts of the scientific system are missing, noisy, or too costly to compute directly</td>
+  <td>combine learned prediction with scientific checks that name what the claim is allowed to mean</td>
+  <td>Change shape, mesh, boundary, or sensor layout and inspect the scientific quantity.</td>
+  <td>state the scientific quantity first, then test it under a changed case that matters in that domain</td>
+</tr>
+
+<tr>
+  <td><a href="topics/surrogate-modeling.html">Surrogate Modeling</a></td>
+  <td>a trusted simulator may be too slow to run for every design, control, or uncertainty question</td>
+  <td>expensive solver inputs and outputs for a limited set of cases</td>
+  <td>the solver answer for every new query someone wants to ask</td>
+  <td>train a cheaper stand-in for the expensive input-output behavior</td>
+  <td>Change holes, edges, mesh detail, or shape class and compare with the full solver.</td>
+  <td>compare against the full solver on new cases near the edge of the intended use</td>
+</tr>
+
+<tr>
+  <td><a href="topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></td>
+  <td>a prediction is not enough unless the user knows when it should be believed</td>
+  <td>training cases, validation cases, prediction errors, and known shifts between cases</td>
+  <td>how wrong the model may be on a case unlike the ones it learned from</td>
+  <td>separate fit on familiar examples from evidence on changed examples</td>
+  <td>Hold out a new shape family, missing connection, or mesh resolution and measure the error.</td>
+  <td>move one important condition outside the training range and measure the first failure</td>
+</tr>
+
+<tr>
+  <td><a href="topics/optimization-for-learning.html">Optimization For Learning</a></td>
+  <td>learning needs a way to decide which model settings are better or worse</td>
+  <td>a written score that says which model behavior is better or worse</td>
+  <td>whether that score matches the scientific behavior the user actually cares about</td>
+  <td>change model settings to lower the written score</td>
+  <td>Inspect whether the trained answer breaks after relabeling, mesh change, or boundary change.</td>
+  <td>inspect what the score ignores, then check whether the ignored behavior fails after training</td>
+</tr>
+
+<tr>
+  <td><a href="topics/generative-modeling.html">Generative Modeling</a></td>
+  <td>some tasks need many possible examples, not one predicted answer</td>
+  <td>examples of fields, molecules, flows, shapes, or other scientific objects</td>
+  <td>the spread of possible valid objects beyond the examples</td>
+  <td>learn how to sample new candidates that resemble the training family</td>
+  <td>Test connected parts, forbidden holes, mesh validity, and downstream use.</td>
+  <td>measure constraints, rare cases, conservation, and downstream task performance on generated samples</td>
+</tr>
+
+<tr>
+  <td><a href="topics/graphs-and-geometric-learning.html">Graphs And Geometric Learning</a></td>
+  <td>many scientific objects are not simple rows of numbers; their connections matter</td>
+  <td>objects with parts and connections, such as meshes, molecules, or interacting components</td>
+  <td>which neighboring and long-range interactions control the scientific quantity</td>
+  <td>let information move along the object connections instead of flattening the object into a plain row</td>
+  <td>Relabel nodes, rotate the object, refine the mesh, or add a missing edge and inspect the target.</td>
+  <td>change the mesh, rotate or move the object, or add missing interactions and inspect what breaks</td>
+</tr>
+
+<tr>
+  <td><a href="topics/neural-differential-equations.html">Neural Differential Equations</a></td>
+  <td>scientists may know that a system changes continuously but not know the exact rule for that change</td>
+  <td>measurements of a system changing over time</td>
+  <td>the rate rule that moves the present value into the future</td>
+  <td>learn the missing rate rule and place it inside a time-evolution calculation</td>
+  <td>Change the starting state, shape, or connection pattern and run longer than the training window.</td>
+  <td>run longer than the training window and check whether small rate errors accumulate into drift</td>
+</tr>
+
+<tr>
+  <td><a href="topics/symbolic-regression.html">Symbolic Regression And Model Discovery</a></td>
+  <td>a scientist may need a readable equation, not only a model that predicts well</td>
+  <td>measured variables and candidate mathematical ingredients</td>
+  <td>which short formula, if any, actually explains the measured change</td>
+  <td>search for a readable equation that fits the data and survives a changed case</td>
+  <td>Remove a shape measure, change the mesh, or add a missing variable and test the formula.</td>
+  <td>remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts</td>
+</tr>
+
+<tr>
+  <td><a href="topics/foundation-models-for-pdes.html">Foundation Models For PDEs</a></td>
+  <td>one trained model may be asked to handle many related equations, grids, parameters, or physical settings</td>
+  <td>many PDE problem instances across equations, grids, parameters, or physical settings</td>
+  <td>which shared structure carries from one scientific task to another</td>
+  <td>train one broad model to reuse structure across many related field-prediction tasks</td>
+  <td>Hold out whole geometry families, boundary types, scales, or rare regimes.</td>
+  <td>hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver</td>
+</tr>
+
+<tr>
+  <td><a href="topics/attention-for-scientific-fields.html">Attention For Scientific Fields</a></td>
+  <td>a local patch of a field may depend on faraway information, but looking everywhere can be expensive</td>
+  <td>large fields where one location may depend on other locations</td>
+  <td>which distant parts matter for the local prediction</td>
+  <td>let the model choose which parts of the field exchange information</td>
+  <td>Change window size, long-range links, boundary regions, or point order.</td>
+  <td>change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures</td>
+</tr>
+</tbody>
+</table>
+<h2>Topic Capstone Prompts</h2>
+
+<section>
+  <h2>Deep Learning</h2>
+  <p><strong>Final Answer Prompt:</strong> Explain why this topic matters without starting from its name.</p>
+  <ol>
+    <li>Start with the everyday need: scientists often have examples of behavior but no short rule that predicts the next case.</li>
+    <li>Name the evidence: many input-output examples from experiments, simulations, or measurements.</li>
+    <li>Name the missing answer: the exact rule that connects the input to the output.</li>
+    <li>Name the first-principles move: adjust many weights until the model maps familiar inputs to the right outputs.</li>
+    <li>Name the topology or shape check: Hold out a new shape family, camera view, mesh order, or scale and measure the target error.</li>
+    <li>Name one engineering use: Sort old test runs so a designer can screen the next part before a costly build.</li>
+    <li>Name one materials, chemistry, or biology use: Read images, spectra, molecules, or cell measurements when hand rules are incomplete.</li>
+    <li>Name one climate, fluids, or field use: Learn repeated field patterns from stored simulations or measurements.</li>
+    <li>End with the rejection test: hold out a changed material, geometry, parameter range, or sensor condition.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Physics-Informed Neural Networks</h2>
+  <p><strong>Final Answer Prompt:</strong> Explain why this topic matters without starting from its name.</p>
+  <ol>
+    <li>Start with the everyday need: measurements may be sparse, but the answer must still respect a known physical equation.</li>
+    <li>Name the evidence: some measured values, boundary values, starting values, and a known differential equation.</li>
+    <li>Name the missing answer: the full field value at every point in space and time.</li>
+    <li>Name the first-principles move: fit a neural network while also measuring how badly its output violates the known equation.</li>
+    <li>Name the topology or shape check: Move sensors, change the boundary, or bend the domain and compare the hidden field with trusted values.</li>
+    <li>Name one engineering use: Estimate heat, stress, flow, or pressure when tests are sparse but the physical law is known.</li>
+    <li>Name one materials, chemistry, or biology use: Fill in missing concentration, strain, or reaction fields while keeping known balance rules visible.</li>
+    <li>Name one climate, fluids, or field use: Recover a full field from sparse measurements without ignoring the governing equation.</li>
+    <li>End with the rejection test: move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Partial Differential Equations</h2>
+  <p><strong>Final Answer Prompt:</strong> Explain why this topic matters without starting from its name.</p>
+  <ol>
+    <li>Start with the everyday need: a quantity changes over space and time, so one number is not enough to describe the situation.</li>
+    <li>Name the evidence: a field such as temperature, pressure, concentration, velocity, or displacement.</li>
+    <li>Name the missing answer: how every point in the field affects nearby points over time.</li>
+    <li>Name the first-principles move: write a local change rule that uses rates across space and time.</li>
+    <li>Name the topology or shape check: Change the boundary, cut a hole, refine the mesh, or bend the region and check conservation.</li>
+    <li>Name one engineering use: Write the rule for heat, stress, flow, pressure, or waves before choosing a learning method.</li>
+    <li>Name one materials, chemistry, or biology use: Track diffusion, reaction, strain, growth, or transport through a material or tissue.</li>
+    <li>Name one climate, fluids, or field use: Describe wind, heat, concentration, pressure, and water over space and time.</li>
+    <li>End with the rejection test: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Operator Learning</h2>
+  <p><strong>Final Answer Prompt:</strong> Explain why this topic matters without starting from its name.</p>
+  <ol>
+    <li>Start with the everyday need: one simulation answer is not enough when engineers need the whole map from inputs to solution fields.</li>
+    <li>Name the evidence: many example inputs and their full solution fields.</li>
+    <li>Name the missing answer: the rule that maps a new input field to its new solution field.</li>
+    <li>Name the first-principles move: learn the map from problem input to solution, not only one solution at a time.</li>
+    <li>Name the topology or shape check: Hold out a new geometry class, mesh resolution, boundary type, or coefficient range.</li>
+    <li>Name one engineering use: Give fast field estimates for repeated wing, device, part, or load queries.</li>
+    <li>Name one materials, chemistry, or biology use: Map a material setting, molecular field, or tissue condition to a response field.</li>
+    <li>Name one climate, fluids, or field use: Map forcing, boundary, or initial fields to future solution fields.</li>
+    <li>End with the rejection test: change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Scientific Machine Learning</h2>
+  <p><strong>Final Answer Prompt:</strong> Explain why this topic matters without starting from its name.</p>
+  <ol>
+    <li>Start with the everyday need: scientific work needs predictions that respect measurements, equations, uncertainty, and domain limits at the same time.</li>
+    <li>Name the evidence: data, equations, units, simulation outputs, and domain limits.</li>
+    <li>Name the missing answer: which parts of the scientific system are missing, noisy, or too costly to compute directly.</li>
+    <li>Name the first-principles move: combine learned prediction with scientific checks that name what the claim is allowed to mean.</li>
+    <li>Name the topology or shape check: Change shape, mesh, boundary, or sensor layout and inspect the scientific quantity.</li>
+    <li>Name one engineering use: Use data and scientific checks together when a design decision has a cost.</li>
+    <li>Name one materials, chemistry, or biology use: Tie learned predictions to units, mechanisms, measurements, and domain limits.</li>
+    <li>Name one climate, fluids, or field use: Use learned models only with clear field checks, physical checks, and use ranges.</li>
+    <li>End with the rejection test: state the scientific quantity first, then test it under a changed case that matters in that domain.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Surrogate Modeling</h2>
+  <p><strong>Final Answer Prompt:</strong> Explain why this topic matters without starting from its name.</p>
+  <ol>
+    <li>Start with the everyday need: a trusted simulator may be too slow to run for every design, control, or uncertainty question.</li>
+    <li>Name the evidence: expensive solver inputs and outputs for a limited set of cases.</li>
+    <li>Name the missing answer: the solver answer for every new query someone wants to ask.</li>
+    <li>Name the first-principles move: train a cheaper stand-in for the expensive input-output behavior.</li>
+    <li>Name the topology or shape check: Change holes, edges, mesh detail, or shape class and compare with the full solver.</li>
+    <li>Name one engineering use: Screen many candidate parts, wings, devices, or loads before running the costly solve.</li>
+    <li>Name one materials, chemistry, or biology use: Use a cheaper stand-in for repeated material, molecule, or tissue simulations.</li>
+    <li>Name one climate, fluids, or field use: Answer repeated field queries faster than running a full model each time.</li>
+    <li>End with the rejection test: compare against the full solver on new cases near the edge of the intended use.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Uncertainty And Generalization</h2>
+  <p><strong>Final Answer Prompt:</strong> Explain why this topic matters without starting from its name.</p>
+  <ol>
+    <li>Start with the everyday need: a prediction is not enough unless the user knows when it should be believed.</li>
+    <li>Name the evidence: training cases, validation cases, prediction errors, and known shifts between cases.</li>
+    <li>Name the missing answer: how wrong the model may be on a case unlike the ones it learned from.</li>
+    <li>Name the first-principles move: separate fit on familiar examples from evidence on changed examples.</li>
+    <li>Name the topology or shape check: Hold out a new shape family, missing connection, or mesh resolution and measure the error.</li>
+    <li>Name one engineering use: Attach a use range and warning boundary to a prediction before a design choice.</li>
+    <li>Name one materials, chemistry, or biology use: Say when a measured property prediction should weaken under a new lab or sample condition.</li>
+    <li>Name one climate, fluids, or field use: Separate ordinary test success from success under changed climate, flow, or boundary conditions.</li>
+    <li>End with the rejection test: move one important condition outside the training range and measure the first failure.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Optimization For Learning</h2>
+  <p><strong>Final Answer Prompt:</strong> Explain why this topic matters without starting from its name.</p>
+  <ol>
+    <li>Start with the everyday need: learning needs a way to decide which model settings are better or worse.</li>
+    <li>Name the evidence: a written score that says which model behavior is better or worse.</li>
+    <li>Name the missing answer: whether that score matches the scientific behavior the user actually cares about.</li>
+    <li>Name the first-principles move: change model settings to lower the written score.</li>
+    <li>Name the topology or shape check: Inspect whether the trained answer breaks after relabeling, mesh change, or boundary change.</li>
+    <li>Name one engineering use: Train toward the quantity that drives the design, not only average error.</li>
+    <li>Name one materials, chemistry, or biology use: Set the training score so it respects measured properties, units, and known checks.</li>
+    <li>Name one climate, fluids, or field use: Balance field error, physical checks, and decision costs during training.</li>
+    <li>End with the rejection test: inspect what the score ignores, then check whether the ignored behavior fails after training.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Generative Modeling</h2>
+  <p><strong>Final Answer Prompt:</strong> Explain why this topic matters without starting from its name.</p>
+  <ol>
+    <li>Start with the everyday need: some tasks need many possible examples, not one predicted answer.</li>
+    <li>Name the evidence: examples of fields, molecules, flows, shapes, or other scientific objects.</li>
+    <li>Name the missing answer: the spread of possible valid objects beyond the examples.</li>
+    <li>Name the first-principles move: learn how to sample new candidates that resemble the training family.</li>
+    <li>Name the topology or shape check: Test connected parts, forbidden holes, mesh validity, and downstream use.</li>
+    <li>Name one engineering use: Propose candidate parts, layouts, fields, or operating cases for later testing.</li>
+    <li>Name one materials, chemistry, or biology use: Suggest molecules, structures, images, or samples that should still obey known rules.</li>
+    <li>Name one climate, fluids, or field use: Sample possible fields for stress tests, rare cases, or downstream solvers.</li>
+    <li>End with the rejection test: measure constraints, rare cases, conservation, and downstream task performance on generated samples.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Graphs And Geometric Learning</h2>
+  <p><strong>Final Answer Prompt:</strong> Explain why this topic matters without starting from its name.</p>
+  <ol>
+    <li>Start with the everyday need: many scientific objects are not simple rows of numbers; their connections matter.</li>
+    <li>Name the evidence: objects with parts and connections, such as meshes, molecules, or interacting components.</li>
+    <li>Name the missing answer: which neighboring and long-range interactions control the scientific quantity.</li>
+    <li>Name the first-principles move: let information move along the object connections instead of flattening the object into a plain row.</li>
+    <li>Name the topology or shape check: Relabel nodes, rotate the object, refine the mesh, or add a missing edge and inspect the target.</li>
+    <li>Name one engineering use: Model meshes, parts, sensor networks, or connected components without flattening away contact.</li>
+    <li>Name one materials, chemistry, or biology use: Represent atoms, bonds, cells, proteins, grains, or interaction networks as connected objects.</li>
+    <li>Name one climate, fluids, or field use: Carry information over irregular grids, sensor networks, coastlines, or mesh fields.</li>
+    <li>End with the rejection test: change the mesh, rotate or move the object, or add missing interactions and inspect what breaks.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Neural Differential Equations</h2>
+  <p><strong>Final Answer Prompt:</strong> Explain why this topic matters without starting from its name.</p>
+  <ol>
+    <li>Start with the everyday need: scientists may know that a system changes continuously but not know the exact rule for that change.</li>
+    <li>Name the evidence: measurements of a system changing over time.</li>
+    <li>Name the missing answer: the rate rule that moves the present value into the future.</li>
+    <li>Name the first-principles move: learn the missing rate rule and place it inside a time-evolution calculation.</li>
+    <li>Name the topology or shape check: Change the starting state, shape, or connection pattern and run longer than the training window.</li>
+    <li>Name one engineering use: Predict changing heat, motion, wear, control, or flow when the exact rate rule is unknown.</li>
+    <li>Name one materials, chemistry, or biology use: Learn reaction, growth, motion, or change rules from measured time traces.</li>
+    <li>Name one climate, fluids, or field use: Learn missing pieces of a time-update rule for fields.</li>
+    <li>End with the rejection test: run longer than the training window and check whether small rate errors accumulate into drift.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Symbolic Regression And Model Discovery</h2>
+  <p><strong>Final Answer Prompt:</strong> Explain why this topic matters without starting from its name.</p>
+  <ol>
+    <li>Start with the everyday need: a scientist may need a readable equation, not only a model that predicts well.</li>
+    <li>Name the evidence: measured variables and candidate mathematical ingredients.</li>
+    <li>Name the missing answer: which short formula, if any, actually explains the measured change.</li>
+    <li>Name the first-principles move: search for a readable equation that fits the data and survives a changed case.</li>
+    <li>Name the topology or shape check: Remove a shape measure, change the mesh, or add a missing variable and test the formula.</li>
+    <li>Name one engineering use: Find a readable equation that links design variables to the decision quantity.</li>
+    <li>Name one materials, chemistry, or biology use: Search for compact laws from measured variables, ingredients, and properties.</li>
+    <li>Name one climate, fluids, or field use: Look for a readable relation inside measured or simulated field behavior.</li>
+    <li>End with the rejection test: remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Foundation Models For PDEs</h2>
+  <p><strong>Final Answer Prompt:</strong> Explain why this topic matters without starting from its name.</p>
+  <ol>
+    <li>Start with the everyday need: one trained model may be asked to handle many related equations, grids, parameters, or physical settings.</li>
+    <li>Name the evidence: many PDE problem instances across equations, grids, parameters, or physical settings.</li>
+    <li>Name the missing answer: which shared structure carries from one scientific task to another.</li>
+    <li>Name the first-principles move: train one broad model to reuse structure across many related field-prediction tasks.</li>
+    <li>Name the topology or shape check: Hold out whole geometry families, boundary types, scales, or rare regimes.</li>
+    <li>Name one engineering use: Start from a broad PDE model for a new device or part, then verify the design quantity.</li>
+    <li>Name one materials, chemistry, or biology use: Transfer learned field behavior across related materials, tissues, or reaction settings.</li>
+    <li>Name one climate, fluids, or field use: Use one broad field model across related equation settings.</li>
+    <li>End with the rejection test: hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver.</li>
+  </ol>
+</section>
+
+<section>
+  <h2>Attention For Scientific Fields</h2>
+  <p><strong>Final Answer Prompt:</strong> Explain why this topic matters without starting from its name.</p>
+  <ol>
+    <li>Start with the everyday need: a local patch of a field may depend on faraway information, but looking everywhere can be expensive.</li>
+    <li>Name the evidence: large fields where one location may depend on other locations.</li>
+    <li>Name the missing answer: which distant parts matter for the local prediction.</li>
+    <li>Name the first-principles move: let the model choose which parts of the field exchange information.</li>
+    <li>Name the topology or shape check: Change window size, long-range links, boundary regions, or point order.</li>
+    <li>Name one engineering use: Route information across a part, surface, or field where distant regions interact.</li>
+    <li>Name one materials, chemistry, or biology use: Let distant atoms, cells, residues, or regions influence a local prediction.</li>
+    <li>Name one climate, fluids, or field use: Route information across fields where one region can affect another.</li>
+    <li>End with the rejection test: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures.</li>
+  </ol>
+</section>
+
+<h2>Pass Standard</h2>
+<p>A learner passes the capstone when they can choose any three topics, including one shape-heavy topic such as Graphs And Geometric Learning or Operator Learning, and give a plain answer that includes evidence, hidden answer, first-principles move, topology or shape check, field transfer, and rejection test.</p>
+
+</main>
+</body>
+</html>
