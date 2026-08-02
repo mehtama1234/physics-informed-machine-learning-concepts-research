@@ -36,6 +36,7 @@
 - review_queue_count: 14
 - review_queue_p0_count: 0
 - review_queue_p1_count: 0
+- hand_polish_review_count: 14
 - editorial_roadmap_count: 7
 - editorial_roadmap_completed_count: 7
 - source_anchor_count: 28
@@ -1472,6 +1473,148 @@
 - Missing layers: none
 - Reason: ready for hand polish
 - Next action: Open the evidence packet, check the source-strength audit, then add or confirm anchors before widening the claim for Uncertainty And Generalization.
+- Topic: topics/uncertainty-and-generalization.html
+- Evidence packet: evidence-packets/uncertainty-and-generalization.html
+
+
+## Hand Polish Audit
+### P2 Attention For Scientific Fields
+- Status: ready for hand polish
+- Supported claim: This page can claim that Attention For Scientific Fields is a route for this problem: a local patch of a field may depend on faraway information, but looking everywhere can be expensive
+- Overclaim to avoid: Do not claim that Attention For Scientific Fields works across large scientific fields where distant parts may interact without a changed-case test tied to the target quantity.
+- Stronger evidence needed: Use held-out measurements, trusted solves, changed boundaries, changed geometry, or changed regimes to test: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures
+- First rejection test: windowing or scaling choices can miss long-range effects that matter for the scientific quantity being predicted
+- Done when: A reviewer can retell the page as problem, evidence, hidden quantity, mathematical move, source limit, and changed-case rejection without adding outside jargon.
+- Topic: topics/attention-for-scientific-fields.html
+- Evidence packet: evidence-packets/attention-for-scientific-fields.html
+
+### P2 Deep Learning
+- Status: ready for hand polish
+- Supported claim: This page can claim that Deep Learning is a route for this problem: scientists often have examples of behavior but no short rule that predicts the next case
+- Overclaim to avoid: Do not claim that Deep Learning works across scientific prediction from large measured or simulated data sets without a changed-case test tied to the target quantity.
+- Stronger evidence needed: Use held-out measurements, trusted solves, changed boundaries, changed geometry, or changed regimes to test: hold out a changed material, geometry, parameter range, or sensor condition
+- First rejection test: the model can fit familiar examples while failing on a new material, geometry, scale, or boundary condition
+- Done when: A reviewer can retell the page as problem, evidence, hidden quantity, mathematical move, source limit, and changed-case rejection without adding outside jargon.
+- Topic: topics/deep-learning.html
+- Evidence packet: evidence-packets/deep-learning.html
+
+### P2 Foundation Models For PDEs
+- Status: ready for hand polish
+- Supported claim: This page can claim that Foundation Models For PDEs is a route for this problem: one trained model may be asked to handle many related equations, grids, parameters, or physical settings
+- Overclaim to avoid: Do not claim that Foundation Models For PDEs works across broad families of PDE problems and scientific fields without a changed-case test tied to the target quantity.
+- Stronger evidence needed: Use held-out measurements, trusted solves, changed boundaries, changed geometry, or changed regimes to test: hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver
+- First rejection test: the model can look broad while missing rare regimes, new boundary conditions, or quantities not represented in training
+- Done when: A reviewer can retell the page as problem, evidence, hidden quantity, mathematical move, source limit, and changed-case rejection without adding outside jargon.
+- Topic: topics/foundation-models-for-pdes.html
+- Evidence packet: evidence-packets/foundation-models-for-pdes.html
+
+### P2 Generative Modeling
+- Status: ready for hand polish
+- Supported claim: This page can claim that Generative Modeling is a route for this problem: some tasks need many possible examples, not one predicted answer
+- Overclaim to avoid: Do not claim that Generative Modeling works across creating plausible scientific samples, fields, or candidate designs without a changed-case test tied to the target quantity.
+- Stronger evidence needed: Use held-out measurements, trusted solves, changed boundaries, changed geometry, or changed regimes to test: measure constraints, rare cases, conservation, and downstream task performance on generated samples
+- First rejection test: generated samples can look realistic while breaking constraints, conservation, or rare-event behavior
+- Done when: A reviewer can retell the page as problem, evidence, hidden quantity, mathematical move, source limit, and changed-case rejection without adding outside jargon.
+- Topic: topics/generative-modeling.html
+- Evidence packet: evidence-packets/generative-modeling.html
+
+### P2 Graphs And Geometric Learning
+- Status: ready for hand polish
+- Supported claim: This page can claim that Graphs And Geometric Learning is a route for this problem: many scientific objects are not simple rows of numbers; their connections matter
+- Overclaim to avoid: Do not claim that Graphs And Geometric Learning works across systems made of interacting parts, meshes, molecules, or spatial relations without a changed-case test tied to the target quantity.
+- Stronger evidence needed: Use held-out measurements, trusted solves, changed boundaries, changed geometry, or changed regimes to test: change the mesh, rotate or move the object, or add missing interactions and inspect what breaks
+- First rejection test: the graph can encode the wrong neighborhood, hide missing interactions, or fail when the mesh changes
+- Done when: A reviewer can retell the page as problem, evidence, hidden quantity, mathematical move, source limit, and changed-case rejection without adding outside jargon.
+- Topic: topics/graphs-and-geometric-learning.html
+- Evidence packet: evidence-packets/graphs-and-geometric-learning.html
+
+### P2 Neural Differential Equations
+- Status: ready for hand polish
+- Supported claim: This page can claim that Neural Differential Equations is a route for this problem: scientists may know that a system changes continuously but not know the exact rule for that change
+- Overclaim to avoid: Do not claim that Neural Differential Equations works across changing systems where time evolution is part of the model without a changed-case test tied to the target quantity.
+- Stronger evidence needed: Use held-out measurements, trusted solves, changed boundaries, changed geometry, or changed regimes to test: run longer than the training window and check whether small rate errors accumulate into drift
+- First rejection test: small learned-rate errors can accumulate until long-time predictions drift away from the real system
+- Done when: A reviewer can retell the page as problem, evidence, hidden quantity, mathematical move, source limit, and changed-case rejection without adding outside jargon.
+- Topic: topics/neural-differential-equations.html
+- Evidence packet: evidence-packets/neural-differential-equations.html
+
+### P2 Operator Learning
+- Status: ready for hand polish
+- Supported claim: This page can claim that Operator Learning is a route for this problem: one simulation answer is not enough when engineers need the whole map from inputs to solution fields
+- Overclaim to avoid: Do not claim that Operator Learning works across fast prediction for families of scientific simulations without a changed-case test tied to the target quantity.
+- Stronger evidence needed: Use held-out measurements, trusted solves, changed boundaries, changed geometry, or changed regimes to test: change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed
+- First rejection test: the learned map can give plausible-looking fields that violate the equation or fail on a shifted input family
+- Done when: A reviewer can retell the page as problem, evidence, hidden quantity, mathematical move, source limit, and changed-case rejection without adding outside jargon.
+- Topic: topics/operator-learning.html
+- Evidence packet: evidence-packets/operator-learning.html
+
+### P2 Optimization For Learning
+- Status: ready for hand polish
+- Supported claim: This page can claim that Optimization For Learning is a route for this problem: learning needs a way to decide which model settings are better or worse
+- Overclaim to avoid: Do not claim that Optimization For Learning works across turning model fitting into a repeatable computation without a changed-case test tied to the target quantity.
+- Stronger evidence needed: Use held-out measurements, trusted solves, changed boundaries, changed geometry, or changed regimes to test: inspect what the score ignores, then check whether the ignored behavior fails after training
+- First rejection test: a model can optimize the written score while missing the scientific behavior the score failed to name
+- Done when: A reviewer can retell the page as problem, evidence, hidden quantity, mathematical move, source limit, and changed-case rejection without adding outside jargon.
+- Topic: topics/optimization-for-learning.html
+- Evidence packet: evidence-packets/optimization-for-learning.html
+
+### P2 Partial Differential Equations
+- Status: ready for hand polish
+- Supported claim: This page can claim that Partial Differential Equations is a route for this problem: a quantity changes over space and time, so one number is not enough to describe the situation
+- Overclaim to avoid: Do not claim that Partial Differential Equations works across fluids, heat, waves, mechanics, chemistry, climate, and other changing fields without a changed-case test tied to the target quantity.
+- Stronger evidence needed: Use held-out measurements, trusted solves, changed boundaries, changed geometry, or changed regimes to test: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error
+- First rejection test: a learned shortcut can ignore boundary conditions or conservation behavior that the PDE was carrying
+- Done when: A reviewer can retell the page as problem, evidence, hidden quantity, mathematical move, source limit, and changed-case rejection without adding outside jargon.
+- Topic: topics/partial-differential-equations.html
+- Evidence packet: evidence-packets/partial-differential-equations.html
+
+### P2 Physics-Informed Neural Networks
+- Status: ready for hand polish
+- Supported claim: This page can claim that Physics-Informed Neural Networks is a route for this problem: measurements may be sparse, but the answer must still respect a known physical equation
+- Overclaim to avoid: Do not claim that Physics-Informed Neural Networks works across differential equations in science and engineering without a changed-case test tied to the target quantity.
+- Stronger evidence needed: Use held-out measurements, trusted solves, changed boundaries, changed geometry, or changed regimes to test: move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements
+- First rejection test: the equation penalty can look small while the solution is wrong in hard regions, sharp layers, or unseen boundary cases
+- Done when: A reviewer can retell the page as problem, evidence, hidden quantity, mathematical move, source limit, and changed-case rejection without adding outside jargon.
+- Topic: topics/physics-informed-neural-networks.html
+- Evidence packet: evidence-packets/physics-informed-neural-networks.html
+
+### P2 Scientific Machine Learning
+- Status: ready for hand polish
+- Supported claim: This page can claim that Scientific Machine Learning is a route for this problem: scientific work needs predictions that respect measurements, equations, uncertainty, and domain limits at the same time
+- Overclaim to avoid: Do not claim that Scientific Machine Learning works across using data-driven models inside scientific workflows without a changed-case test tied to the target quantity.
+- Stronger evidence needed: Use held-out measurements, trusted solves, changed boundaries, changed geometry, or changed regimes to test: state the scientific quantity first, then test it under a changed case that matters in that domain
+- First rejection test: the method becomes a generic fitting tool if the physical quantity, scientific claim, and validation case are not named
+- Done when: A reviewer can retell the page as problem, evidence, hidden quantity, mathematical move, source limit, and changed-case rejection without adding outside jargon.
+- Topic: topics/scientific-machine-learning.html
+- Evidence packet: evidence-packets/scientific-machine-learning.html
+
+### P2 Surrogate Modeling
+- Status: ready for hand polish
+- Supported claim: This page can claim that Surrogate Modeling is a route for this problem: a trusted simulator may be too slow to run for every design, control, or uncertainty question
+- Overclaim to avoid: Do not claim that Surrogate Modeling works across expensive simulation and design loops without a changed-case test tied to the target quantity.
+- Stronger evidence needed: Use held-out measurements, trusted solves, changed boundaries, changed geometry, or changed regimes to test: compare against the full solver on new cases near the edge of the intended use
+- First rejection test: speed can hide missing physics when the surrogate is used beyond the regime where it was checked
+- Done when: A reviewer can retell the page as problem, evidence, hidden quantity, mathematical move, source limit, and changed-case rejection without adding outside jargon.
+- Topic: topics/surrogate-modeling.html
+- Evidence packet: evidence-packets/surrogate-modeling.html
+
+### P2 Symbolic Regression And Model Discovery
+- Status: ready for hand polish
+- Supported claim: This page can claim that Symbolic Regression And Model Discovery is a route for this problem: a scientist may need a readable equation, not only a model that predicts well
+- Overclaim to avoid: Do not claim that Symbolic Regression And Model Discovery works across turning data into equations people can inspect without a changed-case test tied to the target quantity.
+- Stronger evidence needed: Use held-out measurements, trusted solves, changed boundaries, changed geometry, or changed regimes to test: remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts
+- First rejection test: a neat formula can fit the training data while using the wrong variables or failing on a changed experiment
+- Done when: A reviewer can retell the page as problem, evidence, hidden quantity, mathematical move, source limit, and changed-case rejection without adding outside jargon.
+- Topic: topics/symbolic-regression.html
+- Evidence packet: evidence-packets/symbolic-regression.html
+
+### P2 Uncertainty And Generalization
+- Status: ready for hand polish
+- Supported claim: This page can claim that Uncertainty And Generalization is a route for this problem: a prediction is not enough unless the user knows when it should be believed
+- Overclaim to avoid: Do not claim that Uncertainty And Generalization works across model use under new conditions without a changed-case test tied to the target quantity.
+- Stronger evidence needed: Use held-out measurements, trusted solves, changed boundaries, changed geometry, or changed regimes to test: move one important condition outside the training range and measure the first failure
+- First rejection test: training error can look good while the model fails under a new geometry, parameter range, sensor, or physical regime
+- Done when: A reviewer can retell the page as problem, evidence, hidden quantity, mathematical move, source limit, and changed-case rejection without adding outside jargon.
 - Topic: topics/uncertainty-and-generalization.html
 - Evidence packet: evidence-packets/uncertainty-and-generalization.html
 

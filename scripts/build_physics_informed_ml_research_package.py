@@ -3331,6 +3331,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
     core_derivations = build_core_derivations(topic_treatments)
     concept_evidence_packets = build_concept_evidence_packets(topic_treatments)
     review_queue = build_review_queue(coverage_matrix, concept_evidence_packets)
+    hand_polish_reviews = build_hand_polish_reviews(review_queue, concept_evidence_packets)
     meaty_goal_coverage = build_meaty_goal_coverage(topic_treatments, reader_checks, concept_evidence_packets)
     formula_guide = build_formula_guide(core_derivations)
     misconception_map = build_misconception_map(core_derivations, reader_checks)
@@ -3377,6 +3378,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
             "review_queue_count": len(review_queue),
             "review_queue_p0_count": sum(1 for item in review_queue if item["priority"] == "P0"),
             "review_queue_p1_count": sum(1 for item in review_queue if item["priority"] == "P1"),
+            "hand_polish_review_count": len(hand_polish_reviews),
             "editorial_roadmap_count": len(editorial_roadmap),
             "editorial_roadmap_completed_count": sum(1 for item in editorial_roadmap if item.get("status") == "locally completed"),
             "source_anchor_count": sum(len(SOURCE_ANCHORS.get(str(row["slug"]), [])) or min(2, len(row.get("evidence") or [])) for row in concept_atlas),
@@ -3407,6 +3409,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
         "dependency_map": dependency_map,
         "concept_ladder": concept_ladder,
         "concept_evidence_packets": concept_evidence_packets,
+        "hand_polish_reviews": hand_polish_reviews,
         "meaty_goal": MEATY_END_TO_END_GOAL,
         "meaty_goal_coverage": meaty_goal_coverage,
         "quality_rubric": QUALITY_RUBRIC,
@@ -3538,6 +3541,40 @@ def build_review_queue(coverage_rows: list[dict[str, object]], packets: list[dic
         )
     priority_order = {"P0": 0, "P1": 1, "P2": 2}
     return sorted(queue, key=lambda item: (priority_order[str(item["priority"])], -len(item["missing_layers"]), str(item["name"])))
+
+
+def build_hand_polish_reviews(review_queue: list[dict[str, object]], packets: list[dict[str, object]]) -> list[dict[str, object]]:
+    packet_by_slug = {str(packet["slug"]): packet for packet in packets}
+    rows = []
+    for item in review_queue:
+        slug = str(item["slug"])
+        packet = packet_by_slug.get(slug, {})
+        strength = packet.get("source_strength") or {}
+        claim_review = packet.get("claim_review") or {}
+        checks = [
+            "Read the topic page from top to bottom without using method knowledge from outside the page.",
+            "Verify that the common problem, domain, observed evidence, hidden quantity, and mathematical move form one plain chain.",
+            "Open the evidence packet and confirm the reviewed anchors support the page's limited claim.",
+            "Check that the overclaim warning is stronger than the page's most ambitious sentence.",
+            "Make sure the first rejection test names a concrete changed case, not a general need for more data.",
+        ]
+        rows.append(
+            {
+                "slug": slug,
+                "title": str(item["name"]),
+                "priority": str(item["priority"]),
+                "topic_href": str(item["topic_href"]),
+                "packet_href": str(item["packet_href"]),
+                "review_status": "ready for hand polish" if item["priority"] == "P2" else "blocked by missing support",
+                "supported_claim": str(claim_review.get("supported_claim") or ""),
+                "overclaim_to_avoid": str(claim_review.get("overclaim_to_avoid") or ""),
+                "first_rejection_test": str(claim_review.get("first_rejection_test") or ""),
+                "stronger_evidence_needed": str(claim_review.get("stronger_evidence_needed") or strength.get("stronger_proof_needed") or ""),
+                "acceptance_checks": checks,
+                "done_when": "A reviewer can retell the page as problem, evidence, hidden quantity, mathematical move, source limit, and changed-case rejection without adding outside jargon.",
+            }
+        )
+    return rows
 
 
 def build_meaty_goal_coverage(topic_treatments: list[dict[str, object]], reader_checks: list[dict[str, object]], packets: list[dict[str, object]]) -> list[dict[str, object]]:
@@ -4294,6 +4331,7 @@ def write_site(data: dict[str, object]) -> None:
     completion_requirements = data["completion_requirements"]
     review_search_index = data["review_search_index"]
     editorial_roadmap = data["editorial_roadmap"]
+    hand_polish_reviews = data["hand_polish_reviews"]
     meaty_goal = data["meaty_goal"]
     meaty_goal_coverage = data["meaty_goal_coverage"]
 
@@ -4327,6 +4365,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Review Map", f"{summary['review_entrypoint_count']} entry points for end-to-end review, use, and source checks.", "review-entrypoints.html")}
 {card("Find By Question", f"{summary['review_search_intent_count']} reviewer intents mapped to the right pages.", "review-search.html")}
 {card("Review Queue", f"{summary['review_queue_p0_count']} P0 concepts need source anchors; {summary['review_queue_p1_count']} P1 concepts need support-layer polish.", "review-queue.html")}
+{card("Hand Polish", f"{summary['hand_polish_review_count']} concept-level acceptance checklists for final editorial review.", "hand-polish.html")}
 {card("Editorial Roadmap", f"{summary['editorial_roadmap_completed_count']} of {summary['editorial_roadmap_count']} roadmap tasks are locally completed, including remote verification.", "editorial-roadmap.html")}
 {card("Completion Audit", f"{summary['completion_requirement_count']} requirements checked against local evidence and external status.", "completion-audit.html")}
 {card("Review Handoff", "Shortest route for reviewing the package and the remaining editorial work.", "handoff.html")}
@@ -4516,6 +4555,7 @@ def write_site(data: dict[str, object]) -> None:
     write_handoff_page(SITE / "handoff.html", dict(review_handoff), summary)
     write_review_entrypoints_page(SITE / "review-entrypoints.html", list(review_entrypoints))
     write_review_search_page(SITE / "review-search.html", list(review_search_index))
+    write_hand_polish_page(SITE / "hand-polish.html", list(hand_polish_reviews))
     write_editorial_roadmap_page(SITE / "editorial-roadmap.html", list(editorial_roadmap))
     write_completion_audit_page(SITE / "completion-audit.html", list(completion_requirements), summary)
     write_meaty_goal_page(SITE / "meaty-goal.html", dict(meaty_goal))
@@ -5713,6 +5753,34 @@ def write_review_queue_page(path: Path, rows: list[dict[str, object]]) -> None:
     path.write_text(html_page("Physics-Informed ML Review Queue", body), encoding="utf-8")
 
 
+def write_hand_polish_page(path: Path, rows: list[dict[str, object]]) -> None:
+    cards = []
+    for row in rows:
+        checks = "".join(f"<li>{html.escape(str(item))}</li>" for item in row["acceptance_checks"])
+        cards.append(
+            f"""
+<article class="card">
+  <p class="meta">{html.escape(str(row['priority']))} | {html.escape(str(row['review_status']))}</p>
+  <h3><a href="{html.escape(str(row['topic_href']))}">{html.escape(str(row['title']))}</a></h3>
+  <p><a href="{html.escape(str(row['packet_href']))}">Evidence packet</a></p>
+  <p><strong>Supported Claim:</strong> {html.escape(str(row['supported_claim']))}</p>
+  <p><strong>Overclaim To Avoid:</strong> {html.escape(str(row['overclaim_to_avoid']))}</p>
+  <p><strong>Stronger Evidence Needed:</strong> {html.escape(str(row['stronger_evidence_needed']))}</p>
+  <p><strong>First Rejection Test:</strong> {html.escape(str(row['first_rejection_test']))}</p>
+  <h4>Acceptance Checks</h4>
+  <ol>{checks}</ol>
+  <p><strong>Done When:</strong> {html.escape(str(row['done_when']))}</p>
+</article>
+"""
+        )
+    body = f"""
+<h1>Hand Polish Audit</h1>
+<p>This page turns the P2 queue into concrete editorial checks. Use it after structural coverage passes. A page is not finished just because the support layers exist; it must read as one plain chain from scientific problem to source-limited claim.</p>
+<div class="grid">{''.join(cards)}</div>
+"""
+    path.write_text(html_page("Physics-Informed ML Hand Polish Audit", body), encoding="utf-8")
+
+
 def write_dependency_map_page(path: Path, rows: list[dict[str, object]]) -> None:
     table_rows = []
     for row in rows:
@@ -6561,6 +6629,22 @@ def write_markdown_export(data: dict[str, object]) -> None:
                 "",
             ]
         )
+    lines.extend(["", "## Hand Polish Audit"])
+    for row in data["hand_polish_reviews"]:
+        lines.extend(
+            [
+                f"### {row['priority']} {row['title']}",
+                f"- Status: {row['review_status']}",
+                f"- Supported claim: {row['supported_claim']}",
+                f"- Overclaim to avoid: {row['overclaim_to_avoid']}",
+                f"- Stronger evidence needed: {row['stronger_evidence_needed']}",
+                f"- First rejection test: {row['first_rejection_test']}",
+                f"- Done when: {row['done_when']}",
+                f"- Topic: {row['topic_href']}",
+                f"- Evidence packet: {row['packet_href']}",
+                "",
+            ]
+        )
     lines.extend(["", "## Concept Dependency Map"])
     for row in data["dependency_map"]:
         lines.extend(
@@ -7030,6 +7114,22 @@ def validate(data: dict[str, object] | None = None) -> None:
         for href_field in ("topic_href", "packet_href"):
             if not (SITE / str(row[href_field])).exists():
                 raise SystemExit(f"review queue link missing: {row.get('name')} -> {row[href_field]}")
+    hand_polish_path = SITE / "hand-polish.html"
+    hand_polish_text = hand_polish_path.read_text(encoding="utf-8")
+    if "Hand Polish Audit" not in hand_polish_text or "Acceptance Checks" not in hand_polish_text or "Overclaim To Avoid" not in hand_polish_text:
+        raise SystemExit("hand polish audit page not rendered correctly")
+    hand_polish_rows = data.get("hand_polish_reviews") or []
+    if len(hand_polish_rows) != len(data["concept_atlas"]):
+        raise SystemExit("hand polish audit row count does not match concept atlas")
+    for row in hand_polish_rows:
+        for field in ("supported_claim", "overclaim_to_avoid", "stronger_evidence_needed", "first_rejection_test", "done_when"):
+            if not row.get(field):
+                raise SystemExit(f"hand polish row missing {field}: {row.get('title')}")
+        if len(row.get("acceptance_checks") or []) < 5:
+            raise SystemExit(f"hand polish row needs at least five acceptance checks: {row.get('title')}")
+        for href_field in ("topic_href", "packet_href"):
+            if not (SITE / str(row[href_field])).exists():
+                raise SystemExit(f"hand polish link missing: {row.get('title')} -> {row[href_field]}")
     dependency_path = SITE / "dependencies.html"
     dependency_text = dependency_path.read_text(encoding="utf-8")
     if "Concept Dependency Map" not in dependency_text or "Confusion It Prevents" not in dependency_text:
