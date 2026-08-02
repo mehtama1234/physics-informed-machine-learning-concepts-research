@@ -3314,6 +3314,7 @@ MEATY_GOAL_REQUIREMENTS = [
     {"key": "use_protocol", "label": "End-To-End Use Protocol", "proof_term": "End-To-End Use Protocol"},
     {"key": "before_math_slow_walk", "label": "Before The Math Slow Walk", "proof_term": "Before The Math Slow Walk"},
     {"key": "plain_big_picture", "label": "Plain Big Picture Essay", "proof_term": "Plain Big Picture Essay"},
+    {"key": "slow_importance_essay", "label": "Slow Importance Essay", "proof_term": "Why This Matters Slowly"},
     {"key": "hand_teaching_note", "label": "Hand Teaching Note", "proof_term": "Hand Teaching Note"},
     {"key": "case_walkthrough", "label": "Case Walkthrough", "proof_term": "One Concrete Case From Start To Finish"},
     {"key": "course_role", "label": "Course Role", "proof_term": "Course Role In Plain Words"},
@@ -6680,6 +6681,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     use_protocol = topic_use_protocol_html(topic, derivation)
     first_principles_essay = topic_first_principles_essay_html(topic, derivation)
     plain_big_picture = topic_plain_big_picture_essay_html(topic, derivation)
+    slow_importance = topic_slow_importance_essay_html(topic, derivation)
     teaching_note = topic_teaching_note_html(str(topic["slug"]))
     case_walkthrough = topic_case_walkthrough_html(topic, derivation)
     course_role = topic_course_role_html(topic, derivation)
@@ -6710,6 +6712,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
 {use_protocol}
 {first_principles_essay}
 {plain_big_picture}
+{slow_importance}
 {teaching_note}
 {case_walkthrough}
 {course_role}
@@ -7255,6 +7258,25 @@ def topic_plain_big_picture_essay_html(topic: dict[str, object], derivation: dic
   <thead><tr><th>Field</th><th>Plain Use</th><th>Why It Matters</th><th>First Check</th></tr></thead>
   <tbody>{rows}</tbody>
 </table>
+"""
+
+
+def topic_slow_importance_essay_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
+    title = str(topic["title"])
+    applications = topic_plain_applications(topic, derivation)
+    shape = next(row for row in applications if row["field"] == "Topology and shape")
+    engineering = next(row for row in applications if row["field"] == "Engineering design")
+    materials = next(row for row in applications if row["field"] == "Materials, chemistry, and biology")
+    fields = next(row for row in applications if row["field"] == "Climate, fluids, and fields")
+    return f"""
+<h2>Why This Matters Slowly</h2>
+<p>Do not start by asking what {html.escape(title)} is called. Start by asking what would be hard without it. In plain words, the hard part is this: {html.escape(str(topic['common_problem']))}. A person may have measurements, solved examples, a known equation, a shape, a field, a graph, a material sample, or a past experiment. That evidence is useful, but it is not yet the answer. The missing answer is {html.escape(str(derivation['hidden']))}. This topic matters because it gives a disciplined way to move from the evidence to that missing answer.</p>
+<p>The move is {html.escape(str(derivation['move']))}. That sentence is the center of the idea. It says what work the topic is doing before any notation appears. It also limits the claim. The topic is allowed to say this: {html.escape(str(derivation['meaning']))}. It is not allowed to say that every future case is handled, or that a neat curve, small error, or good-looking field is enough. A scientific claim has to carry its own stopping rule.</p>
+<p>Topology and shape matter here because scientific evidence often has form before it has numbers. {html.escape(str(shape['use']))} The reason is simple: {html.escape(str(shape['why']))} If a model loses the relation that carries the quantity, the answer can look tidy and still be wrong. The first shape check is: {html.escape(str(shape['check']))}</p>
+<p>In engineering design, the same idea becomes a decision about a part, device, load, safety limit, or operating condition. {html.escape(str(engineering['use']))} Why it matters: {html.escape(str(engineering['why']))} The first engineering check is: {html.escape(str(engineering['check']))}</p>
+<p>In materials, chemistry, and biology, the evidence may be a molecule, sample, image, spectrum, tissue, property measurement, or reaction trace. {html.escape(str(materials['use']))} Why it matters: {html.escape(str(materials['why']))} The first check in that field is: {html.escape(str(materials['check']))}</p>
+<p>In climate, fluids, and other field problems, the answer often lives across space and time. {html.escape(str(fields['use']))} Why it matters: {html.escape(str(fields['why']))} The first field check is: {html.escape(str(fields['check']))}</p>
+<p>The reader should leave this section with one plain sentence: {html.escape(title)} matters when it helps carry {html.escape(str(derivation['observed']))} toward {html.escape(str(derivation['hidden']))}, and it should be narrowed or rejected when this changed case fails: {html.escape(str(derivation['test']))}.</p>
 """
 
 
@@ -9220,6 +9242,9 @@ def validate(data: dict[str, object] | None = None) -> None:
             "Final Claim Allowed",
             "First-Principles Essay",
             "Plain Big Picture Essay",
+            "Why This Matters Slowly",
+            "Topology and shape matter here",
+            "The reader should leave this section with one plain sentence",
             "Applications In Everyday Words",
             "Topology and shape",
             "Engineering design",
@@ -9767,7 +9792,7 @@ def validate(data: dict[str, object] | None = None) -> None:
             raise SystemExit(f"meaty goal core page link missing: {item['href']}")
     goal_coverage_path = SITE / "meaty-goal-coverage.html"
     goal_coverage_text = goal_coverage_path.read_text(encoding="utf-8")
-    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Hand Teaching Note" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Concept Connections" not in goal_coverage_text or "Belief Evidence" not in goal_coverage_text or "Domain Fit" not in goal_coverage_text or "Shape Follows" not in goal_coverage_text or "Reader Answer Parts" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
+    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Slow Importance Essay" not in goal_coverage_text or "Hand Teaching Note" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Concept Connections" not in goal_coverage_text or "Belief Evidence" not in goal_coverage_text or "Domain Fit" not in goal_coverage_text or "Shape Follows" not in goal_coverage_text or "Reader Answer Parts" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
         raise SystemExit("meaty goal coverage audit not rendered correctly")
     goal_coverage_rows = data.get("meaty_goal_coverage") or []
     if len(goal_coverage_rows) != len(data["concept_atlas"]):
