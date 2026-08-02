@@ -198,7 +198,7 @@
           "check": "If only average error is reported, the decision quantity may still be wrong."
         }
       ],
-      "final_line": "A surrogate derivation is not just about fitting a curve; it is about earning a cheaper answer while keeping the trusted source in view."
+      "final_line": "A surrogate derivation is about earning a cheaper answer while keeping the trusted source in view, rather than only fitting a curve."
     },
     "plain_formula": "new query -> fast stand-in -> approximate answer with a stated use range",
     "smallest_useful_formula": "The smallest useful formula must start from expensive solver inputs and outputs for a limited set of cases, carry the answer toward the solver answer for every new query someone wants to ask, and include a check that can fail: compare against the full solver on new cases near the edge of the intended use.",
@@ -250,7 +250,7 @@
         {
           "term": "failure evidence",
           "why_it_enters": "Knowing where the model breaks is part of knowing where it can be used.",
-          "check": "If no failure case is named, confidence is just a number without a boundary."
+          "check": "If no failure case is named, confidence is a number without a boundary."
         }
       ],
       "final_line": "The mathematical shape joins answer and boundary: report the prediction together with the evidence that says where belief should weaken."
@@ -345,7 +345,7 @@
       "Inspect whether the remaining formula makes scientific sense."
     ],
     "hand_derivation": {
-      "plain_start": "Start with measured variables and a need for a readable law. The unknown object is the relation among the variables, not just the next predicted value.",
+      "plain_start": "Start with measured variables and a need for a readable law. The unknown object is the relation among the variables, rather than only the next predicted value.",
       "line_steps": [
         {
           "term": "candidate ingredients",
@@ -397,7 +397,7 @@
       "Train one model to keep shared structure across those tasks.",
       "Adapt or query it on a new task.",
       "Compare against trusted solves or measurements.",
-      "Hold out whole task families, not just random examples."
+      "Hold out whole task families, rather than only random examples."
     ],
     "hand_derivation": {
       "plain_start": "Start with many PDE tasks. Each task teaches something about fields, equations, boundaries, or solution patterns. The new task is useful only if it shares structure the model actually learned.",
@@ -607,7 +607,7 @@
   {
     "slug": "generative-modeling",
     "title": "Generative Modeling",
-    "one_sentence": "Generative modeling learns how to make possible examples, not just score one existing example.",
+    "one_sentence": "Generative modeling learns how to make possible examples, rather than only score one existing example.",
     "domain_story": "For uncertain weather or material fields, one answer may hide the range of possible outcomes. A generative model can propose many candidates, but those candidates still need physical checks.",
     "common_problem": "some tasks need many possible examples, not one predicted answer",
     "observed": "examples of fields, molecules, flows, shapes, or other scientific objects",
@@ -663,7 +663,7 @@
     "slug": "graphs-and-geometric-learning",
     "title": "Graphs And Geometric Learning",
     "one_sentence": "Graph and geometric learning keeps the connections and shape of the object visible to the model.",
-    "domain_story": "A bridge mesh, a molecule, and an airfoil surface are not just lists of numbers. Which points touch, which edges carry forces, and which shape is rotated or refined can change the answer.",
+    "domain_story": "A bridge mesh, a molecule, and an airfoil surface are more than lists of numbers. Which points touch, which edges carry forces, and which shape is rotated or refined can change the answer.",
     "common_problem": "many scientific objects are not simple rows of numbers; their connections matter",
     "observed": "objects with parts and connections, such as meshes, molecules, or interacting components",
     "hidden": "which neighboring and long-range interactions control the scientific quantity",
@@ -693,7 +693,7 @@
           "check": "If relabeling, rotation, or mesh changes break the result, the model may be learning bookkeeping instead of structure."
         }
       ],
-      "final_line": "Graph and geometric learning starts from the fact that the scientific object is connected, not just listed."
+      "final_line": "Graph and geometric learning starts from the fact that the scientific object is connected, rather than only listed."
     },
     "plain_formula": "connected shape + local values -> relation-aware updates -> field or object answer",
     "smallest_useful_formula": "The smallest useful formula must start from objects with parts and connections, such as meshes, molecules, or interacting components, carry the answer toward which neighboring and long-range interactions control the scientific quantity, and include a check that can fail: change the mesh, rotate or move the object, or add missing interactions and inspect what breaks.",

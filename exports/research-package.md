@@ -411,7 +411,7 @@
 
 ### Climate Risk Under Shifted Conditions
 - Domain: climate, weather, and environmental fields where future conditions may differ from old data
-- Question: How should a model report risk when the future case is not just another familiar example?
+- Question: How should a model report risk when the future case differs from familiar examples?
 - Observed: historical fields, simulation ensembles, forcing conditions, regional measurements, and known physical constraints
 - Hidden: how wrong the prediction may be under a changed climate, rare event, or new regional pattern
 - Decision quantity: the risk quantity for a region, time window, rare event, or changed forcing condition
@@ -428,7 +428,7 @@
 ### Physics Informed Neural Networks
 - One sentence: A PINN is a fitted field that must answer to both measured values and a known physical rule.
 - Use when: Use it when measurements are sparse, the equation is trusted, and the scientific job is one specific field or parameter case.
-- Do not use when: Do not treat it as magic for hard PDEs; if boundary data, scales, or sharp regions are poorly handled, the equation penalty can mislead.
+- Do not use when: Do not treat it as an automatic solution for hard PDEs; if boundary data, scales, or sharp regions are poorly handled, the equation penalty can mislead.
 - Plain formula: total error = data error + equation error + boundary error
 - Why it matters: The equation gives the model a reason not to invent impossible behavior between data points.
 
@@ -463,7 +463,7 @@
 ### Neural Differential Equations
 - One sentence: A neural differential equation learns the missing rule for how a system changes.
 - Use when: Use it when time evolution is central but the exact rate rule is partly unknown.
-- Do not use when: Do not trust long-time behavior just because short training windows fit well.
+- Do not use when: Do not trust long-time behavior because short training windows fit well; long runs need their own checks.
 - Plain formula: current state -> learned change rate -> next state
 - Why it matters: It keeps the idea of continuous motion while admitting that part of the motion rule is unknown.
 
@@ -491,7 +491,7 @@
 ### Scientific Machine Learning
 - One sentence: Scientific machine learning uses data and scientific rules together so the answer is useful for a named scientific question.
 - Use when: Use it when measurements alone are incomplete and hand-written equations alone are incomplete, too slow, or partly uncertain.
-- Do not use when: Do not call a model scientific just because the data came from science; the physical quantity, rule, and failure test must be explicit.
+- Do not use when: Do not call a model scientific because the data came from science; the physical quantity, rule, and failure test must be explicit.
 - Plain formula: measurements + known rule + learned missing part -> checked scientific answer
 - Why it matters: It turns machine learning from a general prediction tool into a disciplined way to answer a scientific question with stated evidence.
 
@@ -503,7 +503,7 @@
 - Why it matters: The training score is the contract the model follows; if the contract is wrong, the learned answer can be wrong in a polished way.
 
 ### Generative Modeling
-- One sentence: Generative modeling learns how to make possible examples, not just score one existing example.
+- One sentence: Generative modeling learns how to make possible examples, rather than only score one existing example.
 - Use when: Use it when the job is to sample plausible fields, fill missing parts, create candidate designs, or explore many possible futures.
 - Do not use when: Do not treat a plausible-looking sample as a valid scientific answer unless constraints, measurements, and use-range checks are passed.
 - Plain formula: known conditions + variation -> candidate example -> realism and rule checks
@@ -566,7 +566,7 @@
 - Say it back: Optimization makes the model obey the training score, so the score must include the quantity, boundary, rule, and failure case that matter.
 
 ### Generative Modeling
-- Plain problem: Some scientific jobs need many possible fields, designs, or futures, not just a single average answer.
+- Plain problem: Some scientific jobs need many possible fields, designs, or futures, rather than a single average answer.
 - Why the math follows: The model needs a source of variation because the output is a set of candidates. Each candidate still needs condition checks, rule checks, and use-range checks.
 - Say it back: Generative modeling makes possible candidates; science begins when those candidates are tested against measurements, rules, and the intended use family.
 
@@ -663,7 +663,7 @@
 - trusted source: The stand-in needs something to imitate and something to be checked against. Check: If the trusted source is not named, the surrogate has no clear reference point.
 - cheap stand-in: The learned model replaces repeated expensive calls inside a named use range. Check: If the use range is missing, speed can hide bad answers.
 - edge check: Errors often matter most near the edge of the range where decisions are tempting and evidence is thin. Check: If only average error is reported, the decision quantity may still be wrong.
-- Final line: A surrogate derivation is not just about fitting a curve; it is about earning a cheaper answer while keeping the trusted source in view.
+- Final line: A surrogate derivation is about earning a cheaper answer while keeping the trusted source in view, rather than only fitting a curve.
 
 ### Uncertainty And Generalization
 - Problem: a prediction is not enough unless the user knows when it should be believed
@@ -679,7 +679,7 @@
 - Start: Start with a model trained on old cases and a new case that may differ. The missing quantity is not only the prediction; it is how much trust the prediction deserves.
 - prediction: The model gives an answer for the quantity the scientist asked for. Check: A prediction without a use range is incomplete.
 - tested use range: The reader needs to know which cases actually support the answer. Check: If the test cases look like the training cases, changed-case trust is still unproved.
-- failure evidence: Knowing where the model breaks is part of knowing where it can be used. Check: If no failure case is named, confidence is just a number without a boundary.
+- failure evidence: Knowing where the model breaks is part of knowing where it can be used. Check: If no failure case is named, confidence is a number without a boundary.
 - Final line: The mathematical shape joins answer and boundary: report the prediction together with the evidence that says where belief should weaken.
 
 ### Neural Differential Equations
@@ -710,7 +710,7 @@
 - Page: derivations/symbolic-regression.html
 
 #### Hand Derivation For Symbolic Regression And Model Discovery
-- Start: Start with measured variables and a need for a readable law. The unknown object is the relation among the variables, not just the next predicted value.
+- Start: Start with measured variables and a need for a readable law. The unknown object is the relation among the variables, rather than only the next predicted value.
 - candidate ingredients: The search can only build formulas from measured variables and allowed operations. Check: If an important variable is missing, the best formula may still be false.
 - searched formulas: Many possible short laws are tried because the correct relation is not known ahead of time. Check: If size is not controlled, the formula may only memorize noise.
 - changed experiment: A readable formula becomes a scientific candidate only if it survives a new situation. Check: If it is tested only where it was found, it is not yet a law.
@@ -816,7 +816,7 @@
 - parts: The model needs the pieces whose values, features, or positions carry the scientific quantity. Check: If important parts are missing, the graph cannot recover their influence.
 - connections: Connections say which parts can directly affect one another. Check: If the graph connects the wrong neighbors, the model can learn the wrong interaction pattern.
 - geometry or symmetry check: The answer should not change for reasons that are only artifacts of mesh order, rotation, or labeling. Check: If relabeling, rotation, or mesh changes break the result, the model may be learning bookkeeping instead of structure.
-- Final line: Graph and geometric learning starts from the fact that the scientific object is connected, not just listed.
+- Final line: Graph and geometric learning starts from the fact that the scientific object is connected, rather than only listed.
 
 ### Attention For Scientific Fields
 - Problem: a local patch of a field may depend on faraway information, but looking everywhere can be expensive
@@ -1002,8 +1002,8 @@
 
 ### Generative Modeling
 - Why tempting: The shortcut is tempting because it keeps the visible result for Generative Modeling while skipping the evidence boundary: measure constraints, rare cases, conservation, and downstream task performance on generated samples.
-- Correction: Generative modeling learns how to make possible examples, not just score one existing example.
-- Repair sentence: Say instead: Generative modeling learns how to make possible examples, not just score one existing example. It should be trusted only after this check: measure constraints, rare cases, conservation, and downstream task performance on generated samples.
+- Correction: Generative modeling learns how to make possible examples, rather than only score one existing example.
+- Repair sentence: Say instead: Generative modeling learns how to make possible examples, rather than only score one existing example. It should be trusted only after this check: measure constraints, rare cases, conservation, and downstream task performance on generated samples.
 - First-principles test: measure constraints, rare cases, conservation, and downstream task performance on generated samples
 - Wrong turns: A weak answer says only that Generative Modeling is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.; Samples look realistic but violate a known equation or boundary.; Diversity is reported without saying whether the candidates are valid.; The model creates cases outside the evidence family.; The generated object is used as data without marking it as generated.
 
@@ -1486,9 +1486,9 @@
 
 ### Partial Differential Equations Reader Check
 - Setup: A reader is deciding whether Partial Differential Equations fits a scientific job in fluids, heat, waves, mechanics, chemistry, climate, and other changing fields.
-- Strong answer: Observed: a field such as temperature, pressure, concentration, velocity, or displacement. Hidden: how every point in the field affects nearby points over time. The mathematical move is to write a local change rule that uses rates across space and time. The formula shape means the equation carries how a whole field changes, not just how one number changes. The claim should be tested by this changed case: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error.
+- Strong answer: Observed: a field such as temperature, pressure, concentration, velocity, or displacement. Hidden: how every point in the field affects nearby points over time. The mathematical move is to write a local change rule that uses rates across space and time. The formula shape means the equation carries how a whole field changes, rather than only how one number changes. The claim should be tested by this changed case: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error.
 - Weak answer warning: A weak answer says only that Partial Differential Equations is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.
-- Acceptance sentence: A reader passes only if they can say, in ordinary language, Observed: a field such as temperature, pressure, concentration, velocity, or displacement. Hidden: how every point in the field affects nearby points over time. The mathematical move is to write a local change rule that uses rates across space and time. The formula shape means the equation carries how a whole field changes, not just how one number changes. The claim should be tested by this changed case: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error.
+- Acceptance sentence: A reader passes only if they can say, in ordinary language, Observed: a field such as temperature, pressure, concentration, velocity, or displacement. Hidden: how every point in the field affects nearby points over time. The mathematical move is to write a local change rule that uses rates across space and time. The formula shape means the equation carries how a whole field changes, rather than only how one number changes. The claim should be tested by this changed case: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error.
 
 #### First-Principles Scoring Rubric
 - Observed evidence: pass if Names what is actually known before the method is chosen. Fail if Starts with the method name.
@@ -2062,7 +2062,7 @@
 ### Physics-Informed Neural Networks
 - Learn first: Partial Differential Equations, Deep Learning, Optimization For Learning
 - Why: A PINN combines a fitted neural network, a differential equation check, and a training score.
-- Confusion prevented: Without the dependencies, a reader may think a PINN is just a neural network with physics language attached.
+- Confusion prevented: Without the dependencies, a reader may think a PINN is a neural network with physics language attached, rather than a fit constrained by data, equations, and boundaries.
 
 ### Operator Learning
 - Learn first: Partial Differential Equations, Deep Learning, Surrogate Modeling
@@ -2533,9 +2533,9 @@
 ### Symbolic Regression
 - Source: ETH Zurich AISE 2024: Symbolic Regression and Model Discovery
 - Page: videos/eth-aise-2024-024-eth-zrich-aise-symbolic-regression-and-model-discovery.html
-- Claim anchored: Symbolic regression aims for a readable candidate law, not just a fitted prediction.
+- Claim anchored: Symbolic regression aims for a readable candidate law, rather than only a fitted prediction.
 - Why this source: This is the local lecture dedicated to symbolic regression and model discovery.
-- Transcript excerpt to inspect: we're going to talk about is um symbolic regression and model Discovery uh yeah so like I said we just we
+- Transcript excerpt to inspect: guest lectures next week and so what we're going to talk about is um symbolic regression and model Discovery uh
 - Limit: The source supports the concept and goal; a discovered law still needs a new-experiment test and measured variables that cover the real cause.
 
 - Source: ETH Zurich AISE 2024: Neural Differential Equations

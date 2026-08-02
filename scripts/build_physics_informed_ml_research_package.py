@@ -243,7 +243,7 @@ CONCEPT_DEPENDENCIES = [
         "concept": "physics-informed-neural-networks",
         "depends_on": ["partial-differential-equations", "deep-learning", "optimization-for-learning"],
         "why": "A PINN combines a fitted neural network, a differential equation check, and a training score.",
-        "confusion_prevented": "Without the dependencies, a reader may think a PINN is just a neural network with physics language attached.",
+        "confusion_prevented": "Without the dependencies, a reader may think a PINN is a neural network with physics language attached, rather than a fit constrained by data, equations, and boundaries.",
     },
     {
         "concept": "operator-learning",
@@ -675,7 +675,7 @@ WORKED_EXAMPLES = [
         "slug": "climate-risk-under-shifted-conditions",
         "title": "Climate Risk Under Shifted Conditions",
         "domain": "climate, weather, and environmental fields where future conditions may differ from old data",
-        "question": "How should a model report risk when the future case is not just another familiar example?",
+        "question": "How should a model report risk when the future case differs from familiar examples?",
         "observed": "historical fields, simulation ensembles, forcing conditions, regional measurements, and known physical constraints",
         "hidden": "how wrong the prediction may be under a changed climate, rare event, or new regional pattern",
         "method_route": ["uncertainty-and-generalization", "surrogate-modeling", "partial-differential-equations"],
@@ -702,7 +702,7 @@ TOPIC_DEEP_DIVES = {
     "physics-informed-neural-networks": {
         "one_sentence": "A PINN is a fitted field that must answer to both measured values and a known physical rule.",
         "use_when": "Use it when measurements are sparse, the equation is trusted, and the scientific job is one specific field or parameter case.",
-        "do_not_use_when": "Do not treat it as magic for hard PDEs; if boundary data, scales, or sharp regions are poorly handled, the equation penalty can mislead.",
+        "do_not_use_when": "Do not treat it as an automatic solution for hard PDEs; if boundary data, scales, or sharp regions are poorly handled, the equation penalty can mislead.",
         "domain_story": "Imagine estimating temperature inside a wall from a few sensors. The sensor readings anchor the answer, while the heat equation checks the empty places between sensors.",
         "math_shape": [
             "Choose a neural network to represent the unknown field.",
@@ -812,7 +812,7 @@ TOPIC_DEEP_DIVES = {
     "neural-differential-equations": {
         "one_sentence": "A neural differential equation learns the missing rule for how a system changes.",
         "use_when": "Use it when time evolution is central but the exact rate rule is partly unknown.",
-        "do_not_use_when": "Do not trust long-time behavior just because short training windows fit well.",
+        "do_not_use_when": "Do not trust long-time behavior because short training windows fit well; long runs need their own checks.",
         "domain_story": "If measurements show a chemical concentration changing but the reaction law is incomplete, the learned part can supply the missing rate.",
         "math_shape": [
             "Name the current state.",
@@ -863,7 +863,7 @@ TOPIC_DEEP_DIVES = {
             "Train one model to keep shared structure across those tasks.",
             "Adapt or query it on a new task.",
             "Compare against trusted solves or measurements.",
-            "Hold out whole task families, not just random examples.",
+            "Hold out whole task families, rather than only random examples.",
         ],
         "plain_formula": "many PDE tasks -> shared learned structure -> new task prediction",
         "important_because": "If it works, broad training could reduce repeated model-building for related scientific problems.",
@@ -900,7 +900,7 @@ TOPIC_DEEP_DIVES = {
     "scientific-machine-learning": {
         "one_sentence": "Scientific machine learning uses data and scientific rules together so the answer is useful for a named scientific question.",
         "use_when": "Use it when measurements alone are incomplete and hand-written equations alone are incomplete, too slow, or partly uncertain.",
-        "do_not_use_when": "Do not call a model scientific just because the data came from science; the physical quantity, rule, and failure test must be explicit.",
+        "do_not_use_when": "Do not call a model scientific because the data came from science; the physical quantity, rule, and failure test must be explicit.",
         "domain_story": "A material test may have sparse measurements and a partial stress law. Scientific machine learning asks how the measurements and the law should correct each other.",
         "math_shape": [
             "Name the scientific quantity people need.",
@@ -942,7 +942,7 @@ TOPIC_DEEP_DIVES = {
         "connects_to": ["physics-informed-neural-networks", "neural-differential-equations", "deep-learning"],
     },
     "generative-modeling": {
-        "one_sentence": "Generative modeling learns how to make possible examples, not just score one existing example.",
+        "one_sentence": "Generative modeling learns how to make possible examples, rather than only score one existing example.",
         "use_when": "Use it when the job is to sample plausible fields, fill missing parts, create candidate designs, or explore many possible futures.",
         "do_not_use_when": "Do not treat a plausible-looking sample as a valid scientific answer unless constraints, measurements, and use-range checks are passed.",
         "domain_story": "For uncertain weather or material fields, one answer may hide the range of possible outcomes. A generative model can propose many candidates, but those candidates still need physical checks.",
@@ -967,7 +967,7 @@ TOPIC_DEEP_DIVES = {
         "one_sentence": "Graph and geometric learning keeps the connections and shape of the object visible to the model.",
         "use_when": "Use it when the data lives on meshes, molecules, surfaces, sensor networks, or other connected shapes where nearby relations matter.",
         "do_not_use_when": "Do not flatten connected scientific data into an ordinary table if the connections carry the physical meaning.",
-        "domain_story": "A bridge mesh, a molecule, and an airfoil surface are not just lists of numbers. Which points touch, which edges carry forces, and which shape is rotated or refined can change the answer.",
+        "domain_story": "A bridge mesh, a molecule, and an airfoil surface are more than lists of numbers. Which points touch, which edges carry forces, and which shape is rotated or refined can change the answer.",
         "math_shape": [
             "Represent the object as points with connections or geometric positions.",
             "Attach measured or computed values to points, edges, or whole shapes.",
@@ -1052,7 +1052,7 @@ TOPIC_TEACHING_NOTES = {
         "say_back": "Optimization makes the model obey the training score, so the score must include the quantity, boundary, rule, and failure case that matter.",
     },
     "generative-modeling": {
-        "plain_problem": "Some scientific jobs need many possible fields, designs, or futures, not just a single average answer.",
+        "plain_problem": "Some scientific jobs need many possible fields, designs, or futures, rather than a single average answer.",
         "why_math_follows": "The model needs a source of variation because the output is a set of candidates. Each candidate still needs condition checks, rule checks, and use-range checks.",
         "say_back": "Generative modeling makes possible candidates; science begins when those candidates are tested against measurements, rules, and the intended use family.",
     },
@@ -1209,7 +1209,7 @@ HAND_DERIVATIONS = {
                 "check": "If relabeling, rotation, or mesh changes break the result, the model may be learning bookkeeping instead of structure.",
             },
         ],
-        "final_line": "Graph and geometric learning starts from the fact that the scientific object is connected, not just listed.",
+        "final_line": "Graph and geometric learning starts from the fact that the scientific object is connected, rather than only listed.",
     },
     "neural-differential-equations": {
         "plain_start": "Start with a system observed over time and an incomplete rule for how it changes. The missing object is the rate that moves the present state forward.",
@@ -1314,7 +1314,7 @@ HAND_DERIVATIONS = {
                 "check": "If only average error is reported, the decision quantity may still be wrong.",
             },
         ],
-        "final_line": "A surrogate derivation is not just about fitting a curve; it is about earning a cheaper answer while keeping the trusted source in view.",
+        "final_line": "A surrogate derivation is about earning a cheaper answer while keeping the trusted source in view, rather than only fitting a curve.",
     },
     "uncertainty-and-generalization": {
         "plain_start": "Start with a model trained on old cases and a new case that may differ. The missing quantity is not only the prediction; it is how much trust the prediction deserves.",
@@ -1332,13 +1332,13 @@ HAND_DERIVATIONS = {
             {
                 "term": "failure evidence",
                 "why_it_enters": "Knowing where the model breaks is part of knowing where it can be used.",
-                "check": "If no failure case is named, confidence is just a number without a boundary.",
+                "check": "If no failure case is named, confidence is a number without a boundary.",
             },
         ],
         "final_line": "The mathematical shape joins answer and boundary: report the prediction together with the evidence that says where belief should weaken.",
     },
     "symbolic-regression": {
-        "plain_start": "Start with measured variables and a need for a readable law. The unknown object is the relation among the variables, not just the next predicted value.",
+        "plain_start": "Start with measured variables and a need for a readable law. The unknown object is the relation among the variables, rather than only the next predicted value.",
         "line_steps": [
             {
                 "term": "candidate ingredients",
@@ -3167,7 +3167,7 @@ SOURCE_ANCHORS = {
     ],
     "symbolic-regression": [
         {
-            "claim": "Symbolic regression aims for a readable candidate law, not just a fitted prediction.",
+            "claim": "Symbolic regression aims for a readable candidate law, rather than only a fitted prediction.",
             "source": "ETH Zurich AISE 2024: Symbolic Regression and Model Discovery",
             "href": "videos/eth-aise-2024-024-eth-zrich-aise-symbolic-regression-and-model-discovery.html",
             "why_this_source": "This is the local lecture dedicated to symbolic regression and model discovery.",
@@ -4154,12 +4154,12 @@ def everyday_anchor(slug: str) -> str:
         "physics-informed-neural-networks": "A student drawing a bridge cannot ignore gravity. A PINN is similar: the fitted curve is pushed to obey the equation, not only the measured dots.",
         "partial-differential-equations": "A weather map changes from place to place and hour to hour. A PDE is a way to say how nearby values push each other forward.",
         "operator-learning": "Instead of solving one puzzle, the learner tries to learn the machine that turns many puzzle inputs into many full answers.",
-        "scientific-machine-learning": "A scientist does not just want a number; they want a number with a reason, a check, and a warning label for when it should fail.",
+        "scientific-machine-learning": "A scientist needs more than a number; they need a number with a reason, a check, and a warning label for when it should fail.",
         "surrogate-modeling": "A wind-tunnel test is expensive. A surrogate is a cheaper stand-in that can be used only after showing which wind-tunnel questions it still answers.",
         "uncertainty-and-generalization": "A map is useful only if you know where it ends. Model uncertainty marks the edge of the map instead of pretending every road is known.",
         "optimization-for-learning": "Training is like grading many drafts with one rubric. The model improves the rubric score, so the rubric must match the scientific goal.",
         "generative-modeling": "A generator can make many candidate sketches. The scientific question is which sketches obey the rules, not only which ones look familiar.",
-        "graphs-and-geometric-learning": "A molecule, mesh, or network is not just a list. The connections decide what can influence what.",
+        "graphs-and-geometric-learning": "A molecule, mesh, or network is more than a list. The connections decide what can influence what.",
     }
     return anchors.get(slug, "Start with the observed object, name what must be predicted, then test the claim on a changed case.")
 
@@ -4575,6 +4575,17 @@ def visible_text_from_html(text: str) -> str:
     return html.unescape(re.sub(r"\s+", " ", text))
 
 
+def remove_html_section(text: str, heading: str) -> str:
+    pattern = rf"<h2>{re.escape(heading)}</h2>.*?(?=<h2>|</main>)"
+    return re.sub(pattern, " ", text, flags=re.IGNORECASE | re.DOTALL)
+
+
+def authored_review_html(text: str) -> str:
+    for heading in ("Selected Source Anchors", "Transcript Evidence"):
+        text = remove_html_section(text, heading)
+    return text
+
+
 def build_wording_audit() -> list[dict[str, object]]:
     scan_roots = [
         SITE / "topics",
@@ -4593,7 +4604,7 @@ def build_wording_audit() -> list[dict[str, object]]:
             if not root.exists():
                 continue
             for path in sorted(root.glob("*.html")):
-                text = visible_text_from_html(path.read_text(encoding="utf-8", errors="ignore"))
+                text = visible_text_from_html(authored_review_html(path.read_text(encoding="utf-8", errors="ignore")))
                 count = len(pattern.findall(text))
                 if count:
                     matches.append({"page": str(path.relative_to(SITE)), "count": count})
@@ -4633,7 +4644,7 @@ def write_wording_audit_page(path: Path, rows: list[dict[str, object]]) -> None:
         )
     body = f"""
 <h1>Wording Audit</h1>
-<p>This page turns the plain-language rule into a concrete review surface. Hard-stop terms are blocked on content pages by validation. Review terms are not automatically wrong, but each hit should earn its place by naming evidence, quantity, domain, and failure test.</p>
+<p>This page turns the plain-language rule into a concrete review surface for authored explanatory prose. Hard-stop terms are blocked on content pages by validation. Review terms are not automatically wrong, but each hit should earn its place by naming evidence, quantity, domain, and failure test. Transcript excerpts are kept visible on source pages but excluded from this wording count.</p>
 <table>
   <thead>
     <tr><th>Term</th><th>Severity</th><th>Hits</th><th>Why It Is Risky</th><th>Replacement Test</th><th>Current Pages</th></tr>
@@ -5514,7 +5525,7 @@ def topic_derivation(topic: dict[str, object]) -> dict[str, object]:
             "hidden": "how every point in the field affects nearby points over time",
             "move": "write a local change rule that uses rates across space and time",
             "form": "future change = spatial change + sources + boundary information",
-            "meaning": "the equation carries how a whole field changes, not just how one number changes",
+            "meaning": "the equation carries how a whole field changes, rather than only how one number changes",
             "test": "change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error",
         },
         "deep-learning": {
@@ -5586,7 +5597,7 @@ def topic_derivation(topic: dict[str, object]) -> dict[str, object]:
             "hidden": "which short formula, if any, actually explains the measured change",
             "move": "search for a readable equation that fits the data and survives a changed case",
             "form": "candidate formulas -> selected formula -> held-out test",
-            "meaning": "a compact equation is a claim about structure, not just a curve through points",
+            "meaning": "a compact equation is a claim about structure, rather than only a curve through points",
             "test": "remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts",
         },
         "foundation-models-for-pdes": {
@@ -5878,7 +5889,7 @@ def topic_wrong_use(topic: dict[str, object]) -> dict[str, str]:
             "mistake": "Assume a broad PDE model covers a new equation because it was trained on many tasks.",
             "why_tempting": "Scale and breadth can sound like coverage.",
             "what_breaks": "The model may not have learned the structure needed for a rare regime, boundary type, scale, or output quantity.",
-            "catch_test": "Hold out whole task families, not just random examples, and compare against trusted solves on the new family.",
+            "catch_test": "Hold out whole task families, rather than only random examples, and compare against trusted solves on the new family.",
         },
         "attention-for-scientific-fields": {
             "mistake": "Assume attention found the physically important interactions because it connected distant field parts.",
@@ -6009,7 +6020,7 @@ def topic_domain_fit_html(topic: dict[str, object], derivation: dict[str, object
     avoid = f"Do not use this concept in a domain where {topic['leaves_out']} is exactly the part needed for the decision."
     return f"""
 <h2>Where This Fits By Domain</h2>
-<p>A concept is not generally useful just because the method works somewhere. It fits a domain when the real quantity, observed evidence, hidden target, and changed-case test line up.</p>
+<p>A concept fits a domain only when the real quantity, observed evidence, hidden target, and changed-case test line up.</p>
 <table>
   <thead>
     <tr><th>Domain</th><th>Real Quantity</th><th>Scientific Job</th><th>Observed Evidence</th><th>Changed-Case Test</th></tr>
@@ -6740,7 +6751,7 @@ def write_hand_polish_page(path: Path, rows: list[dict[str, object]]) -> None:
         )
     body = f"""
 <h1>Hand Polish Audit</h1>
-<p>This page turns the P2 queue into concrete editorial checks. Use it after structural coverage passes. A page is not finished just because the support layers exist; it must read as one plain chain from scientific problem to source-limited claim.</p>
+<p>This page turns the P2 queue into concrete editorial checks. Use it after structural coverage passes. A page is not finished because the support layers exist; it must read as one plain chain from scientific problem to source-limited claim.</p>
 <div class="grid">{''.join(cards)}</div>
 """
     path.write_text(html_page("Physics-Informed ML Hand Polish Audit", body), encoding="utf-8")
@@ -8400,8 +8411,9 @@ def validate(data: dict[str, object] | None = None) -> None:
     wording_rows = json.loads(wording_audit_json.read_text(encoding="utf-8"))
     if len(wording_rows) != len(WORDING_AUDIT_TERMS):
         raise SystemExit("wording audit term count mismatch")
-    if not any(row.get("severity") == "review" and int(row.get("count") or 0) > 0 for row in wording_rows):
-        raise SystemExit("wording audit has no review-term hits to inspect")
+    hard_stop_hits = [row for row in wording_rows if row.get("severity") == "hard stop" and int(row.get("count") or 0) > 0]
+    if hard_stop_hits:
+        raise SystemExit(f"wording audit found hard-stop hits: {[row['term'] for row in hard_stop_hits]}")
     for item in SYNTHESIS_GUIDES:
         item_path = SITE / "synthesis" / f"{item['slug']}.html"
         if not item_path.exists():

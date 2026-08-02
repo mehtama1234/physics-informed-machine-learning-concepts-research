@@ -2,7 +2,7 @@
   "physics-informed-neural-networks": {
     "one_sentence": "A PINN is a fitted field that must answer to both measured values and a known physical rule.",
     "use_when": "Use it when measurements are sparse, the equation is trusted, and the scientific job is one specific field or parameter case.",
-    "do_not_use_when": "Do not treat it as magic for hard PDEs; if boundary data, scales, or sharp regions are poorly handled, the equation penalty can mislead.",
+    "do_not_use_when": "Do not treat it as an automatic solution for hard PDEs; if boundary data, scales, or sharp regions are poorly handled, the equation penalty can mislead.",
     "domain_story": "Imagine estimating temperature inside a wall from a few sensors. The sensor readings anchor the answer, while the heat equation checks the empty places between sensors.",
     "math_shape": [
       "Choose a neural network to represent the unknown field.",
@@ -132,7 +132,7 @@
   "neural-differential-equations": {
     "one_sentence": "A neural differential equation learns the missing rule for how a system changes.",
     "use_when": "Use it when time evolution is central but the exact rate rule is partly unknown.",
-    "do_not_use_when": "Do not trust long-time behavior just because short training windows fit well.",
+    "do_not_use_when": "Do not trust long-time behavior because short training windows fit well; long runs need their own checks.",
     "domain_story": "If measurements show a chemical concentration changing but the reaction law is incomplete, the learned part can supply the missing rate.",
     "math_shape": [
       "Name the current state.",
@@ -191,7 +191,7 @@
       "Train one model to keep shared structure across those tasks.",
       "Adapt or query it on a new task.",
       "Compare against trusted solves or measurements.",
-      "Hold out whole task families, not just random examples."
+      "Hold out whole task families, rather than only random examples."
     ],
     "plain_formula": "many PDE tasks -> shared learned structure -> new task prediction",
     "important_because": "If it works, broad training could reduce repeated model-building for related scientific problems.",
@@ -236,7 +236,7 @@
   "scientific-machine-learning": {
     "one_sentence": "Scientific machine learning uses data and scientific rules together so the answer is useful for a named scientific question.",
     "use_when": "Use it when measurements alone are incomplete and hand-written equations alone are incomplete, too slow, or partly uncertain.",
-    "do_not_use_when": "Do not call a model scientific just because the data came from science; the physical quantity, rule, and failure test must be explicit.",
+    "do_not_use_when": "Do not call a model scientific because the data came from science; the physical quantity, rule, and failure test must be explicit.",
     "domain_story": "A material test may have sparse measurements and a partial stress law. Scientific machine learning asks how the measurements and the law should correct each other.",
     "math_shape": [
       "Name the scientific quantity people need.",
@@ -286,7 +286,7 @@
     ]
   },
   "generative-modeling": {
-    "one_sentence": "Generative modeling learns how to make possible examples, not just score one existing example.",
+    "one_sentence": "Generative modeling learns how to make possible examples, rather than only score one existing example.",
     "use_when": "Use it when the job is to sample plausible fields, fill missing parts, create candidate designs, or explore many possible futures.",
     "do_not_use_when": "Do not treat a plausible-looking sample as a valid scientific answer unless constraints, measurements, and use-range checks are passed.",
     "domain_story": "For uncertain weather or material fields, one answer may hide the range of possible outcomes. A generative model can propose many candidates, but those candidates still need physical checks.",
@@ -315,7 +315,7 @@
     "one_sentence": "Graph and geometric learning keeps the connections and shape of the object visible to the model.",
     "use_when": "Use it when the data lives on meshes, molecules, surfaces, sensor networks, or other connected shapes where nearby relations matter.",
     "do_not_use_when": "Do not flatten connected scientific data into an ordinary table if the connections carry the physical meaning.",
-    "domain_story": "A bridge mesh, a molecule, and an airfoil surface are not just lists of numbers. Which points touch, which edges carry forces, and which shape is rotated or refined can change the answer.",
+    "domain_story": "A bridge mesh, a molecule, and an airfoil surface are more than lists of numbers. Which points touch, which edges carry forces, and which shape is rotated or refined can change the answer.",
     "math_shape": [
       "Represent the object as points with connections or geometric positions.",
       "Attach measured or computed values to points, edges, or whole shapes.",
