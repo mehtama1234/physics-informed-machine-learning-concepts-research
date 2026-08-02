@@ -3331,6 +3331,7 @@ MEATY_GOAL_REQUIREMENTS = [
     {"key": "use_or_refuse_gate", "label": "Use Or Refuse Gate", "proof_term": "Use Or Refuse Gate In Plain Words"},
     {"key": "final_learner_proof", "label": "Final Learner Proof", "proof_term": "Final Learner Proof In Plain Words"},
     {"key": "next_day_memory_check", "label": "Next-Day Memory Check", "proof_term": "Next-Day Memory Check"},
+    {"key": "nearby_topic_comparison", "label": "Nearby Topic Comparison", "proof_term": "Nearby Topic Comparison In Plain Words"},
     {"key": "field_mini_cases", "label": "Field Mini Cases", "proof_term": "Field Mini Cases In Plain Words"},
     {"key": "hand_teaching_note", "label": "Hand Teaching Note", "proof_term": "Hand Teaching Note"},
     {"key": "case_walkthrough", "label": "Case Walkthrough", "proof_term": "One Concrete Case From Start To Finish"},
@@ -6858,6 +6859,46 @@ def topic_course_bridge_html(topic: dict[str, object], derivation: dict[str, obj
 """
 
 
+def topic_nearby_topic_comparison_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
+    slug = str(topic["slug"])
+    title = str(topic["title"])
+    names = {str(item["slug"]): str(item["name"]) for item in CONCEPTS}
+    dependency = next((item for item in CONCEPT_DEPENDENCIES if item["concept"] == slug), None)
+    learn_first = list(dependency["depends_on"]) if dependency else []
+    used_by = [str(item["concept"]) for item in CONCEPT_DEPENDENCIES if slug in item["depends_on"]]
+    compare_before = learn_first[0] if learn_first else ""
+    compare_after = used_by[0] if used_by else ""
+    before_name = names.get(compare_before, "the starting course question")
+    after_name = names.get(compare_after, "later course claims")
+    before_sentence = (
+        f"{before_name} should prepare the learner to ask what evidence is available before {title} makes its move."
+        if compare_before
+        else f"The starting course question asks what is known, what is missing, and what would reject the answer before {title} is named."
+    )
+    after_sentence = (
+        f"{after_name} can use {title} only after the evidence, hidden answer, and changed-case test remain clear."
+        if compare_after
+        else f"Later course claims can use {title} only when the evidence, hidden answer, and changed-case test remain clear."
+    )
+    return f"""
+<h2>Nearby Topic Comparison In Plain Words</h2>
+<p>This comparison prevents method-name swapping. A learner should be able to explain why {html.escape(title)} is not the same job as a nearby topic, even when the pages appear close in the course route.</p>
+<table>
+  <tbody>
+    <tr><th>Compare With Earlier Idea</th><td>{html.escape(before_name)}</td></tr>
+    <tr><th>Earlier Idea Job</th><td>{html.escape(before_sentence)}</td></tr>
+    <tr><th>This Topic Job</th><td>{html.escape(title)} moves from {html.escape(str(derivation['observed']))} toward {html.escape(str(derivation['hidden']))} by this move: {html.escape(str(derivation['move']))}.</td></tr>
+    <tr><th>Compare With Later Idea</th><td>{html.escape(after_name)}</td></tr>
+    <tr><th>Later Idea Job</th><td>{html.escape(after_sentence)}</td></tr>
+    <tr><th>Difference In One Sentence</th><td>{html.escape(title)} earns its own page only because its evidence, hidden answer, allowed move, and changed-case test are not interchangeable with nearby topic names.</td></tr>
+    <tr><th>Comparison Failure Test</th><td>If the learner can swap the topic names without changing the evidence, hidden answer, move, and rejection test, the comparison has failed.</td></tr>
+  </tbody>
+</table>
+<h3>Nearby Comparison Pass Test</h3>
+<p>The comparison passes only if the learner can name the earlier job, this topic's job, the later job, and the evidence-to-claim difference in everyday words.</p>
+"""
+
+
 def topic_wrong_use(topic: dict[str, object]) -> dict[str, str]:
     slug = str(topic["slug"])
     wrong_uses = {
@@ -7308,6 +7349,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     case_walkthrough = topic_case_walkthrough_html(topic, derivation)
     course_role = topic_course_role_html(topic, derivation)
     course_bridge = topic_course_bridge_html(topic, derivation)
+    nearby_topic_comparison = topic_nearby_topic_comparison_html(topic, derivation)
     connections = topic_connections_html(topic)
     shape_follows = topic_shape_follows_html(str(topic["slug"]), derivation)
     formula_terms = topic_formula_terms_html(derivation)
@@ -7359,6 +7401,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
 {case_walkthrough}
 {course_role}
 {course_bridge}
+{nearby_topic_comparison}
 {connections}
 <h2>First-Principles Walkthrough</h2>
 <ol>
@@ -10554,6 +10597,15 @@ def validate(data: dict[str, object] | None = None) -> None:
             "Remember When To Stop",
             "One-Minute Memory Answer",
             "Memory Pass Test",
+            "Nearby Topic Comparison In Plain Words",
+            "Compare With Earlier Idea",
+            "Earlier Idea Job",
+            "This Topic Job",
+            "Compare With Later Idea",
+            "Later Idea Job",
+            "Difference In One Sentence",
+            "Comparison Failure Test",
+            "Nearby Comparison Pass Test",
             "Plain Question To Answer Script",
             "Real question",
             "Evidence sentence",
