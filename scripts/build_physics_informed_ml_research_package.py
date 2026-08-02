@@ -3322,6 +3322,7 @@ MEATY_GOAL_REQUIREMENTS = [
     {"key": "plain_big_picture", "label": "Plain Big Picture Essay", "proof_term": "Plain Big Picture Essay"},
     {"key": "slow_importance_essay", "label": "Slow Importance Essay", "proof_term": "Why This Matters Slowly"},
     {"key": "long_everyday_importance_essay", "label": "Long Everyday Importance Essay", "proof_term": "Long Everyday Importance Essay"},
+    {"key": "field_mini_cases", "label": "Field Mini Cases", "proof_term": "Field Mini Cases In Plain Words"},
     {"key": "hand_teaching_note", "label": "Hand Teaching Note", "proof_term": "Hand Teaching Note"},
     {"key": "case_walkthrough", "label": "Case Walkthrough", "proof_term": "One Concrete Case From Start To Finish"},
     {"key": "course_role", "label": "Course Role", "proof_term": "Course Role In Plain Words"},
@@ -7248,6 +7249,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     first_principles_essay = topic_first_principles_essay_html(topic, derivation)
     teach_from_zero = topic_teach_from_zero_html(topic, derivation)
     application_claim_ladder = topic_application_claim_ladder_html(topic, derivation)
+    field_mini_cases = topic_field_mini_cases_html(topic, derivation)
     plain_question_answer_script = topic_plain_question_answer_script_html(topic, derivation)
     know_still_test = topic_know_still_test_html(topic, derivation)
     failure_consequence = topic_failure_consequence_html(topic, derivation)
@@ -7289,6 +7291,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
 {first_principles_essay}
 {teach_from_zero}
 {application_claim_ladder}
+{field_mini_cases}
 {plain_question_answer_script}
 {know_still_test}
 {failure_consequence}
@@ -7634,7 +7637,7 @@ def topic_plain_applications(topic: dict[str, object], derivation: dict[str, obj
             {
                 "field": "Topology and shape",
                 "use": "Create candidate shapes or fields while checking holes, connections, and boundaries.",
-                "why": "Generative modeling matters here only if the samples are valid objects, not just plausible pictures.",
+                "why": "Generative modeling matters here only if the samples are valid objects rather than plausible pictures.",
                 "check": "Test connected parts, forbidden holes, mesh validity, and downstream use.",
             },
             {
@@ -7816,6 +7819,49 @@ def topic_plain_applications(topic: dict[str, object], derivation: dict[str, obj
             },
         ],
     )
+
+
+def topic_field_mini_cases_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
+    title = str(topic["title"])
+    observed = str(derivation["observed"])
+    hidden = str(derivation["hidden"])
+    move = str(derivation["move"])
+    heading_by_field = {
+        "Topology and shape": "Topology And Shape Mini Case",
+        "Engineering design": "Engineering Mini Case",
+        "Materials, chemistry, and biology": "Materials Or Biology Mini Case",
+        "Climate, fluids, and fields": "Climate Or Field Mini Case",
+    }
+    person_by_field = {
+        "Topology and shape": "A person studying shapes",
+        "Engineering design": "A person designing a part",
+        "Materials, chemistry, and biology": "A person running lab tests",
+        "Climate, fluids, and fields": "A person studying weather, water, heat, or flow",
+    }
+    sections = []
+    for application in topic_plain_applications(topic, derivation):
+        field = application["field"]
+        sections.append(
+            f"""
+<h3>{html.escape(heading_by_field[field])}</h3>
+<p><strong>Person:</strong> {html.escape(person_by_field[field])} is using {html.escape(title)} because they need a trustworthy answer before the full answer is easy to see.</p>
+<table>
+  <tbody>
+    <tr><th>What They Can See</th><td>{html.escape(observed)}</td></tr>
+    <tr><th>What They Need</th><td>{html.escape(hidden)}</td></tr>
+    <tr><th>How The Topic Helps</th><td>{html.escape(application['use'])}</td></tr>
+    <tr><th>What The Math Is Doing</th><td>{html.escape(move)}</td></tr>
+    <tr><th>Why This Matters In The Field</th><td>{html.escape(application['why'])}</td></tr>
+    <tr><th>First Check</th><td>{html.escape(application['check'])}</td></tr>
+  </tbody>
+</table>
+"""
+        )
+    return f"""
+<h2>Field Mini Cases In Plain Words</h2>
+<p>Each mini case starts with a person and a job in the world. The point is to see why the idea matters before using the topic name as a shortcut.</p>
+{''.join(sections)}
+"""
 
 
 def topic_plain_big_picture_essay_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
@@ -10076,6 +10122,17 @@ def validate(data: dict[str, object] | None = None) -> None:
             "Evidence To Start From",
             "Hidden Answer Needed",
             "Changed Case That Tests It",
+            "Field Mini Cases In Plain Words",
+            "Topology And Shape Mini Case",
+            "Engineering Mini Case",
+            "Materials Or Biology Mini Case",
+            "Climate Or Field Mini Case",
+            "What They Can See",
+            "What They Need",
+            "How The Topic Helps",
+            "What The Math Is Doing",
+            "Why This Matters In The Field",
+            "First Check",
             "Plain Question To Answer Script",
             "Real question",
             "Evidence sentence",

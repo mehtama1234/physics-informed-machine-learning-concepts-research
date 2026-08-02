@@ -188,6 +188,63 @@
 <p>Topology and shape are not a side note in this ladder. They are part of the application claim whenever the answer depends on connections, boundaries, holes, distances, mesh, molecule shape, or how information moves across a field.</p>
 
 
+<h2>Field Mini Cases In Plain Words</h2>
+<p>Each mini case starts with a person and a job in the world. The point is to see why the idea matters before using the topic name as a shortcut.</p>
+
+<h3>Topology And Shape Mini Case</h3>
+<p><strong>Person:</strong> A person studying shapes is using Generative Modeling because they need a trustworthy answer before the full answer is easy to see.</p>
+<table>
+  <tbody>
+    <tr><th>What They Can See</th><td>examples of fields, molecules, flows, shapes, or other scientific objects</td></tr>
+    <tr><th>What They Need</th><td>the spread of possible valid objects beyond the examples</td></tr>
+    <tr><th>How The Topic Helps</th><td>Create candidate shapes or fields while checking holes, connections, and boundaries.</td></tr>
+    <tr><th>What The Math Is Doing</th><td>learn how to sample new candidates that resemble the training family</td></tr>
+    <tr><th>Why This Matters In The Field</th><td>Generative modeling matters here only if the samples are valid objects rather than plausible pictures.</td></tr>
+    <tr><th>First Check</th><td>Test connected parts, forbidden holes, mesh validity, and downstream use.</td></tr>
+  </tbody>
+</table>
+
+<h3>Engineering Mini Case</h3>
+<p><strong>Person:</strong> A person designing a part is using Generative Modeling because they need a trustworthy answer before the full answer is easy to see.</p>
+<table>
+  <tbody>
+    <tr><th>What They Can See</th><td>examples of fields, molecules, flows, shapes, or other scientific objects</td></tr>
+    <tr><th>What They Need</th><td>the spread of possible valid objects beyond the examples</td></tr>
+    <tr><th>How The Topic Helps</th><td>Propose candidate parts, layouts, fields, or operating cases for later testing.</td></tr>
+    <tr><th>What The Math Is Doing</th><td>learn how to sample new candidates that resemble the training family</td></tr>
+    <tr><th>Why This Matters In The Field</th><td>The generated candidate is useful only if it can pass the design checks.</td></tr>
+    <tr><th>First Check</th><td>Run constraints, full solves, stress tests, and use-case checks on generated candidates.</td></tr>
+  </tbody>
+</table>
+
+<h3>Materials Or Biology Mini Case</h3>
+<p><strong>Person:</strong> A person running lab tests is using Generative Modeling because they need a trustworthy answer before the full answer is easy to see.</p>
+<table>
+  <tbody>
+    <tr><th>What They Can See</th><td>examples of fields, molecules, flows, shapes, or other scientific objects</td></tr>
+    <tr><th>What They Need</th><td>the spread of possible valid objects beyond the examples</td></tr>
+    <tr><th>How The Topic Helps</th><td>Suggest molecules, structures, images, or samples that should still obey known rules.</td></tr>
+    <tr><th>What The Math Is Doing</th><td>learn how to sample new candidates that resemble the training family</td></tr>
+    <tr><th>Why This Matters In The Field</th><td>A sample matters when it can be measured, built, or screened for a real property.</td></tr>
+    <tr><th>First Check</th><td>Reject samples that break chemistry rules, material limits, or biological measurements.</td></tr>
+  </tbody>
+</table>
+
+<h3>Climate Or Field Mini Case</h3>
+<p><strong>Person:</strong> A person studying weather, water, heat, or flow is using Generative Modeling because they need a trustworthy answer before the full answer is easy to see.</p>
+<table>
+  <tbody>
+    <tr><th>What They Can See</th><td>examples of fields, molecules, flows, shapes, or other scientific objects</td></tr>
+    <tr><th>What They Need</th><td>the spread of possible valid objects beyond the examples</td></tr>
+    <tr><th>How The Topic Helps</th><td>Sample possible fields for stress tests, rare cases, or downstream solvers.</td></tr>
+    <tr><th>What The Math Is Doing</th><td>learn how to sample new candidates that resemble the training family</td></tr>
+    <tr><th>Why This Matters In The Field</th><td>The samples are useful only if they carry the field behavior needed by the next task.</td></tr>
+    <tr><th>First Check</th><td>Measure conservation, rare-event rates, boundary behavior, and downstream task performance.</td></tr>
+  </tbody>
+</table>
+
+
+
 <h2>Plain Question To Answer Script</h2>
 <p>Use this script as a full spoken answer. It starts with the real question, not the topic name, and it ends with the condition that can reject the claim.</p>
 <ol>
@@ -195,7 +252,7 @@
   <li><strong>Evidence sentence:</strong> I can start from examples of fields, molecules, flows, shapes, or other scientific objects.</li>
   <li><strong>Missing-answer sentence:</strong> I still need the spread of possible valid objects beyond the examples.</li>
   <li><strong>Why Generative Modeling enters:</strong> It enters because the plain move is to learn how to sample new candidates that resemble the training family.</li>
-  <li><strong>Shape or topology sentence:</strong> I must check shape because Generative modeling matters here only if the samples are valid objects, not just plausible pictures. The shape check is: Test connected parts, forbidden holes, mesh validity, and downstream use.</li>
+  <li><strong>Shape or topology sentence:</strong> I must check shape because Generative modeling matters here only if the samples are valid objects rather than plausible pictures. The shape check is: Test connected parts, forbidden holes, mesh validity, and downstream use.</li>
   <li><strong>Field-use sentence:</strong> In field problems, sample possible fields for stress tests, rare cases, or downstream solvers. The field check is: Measure conservation, rare-event rates, boundary behavior, and downstream task performance.</li>
   <li><strong>Allowed-answer sentence:</strong> The answer is allowed to mean only this: a generated object must still pass physics and usefulness checks.</li>
   <li><strong>Stop sentence:</strong> I should stop or narrow the claim when this fails: measure constraints, rare cases, conservation, and downstream task performance on generated samples.</li>
@@ -263,7 +320,7 @@
 <tr>
   <td>Topology and shape</td>
   <td>Create candidate shapes or fields while checking holes, connections, and boundaries.</td>
-  <td>Generative modeling matters here only if the samples are valid objects, not just plausible pictures.</td>
+  <td>Generative modeling matters here only if the samples are valid objects rather than plausible pictures.</td>
   <td>Test connected parts, forbidden holes, mesh validity, and downstream use.</td>
 </tr>
 
@@ -294,7 +351,7 @@
 <h2>Why This Matters Slowly</h2>
 <p>Do not start by asking what Generative Modeling is called. Start by asking what would be hard without it. In plain words, the hard part is this: some tasks need many possible examples, not one predicted answer. A person may have measurements, solved examples, a known equation, a shape, a field, a graph, a material sample, or a past experiment. That evidence is useful, but it is not yet the answer. The missing answer is the spread of possible valid objects beyond the examples. This topic matters because it gives a disciplined way to move from the evidence to that missing answer.</p>
 <p>The move is learn how to sample new candidates that resemble the training family. That sentence is the center of the idea. It says what work the topic is doing before any notation appears. It also limits the claim. The topic is allowed to say this: a generated object must still pass physics and usefulness checks. It is not allowed to say that every future case is handled, or that a neat curve, small error, or good-looking field is enough. A scientific claim has to carry its own stopping rule.</p>
-<p>Topology and shape matter here because scientific evidence often has form before it has numbers. Create candidate shapes or fields while checking holes, connections, and boundaries. The reason is simple: Generative modeling matters here only if the samples are valid objects, not just plausible pictures. If a model loses the relation that carries the quantity, the answer can look tidy and still be wrong. The first shape check is: Test connected parts, forbidden holes, mesh validity, and downstream use.</p>
+<p>Topology and shape matter here because scientific evidence often has form before it has numbers. Create candidate shapes or fields while checking holes, connections, and boundaries. The reason is simple: Generative modeling matters here only if the samples are valid objects rather than plausible pictures. If a model loses the relation that carries the quantity, the answer can look tidy and still be wrong. The first shape check is: Test connected parts, forbidden holes, mesh validity, and downstream use.</p>
 <p>In engineering design, the same idea becomes a decision about a part, device, load, safety limit, or operating condition. Propose candidate parts, layouts, fields, or operating cases for later testing. Why it matters: The generated candidate is useful only if it can pass the design checks. The first engineering check is: Run constraints, full solves, stress tests, and use-case checks on generated candidates.</p>
 <p>In materials, chemistry, and biology, the evidence may be a molecule, sample, image, spectrum, tissue, property measurement, or reaction trace. Suggest molecules, structures, images, or samples that should still obey known rules. Why it matters: A sample matters when it can be measured, built, or screened for a real property. The first check in that field is: Reject samples that break chemistry rules, material limits, or biological measurements.</p>
 <p>In climate, fluids, and other field problems, the answer often lives across space and time. Sample possible fields for stress tests, rare cases, or downstream solvers. Why it matters: The samples are useful only if they carry the field behavior needed by the next task. The first field check is: Measure conservation, rare-event rates, boundary behavior, and downstream task performance.</p>
@@ -309,7 +366,7 @@
 <p>The first-principles reason is the shortest honest chain: what is known, what is missing, what move can carry information between them, and what changed case can reject the result. For this topic, the known evidence is examples of fields, molecules, flows, shapes, or other scientific objects. The missing answer is the spread of possible valid objects beyond the examples. The move is to learn how to sample new candidates that resemble the training family. The claim is allowed to mean this: a generated object must still pass physics and usefulness checks.</p>
 <p>This is why the mathematical shape appears. The shape is random seed + learned sampler -&gt; candidate scientific object. Read it as a carrier of information, not as decoration. It keeps a learned rule for sampling outputs that resemble the training family. It leaves out a guarantee that each sample is physically valid or useful for a decision. The left-out part is important because it marks the edge of the claim. Past that edge, the topic needs a new test.</p>
 <h3>Topology And Shape In Real Work</h3>
-<p>Topology and shape enter whenever the answer depends on connection, boundary, hole, distance, mesh, molecule form, surface, or how information moves across a field. For this topic, the plain shape use is: Create candidate shapes or fields while checking holes, connections, and boundaries. The reason it matters is: Generative modeling matters here only if the samples are valid objects, not just plausible pictures. The first shape test is: Test connected parts, forbidden holes, mesh validity, and downstream use.</p>
+<p>Topology and shape enter whenever the answer depends on connection, boundary, hole, distance, mesh, molecule form, surface, or how information moves across a field. For this topic, the plain shape use is: Create candidate shapes or fields while checking holes, connections, and boundaries. The reason it matters is: Generative modeling matters here only if the samples are valid objects rather than plausible pictures. The first shape test is: Test connected parts, forbidden holes, mesh validity, and downstream use.</p>
 <p>This matters because a scientific object is often more than a row of numbers. A wing has a boundary and a surface. A molecule has atoms and bonds. A material has grains, defects, and directions. A climate field has regions that touch and regions that influence one another over distance. If the method erases the relation that carries the answer, it may look good on familiar cases and still fail when the shape changes.</p>
 <h3>Applications Beyond The Course</h3>
 <p>In engineering design, the everyday use is: Propose candidate parts, layouts, fields, or operating cases for later testing. This matters because the generated candidate is useful only if it can pass the design checks. The first engineering test is: Run constraints, full solves, stress tests, and use-case checks on generated candidates.</p>
