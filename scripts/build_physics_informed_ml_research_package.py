@@ -5199,6 +5199,7 @@ def html_page(title: str, body: str, root_prefix: str = "") -> str:
   <a href="{root_prefix}formula-guide.html">Formulas</a>
   <a href="{root_prefix}misconceptions.html">Misreads</a>
   <a href="{root_prefix}course-spine.html">Spine</a>
+  <a href="{root_prefix}topology-shape-guide.html">Shape</a>
   <a href="{root_prefix}learning-path.html">Path</a>
   <a href="{root_prefix}glossary.html">Glossary</a>
   <a href="{root_prefix}domains.html">Domains</a>
@@ -5276,6 +5277,50 @@ def write_course_spine_page(path: Path, topics: list[dict[str, object]]) -> None
 <p>A reader understands the course when they can open any topic and say the same chain in everyday words: here is the real problem, here is the evidence, here is the missing answer, here is the mathematical move, here is the claim allowed, here is what was left out, and here is the first changed case that could make the claim fail.</p>
 """
     path.write_text(html_page("Physics-Informed ML Course Spine", body), encoding="utf-8")
+
+
+def write_topology_shape_guide_page(path: Path, topics: list[dict[str, object]]) -> None:
+    rows = []
+    for topic in topics:
+        derivation = topic_derivation(topic)
+        app = next(row for row in topic_plain_applications(topic, derivation) if row["field"] == "Topology and shape")
+        rows.append(
+            f"""
+<tr>
+  <td><a href="topics/{html.escape(str(topic['slug']))}.html">{html.escape(str(topic['title']))}</a></td>
+  <td>{html.escape(str(app['use']))}</td>
+  <td>{html.escape(str(app['why']))}</td>
+  <td>{html.escape(str(app['check']))}</td>
+</tr>
+"""
+        )
+    body = f"""
+<h1>Topology And Shape In Plain Words</h1>
+<h2>The Everyday Meaning</h2>
+<p>Topology is a plain question before it is a math word. It asks what stays connected, what has a hole, what touches what, and what can bend without changing the question. Shape asks where the boundary is, how parts are arranged, and which places can influence each other.</p>
+<p>This matters in physics-informed machine learning because many scientific objects already have structure before a model sees them. A molecule has atoms and bonds. A bridge has connected parts. A wing has a boundary and a surface. A coastline has regions that touch. A field lives on a space, not in a loose pile of numbers.</p>
+<h2>Why It Matters From First Principles</h2>
+<p>The first-principles shortage is simple: the evidence may describe a connected thing, but a careless model can flatten it into a list. Once that happens, the model may lose which parts touch, where the edge is, which hole matters, or which faraway region can change the local answer. The result can look accurate on old cases while answering the wrong scientific question.</p>
+<p>The right check is also simple. Change something about the shape or connection pattern that should matter, then inspect the scientific quantity. Relabeling points should not change a molecule property if the molecule did not change. A new hole, boundary, mesh detail, long-range link, or geometry family should change the answer only for a physical reason.</p>
+<h2>How This Theme Crosses The Course</h2>
+<table>
+  <thead>
+    <tr><th>Topic</th><th>Plain Shape Use</th><th>Why It Matters</th><th>First Shape Check</th></tr>
+  </thead>
+  <tbody>{''.join(rows)}</tbody>
+</table>
+<h2>What To Say Before Trusting A Shape Claim</h2>
+<ol>
+  <li>Name the object: mesh, molecule, field, surface, part, graph, network, or region.</li>
+  <li>Name the relation that matters: touching, boundary, hole, neighbor, distance, long-range link, or symmetry.</li>
+  <li>Name the quantity at stake: property, stress, flow, heat, risk, rate, or design answer.</li>
+  <li>Name what would be unchanged: relabeling, rotation, bending, or mesh order when the real object is the same.</li>
+  <li>Name what should be tested: new geometry, new boundary, missing connection, refined mesh, or rare shape family.</li>
+</ol>
+<h2>Reader Test</h2>
+<p>A reader understands the topology and shape theme when they can point to a topic page and say which connected or shaped part is evidence, which scientific quantity uses it, and which changed shape would make the claim too broad.</p>
+"""
+    path.write_text(html_page("Physics-Informed ML Topology And Shape Guide", body), encoding="utf-8")
 
 
 def concept_links(slugs: list[str], root_prefix: str = "") -> str:
@@ -5532,6 +5577,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Formula Guide", f"{summary['formula_guide_count']} plain formula shapes translated into everyday meaning.", "formula-guide.html")}
 {card("Misconceptions", f"{summary['misconception_count']} core wrong turns paired with plain corrections.", "misconceptions.html")}
 {card("Course Spine", "One plain-language first-principles essay tying the whole course together before the topic pages.", "course-spine.html")}
+{card("Topology And Shape", "A plain guide to connected structure, boundaries, holes, meshes, and shape checks across the course.", "topology-shape-guide.html")}
 {card("Learning Path", f"{summary['learning_path_step_count']} steps from first question to field-level understanding.", "learning-path.html")}
 {card("Glossary", f"{summary['glossary_term_count']} field terms translated into everyday language.", "glossary.html")}
 {card("Domains", f"{summary['domain_guide_count']} domain guides that ground concepts in real scientific work.", "domains.html")}
@@ -5650,6 +5696,7 @@ def write_site(data: dict[str, object]) -> None:
     write_formula_guide_page(SITE / "formula-guide.html", list(formula_guide))
     write_misconception_map_page(SITE / "misconceptions.html", list(misconception_map))
     write_course_spine_page(SITE / "course-spine.html", list(topics))
+    write_topology_shape_guide_page(SITE / "topology-shape-guide.html", list(topics))
 
     learning_cards = []
     for step in learning_path:
@@ -8479,6 +8526,12 @@ def write_markdown_export(data: dict[str, object]) -> None:
             "- First-principles route: name the decision, name the evidence, name the missing thing, choose the carrier, keep the boundary visible, and end with a changed case.",
             "- Topology and shape matter because meshes, molecules, bridges, wings, coastlines, proteins, sensor networks, and fields have structure before a model sees them.",
             "- Reader test: open any topic and say the real problem, evidence, missing answer, mathematical move, allowed claim, left-out part, and first changed case in everyday words.",
+            "",
+            "## Topology And Shape In Plain Words",
+            "- Everyday meaning: ask what stays connected, what has a hole, what touches what, and what can bend without changing the question.",
+            "- First-principles reason: many scientific objects are not loose rows of numbers; their boundaries, connections, distances, and symmetries are evidence.",
+            "- Main failure: a model can flatten away the relation that carries the scientific quantity, then look good on old cases while failing on a changed shape.",
+            "- Shape check: change geometry, boundary, mesh order, missing connection, long-range link, or shape family and inspect the named quantity.",
         ]
     )
     lines.extend(["", "## Concepts"])
@@ -9107,6 +9160,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         SITE / "formula-guide.html",
         SITE / "misconceptions.html",
         SITE / "course-spine.html",
+        SITE / "topology-shape-guide.html",
         SITE / "learning-path.html",
         SITE / "glossary.html",
         SITE / "domains.html",
