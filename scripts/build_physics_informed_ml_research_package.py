@@ -3145,20 +3145,38 @@ def build_formula_guide(core_derivations: list[dict[str, object]]) -> list[dict[
     rows = []
     for derivation in core_derivations:
         formula = str(derivation["plain_formula"])
+        slug = str(derivation["slug"])
         rows.append(
             {
-                "slug": str(derivation["slug"]),
+                "slug": slug,
                 "title": str(derivation["title"]),
                 "plain_formula": formula,
                 "parts": formula_parts(formula),
                 "everyday_reading": str(derivation["why_it_matters"]),
                 "what_to_check": str(derivation["failure_test"]),
-                "common_misread": "Do not read the formula as proof. Read it as a compact map of what information is being carried and what must be tested.",
+                "common_misread": formula_common_misread(slug, derivation),
                 "derivation_href": str(derivation["derivation_href"]),
                 "topic_href": str(derivation["topic_href"]),
             }
         )
     return rows
+
+
+def formula_common_misread(slug: str, derivation: dict[str, object]) -> str:
+    misreads = {
+        "physics-informed-neural-networks": "Do not read the loss as proof that the learned field is physical. Read it as a list of promises that still need point placement, boundary checks, and held-out measurements.",
+        "partial-differential-equations": "Do not read the equation as one more predictor. It is a statement about how change, space, sources, and boundaries must fit together.",
+        "operator-learning": "Do not read the arrow as a normal input-output prediction. The claim is stronger: a whole input field is supposed to produce a whole output field for a named family.",
+        "surrogate-modeling": "Do not read the fast stand-in as a replacement for the trusted solver everywhere. Speed is useful only inside the tested use range.",
+        "uncertainty-and-generalization": "Do not read a confidence number as trust. Trust comes from testing the changed case the user actually cares about.",
+        "neural-differential-equations": "Do not read a short matched trajectory as a learned law. Small rate errors can accumulate when the system is rolled forward.",
+        "symbolic-regression": "Do not read a compact fitted formula as discovery. It must survive missing-variable checks, noise checks, and changed experiments.",
+        "foundation-models-for-pdes": "Do not read broad training as coverage of a new equation. The new task must share the structure the model actually learned.",
+    }
+    return misreads.get(
+        slug,
+        f"Do not read the formula as proof. It is a compact map from {derivation['observed']} to {derivation['hidden']}, and it still needs the stated failure test.",
+    )
 
 
 def build_misconception_map(core_derivations: list[dict[str, object]], reader_checks: list[dict[str, object]]) -> list[dict[str, object]]:
@@ -4605,6 +4623,7 @@ def write_core_derivation_page(path: Path, derivation: dict[str, object]) -> Non
 """
     red_flags = "".join(f"<li>{html.escape(str(item))}</li>" for item in derivation["red_flags"])
     related = concept_links(list(derivation["connects_to"]), root_prefix="../")
+    shape_burden = derivation_shape_burden_html(derivation)
     body = f"""
 <h1>{html.escape(str(derivation['title']))}</h1>
 <p>{html.escape(str(derivation['one_sentence']))}</p>
@@ -4618,6 +4637,7 @@ def write_core_derivation_page(path: Path, derivation: dict[str, object]) -> Non
 <p>{html.escape(str(derivation['hidden']))}</p>
 <h2>Build The Mathematical Shape</h2>
 <div class="route">{steps}</div>
+{shape_burden}
 {hand_block}
 <h2>Plain Formula</h2>
 <p>{html.escape(str(derivation['plain_formula']))}</p>
@@ -4633,6 +4653,21 @@ def write_core_derivation_page(path: Path, derivation: dict[str, object]) -> Non
 <p><a href="../{html.escape(str(derivation['topic_href']))}">Return to the main topic page</a></p>
 """
     path.write_text(html_page(str(derivation["title"]), body, root_prefix="../"), encoding="utf-8")
+
+
+def derivation_shape_burden_html(derivation: dict[str, object]) -> str:
+    return f"""
+<h2>Why This Shape And Not Another</h2>
+<p>The formula shape is justified only when each part carries a burden from the scientific problem. If a part carries no burden, it is decoration. If a burden is missing, the formula is answering a weaker question.</p>
+<table>
+  <tbody>
+    <tr><th>Observed Burden</th><td>The shape must use {html.escape(str(derivation['observed']))}, because that is the evidence actually available.</td></tr>
+    <tr><th>Hidden Burden</th><td>The shape must point toward {html.escape(str(derivation['hidden']))}, because that is the answer the scientist still needs.</td></tr>
+    <tr><th>Use Burden</th><td>The shape matters only if it supports this job: {html.escape(str(derivation['why_it_matters']))}</td></tr>
+    <tr><th>Rejection Burden</th><td>The shape is too weak if it cannot be tested this way: {html.escape(str(derivation['failure_test']))}</td></tr>
+  </tbody>
+</table>
+"""
 
 
 def write_formula_guide_page(path: Path, rows: list[dict[str, object]]) -> None:
@@ -6085,7 +6120,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         if not derivation_path.exists():
             raise SystemExit(f"missing derivation page: {item['title']}")
         derivation_text = derivation_path.read_text(encoding="utf-8")
-        for required in ("Start With What Is Observed", "Build The Mathematical Shape", "Failure Test", "Red Flags"):
+        for required in ("Start With What Is Observed", "Build The Mathematical Shape", "Why This Shape And Not Another", "Observed Burden", "Rejection Burden", "Failure Test", "Red Flags"):
             if required not in derivation_text:
                 raise SystemExit(f"derivation page missing {required}: {item['title']}")
         if item["slug"] in hand_required_slugs:
@@ -6102,7 +6137,7 @@ def validate(data: dict[str, object] | None = None) -> None:
             raise SystemExit(f"topic missing derivation link: {item['topic_href']}")
     formula_path = SITE / "formula-guide.html"
     formula_text = formula_path.read_text(encoding="utf-8")
-    if "Plain Formula Guide" not in formula_text or "Common Misread" not in formula_text:
+    if "Plain Formula Guide" not in formula_text or "Common Misread" not in formula_text or "Do not read the loss as proof" not in formula_text or "Do not read broad training as coverage" not in formula_text:
         raise SystemExit("formula guide not rendered correctly")
     formula_rows = data.get("formula_guide") or []
     if len(formula_rows) != len(derivation_rows):

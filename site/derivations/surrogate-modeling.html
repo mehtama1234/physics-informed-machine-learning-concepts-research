@@ -53,6 +53,18 @@
 <h2>Build The Mathematical Shape</h2>
 <div class="route"><div class="route-step">1. Name the expensive source of truth.</div><div class="route-step">2. Name the inputs people will vary.</div><div class="route-step">3. Name the output quantity needed for decisions.</div><div class="route-step">4. Fit the cheap stand-in on trusted examples.</div><div class="route-step">5. Measure error near the edge of intended use.</div></div>
 
+<h2>Why This Shape And Not Another</h2>
+<p>The formula shape is justified only when each part carries a burden from the scientific problem. If a part carries no burden, it is decoration. If a burden is missing, the formula is answering a weaker question.</p>
+<table>
+  <tbody>
+    <tr><th>Observed Burden</th><td>The shape must use expensive solver inputs and outputs for a limited set of cases, because that is the evidence actually available.</td></tr>
+    <tr><th>Hidden Burden</th><td>The shape must point toward the solver answer for every new query someone wants to ask, because that is the answer the scientist still needs.</td></tr>
+    <tr><th>Use Burden</th><td>The shape matters only if it supports this job: Speed changes what questions scientists and engineers can afford to ask.</td></tr>
+    <tr><th>Rejection Burden</th><td>The shape is too weak if it cannot be tested this way: compare against the full solver on new cases near the edge of the intended use</td></tr>
+  </tbody>
+</table>
+
+
 <h2>Hand Derivation</h2>
 <p>Start with a trusted source that is too slow for repeated use. The scientist still needs many answers for design, search, or risk checks.</p>
 <table>

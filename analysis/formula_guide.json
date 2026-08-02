@@ -11,7 +11,7 @@
     ],
     "everyday_reading": "The equation gives the model a reason not to invent impossible behavior between data points.",
     "what_to_check": "move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements",
-    "common_misread": "Do not read the formula as proof. Read it as a compact map of what information is being carried and what must be tested.",
+    "common_misread": "Do not read the loss as proof that the learned field is physical. Read it as a list of promises that still need point placement, boundary checks, and held-out measurements.",
     "derivation_href": "derivations/physics-informed-neural-networks.html",
     "topic_href": "topics/physics-informed-neural-networks.html"
   },
@@ -27,7 +27,7 @@
     ],
     "everyday_reading": "Most physics-informed machine learning borrows its scientific burden from PDEs.",
     "what_to_check": "change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error",
-    "common_misread": "Do not read the formula as proof. Read it as a compact map of what information is being carried and what must be tested.",
+    "common_misread": "Do not read the equation as one more predictor. It is a statement about how change, space, sources, and boundaries must fit together.",
     "derivation_href": "derivations/partial-differential-equations.html",
     "topic_href": "topics/partial-differential-equations.html"
   },
@@ -42,7 +42,7 @@
     ],
     "everyday_reading": "It targets repeated simulation work, where the valuable object is the whole input-output map.",
     "what_to_check": "change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed",
-    "common_misread": "Do not read the formula as proof. Read it as a compact map of what information is being carried and what must be tested.",
+    "common_misread": "Do not read the arrow as a normal input-output prediction. The claim is stronger: a whole input field is supposed to produce a whole output field for a named family.",
     "derivation_href": "derivations/operator-learning.html",
     "topic_href": "topics/operator-learning.html"
   },
@@ -57,7 +57,7 @@
     ],
     "everyday_reading": "Speed changes what questions scientists and engineers can afford to ask.",
     "what_to_check": "compare against the full solver on new cases near the edge of the intended use",
-    "common_misread": "Do not read the formula as proof. Read it as a compact map of what information is being carried and what must be tested.",
+    "common_misread": "Do not read the fast stand-in as a replacement for the trusted solver everywhere. Speed is useful only inside the tested use range.",
     "derivation_href": "derivations/surrogate-modeling.html",
     "topic_href": "topics/surrogate-modeling.html"
   },
@@ -72,7 +72,7 @@
     ],
     "everyday_reading": "A scientific model is dangerous when it is most confident exactly where it has the least evidence.",
     "what_to_check": "move one important condition outside the training range and measure the first failure",
-    "common_misread": "Do not read the formula as proof. Read it as a compact map of what information is being carried and what must be tested.",
+    "common_misread": "Do not read a confidence number as trust. Trust comes from testing the changed case the user actually cares about.",
     "derivation_href": "derivations/uncertainty-and-generalization.html",
     "topic_href": "topics/uncertainty-and-generalization.html"
   },
@@ -87,7 +87,7 @@
     ],
     "everyday_reading": "It keeps the idea of continuous motion while admitting that part of the motion rule is unknown.",
     "what_to_check": "run longer than the training window and check whether small rate errors accumulate into drift",
-    "common_misread": "Do not read the formula as proof. Read it as a compact map of what information is being carried and what must be tested.",
+    "common_misread": "Do not read a short matched trajectory as a learned law. Small rate errors can accumulate when the system is rolled forward.",
     "derivation_href": "derivations/neural-differential-equations.html",
     "topic_href": "topics/neural-differential-equations.html"
   },
@@ -102,7 +102,7 @@
     ],
     "everyday_reading": "A compact equation can be criticized and reused in ways a large fitted object cannot.",
     "what_to_check": "remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts",
-    "common_misread": "Do not read the formula as proof. Read it as a compact map of what information is being carried and what must be tested.",
+    "common_misread": "Do not read a compact fitted formula as discovery. It must survive missing-variable checks, noise checks, and changed experiments.",
     "derivation_href": "derivations/symbolic-regression.html",
     "topic_href": "topics/symbolic-regression.html"
   },
@@ -117,7 +117,7 @@
     ],
     "everyday_reading": "If it works, broad training could reduce repeated model-building for related scientific problems.",
     "what_to_check": "hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver",
-    "common_misread": "Do not read the formula as proof. Read it as a compact map of what information is being carried and what must be tested.",
+    "common_misread": "Do not read broad training as coverage of a new equation. The new task must share the structure the model actually learned.",
     "derivation_href": "derivations/foundation-models-for-pdes.html",
     "topic_href": "topics/foundation-models-for-pdes.html"
   }
