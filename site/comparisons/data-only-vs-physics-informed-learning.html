@@ -57,10 +57,21 @@
 <h2>Key Difference</h2>
 <p>Data-only learning listens to examples. Physics-informed learning also listens to rules about what answers are allowed.</p>
 
+<h2>Decision Chain From First Principles</h2>
+<table>
+  <tbody>
+    <tr><th>Shortage That Creates The Choice</th><td>The shortage is whether examples alone carry enough evidence. When examples are thin between measurements, a trusted rule may carry information the data do not.</td></tr>
+    <tr><th>Evidence Carried By Data-only learning</th><td>many checked examples from the same source, scale, target quantity, and use range</td></tr>
+    <tr><th>Evidence Carried By Physics-informed learning</th><td>examples plus a trusted equation, boundary condition, conservation law, unit rule, or symmetry check</td></tr>
+    <tr><th>First Wrong Answer To Look For</th><td>a model fits familiar examples but breaks the rule exactly where measurements are sparse or the regime changes</td></tr>
+  </tbody>
+</table>
+
+
 <h2>How To Decide From First Principles</h2>
-<p>Do not start by asking which side sounds more impressive. Start by asking what shortage creates the problem. The shared problem is: Both try to turn examples into predictions. The two sides are different because they carry different evidence and fail in different places.</p>
-<p>Use Data-only learning when this is the situation: Use this side when examples are abundant, the use range is narrow, and there is no trusted rule to add. In plain terms, this side is chosen when its evidence matches the job and its failure boundary can be tested. The concrete version is: A measured property has many examples and no trusted equation for the target. Use data-only learning with a clear held-out test.</p>
-<p>Use Physics-informed learning when this is the situation: Use this side when a known equation, boundary condition, conservation law, unit, or symmetry should constrain the answer. In plain terms, this side is chosen when the scientific task asks for the kind of shortcut, rule, or evidence this side actually provides. The concrete version is: A temperature field has sparse measurements and a trusted heat equation. Add the physical rule so unsensed places are checked.</p>
+<p>Do not start by asking which side sounds more impressive. Start by asking what shortage creates the problem. The shared problem is: Both try to turn examples into predictions. The shortage that creates the choice is: The shortage is whether examples alone carry enough evidence. When examples are thin between measurements, a trusted rule may carry information the data do not.</p>
+<p>Use Data-only learning when examples are abundant, the use range is narrow, and there is no trusted rule to add. In plain terms, this side is chosen when its evidence matches the job and its failure boundary can be tested. The concrete version is: A measured property has many examples and no trusted equation for the target. Use data-only learning with a clear held-out test.</p>
+<p>Use Physics-informed learning when a known equation, boundary condition, conservation law, unit, or symmetry should constrain the answer. In plain terms, this side is chosen when the scientific task asks for the kind of shortcut, rule, or evidence this side actually provides. The concrete version is: A temperature field has sparse measurements and a trusted heat equation. Add the physical rule so unsensed places are checked.</p>
 <p>The dangerous middle is the wrong-choice case: Adding a physical rule that is incomplete or wrong for the experiment, or ignoring a trusted rule when data are sparse. This is where a shallow writeup usually fails. It names a method but does not name the quantity, use range, or changed case. The evidence that exposes the mistake is: Compare changed cases where the rule matters: boundaries, conservation, units, symmetry, or regions between measurements.</p>
 <h3>Decision Checklist</h3>
 <ol>
@@ -80,8 +91,9 @@
   </thead>
   <tbody>
     <tr><th>Use When</th><td>Use this side when examples are abundant, the use range is narrow, and there is no trusted rule to add.</td><td>Use this side when a known equation, boundary condition, conservation law, unit, or symmetry should constrain the answer.</td></tr>
-    <tr><th>Evidence Burden</th><td>The evidence must show the left-side assumptions match the named scientific quantity and use range.</td><td>The evidence must show the right-side assumptions match the named scientific quantity and use range.</td></tr>
+    <tr><th>Evidence Carried</th><td>many checked examples from the same source, scale, target quantity, and use range</td><td>examples plus a trusted equation, boundary condition, conservation law, unit rule, or symmetry check</td></tr>
     <tr><th>Strong Case</th><td>A measured property has many examples and no trusted equation for the target. Use data-only learning with a clear held-out test.</td><td>A temperature field has sparse measurements and a trusted heat equation. Add the physical rule so unsensed places are checked.</td></tr>
+    <tr><th>First Wrong Answer</th><td colspan="2">a model fits familiar examples but breaks the rule exactly where measurements are sparse or the regime changes</td></tr>
     <tr><th>Failure To Check</th><td colspan="2">Compare changed cases where the rule matters: boundaries, conservation, units, symmetry, or regions between measurements.</td></tr>
   </tbody>
 </table>

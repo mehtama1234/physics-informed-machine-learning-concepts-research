@@ -12,7 +12,11 @@
     "wrong_choice_case": "Using an operator model from one family on a boundary type it never saw, or using a PINN when the real need is thousands of fast repeated solves.",
     "evidence_that_exposes_it": "Hold out a changed boundary or input-field family and compare the full field and the scientific quantity, not only visual similarity.",
     "key_difference": "A PINN usually learns one field while being punished for breaking an equation. A neural operator learns the input-to-solution map for a named family of fields.",
-    "wrong_turn": "Do not use either word as a badge of trust. Ask what changed case was tested."
+    "wrong_turn": "Do not use either word as a badge of trust. Ask what changed case was tested.",
+    "shortage_that_creates_choice": "The shortage is either missing values for one field, or missing fast solves for many related fields. Those are different shortages.",
+    "left_evidence_carried": "one physical case, sparse measurements, boundary or starting values, and a trusted equation residual",
+    "right_evidence_carried": "many paired input fields and output fields from a named equation, boundary, geometry, grid, and parameter family",
+    "first_wrong_answer": "the model gives a smooth-looking field while the boundary case, equation residual, or target physical quantity is wrong"
   },
   {
     "slug": "solvers-vs-learned-surrogates",
@@ -27,7 +31,11 @@
     "wrong_choice_case": "Replacing the solver everywhere because the surrogate is fast, including edge cases where no solver comparison exists.",
     "evidence_that_exposes_it": "Compare against the solver near the design boundary and inspect the decision quantity, such as drag, lift, stress peak, or failure location.",
     "key_difference": "A solver follows the written equations step by step. A surrogate imitates the solver's input-output behavior inside a tested use range.",
-    "wrong_turn": "A fast surrogate is not a replacement for the solver outside the cases where it was checked."
+    "wrong_turn": "A fast surrogate is not a replacement for the solver outside the cases where it was checked.",
+    "shortage_that_creates_choice": "The shortage is time. The solver carries the rule directly, but may be too slow for many repeated decisions.",
+    "left_evidence_carried": "the written equation, numerical method, mesh, boundary data, and known checks for conservation or stability",
+    "right_evidence_carried": "trusted solver examples from a named query family plus error checks near the edge of use",
+    "first_wrong_answer": "the surrogate is used on a design edge case and misses the decision quantity that the solver would have caught"
   },
   {
     "slug": "symbolic-regression-vs-large-fitted-prediction",
@@ -42,7 +50,11 @@
     "wrong_choice_case": "Treating a neat formula as a law when an important variable was never measured, or demanding a tiny formula for a pattern that needs richer structure.",
     "evidence_that_exposes_it": "Run a changed experiment, add missing-variable checks, and compare error on cases that differ from the data that selected the formula.",
     "key_difference": "Symbolic regression searches for a small formula. Large fitted prediction can carry more detail but usually gives less direct explanation.",
-    "wrong_turn": "A neat formula is not automatically true; it must survive changed data and missing-variable checks."
+    "wrong_turn": "A neat formula is not automatically true; it must survive changed data and missing-variable checks.",
+    "shortage_that_creates_choice": "The shortage is either a readable law or a strong predictor. A readable law is useful only if the measured variables are enough to support it.",
+    "left_evidence_carried": "measured variables, allowed operations, a small candidate formula, and changed-experiment checks",
+    "right_evidence_carried": "many examples, richer input detail, prediction error on held-out cases, and a stated use range",
+    "first_wrong_answer": "a short formula fits the original data but fails when a missing variable, noise pattern, or new experiment is introduced"
   },
   {
     "slug": "data-only-vs-physics-informed-learning",
@@ -57,6 +69,10 @@
     "wrong_choice_case": "Adding a physical rule that is incomplete or wrong for the experiment, or ignoring a trusted rule when data are sparse.",
     "evidence_that_exposes_it": "Compare changed cases where the rule matters: boundaries, conservation, units, symmetry, or regions between measurements.",
     "key_difference": "Data-only learning listens to examples. Physics-informed learning also listens to rules about what answers are allowed.",
-    "wrong_turn": "Adding physics language does not help if the added rule is wrong, too weak, or never tested against the claim."
+    "wrong_turn": "Adding physics language does not help if the added rule is wrong, too weak, or never tested against the claim.",
+    "shortage_that_creates_choice": "The shortage is whether examples alone carry enough evidence. When examples are thin between measurements, a trusted rule may carry information the data do not.",
+    "left_evidence_carried": "many checked examples from the same source, scale, target quantity, and use range",
+    "right_evidence_carried": "examples plus a trusted equation, boundary condition, conservation law, unit rule, or symmetry check",
+    "first_wrong_answer": "a model fits familiar examples but breaks the rule exactly where measurements are sparse or the regime changes"
   }
 ]

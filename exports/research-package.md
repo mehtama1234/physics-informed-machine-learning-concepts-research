@@ -252,6 +252,10 @@
 ### PINNs vs Neural Operators
 - Shared problem: Both try to predict scientific fields without ignoring the physics that makes those fields meaningful.
 - Key difference: A PINN usually learns one field while being punished for breaking an equation. A neural operator learns the input-to-solution map for a named family of fields.
+- Shortage that creates the choice: The shortage is either missing values for one field, or missing fast solves for many related fields. Those are different shortages.
+- Evidence carried by Physics-informed neural networks: one physical case, sparse measurements, boundary or starting values, and a trusted equation residual
+- Evidence carried by Neural operators: many paired input fields and output fields from a named equation, boundary, geometry, grid, and parameter family
+- First wrong answer to look for: the model gives a smooth-looking field while the boundary case, equation residual, or target physical quantity is wrong
 - Left case: A wall has a few temperature sensors and a trusted heat equation. Use a PINN to fit one temperature field while checking data, equation, and boundary errors.
 - Right case: A lab has thousands of solved heat-flow cases for many source fields. Use an operator model to learn the input-field to solution-field map.
 - Wrong choice case: Using an operator model from one family on a boundary type it never saw, or using a PINN when the real need is thousands of fast repeated solves.
@@ -263,6 +267,10 @@
 ### Solvers vs Learned Surrogates
 - Shared problem: Both produce answers for scientific or engineering questions.
 - Key difference: A solver follows the written equations step by step. A surrogate imitates the solver's input-output behavior inside a tested use range.
+- Shortage that creates the choice: The shortage is time. The solver carries the rule directly, but may be too slow for many repeated decisions.
+- Evidence carried by Trusted numerical solvers: the written equation, numerical method, mesh, boundary data, and known checks for conservation or stability
+- Evidence carried by Learned surrogates: trusted solver examples from a named query family plus error checks near the edge of use
+- First wrong answer to look for: the surrogate is used on a design edge case and misses the decision quantity that the solver would have caught
 - Left case: A safety decision depends on a stress peak near a crack. Use the trusted solver because the local failure quantity matters more than speed.
 - Right case: A design team needs to screen thousands of similar wing shapes before choosing a few expensive solver runs. Use a surrogate inside that named shape family.
 - Wrong choice case: Replacing the solver everywhere because the surrogate is fast, including edge cases where no solver comparison exists.
@@ -274,6 +282,10 @@
 ### Symbolic Regression vs Large Fitted Prediction
 - Shared problem: Both use data to make future or unseen cases easier to understand.
 - Key difference: Symbolic regression searches for a small formula. Large fitted prediction can carry more detail but usually gives less direct explanation.
+- Shortage that creates the choice: The shortage is either a readable law or a strong predictor. A readable law is useful only if the measured variables are enough to support it.
+- Evidence carried by Symbolic regression: measured variables, allowed operations, a small candidate formula, and changed-experiment checks
+- Evidence carried by Large fitted prediction: many examples, richer input detail, prediction error on held-out cases, and a stated use range
+- First wrong answer to look for: a short formula fits the original data but fails when a missing variable, noise pattern, or new experiment is introduced
 - Left case: A lab tracks a simple motion and wants a small equation that explains the rate of change. Use symbolic regression and test the law on a new experiment.
 - Right case: A molecular property depends on many structural details and the goal is accurate screening. Use a larger fitted predictor with clear use-range checks.
 - Wrong choice case: Treating a neat formula as a law when an important variable was never measured, or demanding a tiny formula for a pattern that needs richer structure.
@@ -285,6 +297,10 @@
 ### Data-Only vs Physics-Informed Learning
 - Shared problem: Both try to turn examples into predictions.
 - Key difference: Data-only learning listens to examples. Physics-informed learning also listens to rules about what answers are allowed.
+- Shortage that creates the choice: The shortage is whether examples alone carry enough evidence. When examples are thin between measurements, a trusted rule may carry information the data do not.
+- Evidence carried by Data-only learning: many checked examples from the same source, scale, target quantity, and use range
+- Evidence carried by Physics-informed learning: examples plus a trusted equation, boundary condition, conservation law, unit rule, or symmetry check
+- First wrong answer to look for: a model fits familiar examples but breaks the rule exactly where measurements are sparse or the regime changes
 - Left case: A measured property has many examples and no trusted equation for the target. Use data-only learning with a clear held-out test.
 - Right case: A temperature field has sparse measurements and a trusted heat equation. Add the physical rule so unsensed places are checked.
 - Wrong choice case: Adding a physical rule that is incomplete or wrong for the experiment, or ignoring a trusted rule when data are sparse.

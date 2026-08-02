@@ -57,10 +57,21 @@
 <h2>Key Difference</h2>
 <p>Symbolic regression searches for a small formula. Large fitted prediction can carry more detail but usually gives less direct explanation.</p>
 
+<h2>Decision Chain From First Principles</h2>
+<table>
+  <tbody>
+    <tr><th>Shortage That Creates The Choice</th><td>The shortage is either a readable law or a strong predictor. A readable law is useful only if the measured variables are enough to support it.</td></tr>
+    <tr><th>Evidence Carried By Symbolic regression</th><td>measured variables, allowed operations, a small candidate formula, and changed-experiment checks</td></tr>
+    <tr><th>Evidence Carried By Large fitted prediction</th><td>many examples, richer input detail, prediction error on held-out cases, and a stated use range</td></tr>
+    <tr><th>First Wrong Answer To Look For</th><td>a short formula fits the original data but fails when a missing variable, noise pattern, or new experiment is introduced</td></tr>
+  </tbody>
+</table>
+
+
 <h2>How To Decide From First Principles</h2>
-<p>Do not start by asking which side sounds more impressive. Start by asking what shortage creates the problem. The shared problem is: Both use data to make future or unseen cases easier to understand. The two sides are different because they carry different evidence and fail in different places.</p>
-<p>Use Symbolic regression when this is the situation: Use this side when the user needs a short equation that can be inspected and argued over. In plain terms, this side is chosen when its evidence matches the job and its failure boundary can be tested. The concrete version is: A lab tracks a simple motion and wants a small equation that explains the rate of change. Use symbolic regression and test the law on a new experiment.</p>
-<p>Use Large fitted prediction when this is the situation: Use this side when predictive accuracy on a tangled pattern matters more than a compact human-readable rule. In plain terms, this side is chosen when the scientific task asks for the kind of shortcut, rule, or evidence this side actually provides. The concrete version is: A molecular property depends on many structural details and the goal is accurate screening. Use a larger fitted predictor with clear use-range checks.</p>
+<p>Do not start by asking which side sounds more impressive. Start by asking what shortage creates the problem. The shared problem is: Both use data to make future or unseen cases easier to understand. The shortage that creates the choice is: The shortage is either a readable law or a strong predictor. A readable law is useful only if the measured variables are enough to support it.</p>
+<p>Use Symbolic regression when the user needs a short equation that can be inspected and argued over. In plain terms, this side is chosen when its evidence matches the job and its failure boundary can be tested. The concrete version is: A lab tracks a simple motion and wants a small equation that explains the rate of change. Use symbolic regression and test the law on a new experiment.</p>
+<p>Use Large fitted prediction when predictive accuracy on a tangled pattern matters more than a compact human-readable rule. In plain terms, this side is chosen when the scientific task asks for the kind of shortcut, rule, or evidence this side actually provides. The concrete version is: A molecular property depends on many structural details and the goal is accurate screening. Use a larger fitted predictor with clear use-range checks.</p>
 <p>The dangerous middle is the wrong-choice case: Treating a neat formula as a law when an important variable was never measured, or demanding a tiny formula for a pattern that needs richer structure. This is where a shallow writeup usually fails. It names a method but does not name the quantity, use range, or changed case. The evidence that exposes the mistake is: Run a changed experiment, add missing-variable checks, and compare error on cases that differ from the data that selected the formula.</p>
 <h3>Decision Checklist</h3>
 <ol>
@@ -80,8 +91,9 @@
   </thead>
   <tbody>
     <tr><th>Use When</th><td>Use this side when the user needs a short equation that can be inspected and argued over.</td><td>Use this side when predictive accuracy on a tangled pattern matters more than a compact human-readable rule.</td></tr>
-    <tr><th>Evidence Burden</th><td>The evidence must show the left-side assumptions match the named scientific quantity and use range.</td><td>The evidence must show the right-side assumptions match the named scientific quantity and use range.</td></tr>
+    <tr><th>Evidence Carried</th><td>measured variables, allowed operations, a small candidate formula, and changed-experiment checks</td><td>many examples, richer input detail, prediction error on held-out cases, and a stated use range</td></tr>
     <tr><th>Strong Case</th><td>A lab tracks a simple motion and wants a small equation that explains the rate of change. Use symbolic regression and test the law on a new experiment.</td><td>A molecular property depends on many structural details and the goal is accurate screening. Use a larger fitted predictor with clear use-range checks.</td></tr>
+    <tr><th>First Wrong Answer</th><td colspan="2">a short formula fits the original data but fails when a missing variable, noise pattern, or new experiment is introduced</td></tr>
     <tr><th>Failure To Check</th><td colspan="2">Run a changed experiment, add missing-variable checks, and compare error on cases that differ from the data that selected the formula.</td></tr>
   </tbody>
 </table>

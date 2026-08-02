@@ -57,10 +57,21 @@
 <h2>Key Difference</h2>
 <p>A solver follows the written equations step by step. A surrogate imitates the solver&#x27;s input-output behavior inside a tested use range.</p>
 
+<h2>Decision Chain From First Principles</h2>
+<table>
+  <tbody>
+    <tr><th>Shortage That Creates The Choice</th><td>The shortage is time. The solver carries the rule directly, but may be too slow for many repeated decisions.</td></tr>
+    <tr><th>Evidence Carried By Trusted numerical solvers</th><td>the written equation, numerical method, mesh, boundary data, and known checks for conservation or stability</td></tr>
+    <tr><th>Evidence Carried By Learned surrogates</th><td>trusted solver examples from a named query family plus error checks near the edge of use</td></tr>
+    <tr><th>First Wrong Answer To Look For</th><td>the surrogate is used on a design edge case and misses the decision quantity that the solver would have caught</td></tr>
+  </tbody>
+</table>
+
+
 <h2>How To Decide From First Principles</h2>
-<p>Do not start by asking which side sounds more impressive. Start by asking what shortage creates the problem. The shared problem is: Both produce answers for scientific or engineering questions. The two sides are different because they carry different evidence and fail in different places.</p>
-<p>Use Trusted numerical solvers when this is the situation: Use this side when correctness, conservation, and known numerical behavior matter more than speed. In plain terms, this side is chosen when its evidence matches the job and its failure boundary can be tested. The concrete version is: A safety decision depends on a stress peak near a crack. Use the trusted solver because the local failure quantity matters more than speed.</p>
-<p>Use Learned surrogates when this is the situation: Use this side when many repeated queries make the full solver too costly and the query family is narrow enough to test. In plain terms, this side is chosen when the scientific task asks for the kind of shortcut, rule, or evidence this side actually provides. The concrete version is: A design team needs to screen thousands of similar wing shapes before choosing a few expensive solver runs. Use a surrogate inside that named shape family.</p>
+<p>Do not start by asking which side sounds more impressive. Start by asking what shortage creates the problem. The shared problem is: Both produce answers for scientific or engineering questions. The shortage that creates the choice is: The shortage is time. The solver carries the rule directly, but may be too slow for many repeated decisions.</p>
+<p>Use Trusted numerical solvers when correctness, conservation, and known numerical behavior matter more than speed. In plain terms, this side is chosen when its evidence matches the job and its failure boundary can be tested. The concrete version is: A safety decision depends on a stress peak near a crack. Use the trusted solver because the local failure quantity matters more than speed.</p>
+<p>Use Learned surrogates when many repeated queries make the full solver too costly and the query family is narrow enough to test. In plain terms, this side is chosen when the scientific task asks for the kind of shortcut, rule, or evidence this side actually provides. The concrete version is: A design team needs to screen thousands of similar wing shapes before choosing a few expensive solver runs. Use a surrogate inside that named shape family.</p>
 <p>The dangerous middle is the wrong-choice case: Replacing the solver everywhere because the surrogate is fast, including edge cases where no solver comparison exists. This is where a shallow writeup usually fails. It names a method but does not name the quantity, use range, or changed case. The evidence that exposes the mistake is: Compare against the solver near the design boundary and inspect the decision quantity, such as drag, lift, stress peak, or failure location.</p>
 <h3>Decision Checklist</h3>
 <ol>
@@ -80,8 +91,9 @@
   </thead>
   <tbody>
     <tr><th>Use When</th><td>Use this side when correctness, conservation, and known numerical behavior matter more than speed.</td><td>Use this side when many repeated queries make the full solver too costly and the query family is narrow enough to test.</td></tr>
-    <tr><th>Evidence Burden</th><td>The evidence must show the left-side assumptions match the named scientific quantity and use range.</td><td>The evidence must show the right-side assumptions match the named scientific quantity and use range.</td></tr>
+    <tr><th>Evidence Carried</th><td>the written equation, numerical method, mesh, boundary data, and known checks for conservation or stability</td><td>trusted solver examples from a named query family plus error checks near the edge of use</td></tr>
     <tr><th>Strong Case</th><td>A safety decision depends on a stress peak near a crack. Use the trusted solver because the local failure quantity matters more than speed.</td><td>A design team needs to screen thousands of similar wing shapes before choosing a few expensive solver runs. Use a surrogate inside that named shape family.</td></tr>
+    <tr><th>First Wrong Answer</th><td colspan="2">the surrogate is used on a design edge case and misses the decision quantity that the solver would have caught</td></tr>
     <tr><th>Failure To Check</th><td colspan="2">Compare against the solver near the design boundary and inspect the decision quantity, such as drag, lift, stress peak, or failure location.</td></tr>
   </tbody>
 </table>

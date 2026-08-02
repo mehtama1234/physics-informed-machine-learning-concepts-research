@@ -437,6 +437,10 @@ COMPARISON_PAGES = [
         "evidence_that_exposes_it": "Hold out a changed boundary or input-field family and compare the full field and the scientific quantity, not only visual similarity.",
         "key_difference": "A PINN usually learns one field while being punished for breaking an equation. A neural operator learns the input-to-solution map for a named family of fields.",
         "wrong_turn": "Do not use either word as a badge of trust. Ask what changed case was tested.",
+        "shortage_that_creates_choice": "The shortage is either missing values for one field, or missing fast solves for many related fields. Those are different shortages.",
+        "left_evidence_carried": "one physical case, sparse measurements, boundary or starting values, and a trusted equation residual",
+        "right_evidence_carried": "many paired input fields and output fields from a named equation, boundary, geometry, grid, and parameter family",
+        "first_wrong_answer": "the model gives a smooth-looking field while the boundary case, equation residual, or target physical quantity is wrong",
     },
     {
         "slug": "solvers-vs-learned-surrogates",
@@ -452,6 +456,10 @@ COMPARISON_PAGES = [
         "evidence_that_exposes_it": "Compare against the solver near the design boundary and inspect the decision quantity, such as drag, lift, stress peak, or failure location.",
         "key_difference": "A solver follows the written equations step by step. A surrogate imitates the solver's input-output behavior inside a tested use range.",
         "wrong_turn": "A fast surrogate is not a replacement for the solver outside the cases where it was checked.",
+        "shortage_that_creates_choice": "The shortage is time. The solver carries the rule directly, but may be too slow for many repeated decisions.",
+        "left_evidence_carried": "the written equation, numerical method, mesh, boundary data, and known checks for conservation or stability",
+        "right_evidence_carried": "trusted solver examples from a named query family plus error checks near the edge of use",
+        "first_wrong_answer": "the surrogate is used on a design edge case and misses the decision quantity that the solver would have caught",
     },
     {
         "slug": "symbolic-regression-vs-large-fitted-prediction",
@@ -467,6 +475,10 @@ COMPARISON_PAGES = [
         "evidence_that_exposes_it": "Run a changed experiment, add missing-variable checks, and compare error on cases that differ from the data that selected the formula.",
         "key_difference": "Symbolic regression searches for a small formula. Large fitted prediction can carry more detail but usually gives less direct explanation.",
         "wrong_turn": "A neat formula is not automatically true; it must survive changed data and missing-variable checks.",
+        "shortage_that_creates_choice": "The shortage is either a readable law or a strong predictor. A readable law is useful only if the measured variables are enough to support it.",
+        "left_evidence_carried": "measured variables, allowed operations, a small candidate formula, and changed-experiment checks",
+        "right_evidence_carried": "many examples, richer input detail, prediction error on held-out cases, and a stated use range",
+        "first_wrong_answer": "a short formula fits the original data but fails when a missing variable, noise pattern, or new experiment is introduced",
     },
     {
         "slug": "data-only-vs-physics-informed-learning",
@@ -482,6 +494,10 @@ COMPARISON_PAGES = [
         "evidence_that_exposes_it": "Compare changed cases where the rule matters: boundaries, conservation, units, symmetry, or regions between measurements.",
         "key_difference": "Data-only learning listens to examples. Physics-informed learning also listens to rules about what answers are allowed.",
         "wrong_turn": "Adding physics language does not help if the added rule is wrong, too weak, or never tested against the claim.",
+        "shortage_that_creates_choice": "The shortage is whether examples alone carry enough evidence. When examples are thin between measurements, a trusted rule may carry information the data do not.",
+        "left_evidence_carried": "many checked examples from the same source, scale, target quantity, and use range",
+        "right_evidence_carried": "examples plus a trusted equation, boundary condition, conservation law, unit rule, or symmetry check",
+        "first_wrong_answer": "a model fits familiar examples but breaks the rule exactly where measurements are sparse or the regime changes",
     },
 ]
 
@@ -6441,6 +6457,7 @@ def write_family_page(path: Path, family: dict[str, object]) -> None:
 def write_comparison_page(path: Path, comparison: dict[str, object]) -> None:
     decision_essay = comparison_decision_essay_html(comparison)
     decision_burden = comparison_decision_burden_html(comparison)
+    decision_chain = comparison_decision_chain_html(comparison)
     body = f"""
 <h1>{html.escape(str(comparison['title']))}</h1>
 <h2>Shared Problem</h2>
@@ -6457,6 +6474,7 @@ def write_comparison_page(path: Path, comparison: dict[str, object]) -> None:
 </div>
 <h2>Key Difference</h2>
 <p>{html.escape(str(comparison['key_difference']))}</p>
+{decision_chain}
 {decision_essay}
 {decision_burden}
 <h2>Concrete Choice Cases</h2>
@@ -6476,6 +6494,20 @@ def write_comparison_page(path: Path, comparison: dict[str, object]) -> None:
     path.write_text(html_page(str(comparison["title"]), body, root_prefix="../"), encoding="utf-8")
 
 
+def comparison_decision_chain_html(comparison: dict[str, object]) -> str:
+    return f"""
+<h2>Decision Chain From First Principles</h2>
+<table>
+  <tbody>
+    <tr><th>Shortage That Creates The Choice</th><td>{html.escape(str(comparison['shortage_that_creates_choice']))}</td></tr>
+    <tr><th>Evidence Carried By {html.escape(str(comparison['left']))}</th><td>{html.escape(str(comparison['left_evidence_carried']))}</td></tr>
+    <tr><th>Evidence Carried By {html.escape(str(comparison['right']))}</th><td>{html.escape(str(comparison['right_evidence_carried']))}</td></tr>
+    <tr><th>First Wrong Answer To Look For</th><td>{html.escape(str(comparison['first_wrong_answer']))}</td></tr>
+  </tbody>
+</table>
+"""
+
+
 def comparison_decision_burden_html(comparison: dict[str, object]) -> str:
     return f"""
 <h2>Decision Burden Table</h2>
@@ -6486,8 +6518,9 @@ def comparison_decision_burden_html(comparison: dict[str, object]) -> str:
   </thead>
   <tbody>
     <tr><th>Use When</th><td>{html.escape(str(comparison['left_when']))}</td><td>{html.escape(str(comparison['right_when']))}</td></tr>
-    <tr><th>Evidence Burden</th><td>The evidence must show the left-side assumptions match the named scientific quantity and use range.</td><td>The evidence must show the right-side assumptions match the named scientific quantity and use range.</td></tr>
+    <tr><th>Evidence Carried</th><td>{html.escape(str(comparison['left_evidence_carried']))}</td><td>{html.escape(str(comparison['right_evidence_carried']))}</td></tr>
     <tr><th>Strong Case</th><td>{html.escape(str(comparison['left_case']))}</td><td>{html.escape(str(comparison['right_case']))}</td></tr>
+    <tr><th>First Wrong Answer</th><td colspan="2">{html.escape(str(comparison['first_wrong_answer']))}</td></tr>
     <tr><th>Failure To Check</th><td colspan="2">{html.escape(str(comparison['evidence_that_exposes_it']))}</td></tr>
   </tbody>
 </table>
@@ -6499,11 +6532,13 @@ def comparison_decision_burden_html(comparison: dict[str, object]) -> str:
 
 
 def comparison_decision_essay_html(comparison: dict[str, object]) -> str:
+    left_when = strip_use_when(str(comparison["left_when"]))
+    right_when = strip_use_when(str(comparison["right_when"]))
     return f"""
 <h2>How To Decide From First Principles</h2>
-<p>Do not start by asking which side sounds more impressive. Start by asking what shortage creates the problem. The shared problem is: {html.escape(str(comparison['shared_problem']))} The two sides are different because they carry different evidence and fail in different places.</p>
-<p>Use {html.escape(str(comparison['left']))} when this is the situation: {html.escape(str(comparison['left_when']))} In plain terms, this side is chosen when its evidence matches the job and its failure boundary can be tested. The concrete version is: {html.escape(str(comparison['left_case']))}</p>
-<p>Use {html.escape(str(comparison['right']))} when this is the situation: {html.escape(str(comparison['right_when']))} In plain terms, this side is chosen when the scientific task asks for the kind of shortcut, rule, or evidence this side actually provides. The concrete version is: {html.escape(str(comparison['right_case']))}</p>
+<p>Do not start by asking which side sounds more impressive. Start by asking what shortage creates the problem. The shared problem is: {html.escape(str(comparison['shared_problem']))} The shortage that creates the choice is: {html.escape(str(comparison['shortage_that_creates_choice']))}</p>
+<p>Use {html.escape(str(comparison['left']))} when {html.escape(left_when)}. In plain terms, this side is chosen when its evidence matches the job and its failure boundary can be tested. The concrete version is: {html.escape(str(comparison['left_case']))}</p>
+<p>Use {html.escape(str(comparison['right']))} when {html.escape(right_when)}. In plain terms, this side is chosen when the scientific task asks for the kind of shortcut, rule, or evidence this side actually provides. The concrete version is: {html.escape(str(comparison['right_case']))}</p>
 <p>The dangerous middle is the wrong-choice case: {html.escape(str(comparison['wrong_choice_case']))} This is where a shallow writeup usually fails. It names a method but does not name the quantity, use range, or changed case. The evidence that exposes the mistake is: {html.escape(str(comparison['evidence_that_exposes_it']))}</p>
 <h3>Decision Checklist</h3>
 <ol>
@@ -6514,6 +6549,13 @@ def comparison_decision_essay_html(comparison: dict[str, object]) -> str:
   <li>Choose the side whose burden matches the job, not the side with the more impressive label.</li>
 </ol>
 """
+
+
+def strip_use_when(text: str) -> str:
+    prefix = "Use this side when "
+    if text.startswith(prefix):
+        text = text[len(prefix):]
+    return text[:-1] if text.endswith(".") else text
 
 
 def write_worked_example_page(path: Path, example: dict[str, object]) -> None:
@@ -6629,6 +6671,10 @@ def write_markdown_export(data: dict[str, object]) -> None:
                 f"### {comparison['title']}",
                 f"- Shared problem: {comparison['shared_problem']}",
                 f"- Key difference: {comparison['key_difference']}",
+                f"- Shortage that creates the choice: {comparison['shortage_that_creates_choice']}",
+                f"- Evidence carried by {comparison['left']}: {comparison['left_evidence_carried']}",
+                f"- Evidence carried by {comparison['right']}: {comparison['right_evidence_carried']}",
+                f"- First wrong answer to look for: {comparison['first_wrong_answer']}",
                 f"- Left case: {comparison['left_case']}",
                 f"- Right case: {comparison['right_case']}",
                 f"- Wrong choice case: {comparison['wrong_choice_case']}",
@@ -7120,9 +7166,9 @@ def validate(data: dict[str, object] | None = None) -> None:
         if not comparison_path.exists():
             raise SystemExit(f"missing comparison page: {comparison['title']}")
         comparison_text = comparison_path.read_text(encoding="utf-8")
-        if "How To Decide From First Principles" not in comparison_text or "Decision Checklist" not in comparison_text or "Decision Burden Table" not in comparison_text or "Swap Test" not in comparison_text or "Evidence Needed To Choose" not in comparison_text or "Concrete Choice Cases" not in comparison_text or "Wrong Choice Case" not in comparison_text or "Evidence That Exposes It" not in comparison_text:
+        if "How To Decide From First Principles" not in comparison_text or "Decision Chain From First Principles" not in comparison_text or "Shortage That Creates The Choice" not in comparison_text or "Evidence Carried By" not in comparison_text or "First Wrong Answer To Look For" not in comparison_text or "Decision Checklist" not in comparison_text or "Decision Burden Table" not in comparison_text or "Swap Test" not in comparison_text or "Evidence Needed To Choose" not in comparison_text or "Concrete Choice Cases" not in comparison_text or "Wrong Choice Case" not in comparison_text or "Evidence That Exposes It" not in comparison_text:
             raise SystemExit(f"comparison page missing concrete cases: {comparison['title']}")
-        for field in ("left_case", "right_case", "wrong_choice_case", "evidence_that_exposes_it"):
+        for field in ("shortage_that_creates_choice", "left_evidence_carried", "right_evidence_carried", "first_wrong_answer", "left_case", "right_case", "wrong_choice_case", "evidence_that_exposes_it"):
             if not comparison.get(field):
                 raise SystemExit(f"comparison missing {field}: {comparison['title']}")
     for example in WORKED_EXAMPLES:
