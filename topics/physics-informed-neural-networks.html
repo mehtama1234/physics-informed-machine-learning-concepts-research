@@ -1085,6 +1085,56 @@
 <p>The pass test is this: try the simpler answer first, then change one thing using this test: move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements. If the answer breaks, the learner must explain why Physics-Informed Neural Networks is needed and limit the final claim to this: the model is not allowed to match points while freely breaking the equation between those points</p>
 
 
+<h2>Self-Diagnosis Check</h2>
+<p>Use this check after trying to explain Physics-Informed Neural Networks from memory. Do not ask whether the answer sounds smart. Ask which sentence is missing. A plain explanation is strong only when each missing sentence has been repaired.</p>
+<table>
+  <thead><tr><th>Weak Sentence Symptom</th><th>Repair Sentence To Add</th></tr></thead>
+  <tbody>
+<tr>
+  <td>I only named the topic</td>
+  <td>Start with the shortage: measurements may be sparse, but the answer must still respect a known physical equation</td>
+</tr>
+
+<tr>
+  <td>I did not name the evidence</td>
+  <td>Add what is seen: some measured values, boundary values, starting values, and a known differential equation</td>
+</tr>
+
+<tr>
+  <td>I did not name the missing answer</td>
+  <td>Add what is needed: the full field value at every point in space and time</td>
+</tr>
+
+<tr>
+  <td>I skipped the move</td>
+  <td>Add the plain move: fit a neural network while also measuring how badly its output violates the known equation</td>
+</tr>
+
+<tr>
+  <td>I ignored shape or topology</td>
+  <td>Add the shape stake: Fit a field on a shape while also asking it to obey the rule that should hold inside the shape.</td>
+</tr>
+
+<tr>
+  <td>I ignored field use</td>
+  <td>Add the field stake: Recover a full field from sparse measurements without ignoring the governing equation.</td>
+</tr>
+
+<tr>
+  <td>I made the claim too broad</td>
+  <td>Limit the claim to: the model is not allowed to match points while freely breaking the equation between those points</td>
+</tr>
+
+<tr>
+  <td>I ended without a test</td>
+  <td>End with the changed case: move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements</td>
+</tr>
+</tbody>
+</table>
+<h3>Self-Diagnosis Pass Test</h3>
+<p>The self-diagnosis passes only if the learner can find the missing sentence, add it in everyday words, and then say the whole chain again: shortage, evidence, missing answer, move, shape stake, field stake, careful claim, and changed-case test.</p>
+
+
 <h2>Hand Teaching Note</h2>
 <p><strong>Plain problem:</strong> The scientist wants a whole field, but measurements cover only a few places. A known equation can check the empty places if the equation is trusted for that case.</p>
 <p><strong>Why the math follows:</strong> The loss needs data error because sensors matter, equation error because unsensed points still have rules, and boundary error because the edge defines the physical problem.</p>
