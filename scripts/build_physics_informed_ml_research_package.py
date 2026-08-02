@@ -3706,15 +3706,50 @@ def dedupe_adjacent_words(words: list[str]) -> list[str]:
     cleaned: list[str] = []
     for word in words:
         cleaned.append(word)
-        for span in range(8, 2, -1):
-            if len(cleaned) >= span * 2 and cleaned[-span:] == cleaned[-span * 2 : -span]:
+        lowered = [item.lower() for item in cleaned]
+        for span in range(8, 0, -1):
+            if len(lowered) >= span * 2 and lowered[-span:] == lowered[-span * 2 : -span]:
                 del cleaned[-span:]
                 break
     return cleaned
 
 
+def dedupe_transcript_lines(text: str) -> str:
+    lines = [line.strip() for line in text.splitlines()]
+    cleaned: list[str] = []
+    for line in lines:
+        if line and (not cleaned or line != cleaned[-1]):
+            cleaned.append(line)
+    return " ".join(cleaned)
+
+
+EXCERPT_BLOCKED_TERMS = {
+    "advanced",
+    "black",
+    "box",
+    "complex",
+    "cutting",
+    "edge",
+    "framework",
+    "leverage",
+    "paradigm",
+    "powerful",
+    "robust",
+    "seamless",
+    "utilize",
+}
+
+EXCERPT_BLOCKED_PHRASES = {
+    "black box",
+    "black-box",
+    "cutting edge",
+    "many different",
+    "state of the art",
+}
+
+
 def first_excerpt(text: str, terms: list[str], limit: int = 44) -> str:
-    words = re.findall(r"[A-Za-z][A-Za-z'-]*", text)
+    words = re.findall(r"[A-Za-z][A-Za-z'-]*", dedupe_transcript_lines(text))
     if not words:
         return ""
     lowered_words = [word.lower() for word in words]
@@ -3736,8 +3771,11 @@ def first_excerpt(text: str, terms: list[str], limit: int = 44) -> str:
         window = lowered_words[start : start + limit]
         term_hits = sum(1 for item in window if item in term_words)
         boilerplate_hits = sum(1 for item in window if item in boilerplate)
+        blocked_hits = sum(1 for item in window if item in EXCERPT_BLOCKED_TERMS)
+        window_text = " ".join(window)
+        blocked_hits += sum(2 for phrase in EXCERPT_BLOCKED_PHRASES if phrase in window_text)
         early_penalty = 4 if start < 45 else 0
-        score = term_hits * 5 - boilerplate_hits * 2 - early_penalty
+        score = term_hits * 5 - boilerplate_hits * 2 - blocked_hits * 20 - early_penalty
         if score > best_score:
             best_score = score
             best_start = start
@@ -8357,6 +8395,9 @@ def validate(data: dict[str, object] | None = None) -> None:
             excerpt = str(evidence.get("excerpt") or "").lower()
             if any(pattern in excerpt for pattern in boilerplate_excerpt_patterns):
                 raise SystemExit(f"boilerplate evidence excerpt selected: {packet['title']} -> {evidence.get('title')}")
+            words = re.findall(r"[a-z0-9']+", excerpt)
+            if any(left == right for left, right in zip(words, words[1:])):
+                raise SystemExit(f"repeated adjacent word in evidence excerpt: {packet['title']} -> {evidence.get('title')}")
         for item in packet["review_links"]:
             if not (SITE / str(item["href"])).exists():
                 raise SystemExit(f"concept evidence packet review link missing: {packet['title']} -> {item['href']}")
