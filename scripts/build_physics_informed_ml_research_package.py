@@ -5206,6 +5206,7 @@ def html_page(title: str, body: str, root_prefix: str = "") -> str:
   <a href="{root_prefix}question-to-topic-guide.html">Questions</a>
   <a href="{root_prefix}field-application-guide.html">Fields</a>
   <a href="{root_prefix}end-to-end-walkthrough.html">Walkthrough</a>
+  <a href="{root_prefix}example-route-guide.html">Routes</a>
   <a href="{root_prefix}learning-path.html">Path</a>
   <a href="{root_prefix}glossary.html">Glossary</a>
   <a href="{root_prefix}domains.html">Domains</a>
@@ -5490,6 +5491,51 @@ def write_end_to_end_walkthrough_page(path: Path, topics: list[dict[str, object]
     path.write_text(html_page("Physics-Informed ML End-To-End Course Walkthrough", body), encoding="utf-8")
 
 
+def write_example_route_guide_page(path: Path, examples: list[dict[str, object]]) -> None:
+    concept_names = {str(item["slug"]): str(item["name"]) for item in CONCEPTS}
+    rows = []
+    for example in examples:
+        route_links = " -> ".join(
+            f'<a href="topics/{html.escape(str(slug))}.html">{html.escape(concept_names.get(str(slug), str(slug).replace("-", " ").title()))}</a>'
+            for slug in example["method_route"]
+        )
+        rows.append(
+            f"""
+<tr>
+  <td><a href="worked-examples/{html.escape(str(example['slug']))}.html">{html.escape(str(example['title']))}</a></td>
+  <td>{html.escape(str(example['question']))}</td>
+  <td>{html.escape(str(example['observed']))}</td>
+  <td>{html.escape(str(example['hidden']))}</td>
+  <td>{route_links}</td>
+  <td>{html.escape(str(example['failure_signal']))}</td>
+</tr>
+"""
+        )
+    body = f"""
+<h1>Example Route Guide</h1>
+<h2>Start With A Concrete Job</h2>
+<p>This page connects the course-wide first-principles route to worked examples. Start with the job a scientist or engineer needs to do. Then inspect the evidence, name the hidden answer, follow the topic route, and stop at the first changed case that can reject the claim.</p>
+<h2>Worked Example Routes</h2>
+<table>
+  <thead>
+    <tr><th>Open This Example</th><th>Scientific Job</th><th>Observed Evidence</th><th>Hidden Answer</th><th>Topic Route</th><th>First Failure Signal</th></tr>
+  </thead>
+  <tbody>{''.join(rows)}</tbody>
+</table>
+<h2>How To Use A Route</h2>
+<ol>
+  <li>Read the scientific job before the topic route.</li>
+  <li>Say what evidence exists and what answer is still hidden.</li>
+  <li>Open each topic only for the work it adds to the route.</li>
+  <li>Check whether shape, boundary, mesh, molecule, field, or time changes the answer.</li>
+  <li>Reject the wider claim when the first failure signal appears.</li>
+</ol>
+<h2>Reader Test</h2>
+<p>A reader understands an example route when they can explain why each topic is present, what would break if that topic were removed, and which changed case would make the final claim too broad.</p>
+"""
+    path.write_text(html_page("Physics-Informed ML Example Route Guide", body), encoding="utf-8")
+
+
 def concept_links(slugs: list[str], root_prefix: str = "") -> str:
     items = []
     concept_names = {str(item["slug"]): str(item["name"]) for item in CONCEPTS}
@@ -5748,6 +5794,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Question To Topic Guide", "Start from an everyday scientific question and open the first topic that carries that need.", "question-to-topic-guide.html")}
 {card("Field Application Guide", "A plain map of how each topic enters engineering, materials, biology, climate, fluids, and field problems.", "field-application-guide.html")}
 {card("End-To-End Walkthrough", "One plain route from sparse evidence and a scientific job to a bounded claim.", "end-to-end-walkthrough.html")}
+{card("Example Route Guide", "Concrete worked examples mapped from scientific job to topic route and first failure signal.", "example-route-guide.html")}
 {card("Learning Path", f"{summary['learning_path_step_count']} steps from first question to field-level understanding.", "learning-path.html")}
 {card("Glossary", f"{summary['glossary_term_count']} field terms translated into everyday language.", "glossary.html")}
 {card("Domains", f"{summary['domain_guide_count']} domain guides that ground concepts in real scientific work.", "domains.html")}
@@ -5870,6 +5917,7 @@ def write_site(data: dict[str, object]) -> None:
     write_question_to_topic_guide_page(SITE / "question-to-topic-guide.html", list(topics))
     write_field_application_guide_page(SITE / "field-application-guide.html", list(topics))
     write_end_to_end_walkthrough_page(SITE / "end-to-end-walkthrough.html", list(topics))
+    write_example_route_guide_page(SITE / "example-route-guide.html", list(worked_examples))
 
     learning_cards = []
     for step in learning_path:
@@ -8792,6 +8840,10 @@ def write_markdown_export(data: dict[str, object]) -> None:
             "- Final say-it-back test: state the scientific job, evidence, hidden answer, topic route, shape or topology issue, field use, and changed case without hiding behind a method name.",
         ]
     )
+    lines.extend(["", "## Example Route Guide"])
+    for example in data["worked_examples"]:
+        route = " -> ".join(str(slug).replace("-", " ") for slug in example["method_route"])
+        lines.append(f"- {example['title']}: job: {example['question']} Observed: {example['observed']} Hidden: {example['hidden']} Route: {route}. First failure: {example['failure_signal']}")
     lines.extend(["", "## Concepts"])
     for concept in data["concept_atlas"]:
         lines.extend(
@@ -9437,6 +9489,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         SITE / "question-to-topic-guide.html",
         SITE / "field-application-guide.html",
         SITE / "end-to-end-walkthrough.html",
+        SITE / "example-route-guide.html",
         SITE / "learning-path.html",
         SITE / "glossary.html",
         SITE / "domains.html",
@@ -9507,6 +9560,22 @@ def validate(data: dict[str, object] | None = None) -> None:
     ):
         if term not in walkthrough_text:
             raise SystemExit(f"end-to-end walkthrough missing: {term}")
+    example_route_text = (SITE / "example-route-guide.html").read_text(encoding="utf-8")
+    for term in (
+        "Example Route Guide",
+        "Start With A Concrete Job",
+        "Worked Example Routes",
+        "Open This Example",
+        "Scientific Job",
+        "Observed Evidence",
+        "Hidden Answer",
+        "Topic Route",
+        "First Failure Signal",
+        "How To Use A Route",
+        "Reader Test",
+    ):
+        if term not in example_route_text:
+            raise SystemExit(f"example route guide missing: {term}")
     for family in FAMILY_PAGES:
         family_path = SITE / "families" / f"{family['slug']}.html"
         if not family_path.exists():
