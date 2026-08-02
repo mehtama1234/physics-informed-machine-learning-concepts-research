@@ -416,6 +416,25 @@
 <p>A field transfer passes only if the learner can change the field while keeping the evidence, hidden answer, mathematical move, and rejection test visible in everyday words.</p>
 
 
+<h2>Wrong Path To Right Path Repair</h2>
+<p>This repair starts with the answer a hurried learner might give, then rebuilds the explanation from the evidence and the missing answer. The goal is to catch the exact step where the claim became too wide.</p>
+<table>
+  <tbody>
+    <tr><th>Tempting Wrong Path</th><td>Use a PINN because sensor data are sparse, even though the boundary values are uncertain and the equation is missing a heat source.</td></tr>
+    <tr><th>Why A Learner Might Say It</th><td>The equation penalty gives the page a scientific look, and the fit can still pass through the measured points.</td></tr>
+    <tr><th>Missing First-Principles Piece</th><td>The answer skipped the link from some measured values, boundary values, starting values, and a known differential equation to the full field value at every point in space and time.</td></tr>
+    <tr><th>Repair Step One</th><td>Start by saying what is visible: some measured values, boundary values, starting values, and a known differential equation.</td></tr>
+    <tr><th>Repair Step Two</th><td>Name what is still missing: the full field value at every point in space and time.</td></tr>
+    <tr><th>Repair Step Three</th><td>Use Physics-Informed Neural Networks only for this move: fit a neural network while also measuring how badly its output violates the known equation.</td></tr>
+    <tr><th>Repaired Plain Claim</th><td>the model is not allowed to match points while freely breaking the equation between those points</td></tr>
+    <tr><th>Check That Proves The Repair</th><td>Change the boundary, add held-out sensors near the source region, and compare against a trusted solve.</td></tr>
+    <tr><th>What Breaks If You Do Not Repair It</th><td>The model may satisfy the wrong problem: a field with the wrong boundary or missing source can look smooth while answering a different physical question.</td></tr>
+  </tbody>
+</table>
+<h3>Repair Pass Test</h3>
+<p>The repair passes only if the learner can point to the skipped evidence, name the hidden answer, restate the allowed move, and give the changed case that would catch the wrong path.</p>
+
+
 <h2>Plain Question To Answer Script</h2>
 <p>Use this script as a full spoken answer. It starts with the real question, not the topic name, and it ends with the condition that can reject the claim.</p>
 <ol>
