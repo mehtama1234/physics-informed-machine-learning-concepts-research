@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Generative Modeling</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<nav class="topbar">
+  <a href="../index.html">Physics-Informed ML</a>
+  <a href="../transcripts.html">Transcripts</a>
+  <a href="../concept-atlas.html">Concept Atlas</a>
+  <a href="../families.html">Families</a>
+  <a href="../comparisons.html">Comparisons</a>
+  <a href="../worked-examples.html">Examples</a>
+  <a href="../diagrams.html">Diagrams</a>
+  <a href="../derivations.html">Derivations</a>
+  <a href="../formula-guide.html">Formulas</a>
+  <a href="../misconceptions.html">Misreads</a>
+  <a href="../learning-path.html">Path</a>
+  <a href="../glossary.html">Glossary</a>
+  <a href="../domains.html">Domains</a>
+  <a href="../reader-checks.html">Checks</a>
+  <a href="../decision-guide.html">Decide</a>
+  <a href="../provenance.html">Provenance</a>
+  <a href="../coverage.html">Coverage</a>
+  <a href="../dependencies.html">Dependencies</a>
+  <a href="../concept-ladder.html">Ladder</a>
+  <a href="../evidence-packets.html">Packets</a>
+  <a href="../quality.html">Quality</a>
+  <a href="../synthesis.html">Synthesis</a>
+  <a href="../review-entrypoints.html">Review Map</a>
+  <a href="../review-search.html">Find</a>
+  <a href="../review-queue.html">Queue</a>
+  <a href="../editorial-roadmap.html">Roadmap</a>
+  <a href="../completion-audit.html">Audit</a>
+  <a href="../handoff.html">Handoff</a>
+  <a href="../theme-map.html">Themes</a>
+  <a href="../evidence-ledger.html">Evidence</a>
+</nav>
+<main>
+
+<h1>Generative Modeling</h1>
+<p>Generative modeling learns how to make possible examples, not just score one existing example.</p>
+<h2>Domain Story</h2>
+<p>For uncertain weather or material fields, one answer may hide the range of possible outcomes. A generative model can propose many candidates, but those candidates still need physical checks.</p>
+<h2>Problem</h2>
+<p>some tasks need many possible examples, not one predicted answer</p>
+<h2>Start With What Is Observed</h2>
+<p>examples of fields, molecules, flows, shapes, or other scientific objects</p>
+<h2>Name What Is Hidden</h2>
+<p>the spread of possible valid objects beyond the examples</p>
+<h2>Build The Mathematical Shape</h2>
+<div class="route"><div class="route-step">1. Collect examples of the kind of object the model should produce.</div><div class="route-step">2. Give the model a source of variation so it can make different candidates.</div><div class="route-step">3. Train it so generated candidates resemble checked examples.</div><div class="route-step">4. Condition it on known measurements, boundaries, or design requirements when needed.</div><div class="route-step">5. Reject candidates that break the scientific rule or fall outside the tested family.</div></div>
+
+<h2>Why This Shape And Not Another</h2>
+<p>The formula shape is justified only when each part carries a burden from the scientific problem. If a part carries no burden, it is decoration. If a burden is missing, the formula is answering a weaker question.</p>
+<table>
+  <tbody>
+    <tr><th>Observed Burden</th><td>The shape must use examples of fields, molecules, flows, shapes, or other scientific objects, because that is the evidence actually available.</td></tr>
+    <tr><th>Hidden Burden</th><td>The shape must point toward the spread of possible valid objects beyond the examples, because that is the answer the scientist still needs.</td></tr>
+    <tr><th>Use Burden</th><td>The shape matters only if it supports this job: Many scientific decisions need a range of possible cases, not a single average case.</td></tr>
+    <tr><th>Rejection Burden</th><td>The shape is too weak if it cannot be tested this way: measure constraints, rare cases, conservation, and downstream task performance on generated samples</td></tr>
+  </tbody>
+</table>
+
+
+<h2>Plain Formula</h2>
+<p>known conditions + variation -&gt; candidate example -&gt; realism and rule checks</p>
+<h2>Why This Matters</h2>
+<p>Many scientific decisions need a range of possible cases, not a single average case.</p>
+<h2>Failure Test</h2>
+<p>measure constraints, rare cases, conservation, and downstream task performance on generated samples</p>
+<h2>Red Flags</h2>
+<ul><li>Samples look realistic but violate a known equation or boundary.</li><li>Diversity is reported without saying whether the candidates are valid.</li><li>The model creates cases outside the evidence family.</li><li>The generated object is used as data without marking it as generated.</li></ul>
+<h2>Connects To</h2>
+<ul><li><a href="../topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></li><li><a href="../topics/deep-learning.html">Deep Learning</a></li><li><a href="../topics/foundation-models-for-pdes.html">Foundation Models For PDEs</a></li></ul>
+<h2>Topic Page</h2>
+<p><a href="../topics/generative-modeling.html">Return to the main topic page</a></p>
+
+</main>
+</body>
+</html>

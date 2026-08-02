@@ -128,8 +128,29 @@
 </table>
 
 
+<h2>Core Idea In One Sentence</h2>
+<p>Generative modeling learns how to make possible examples, not just score one existing example.</p>
+<h2>Where This Is Useful</h2>
+<p>Use it when the job is to sample plausible fields, fill missing parts, create candidate designs, or explore many possible futures.</p>
+<h2>Where This Breaks</h2>
+<p>Do not treat a plausible-looking sample as a valid scientific answer unless constraints, measurements, and use-range checks are passed.</p>
+<h2>Concrete Domain Story</h2>
+<p>For uncertain weather or material fields, one answer may hide the range of possible outcomes. A generative model can propose many candidates, but those candidates still need physical checks.</p>
+<h2>Mathematical Shape Without Jargon</h2>
+<div class="route"><div class="route-step">1. Collect examples of the kind of object the model should produce.</div><div class="route-step">2. Give the model a source of variation so it can make different candidates.</div><div class="route-step">3. Train it so generated candidates resemble checked examples.</div><div class="route-step">4. Condition it on known measurements, boundaries, or design requirements when needed.</div><div class="route-step">5. Reject candidates that break the scientific rule or fall outside the tested family.</div></div>
+<p><strong>Plain formula:</strong> known conditions + variation -&gt; candidate example -&gt; realism and rule checks</p>
+<h2>Why This Matters</h2>
+<p>Many scientific decisions need a range of possible cases, not a single average case.</p>
+<h2>Red Flags</h2>
+<ul><li>Samples look realistic but violate a known equation or boundary.</li><li>Diversity is reported without saying whether the candidates are valid.</li><li>The model creates cases outside the evidence family.</li><li>The generated object is used as data without marking it as generated.</li></ul>
+<h2>Connects To</h2>
+<ul><li><a href="../topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></li><li><a href="../topics/deep-learning.html">Deep Learning</a></li><li><a href="../topics/foundation-models-for-pdes.html">Foundation Models For PDEs</a></li></ul>
 
 
+
+
+<h2>Full Derivation Walkthrough</h2>
+<p><a href="../derivations/generative-modeling.html">Open the step-by-step derivation page</a>. It slows this concept down from observed evidence, to hidden quantity, to formula shape, to failure test.</p>
 
 
 <h2>Concrete Worked Example</h2>
