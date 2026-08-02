@@ -2455,9 +2455,10 @@ REVIEW_HANDOFF = {
         {"label": "Home", "href": "index.html", "why": "Use this to see the full package map and current counts."},
         {"label": "Hand Polish Audit", "href": "hand-polish.html", "why": "Use this to review the 14 concept-level acceptance checklists."},
         {"label": "Meaty Goal Coverage", "href": "meaty-goal-coverage.html", "why": "Use this to verify every required teaching-grade part is present."},
+        {"label": "Quality Rubric", "href": "quality.html", "why": "Use this to inspect the forbidden shortcuts and replacement tests embedded in each topic page."},
         {"label": "Review Queue", "href": "review-queue.html", "why": "Use this to confirm there are no P0 or P1 support gaps left."},
         {"label": "Evidence Packets", "href": "evidence-packets.html", "why": "Use this to check source support, source limits, and claim boundaries."},
-        {"label": "Topic Atlas", "href": "concept-atlas.html", "why": "Use this to open individual concept pages."},
+        {"label": "Topic Atlas", "href": "concept-atlas.html", "why": "Use this to open individual concept pages and apply the embedded Quality Gate Before Review."},
     ],
     "core_review_pages": [
         {"label": "PINNs", "href": "topics/physics-informed-neural-networks.html"},
@@ -3204,7 +3205,7 @@ COMPLETION_REQUIREMENTS = [
     {
         "slug": "plain-first-principles-concepts",
         "requirement": "Explain mathematical concepts from first principles without assuming prior jargon.",
-        "local_evidence": "topic pages, concept ladder, glossary, derivations, and quality rubric require problem, domain, observed evidence, hidden quantity, formula shape, and failure test.",
+        "local_evidence": "topic pages embed Quality Gate Before Review tables and, with the concept ladder, glossary, derivations, and quality rubric, require problem, domain, observed evidence, hidden quantity, formula shape, and failure test.",
         "status": "locally verified",
         "links": ["concept-atlas.html", "concept-ladder.html", "derivations.html", "quality.html"],
     },
@@ -3280,6 +3281,7 @@ REVIEW_SEARCH_INDEX = [
         "intent": "I need to understand a concept from first principles.",
         "look_for": "problem, observed evidence, hidden quantity, formula shape, and failure test",
         "pages": [
+            {"label": "Topic Atlas", "href": "concept-atlas.html"},
             {"label": "Concept Ladder", "href": "concept-ladder.html"},
             {"label": "Dependency Map", "href": "dependencies.html"},
             {"label": "Formula Guide", "href": "formula-guide.html"},
@@ -3309,8 +3311,9 @@ REVIEW_SEARCH_INDEX = [
     },
     {
         "intent": "I need to audit quality.",
-        "look_for": "plain language, failure boundary, evidence discipline, and connected map",
+        "look_for": "topic quality gates, forbidden shortcuts, replacement tests, failure boundary, evidence discipline, and connected map",
         "pages": [
+            {"label": "Topic Atlas", "href": "concept-atlas.html"},
             {"label": "Quality Rubric", "href": "quality.html"},
             {"label": "Reader Checks", "href": "reader-checks.html"},
             {"label": "Misconception Map", "href": "misconceptions.html"},

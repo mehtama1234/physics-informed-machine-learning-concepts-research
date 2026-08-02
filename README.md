@@ -34,7 +34,7 @@ The purpose is not to summarize lectures. The purpose is to explain physics-info
 - `site/dependencies.html`: concept dependency map for prerequisite ideas
 - `site/concept-ladder.html`: first-principles concept ladder from evidence to failure test
 - `site/evidence-packets.html`: per-concept source support and review links
-- `site/quality.html`: editorial quality rubric for first-principles pages
+- `site/quality.html`: editorial quality rubric whose forbidden shortcuts and replacement tests are embedded in topic pages
 - `site/synthesis.html`: field-level synthesis tying the concepts together
 - `site/review-entrypoints.html`: end-to-end review route through the package
 - `site/review-search.html`: reviewer-question index for finding the right page
@@ -113,6 +113,8 @@ The fastest review path is:
 http://127.0.0.1:8022/handoff.html
 http://127.0.0.1:8022/hand-polish.html
 http://127.0.0.1:8022/meaty-goal-coverage.html
+http://127.0.0.1:8022/quality.html
+http://127.0.0.1:8022/concept-atlas.html
 http://127.0.0.1:8022/review-queue.html
 ```
 
@@ -148,6 +150,7 @@ http://127.0.0.1:8022/review-queue.html
 - meaty-goal coverage with 14 required parts per concept and zero missing items
 - selected source anchors for core concepts
 - editorial quality rubric
+- embedded topic quality gates
 - field synthesis
 - review entrypoint map
 - reviewer-question index

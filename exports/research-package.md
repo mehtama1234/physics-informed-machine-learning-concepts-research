@@ -2670,9 +2670,10 @@
 
 ### I need to understand a concept from first principles.
 - Look for: problem, observed evidence, hidden quantity, formula shape, and failure test
-- Open first: Concept Ladder (concept-ladder.html)
-- Prove before moving on: The pages Concept Ladder, Dependency Map, Formula Guide must answer this intent with problem, observed evidence, hidden quantity, formula shape, and failure test.
+- Open first: Topic Atlas (concept-atlas.html)
+- Prove before moving on: The pages Topic Atlas, Concept Ladder, Dependency Map must answer this intent with problem, observed evidence, hidden quantity, formula shape, and failure test.
 - Reject the route if: The route names pages but never reaches a source, quantity, formula shape, changed-case test, or acceptance check.
+- Topic Atlas: concept-atlas.html
 - Concept Ladder: concept-ladder.html
 - Dependency Map: dependencies.html
 - Formula Guide: formula-guide.html
@@ -2700,10 +2701,11 @@
 - Comparisons: comparisons.html
 
 ### I need to audit quality.
-- Look for: plain language, failure boundary, evidence discipline, and connected map
-- Open first: Quality Rubric (quality.html)
-- Prove before moving on: The pages Quality Rubric, Reader Checks, Misconception Map must answer this intent with plain language, failure boundary, evidence discipline, and connected map.
+- Look for: topic quality gates, forbidden shortcuts, replacement tests, failure boundary, evidence discipline, and connected map
+- Open first: Topic Atlas (concept-atlas.html)
+- Prove before moving on: The pages Topic Atlas, Quality Rubric, Reader Checks must answer this intent with topic quality gates, forbidden shortcuts, replacement tests, failure boundary, evidence discipline, and connected map.
 - Reject the route if: The route names pages but never reaches a source, quantity, formula shape, changed-case test, or acceptance check.
+- Topic Atlas: concept-atlas.html
 - Quality Rubric: quality.html
 - Reader Checks: reader-checks.html
 - Misconception Map: misconceptions.html
@@ -2945,7 +2947,7 @@
 
 ### Explain mathematical concepts from first principles without assuming prior jargon.
 - Status: locally verified
-- Evidence: topic pages, concept ladder, glossary, derivations, and quality rubric require problem, domain, observed evidence, hidden quantity, formula shape, and failure test.
+- Evidence: topic pages embed Quality Gate Before Review tables and, with the concept ladder, glossary, derivations, and quality rubric, require problem, domain, observed evidence, hidden quantity, formula shape, and failure test.
 
 ### Connect concepts to real domains and concrete scientific jobs.
 - Status: locally verified
