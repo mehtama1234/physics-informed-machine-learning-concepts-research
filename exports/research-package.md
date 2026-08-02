@@ -1780,6 +1780,9 @@
 - Forbidden shortcut: pass if Avoids this weak answer: A weak answer says only that Attention For Scientific Fields is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test. Fail if A weak answer says only that Attention For Scientific Fields is useful without naming the observed evidence, hidden quantity, mathematical move, and changed-case test.
 
 
+## Plain Explanation Practice
+- See `site/plain-explanation-practice.html` for learner drills that turn each topic into a plain spoken paragraph from everyday need to tested claim.
+
 ## Decision Guide
 ### Sparse Data, Known Equation
 - Situation: You have few measurements, but a trusted equation and boundary or starting information exist.

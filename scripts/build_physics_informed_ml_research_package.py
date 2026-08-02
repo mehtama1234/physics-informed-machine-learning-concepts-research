@@ -5221,6 +5221,7 @@ def html_page(title: str, body: str, root_prefix: str = "") -> str:
   <a href="{root_prefix}glossary.html">Glossary</a>
   <a href="{root_prefix}domains.html">Domains</a>
   <a href="{root_prefix}reader-checks.html">Checks</a>
+  <a href="{root_prefix}plain-explanation-practice.html">Practice</a>
   <a href="{root_prefix}decision-guide.html">Decide</a>
   <a href="{root_prefix}provenance.html">Provenance</a>
   <a href="{root_prefix}coverage.html">Coverage</a>
@@ -5571,6 +5572,80 @@ def write_plain_essay_review_page(path: Path, topics: list[dict[str, object]]) -
 <p>A reader passes this review when they can pick any topic and say why it matters in everyday words, how the first-principles move follows from the evidence, where shape or topology matters, how the idea appears in at least two fields, and what changed case would make the claim too broad.</p>
 """
     path.write_text(html_page("Physics-Informed ML Plain Essay Review", body), encoding="utf-8")
+
+
+def write_plain_explanation_practice_page(path: Path, topics: list[dict[str, object]]) -> None:
+    drills = []
+    checklist_rows = []
+    def trim_period(value: object) -> str:
+        return str(value).strip().rstrip(".")
+
+    def lower_first(value: object) -> str:
+        text = trim_period(value)
+        return text[:1].lower() + text[1:] if text else text
+
+    for topic in topics:
+        derivation = topic_derivation(topic)
+        applications = topic_plain_applications(topic, derivation)
+        shape = next(row for row in applications if row["field"] == "Topology and shape")
+        engineering = next(row for row in applications if row["field"] == "Engineering design")
+        materials = next(row for row in applications if row["field"] == "Materials, chemistry, and biology")
+        fields = next(row for row in applications if row["field"] == "Climate, fluids, and fields")
+        title = str(topic["title"])
+        topic_href = f"topics/{html.escape(str(topic['slug']))}.html"
+        common_problem = trim_period(topic["common_problem"])
+        shape_why = lower_first(shape["why"])
+        shape_check = trim_period(shape["check"])
+        why_matters = lower_first(topic["why_it_matters"])
+        test = trim_period(derivation["test"])
+        checklist_rows.append(
+            f"""
+<tr>
+  <td><a href="topics/{html.escape(str(topic['slug']))}.html">{html.escape(title)}</a></td>
+  <td>{html.escape(str(topic['common_problem']))}</td>
+  <td>{html.escape(str(derivation['observed']))}</td>
+  <td>{html.escape(str(derivation['hidden']))}</td>
+  <td>{html.escape(str(shape['check']))}</td>
+  <td>{html.escape(str(derivation['test']))}</td>
+</tr>
+"""
+        )
+        drills.append(
+            f"""
+<section>
+  <h2>{html.escape(title)}</h2>
+  <p><a href="{topic_href}">Open the topic page and find Long Everyday Importance Essay</a></p>
+  <ol>
+    <li><strong>Everyday opening:</strong> A person needs help because {html.escape(common_problem)}.</li>
+    <li><strong>Evidence sentence:</strong> The evidence already in hand is {html.escape(str(derivation['observed']))}.</li>
+    <li><strong>Missing-answer sentence:</strong> The answer still needed is {html.escape(str(derivation['hidden']))}.</li>
+    <li><strong>First-principles move:</strong> The plain move is to {html.escape(str(derivation['move']))}.</li>
+    <li><strong>Shape or topology sentence:</strong> Shape matters here because {html.escape(shape_why)}. The first shape check is {html.escape(shape_check)}.</li>
+    <li><strong>Field transfer sentence:</strong> In engineering, {html.escape(str(engineering['use']))} In materials, chemistry, and biology, {html.escape(str(materials['use']))} In climate, fluids, and fields, {html.escape(str(fields['use']))}</li>
+    <li><strong>Importance sentence:</strong> This matters because {html.escape(why_matters)}.</li>
+    <li><strong>Stop sentence:</strong> I should narrow the claim if this fails: {html.escape(test)}.</li>
+  </ol>
+  <p><strong>Rewrite Task:</strong> Turn the eight sentences above into one plain paragraph without starting with the method name.</p>
+</section>
+"""
+        )
+    body = f"""
+<h1>Plain Explanation Practice</h1>
+<h2>Practice Goal</h2>
+<p>This page turns the long topic essays into spoken practice. The learner should be able to explain each topic from an everyday need to a tested claim using ordinary words.</p>
+<h2>Quick Checklist</h2>
+<table>
+  <thead>
+    <tr><th>Topic</th><th>Everyday Need</th><th>Evidence</th><th>Missing Answer</th><th>Shape Check</th><th>Changed Case</th></tr>
+  </thead>
+  <tbody>{''.join(checklist_rows)}</tbody>
+</table>
+<h2>Explanation Drills</h2>
+{''.join(drills)}
+<h2>Pass Standard</h2>
+<p>A learner passes when they can explain Deep Learning, Physics-Informed Neural Networks, Operator Learning, and Graphs And Geometric Learning without starting from the method name. Each answer must include the everyday need, evidence, missing answer, first-principles move, topology or shape check, one field use, and the changed case.</p>
+"""
+    path.write_text(html_page("Physics-Informed ML Plain Explanation Practice", body), encoding="utf-8")
 
 
 def write_end_to_end_walkthrough_page(path: Path, topics: list[dict[str, object]]) -> None:
@@ -5979,6 +6054,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Glossary", f"{summary['glossary_term_count']} field terms translated into everyday language.", "glossary.html")}
 {card("Domains", f"{summary['domain_guide_count']} domain guides that ground concepts in real scientific work.", "domains.html")}
 {card("Reader Checks", f"{summary['reader_check_count']} self-check prompts for core ideas.", "reader-checks.html")}
+{card("Plain Explanation Practice", "Learner drills for saying each topic from everyday need to tested claim.", "plain-explanation-practice.html")}
 {card("Decision Guide", f"{summary['decision_guide_count']} method choices from concrete scientific situations.", "decision-guide.html")}
 {card("Provenance", f"{summary['provenance_guide_count']} pages documenting source, extraction, build, and reproduction.", "provenance.html")}
 {card("Coverage Matrix", f"{summary['coverage_row_count']} concepts checked across evidence and guide layers.", "coverage.html")}
@@ -6139,6 +6215,7 @@ def write_site(data: dict[str, object]) -> None:
         html_page("Physics-Informed ML Reader Checks", f"<h1>Reader Checks</h1><p>These prompts test whether a reader can name the observed evidence, hidden quantity, method, failure case, and domain claim without hiding behind method names.</p><div class=\"grid\">{''.join(check_cards)}</div>"),
         encoding="utf-8",
     )
+    write_plain_explanation_practice_page(SITE / "plain-explanation-practice.html", list(topics))
 
     decision_cards = []
     for decision in decision_guides:
@@ -9498,6 +9575,13 @@ def write_markdown_export(data: dict[str, object]) -> None:
         for item in check["scoring_rubric"]:
             lines.append(f"- {item['criterion']}: pass if {item['pass']} Fail if {item['fail']}")
         lines.append("")
+    lines.extend(
+        [
+            "",
+            "## Plain Explanation Practice",
+            "- See `site/plain-explanation-practice.html` for learner drills that turn each topic into a plain spoken paragraph from everyday need to tested claim.",
+        ]
+    )
     lines.extend(["", "## Decision Guide"])
     for decision in data["decision_guides"]:
         burden = decision_burden_data(decision)
@@ -9973,6 +10057,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         SITE / "glossary.html",
         SITE / "domains.html",
         SITE / "reader-checks.html",
+        SITE / "plain-explanation-practice.html",
         SITE / "decision-guide.html",
         SITE / "provenance.html",
         SITE / "coverage.html",
@@ -10065,6 +10150,29 @@ def validate(data: dict[str, object] | None = None) -> None:
     ):
         if term not in plain_essay_review_text:
             raise SystemExit(f"plain essay review missing: {term}")
+    explanation_practice_text = (SITE / "plain-explanation-practice.html").read_text(encoding="utf-8")
+    for term in (
+        "Plain Explanation Practice",
+        "Practice Goal",
+        "Quick Checklist",
+        "Everyday Need",
+        "Missing Answer",
+        "Shape Check",
+        "Changed Case",
+        "Explanation Drills",
+        "Everyday opening",
+        "Evidence sentence",
+        "Missing-answer sentence",
+        "Shape or topology sentence",
+        "Field transfer sentence",
+        "Rewrite Task",
+        "Pass Standard",
+        "Deep Learning",
+        "Operator Learning",
+        "Graphs And Geometric Learning",
+    ):
+        if term not in explanation_practice_text:
+            raise SystemExit(f"plain explanation practice missing: {term}")
     walkthrough_text = (SITE / "end-to-end-walkthrough.html").read_text(encoding="utf-8")
     for term in (
         "End-To-End Course Walkthrough",
