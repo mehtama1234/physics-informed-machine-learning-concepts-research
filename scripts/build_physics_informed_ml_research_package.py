@@ -2436,11 +2436,17 @@ REVIEW_HANDOFF = {
         "python3 scripts/verify_ci_status.py",
         "run the wording scan for restricted filler terms listed in the editorial quality rubric",
     ],
+    "verified_project_state": [
+        "Remote repository exists at https://github.com/mehtama1234/physics-informed-machine-learning-concepts-research.git.",
+        "Local main is configured to track origin/main.",
+        "The package has 40 transcript-backed video pages, 14 concept pages, and the generated review layers listed below.",
+        "Before calling any later pass finished, compare local main with origin/main and verify the GitHub Actions result for the current commit.",
+    ],
     "remaining_editorial_work": [
-        "Remote repository is created and main is pushed.",
-        "For any later commit, run git push and compare git ls-remote origin main with git rev-parse main.",
-        "Keep this handoff updated whenever the latest local commit changes.",
-        "Optional later editorial work: replace selected source anchors with manually verified short lecture quotes.",
+        "Replace selected source anchors with manually verified short lecture quotes where a page needs stronger evidence.",
+        "Add hand-written diagrams for the core routes: PINNs, operator learning, surrogate modeling, symbolic regression, and foundation PDE models.",
+        "Keep future commits tied to the first-principles standard: real quantity, observed evidence, hidden quantity, mathematical move, domain use, failure test.",
+        "After any later content change, run git push, make remote-check, and make ci-check before handing the repo to another reviewer.",
     ],
     "remote_finish_commands": [
         "git status --short --branch",
@@ -6364,6 +6370,7 @@ def write_meaty_goal_page(path: Path, goal: dict[str, object]) -> None:
 def write_handoff_page(path: Path, handoff: dict[str, object], summary: dict[str, object]) -> None:
     commands = "".join(f"<li><code>{html.escape(str(command))}</code></li>" for command in handoff["validation_commands"])
     remote_commands = "".join(f"<li><code>{html.escape(str(command))}</code></li>" for command in handoff["remote_finish_commands"])
+    verified = "".join(f"<li>{html.escape(str(item))}</li>" for item in handoff["verified_project_state"])
     remaining = "".join(f"<li>{html.escape(str(item))}</li>" for item in handoff["remaining_editorial_work"])
     local_server = str(handoff["local_server"]).rstrip("/") + "/"
     review_rows = []
@@ -6399,6 +6406,8 @@ def write_handoff_page(path: Path, handoff: dict[str, object], summary: dict[str
 {link_list(list(handoff['start_here']))}
 <h2>Core Review Pages</h2>
 {link_list(list(handoff['core_review_pages']))}
+<h2>Verified Project State</h2>
+<ul>{verified}</ul>
 <h2>Validation Commands</h2>
 <ul>{commands}</ul>
 <h2>Remote Verification Commands</h2>
@@ -7207,6 +7216,9 @@ def write_markdown_export(data: dict[str, object]) -> None:
     lines.append("### Start Here")
     for item in handoff["start_here"]:
         lines.append(f"- {item['label']}: {item['href']}")
+    lines.extend(["", "### Verified Project State"])
+    for item in handoff["verified_project_state"]:
+        lines.append(f"- {item}")
     lines.extend(["", "### Remaining Editorial Work"])
     for item in handoff["remaining_editorial_work"]:
         lines.append(f"- {item}")
@@ -7770,11 +7782,14 @@ def validate(data: dict[str, object] | None = None) -> None:
                 raise SystemExit(f"meaty goal coverage link missing: {row.get('title')} -> {row[href_field]}")
     handoff_path = SITE / "handoff.html"
     handoff_text = handoff_path.read_text(encoding="utf-8")
-    if "Review Now" not in handoff_text or "http://127.0.0.1:8022/hand-polish.html" not in handoff_text or "make review" not in handoff_text or "make remote-check" not in handoff_text or "make ci-check" not in handoff_text or "python3 scripts/verify_remote_state.py" not in handoff_text or "python3 scripts/verify_ci_status.py" not in handoff_text or "Start Here" not in handoff_text or "Remaining Editorial Work" not in handoff_text or "Remote Verification Commands" not in handoff_text:
+    if "Review Now" not in handoff_text or "http://127.0.0.1:8022/hand-polish.html" not in handoff_text or "make review" not in handoff_text or "make remote-check" not in handoff_text or "make ci-check" not in handoff_text or "python3 scripts/verify_remote_state.py" not in handoff_text or "python3 scripts/verify_ci_status.py" not in handoff_text or "Start Here" not in handoff_text or "Verified Project State" not in handoff_text or "Remaining Editorial Work" not in handoff_text or "Remote Verification Commands" not in handoff_text:
         raise SystemExit("handoff page not rendered correctly")
     for command in REVIEW_HANDOFF["remote_finish_commands"]:
         if command not in handoff_text:
             raise SystemExit(f"handoff remote command missing: {command}")
+    for item in REVIEW_HANDOFF["verified_project_state"]:
+        if item not in handoff_text:
+            raise SystemExit(f"handoff verified state missing: {item}")
     for group in ("start_here", "core_review_pages"):
         for item in REVIEW_HANDOFF[group]:
             if not (SITE / item["href"]).exists():
