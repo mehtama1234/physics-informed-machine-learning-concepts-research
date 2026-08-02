@@ -3325,6 +3325,7 @@ MEATY_GOAL_REQUIREMENTS = [
     {"key": "long_everyday_importance_essay", "label": "Long Everyday Importance Essay", "proof_term": "Long Everyday Importance Essay"},
     {"key": "from_scratch_story", "label": "From Scratch Story", "proof_term": "From Scratch Story In Plain Words"},
     {"key": "no_jargon_translation", "label": "No-Jargon Translation", "proof_term": "No-Jargon Translation For This Topic"},
+    {"key": "everyday_vocabulary_bridge", "label": "Everyday Vocabulary Bridge", "proof_term": "Everyday Vocabulary Bridge"},
     {"key": "plain_retell_drill", "label": "Plain Retell Drill", "proof_term": "Plain Retell Drill"},
     {"key": "field_transfer_check", "label": "Field Transfer Check", "proof_term": "Field Transfer Check In Plain Words"},
     {"key": "wrong_path_repair", "label": "Wrong Path Repair", "proof_term": "Wrong Path To Right Path Repair"},
@@ -7382,6 +7383,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     field_mini_cases = topic_field_mini_cases_html(topic, derivation)
     from_scratch_story = topic_from_scratch_story_html(topic, derivation)
     no_jargon_translation = topic_no_jargon_translation_html(topic, derivation)
+    everyday_vocabulary_bridge = topic_everyday_vocabulary_bridge_html(topic, derivation)
     plain_retell_drill = topic_plain_retell_drill_html(topic, derivation)
     field_transfer_check = topic_field_transfer_check_html(topic, derivation)
     wrong_path_repair = topic_wrong_path_repair_html(topic, derivation)
@@ -7440,6 +7442,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
 {field_mini_cases}
 {from_scratch_story}
 {no_jargon_translation}
+{everyday_vocabulary_bridge}
 {plain_retell_drill}
 {field_transfer_check}
 {wrong_path_repair}
@@ -8113,6 +8116,78 @@ def topic_no_jargon_translation_html(topic: dict[str, object], derivation: dict[
   </thead>
   <tbody>{body}</tbody>
 </table>
+"""
+
+
+def topic_everyday_vocabulary_bridge_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
+    title = str(topic["title"])
+    shape = next(row for row in topic_plain_applications(topic, derivation) if row["field"] == "Topology and shape")
+    rows = (
+        (
+            "Object Word",
+            title,
+            f"The name of the tool is less important than the shortage it answers: {str(topic['common_problem'])}.",
+            "What problem made this word necessary?",
+        ),
+        (
+            "Evidence Word",
+            str(derivation["observed"]),
+            "The seen part: something measured, written, simulated, solved, drawn, or checked before the claim.",
+            "What can I point to before I believe anything?",
+        ),
+        (
+            "Missing-Answer Word",
+            str(derivation["hidden"]),
+            "The not-yet-known part that the learner is trying to recover, predict, explain, design, or test.",
+            "What answer would make the real problem easier?",
+        ),
+        (
+            "Action Word",
+            str(derivation["move"]),
+            "The plain step that carries the seen part toward the missing part.",
+            "What action is being taken, without using the topic name?",
+        ),
+        (
+            "Shape Word",
+            str(shape["use"]),
+            "The relation, boundary, path, connection, field, surface, graph, or form that must not be erased.",
+            "What shaped part carries the answer?",
+        ),
+        (
+            "Decision Word",
+            str(topic["why_it_matters"]),
+            "The reason a person in a field would act differently if the answer is right.",
+            "What choice or quantity changes in the world?",
+        ),
+        (
+            "Trust Word",
+            str(topic["failure_boundary"]),
+            "The place where the claim should stop, shrink, or be checked again.",
+            "What changed case would make me stop?",
+        ),
+    )
+    body = "".join(
+        f"""
+<tr>
+  <th>{html.escape(label)}</th>
+  <td>{html.escape(page_words)}</td>
+  <td>{html.escape(everyday_words)}</td>
+  <td>{html.escape(check_question)}</td>
+</tr>
+"""
+        for label, page_words, everyday_words, check_question in rows
+    )
+    return f"""
+<h2>Everyday Vocabulary Bridge</h2>
+<p>This bridge turns the topic vocabulary into plain nouns and verbs before the learner reads symbols or method names.</p>
+<table>
+  <thead>
+    <tr><th>Word Job</th><th>Page Words</th><th>Everyday Words</th><th>Check Question</th></tr>
+  </thead>
+  <tbody>{body}</tbody>
+</table>
+<h3>Vocabulary Pass Test</h3>
+<p>The bridge passes only if the learner can replace object, evidence, missing-answer, action, shape, decision, and trust words with plain speech.</p>
 """
 
 
@@ -10754,6 +10829,19 @@ def validate(data: dict[str, object] | None = None) -> None:
             "Hidden Answer",
             "Math Move",
             "Trust Boundary",
+            "Everyday Vocabulary Bridge",
+            "Word Job",
+            "Page Words",
+            "Everyday Words",
+            "Check Question",
+            "Object Word",
+            "Evidence Word",
+            "Missing-Answer Word",
+            "Action Word",
+            "Shape Word",
+            "Decision Word",
+            "Trust Word",
+            "Vocabulary Pass Test",
             "Plain Retell Drill",
             "Start With The Shortage",
             "Name The Evidence",
@@ -11647,7 +11735,7 @@ def validate(data: dict[str, object] | None = None) -> None:
             raise SystemExit(f"meaty goal core page link missing: {item['href']}")
     goal_coverage_path = SITE / "meaty-goal-coverage.html"
     goal_coverage_text = goal_coverage_path.read_text(encoding="utf-8")
-    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Teach From Zero" not in goal_coverage_text or "Application Claim Ladder" not in goal_coverage_text or "Field Decision Story" not in goal_coverage_text or "Plain Question To Answer Script" not in goal_coverage_text or "Know And Still Test" not in goal_coverage_text or "Failure Consequence" not in goal_coverage_text or "Slow Problem Shape Bridge" not in goal_coverage_text or "Slow Importance Essay" not in goal_coverage_text or "Source-To-Claim Boundary" not in goal_coverage_text or "Teach Someone Handoff" not in goal_coverage_text or "Topology Shape Story" not in goal_coverage_text or "Confusion To Clarity" not in goal_coverage_text or "Hand Teaching Note" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Concept Connections" not in goal_coverage_text or "Belief Evidence" not in goal_coverage_text or "Domain Fit" not in goal_coverage_text or "Shape Follows" not in goal_coverage_text or "Reader Answer Parts" not in goal_coverage_text or "Say It Back Check" not in goal_coverage_text or "Misread Repair Drill" not in goal_coverage_text or "Plain-Language Audit" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
+    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Teach From Zero" not in goal_coverage_text or "Application Claim Ladder" not in goal_coverage_text or "Field Decision Story" not in goal_coverage_text or "Everyday Vocabulary Bridge" not in goal_coverage_text or "Plain Question To Answer Script" not in goal_coverage_text or "Know And Still Test" not in goal_coverage_text or "Failure Consequence" not in goal_coverage_text or "Slow Problem Shape Bridge" not in goal_coverage_text or "Slow Importance Essay" not in goal_coverage_text or "Source-To-Claim Boundary" not in goal_coverage_text or "Teach Someone Handoff" not in goal_coverage_text or "Topology Shape Story" not in goal_coverage_text or "Confusion To Clarity" not in goal_coverage_text or "Hand Teaching Note" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Concept Connections" not in goal_coverage_text or "Belief Evidence" not in goal_coverage_text or "Domain Fit" not in goal_coverage_text or "Shape Follows" not in goal_coverage_text or "Reader Answer Parts" not in goal_coverage_text or "Say It Back Check" not in goal_coverage_text or "Misread Repair Drill" not in goal_coverage_text or "Plain-Language Audit" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
         raise SystemExit("meaty goal coverage audit not rendered correctly")
     goal_coverage_rows = data.get("meaty_goal_coverage") or []
     if len(goal_coverage_rows) != len(data["concept_atlas"]):
