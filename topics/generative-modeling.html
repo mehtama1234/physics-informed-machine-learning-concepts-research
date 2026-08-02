@@ -183,6 +183,21 @@
 <p>Topology and shape are not a side note in this ladder. They are part of the application claim whenever the answer depends on connections, boundaries, holes, distances, mesh, molecule shape, or how information moves across a field.</p>
 
 
+<h2>Plain Question To Answer Script</h2>
+<p>Use this script as a full spoken answer. It starts with the real question, not the topic name, and it ends with the condition that can reject the claim.</p>
+<ol>
+  <li><strong>Real question:</strong> In this setting: A team needs many possible turbulent fields for stress testing a downstream solver.</li>
+  <li><strong>Evidence sentence:</strong> I can start from examples of fields, molecules, flows, shapes, or other scientific objects.</li>
+  <li><strong>Missing-answer sentence:</strong> I still need the spread of possible valid objects beyond the examples.</li>
+  <li><strong>Why Generative Modeling enters:</strong> It enters because the plain move is to learn how to sample new candidates that resemble the training family.</li>
+  <li><strong>Shape or topology sentence:</strong> I must check shape because Generative modeling matters here only if the samples are valid objects, not just plausible pictures. The shape check is: Test connected parts, forbidden holes, mesh validity, and downstream use.</li>
+  <li><strong>Field-use sentence:</strong> In field problems, sample possible fields for stress tests, rare cases, or downstream solvers. The field check is: Measure conservation, rare-event rates, boundary behavior, and downstream task performance.</li>
+  <li><strong>Allowed-answer sentence:</strong> The answer is allowed to mean only this: a generated object must still pass physics and usefulness checks.</li>
+  <li><strong>Stop sentence:</strong> I should stop or narrow the claim when this fails: measure constraints, rare cases, conservation, and downstream task performance on generated samples.</li>
+</ol>
+<p>A reader who cannot say this script in everyday words is not done with the topic yet. The missing part is usually the hidden answer, the shape issue, or the changed case that would prove the answer is not ready.</p>
+
+
 <h2>Plain Big Picture Essay</h2>
 <p>Start with the human problem. Someone needs to act, explain, build, test, or decide, and the answer is not sitting in front of them. For Generative Modeling, the plain problem is this: some tasks need many possible examples, not one predicted answer. The course idea is important only because it helps move from what is already known to what still has to be known. If that movement is not clear, the page is only naming a tool. If the movement is clear, the reader can see why the tool enters at all.</p>
 <p>The first-principles path is simple. We have evidence: examples of fields, molecules, flows, shapes, or other scientific objects. We need something hidden: the spread of possible valid objects beyond the examples. We make a move: learn how to sample new candidates that resemble the training family. The move is allowed only because it carries the right part of the evidence toward the missing answer. It is not allowed to claim more than that. The final claim is: a generated object must still pass physics and usefulness checks.</p>

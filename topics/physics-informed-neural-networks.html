@@ -183,6 +183,21 @@
 <p>Topology and shape are not a side note in this ladder. They are part of the application claim whenever the answer depends on connections, boundaries, holes, distances, mesh, molecule shape, or how information moves across a field.</p>
 
 
+<h2>Plain Question To Answer Script</h2>
+<p>Use this script as a full spoken answer. It starts with the real question, not the topic name, and it ends with the condition that can reject the claim.</p>
+<ol>
+  <li><strong>Real question:</strong> In this setting: A heat plate has only a few temperature sensors, but the heat equation and boundary temperatures are partly known.</li>
+  <li><strong>Evidence sentence:</strong> I can start from some measured values, boundary values, starting values, and a known differential equation.</li>
+  <li><strong>Missing-answer sentence:</strong> I still need the full field value at every point in space and time.</li>
+  <li><strong>Why Physics-Informed Neural Networks enters:</strong> It enters because the plain move is to fit a neural network while also measuring how badly its output violates the known equation.</li>
+  <li><strong>Shape or topology sentence:</strong> I must check shape because A PINN matters here when sparse points are not enough but an equation can still guide the missing field. The shape check is: Move sensors, change the boundary, or bend the domain and compare the hidden field with trusted values.</li>
+  <li><strong>Field-use sentence:</strong> In field problems, recover a full field from sparse measurements without ignoring the governing equation. The field check is: Change source terms, boundaries, or sensor placement and compare against a solver or held-out data.</li>
+  <li><strong>Allowed-answer sentence:</strong> The answer is allowed to mean only this: the model is not allowed to match points while freely breaking the equation between those points.</li>
+  <li><strong>Stop sentence:</strong> I should stop or narrow the claim when this fails: move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements.</li>
+</ol>
+<p>A reader who cannot say this script in everyday words is not done with the topic yet. The missing part is usually the hidden answer, the shape issue, or the changed case that would prove the answer is not ready.</p>
+
+
 <h2>Plain Big Picture Essay</h2>
 <p>Start with the human problem. Someone needs to act, explain, build, test, or decide, and the answer is not sitting in front of them. For Physics-Informed Neural Networks, the plain problem is this: measurements may be sparse, but the answer must still respect a known physical equation. The course idea is important only because it helps move from what is already known to what still has to be known. If that movement is not clear, the page is only naming a tool. If the movement is clear, the reader can see why the tool enters at all.</p>
 <p>The first-principles path is simple. We have evidence: some measured values, boundary values, starting values, and a known differential equation. We need something hidden: the full field value at every point in space and time. We make a move: fit a neural network while also measuring how badly its output violates the known equation. The move is allowed only because it carries the right part of the evidence toward the missing answer. It is not allowed to claim more than that. The final claim is: the model is not allowed to match points while freely breaking the equation between those points.</p>
