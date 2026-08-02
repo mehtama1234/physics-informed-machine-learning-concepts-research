@@ -3314,6 +3314,7 @@ MEATY_GOAL_REQUIREMENTS = [
     {"key": "use_protocol", "label": "End-To-End Use Protocol", "proof_term": "End-To-End Use Protocol"},
     {"key": "before_math_slow_walk", "label": "Before The Math Slow Walk", "proof_term": "Before The Math Slow Walk"},
     {"key": "teach_from_zero", "label": "Teach From Zero", "proof_term": "Teach It From Zero"},
+    {"key": "application_claim_ladder", "label": "Application Claim Ladder", "proof_term": "Application Claim Ladder"},
     {"key": "plain_big_picture", "label": "Plain Big Picture Essay", "proof_term": "Plain Big Picture Essay"},
     {"key": "slow_importance_essay", "label": "Slow Importance Essay", "proof_term": "Why This Matters Slowly"},
     {"key": "hand_teaching_note", "label": "Hand Teaching Note", "proof_term": "Hand Teaching Note"},
@@ -6874,6 +6875,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     use_protocol = topic_use_protocol_html(topic, derivation)
     first_principles_essay = topic_first_principles_essay_html(topic, derivation)
     teach_from_zero = topic_teach_from_zero_html(topic, derivation)
+    application_claim_ladder = topic_application_claim_ladder_html(topic, derivation)
     plain_big_picture = topic_plain_big_picture_essay_html(topic, derivation)
     slow_importance = topic_slow_importance_essay_html(topic, derivation)
     teaching_note = topic_teaching_note_html(str(topic["slug"]))
@@ -6908,6 +6910,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
 {use_protocol}
 {first_principles_essay}
 {teach_from_zero}
+{application_claim_ladder}
 {plain_big_picture}
 {slow_importance}
 {teaching_note}
@@ -7483,6 +7486,33 @@ def topic_teach_from_zero_html(topic: dict[str, object], derivation: dict[str, o
 <p><strong>Where Shape Or Topology Enters:</strong> Shape and topology matter when the answer depends on what is connected, what touches a boundary, what has a hole, what is near or far, or what path information can travel through. For this topic, the shape use is: {html.escape(str(shape['use']))} The first shape check is: {html.escape(str(shape['check']))}</p>
 <p><strong>Where People Use It:</strong> In engineering, {html.escape(engineering_use)} In materials, chemistry, and biology, {html.escape(materials_use)} In climate, fluids, and field problems, {html.escape(fields_use)} These uses are different on the surface, but the same plain question sits underneath: what evidence do we have, what answer is missing, and what changed case would make us stop?</p>
 <p><strong>End With The Claim:</strong> After all that, {html.escape(title)} is allowed to claim only this: {html.escape(str(derivation['meaning']))}. The first rejection check is {html.escape(str(derivation['test']))}. If a reader can say that whole chain without hiding behind the topic name, the idea has started to become understandable.</p>
+"""
+
+
+def topic_application_claim_ladder_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
+    applications = topic_plain_applications(topic, derivation)
+    rows = []
+    for row in applications:
+        rows.append(
+            f"""
+<tr>
+  <td>{html.escape(str(row['field']))}</td>
+  <td>{html.escape(str(row['use']))}</td>
+  <td>{html.escape(str(derivation['observed']))}</td>
+  <td>{html.escape(str(derivation['hidden']))}</td>
+  <td>{html.escape(str(derivation['move']))}</td>
+  <td>{html.escape(str(row['check']))}</td>
+</tr>
+"""
+        )
+    return f"""
+<h2>Application Claim Ladder</h2>
+<p>Each application has to climb the same ladder before it becomes believable. Name the field use, name the evidence, name the missing answer, name the plain move, and end with the first check that can reject the claim.</p>
+<table>
+  <thead><tr><th>Application Field</th><th>Plain Use</th><th>Evidence To Start From</th><th>Hidden Answer Needed</th><th>First-Principles Move</th><th>Changed Case That Tests It</th></tr></thead>
+  <tbody>{''.join(rows)}</tbody>
+</table>
+<p>Topology and shape are not a side note in this ladder. They are part of the application claim whenever the answer depends on connections, boundaries, holes, distances, mesh, molecule shape, or how information moves across a field.</p>
 """
 
 
@@ -9491,6 +9521,11 @@ def validate(data: dict[str, object] | None = None) -> None:
             "Where Shape Or Topology Enters",
             "Where People Use It",
             "End With The Claim",
+            "Application Claim Ladder",
+            "Application Field",
+            "Evidence To Start From",
+            "Hidden Answer Needed",
+            "Changed Case That Tests It",
             "Plain Big Picture Essay",
             "Why This Matters Slowly",
             "Topology and shape matter here",
@@ -10104,7 +10139,7 @@ def validate(data: dict[str, object] | None = None) -> None:
             raise SystemExit(f"meaty goal core page link missing: {item['href']}")
     goal_coverage_path = SITE / "meaty-goal-coverage.html"
     goal_coverage_text = goal_coverage_path.read_text(encoding="utf-8")
-    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Teach From Zero" not in goal_coverage_text or "Slow Importance Essay" not in goal_coverage_text or "Hand Teaching Note" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Concept Connections" not in goal_coverage_text or "Belief Evidence" not in goal_coverage_text or "Domain Fit" not in goal_coverage_text or "Shape Follows" not in goal_coverage_text or "Reader Answer Parts" not in goal_coverage_text or "Say It Back Check" not in goal_coverage_text or "Plain-Language Audit" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
+    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Teach From Zero" not in goal_coverage_text or "Application Claim Ladder" not in goal_coverage_text or "Slow Importance Essay" not in goal_coverage_text or "Hand Teaching Note" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Concept Connections" not in goal_coverage_text or "Belief Evidence" not in goal_coverage_text or "Domain Fit" not in goal_coverage_text or "Shape Follows" not in goal_coverage_text or "Reader Answer Parts" not in goal_coverage_text or "Say It Back Check" not in goal_coverage_text or "Plain-Language Audit" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
         raise SystemExit("meaty goal coverage audit not rendered correctly")
     goal_coverage_rows = data.get("meaty_goal_coverage") or []
     if len(goal_coverage_rows) != len(data["concept_atlas"]):
