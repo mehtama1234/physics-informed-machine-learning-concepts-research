@@ -56,14 +56,48 @@
 <h2>Observed And Hidden</h2>
 <p><strong>Observed:</strong> many prior equation tasks, grids, parameters, boundary types, and solution fields</p>
 <p><strong>Hidden:</strong> which shared structure carries to the new equation and which parts do not</p>
+<p><strong>Decision Quantity:</strong> whether the new PDE task can be answered with reused structure from previous tasks</p>
 <h2>Method Route</h2>
 <ul><li><a href="../topics/foundation-models-for-pdes.html">Foundation Models For PDEs</a></li><li><a href="../topics/operator-learning.html">Operator Learning</a></li><li><a href="../topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></li></ul>
 <h2>Plain Steps</h2>
 <div class="route"><div class="route-step">1. List what the broad model has seen before.</div><div class="route-step">2. Name what is different about the new equation, boundary, scale, or field.</div><div class="route-step">3. Use the model only as a candidate shortcut for the new task.</div><div class="route-step">4. Compare against a trusted solve and look for the first changed condition where it fails.</div></div>
+
+<h2>Why Each Step Follows</h2>
+<table>
+  <thead>
+    <tr><th>Step</th><th>Move</th><th>Why It Follows From The Evidence</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <th>1</th>
+  <td>List what the broad model has seen before.</td>
+  <td>The training history defines what shared structure the broad model could have learned.</td>
+</tr>
+
+<tr>
+  <th>2</th>
+  <td>Name what is different about the new equation, boundary, scale, or field.</td>
+  <td>The new equation, boundary, scale, or field names the gap that must not be hidden.</td>
+</tr>
+
+<tr>
+  <th>3</th>
+  <td>Use the model only as a candidate shortcut for the new task.</td>
+  <td>Calling it a candidate shortcut keeps the claim smaller than proof of broad skill.</td>
+</tr>
+
+<tr>
+  <th>4</th>
+  <td>Compare against a trusted solve and look for the first changed condition where it fails.</td>
+  <td>A trusted solve on the changed task checks whether reused structure still carries the needed answer.</td>
+</tr>
+</tbody>
+</table>
+
 <h2>Why This Example Teaches The Field</h2>
 <p>It makes breadth concrete. A broad model is useful only when the new task shares the structure the model actually learned.</p>
 <h2>Claim Boundary</h2>
-<p>The example supports a method only inside the named scientific job. A wider claim needs a new test, not stronger wording.</p>
+<p>The example supports a method only inside the named scientific job. A wider claim needs a new test, not stronger wording. The first failure signal is: the model looks broad but fails on the held-out equation family, boundary type, scale, or quantity.</p>
 
 <h2>Example Stress Test</h2>
 <p>Use this test to decide whether the worked example is a scientific explanation or only a story about a method.</p>
@@ -71,8 +105,10 @@
   <tbody>
     <tr><th>Known Evidence</th><td>many prior equation tasks, grids, parameters, boundary types, and solution fields</td></tr>
     <tr><th>Needed Answer</th><td>which shared structure carries to the new equation and which parts do not</td></tr>
+    <tr><th>Decision Quantity</th><td>whether the new PDE task can be answered with reused structure from previous tasks</td></tr>
     <tr><th>Method Route Under Test</th><td>foundation models for pdes -&gt; operator learning -&gt; uncertainty and generalization</td></tr>
     <tr><th>Changed Case To Try</th><td>Compare against a trusted solve and look for the first changed condition where it fails.</td></tr>
+    <tr><th>First Failure Signal</th><td>the model looks broad but fails on the held-out equation family, boundary type, scale, or quantity</td></tr>
     <tr><th>Passes Only If</th><td>The route still answers the original question: When can a model trained on many PDE examples help with a new equation family?</td></tr>
   </tbody>
 </table>

@@ -316,48 +316,112 @@
 - Question: What is the temperature everywhere if sensors only report a few places?
 - Observed: sensor readings, starting temperature, boundary temperature, and the rule that heat flows from hot regions toward cold regions
 - Hidden: temperature at every unsensed point and later time
+- Decision quantity: temperature at unsensed places and later times
+- First failure signal: the fitted field matches sensor points but gives the wrong temperature between them or after the starting time
+
+#### Why Each Step Follows
+- Draw the unknown temperature as a field, not as one number. Reason: A field is needed because the answer lives between sensors, not only at sensor points.
+- Use the measured points as anchors. Reason: The measurements stop the fitted field from drifting away from what was actually observed.
+- Use the heat rule as a check between anchors. Reason: The heat rule tells the unsensed middle how it is allowed to connect hot and cold regions.
+- Compare with held-out sensors or a trusted solve. Reason: Held-out sensors or a trusted solve check whether the rule helped rather than only making the fit look tidy.
 
 ### Fast Fluid Field Surrogate
 - Domain: air or liquid flow around shapes
 - Question: How can engineers test many shapes without running a full simulation every time?
 - Observed: many prior simulations connecting shape, conditions, and resulting velocity or pressure fields
 - Hidden: the flow field for a new shape or new condition
+- Decision quantity: velocity, pressure, drag, lift, or another flow quantity used for the design choice
+- First failure signal: the shortcut is fast but misses a force, vortex, or boundary effect that changes the engineering choice
+
+#### Why Each Step Follows
+- Name the range of shapes and flow conditions. Reason: The range of shapes and conditions defines what the shortcut is allowed to answer.
+- Train a model on full fields from trusted simulations. Reason: Full trusted fields teach the shortcut both local details and larger flow patterns.
+- Predict a new field quickly. Reason: Fast prediction matters only because the same kind of query must be answered many times.
+- Reject the shortcut if it misses boundary behavior, vortices, or pressure forces that matter. Reason: Boundary behavior and forces are checked because they can decide the design even when the picture looks smooth.
 
 ### Discovering A Small Law From Motion
 - Domain: a measured system changing over time
 - Question: Can data reveal a short rule for how the system moves?
 - Observed: measurements of position, speed, concentration, or another changing quantity
 - Hidden: the rate rule that causes the next moment
+- Decision quantity: the rate rule that explains and predicts the measured change
+- First failure signal: the rule fits the original trace but breaks when the starting condition, forcing, or measured setting changes
+
+#### Why Each Step Follows
+- Measure the variables that might matter. Reason: Only measured variables can fairly appear in the proposed rule.
+- Estimate how they change from moment to moment. Reason: Change from moment to moment is the evidence for the missing rate.
+- Search for a short rule or learn the missing rate. Reason: A short rule or learned rate is the candidate bridge from the present state to the next one.
+- Test on a new experiment, not only the original trace. Reason: A new experiment checks whether the rule is about the system rather than one recorded trace.
 
 ### Molecule Property From Structure
 - Domain: chemistry and biology, where atoms, bonds, shape, and measured activity all matter
 - Question: Can a model predict a useful molecular property without flattening away the structure that causes it?
 - Observed: molecular graphs, atom types, bond patterns, shape information, and measured properties from experiments or trusted calculations
 - Hidden: which structural relations control the property for a new molecule
+- Decision quantity: the molecular property or activity that will guide a chemistry or biology choice
+- First failure signal: the model works on familiar molecules but fails on a new scaffold, rare atom type, or changed assay
+
+#### Why Each Step Follows
+- Represent the molecule as connected parts, not as an unordered list. Reason: The molecule's connections are part of the object, so flattening them can remove the reason the property appears.
+- Let information move along bonds and nearby spatial relations. Reason: Information moves along bonds and spatial neighbors because atoms affect one another through structure.
+- Predict the target property for a new molecule. Reason: The prediction is useful only when it names the property being used for the next choice.
+- Reject the claim if a new scaffold, rare atom type, or changed assay breaks the prediction. Reason: New scaffolds, rare atoms, and changed assays test whether the model learned chemistry or only familiar examples.
 
 ### Material Stress From Sparse Tests
 - Domain: materials and mechanics, where stress and strain depend on shape, load, defects, and boundary conditions
 - Question: How can a model estimate stress inside a material when only a few tests or simulations are available?
 - Observed: sample geometry, load conditions, a few measured displacements or strains, and known mechanical balance laws
 - Hidden: the internal stress field and the weak region where failure may begin
+- Decision quantity: internal stress, strain, or the location where failure may begin
+- First failure signal: the model has low average error but misses the local stress concentration that drives failure
+
+#### Why Each Step Follows
+- Name the material quantity that matters for the decision. Reason: The decision quantity matters because average error can hide the weak region.
+- Use sparse measurements as anchors for the unknown field. Reason: Sparse measurements anchor the unknown field to real tests or trusted simulations.
+- Use mechanical balance as a check between measured places. Reason: Mechanical balance limits what can happen between measured places.
+- Compare against held-out tests, changed loads, and trusted simulations near failure regions. Reason: Changed loads and near-failure regions check the place where a wrong field would be most costly.
 
 ### Mesh Field On Irregular Geometry
 - Domain: scientific fields on meshes, surfaces, networks, and irregular engineering shapes
 - Question: How can a model predict a field when the points are connected in an uneven shape instead of a neat grid?
 - Observed: mesh points, connections, boundary labels, local features, and solution fields from prior solves
 - Hidden: how information should move across the irregular geometry for a new case
+- Decision quantity: the field value on the connected shape, especially near boundaries and refined regions
+- First failure signal: renumbering, refining, rotating, or changing the boundary makes the field answer change for the wrong reason
+
+#### Why Each Step Follows
+- Keep the mesh connections visible. Reason: Connections tell the model which points can physically or geometrically affect one another.
+- Pass information along nearby and important distant relations. Reason: Nearby and distant relations both matter when boundary regions or long paths carry influence.
+- Predict the field on the same kind of geometric object. Reason: The prediction must live on the same kind of connected object, not on a shuffled table.
+- Test changed meshes, boundaries, rotations, and refined regions before trusting the answer. Reason: Changed meshes and rotations check whether the answer follows the shape rather than the file layout.
 
 ### Foundation PDE Model On A New Equation
 - Domain: many PDE tasks where one broad model is asked to help with a new scientific equation
 - Question: When can a model trained on many PDE examples help with a new equation family?
 - Observed: many prior equation tasks, grids, parameters, boundary types, and solution fields
 - Hidden: which shared structure carries to the new equation and which parts do not
+- Decision quantity: whether the new PDE task can be answered with reused structure from previous tasks
+- First failure signal: the model looks broad but fails on the held-out equation family, boundary type, scale, or quantity
+
+#### Why Each Step Follows
+- List what the broad model has seen before. Reason: The training history defines what shared structure the broad model could have learned.
+- Name what is different about the new equation, boundary, scale, or field. Reason: The new equation, boundary, scale, or field names the gap that must not be hidden.
+- Use the model only as a candidate shortcut for the new task. Reason: Calling it a candidate shortcut keeps the claim smaller than proof of broad skill.
+- Compare against a trusted solve and look for the first changed condition where it fails. Reason: A trusted solve on the changed task checks whether reused structure still carries the needed answer.
 
 ### Climate Risk Under Shifted Conditions
 - Domain: climate, weather, and environmental fields where future conditions may differ from old data
 - Question: How should a model report risk when the future case is not just another familiar example?
 - Observed: historical fields, simulation ensembles, forcing conditions, regional measurements, and known physical constraints
 - Hidden: how wrong the prediction may be under a changed climate, rare event, or new regional pattern
+- Decision quantity: the risk quantity for a region, time window, rare event, or changed forcing condition
+- First failure signal: the model reports confident risk while rare events, changed forcing, or the target region were not tested
+
+#### Why Each Step Follows
+- Name the risk quantity before choosing a model. Reason: The risk quantity comes first because different risks need different evidence.
+- Separate familiar held-out cases from truly changed future conditions. Reason: Familiar held-out cases do not prove behavior under a changed future condition.
+- Report prediction with the tested use range. Reason: The use range is part of the answer because it says where the prediction has support.
+- Reject confident claims when rare events, regions, or forcing changes have not been checked. Reason: Rare events and changed forcing are checked because they are often where the decision matters most.
 
 
 ## Core Topic Deep Dives

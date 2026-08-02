@@ -517,6 +517,14 @@ WORKED_EXAMPLES = [
             "Use the heat rule as a check between anchors.",
             "Compare with held-out sensors or a trusted solve.",
         ],
+        "decision_quantity": "temperature at unsensed places and later times",
+        "step_rationale": [
+            "A field is needed because the answer lives between sensors, not only at sensor points.",
+            "The measurements stop the fitted field from drifting away from what was actually observed.",
+            "The heat rule tells the unsensed middle how it is allowed to connect hot and cold regions.",
+            "Held-out sensors or a trusted solve check whether the rule helped rather than only making the fit look tidy.",
+        ],
+        "failure_signal": "the fitted field matches sensor points but gives the wrong temperature between them or after the starting time",
         "why_it_teaches": "This is the cleanest entry point for PINNs because the physical rule is familiar: heat smooths out unless a source keeps adding energy.",
     },
     {
@@ -533,6 +541,14 @@ WORKED_EXAMPLES = [
             "Predict a new field quickly.",
             "Reject the shortcut if it misses boundary behavior, vortices, or pressure forces that matter.",
         ],
+        "decision_quantity": "velocity, pressure, drag, lift, or another flow quantity used for the design choice",
+        "step_rationale": [
+            "The range of shapes and conditions defines what the shortcut is allowed to answer.",
+            "Full trusted fields teach the shortcut both local details and larger flow patterns.",
+            "Fast prediction matters only because the same kind of query must be answered many times.",
+            "Boundary behavior and forces are checked because they can decide the design even when the picture looks smooth.",
+        ],
+        "failure_signal": "the shortcut is fast but misses a force, vortex, or boundary effect that changes the engineering choice",
         "why_it_teaches": "It shows why speed is not the same as trust. The useful claim is a fast answer inside a tested design family.",
     },
     {
@@ -549,6 +565,14 @@ WORKED_EXAMPLES = [
             "Search for a short rule or learn the missing rate.",
             "Test on a new experiment, not only the original trace.",
         ],
+        "decision_quantity": "the rate rule that explains and predicts the measured change",
+        "step_rationale": [
+            "Only measured variables can fairly appear in the proposed rule.",
+            "Change from moment to moment is the evidence for the missing rate.",
+            "A short rule or learned rate is the candidate bridge from the present state to the next one.",
+            "A new experiment checks whether the rule is about the system rather than one recorded trace.",
+        ],
+        "failure_signal": "the rule fits the original trace but breaks when the starting condition, forcing, or measured setting changes",
         "why_it_teaches": "It separates prediction from explanation. A readable rule becomes valuable only when it survives a changed experiment.",
     },
     {
@@ -565,6 +589,14 @@ WORKED_EXAMPLES = [
             "Predict the target property for a new molecule.",
             "Reject the claim if a new scaffold, rare atom type, or changed assay breaks the prediction.",
         ],
+        "decision_quantity": "the molecular property or activity that will guide a chemistry or biology choice",
+        "step_rationale": [
+            "The molecule's connections are part of the object, so flattening them can remove the reason the property appears.",
+            "Information moves along bonds and spatial neighbors because atoms affect one another through structure.",
+            "The prediction is useful only when it names the property being used for the next choice.",
+            "New scaffolds, rare atoms, and changed assays test whether the model learned chemistry or only familiar examples.",
+        ],
+        "failure_signal": "the model works on familiar molecules but fails on a new scaffold, rare atom type, or changed assay",
         "why_it_teaches": "It shows why geometry and connections matter. The scientific object already has structure before the model sees it.",
     },
     {
@@ -581,6 +613,14 @@ WORKED_EXAMPLES = [
             "Use mechanical balance as a check between measured places.",
             "Compare against held-out tests, changed loads, and trusted simulations near failure regions.",
         ],
+        "decision_quantity": "internal stress, strain, or the location where failure may begin",
+        "step_rationale": [
+            "The decision quantity matters because average error can hide the weak region.",
+            "Sparse measurements anchor the unknown field to real tests or trusted simulations.",
+            "Mechanical balance limits what can happen between measured places.",
+            "Changed loads and near-failure regions check the place where a wrong field would be most costly.",
+        ],
+        "failure_signal": "the model has low average error but misses the local stress concentration that drives failure",
         "why_it_teaches": "It connects physics constraints to a practical engineering risk: missing a local stress concentration can matter more than average error.",
     },
     {
@@ -597,6 +637,14 @@ WORKED_EXAMPLES = [
             "Predict the field on the same kind of geometric object.",
             "Test changed meshes, boundaries, rotations, and refined regions before trusting the answer.",
         ],
+        "decision_quantity": "the field value on the connected shape, especially near boundaries and refined regions",
+        "step_rationale": [
+            "Connections tell the model which points can physically or geometrically affect one another.",
+            "Nearby and distant relations both matter when boundary regions or long paths carry influence.",
+            "The prediction must live on the same kind of connected object, not on a shuffled table.",
+            "Changed meshes and rotations check whether the answer follows the shape rather than the file layout.",
+        ],
+        "failure_signal": "renumbering, refining, rotating, or changing the boundary makes the field answer change for the wrong reason",
         "why_it_teaches": "It shows why some scientific data cannot be treated like a flat table. The connections carry part of the physics.",
     },
     {
@@ -613,6 +661,14 @@ WORKED_EXAMPLES = [
             "Use the model only as a candidate shortcut for the new task.",
             "Compare against a trusted solve and look for the first changed condition where it fails.",
         ],
+        "decision_quantity": "whether the new PDE task can be answered with reused structure from previous tasks",
+        "step_rationale": [
+            "The training history defines what shared structure the broad model could have learned.",
+            "The new equation, boundary, scale, or field names the gap that must not be hidden.",
+            "Calling it a candidate shortcut keeps the claim smaller than proof of broad skill.",
+            "A trusted solve on the changed task checks whether reused structure still carries the needed answer.",
+        ],
+        "failure_signal": "the model looks broad but fails on the held-out equation family, boundary type, scale, or quantity",
         "why_it_teaches": "It makes breadth concrete. A broad model is useful only when the new task shares the structure the model actually learned.",
     },
     {
@@ -629,6 +685,14 @@ WORKED_EXAMPLES = [
             "Report prediction with the tested use range.",
             "Reject confident claims when rare events, regions, or forcing changes have not been checked.",
         ],
+        "decision_quantity": "the risk quantity for a region, time window, rare event, or changed forcing condition",
+        "step_rationale": [
+            "The risk quantity comes first because different risks need different evidence.",
+            "Familiar held-out cases do not prove behavior under a changed future condition.",
+            "The use range is part of the answer because it says where the prediction has support.",
+            "Rare events and changed forcing are checked because they are often where the decision matters most.",
+        ],
+        "failure_signal": "the model reports confident risk while rare events, changed forcing, or the target region were not tested",
         "why_it_teaches": "It shows why uncertainty is not an add-on. The use range is part of the scientific answer.",
     },
 ]
@@ -6560,6 +6624,7 @@ def strip_use_when(text: str) -> str:
 
 def write_worked_example_page(path: Path, example: dict[str, object]) -> None:
     steps = "".join(f"<div class=\"route-step\">{idx}. {html.escape(step)}</div>" for idx, step in enumerate(example["plain_steps"], start=1))
+    step_rationale = worked_example_step_rationale_html(example)
     flow_nodes = [
         f"Observed: {example['observed']}",
         f"Hidden: {example['hidden']}",
@@ -6581,17 +6646,42 @@ def write_worked_example_page(path: Path, example: dict[str, object]) -> None:
 <h2>Observed And Hidden</h2>
 <p><strong>Observed:</strong> {html.escape(str(example['observed']))}</p>
 <p><strong>Hidden:</strong> {html.escape(str(example['hidden']))}</p>
+<p><strong>Decision Quantity:</strong> {html.escape(str(example['decision_quantity']))}</p>
 <h2>Method Route</h2>
 {concept_links(list(example['method_route']), root_prefix="../")}
 <h2>Plain Steps</h2>
 <div class="route">{steps}</div>
+{step_rationale}
 <h2>Why This Example Teaches The Field</h2>
 <p>{html.escape(str(example['why_it_teaches']))}</p>
 <h2>Claim Boundary</h2>
-<p>The example supports a method only inside the named scientific job. A wider claim needs a new test, not stronger wording.</p>
+<p>The example supports a method only inside the named scientific job. A wider claim needs a new test, not stronger wording. The first failure signal is: {html.escape(str(example['failure_signal']))}.</p>
 {stress_test}
 """
     path.write_text(html_page(str(example["title"]), body, root_prefix="../"), encoding="utf-8")
+
+
+def worked_example_step_rationale_html(example: dict[str, object]) -> str:
+    rows = []
+    for idx, (step, reason) in enumerate(zip(example["plain_steps"], example["step_rationale"]), start=1):
+        rows.append(
+            f"""
+<tr>
+  <th>{idx}</th>
+  <td>{html.escape(str(step))}</td>
+  <td>{html.escape(str(reason))}</td>
+</tr>
+"""
+        )
+    return f"""
+<h2>Why Each Step Follows</h2>
+<table>
+  <thead>
+    <tr><th>Step</th><th>Move</th><th>Why It Follows From The Evidence</th></tr>
+  </thead>
+  <tbody>{''.join(rows)}</tbody>
+</table>
+"""
 
 
 def worked_example_story_html(example: dict[str, object]) -> str:
@@ -6613,8 +6703,10 @@ def worked_example_stress_test_html(example: dict[str, object]) -> str:
   <tbody>
     <tr><th>Known Evidence</th><td>{html.escape(str(example['observed']))}</td></tr>
     <tr><th>Needed Answer</th><td>{html.escape(str(example['hidden']))}</td></tr>
+    <tr><th>Decision Quantity</th><td>{html.escape(str(example['decision_quantity']))}</td></tr>
     <tr><th>Method Route Under Test</th><td>{html.escape(route)}</td></tr>
     <tr><th>Changed Case To Try</th><td>{html.escape(last_step)}</td></tr>
+    <tr><th>First Failure Signal</th><td>{html.escape(str(example['failure_signal']))}</td></tr>
     <tr><th>Passes Only If</th><td>The route still answers the original question: {html.escape(str(example['question']))}</td></tr>
   </tbody>
 </table>
@@ -6694,9 +6786,15 @@ def write_markdown_export(data: dict[str, object]) -> None:
                 f"- Question: {example['question']}",
                 f"- Observed: {example['observed']}",
                 f"- Hidden: {example['hidden']}",
+                f"- Decision quantity: {example['decision_quantity']}",
+                f"- First failure signal: {example['failure_signal']}",
                 "",
             ]
         )
+        lines.append("#### Why Each Step Follows")
+        for step, reason in zip(example["plain_steps"], example["step_rationale"]):
+            lines.append(f"- {step} Reason: {reason}")
+        lines.append("")
     lines.extend(["", "## Core Topic Deep Dives"])
     for slug, deep in data["topic_deep_dives"].items():
         lines.extend(
@@ -7176,8 +7274,13 @@ def validate(data: dict[str, object] | None = None) -> None:
         if not example_path.exists():
             raise SystemExit(f"missing worked example page: {example['title']}")
         example_text = example_path.read_text(encoding="utf-8")
-        if "First-Principles Story" not in example_text or "End-To-End Flow" not in example_text or "flow-node" not in example_text or "Claim Boundary" not in example_text or "Example Stress Test" not in example_text or "Method Route Under Test" not in example_text or "Passes Only If" not in example_text:
+        if "First-Principles Story" not in example_text or "End-To-End Flow" not in example_text or "flow-node" not in example_text or "Decision Quantity" not in example_text or "Why Each Step Follows" not in example_text or "Why It Follows From The Evidence" not in example_text or "Claim Boundary" not in example_text or "First Failure Signal" not in example_text or "Example Stress Test" not in example_text or "Method Route Under Test" not in example_text or "Passes Only If" not in example_text:
             raise SystemExit(f"worked example not rendered correctly: {example['title']}")
+        for field in ("decision_quantity", "step_rationale", "failure_signal"):
+            if not example.get(field):
+                raise SystemExit(f"worked example missing {field}: {example['title']}")
+        if len(example["plain_steps"]) != len(example["step_rationale"]):
+            raise SystemExit(f"worked example step rationale count mismatch: {example['title']}")
         for slug in example["method_route"]:
             if not (SITE / "topics" / f"{slug}.html").exists():
                 raise SystemExit(f"worked example method route missing topic: {example['title']} -> {slug}")

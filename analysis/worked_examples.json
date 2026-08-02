@@ -18,6 +18,14 @@
       "Use the heat rule as a check between anchors.",
       "Compare with held-out sensors or a trusted solve."
     ],
+    "decision_quantity": "temperature at unsensed places and later times",
+    "step_rationale": [
+      "A field is needed because the answer lives between sensors, not only at sensor points.",
+      "The measurements stop the fitted field from drifting away from what was actually observed.",
+      "The heat rule tells the unsensed middle how it is allowed to connect hot and cold regions.",
+      "Held-out sensors or a trusted solve check whether the rule helped rather than only making the fit look tidy."
+    ],
+    "failure_signal": "the fitted field matches sensor points but gives the wrong temperature between them or after the starting time",
     "why_it_teaches": "This is the cleanest entry point for PINNs because the physical rule is familiar: heat smooths out unless a source keeps adding energy."
   },
   {
@@ -38,6 +46,14 @@
       "Predict a new field quickly.",
       "Reject the shortcut if it misses boundary behavior, vortices, or pressure forces that matter."
     ],
+    "decision_quantity": "velocity, pressure, drag, lift, or another flow quantity used for the design choice",
+    "step_rationale": [
+      "The range of shapes and conditions defines what the shortcut is allowed to answer.",
+      "Full trusted fields teach the shortcut both local details and larger flow patterns.",
+      "Fast prediction matters only because the same kind of query must be answered many times.",
+      "Boundary behavior and forces are checked because they can decide the design even when the picture looks smooth."
+    ],
+    "failure_signal": "the shortcut is fast but misses a force, vortex, or boundary effect that changes the engineering choice",
     "why_it_teaches": "It shows why speed is not the same as trust. The useful claim is a fast answer inside a tested design family."
   },
   {
@@ -58,6 +74,14 @@
       "Search for a short rule or learn the missing rate.",
       "Test on a new experiment, not only the original trace."
     ],
+    "decision_quantity": "the rate rule that explains and predicts the measured change",
+    "step_rationale": [
+      "Only measured variables can fairly appear in the proposed rule.",
+      "Change from moment to moment is the evidence for the missing rate.",
+      "A short rule or learned rate is the candidate bridge from the present state to the next one.",
+      "A new experiment checks whether the rule is about the system rather than one recorded trace."
+    ],
+    "failure_signal": "the rule fits the original trace but breaks when the starting condition, forcing, or measured setting changes",
     "why_it_teaches": "It separates prediction from explanation. A readable rule becomes valuable only when it survives a changed experiment."
   },
   {
@@ -79,6 +103,14 @@
       "Predict the target property for a new molecule.",
       "Reject the claim if a new scaffold, rare atom type, or changed assay breaks the prediction."
     ],
+    "decision_quantity": "the molecular property or activity that will guide a chemistry or biology choice",
+    "step_rationale": [
+      "The molecule's connections are part of the object, so flattening them can remove the reason the property appears.",
+      "Information moves along bonds and spatial neighbors because atoms affect one another through structure.",
+      "The prediction is useful only when it names the property being used for the next choice.",
+      "New scaffolds, rare atoms, and changed assays test whether the model learned chemistry or only familiar examples."
+    ],
+    "failure_signal": "the model works on familiar molecules but fails on a new scaffold, rare atom type, or changed assay",
     "why_it_teaches": "It shows why geometry and connections matter. The scientific object already has structure before the model sees it."
   },
   {
@@ -99,6 +131,14 @@
       "Use mechanical balance as a check between measured places.",
       "Compare against held-out tests, changed loads, and trusted simulations near failure regions."
     ],
+    "decision_quantity": "internal stress, strain, or the location where failure may begin",
+    "step_rationale": [
+      "The decision quantity matters because average error can hide the weak region.",
+      "Sparse measurements anchor the unknown field to real tests or trusted simulations.",
+      "Mechanical balance limits what can happen between measured places.",
+      "Changed loads and near-failure regions check the place where a wrong field would be most costly."
+    ],
+    "failure_signal": "the model has low average error but misses the local stress concentration that drives failure",
     "why_it_teaches": "It connects physics constraints to a practical engineering risk: missing a local stress concentration can matter more than average error."
   },
   {
@@ -119,6 +159,14 @@
       "Predict the field on the same kind of geometric object.",
       "Test changed meshes, boundaries, rotations, and refined regions before trusting the answer."
     ],
+    "decision_quantity": "the field value on the connected shape, especially near boundaries and refined regions",
+    "step_rationale": [
+      "Connections tell the model which points can physically or geometrically affect one another.",
+      "Nearby and distant relations both matter when boundary regions or long paths carry influence.",
+      "The prediction must live on the same kind of connected object, not on a shuffled table.",
+      "Changed meshes and rotations check whether the answer follows the shape rather than the file layout."
+    ],
+    "failure_signal": "renumbering, refining, rotating, or changing the boundary makes the field answer change for the wrong reason",
     "why_it_teaches": "It shows why some scientific data cannot be treated like a flat table. The connections carry part of the physics."
   },
   {
@@ -139,6 +187,14 @@
       "Use the model only as a candidate shortcut for the new task.",
       "Compare against a trusted solve and look for the first changed condition where it fails."
     ],
+    "decision_quantity": "whether the new PDE task can be answered with reused structure from previous tasks",
+    "step_rationale": [
+      "The training history defines what shared structure the broad model could have learned.",
+      "The new equation, boundary, scale, or field names the gap that must not be hidden.",
+      "Calling it a candidate shortcut keeps the claim smaller than proof of broad skill.",
+      "A trusted solve on the changed task checks whether reused structure still carries the needed answer."
+    ],
+    "failure_signal": "the model looks broad but fails on the held-out equation family, boundary type, scale, or quantity",
     "why_it_teaches": "It makes breadth concrete. A broad model is useful only when the new task shares the structure the model actually learned."
   },
   {
@@ -159,6 +215,14 @@
       "Report prediction with the tested use range.",
       "Reject confident claims when rare events, regions, or forcing changes have not been checked."
     ],
+    "decision_quantity": "the risk quantity for a region, time window, rare event, or changed forcing condition",
+    "step_rationale": [
+      "The risk quantity comes first because different risks need different evidence.",
+      "Familiar held-out cases do not prove behavior under a changed future condition.",
+      "The use range is part of the answer because it says where the prediction has support.",
+      "Rare events and changed forcing are checked because they are often where the decision matters most."
+    ],
+    "failure_signal": "the model reports confident risk while rare events, changed forcing, or the target region were not tested",
     "why_it_teaches": "It shows why uncertainty is not an add-on. The use range is part of the scientific answer."
   }
 ]
