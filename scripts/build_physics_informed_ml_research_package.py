@@ -2094,6 +2094,7 @@ MEATY_GOAL_REQUIREMENTS = [
     {"key": "case_walkthrough", "label": "Case Walkthrough", "proof_term": "One Concrete Case From Start To Finish"},
     {"key": "concept_connections", "label": "Concept Connections", "proof_term": "How This Connects To Nearby Ideas"},
     {"key": "belief_evidence", "label": "Belief Evidence", "proof_term": "Evidence Needed To Believe This"},
+    {"key": "domain_fit", "label": "Domain Fit", "proof_term": "Where This Fits By Domain"},
     {"key": "formula_terms", "label": "Formula Terms", "proof_term": "Plain Formula Term By Term"},
     {"key": "worked_example", "label": "Worked Example", "proof_term": "Concrete Worked Example"},
     {"key": "wrong_use", "label": "Wrong-Use Example", "proof_term": "Concrete Wrong-Use Example"},
@@ -4341,6 +4342,51 @@ def topic_belief_evidence_html(topic: dict[str, object], derivation: dict[str, o
 """
 
 
+def topic_domain_fit_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
+    slug = str(topic["slug"])
+    matched_guides = [guide for guide in DOMAIN_GUIDES if slug in guide["concepts"]]
+    if matched_guides:
+        table_rows = []
+        for guide in matched_guides:
+            job = guide.get("domain_job") or {}
+            table_rows.append(
+                f"""
+<tr>
+  <td><a href="../domains/{html.escape(str(guide['slug']))}.html">{html.escape(str(guide['title']))}</a></td>
+  <td>{html.escape(str(guide['real_quantity']))}</td>
+  <td>{html.escape(str(job.get('scientific_job') or guide['common_question']))}</td>
+  <td>{html.escape(str(job.get('observed_evidence') or derivation['observed']))}</td>
+  <td>{html.escape(str(job.get('changed_case_test') or guide['failure_test']))}</td>
+</tr>
+"""
+            )
+    else:
+        table_rows = [
+            f"""
+<tr>
+  <td>{html.escape(str(topic['domain']))}</td>
+  <td>{html.escape(str(derivation['hidden']))}</td>
+  <td>{html.escape(str(topic['common_problem']))}</td>
+  <td>{html.escape(str(derivation['observed']))}</td>
+  <td>{html.escape(str(derivation['test']))}</td>
+</tr>
+"""
+        ]
+    avoid = f"Do not use this concept in a domain where {topic['leaves_out']} is exactly the part needed for the decision."
+    return f"""
+<h2>Where This Fits By Domain</h2>
+<p>A concept is not generally useful just because the method works somewhere. It fits a domain when the real quantity, observed evidence, hidden target, and changed-case test line up.</p>
+<table>
+  <thead>
+    <tr><th>Domain</th><th>Real Quantity</th><th>Scientific Job</th><th>Observed Evidence</th><th>Changed-Case Test</th></tr>
+  </thead>
+  <tbody>{''.join(table_rows)}</tbody>
+</table>
+<h3>When To Avoid This In A Domain</h3>
+<p>{html.escape(avoid)}</p>
+"""
+
+
 def topic_worked_examples_html(slug: str) -> str:
     matches = [example for example in WORKED_EXAMPLES if slug in example["method_route"]]
     if not matches:
@@ -4401,6 +4447,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     formula_terms = topic_formula_terms_html(derivation)
     wrong_use = topic_wrong_use_html(topic)
     belief_evidence = topic_belief_evidence_html(topic, derivation)
+    domain_fit = topic_domain_fit_html(topic, derivation)
     worked_examples = topic_worked_examples_html(str(topic["slug"]))
     acceptance_sentence = topic_acceptance_sentence_html(topic, derivation)
     body = f"""
@@ -4433,6 +4480,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
 {worked_examples}
 {wrong_use}
 {belief_evidence}
+{domain_fit}
 {acceptance_sentence}
 <h2>Deeper Mathematical Why</h2>
 <p>The mathematical point is to decide what information is allowed to carry the scientific claim. If the carried information is too small, the model misses the behavior that matters. If it is too broad, the page may claim more than the evidence supports. The useful middle is a named object, a named scientific job, and a changed case that can reject the claim.</p>
@@ -5789,7 +5837,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         if not topic_path.exists():
             raise SystemExit(f"deep dive missing topic page: {slug}")
         topic_text = topic_path.read_text(encoding="utf-8")
-        if "First-Principles Essay" not in topic_text or "What A Strong Explanation Must Say" not in topic_text or "One Concrete Case From Start To Finish" not in topic_text or "Observed Evidence" not in topic_text or "Rejection Test" not in topic_text or "How This Connects To Nearby Ideas" not in topic_text or "Learn Before This" not in topic_text or "Confusion It Prevents" not in topic_text or "Evidence Needed To Believe This" not in topic_text or "Strong Evidence" not in topic_text or "Too Weak" not in topic_text or "Reject Or Recheck When" not in topic_text or "Plain Formula Term By Term" not in topic_text or "What It Carries" not in topic_text or "Concrete Worked Example" not in topic_text or "Concrete Wrong-Use Example" not in topic_text or "Test That Catches It" not in topic_text or "Acceptance Sentence Filled" not in topic_text or "I would test it by changing" not in topic_text or "Core Idea In One Sentence" not in topic_text or "Mathematical Shape Without Jargon" not in topic_text:
+        if "First-Principles Essay" not in topic_text or "What A Strong Explanation Must Say" not in topic_text or "One Concrete Case From Start To Finish" not in topic_text or "Observed Evidence" not in topic_text or "Rejection Test" not in topic_text or "How This Connects To Nearby Ideas" not in topic_text or "Learn Before This" not in topic_text or "Confusion It Prevents" not in topic_text or "Evidence Needed To Believe This" not in topic_text or "Strong Evidence" not in topic_text or "Too Weak" not in topic_text or "Reject Or Recheck When" not in topic_text or "Where This Fits By Domain" not in topic_text or "When To Avoid This In A Domain" not in topic_text or "Changed-Case Test" not in topic_text or "Plain Formula Term By Term" not in topic_text or "What It Carries" not in topic_text or "Concrete Worked Example" not in topic_text or "Concrete Wrong-Use Example" not in topic_text or "Test That Catches It" not in topic_text or "Acceptance Sentence Filled" not in topic_text or "I would test it by changing" not in topic_text or "Core Idea In One Sentence" not in topic_text or "Mathematical Shape Without Jargon" not in topic_text:
             raise SystemExit(f"deep dive not rendered on topic page: {slug}")
     worked_example_slugs = {str(slug) for example in WORKED_EXAMPLES for slug in example["method_route"]}
     concepts_without_examples = sorted(concept_slugs - worked_example_slugs)
@@ -6137,7 +6185,7 @@ def validate(data: dict[str, object] | None = None) -> None:
             raise SystemExit(f"meaty goal core page link missing: {item['href']}")
     goal_coverage_path = SITE / "meaty-goal-coverage.html"
     goal_coverage_text = goal_coverage_path.read_text(encoding="utf-8")
-    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Concept Connections" not in goal_coverage_text or "Belief Evidence" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
+    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Concept Connections" not in goal_coverage_text or "Belief Evidence" not in goal_coverage_text or "Domain Fit" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
         raise SystemExit("meaty goal coverage audit not rendered correctly")
     goal_coverage_rows = data.get("meaty_goal_coverage") or []
     if len(goal_coverage_rows) != len(data["concept_atlas"]):

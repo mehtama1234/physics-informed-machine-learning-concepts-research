@@ -258,6 +258,26 @@
 </table>
 
 
+<h2>Where This Fits By Domain</h2>
+<p>A concept is not generally useful just because the method works somewhere. It fits a domain when the real quantity, observed evidence, hidden target, and changed-case test line up.</p>
+<table>
+  <thead>
+    <tr><th>Domain</th><th>Real Quantity</th><th>Scientific Job</th><th>Observed Evidence</th><th>Changed-Case Test</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <td><a href="../domains/heat-and-diffusion.html">Heat And Diffusion</a></td>
+  <td>temperature, concentration, or another quantity spreading through space</td>
+  <td>Estimate the full temperature field inside a wall after a boundary temperature changes.</td>
+  <td>a few sensor readings, starting temperature, boundary temperature, material constants, and the heat equation</td>
+  <td>move the heat source or change the boundary temperature and compare against held-out sensors or a trusted solve</td>
+</tr>
+</tbody>
+</table>
+<h3>When To Avoid This In A Domain</h3>
+<p>Do not use this concept in a domain where guaranteed accuracy when the equation, boundary data, or training points are poor is exactly the part needed for the decision.</p>
+
+
 <h2>Acceptance Sentence Filled</h2>
 <p>This concept exists because scientists need an answer in a case where measurements may be sparse, but the answer must still respect a known physical equation. The available evidence is some measured values, boundary values, starting values, and a known differential equation. The hidden thing is the full field value at every point in space and time. The math does fit a neural network while also measuring how badly its output violates the known equation because the model is not allowed to match points while freely breaking the equation between those points. It matters in differential equations in science and engineering because it lets known physics push the fit toward physically possible behavior instead of treating data points as the only evidence. It fails when the equation penalty can look small while the solution is wrong in hard regions, sharp layers, or unseen boundary cases. I would test it by changing the case this way: move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements.</p>
 

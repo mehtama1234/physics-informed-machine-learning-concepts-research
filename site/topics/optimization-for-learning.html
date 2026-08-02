@@ -181,6 +181,26 @@
 </table>
 
 
+<h2>Where This Fits By Domain</h2>
+<p>A concept is not generally useful just because the method works somewhere. It fits a domain when the real quantity, observed evidence, hidden target, and changed-case test line up.</p>
+<table>
+  <thead>
+    <tr><th>Domain</th><th>Real Quantity</th><th>Scientific Job</th><th>Observed Evidence</th><th>Changed-Case Test</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <td>turning model fitting into a repeatable computation</td>
+  <td>whether that score matches the scientific behavior the user actually cares about</td>
+  <td>learning needs a way to decide which model settings are better or worse</td>
+  <td>a written score that says which model behavior is better or worse</td>
+  <td>inspect what the score ignores, then check whether the ignored behavior fails after training</td>
+</tr>
+</tbody>
+</table>
+<h3>When To Avoid This In A Domain</h3>
+<p>Do not use this concept in a domain where everything the score forgot to penalize is exactly the part needed for the decision.</p>
+
+
 <h2>Acceptance Sentence Filled</h2>
 <p>This concept exists because scientists need an answer in a case where learning needs a way to decide which model settings are better or worse. The available evidence is a written score that says which model behavior is better or worse. The hidden thing is whether that score matches the scientific behavior the user actually cares about. The math does change model settings to lower the written score because the model learns the score, so the score must include the scientific burden. It matters in turning model fitting into a repeatable computation because the model only learns what the training score asks it to improve. It fails when a model can optimize the written score while missing the scientific behavior the score failed to name. I would test it by changing the case this way: inspect what the score ignores, then check whether the ignored behavior fails after training.</p>
 
