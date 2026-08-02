@@ -211,6 +211,34 @@
 </table>
 
 
+<h2>Where This Fits By Domain</h2>
+<p>A concept is not generally useful just because the method works somewhere. It fits a domain when the real quantity, observed evidence, hidden target, and changed-case test line up.</p>
+<table>
+  <thead>
+    <tr><th>Domain</th><th>Real Quantity</th><th>Scientific Job</th><th>Observed Evidence</th><th>Changed-Case Test</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <td><a href="../domains/fluids-and-flow.html">Fluids And Flow</a></td>
+  <td>velocity, pressure, vorticity, drag, lift, or other flow quantities</td>
+  <td>Predict pressure and velocity around a new wing or channel shape before running the full solver.</td>
+  <td>trusted simulations for earlier shapes, boundary conditions, inflow speed, and resulting velocity or pressure fields</td>
+  <td>hold out a new geometry or flow regime and check drag, lift, boundary behavior, and vortices</td>
+</tr>
+
+<tr>
+  <td><a href="../domains/many-pde-tasks.html">Many PDE Tasks</a></td>
+  <td>solution fields across many equations, grids, parameters, or boundary settings</td>
+  <td>Use a broad PDE model on a new equation case without pretending breadth is proof.</td>
+  <td>many prior PDE tasks, fields, grids, parameters, boundary types, and trusted solution fields</td>
+  <td>withhold a full equation family, boundary type, scale, or quantity and compare against trusted solves</td>
+</tr>
+</tbody>
+</table>
+<h3>When To Avoid This In A Domain</h3>
+<p>Do not use this concept in a domain where interactions the attention pattern never compares is exactly the part needed for the decision.</p>
+
+
 <h2>Acceptance Sentence Filled</h2>
 <p>This concept exists because scientists need an answer in a case where a local patch of a field may depend on faraway information, but looking everywhere can be expensive. The available evidence is large fields where one location may depend on other locations. The hidden thing is which distant parts matter for the local prediction. The math does let the model choose which parts of the field exchange information because attention is a routing rule for information, not proof that the selected route is physically complete. It matters in large scientific fields where distant parts may interact because it gives the model a way to move information across a field without treating every location as isolated. It fails when windowing or scaling choices can miss long-range effects that matter for the scientific quantity being predicted. I would test it by changing the case this way: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures.</p>
 

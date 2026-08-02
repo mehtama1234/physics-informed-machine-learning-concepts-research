@@ -238,6 +238,34 @@
 </table>
 
 
+<h2>Where This Fits By Domain</h2>
+<p>A concept is not generally useful just because the method works somewhere. It fits a domain when the real quantity, observed evidence, hidden target, and changed-case test line up.</p>
+<table>
+  <thead>
+    <tr><th>Domain</th><th>Real Quantity</th><th>Scientific Job</th><th>Observed Evidence</th><th>Changed-Case Test</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <td><a href="../domains/heat-and-diffusion.html">Heat And Diffusion</a></td>
+  <td>temperature, concentration, or another quantity spreading through space</td>
+  <td>Estimate the full temperature field inside a wall after a boundary temperature changes.</td>
+  <td>a few sensor readings, starting temperature, boundary temperature, material constants, and the heat equation</td>
+  <td>move the heat source or change the boundary temperature and compare against held-out sensors or a trusted solve</td>
+</tr>
+
+<tr>
+  <td><a href="../domains/materials-and-mechanics.html">Materials And Mechanics</a></td>
+  <td>stress, strain, displacement, failure location, or material response</td>
+  <td>Find the stress field and likely weak region in a part with a new load or defect pattern.</td>
+  <td>geometry, mesh, loads, material parameters, sparse strain measurements, and trusted simulations</td>
+  <td>change the load path, defect, mesh, or boundary and check stress near failure regions</td>
+</tr>
+</tbody>
+</table>
+<h3>When To Avoid This In A Domain</h3>
+<p>Do not use this concept in a domain where unmodeled forces, unresolved scales, uncertain parameters, and numerical error is exactly the part needed for the decision.</p>
+
+
 <h2>Acceptance Sentence Filled</h2>
 <p>This concept exists because scientists need an answer in a case where a quantity changes over space and time, so one number is not enough to describe the situation. The available evidence is a field such as temperature, pressure, concentration, velocity, or displacement. The hidden thing is how every point in the field affects nearby points over time. The math does write a local change rule that uses rates across space and time because the equation carries how a whole field changes, not just how one number changes. It matters in fluids, heat, waves, mechanics, chemistry, climate, and other changing fields because PDEs are the language many scientific models use before machine learning enters the story. It fails when a learned shortcut can ignore boundary conditions or conservation behavior that the PDE was carrying. I would test it by changing the case this way: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error.</p>
 
