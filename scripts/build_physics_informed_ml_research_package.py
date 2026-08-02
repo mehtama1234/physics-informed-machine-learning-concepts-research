@@ -2475,8 +2475,8 @@ REVIEW_HANDOFF = {
         "Before calling any later pass finished, compare local main with origin/main and verify the GitHub Actions result for the current commit.",
     ],
     "remaining_editorial_work": [
-        "Replace selected source anchors with manually verified short lecture quotes where a page needs stronger evidence.",
-        "Add hand-written diagrams for the core routes: PINNs, operator learning, surrogate modeling, symbolic regression, and foundation PDE models.",
+        "Replace selected source anchors with manually verified short lecture quotes where a page needs stronger evidence than the selected transcript excerpt.",
+        "Optionally replace generated sketch cards with hand-drawn figures if a page needs spatial detail beyond input, output, kept rule, and failure case.",
         "Keep future commits tied to the first-principles standard: real quantity, observed evidence, hidden quantity, mathematical move, domain use, failure test.",
         "After any later content change, run git push, make remote-check, and make ci-check before handing the repo to another reviewer.",
     ],
@@ -2530,9 +2530,9 @@ EDITORIAL_ROADMAP = [
             {"label": "Evidence Packets", "href": "evidence-packets.html"},
         ],
         "work": [
-            "Manually review the transcript excerpts for each core concept and choose the best source anchors.",
+            "Choose concept-specific transcript excerpts before generic course introductions.",
             "Add a short source note beside each major claim: what the lecture supports, and what it does not settle.",
-            "Prefer concrete lecture moments over broad statements.",
+            "Prefer concrete lecture moments over broad statements and reject boilerplate lecture openings.",
         ],
         "acceptance_check": "Each core concept has at least two reviewed transcript anchors and one clear limit statement.",
     },
@@ -2569,12 +2569,16 @@ EDITORIAL_ROADMAP = [
             {"label": "Operator Learning Topic", "href": "topics/operator-learning.html"},
             {"label": "Surrogate Modeling Topic", "href": "topics/surrogate-modeling.html"},
             {"label": "Uncertainty Topic", "href": "topics/uncertainty-and-generalization.html"},
+            {"label": "Symbolic Regression Topic", "href": "topics/symbolic-regression.html"},
+            {"label": "Foundation PDE Topic", "href": "topics/foundation-models-for-pdes.html"},
         ],
         "work": [
             "Add one sketch for measured points plus equation-check points.",
             "Add one sketch for input field to output field.",
             "Add one sketch for a fast surrogate inside repeated scientific choices.",
             "Add one sketch for a shifted case where the model should admit doubt.",
+            "Add one sketch for measurements to a readable law.",
+            "Add one sketch for old PDE tasks to a new equation case.",
         ],
         "acceptance_check": "Each sketch names input, output, kept rule, and failure case in the caption.",
     },
@@ -2647,8 +2651,8 @@ ROADMAP_STATUS = {
     },
     "source-anchored-core-concepts": {
         "status": "locally completed",
-        "evidence": "Core topic pages and evidence packets include selected source anchors with claim, source page, reason, and limit.",
-        "proof_pages": ["topics/physics-informed-neural-networks.html", "evidence-packets/foundation-models-for-pdes.html", "evidence-packets/operator-learning.html"],
+        "evidence": "Core topic pages and evidence packets include selected source anchors with claim, source page, reason, limit, concept-ranked transcript excerpts, and validation that rejects boilerplate lecture openings.",
+        "proof_pages": ["topics/physics-informed-neural-networks.html", "evidence-packets/foundation-models-for-pdes.html", "evidence-packets/operator-learning.html", "evidence-ledger.html"],
     },
     "hand-derivations": {
         "status": "locally completed",
@@ -2657,8 +2661,8 @@ ROADMAP_STATUS = {
     },
     "figures-and-sketches": {
         "status": "locally completed",
-        "evidence": "The diagrams index and core topic pages include mathematical sketches with input, output, kept rule, and failure case.",
-        "proof_pages": ["diagrams.html", "topics/operator-learning.html", "topics/surrogate-modeling.html"],
+        "evidence": "The diagrams index and core topic pages include six mathematical sketches with input, output, kept rule, and failure case, including symbolic regression and foundation PDE transfer.",
+        "proof_pages": ["diagrams.html", "topics/operator-learning.html", "topics/symbolic-regression.html", "topics/foundation-models-for-pdes.html"],
     },
     "domain-examples": {
         "status": "locally completed",

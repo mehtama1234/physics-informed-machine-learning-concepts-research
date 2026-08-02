@@ -2572,8 +2572,8 @@
 - Before calling any later pass finished, compare local main with origin/main and verify the GitHub Actions result for the current commit.
 
 ### Remaining Editorial Work
-- Replace selected source anchors with manually verified short lecture quotes where a page needs stronger evidence.
-- Add hand-written diagrams for the core routes: PINNs, operator learning, surrogate modeling, symbolic regression, and foundation PDE models.
+- Replace selected source anchors with manually verified short lecture quotes where a page needs stronger evidence than the selected transcript excerpt.
+- Optionally replace generated sketch cards with hand-drawn figures if a page needs spatial detail beyond input, output, kept rule, and failure case.
 - Keep future commits tied to the first-principles standard: real quantity, observed evidence, hidden quantity, mathematical move, domain use, failure test.
 - After any later content change, run git push, make remote-check, and make ci-check before handing the repo to another reviewer.
 
@@ -2869,10 +2869,10 @@
 - Status: locally completed
 - Goal: Turn the main topic pages and evidence packets into source-backed teaching pages, not only generated summaries.
 - Why it matters: The package is transcript-backed only if the important claims point to lecture-specific support and state what that support does not prove.
-- Current evidence: Core topic pages and evidence packets include selected source anchors with claim, source page, reason, and limit.
-- Proof pages: topics/physics-informed-neural-networks.html, evidence-packets/foundation-models-for-pdes.html, evidence-packets/operator-learning.html
+- Current evidence: Core topic pages and evidence packets include selected source anchors with claim, source page, reason, limit, concept-ranked transcript excerpts, and validation that rejects boilerplate lecture openings.
+- Proof pages: topics/physics-informed-neural-networks.html, evidence-packets/foundation-models-for-pdes.html, evidence-packets/operator-learning.html, evidence-ledger.html
 - Target pages: topics/physics-informed-neural-networks.html, topics/operator-learning.html, topics/uncertainty-and-generalization.html, topics/foundation-models-for-pdes.html, evidence-packets.html
-- Work: Manually review the transcript excerpts for each core concept and choose the best source anchors.; Add a short source note beside each major claim: what the lecture supports, and what it does not settle.; Prefer concrete lecture moments over broad statements.
+- Work: Choose concept-specific transcript excerpts before generic course introductions.; Add a short source note beside each major claim: what the lecture supports, and what it does not settle.; Prefer concrete lecture moments over broad statements and reject boilerplate lecture openings.
 - Acceptance check: Each core concept has at least two reviewed transcript anchors and one clear limit statement.
 
 ### P0 Deepen The Hand Derivations
@@ -2889,10 +2889,10 @@
 - Status: locally completed
 - Goal: Replace purely textual explanation where a picture would reveal the object being learned or checked.
 - Why it matters: Some ideas are spatial: a PDE field, a boundary, a residual point, an input field, an output field, or a shifted test case. A sketch can make the hidden quantity visible.
-- Current evidence: The diagrams index and core topic pages include mathematical sketches with input, output, kept rule, and failure case.
-- Proof pages: diagrams.html, topics/operator-learning.html, topics/surrogate-modeling.html
-- Target pages: diagrams.html, topics/physics-informed-neural-networks.html, topics/operator-learning.html, topics/surrogate-modeling.html, topics/uncertainty-and-generalization.html
-- Work: Add one sketch for measured points plus equation-check points.; Add one sketch for input field to output field.; Add one sketch for a fast surrogate inside repeated scientific choices.; Add one sketch for a shifted case where the model should admit doubt.
+- Current evidence: The diagrams index and core topic pages include six mathematical sketches with input, output, kept rule, and failure case, including symbolic regression and foundation PDE transfer.
+- Proof pages: diagrams.html, topics/operator-learning.html, topics/symbolic-regression.html, topics/foundation-models-for-pdes.html
+- Target pages: diagrams.html, topics/physics-informed-neural-networks.html, topics/operator-learning.html, topics/surrogate-modeling.html, topics/uncertainty-and-generalization.html, topics/symbolic-regression.html, topics/foundation-models-for-pdes.html
+- Work: Add one sketch for measured points plus equation-check points.; Add one sketch for input field to output field.; Add one sketch for a fast surrogate inside repeated scientific choices.; Add one sketch for a shifted case where the model should admit doubt.; Add one sketch for measurements to a readable law.; Add one sketch for old PDE tasks to a new equation case.
 - Acceptance check: Each sketch names input, output, kept rule, and failure case in the caption.
 
 ### P1 Strengthen Domain Examples
