@@ -5212,6 +5212,7 @@ def html_page(title: str, body: str, root_prefix: str = "") -> str:
   <a href="{root_prefix}topology-shape-guide.html">Shape</a>
   <a href="{root_prefix}question-to-topic-guide.html">Questions</a>
   <a href="{root_prefix}field-application-guide.html">Fields</a>
+  <a href="{root_prefix}importance-matrix.html">Importance</a>
   <a href="{root_prefix}end-to-end-walkthrough.html">Walkthrough</a>
   <a href="{root_prefix}example-route-guide.html">Routes</a>
   <a href="{root_prefix}no-jargon-concept-guide.html">No Jargon</a>
@@ -5442,6 +5443,64 @@ def write_field_application_guide_page(path: Path, topics: list[dict[str, object
 <p>A reader understands the field applications when they can pick one topic and explain how it helps in engineering design, materials or biology, and climate or fluids using ordinary words. The answer should end with a changed case, not with a claim that the method works in general.</p>
 """
     path.write_text(html_page("Physics-Informed ML Field Application Guide", body), encoding="utf-8")
+
+
+def write_importance_matrix_page(path: Path, topics: list[dict[str, object]]) -> None:
+    rows = []
+    stories = []
+    for topic in topics:
+        derivation = topic_derivation(topic)
+        applications = topic_plain_applications(topic, derivation)
+        shape_app = next(row for row in applications if row["field"] == "Topology and shape")
+        field_apps = [row for row in applications if row["field"] != "Topology and shape"]
+        other_fields = " ".join(f"{row['field']}: {row['use']} Check: {row['check']}" for row in field_apps)
+        rows.append(
+            f"""
+<tr>
+  <td><a href="topics/{html.escape(str(topic['slug']))}.html">{html.escape(str(topic['title']))}</a></td>
+  <td>{html.escape(str(topic['common_problem']))}</td>
+  <td>{html.escape(str(topic['why_it_matters']))}</td>
+  <td>{html.escape(str(shape_app['why']))} First check: {html.escape(str(shape_app['check']))}</td>
+  <td>{html.escape(other_fields)}</td>
+  <td>{html.escape(str(derivation['test']))}</td>
+</tr>
+"""
+        )
+        stories.append(
+            f"""
+<section>
+  <h2>{html.escape(str(topic['title']))}</h2>
+  <p><strong>Plain end-to-end story.</strong> The starting problem is {html.escape(str(topic['common_problem']))}. In everyday words, the evidence in hand is {html.escape(str(derivation['observed']))}. The missing answer is {html.escape(str(derivation['hidden']))}. The first-principles move is {html.escape(str(derivation['move']))}. This matters because {html.escape(str(topic['why_it_matters']))}.</p>
+  <p><strong>Shape and topology link.</strong> {html.escape(str(shape_app['use']))} {html.escape(str(shape_app['why']))} The first check is: {html.escape(str(shape_app['check']))}</p>
+  <p><strong>Other fields.</strong> {html.escape(other_fields)}</p>
+  <p><strong>Claim boundary.</strong> The page should not say more than this: {html.escape(str(derivation['meaning']))}. The first thing to try before trusting a wider claim is: {html.escape(str(derivation['test']))}.</p>
+</section>
+"""
+        )
+    body = f"""
+<h1>Importance Matrix</h1>
+<h2>Why Each Topic Matters Across Fields</h2>
+<p>Start with the need, not the name. Each row says what problem creates the topic, why the answer matters, where shape or topology enters, where other fields use it, and what first changed case should be tried before trusting the claim.</p>
+<table>
+  <thead>
+    <tr><th>Concept</th><th>Everyday Problem</th><th>Why It Matters</th><th>Topology Or Shape Link</th><th>Other Fields</th><th>First Test</th></tr>
+  </thead>
+  <tbody>{''.join(rows)}</tbody>
+</table>
+<h2>How To Use This Matrix</h2>
+<ol>
+  <li>Read the everyday problem before the concept name.</li>
+  <li>Check that the topic answers a missing quantity, not just a label.</li>
+  <li>Ask whether shape, boundary, connection, or field layout carries part of the evidence.</li>
+  <li>Compare the other-field uses and name the decision each field is making.</li>
+  <li>Run the first test before making the claim wider.</li>
+</ol>
+<h2>Plain End-To-End Stories</h2>
+{''.join(stories)}
+<h2>Reader Test</h2>
+<p>A reader understands the course-wide importance when they can pick Deep Learning, Operator Learning, and Graphs And Geometric Learning and explain the everyday problem, the shape or topology link, one other-field use, and the first changed case without using the method name as the reason.</p>
+"""
+    path.write_text(html_page("Physics-Informed ML Importance Matrix", body), encoding="utf-8")
 
 
 def write_end_to_end_walkthrough_page(path: Path, topics: list[dict[str, object]]) -> None:
@@ -5842,6 +5901,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Topology And Shape", "A plain guide to connected structure, boundaries, holes, meshes, and shape checks across the course.", "topology-shape-guide.html")}
 {card("Question To Topic Guide", "Start from an everyday scientific question and open the first topic that carries that need.", "question-to-topic-guide.html")}
 {card("Field Application Guide", "A plain map of how each topic enters engineering, materials, biology, climate, fluids, and field problems.", "field-application-guide.html")}
+{card("Importance Matrix", "Every topic compared by everyday problem, reason it matters, shape link, field use, and first test.", "importance-matrix.html")}
 {card("End-To-End Walkthrough", "One plain route from sparse evidence and a scientific job to a bounded claim.", "end-to-end-walkthrough.html")}
 {card("Example Route Guide", "Concrete worked examples mapped from scientific job to topic route and first failure signal.", "example-route-guide.html")}
 {card("No-Jargon Concept Guide", "Every concept label translated into the everyday job, evidence, hidden answer, move, and rejection check.", "no-jargon-concept-guide.html")}
@@ -5966,6 +6026,7 @@ def write_site(data: dict[str, object]) -> None:
     write_topology_shape_guide_page(SITE / "topology-shape-guide.html", list(topics))
     write_question_to_topic_guide_page(SITE / "question-to-topic-guide.html", list(topics))
     write_field_application_guide_page(SITE / "field-application-guide.html", list(topics))
+    write_importance_matrix_page(SITE / "importance-matrix.html", list(topics))
     write_end_to_end_walkthrough_page(SITE / "end-to-end-walkthrough.html", list(topics))
     write_example_route_guide_page(SITE / "example-route-guide.html", list(worked_examples))
     write_no_jargon_concept_guide_page(SITE / "no-jargon-concept-guide.html", list(topics))
@@ -9056,6 +9117,14 @@ def write_markdown_export(data: dict[str, object]) -> None:
             derivation = topic_derivation(topic)
             app = next(row for row in topic_plain_applications(topic, derivation) if row["field"] == field_name)
             lines.append(f"- {topic['title']}: use: {app['use']} Why: {app['why']} Check: {app['check']}")
+    lines.extend(["", "## Importance Matrix"])
+    for topic in data["topic_treatments"]:
+        derivation = topic_derivation(topic)
+        applications = topic_plain_applications(topic, derivation)
+        shape_app = next(row for row in applications if row["field"] == "Topology and shape")
+        field_apps = [row for row in applications if row["field"] != "Topology and shape"]
+        other_fields = " ".join(f"{row['field']}: {row['use']} Check: {row['check']}" for row in field_apps)
+        lines.append(f"- {topic['title']}: everyday problem: {topic['common_problem']} Why it matters: {topic['why_it_matters']} Topology or shape link: {shape_app['why']} First shape check: {shape_app['check']} Other fields: {other_fields} First test: {derivation['test']}")
     lines.extend(
         [
             "",
@@ -9767,6 +9836,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         SITE / "topology-shape-guide.html",
         SITE / "question-to-topic-guide.html",
         SITE / "field-application-guide.html",
+        SITE / "importance-matrix.html",
         SITE / "end-to-end-walkthrough.html",
         SITE / "example-route-guide.html",
         SITE / "no-jargon-concept-guide.html",
@@ -9825,6 +9895,25 @@ def validate(data: dict[str, object] | None = None) -> None:
     ):
         if term not in field_guide_text:
             raise SystemExit(f"field application guide missing: {term}")
+    importance_matrix_text = (SITE / "importance-matrix.html").read_text(encoding="utf-8")
+    for term in (
+        "Importance Matrix",
+        "Why Each Topic Matters Across Fields",
+        "Concept",
+        "Everyday Problem",
+        "Why It Matters",
+        "Topology Or Shape Link",
+        "Other Fields",
+        "First Test",
+        "How To Use This Matrix",
+        "Plain End-To-End Stories",
+        "Reader Test",
+        "Deep Learning",
+        "Operator Learning",
+        "Graphs And Geometric Learning",
+    ):
+        if term not in importance_matrix_text:
+            raise SystemExit(f"importance matrix missing: {term}")
     walkthrough_text = (SITE / "end-to-end-walkthrough.html").read_text(encoding="utf-8")
     for term in (
         "End-To-End Course Walkthrough",

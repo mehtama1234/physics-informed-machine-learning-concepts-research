@@ -28,6 +28,7 @@ REQUIRED_ROOT_PAGES = {
     "topology-shape-guide.html",
     "question-to-topic-guide.html",
     "field-application-guide.html",
+    "importance-matrix.html",
     "end-to-end-walkthrough.html",
     "example-route-guide.html",
     "no-jargon-concept-guide.html",
@@ -166,6 +167,7 @@ def check_required_sections() -> list[str]:
         "site/topology-shape-guide.html": ("Topology And Shape In Plain Words", "The Everyday Meaning", "Why It Matters From First Principles", "How This Theme Crosses The Course", "Plain Shape Use", "First Shape Check", "What To Say Before Trusting A Shape Claim", "Reader Test", "mesh", "molecule", "boundary", "hole", "Graphs And Geometric Learning"),
         "site/question-to-topic-guide.html": ("Question To Topic Guide", "Start With The Need", "Everyday Question", "Open This Topic", "Why This Is The First Stop", "What To Check Before Trusting It", "If Your Question Mentions Shape", "Reader Test", "I have many examples", "I have a few measurements and a known equation", "mesh", "molecule", "changed case"),
         "site/field-application-guide.html": ("Field Application Guide In Plain Words", "Why Fields Need Their Own Map", "Engineering design", "Materials, chemistry, and biology", "Climate, fluids, and fields", "Plain Use", "Why It Matters", "First Field Check", "How To Read An Application Claim", "Reader Test", "stress", "molecule", "climate", "fluids", "changed case"),
+        "site/importance-matrix.html": ("Importance Matrix", "Why Each Topic Matters Across Fields", "Concept", "Everyday Problem", "Why It Matters", "Topology Or Shape Link", "Other Fields", "First Test", "How To Use This Matrix", "Plain End-To-End Stories", "Reader Test", "Deep Learning", "Operator Learning", "Graphs And Geometric Learning", "changed case"),
         "site/end-to-end-walkthrough.html": ("End-To-End Course Walkthrough", "One Scientific Job From Start To Finish", "The Plain Route", "First Topic To Open", "Everyday Need", "What It Adds", "Rejection Check", "Shape And Field Checks", "What The Final Claim Can Say", "Final Say-It-Back Test", "sparse measurements", "shaped domain", "changed case"),
         "site/example-route-guide.html": ("Example Route Guide", "Start With A Concrete Job", "Worked Example Routes", "Open This Example", "Scientific Job", "Observed Evidence", "Hidden Answer", "Topic Route", "First Failure Signal", "How To Use A Route", "Reader Test", "heat", "molecule", "climate"),
         "site/no-jargon-concept-guide.html": ("No-Jargon Concept Guide", "Translate The Label Into A Job", "Concepts Without Hiding Behind Names", "Concept Label", "Everyday Job", "Evidence In Hand", "Hidden Answer Needed", "Plain Move", "First Rejection Check", "How To Read A Method Name", "Reader Test", "Deep Learning", "Physics-Informed Neural Networks", "Operator Learning"),
@@ -541,8 +543,8 @@ def validate() -> None:
         errors.append(f"expected 40 videos, found {summary.get('video_count')}")
     if summary.get("concept_count") != 14:
         errors.append(f"expected 14 concepts, found {summary.get('concept_count')}")
-    if len(manifest) != 227:
-        errors.append(f"expected 227 pages, found {len(manifest)}")
+    if len(manifest) != 228:
+        errors.append(f"expected 228 pages, found {len(manifest)}")
 
     errors.extend(check_internal_links(manifest))
     errors.extend(check_required_sections())
