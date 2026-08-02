@@ -219,6 +219,26 @@
 <p>The gate passes only if the learner can say why this topic is the first stop, what should be read first when needed, what page comes next, and what changed case would prove the start was too broad.</p>
 
 
+<h2>Skeptical Reader Proof</h2>
+<p>A skeptical reader does not ask whether Physics-Informed Neural Networks sounds useful. They ask what evidence would make the claim believable and what test would make the claim smaller.</p>
+<table>
+  <tbody>
+    <tr><th>Question A Skeptic Asks</th><td>Why should this move be trusted for this problem: measurements may be sparse, but the answer must still respect a known physical equation</td></tr>
+    <tr><th>Evidence A Skeptic Needs</th><td>some measured values, boundary values, starting values, and a known differential equation</td></tr>
+    <tr><th>Missing Answer They Watch</th><td>the full field value at every point in space and time</td></tr>
+    <tr><th>Move They Must See</th><td>fit a neural network while also measuring how badly its output violates the known equation</td></tr>
+    <tr><th>Shape Check They Need</th><td>Move sensors, change the boundary, or bend the domain and compare the hidden field with trusted values.</td></tr>
+    <tr><th>Engineering Check They Need</th><td>Inspect sharp regions, edge cases, and held-out sensors near the places where failure would matter.</td></tr>
+    <tr><th>Field Check They Need</th><td>Change source terms, boundaries, or sensor placement and compare against a solver or held-out data.</td></tr>
+    <tr><th>What The Page Can Support</th><td>the model is not allowed to match points while freely breaking the equation between those points</td></tr>
+    <tr><th>What The Page Cannot Support</th><td>The model may satisfy the wrong problem: a field with the wrong boundary or missing source can look smooth while answering a different physical question.</td></tr>
+    <tr><th>First Test Before Belief</th><td>Change the boundary, add held-out sensors near the source region, and compare against a trusted solve.</td></tr>
+  </tbody>
+</table>
+<h3>Belief Pass Test</h3>
+<p>The proof passes only if the learner can name the evidence, hidden answer, move, shape check, field check, allowed support, unsupported overclaim, and first test before saying they believe the topic claim.</p>
+
+
 <h2>End-To-End Use Protocol</h2>
 <p>Use this as the smallest complete path from a real scientific question to a claim that can be rejected.</p>
 <table>

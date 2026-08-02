@@ -3317,6 +3317,7 @@ MEATY_GOAL_REQUIREMENTS = [
     {"key": "sounds_right_filter", "label": "Sounds-Right Filter", "proof_term": "Sounds-Right Filter"},
     {"key": "draw_before_math", "label": "Draw Before Math", "proof_term": "Draw Before Math"},
     {"key": "start_here_gate", "label": "Start-Here Gate", "proof_term": "Start-Here Gate"},
+    {"key": "skeptical_reader_proof", "label": "Skeptical Reader Proof", "proof_term": "Skeptical Reader Proof"},
     {"key": "use_protocol", "label": "End-To-End Use Protocol", "proof_term": "End-To-End Use Protocol"},
     {"key": "before_math_slow_walk", "label": "Before The Math Slow Walk", "proof_term": "Before The Math Slow Walk"},
     {"key": "teach_from_zero", "label": "Teach From Zero", "proof_term": "Teach It From Zero"},
@@ -7244,6 +7245,35 @@ def topic_start_here_gate_html(topic: dict[str, object], derivation: dict[str, o
 """
 
 
+def topic_skeptical_reader_proof_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
+    title = str(topic["title"])
+    wrong = topic_wrong_use(topic)
+    applications = topic_plain_applications(topic, derivation)
+    shape = next(row for row in applications if row["field"] == "Topology and shape")
+    engineering = next(row for row in applications if row["field"] == "Engineering design")
+    fields = next(row for row in applications if row["field"] == "Climate, fluids, and fields")
+    return f"""
+<h2>Skeptical Reader Proof</h2>
+<p>A skeptical reader does not ask whether {html.escape(title)} sounds useful. They ask what evidence would make the claim believable and what test would make the claim smaller.</p>
+<table>
+  <tbody>
+    <tr><th>Question A Skeptic Asks</th><td>Why should this move be trusted for this problem: {html.escape(str(topic['common_problem']))}</td></tr>
+    <tr><th>Evidence A Skeptic Needs</th><td>{html.escape(str(derivation['observed']))}</td></tr>
+    <tr><th>Missing Answer They Watch</th><td>{html.escape(str(derivation['hidden']))}</td></tr>
+    <tr><th>Move They Must See</th><td>{html.escape(str(derivation['move']))}</td></tr>
+    <tr><th>Shape Check They Need</th><td>{html.escape(str(shape['check']))}</td></tr>
+    <tr><th>Engineering Check They Need</th><td>{html.escape(str(engineering['check']))}</td></tr>
+    <tr><th>Field Check They Need</th><td>{html.escape(str(fields['check']))}</td></tr>
+    <tr><th>What The Page Can Support</th><td>{html.escape(str(derivation['meaning']))}</td></tr>
+    <tr><th>What The Page Cannot Support</th><td>{html.escape(wrong['what_breaks'])}</td></tr>
+    <tr><th>First Test Before Belief</th><td>{html.escape(wrong['catch_test'])}</td></tr>
+  </tbody>
+</table>
+<h3>Belief Pass Test</h3>
+<p>The proof passes only if the learner can name the evidence, hidden answer, move, shape check, field check, allowed support, unsupported overclaim, and first test before saying they believe the topic claim.</p>
+"""
+
+
 def topic_before_math_slow_walk_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
     title = str(topic["title"])
     case = topic_case_walkthrough(topic, derivation)
@@ -7598,6 +7628,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     sounds_right_filter = topic_sounds_right_filter_html(topic, derivation)
     draw_before_math = topic_draw_before_math_html(topic, derivation)
     start_here_gate = topic_start_here_gate_html(topic, derivation)
+    skeptical_reader_proof = topic_skeptical_reader_proof_html(topic, derivation)
     use_protocol = topic_use_protocol_html(topic, derivation)
     first_principles_essay = topic_first_principles_essay_html(topic, derivation)
     teach_from_zero = topic_teach_from_zero_html(topic, derivation)
@@ -7666,6 +7697,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
 {sounds_right_filter}
 {draw_before_math}
 {start_here_gate}
+{skeptical_reader_proof}
 {use_protocol}
 {first_principles_essay}
 {teach_from_zero}
@@ -11124,6 +11156,18 @@ def validate(data: dict[str, object] | None = None) -> None:
             "Do Not Start Here When",
             "Start-Here Rejection Test",
             "Gate Pass Test",
+            "Skeptical Reader Proof",
+            "Question A Skeptic Asks",
+            "Evidence A Skeptic Needs",
+            "Missing Answer They Watch",
+            "Move They Must See",
+            "Shape Check They Need",
+            "Engineering Check They Need",
+            "Field Check They Need",
+            "What The Page Can Support",
+            "What The Page Cannot Support",
+            "First Test Before Belief",
+            "Belief Pass Test",
             "End-To-End Use Protocol",
             "State The Scientific Job",
             "Name The Decision Quantity",
@@ -12130,7 +12174,7 @@ def validate(data: dict[str, object] | None = None) -> None:
             raise SystemExit(f"meaty goal core page link missing: {item['href']}")
     goal_coverage_path = SITE / "meaty-goal-coverage.html"
     goal_coverage_text = goal_coverage_path.read_text(encoding="utf-8")
-    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Explanation Order" not in goal_coverage_text or "Why Care Before Terms" not in goal_coverage_text or "Workday Decision Rehearsal" not in goal_coverage_text or "Sounds-Right Filter" not in goal_coverage_text or "Draw Before Math" not in goal_coverage_text or "Start-Here Gate" not in goal_coverage_text or "Teach From Zero" not in goal_coverage_text or "Application Claim Ladder" not in goal_coverage_text or "Field Decision Story" not in goal_coverage_text or "Everyday Vocabulary Bridge" not in goal_coverage_text or "New Case Transfer Rehearsal" not in goal_coverage_text or "Reader Mistake Audit" not in goal_coverage_text or "One-Page Mental Model" not in goal_coverage_text or "Plain Question To Answer Script" not in goal_coverage_text or "Know And Still Test" not in goal_coverage_text or "Failure Consequence" not in goal_coverage_text or "Slow Problem Shape Bridge" not in goal_coverage_text or "Slow Importance Essay" not in goal_coverage_text or "Source-To-Claim Boundary" not in goal_coverage_text or "Teach Someone Handoff" not in goal_coverage_text or "Topology Shape Story" not in goal_coverage_text or "Confusion To Clarity" not in goal_coverage_text or "Hand Teaching Note" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Concept Connections" not in goal_coverage_text or "Belief Evidence" not in goal_coverage_text or "Domain Fit" not in goal_coverage_text or "Shape Follows" not in goal_coverage_text or "Reader Answer Parts" not in goal_coverage_text or "Say It Back Check" not in goal_coverage_text or "Misread Repair Drill" not in goal_coverage_text or "Plain-Language Audit" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
+    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Explanation Order" not in goal_coverage_text or "Why Care Before Terms" not in goal_coverage_text or "Workday Decision Rehearsal" not in goal_coverage_text or "Sounds-Right Filter" not in goal_coverage_text or "Draw Before Math" not in goal_coverage_text or "Start-Here Gate" not in goal_coverage_text or "Skeptical Reader Proof" not in goal_coverage_text or "Teach From Zero" not in goal_coverage_text or "Application Claim Ladder" not in goal_coverage_text or "Field Decision Story" not in goal_coverage_text or "Everyday Vocabulary Bridge" not in goal_coverage_text or "New Case Transfer Rehearsal" not in goal_coverage_text or "Reader Mistake Audit" not in goal_coverage_text or "One-Page Mental Model" not in goal_coverage_text or "Plain Question To Answer Script" not in goal_coverage_text or "Know And Still Test" not in goal_coverage_text or "Failure Consequence" not in goal_coverage_text or "Slow Problem Shape Bridge" not in goal_coverage_text or "Slow Importance Essay" not in goal_coverage_text or "Source-To-Claim Boundary" not in goal_coverage_text or "Teach Someone Handoff" not in goal_coverage_text or "Topology Shape Story" not in goal_coverage_text or "Confusion To Clarity" not in goal_coverage_text or "Hand Teaching Note" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Concept Connections" not in goal_coverage_text or "Belief Evidence" not in goal_coverage_text or "Domain Fit" not in goal_coverage_text or "Shape Follows" not in goal_coverage_text or "Reader Answer Parts" not in goal_coverage_text or "Say It Back Check" not in goal_coverage_text or "Misread Repair Drill" not in goal_coverage_text or "Plain-Language Audit" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
         raise SystemExit("meaty goal coverage audit not rendered correctly")
     goal_coverage_rows = data.get("meaty_goal_coverage") or []
     if len(goal_coverage_rows) != len(data["concept_atlas"]):
