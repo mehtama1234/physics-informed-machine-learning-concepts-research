@@ -109,6 +109,37 @@
   <li><strong>Say what it means:</strong> learning supplies the unknown change rule while the time update carries the idea of continuous motion.</li>
 </ol>
 
+<h2>Why This Shape Follows</h2>
+<p>Start with a system observed over time and an incomplete rule for how it changes. The missing object is the rate that moves the present state forward.</p>
+<table>
+  <thead>
+    <tr><th>Piece</th><th>Why It Has To Be There</th><th>What Breaks Without It</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <td>state</td>
+  <td>The state is the information carried from the present into the next moment.</td>
+  <td>If the state leaves out an important variable, the learned rate may compensate in a false way.</td>
+</tr>
+
+<tr>
+  <td>learned rate</td>
+  <td>The unknown change rule is placed where a differential equation needs a rate.</td>
+  <td>If the rate is only right over a short window, long-time behavior can drift.</td>
+</tr>
+
+<tr>
+  <td>time solver</td>
+  <td>The rate has to be accumulated through time to produce a path.</td>
+  <td>If the solver amplifies small rate errors, the path can look right at first and then fail.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Plain final line:</strong> A neural differential equation learns a missing rate, then exposes that rate to the discipline of time evolution.</p>
+<p><strong>Smallest useful formula:</strong> The smallest useful formula must start from measurements of a system changing over time, carry the answer toward the rate rule that moves the present value into the future, and include a check that can fail: run longer than the training window and check whether small rate errors accumulate into drift.</p>
+<p><strong>First wrong simplification:</strong> The first wrong shortcut is to keep the part that gives an answer while dropping the part that checks it. That would hide this failure: run longer than the training window and check whether small rate errors accumulate into drift.</p>
+
+
 <h2>Plain Formula Term By Term</h2>
 <p>The formula is not decoration. Each part says what information is being carried from the observed evidence toward the hidden quantity, and what must be checked before the claim is trusted.</p>
 <table>

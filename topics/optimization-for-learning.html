@@ -109,6 +109,37 @@
   <li><strong>Say what it means:</strong> the model learns the score, so the score must include the scientific burden.</li>
 </ol>
 
+<h2>Why This Shape Follows</h2>
+<p>Start with a model that can be adjusted and a score that says which answers look better. Training is the repeated act of changing the model to reduce that score.</p>
+<table>
+  <thead>
+    <tr><th>Piece</th><th>Why It Has To Be There</th><th>What Breaks Without It</th></tr>
+  </thead>
+  <tbody>
+<tr>
+  <td>adjustable model parts</td>
+  <td>Something must be changeable, or there is nothing for training to improve.</td>
+  <td>If the adjustable parts cannot express the needed behavior, optimization cannot invent it.</td>
+</tr>
+
+<tr>
+  <td>training score</td>
+  <td>The score tells the optimizer what better means.</td>
+  <td>If the score ignores the scientific quantity, training can improve the score while harming the job.</td>
+</tr>
+
+<tr>
+  <td>update rule</td>
+  <td>The model needs a way to use local score information to choose the next setting.</td>
+  <td>If the updates stall or chase the wrong term, the final model may reflect optimization failure rather than scientific truth.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Plain final line:</strong> Optimization is not proof; it is a way to obey a written score, so the score must match the scientific burden.</p>
+<p><strong>Smallest useful formula:</strong> The smallest useful formula must start from a written score that says which model behavior is better or worse, carry the answer toward whether that score matches the scientific behavior the user actually cares about, and include a check that can fail: inspect what the score ignores, then check whether the ignored behavior fails after training.</p>
+<p><strong>First wrong simplification:</strong> The first wrong shortcut is to keep the part that gives an answer while dropping the part that checks it. That would hide this failure: inspect what the score ignores, then check whether the ignored behavior fails after training.</p>
+
+
 <h2>Plain Formula Term By Term</h2>
 <p>The formula is not decoration. Each part says what information is being carried from the observed evidence toward the hidden quantity, and what must be checked before the claim is trusted.</p>
 <table>
