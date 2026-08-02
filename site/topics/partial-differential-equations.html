@@ -435,6 +435,22 @@
 <p>Do not use this concept in a domain where unmodeled forces, unresolved scales, uncertain parameters, and numerical error is exactly the part needed for the decision.</p>
 
 
+<h2>Say It Back Check</h2>
+<p>Use this table as the final no-jargon recap. If a reader cannot fill these rows in plain words, the topic has not yet landed.</p>
+<table>
+  <tbody>
+    <tr><th>Real Problem</th><td>a quantity changes over space and time, so one number is not enough to describe the situation</td></tr>
+    <tr><th>Evidence I Have</th><td>a field such as temperature, pressure, concentration, velocity, or displacement</td></tr>
+    <tr><th>Answer I Need</th><td>how every point in the field affects nearby points over time</td></tr>
+    <tr><th>Move I Am Making</th><td>write a local change rule that uses rates across space and time</td></tr>
+    <tr><th>Why It Matters In A Field</th><td>PDEs are the language many scientific models use before machine learning enters the story</td></tr>
+    <tr><th>Shape Or Topology Issue</th><td>Describe how a field moves across a shape, surface, mesh, or region with boundaries. Check: Change the boundary, cut a hole, refine the mesh, or bend the region and check conservation.</td></tr>
+    <tr><th>Claim I Am Allowed To Make</th><td>the equation carries how a whole field changes, rather than only how one number changes</td></tr>
+    <tr><th>Changed Case That Can Reject It</th><td>change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error</td></tr>
+  </tbody>
+</table>
+
+
 <h2>Acceptance Sentence Filled</h2>
 <p>This concept exists because scientists need an answer in a case where a quantity changes over space and time, so one number is not enough to describe the situation. The available evidence is a field such as temperature, pressure, concentration, velocity, or displacement. The hidden thing is how every point in the field affects nearby points over time. The math does write a local change rule that uses rates across space and time because the equation carries how a whole field changes, rather than only how one number changes. It matters in fluids, heat, waves, mechanics, chemistry, climate, and other changing fields because PDEs are the language many scientific models use before machine learning enters the story. It fails when a learned shortcut can ignore boundary conditions or conservation behavior that the PDE was carrying. I would test it by changing the case this way: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error.</p>
 

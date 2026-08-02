@@ -3330,6 +3330,7 @@ MEATY_GOAL_REQUIREMENTS = [
     {"key": "source_anchors", "label": "Source Anchors", "proof_term": "Selected Source Anchors"},
     {"key": "reader_check", "label": "Reader Check", "proof_term": "Reader Check"},
     {"key": "reader_answer_parts", "label": "Reader Answer Parts", "proof_term": "Strong Answer Broken Into Parts"},
+    {"key": "say_it_back_check", "label": "Say It Back Check", "proof_term": "Say It Back Check"},
     {"key": "acceptance_sentence", "label": "Acceptance Sentence", "proof_term": "Acceptance Sentence Filled"},
 ]
 
@@ -6638,6 +6639,26 @@ def topic_acceptance_sentence_html(topic: dict[str, object], derivation: dict[st
 """
 
 
+def topic_say_it_back_check_html(topic: dict[str, object], derivation: dict[str, object]) -> str:
+    shape = next(row for row in topic_plain_applications(topic, derivation) if row["field"] == "Topology and shape")
+    return f"""
+<h2>Say It Back Check</h2>
+<p>Use this table as the final no-jargon recap. If a reader cannot fill these rows in plain words, the topic has not yet landed.</p>
+<table>
+  <tbody>
+    <tr><th>Real Problem</th><td>{html.escape(str(topic['common_problem']))}</td></tr>
+    <tr><th>Evidence I Have</th><td>{html.escape(str(derivation['observed']))}</td></tr>
+    <tr><th>Answer I Need</th><td>{html.escape(str(derivation['hidden']))}</td></tr>
+    <tr><th>Move I Am Making</th><td>{html.escape(str(derivation['move']))}</td></tr>
+    <tr><th>Why It Matters In A Field</th><td>{html.escape(str(topic['why_it_matters']))}</td></tr>
+    <tr><th>Shape Or Topology Issue</th><td>{html.escape(str(shape['use']))} Check: {html.escape(str(shape['check']))}</td></tr>
+    <tr><th>Claim I Am Allowed To Make</th><td>{html.escape(str(derivation['meaning']))}</td></tr>
+    <tr><th>Changed Case That Can Reject It</th><td>{html.escape(str(derivation['test']))}</td></tr>
+  </tbody>
+</table>
+"""
+
+
 def topic_quality_gate_html() -> str:
     rows = []
     for item in QUALITY_RUBRIC:
@@ -6692,6 +6713,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
     belief_evidence = topic_belief_evidence_html(topic, derivation)
     domain_fit = topic_domain_fit_html(topic, derivation)
     worked_examples = topic_worked_examples_html(str(topic["slug"]))
+    say_it_back = topic_say_it_back_check_html(topic, derivation)
     acceptance_sentence = topic_acceptance_sentence_html(topic, derivation)
     breaks_without = topic_breaks_without_html(topic, derivation)
     claim_review = claim_boundary_review_html(claim_boundary_review(topic, derivation))
@@ -6736,6 +6758,7 @@ def write_topic_page(path: Path, topic: dict[str, object], reader_checks: list[d
 {belief_evidence}
 {claim_review}
 {domain_fit}
+{say_it_back}
 {acceptance_sentence}
 {breaks_without}
 <h2>Deeper Mathematical Why</h2>
@@ -9281,6 +9304,13 @@ def validate(data: dict[str, object] | None = None) -> None:
             "What Breaks Without This Idea",
             "Minimum Proof Needed",
             "Reader Must Be Able To Say",
+            "Say It Back Check",
+            "Real Problem",
+            "Evidence I Have",
+            "Answer I Need",
+            "Move I Am Making",
+            "Shape Or Topology Issue",
+            "Claim I Am Allowed To Make",
             "Acceptance Sentence Filled",
             "I would test it by changing",
             "Core Idea In One Sentence",
@@ -9792,7 +9822,7 @@ def validate(data: dict[str, object] | None = None) -> None:
             raise SystemExit(f"meaty goal core page link missing: {item['href']}")
     goal_coverage_path = SITE / "meaty-goal-coverage.html"
     goal_coverage_text = goal_coverage_path.read_text(encoding="utf-8")
-    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Slow Importance Essay" not in goal_coverage_text or "Hand Teaching Note" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Concept Connections" not in goal_coverage_text or "Belief Evidence" not in goal_coverage_text or "Domain Fit" not in goal_coverage_text or "Shape Follows" not in goal_coverage_text or "Reader Answer Parts" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
+    if "Meaty Goal Coverage Audit" not in goal_coverage_text or "Missing Items" not in goal_coverage_text or "Slow Importance Essay" not in goal_coverage_text or "Hand Teaching Note" not in goal_coverage_text or "Case Walkthrough" not in goal_coverage_text or "Concept Connections" not in goal_coverage_text or "Belief Evidence" not in goal_coverage_text or "Domain Fit" not in goal_coverage_text or "Shape Follows" not in goal_coverage_text or "Reader Answer Parts" not in goal_coverage_text or "Say It Back Check" not in goal_coverage_text or "Acceptance Sentence" not in goal_coverage_text or "Reader Check" not in goal_coverage_text:
         raise SystemExit("meaty goal coverage audit not rendered correctly")
     goal_coverage_rows = data.get("meaty_goal_coverage") or []
     if len(goal_coverage_rows) != len(data["concept_atlas"]):

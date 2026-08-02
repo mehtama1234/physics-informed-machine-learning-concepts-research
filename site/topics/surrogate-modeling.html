@@ -463,6 +463,22 @@
 <p>Do not use this concept in a domain where full simulation detail outside the tested query family is exactly the part needed for the decision.</p>
 
 
+<h2>Say It Back Check</h2>
+<p>Use this table as the final no-jargon recap. If a reader cannot fill these rows in plain words, the topic has not yet landed.</p>
+<table>
+  <tbody>
+    <tr><th>Real Problem</th><td>a trusted simulator may be too slow to run for every design, control, or uncertainty question</td></tr>
+    <tr><th>Evidence I Have</th><td>expensive solver inputs and outputs for a limited set of cases</td></tr>
+    <tr><th>Answer I Need</th><td>the solver answer for every new query someone wants to ask</td></tr>
+    <tr><th>Move I Am Making</th><td>train a cheaper stand-in for the expensive input-output behavior</td></tr>
+    <tr><th>Why It Matters In A Field</th><td>it makes repeated scientific decisions possible when full simulation cost would stop the workflow</td></tr>
+    <tr><th>Shape Or Topology Issue</th><td>Replace slow solves for repeated shape queries inside a named family. Check: Change holes, edges, mesh detail, or shape class and compare with the full solver.</td></tr>
+    <tr><th>Claim I Am Allowed To Make</th><td>speed is useful only inside the query family where the stand-in was checked</td></tr>
+    <tr><th>Changed Case That Can Reject It</th><td>compare against the full solver on new cases near the edge of the intended use</td></tr>
+  </tbody>
+</table>
+
+
 <h2>Acceptance Sentence Filled</h2>
 <p>This concept exists because scientists need an answer in a case where a trusted simulator may be too slow to run for every design, control, or uncertainty question. The available evidence is expensive solver inputs and outputs for a limited set of cases. The hidden thing is the solver answer for every new query someone wants to ask. The math does train a cheaper stand-in for the expensive input-output behavior because speed is useful only inside the query family where the stand-in was checked. It matters in expensive simulation and design loops because it makes repeated scientific decisions possible when full simulation cost would stop the workflow. It fails when speed can hide missing physics when the surrogate is used beyond the regime where it was checked. I would test it by changing the case this way: compare against the full solver on new cases near the edge of the intended use.</p>
 
