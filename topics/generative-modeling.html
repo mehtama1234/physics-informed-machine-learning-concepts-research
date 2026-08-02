@@ -114,30 +114,30 @@
   <tbody>
 <tr>
   <td>Topology and shape</td>
-  <td>Ask what stays connected, what has a hole, what touches what, and what can bend without changing the real question.</td>
-  <td>Generative Modeling matters here when the answer depends on shape evidence, not only on a row of numbers.</td>
-  <td>Change the mesh, bend the shape, relabel points, or add a missing connection and see whether the claim still follows.</td>
+  <td>Create candidate shapes or fields while checking holes, connections, and boundaries.</td>
+  <td>Generative modeling matters here only if the samples are valid objects, not just plausible pictures.</td>
+  <td>Test connected parts, forbidden holes, mesh validity, and downstream use.</td>
 </tr>
 
 <tr>
   <td>Engineering design</td>
-  <td>Ask whether a wing, bridge, part, battery, or device will work before every costly test is run.</td>
-  <td>Generative Modeling matters here because the answer must guide a build, a redesign, or a stop decision.</td>
-  <td>Move the design near the edge of the planned use and compare with a trusted solve or measurement.</td>
+  <td>Propose candidate parts, layouts, fields, or operating cases for later testing.</td>
+  <td>The generated candidate is useful only if it can pass the design checks.</td>
+  <td>Run constraints, full solves, stress tests, and use-case checks on generated candidates.</td>
 </tr>
 
 <tr>
   <td>Materials, chemistry, and biology</td>
-  <td>Ask how small parts, bonds, cells, grains, or local regions add up to a property people care about.</td>
-  <td>Generative Modeling matters here because the useful answer is about the thing itself, not only about fitting old examples.</td>
-  <td>Hold out a new molecule, material setting, tissue type, or lab condition and inspect the target quantity.</td>
+  <td>Suggest molecules, structures, images, or samples that should still obey known rules.</td>
+  <td>A sample matters when it can be measured, built, or screened for a real property.</td>
+  <td>Reject samples that break chemistry rules, material limits, or biological measurements.</td>
 </tr>
 
 <tr>
   <td>Climate, fluids, and fields</td>
-  <td>Ask how a value spread over space changes when wind, heat, pressure, flow, or a boundary changes.</td>
-  <td>Generative Modeling matters here because one number is not enough when the decision depends on a whole field.</td>
-  <td>Change a boundary, source, scale, region, or rare event and test the field where the decision is made.</td>
+  <td>Sample possible fields for stress tests, rare cases, or downstream solvers.</td>
+  <td>The samples are useful only if they carry the field behavior needed by the next task.</td>
+  <td>Measure conservation, rare-event rates, boundary behavior, and downstream task performance.</td>
 </tr>
 </tbody>
 </table>
