@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chapter 116 - Use First Principles To Choose The Model</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="sidebar">
+        <h1>DDPS Study</h1>
+        <a href="index.html">Start</a>
+        <a href="review-path.html">Review Path</a>
+        <a href="plain-words.html">Plain Words</a>
+        <a href="method-map.html">Method Map</a>
+        <a href="self-check.html">Self Check</a>
+        <a href="capstone.html">Capstone</a>
+        <a href="theme-index.html">Theme Index</a>
+        <a href="domain-map.html">Domain Map</a>
+        <a href="paper-reader.html">Paper Reader</a>
+        <a href="common-mistakes.html">Common Mistakes</a>
+        <a href="study-plan.html">Study Plan</a>
+        <a href="math-map.html">Math Map</a>
+        <a href="prerequisite-map.html">Prerequisite Map</a>
+        <a href="cheat-sheet.html">Cheat Sheet</a>
+        <a href="chapter-98.html">Chapter 98</a>
+        <a href="chapter-99.html">Chapter 99</a>
+        <a href="chapter-100.html">Chapter 100</a>
+        <a href="chapter-101.html">Chapter 101</a>
+        <a href="chapter-102.html">Chapter 102</a>
+        <a href="chapter-103.html">Chapter 103</a>
+        <a href="chapter-104.html">Chapter 104</a>
+        <a href="chapter-105.html">Chapter 105</a>
+        <a href="chapter-106.html">Chapter 106</a>
+        <a href="chapter-107.html">Chapter 107</a>
+        <a href="chapter-108.html">Chapter 108</a>
+        <a href="chapter-109.html">Chapter 109</a>
+        <a href="chapter-110.html">Chapter 110</a>
+        <a href="chapter-111.html">Chapter 111</a>
+        <a href="chapter-112.html">Chapter 112</a>
+        <a href="chapter-113.html">Chapter 113</a>
+        <a href="chapter-114.html">Chapter 114</a>
+        <a href="chapter-115.html">Chapter 115</a>
+        <a href="chapter-116.html">Chapter 116</a>
+        <a href="chapter-117.html">Chapter 117</a>
+        <a href="chapter-118.html">Chapter 118</a>
+        <a href="chapter-119.html">Chapter 119</a>
+        <a href="chapter-120.html">Chapter 120</a>
+        <a href="chapter-121.html">Chapter 121</a>
+        <a href="chapter-122.html">Chapter 122</a>
+        <a href="chapter-123.html">Chapter 123</a>
+        <a href="chapter-124.html">Chapter 124</a>
+        <a href="chapter-125.html">Chapter 125</a>
+        <a href="chapter-126.html">Chapter 126</a>
+        <a href="chapter-127.html">Chapter 127</a>
+        <a href="chapter-128.html">Chapter 128</a>
+        <a href="chapter-129.html">Chapter 129</a>
+        <a href="chapter-130.html">Chapter 130</a>
+        <a href="chapter-131.html">Chapter 131</a>
+        <a href="chapter-132.html">Chapter 132</a>
+        <a href="chapter-133.html">Chapter 133</a>
+        <a href="chapter-134.html">Chapter 134</a>
+        <a href="chapter-135.html">Chapter 135</a>
+        <a href="chapter-136.html">Chapter 136</a>
+        <a href="chapter-137.html">Chapter 137</a>
+        <a href="from-zero.html">From Zero</a>
+        <a href="pinn-from-zero.html">PINNs From Zero</a>
+        <a href="rom-from-zero.html">ROMs From Zero</a>
+        <a href="manifold-from-zero.html">Manifolds From Zero</a>
+        <a href="synthesis.html">Synthesis</a>
+        <a href="big-picture.html">Big Picture</a>
+        <a href="examples.html">Examples</a>
+        <a href="bridge.html">AISE Bridge</a>
+        <a href="audit.html">Transcript Audit</a>
+      </nav>
+      <main class="content">
+        <p class="eyebrow">Narrative chapter</p>
+        <h1>Use First Principles To Choose The Model</h1>
+
+        <p>This chapter uses video 119, Yasaman Bahri's DDPS talk on a first-principles approach to understanding deep learning. The talk is not about a new PDE solver. It asks a more basic question: when a neural network works, what can we understand about why it works, when it should be replaced by a kernel method, and what happens when we scale data, model size, or compute?</p>
+
+        <p>The speaker starts from the complaint that deep learning can feel like alchemy: people try architectures, sizes, losses, and data mixtures without a clear law telling them what should happen. The talk gives two partial ways out. First, very wide neural networks can become mathematically describable as Gaussian processes. Second, scaling laws can tell us whether more data, a bigger model, or better data selection is likely to improve performance.</p>
+
+        <section class="lesson-claim-chain" aria-label="Plain first-principles reading guide for deep learning model choice">
+          <h2>Read This Chapter As One Claim</h2>
+          <p>Suppose you have expensive scientific data and several model choices. One choice is a huge neural network. Another is a kernel method that gives uncertainty and behaves more predictably with little data. Another choice is to spend the next budget on more data instead of a bigger model. This chapter says not to choose by fashion. Ask what the architecture assumes, whether the data is enough for feature learning, which resource is the bottleneck, and which next examples would teach the model the most.</p>
+          <div class="lesson-claim-grid">
+            <div><strong>Everyday problem</strong><span>Scientific data is expensive, so choosing the wrong model size or collecting the wrong next samples wastes real simulation or experiment budget.</span></div>
+            <div><strong>Shared promise</strong><span>Use kernel limits, uncertainty, feature-learning tests, and scaling curves to decide what to trust and what to scale next.</span></div>
+            <div><strong>Hidden danger</strong><span>A bigger model can look better in one regime but lose to a kernel in scarce data, or scaling can fail when noise, task changes, or new distributions enter.</span></div>
+            <div><strong>First rejection test</strong><span>Compare against a kernel baseline, measure the data-size slope, and test active samples near failures, transitions, and design constraints.</span></div>
+          </div>
+        </section>
+
+        <div class="firstprinciples-big-picture-map" aria-label="The talk gives two first-principles handles for understanding deep learning">
+          <div>too many model choices</div>
+          <div>wide networks become kernels</div>
+          <div>scaling laws expose bottlenecks</div>
+          <div>choose models with evidence</div>
+        </div>
+
+        <h2>The Problem Is Not Only Prediction</h2>
+        <p>Deep learning has produced real scientific successes, including protein structure prediction, neural-network density functionals, and large models that can handle some math and science tasks. But success alone does not explain design. If two models both work somewhat well, a scientist still needs to decide which one to trust, which one to scale, and which one is wasting data.</p>
+
+        <p>The talk asks three practical questions. What does a neural network actually learn? Why do models with more parameters often perform better instead of merely overfitting? What controls the gains when we increase data, model size, or compute? These questions matter in scientific machine learning because data can be expensive and model runs can cost real laboratory or simulation time.</p>
+
+        <div class="design-question-map" aria-label="Scientific model choice needs understanding, not only current prediction score">
+          <div>model predicts something</div>
+          <div>scientist must choose next step</div>
+          <div>more data or bigger model costs money</div>
+          <div>understanding guides the spend</div>
+        </div>
+
+        <h2>A Very Wide Random Network Becomes A Gaussian Process</h2>
+        <p>The first major idea is about width. A neural network layer sums many contributions from many hidden units. If the layer is extremely wide and the weights are random at initialization, that sum behaves like the kind of average described by the central limit theorem. The network's output can then be described as a Gaussian process.</p>
+
+        <p>A Gaussian process is a probability distribution over functions. To describe it, you need a mean and a covariance function. In this setting, the mean is often zero, and the covariance, also called the kernel, tells you how related the network's outputs are for two inputs. The useful point is that the neural network architecture produces a particular kernel. The kernel is not chosen by hand in the old Gaussian-process style; it comes from the layers, nonlinearities, convolutions, attention, skips, or graph structure of the network.</p>
+
+        <div class="wide-network-gp-map" aria-label="In the infinite-width limit, a neural network defines a Gaussian process kernel">
+          <div>many random hidden units</div>
+          <div>averaging limit simplifies behavior</div>
+          <div>network defines covariance</div>
+          <div>infinite-width model is a Gaussian process</div>
+        </div>
+
+        <h2>The Kernel Measures Similarity After The Network's Computation</h2>
+        <p>A plain distance between two inputs may be misleading. Two images, molecules, microstructures, or flow states can look far apart in raw coordinates while being similar in the features that matter. A neural-network kernel measures similarity after the architecture's computation has transformed the inputs.</p>
+
+        <p>This is why these kernels are richer than many traditional kernels. A radial basis kernel, for example, gives high similarity mainly to points close in the original input space. A neural-network-derived kernel can be nonlocal: two raw inputs can be distant but still highly related after the network's learned-style feature processing. Convolutional, residual, attention, and graph architectures each create different notions of similarity.</p>
+
+        <div class="kernel-similarity-map" aria-label="A neural network kernel compares inputs after architectural feature processing">
+          <div>raw inputs may look far apart</div>
+          <div>architecture transforms features</div>
+          <div>kernel measures processed similarity</div>
+          <div>nonlocal relationships become possible</div>
+        </div>
+
+        <h2>Why This Helps With Scarce Scientific Data</h2>
+        <p>Once the infinite-width network is described as a Gaussian process, Bayesian prediction becomes available in closed form. Given training data, the model predicts a distribution for a new input, with a mean and uncertainty. That is valuable when data is scarce and uncertainty matters.</p>
+
+        <p>The talk emphasizes a practical comparison. Fully connected finite networks may not have strong useful structure, so their corresponding infinite-width kernels can perform surprisingly well. Convolutional networks have stronger physical and image-like structure, so finite convolutional networks can beat their kernel limits when enough data is available. The dividing line is data. With little data, a kernel may be competitive or better. With enough data, a finite neural network can adapt its features to the data and pull ahead.</p>
+
+        <div class="low-data-kernel-map" aria-label="Kernels can be strong in low-data regimes while finite networks can win when data is enough">
+          <div>few data points</div>
+          <div>kernel gives Bayesian prediction</div>
+          <div>more data arrives</div>
+          <div>finite network adapts features</div>
+        </div>
+
+        <h2>Feature Learning Is The Thing The Kernel Cannot Do</h2>
+        <p>A kernel method fixes its basis of comparison. It uses the kernel implied by the architecture and then performs learning through that fixed similarity structure. A finite neural network can change its internal representations during training. That is feature learning.</p>
+
+        <p>This explains why neither side should be treated as always better. If data is scarce, fixed structure and Bayesian uncertainty may be safer. If data is plentiful and the architecture has a useful inductive bias, feature learning can exploit the data better. For scientific work, this means a small-data molecular, material, or simulation problem should not automatically use the largest possible neural network. A kernel derived from a good architecture may be a strong baseline.</p>
+
+        <div class="feature-learning-map" aria-label="Finite networks can adapt features while kernel methods use fixed similarity">
+          <div>kernel similarity is fixed</div>
+          <div>finite network changes features</div>
+          <div>feature learning needs data</div>
+          <div>choose by data regime</div>
+        </div>
+
+        <h2>Scaling Laws Ask A Different Question</h2>
+        <p>The second major part of the talk changes the question from "which model is best right now?" to "which model improves fastest if I give it more?" The knobs are training data, model size, and compute. In large language models and other big models, test loss often improves predictably as these knobs increase, sometimes following power laws.</p>
+
+        <p>This matters even for smaller scientific problems. Suppose an experimentalist can collect more measurements next month, or a simulation team can afford more high-fidelity runs, or a group can train a larger surrogate. The model with the best current error may not be the best investment. A model with a slightly worse current score but a better scaling slope may become better after more data or compute.</p>
+
+        <div class="scaling-question-map" aria-label="Scaling laws compare how model error changes as data, model size, or compute increase">
+          <div>current score is one snapshot</div>
+          <div>more data may arrive</div>
+          <div>larger model may be affordable</div>
+          <div>scaling slope predicts payoff</div>
+        </div>
+
+        <h2>One Bottleneck Dominates At A Time</h2>
+        <p>The talk describes regimes where either data or model width becomes the bottleneck. If the model is large enough but data is scarce, adding data can help. If data is abundant but the model is too small, increasing model size can help. In other regimes, scaling the non-bottleneck variable gives only limited improvement.</p>
+
+        <p>The exact exponent can depend on the data and architecture. The speaker calls one regime resolution-limited because it is tied to how well the data manifold is resolved. In everyday terms, if your examples do not cover the important directions in the problem, the model cannot infer them no matter how much capacity sits unused. If your model is too small, more data may only reveal patterns the model cannot represent.</p>
+
+        <div class="bottleneck-map" aria-label="Scaling improves most when it attacks the current bottleneck">
+          <div>data too small</div>
+          <div>model too small</div>
+          <div>one bottleneck dominates</div>
+          <div>scale the limiting side</div>
+        </div>
+
+        <h2>Real Data Has Its Own Power Laws</h2>
+        <p>The talk ties model scaling to structure in real data. If you evaluate a kernel on the training data and look at the eigenvalue spectrum, those eigenvalues can follow a power law. The slope reflects both the data set and the kernel. Coarse-graining images changes the difficulty of the task and changes that spectrum.</p>
+
+        <p>The broader lesson is that scaling behavior is not only a property of the optimizer or model size. It is also a property of the data manifold: the lower-dimensional structure inside the data distribution. Harder, higher-dimensional, noisier, or less aligned data can produce worse scaling. Better alignment between model and data can improve the scaling exponent.</p>
+
+        <div class="data-powerlaw-map" aria-label="Kernel spectra and data manifold structure help explain scaling behavior">
+          <div>evaluate kernel on data</div>
+          <div>eigenvalues show power law</div>
+          <div>task complexity changes spectrum</div>
+          <div>scaling depends on data geometry</div>
+        </div>
+
+        <h2>Noise And Task Choice Change The Curve</h2>
+        <p>The speaker notes that changing the task changes scaling. If you corrupt data with noise, the curves shift upward and the slope can worsen. The model not only starts with a harder job; it also improves less efficiently as more data is added. If you change a task in a semantically similar way, the curve may shift up or down without changing the slope as much.</p>
+
+        <p>Architecture also matters. In the wide ResNet examples, increasing depth can shift performance, while increasing width can push the model closer to a kernel-like regime. That can make data efficiency worse once enough data is available, because the infinite-width kernel does not feature-learn as effectively as a finite network.</p>
+
+        <div class="curve-shift-map" aria-label="Noise, task changes, depth, and width can shift or tilt scaling curves">
+          <div>noise makes data harder</div>
+          <div>task changes shift difficulty</div>
+          <div>depth may shift curves</div>
+          <div>width can move toward kernel behavior</div>
+        </div>
+
+        <h2>Better Data Selection Can Beat Random Scaling</h2>
+        <p>One of the most useful points for scientific work is data selection. If examples are sampled randomly, performance may follow a slow power law. But if the most informative examples can be selected strategically, the model may improve much faster in the small-data regime.</p>
+
+        <p>The speaker connects this to active learning and expensive data. In science, one data point may require a high-fidelity simulation or a difficult experiment. That means the question is not just how many points to collect. It is which points to collect. Domain knowledge can help: conservation laws, regimes near transitions, boundary cases, high-error regions, rare events, or designs near failure can all be more informative than another easy example.</p>
+
+        <div class="data-selection-map" aria-label="Strategic data selection can improve learning faster than random sampling">
+          <div>random data follows slow power law</div>
+          <div>some points are more informative</div>
+          <div>physics knowledge guides sampling</div>
+          <div>small-data learning improves faster</div>
+        </div>
+
+        <h2>The Q&A Adds Practical Caution</h2>
+        <p>The Q&A helps avoid overclaiming. The additive form used in some scaling-law fits is not guaranteed to be the final truth; product correction terms may matter for some problems. Crossovers can happen when model size and data size are of comparable order, and those regions may show different behavior such as double descent rather than clean power laws.</p>
+
+        <p>The speaker also explains that many theoretical scaling curves average over randomness from which data batch was drawn and how the model was initialized. In large models, this randomness can become small because the system self-averages. In smaller scientific settings, it may be visible and noisy. Out-of-distribution scaling is also not settled: performance can improve, flatten, or even worsen depending on how the new distribution aligns with the trained model.</p>
+
+        <div class="scaling-caution-map" aria-label="Scaling laws need caution around fit forms, crossovers, randomness, and out-of-distribution tests">
+          <div>fit form may need corrections</div>
+          <div>crossover regimes behave differently</div>
+          <div>small runs can be noisy</div>
+          <div>OOD scaling is problem dependent</div>
+        </div>
+
+        <h2>How This Connects To Topology And Scientific Design</h2>
+        <p>Topology and design work often lives in the low-data, expensive-data regime. A high-fidelity simulation of one design can cost time. A physical experiment can cost money. A finite-element or CFD response may live on a complicated design manifold, not on a simple grid of easy examples.</p>
+
+        <p>This talk gives three practical checks. First, compare a finite neural surrogate against a kernel baseline, especially when data is scarce and uncertainty matters. Second, measure how the model improves when data or width changes, because the current best model may not be the best model after more samples. Third, choose data with physics knowledge instead of only random sampling. For topology, that means sampling designs near constraint boundaries, regime changes, buckling, hot spots, pressure drops, disconnected material, or other places where the model's current uncertainty or error matters most.</p>
+
+        <p>The deeper message is that "bigger model" is not a first principle. A model should be chosen by its alignment with the data, its ability to feature-learn when data exists, its uncertainty behavior when data is scarce, and its scaling slope under the actual resource bottleneck.</p>
+
+        <div class="topology-scaling-map" aria-label="Topology design should compare kernels, scaling slopes, and physics-guided data choices">
+          <div>expensive design samples</div>
+          <div>compare kernel and finite network</div>
+          <div>measure scaling bottleneck</div>
+          <div>sample physics-critical cases</div>
+        </div>
+
+        <h2>The Chapter In One Chain</h2>
+        <p>First, deep learning has scientific successes but model design can still feel unprincipled. Second, very wide randomly initialized neural networks become Gaussian processes. Third, the network architecture defines a compositional kernel that measures similarity after architectural processing. Fourth, those kernels can give Bayesian predictions and uncertainty, which is useful in low-data scientific settings. Fifth, finite neural networks can outperform their kernel limits when there is enough data because they adapt their features. Sixth, the right choice between kernel and finite network depends on architecture, data amount, and task. Seventh, scaling laws ask how error changes when data, model size, or compute increase. Eighth, one bottleneck often dominates: scarce data, small model size, or limited compute. Ninth, real data geometry, kernel eigenvalue spectra, effective dimension, and model-data alignment affect scaling exponents. Tenth, noise and task changes can shift or tilt scaling curves. Eleventh, strategically selected data can beat random sampling, especially when examples are expensive. Twelfth, the Q&A warns that scaling fits are approximations, crossover regimes can differ, small experiments have variance, and out-of-distribution scaling is not guaranteed. Thirteenth, for topology and design, the practical lesson is to choose models and data by evidence: kernel baseline, feature-learning need, scaling bottleneck, and physics-guided sample selection.</p>
+
+        <div class="note">
+          <p>The chapter's core idea: do not choose a deep model only because it is big. Ask what the architecture becomes in a limit, whether the data is enough for feature learning, which resource is the bottleneck, and which next examples would teach the model the most.</p>
+        </div>
+
+        <section class="lesson-review" aria-label="End of chapter understanding check for deep learning model choice">
+          <h2>How To Test Whether You Understood This Chapter</h2>
+          <div class="lesson-review-grid">
+            <div><strong>Explain the kernel limit simply</strong><span>An extremely wide random network can behave like a Gaussian process, where the architecture defines a similarity rule and prediction comes with uncertainty.</span></div>
+            <div><strong>Explain feature learning</strong><span>A finite network can change its internal features during training. That can beat a fixed kernel when enough useful data exists, but it is not free in scarce-data settings.</span></div>
+            <div><strong>Explain the scaling question</strong><span>Scaling laws ask what happens if you add data, model size, or compute. The best next investment is the one that attacks the current bottleneck.</span></div>
+            <div><strong>Connect it to topology and design</strong><span>For expensive design studies, sample near buckling, hot spots, pressure drops, disconnected material, regime changes, and constraint boundaries instead of only adding random easy cases.</span></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

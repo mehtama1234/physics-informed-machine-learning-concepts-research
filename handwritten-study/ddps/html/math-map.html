@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DDPS Math Without Formulas</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="sidebar">
+        <h1>DDPS Study</h1>
+        <a href="index.html">Start</a>
+        <a href="review-path.html">Review Path</a>
+        <a href="plain-words.html">Plain Words</a>
+        <a href="method-map.html">Method Map</a>
+        <a href="self-check.html">Self Check</a>
+        <a href="capstone.html">Capstone</a>
+        <a href="theme-index.html">Theme Index</a>
+        <a href="domain-map.html">Domain Map</a>
+        <a href="paper-reader.html">Paper Reader</a>
+        <a href="common-mistakes.html">Common Mistakes</a>
+        <a href="study-plan.html">Study Plan</a>
+        <a href="math-map.html">Math Map</a>
+        <a href="prerequisite-map.html">Prerequisite Map</a>
+        <a href="cheat-sheet.html">Cheat Sheet</a>
+        <a href="audit.html">Transcript Audit</a>
+      </nav>
+      <main class="content">
+        <p class="eyebrow">Formula-free math</p>
+        <h1>Math Map Without Formulas</h1>
+
+        <p>This page explains the recurring math objects in the course without symbols. Use it when a chapter starts using a term like loss, residual, operator, posterior, manifold, latent space, or gradient and you need the everyday meaning first.</p>
+
+        <div class="math-core-map" aria-label="Formula-free map from math object to physical role">
+          <div>math word</div>
+          <div>ordinary meaning</div>
+          <div>physical job</div>
+          <div>failure check</div>
+        </div>
+
+        <section class="math-block">
+          <h2>Loss</h2>
+          <p><strong>Plain meaning:</strong> a score for how badly the model is doing.</p>
+          <p><strong>Physical job:</strong> combine different complaints: data mismatch, equation violation, boundary error, safety violation, or regularization.</p>
+          <p><strong>Failure check:</strong> one complaint can drown out the others, so training looks successful while the physical rule is ignored.</p>
+          <p><strong>Read:</strong> <a href="chapter-01.html">Chapter 1</a>, <a href="pinn-from-zero.html">PINNs From Zero</a>.</p>
+        </section>
+
+        <section class="math-block">
+          <h2>Residual</h2>
+          <p><strong>Plain meaning:</strong> the leftover error after you plug a proposed answer into a rule.</p>
+          <p><strong>Physical job:</strong> tell whether the learned field actually obeys the equation, not just whether it matches stored data.</p>
+          <p><strong>Failure check:</strong> a small residual at sampled points can miss bad behavior between points or under changed conditions.</p>
+          <p><strong>Read:</strong> <a href="chapter-01.html">Chapter 1</a>, <a href="chapter-102.html">Chapter 102</a>.</p>
+        </section>
+
+        <section class="math-block">
+          <h2>Gradient</h2>
+          <p><strong>Plain meaning:</strong> a direction that says which change would increase or decrease something.</p>
+          <p><strong>Physical job:</strong> guide training, control, inverse problems, and design by saying how a prediction changes when an input changes.</p>
+          <p><strong>Failure check:</strong> gradients can be wrong or misleading near discontinuities, missing physics, unstable rollouts, or model blind spots.</p>
+          <p><strong>Read:</strong> <a href="chapter-08.html">Chapter 8</a>, <a href="chapter-58.html">Chapter 58</a>, <a href="chapter-129.html">Chapter 129</a>.</p>
+        </section>
+
+        <section class="math-block">
+          <h2>Basis</h2>
+          <p><strong>Plain meaning:</strong> a small set of building-block shapes used to rebuild a larger field.</p>
+          <p><strong>Physical job:</strong> make a huge simulation cheaper by describing it with a few coefficients instead of every grid value.</p>
+          <p><strong>Failure check:</strong> a fixed basis can waste many shapes tracking a feature that simply moved.</p>
+          <p><strong>Read:</strong> <a href="rom-from-zero.html">ROMs From Zero</a>, <a href="chapter-09.html">Chapter 9</a>, <a href="chapter-18.html">Chapter 18</a>.</p>
+        </section>
+
+        <section class="math-block">
+          <h2>Manifold</h2>
+          <p><strong>Plain meaning:</strong> a smaller curved place where the important states live inside a huge state space.</p>
+          <p><strong>Physical job:</strong> preserve nonlinear motion, regime boundaries, cycles, and attractors that a flat compression can miss.</p>
+          <p><strong>Failure check:</strong> the manifold may be only local, badly measured, not attracting, or broken by a poor coordinate chart.</p>
+          <p><strong>Read:</strong> <a href="manifold-from-zero.html">Manifolds From Zero</a>, <a href="chapter-47.html">Chapter 47</a>, <a href="chapter-136.html">Chapter 136</a>.</p>
+        </section>
+
+        <section class="math-block">
+          <h2>Operator</h2>
+          <p><strong>Plain meaning:</strong> a rule that turns one whole object into another whole object.</p>
+          <p><strong>Physical job:</strong> map an initial field, geometry, source, or material field to a solution field.</p>
+          <p><strong>Failure check:</strong> the rule may fail when grid, geometry, boundary condition, resolution, or physical regime changes.</p>
+          <p><strong>Read:</strong> <a href="chapter-98.html">Chapter 98</a>, <a href="chapter-125.html">Chapter 125</a>, <a href="chapter-131.html">Chapter 131</a>.</p>
+        </section>
+
+        <section class="math-block">
+          <h2>Posterior</h2>
+          <p><strong>Plain meaning:</strong> the updated set of beliefs after observations are used.</p>
+          <p><strong>Physical job:</strong> narrow many possible hidden worlds into the ones still consistent with data.</p>
+          <p><strong>Failure check:</strong> if the prior excludes the true world, the posterior can become confidently wrong.</p>
+          <p><strong>Read:</strong> <a href="chapter-134.html">Chapter 134</a>, <a href="chapter-137.html">Chapter 137</a>.</p>
+        </section>
+
+        <section class="math-block">
+          <h2>Latent Space</h2>
+          <p><strong>Plain meaning:</strong> a hidden compressed language used by the model.</p>
+          <p><strong>Physical job:</strong> represent complicated fields, geometries, molecules, or fracture networks with fewer variables.</p>
+          <p><strong>Failure check:</strong> the compressed language may hide the physical feature that matters, such as a connection, symmetry, or rare regime.</p>
+          <p><strong>Read:</strong> <a href="chapter-125.html">Chapter 125</a>, <a href="chapter-129.html">Chapter 129</a>, <a href="chapter-137.html">Chapter 137</a>.</p>
+        </section>
+
+        <section class="math-block">
+          <h2>Invariant</h2>
+          <p><strong>Plain meaning:</strong> something that stays true while the system changes.</p>
+          <p><strong>Physical job:</strong> protect conservation laws, symmetries, stable structures, or closed reduced dynamics.</p>
+          <p><strong>Failure check:</strong> if the learned model breaks the invariant, it may drift, create impossible states, or lose long-time trust.</p>
+          <p><strong>Read:</strong> <a href="chapter-126.html">Chapter 126</a>, <a href="chapter-130.html">Chapter 130</a>, <a href="chapter-136.html">Chapter 136</a>.</p>
+        </section>
+
+        <h2>The Rule For Reading Math In This Course</h2>
+        <p>Before trying to parse symbols, ask what job the math object does. Does it measure error, move information, compress a field, update belief, preserve a rule, or guide a decision? Once that job is clear, the formula has somewhere to land.</p>
+      </main>
+    </div>
+  </body>
+</html>

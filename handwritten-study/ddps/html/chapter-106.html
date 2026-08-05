@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chapter 106 - Let Each Layer Learn From Its Own Evidence</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="sidebar">
+        <h1>DDPS Study</h1>
+        <a href="index.html">Start</a>
+        <a href="review-path.html">Review Path</a>
+        <a href="plain-words.html">Plain Words</a>
+        <a href="method-map.html">Method Map</a>
+        <a href="self-check.html">Self Check</a>
+        <a href="capstone.html">Capstone</a>
+        <a href="theme-index.html">Theme Index</a>
+        <a href="domain-map.html">Domain Map</a>
+        <a href="paper-reader.html">Paper Reader</a>
+        <a href="common-mistakes.html">Common Mistakes</a>
+        <a href="study-plan.html">Study Plan</a>
+        <a href="math-map.html">Math Map</a>
+        <a href="prerequisite-map.html">Prerequisite Map</a>
+        <a href="cheat-sheet.html">Cheat Sheet</a>
+        <a href="chapter-98.html">Chapter 98</a>
+        <a href="chapter-99.html">Chapter 99</a>
+        <a href="chapter-100.html">Chapter 100</a>
+        <a href="chapter-101.html">Chapter 101</a>
+        <a href="chapter-102.html">Chapter 102</a>
+        <a href="chapter-103.html">Chapter 103</a>
+        <a href="chapter-104.html">Chapter 104</a>
+        <a href="chapter-105.html">Chapter 105</a>
+        <a href="chapter-106.html">Chapter 106</a>
+        <a href="chapter-107.html">Chapter 107</a>
+        <a href="chapter-108.html">Chapter 108</a>
+        <a href="chapter-109.html">Chapter 109</a>
+        <a href="chapter-110.html">Chapter 110</a>
+        <a href="chapter-111.html">Chapter 111</a>
+        <a href="chapter-112.html">Chapter 112</a>
+        <a href="chapter-113.html">Chapter 113</a>
+        <a href="chapter-114.html">Chapter 114</a>
+        <a href="chapter-115.html">Chapter 115</a>
+        <a href="chapter-116.html">Chapter 116</a>
+        <a href="chapter-117.html">Chapter 117</a>
+        <a href="chapter-118.html">Chapter 118</a>
+        <a href="chapter-119.html">Chapter 119</a>
+        <a href="chapter-120.html">Chapter 120</a>
+        <a href="chapter-121.html">Chapter 121</a>
+        <a href="chapter-122.html">Chapter 122</a>
+        <a href="chapter-123.html">Chapter 123</a>
+        <a href="chapter-124.html">Chapter 124</a>
+        <a href="chapter-125.html">Chapter 125</a>
+        <a href="chapter-126.html">Chapter 126</a>
+        <a href="chapter-127.html">Chapter 127</a>
+        <a href="chapter-128.html">Chapter 128</a>
+        <a href="chapter-129.html">Chapter 129</a>
+        <a href="chapter-130.html">Chapter 130</a>
+        <a href="chapter-131.html">Chapter 131</a>
+        <a href="chapter-132.html">Chapter 132</a>
+        <a href="chapter-133.html">Chapter 133</a>
+        <a href="chapter-134.html">Chapter 134</a>
+        <a href="chapter-135.html">Chapter 135</a>
+        <a href="chapter-136.html">Chapter 136</a>
+        <a href="chapter-137.html">Chapter 137</a>
+        <a href="from-zero.html">From Zero</a>
+        <a href="pinn-from-zero.html">PINNs From Zero</a>
+        <a href="rom-from-zero.html">ROMs From Zero</a>
+        <a href="manifold-from-zero.html">Manifolds From Zero</a>
+        <a href="synthesis.html">Synthesis</a>
+        <a href="big-picture.html">Big Picture</a>
+        <a href="examples.html">Examples</a>
+        <a href="bridge.html">AISE Bridge</a>
+        <a href="audit.html">Transcript Audit</a>
+      </nav>
+      <main class="content">
+        <p class="eyebrow">Narrative chapter</p>
+        <h1>Let Each Layer Learn From Its Own Evidence</h1>
+
+        <p>This chapter uses video 109, Fabio Gianpaolo's DDPS talk on learning paradigms for neural networks and the locally backpropagated forward-forward algorithm. The talk is not mainly about inventing a new classifier for handwritten digits. The simple digit tests are a workshop bench. The real question is larger: can a neural network learn when the usual all-at-once backward error signal is unavailable, undesirable, or too restrictive?</p>
+
+        <p>Backpropagation is the normal engine of deep learning. It works because it sends a very useful correction signal backward through the whole network. But that strength is also a contract. Every piece of the model must let derivatives pass through it. The network must store what happened in the forward pass. The later layers must send information back to earlier layers. If a model contains a locked black box, a hard decision rule, a pruning mask, a legacy simulator, or a human judgment step, that clean backward road may break.</p>
+
+        <section class="lesson-claim-chain" aria-label="Plain first-principles reading guide for local learning when global backpropagation is hard">
+          <h2>Read This Chapter As One Claim</h2>
+          <p>Start with what backpropagation assumes. It assumes the whole model is one smooth trainable road, so an error at the end can send a clean correction backward through every layer. Many real scientific and engineering systems are not like that. They may contain old simulation code, hard safety rules, pruning masks, discrete design changes, human feedback, private client data, or devices that cannot train the whole network. This chapter asks how learning can still happen when the global road is broken. Forward-forward gives each layer a local question: does this input look good or bad here? The hybrid method keeps backpropagation inside small blocks, where it still works, but avoids demanding one backward pass through everything. The federated version lets different clients train different depths, freezes stable blocks, and keeps moving training forward even when data and hardware are uneven.</p>
+          <div class="lesson-claim-grid">
+            <div><strong>Everyday problem</strong><span>A useful model may include black boxes, hard rules, human choices, private data, or weak devices that break one clean gradient path.</span></div>
+            <div><strong>Shared promise</strong><span>Local goodness scores and block-level backpropagation let parts of the model learn from evidence they can actually see.</span></div>
+            <div><strong>Hidden danger</strong><span>Pure local learning can make layers stop cooperating, and federated clients with uneven data can pull the global model apart.</span></div>
+            <div><strong>First rejection test</strong><span>Check whether deeper blocks add value, client data skew is tolerable, and frozen blocks still let later blocks learn.</span></div>
+          </div>
+        </section>
+
+        <div class="layer-evidence-map" aria-label="The chapter asks whether layers can learn from local evidence when global backpropagation is hard">
+          <div>global backprop works</div>
+          <div>but needs a clear backward road</div>
+          <div>local evidence may still exist</div>
+          <div>train useful pieces anyway</div>
+        </div>
+
+        <h2>The Basic Neural Network Story</h2>
+        <p>A neuron takes numbers in, multiplies them by learned weights, adds them up, and passes the result through a simple bend such as a nonlinear activation. A deep network stacks many of these small units. Early layers see raw input. Middle layers build internal descriptions. Final layers produce the answer for the task.</p>
+
+        <p>The weights are the memory of the network. Training means changing those weights until the model's answer is closer to the target answer. A loss function measures how wrong the current answer is. Once we have a loss, learning becomes a search: find weights that make the loss smaller.</p>
+
+        <div class="basic-net-map" aria-label="A neural network changes weights to reduce a loss">
+          <div>input numbers</div>
+          <div>weighted sums and activations</div>
+          <div>prediction</div>
+          <div>loss tells what is wrong</div>
+        </div>
+
+        <h2>Why Backpropagation Is So Effective</h2>
+        <p>Backpropagation has two passes. The forward pass computes the prediction. The backward pass asks how each weight contributed to the error. The chain rule makes this possible: if the output error depends on the last layer, and the last layer depends on the layer before it, the correction can be walked backward step by step.</p>
+
+        <p>The lecture stresses why this became the standard method. Backprop sends a strong direction for improving the weights. It is not just saying "this answer was bad." It says, in a mathematically organized way, which direction each weight should move to reduce the loss. That is why backpropagation is efficient and widely used.</p>
+
+        <div class="backprop-road-map" aria-label="Backpropagation sends correction directions backward through the whole network">
+          <div>make prediction</div>
+          <div>measure error</div>
+          <div>send correction backward</div>
+          <div>move weights downhill</div>
+        </div>
+
+        <h2>The Weak Point Is The Backward Road</h2>
+        <p>The same backward road can become a weakness. If the model contains a non-differentiable part, the correction cannot pass through it cleanly. A black-box component may give outputs but not derivatives. A rule-based decision system may branch with hard yes-or-no choices. A human preference may be useful but not differentiable.</p>
+
+        <p>This matters in scientific and engineering systems. A model may need to connect neural networks, old code, optimization rules, control decisions, and human review. The speaker gives examples such as legacy systems, rule-based classifiers, pruning, architecture search, and human feedback. In those cases, demanding one smooth differentiable pipe through everything can be too narrow.</p>
+
+        <div class="broken-road-map" aria-label="Backpropagation can fail when a model contains non-differentiable components">
+          <div>black-box simulator</div>
+          <div>hard rule or mask</div>
+          <div>human feedback</div>
+          <div>gradient path breaks</div>
+        </div>
+
+        <h2>Forward-Forward Changes The Training Question</h2>
+        <p>Geoffrey Hinton's forward-forward algorithm replaces one forward pass plus one backward pass with two forward passes. One pass uses positive data, meaning a real or correct pairing. The other uses negative data, meaning a deliberately wrong pairing. Each layer then asks a local question: does this input look good for this layer or bad for this layer?</p>
+
+        <p>The word "goodness" is the key. A layer can compute a score from its own activity, for example from the size of its activations. For positive examples, the layer should produce goodness above a threshold. For negative examples, it should produce goodness below the threshold. The layer is not waiting for a far-away final loss to explain everything. It has its own local training signal.</p>
+
+        <div class="forward-forward-map" aria-label="Forward-forward trains layers with positive and negative examples using local goodness">
+          <div>positive example</div>
+          <div>negative example</div>
+          <div>local goodness score</div>
+          <div>layer learns locally</div>
+        </div>
+
+        <h2>A Digit Example Makes The Difference Concrete</h2>
+        <p>For a digit image, a positive example can pair the image with the correct label. A negative example can pair the same image with the wrong label. If the image is a seven, the network should give high goodness to the seven pairing and lower goodness to the other labels.</p>
+
+        <p>In ordinary deep learning, the whole stack works together to produce one answer at the end. In forward-forward, each layer gives its own measure of whether the sample and label fit together. Classification can be done by adding the goodness scores and choosing the label with the highest total goodness.</p>
+
+        <div class="digit-goodness-map" aria-label="A digit image is tested against correct and incorrect labels">
+          <div>image of seven</div>
+          <div>try label seven</div>
+          <div>try wrong labels</div>
+          <div>highest goodness wins</div>
+        </div>
+
+        <h2>The Price Of Local Learning</h2>
+        <p>Local learning is attractive because each layer can train without a full backward pass through the whole network. But the lecture shows the price. Later layers may not help as much as expected. In the speaker's MNIST and Fashion-MNIST experiments, adding more layers can stop improving the stack. Some layers give a negative marginal contribution because they did not learn how to cooperate with the earlier and later layers.</p>
+
+        <p>The simple way to say it is this: if every layer studies alone, the whole class may not learn a shared project. Each layer can become locally reasonable while the full network fails to build a strong joint representation.</p>
+
+        <div class="local-price-map" aria-label="Pure local learning can make layers fail to cooperate">
+          <div>layer learns alone</div>
+          <div>next layer sees changed input</div>
+          <div>weak shared representation</div>
+          <div>deeper network may not help</div>
+        </div>
+
+        <h2>The Hybrid Idea: Local Blocks With Backprop Inside</h2>
+        <p>The proposed method splits the network into blocks. Inside each block, ordinary backpropagation is used. Across blocks, the method keeps the forward-forward spirit: no single error signal needs to travel backward through the entire network.</p>
+
+        <p>This is a compromise. Backpropagation is still used where it is easy and useful, inside a small differentiable block. But the full model is not forced to be one long differentiable chain. Each block learns from a goodness objective at its end, and the next block receives the previous block's output as its input.</p>
+
+        <div class="local-block-map" aria-label="The hybrid method uses backpropagation inside blocks while keeping learning local across blocks">
+          <div>split network into blocks</div>
+          <div>backprop inside each block</div>
+          <div>goodness at block end</div>
+          <div>less global dependence</div>
+        </div>
+
+        <h2>Random Blocks Keep More Layers Honest</h2>
+        <p>A fixed block split creates a new problem. The last layer of each block gets direct pressure from the goodness objective. Internal layers mostly learn to help that block endpoint, not to make their own useful goodness judgment. So some layers still do not directly learn the local prediction role the method wants.</p>
+
+        <p>The speaker's fix is to reshuffle the block partitions during training. The number of blocks is fixed, but the block boundaries are randomly moved after a chosen number of epochs. That means many layers eventually become block endpoints and receive direct goodness pressure. The plots in the talk show smoother, more coherent convergence when this random reorganization is used.</p>
+
+        <div class="random-block-map" aria-label="Randomly changing block boundaries lets more layers receive direct goodness training">
+          <div>fixed blocks favor endpoints</div>
+          <div>move boundaries during training</div>
+          <div>more layers face the local test</div>
+          <div>smoother convergence</div>
+        </div>
+
+        <h2>The Number Of Blocks Changes The Behavior</h2>
+        <p>If there are too many tiny blocks, the method starts to look like pure forward-forward again. The network is fragmented, and information about cooperation has trouble moving across the model. If there are fewer larger blocks, backpropagation can coordinate more layers inside each block, and convergence becomes more stable.</p>
+
+        <p>The talk also studies how often the random reorganization happens. Changing too slowly can create stair-step learning because a block saturates before the rest of the network catches up. Changing more often can make the learning path smoother. These are not decorative tuning details. They tell us what the method is balancing: local independence against layer cooperation.</p>
+
+        <div class="block-count-map" aria-label="Block size and reshuffling frequency control the tradeoff between local learning and coordination">
+          <div>many small blocks</div>
+          <div>less cooperation</div>
+          <div>fewer larger blocks</div>
+          <div>more stable training</div>
+        </div>
+
+        <h2>Sequential Training Saves Compute</h2>
+        <p>The lecture then uses another observation: early layers tend to settle before later layers. If an early block has stopped changing much, the method can reduce training attention there and move effort toward later blocks.</p>
+
+        <p>The speaker describes assigning training probabilities to layers, then shifting those probabilities when the first blocks reach a plateau. In the experiments, this did not dramatically change final convergence, but it reduced compute time per epoch. That is still important. A learning method that is theoretically interesting but too expensive will not survive many engineering workflows.</p>
+
+        <div class="sequential-train-map" aria-label="Sequential training shifts effort from settled early layers toward later layers">
+          <div>early blocks settle</div>
+          <div>watch for plateau</div>
+          <div>shift training effort later</div>
+          <div>lower compute time</div>
+        </div>
+
+        <h2>Why Federated Learning Fits This Idea</h2>
+        <p>Federated learning appears when data cannot be gathered into one central dataset. Hospitals, companies, labs, military sites, and industrial plants may each hold private or controlled data. A server sends a model to clients. Clients train locally. The server combines the updated models without collecting the raw data.</p>
+
+        <p>The block idea fits this setting because different clients may have different hardware. A powerful client can train more blocks. A smaller client can train fewer blocks. Instead of pretending every client is equal, the model can be split so each site receives a partial replica it can handle.</p>
+
+        <div class="federated-block-map" aria-label="Federated clients can train different numbers of blocks without sharing raw data">
+          <div>server model</div>
+          <div>private client data</div>
+          <div>train assigned blocks</div>
+          <div>aggregate updates</div>
+        </div>
+
+        <h2>Non-IID Data Is The Real Stress Test</h2>
+        <p>The hard part of federated learning is not only privacy. It is uneven data. One hospital may see different patients from another. One factory may run a different process. One design group may explore different shapes. In the lecture this is called non-IID data, meaning the clients do not all hold the same kind of examples.</p>
+
+        <p>Uneven data can make local models drift apart. When the server averages them, the result can become weaker than expected. The talk tests this by creating different label distributions across clients. Performance stays reasonable for moderate skew, but drops in extreme cases, which is exactly the warning a real distributed system should care about.</p>
+
+        <div class="non-iid-map" aria-label="Uneven client data can make federated models drift apart">
+          <div>client A has one mix</div>
+          <div>client B has another mix</div>
+          <div>local models drift</div>
+          <div>global model can weaken</div>
+        </div>
+
+        <h2>Freezing Blocks Moves Training Forward</h2>
+        <p>Because each partial client model must start from the first block, later blocks could be undertrained if small clients always receive only the beginning of the model. The proposed federated method watches whether a block has become stable across clients. If it has, the block is frozen. It still travels with the model because later blocks need its output, but it no longer consumes heavy training effort.</p>
+
+        <p>Then the client can train the next block. This creates a staircase through the model: stabilize the first part, freeze it, add more of the model, and continue. The point is not only speed. It makes sure all blocks eventually get trained by the clients, even when clients cannot all handle the full network at once.</p>
+
+        <div class="freeze-block-map" aria-label="Federated training freezes stable early blocks so clients can reach later blocks">
+          <div>train early block</div>
+          <div>block becomes stable</div>
+          <div>freeze but still send it</div>
+          <div>train later blocks</div>
+        </div>
+
+        <h2>What The Experiments Do And Do Not Prove</h2>
+        <p>The speaker is careful in the Q&A. The experiments are preliminary. They use MNIST and Fashion-MNIST, which are useful because many standard results are known there. They also tried harder data such as CIFAR, but feed-forward networks struggled with high-dimensional patterns. The speaker points toward convolutional layers and other architectures as future work.</p>
+
+        <p>So the honest claim is narrow but useful. The talk does not prove that this method solves all deep learning. It shows that a hybrid of local learning and block-level backpropagation can improve pure forward-forward behavior on simple tests, reduce some compute cost, and offer a practical structure for federated training with uneven devices.</p>
+
+        <div class="experiment-limit-map" aria-label="The experiments support the idea but remain preliminary and limited to simple data and architectures">
+          <div>MNIST style tests</div>
+          <div>better than pure local layers</div>
+          <div>CIFAR remains harder</div>
+          <div>future architecture work needed</div>
+        </div>
+
+        <h2>How This Connects To Physics, Design, And Topology</h2>
+        <p>This lecture is a learning-algorithm talk, but it still matters for physics-informed work. Scientific models often mix smooth neural pieces with pieces that are not friendly to backpropagation: old solvers, safety rules, discrete mesh choices, optimization masks, topology changes, human approval, and simulation codes that cannot expose gradients.</p>
+
+        <p>In topology optimization, a design can change by adding, removing, or reconnecting material. Those changes are often discrete or nearly discrete. A pure backprop path through every decision may be hard to defend. A local-block learning approach suggests another shape: train differentiable pieces where possible, keep non-differentiable pieces as local boundaries, and make each block prove its usefulness with a local score.</p>
+
+        <p>For distributed engineering, the federated part is also important. Imagine several labs or companies each having private simulation or test data for parts, materials, flows, or manufacturing conditions. They may not be allowed to pool data. They may not have equal compute. A block-trained model gives a way to let small and large clients contribute without pretending they are identical.</p>
+
+        <div class="learning-design-bridge" aria-label="Local block learning can help engineering models that combine differentiable and non-differentiable pieces">
+          <div>physics code and design rules</div>
+          <div>local differentiable blocks</div>
+          <div>private distributed data</div>
+          <div>train useful models with fewer assumptions</div>
+        </div>
+
+        <h2>The Chapter In One Chain</h2>
+        <p>First, a neural network learns by changing weights until its predictions fit a task. Second, backpropagation is powerful because it sends a strong correction direction backward through the whole network. Third, that power depends on a clean differentiable road through the model. Fourth, black boxes, hard rules, pruning masks, architecture choices, and human feedback can break that road. Fifth, forward-forward replaces the backward pass with positive and negative forward passes. Sixth, each layer learns a local goodness score instead of waiting for a global error signal. Seventh, pure local learning can fail because deeper layers do not automatically cooperate. Eighth, the proposed method splits the network into blocks and uses backpropagation inside each block. Ninth, random block reshuffling lets more layers receive direct goodness pressure. Tenth, block size and reshuffling frequency control the balance between local independence and cooperation. Eleventh, sequential training shifts compute away from blocks that have already settled. Twelfth, federated learning benefits because different clients can train different block depths without sharing raw data. Thirteenth, uneven client data can still make models drift, so skew must be tested directly. Fourteenth, freezing stable blocks lets small clients eventually train later parts of the model. Fifteenth, the experiments support the idea on simple digit datasets but do not prove it for every architecture or high-dimensional dataset. Sixteenth, the bigger physics lesson is that useful learning systems may need local evidence, block structure, and honest limits when global backpropagation is not the right fit.</p>
+
+        <div class="note">
+          <p>The chapter's core idea: backpropagation is excellent when the whole model is one smooth trainable chain. This lecture asks what to do when real scientific systems are messier, distributed, partly private, partly discrete, or partly black-box.</p>
+        </div>
+
+        <section class="lesson-review" aria-label="End of chapter understanding check for local and federated learning">
+          <h2>How To Test Whether You Understood This Chapter</h2>
+          <div class="lesson-review-grid">
+            <div><strong>Explain the broken road</strong><span>Say why a black-box simulator, hard rule, pruning mask, or human feedback step can make ordinary backpropagation hard.</span></div>
+            <div><strong>Use local goodness</strong><span>Describe how positive and negative examples let a layer or block learn without waiting for one final global loss.</span></div>
+            <div><strong>Catch the cooperation problem</strong><span>Explain why block size, reshuffling, and sequential training matter if layers must still work together.</span></div>
+            <div><strong>Connect to topology</strong><span>Before using this with discrete design changes or private engineering data, state which block boundary or client skew must be tested.</span></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

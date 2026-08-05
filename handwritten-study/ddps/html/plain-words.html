@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DDPS Plain Words Glossary</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="sidebar">
+        <h1>DDPS Study</h1>
+        <a href="index.html">Start</a>
+        <a href="review-path.html">Review Path</a>
+        <a href="plain-words.html">Plain Words</a>
+        <a href="method-map.html">Method Map</a>
+        <a href="self-check.html">Self Check</a>
+        <a href="capstone.html">Capstone</a>
+        <a href="theme-index.html">Theme Index</a>
+        <a href="domain-map.html">Domain Map</a>
+        <a href="paper-reader.html">Paper Reader</a>
+        <a href="common-mistakes.html">Common Mistakes</a>
+        <a href="study-plan.html">Study Plan</a>
+        <a href="math-map.html">Math Map</a>
+        <a href="prerequisite-map.html">Prerequisite Map</a>
+        <a href="cheat-sheet.html">Cheat Sheet</a>
+        <a href="from-zero.html">From Zero</a>
+        <a href="big-picture.html">Big Picture</a>
+        <a href="synthesis.html">Synthesis</a>
+        <a href="examples.html">Examples</a>
+        <a href="audit.html">Transcript Audit</a>
+      </nav>
+      <main class="content">
+        <p class="eyebrow">Keep open while reading</p>
+        <h1>Plain Words For The Repeating Ideas</h1>
+
+        <p>This page translates the course vocabulary into everyday words. Use it when a chapter starts to feel like a pile of names. The goal is not to memorize terms. The goal is to know what problem each term is trying to solve.</p>
+
+        <div class="plain-rule-map" aria-label="How to read a method name in plain words">
+          <div>method name</div>
+          <div>ordinary problem</div>
+          <div>physical burden</div>
+          <div>first failure test</div>
+        </div>
+
+        <h2>The One-Sentence Version</h2>
+        <p>A scientific machine-learning method is useful only if it makes a physical task cheaper, more observable, more controllable, or more honest about uncertainty while preserving the rule that matters for that task.</p>
+
+        <section class="plain-term">
+          <h2>Physics-Informed Neural Network</h2>
+          <p><strong>Plain words:</strong> a neural network trained not only to match data, but also to avoid breaking an equation or boundary rule.</p>
+          <p><strong>Why it exists:</strong> you may have only a few measurements, but you know the physical equation the answer should obey.</p>
+          <p><strong>What can go wrong:</strong> the data loss, equation loss, and boundary loss can fight or drown each other out. The network can look good at points and still violate the important rule elsewhere.</p>
+          <p><strong>Start with:</strong> <a href="pinn-from-zero.html">PINNs From Zero</a>, <a href="chapter-01.html">Chapter 1</a>, and <a href="chapter-102.html">Chapter 102</a>.</p>
+        </section>
+
+        <section class="plain-term">
+          <h2>Reduced Order Model</h2>
+          <p><strong>Plain words:</strong> a smaller stand-in for a huge simulator.</p>
+          <p><strong>Why it exists:</strong> one full simulation may be fine, but design, control, and uncertainty need many repeated solves.</p>
+          <p><strong>What can go wrong:</strong> the small model may keep the visible shape but lose the reason the shape moves, bends, shocks, or changes regime.</p>
+          <p><strong>Start with:</strong> <a href="rom-from-zero.html">ROMs From Zero</a>, <a href="chapter-09.html">Chapter 9</a>, and <a href="chapter-91.html">Chapter 91</a>.</p>
+        </section>
+
+        <section class="plain-term">
+          <h2>Manifold</h2>
+          <p><strong>Plain words:</strong> a smaller surface or shape inside the huge space of all possible states, where the important motion mostly lives.</p>
+          <p><strong>Why it exists:</strong> a fluid, material, or structure may have millions of numbers, but its long-term behavior may move along a much smaller curved shape.</p>
+          <p><strong>What can go wrong:</strong> the shape may be local, badly measured, folded by one coordinate map, or not attracting enough to support prediction.</p>
+          <p><strong>Start with:</strong> <a href="manifold-from-zero.html">Manifolds From Zero</a>, <a href="chapter-47.html">Chapter 47</a>, and <a href="chapter-136.html">Chapter 136</a>.</p>
+        </section>
+
+        <section class="plain-term">
+          <h2>Operator Learning</h2>
+          <p><strong>Plain words:</strong> learning a rule that maps one whole field to another whole field.</p>
+          <p><strong>Why it exists:</strong> in physics, the input is often not one number. It may be a whole initial condition, geometry, source field, or material map, and the output may be a whole pressure, velocity, temperature, or stress field.</p>
+          <p><strong>What can go wrong:</strong> the learned map may work on familiar grids, smooth fields, or training regimes but fail when resolution, geometry, boundary conditions, or physics change.</p>
+          <p><strong>Start with:</strong> <a href="chapter-98.html">Chapter 98</a>, <a href="chapter-125.html">Chapter 125</a>, and <a href="chapter-131.html">Chapter 131</a>.</p>
+        </section>
+
+        <section class="plain-term">
+          <h2>Data Assimilation</h2>
+          <p><strong>Plain words:</strong> correcting a model with new observations as they arrive.</p>
+          <p><strong>Why it exists:</strong> the model is incomplete and the measurements are incomplete. Combining them can be better than trusting either one alone.</p>
+          <p><strong>What can go wrong:</strong> sparse data may not identify the hidden state, biased priors can keep the answer wrong, and the update can look confident for the wrong reason.</p>
+          <p><strong>Start with:</strong> <a href="chapter-134.html">Chapter 134</a> and <a href="chapter-137.html">Chapter 137</a>.</p>
+        </section>
+
+        <section class="plain-term">
+          <h2>Uncertainty Quantification</h2>
+          <p><strong>Plain words:</strong> making the model say how much doubt belongs with its answer.</p>
+          <p><strong>Why it exists:</strong> a fast prediction can be dangerous if it gives no warning about missing data, unknown parameters, numerical error, or a new regime.</p>
+          <p><strong>What can go wrong:</strong> the uncertainty number can measure only the easy source of doubt and miss architecture error, data bias, discretization error, or model-form error.</p>
+          <p><strong>Start with:</strong> <a href="chapter-135.html">Chapter 135</a> and <a href="chapter-137.html">Chapter 137</a>.</p>
+        </section>
+
+        <section class="plain-term">
+          <h2>Foundation Model For Science</h2>
+          <p><strong>Plain words:</strong> a large reusable model meant to help with many scientific tasks, not just one narrow dataset.</p>
+          <p><strong>Why it exists:</strong> scientists want models that can transfer across equations, geometries, materials, resolutions, and downstream decisions.</p>
+          <p><strong>What can go wrong:</strong> calling a model "foundation" does not prove it generalizes. It must be tested across meaningful physical changes, not only nearby examples.</p>
+          <p><strong>Start with:</strong> <a href="chapter-132.html">Chapter 132</a>, <a href="chapter-125.html">Chapter 125</a>, and <a href="chapter-135.html">Chapter 135</a>.</p>
+        </section>
+
+        <section class="plain-term">
+          <h2>Differentiable Simulation</h2>
+          <p><strong>Plain words:</strong> a simulator that can tell you how changing an input would change the output.</p>
+          <p><strong>Why it exists:</strong> design and control need useful change directions, not only final answers.</p>
+          <p><strong>What can go wrong:</strong> gradients can be expensive, unstable, wrong through discontinuities, or misleading if the simulator omits the real constraint.</p>
+          <p><strong>Start with:</strong> <a href="chapter-08.html">Chapter 8</a>, <a href="chapter-58.html">Chapter 58</a>, and <a href="chapter-129.html">Chapter 129</a>.</p>
+        </section>
+
+        <section class="plain-term">
+          <h2>Topology And Geometry</h2>
+          <p><strong>Plain words:</strong> topology is about what is connected to what, and geometry is about the shape and size of things.</p>
+          <p><strong>Why it exists:</strong> in physics, a connection can matter more than an average value. A fracture path may connect injector to producer. A state-space boundary may separate laminar flow from turbulence. A device shape may decide where waves, heat, or stress go.</p>
+          <p><strong>What can go wrong:</strong> a model can match a number while missing the connected pathway, boundary, hole, fold, or regime change that controls the decision.</p>
+          <p><strong>Start with:</strong> <a href="chapter-129.html">Chapter 129</a>, <a href="chapter-136.html">Chapter 136</a>, and <a href="chapter-137.html">Chapter 137</a>.</p>
+        </section>
+
+        <section class="plain-term">
+          <h2>Generative Model</h2>
+          <p><strong>Plain words:</strong> a model that creates plausible new examples from a learned distribution.</p>
+          <p><strong>Why it exists:</strong> uncertainty work needs many possible worlds, not one answer. A generator can create possible fracture networks, flow fields, molecule structures, or future states quickly.</p>
+          <p><strong>What can go wrong:</strong> plausible-looking samples can be physically broken. The generated sample must be checked against the simulator, the observation, the geometry, and the decision.</p>
+          <p><strong>Start with:</strong> <a href="chapter-125.html">Chapter 125</a>, <a href="chapter-131.html">Chapter 131</a>, and <a href="chapter-137.html">Chapter 137</a>.</p>
+        </section>
+
+        <h2>The Reading Habit</h2>
+        <p>When you hit an unfamiliar term, translate it into this sentence: "This method exists because blank is hard, and it tries to carry blank without breaking blank." If you cannot fill the blanks, the chapter needs rereading from the problem section, not from the formula section.</p>
+      </main>
+    </div>
+  </body>
+</html>

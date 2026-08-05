@@ -1,0 +1,1458 @@
+All right,
+welcome to the DDPS seminar. Everyone,&nbsp;
+Before we introduce our invited speaker,&nbsp;&nbsp;
+let's go over some rules and logistics.&nbsp;
+I have two announcements. First, please&nbsp;&nbsp;
+mute yourself during the talk, but if you have&nbsp;
+questions, you can unmute and ask questions or&nbsp;&nbsp;
+use chat room to post your questions so&nbsp;
+that we can address them in 20 session.&nbsp;&nbsp;
+And finally, today's GDP seminar&nbsp;
+is open to external audiences,
+therefore no classified discussion is allowed.&nbsp;
+So please watch out, that's about it. Now. Let&nbsp;&nbsp;
+me briefly introduce our speaker today.&nbsp;
+It is an honor to host Dr yasamin Bari,&nbsp;&nbsp;
+who is a research scientist at Google DeepMind&nbsp;
+with research interests at the interface of&nbsp;&nbsp;
+statistical physics, machine learning and&nbsp;
+condensed matter physics. In recent years,&nbsp;&nbsp;
+she has worked on the foundations of deep&nbsp;
+learning. From a physics perspective,&nbsp;&nbsp;
+she has been an invited lecturer at the&nbsp;
+last Haute Cher School of Physics, and was&nbsp;&nbsp;
+a co organizer of a recent program at the Kavli&nbsp;
+Institute for Theoretical Physics. Previously,&nbsp;&nbsp;
+she received a PhD in Physics at UC Berkeley.&nbsp;
+Today, yasaman will talk about a first principle&nbsp;&nbsp;
+approach to understanding deep learning. I'm&nbsp;
+sure we are going to hear a wonderful talk. Now,&nbsp;&nbsp;
+let me ask a somewhat informal questions&nbsp;
+to Yasmin, just to get to know you better,&nbsp;&nbsp;
+Yasmin. So my question, as I warn you, will&nbsp;
+be, you have a very interesting background.&nbsp;&nbsp;
+You you have a physics major, pure physics major,&nbsp;
+I assume yes. And then now you are in, you know,&nbsp;&nbsp;
+computational science, and specifically the&nbsp;
+machine learning and AI. How did it happen?
+It happened somewhat organically. So my my PhD&nbsp;
+thesis was indeed on kind of pure physics and&nbsp;&nbsp;
+theoretical physics in quantum condensed matter&nbsp;
+physics. But condensed matter physics has a long&nbsp;&nbsp;
+history of condensed matter physicists have a long&nbsp;
+history of, kind of going into other disciplines,&nbsp;&nbsp;
+and there's really a broad notion of what&nbsp;
+constitutes condensed matter physics.&nbsp;&nbsp;
+It turns out that in the past, historically,&nbsp;
+condensed matter physicists have also studied&nbsp;&nbsp;
+neural networks as a part of the study of&nbsp;
+disordered systems. And that's something&nbsp;&nbsp;
+that you kind of was alluded to in&nbsp;
+the Nobel Prize in physics that was&nbsp;&nbsp;
+awarded this year. I got interested in it&nbsp;
+organically. While I was still at Berkeley,&nbsp;&nbsp;
+I kind of started to go to seminars in&nbsp;
+the computer science department, and heard&nbsp;&nbsp;
+about all this. And at that time, all of the&nbsp;
+empirical advancements. And at that time, there
+something that kind of came to the fore. Was it a&nbsp;&nbsp;
+lot of people saying that it would&nbsp;
+how important it would be to try to&nbsp;&nbsp;
+understand at least something about&nbsp;
+what these models are doing, and so
+that as a scientific problem is&nbsp;
+how I got started in the field,&nbsp;&nbsp;
+and so I kind of worked on that problem&nbsp;
+a bit more from like a physics angle,&nbsp;&nbsp;
+either with methods from&nbsp;
+physics or physics flavored
+types of questions. And then more recently,&nbsp;&nbsp;
+I've kind of wanted to also&nbsp;
+explore, kind of go back a bit into
+application. Applications&nbsp;
+of of machine learning, to
+to areas of the sciences that I know,&nbsp;
+like condensed matter, materials,&nbsp;&nbsp;
+molecular systems. And that's more of a more&nbsp;
+recent development that I won't talk about,&nbsp;&nbsp;
+but kind of bringing them back together. And&nbsp;
+that second part is partly also, I think,&nbsp;&nbsp;
+inspired by a lot of the advancements I've seen&nbsp;
+now having worked at DeepMind or Google, first&nbsp;&nbsp;
+Google Brain and DeepMind for some time, just&nbsp;
+seeing those advancements and what they can do,
+nice, nice. Well, yes, as you said, the&nbsp;
+first Nobel Prize from the machine learning
+person from the Nobel Prize physics. And&nbsp;
+I hope that's going to happen more often,&nbsp;&nbsp;
+and someday, maybe you're going to be a Nobel&nbsp;
+Prize recipient from the physics field. Okay,&nbsp;&nbsp;
+the stage is yours. Okay? Thank you, Yang. Su&nbsp;
+for the kind introduction and the invitation.
+So the focus of this talk will really be, as the&nbsp;
+title says, taking a first principles approach&nbsp;&nbsp;
+to trying to understand deep learning. So&nbsp;
+rather than talk about methods specifically&nbsp;&nbsp;
+from the physical sciences, I'd like to&nbsp;
+just give a little bit of a survey or over.
+View of some of my work, and more broadly, things&nbsp;
+that would be interesting for scientists who work&nbsp;&nbsp;
+with data driven methods in general and and, and&nbsp;
+how, at least, there's been some progress made in&nbsp;&nbsp;
+understanding some pieces of this big landscape&nbsp;
+of, you know, big design space of neural networks&nbsp;&nbsp;
+and AI, where there are just so many knobs and&nbsp;
+so many choices to make at least something about.&nbsp;&nbsp;
+Some of that has been understood recently, and&nbsp;
+I'd like to share a little bit of that with you
+in hopes that it might kind of influence,&nbsp;&nbsp;
+maybe your research in the physical sciences as&nbsp;
+well. So as you all know, you know there's this
+ever persistent promise of machine&nbsp;
+learning and AI and also some
+real successes from the past&nbsp;
+few years in the sciences,&nbsp;&nbsp;
+as you know, in protein structure&nbsp;
+prediction, like the Alpha fold model
+and developing neural network based DFT&nbsp;
+functionals, for example, and as well as&nbsp;&nbsp;
+developing increasingly large language models that&nbsp;
+can do some amounts of math and science reasoning
+in certain domains and certain types of problems.
+So these have all been big advancements from big&nbsp;&nbsp;
+models in the last few years. But I'm&nbsp;
+going to now maybe take a different
+angle to in this talk, which is, what do&nbsp;
+we understand about deep learning and how&nbsp;&nbsp;
+it works and how to design models? And I&nbsp;
+would say, along with all this empirical&nbsp;&nbsp;
+progress that has happened. I feel that on the&nbsp;
+understanding side, were quite a bit behind.
+And, you know, just a few years ago, at one of&nbsp;
+the main ml, major ml conferences, you know,&nbsp;&nbsp;
+one of the invited speakers, very famously made&nbsp;
+this illusion that deep learning is not really&nbsp;&nbsp;
+a science or in engineering, it's&nbsp;
+alchemy. It's just mixing things,&nbsp;&nbsp;
+you know, designing models in a somewhat&nbsp;
+unprincipled way without, you know,&nbsp;&nbsp;
+the designer knowing exactly what will work or&nbsp;
+what won't, and having some basic principles.
+So I think, you know, the unanticipated success&nbsp;
+of using neural networks as models forces us&nbsp;&nbsp;
+to consider some new questions and also revisit&nbsp;
+some old ones from just machine learning from the&nbsp;&nbsp;
+past few decades. So the types of questions&nbsp;
+I want to kind of address in this talk are,&nbsp;&nbsp;
+what can we say about what neural networks&nbsp;
+actually learn, if anything at all? So this&nbsp;&nbsp;
+problem turns out to be solvable in&nbsp;
+certain regimes which can be useful.
+Why is it that neural networks with more&nbsp;
+and more parameters perform better? So&nbsp;&nbsp;
+there's been this trend in the&nbsp;
+field to make a models bigger,&nbsp;&nbsp;
+and often either models wider or wider and deeper&nbsp;
+and so on. And this kind of runs counter to this&nbsp;&nbsp;
+old intuition from just statistics. But as&nbsp;
+as scientists, when you think about fitting
+any data, the more parameters you use, you&nbsp;
+worry about overfitting. And somehow this runs&nbsp;&nbsp;
+completely counter this. Trend runs completely&nbsp;
+counter to that. And then the third question is,&nbsp;&nbsp;
+what controls the gains from scaling up&nbsp;
+deep neural networks as we increase the&nbsp;&nbsp;
+amount of data or the size of the model and so on.
+So in the first part, I just want to give a bit&nbsp;
+of an overview of a topic that I've worked on,&nbsp;&nbsp;
+but that, I think is more broadly, could be&nbsp;
+broadly useful to scientists who also do a&nbsp;&nbsp;
+lot of scientific modeling, which is some&nbsp;
+results, some correspondences that we built&nbsp;&nbsp;
+between neural networks and Gaussian processes,&nbsp;
+which I won't describe in a lot of detail,&nbsp;&nbsp;
+but maybe some of you are familiar with, it's&nbsp;
+sort of a very different modeling paradigm
+to
+to the training of neural networks.&nbsp;
+So just to set up the basic problem,
+let me consider a just a vanilla neural&nbsp;
+network. But we can do this for a lot of&nbsp;&nbsp;
+different architectures, a fully connected&nbsp;
+deep neural network, which has a certain&nbsp;&nbsp;
+depth L to the computation that it does,&nbsp;
+and it has a certain hidden layer with n,&nbsp;&nbsp;
+which is essentially how many computations&nbsp;
+it's Doing in parallel at the same time. And&nbsp;&nbsp;
+so we can describe, you know what the&nbsp;
+computation done by this network is a&nbsp;&nbsp;
+recursion relationship where the function f is a&nbsp;
+function of the original input data x coming in,
+and we take the signal FL minus&nbsp;
+one, which is also a function.
+Of x, let's say, at coming in here, we pass it&nbsp;
+through a non linearity phi. We multiply by weight&nbsp;&nbsp;
+matrices, which are our learnable parameters in&nbsp;
+this network, and maybe a bias. And we do that&nbsp;&nbsp;
+to construct this signal at the next layer. And&nbsp;
+this continues through the through the network.
+So this computation, as I mentioned, it has&nbsp;
+a depth to it, and it has a network width,&nbsp;&nbsp;
+where, here you sum over all these contributions&nbsp;&nbsp;
+from the different hidden nodes or&nbsp;
+neurons from the previous layer.
+Now, in general, being saying, being able&nbsp;
+to say something about this computation is&nbsp;&nbsp;
+pretty challenging. It depends on a&nbsp;
+lot of the hyper parameters. But it&nbsp;&nbsp;
+turns out that at large n in this so&nbsp;
+when you take the limit of a large&nbsp;&nbsp;
+number of hidden nodes or neurons, the&nbsp;
+description of the system simplifies.
+So you can kind of see that through&nbsp;
+the central limit theorem and or&nbsp;&nbsp;
+other more rigorous techniques. But&nbsp;
+essentially what happens is, at large n
+you sum over very many
+variables here, and that sum you can when, when&nbsp;
+you start with at least at the at the beginning&nbsp;&nbsp;
+of training, a random network will involve the&nbsp;
+sum over many random variables. And you can&nbsp;&nbsp;
+imagine how you apply central limit theorem&nbsp;
+to that to be able to describe the process&nbsp;&nbsp;
+F. So this kind of ties in. Basically, it's&nbsp;
+studying the statistical physics of large and&nbsp;&nbsp;
+deep neural networks at the moment, just when&nbsp;
+they're randomly initialized. So we're just,&nbsp;&nbsp;
+we're you can think of it being at the&nbsp;
+beginning of training, we initialize&nbsp;&nbsp;
+the parameters randomly, and then we want to be&nbsp;
+able to describe the system. But I'll talk about&nbsp;&nbsp;
+training in just a minute, because it turns out&nbsp;
+we you can just easily then get to that as well.
+So this is also, you can think of it as a type&nbsp;
+of mean field theory that becomes exact in the&nbsp;&nbsp;
+infinite width limit. So the conclusion is&nbsp;
+that at the large in the large end limit,&nbsp;&nbsp;
+when the network width is wide enough, this is&nbsp;
+well described by a Gaussian process. This neural&nbsp;&nbsp;
+network, and what we need to describe a Gaussian&nbsp;
+process is just a mean and a covariance function.
+So it's just described by its low order&nbsp;
+statistics. So it turns out that that's&nbsp;&nbsp;
+also pretty natural, easy to calculate. So&nbsp;
+there's some recursion that happens on the&nbsp;&nbsp;
+space of functions as you go through&nbsp;
+one layer of the network to another,&nbsp;&nbsp;
+which I just described. It's&nbsp;
+this Iterative computation,
+but if you were going to calculate the covariance&nbsp;
+function, so the expectation of f of x times f of&nbsp;&nbsp;
+x prime averaged over the network, this is what&nbsp;
+you need to be able to describe the to construct&nbsp;&nbsp;
+the kernel function of the Gaussian process.&nbsp;
+It turns out that that also obeys a recursion&nbsp;&nbsp;
+relation. So for from F naught, you can compute&nbsp;
+a k naught, from f1 you can compute a k1 and so&nbsp;&nbsp;
+on until you get to a final K. This covariance&nbsp;
+function, or kernel function, is a function of
+two inputs, x and x prime. So just as a
+maybe reminder so a Gaussian process I mentioned&nbsp;
+needs a mean function and a covariance function.&nbsp;&nbsp;
+The mean function in this setting is just&nbsp;
+zero. The covariance function is a function&nbsp;&nbsp;
+of two arguments, x and x prime. It tells&nbsp;
+you roughly how similar X and X prime are&nbsp;&nbsp;
+after you perform this series of computations,&nbsp;
+and there's a recursion relationship that you can&nbsp;&nbsp;
+get for K that exactly mirrors the one we wrote&nbsp;
+down for F, because it's done iteratively, it
+inherits the computation that the&nbsp;
+neural Network inherently is doing.
+So this is a way, a natural way, in which Gaussian&nbsp;
+processes and kernels arise from neural networks&nbsp;&nbsp;
+naturally, and they have a certain structure&nbsp;
+that's different from kernels or Gaussian&nbsp;&nbsp;
+processes that were known before, because they&nbsp;
+have this compositionality in them. And you know,&nbsp;&nbsp;
+classic yacht processes in the literature&nbsp;
+and textbooks, if you look at them,&nbsp;&nbsp;
+have a very different structure. They're&nbsp;
+usually constructed from simpler functions,&nbsp;&nbsp;
+and they're not compositional in&nbsp;
+this way that I described. So.
+So now that was the study of random networks,&nbsp;
+but once you map the problem over to a Gaussian&nbsp;&nbsp;
+process, and that description is exact, as&nbsp;
+I mentioned in that limit, and it's a good&nbsp;&nbsp;
+description, if the layer width is large enough,&nbsp;
+then it's easy to do Bayesian learning from that.
+So if you have a data set D, and you'd&nbsp;
+like to make Bayesian predictions from this&nbsp;&nbsp;
+neural network in this large width limit, you can&nbsp;
+essentially do that through this Gaussian process,
+for example. So these are now well&nbsp;
+written, you know, kind of textbook,&nbsp;&nbsp;
+Gaussian processes. There are equations that you&nbsp;
+can look up for what the prediction would be after&nbsp;&nbsp;
+learning on a certain amount of data, for the for&nbsp;
+the network or for the model. So, for example,&nbsp;&nbsp;
+the output of the function on some new point&nbsp;
+x is it's a probabilistic computation. So it's&nbsp;&nbsp;
+described by some distribution. In this case, it's&nbsp;
+a normal distribution with a mean and a variance&nbsp;&nbsp;
+that you can write down analytically. And for&nbsp;
+example, the mean is just gotten by computing this&nbsp;&nbsp;
+linear algebra, you know, computation on the tart,&nbsp;
+on the original targets, y, at the data points&nbsp;&nbsp;
+that you have, and doing some linear algebra using&nbsp;
+this kernel function that I described on the prior&nbsp;&nbsp;
+slide. So for every network, every neural network&nbsp;
+that you have, you have this kernel function k you&nbsp;&nbsp;
+can compute it on your training data, just&nbsp;
+as you would for other Gaussian processes,&nbsp;&nbsp;
+and then you can use that to make predictions.&nbsp;
+And so this became a way of obtaining Bayesian&nbsp;&nbsp;
+predictions that are exact from an infinitely&nbsp;
+wide, deep neural network. And pictorially for&nbsp;&nbsp;
+those of you, just as a maybe reminder of Bayesian&nbsp;
+kind of methods and what a Gaussian process does.
+You know it's probabilistic,&nbsp;
+so before you learn from data,&nbsp;&nbsp;
+you have some kind of distribution&nbsp;
+over the values of the function
+with some mean and some variance. But after you&nbsp;
+learn from data, your function kind of reduces&nbsp;&nbsp;
+its error around those data points to match&nbsp;
+the values y that it's regressing to. And then&nbsp;&nbsp;
+there's some remaining variants in the places in&nbsp;
+input space where you don't have a lot of data,&nbsp;&nbsp;
+but you would need to, you know, have&nbsp;
+more constraints, to do better learning.
+And so in summary, this was kind of&nbsp;
+a few year program, essentially to
+take neural networks of different architectures,&nbsp;
+so this zoo of architectures that exists out there&nbsp;&nbsp;
+with all sorts of different models&nbsp;
+and derive, in this large end limit,&nbsp;&nbsp;
+the Gaussian process and kernels that&nbsp;
+originate from those. And we did that at&nbsp;&nbsp;
+the very beginning with our very first paper&nbsp;
+on just the fully connected neural network,&nbsp;&nbsp;
+which gives rise to some kernel k, which I&nbsp;
+label FC, just to just to say that it it's&nbsp;&nbsp;
+tied to the architecture of a fully connected&nbsp;
+neural network. You can do something similar&nbsp;&nbsp;
+with a convolutional neural network. So&nbsp;
+these are often used in vision problems.
+There the notion of what is n, what is the large&nbsp;
+width limit is slightly different. It's the number&nbsp;&nbsp;
+of filters that you use. But again, it's always&nbsp;
+corresponding to this sequential process, sorry,&nbsp;&nbsp;
+parallel processing that you're doing&nbsp;
+in every layer at the same time. You&nbsp;&nbsp;
+can also do it for models with attention&nbsp;
+layers that are now used in you know,&nbsp;&nbsp;
+it's kind of like the backbone of language models.&nbsp;
+You can do it with residual networks that have&nbsp;&nbsp;
+skip connections. You can also do it with graph&nbsp;
+neural networks as well. And so this kind of had a
+number of implications. So I focused here&nbsp;
+more on the methodology that originate. That
+was one of the consequences of these mappings. So&nbsp;
+now you have Gaussian processes and kernels that&nbsp;&nbsp;
+you can just use. And it turned out that&nbsp;
+they were, at the time, state of the art
+Gaussian processes compared&nbsp;
+to like older, traditional
+GPS, for example, the fully connected one&nbsp;
+that we published the begin some time ago,&nbsp;&nbsp;
+at the time was was like a state of the art&nbsp;
+GP, and same with convolutional. And again,&nbsp;&nbsp;
+I think this, the reason for this is&nbsp;
+that it's a richer class of kernels.
+Or GPS, because it has this compositional,&nbsp;
+hierarchical processing that comes from the neural&nbsp;&nbsp;
+network that usual Gaussian processes with simple&nbsp;
+kernels like radial like Gaussian kernels or,&nbsp;&nbsp;
+you know, radial basis functions don't have.&nbsp;
+So one aspect of this, as I mentioned, was
+one consequence of this program was&nbsp;&nbsp;
+methodological. So now we have&nbsp;
+these methods that we can use
+in lieu of traditional Gaussian processes.
+The second, which I won't go into, was it kind&nbsp;
+of gave rise, on the theoretical side to the to&nbsp;&nbsp;
+to even more work on these large width limits.&nbsp;
+And so there have been a lot of consequences&nbsp;&nbsp;
+coming from that as well, which I won't get&nbsp;
+get into but, but some of those highlights&nbsp;&nbsp;
+have been that the community was able to actually&nbsp;
+solve for the dynamics of optimization exactly&nbsp;&nbsp;
+in that limit. So there are other very&nbsp;
+closely related kernels that you can write&nbsp;&nbsp;
+down and construct that describe what happens&nbsp;
+under optimization in this large with limit.&nbsp;&nbsp;
+And so this has given people a theoretical&nbsp;
+handle on the problem in that limit. It also&nbsp;&nbsp;
+has given rise to kind of a whole sub field&nbsp;
+in in machine learning, having to do with
+setting parameterizing networks, layer widths,&nbsp;
+layers in a right way, so as to either be close&nbsp;&nbsp;
+to this limit or not be close to this limit.&nbsp;
+And I won't get into that either, but just&nbsp;&nbsp;
+allude to this fact that this has kind of gone&nbsp;
+off and evolved into other directions as well.
+On the methodological side, I'll say that.&nbsp;
+So I talked more about the theory, but if&nbsp;&nbsp;
+you're interested in using any of these models,&nbsp;
+there was sort of a larger effort at Google to&nbsp;&nbsp;
+construct a library that would allow you to easily&nbsp;
+implement these kernels and Gaussian processes,
+kind of in in correspondence with neural network&nbsp;
+layers. So in the same way that we have libraries&nbsp;&nbsp;
+for neural network layers where we can define, you&nbsp;
+know, fully connected layer, convolutional layer&nbsp;&nbsp;
+and so on, now you can do that in a way to you&nbsp;
+can define networks and at the same time define&nbsp;&nbsp;
+these kernels and be able to compare them,&nbsp;
+sort of apples to apples. Jax is a really nice
+framework, also developed at Google. So&nbsp;
+this library, the neural tangents library,&nbsp;&nbsp;
+is written in Jax, and it's very easy to use,&nbsp;
+so I encourage everyone to play around with it.&nbsp;&nbsp;
+You just import its neural network library,&nbsp;
+and you can define a neural network here,&nbsp;&nbsp;
+like a sequence, for example, of just weight&nbsp;
+matrices and ReLU function non linearities,&nbsp;&nbsp;
+and be able to obtain both the kernel function&nbsp;
+and the actual neural network function, train&nbsp;&nbsp;
+them and then compare, compare them. And so we did&nbsp;
+this also pretty systematically across different&nbsp;&nbsp;
+architectures. And for each case, it turns out&nbsp;
+that whether the finite size neural network,&nbsp;&nbsp;
+or the infinite with kernel does better really&nbsp;
+depends on the architecture and the and the type&nbsp;&nbsp;
+of data. So for example, you may this might run&nbsp;
+counter to your wisdom, but in the case of fully&nbsp;&nbsp;
+connected neural networks, it turns out that that&nbsp;
+the kernels do pretty well on like the simple&nbsp;&nbsp;
+benchmark data sets coming from the vision you&nbsp;
+know, very simple image classification data sets.
+And I think one reason for that is because&nbsp;
+fully connected neural networks at finite&nbsp;&nbsp;
+size are actually not very good models. They&nbsp;
+don't have rich inductive biases. They don't&nbsp;&nbsp;
+have a lot of structure that's actually relevant&nbsp;
+for the physical world. And so the infinite with&nbsp;&nbsp;
+neural network is something that has infinitely&nbsp;
+many basis functions in it, and it actually does&nbsp;&nbsp;
+either on par or as well, you know, as well as the&nbsp;
+finite size neural network. Now what we found was,&nbsp;&nbsp;
+if you go to other architectural classes,&nbsp;
+like Convolutional Neural Networks,&nbsp;&nbsp;
+which do have structure, more structure in&nbsp;
+them that's well suited for the physical world,&nbsp;&nbsp;
+then the finite size neural networks do do better&nbsp;
+than the kernels, but it's also important that you&nbsp;&nbsp;
+have enough data for that to be true. So a general&nbsp;
+trend that is now kind of known in the field, or
+has kind of grown out of that is, is that&nbsp;
+these finite size neural networks that&nbsp;&nbsp;
+that we're all using to.
+A do do really well, but you do really need a&nbsp;
+certain amount of data for that to be true. And if&nbsp;&nbsp;
+you're in a low data regime, you actually it may&nbsp;
+not be the case that a model which is infinitely&nbsp;&nbsp;
+large and is just a kernel, since that's a&nbsp;
+somewhat it's a very particular class of models,
+a model that is just a kernel can actually do&nbsp;
+that corresponds to the same structure of the&nbsp;&nbsp;
+finite size neural network can actually do&nbsp;
+as well. So there's some crossover between&nbsp;&nbsp;
+as a function of the amount of data that&nbsp;
+you have, between whether a kernel method&nbsp;&nbsp;
+is good and whether a neural network is good.&nbsp;
+So that's sort of a high level takeaway from&nbsp;&nbsp;
+the systematic comparisons of basically having a&nbsp;
+one to one correspondence between infinite size&nbsp;&nbsp;
+models and their finite size versions&nbsp;
+and their finite size versions. When,&nbsp;&nbsp;
+when you know, as I just to reiterate, when&nbsp;
+you do have rich structure in the model&nbsp;&nbsp;
+that matches that of the physical world.&nbsp;
+The finite size network does do better,&nbsp;&nbsp;
+because it adapts its basis functions to&nbsp;
+the data, and a kernel does not do that. I
+want to ask a quick question like,
+how many parameters does this equivalent&nbsp;
+caution process kernel has like?
+Because that seems to be the&nbsp;
+key issue for data, right? So
+do you have any comment on that? So it only&nbsp;
+has in terms of tunable parameters? These&nbsp;&nbsp;
+would the hyper parameters it would have,&nbsp;
+just for example, in these vanilla settings,
+just the like a, I didn't write it on the&nbsp;
+slide, I guess, but a like a weight variance&nbsp;&nbsp;
+and a bias variance, so two constants&nbsp;
+that come from sort of the scale that&nbsp;&nbsp;
+you want to choose for your prior on W on a&nbsp;
+scale for the prior on the B's. And a lot of&nbsp;&nbsp;
+the ones we tested were kind of this. They're&nbsp;
+essentially two parameter Gaussian processes.&nbsp;&nbsp;
+Then we tune those two hyper parameters. But&nbsp;
+the neural network does have, in principle,&nbsp;&nbsp;
+a few more design choices as&nbsp;
+well that we tune. Okay, okay,&nbsp;&nbsp;
+and that's where the more data requirements&nbsp;
+come from, you know, for the neural network.
+No, the more data requirements seem&nbsp;
+to come from. Well, it's actually not&nbsp;&nbsp;
+well understood theoretically or just why, but&nbsp;
+it's more of an empirical observation where,&nbsp;&nbsp;
+if you're the thing with a kernel is that it has a
+if a neural network is allowed to learn?
+Yeah, if
+I guess, I guess I would agree. Maybe that&nbsp;
+is a way of stating it you need more data to&nbsp;&nbsp;
+it's better if you can adapt your basis functions&nbsp;
+quite a lot to the data. But in order to do that,&nbsp;&nbsp;
+you do need more data. Okay, yeah, that's&nbsp;
+sort of the Yeah, maybe the rough idea.
+Thanks.
+Any other questions?
+I don't see anyone, hands up, so you can
+so, so that kind of is just,&nbsp;
+was an overview of this area,
+in case you want to read more about it or use some&nbsp;&nbsp;
+of the tools. Now I'll just&nbsp;
+switch gears to a different
+kind of more recent evolution, which is trying&nbsp;
+to understand scaling laws in in machine learning&nbsp;&nbsp;
+models in general, but particularly neural&nbsp;
+network models, and especially when they're&nbsp;&nbsp;
+large. And so I'll give a bit of an overview on&nbsp;
+that as well. So, you know, you have these basic&nbsp;&nbsp;
+knobs in machine learning that you can tune&nbsp;
+to adjust the performance of an ML model. So&nbsp;&nbsp;
+amount of training data that you have, which&nbsp;
+is often small and scientific applications,&nbsp;&nbsp;
+is is one of them. But you also have the&nbsp;
+size of the model as well as the amount&nbsp;&nbsp;
+of time you want to train for. Or another&nbsp;
+way to state that is, you can change units,&nbsp;&nbsp;
+especially essentially, and instead study the&nbsp;
+amount of computational resources you have to&nbsp;&nbsp;
+devote to that. So like the amount of flops&nbsp;
+that you you would like in a computation. And
+nowadays, in the era of at least in the in the&nbsp;
+space of very large machine learning models,
+there were a few empirical observations a&nbsp;
+few years ago that kind of just highlighted
+a very simple trend, but one that's very&nbsp;
+useful to measure, which is just that the quad.
+Quality of your model as measured&nbsp;
+by the test loss after training
+seems to improve rather monotonically as&nbsp;
+a function of any one of these variables&nbsp;&nbsp;
+in the problem. So the amount of&nbsp;
+computational resources you have,&nbsp;&nbsp;
+the amount of training data and the number&nbsp;
+of parameters and these trends sometimes,&nbsp;&nbsp;
+although not always, seem to be like power&nbsp;
+laws with certain exponents to that scaling.&nbsp;&nbsp;
+There are, of course, other knobs that&nbsp;
+you can also tune, which I won't discuss,&nbsp;&nbsp;
+like the quality of the data, how heterogeneous&nbsp;
+it is and what mixtures you should take.
+But for now, I'll just focus on&nbsp;
+these empirical observations.
+Some other examples of this,&nbsp;
+which you might be familiar with,&nbsp;&nbsp;
+are also in the in the space&nbsp;
+of large language models. So
+you know, GPT three, one of the things that&nbsp;
+was originally observed about it was that you&nbsp;&nbsp;
+know certain performance benchmarks can can&nbsp;
+improve monotonically as a function of, say,&nbsp;&nbsp;
+the size of the model or the amount of data&nbsp;
+and so on. But there's other regimes, other
+types of problems where you&nbsp;
+can have sort of discontinuous
+behavior. And so, for example,
+one of the observations was, if you take,
+let's say you take some relatively smaller model,&nbsp;
+and you look at the accuracy as a function of the&nbsp;&nbsp;
+amount of examples that you give in context to&nbsp;
+this model. So now we're thinking of language&nbsp;&nbsp;
+models. They have some they're trained on&nbsp;
+some pre training data set, some corpus, but
+they can do in context learning. So after&nbsp;
+they're trained, you can give them some&nbsp;&nbsp;
+few examples. You know, that's how you interact&nbsp;
+with say, chat G, chat G, P, T, or any of these&nbsp;&nbsp;
+large language models available now, you give&nbsp;
+a few examples, which is, you know, the number&nbsp;&nbsp;
+of examples in context, and you can look at the&nbsp;
+how the performance improved as a function of the&nbsp;&nbsp;
+number of examples in the context. And sometimes&nbsp;
+what, what was, what was observed was that if you
+continue increasing the size of the model,&nbsp;&nbsp;
+there's a point at which you actually&nbsp;
+get some discontinuous behavior
+as a function of the number of examples&nbsp;
+in the context. So for this ultra large,&nbsp;&nbsp;
+almost absurdly large, you know, model,&nbsp;&nbsp;
+what you find is that the accuracy as a function&nbsp;
+of the amount of data in the context improves
+and then kind of transitions to to&nbsp;
+a different slope, but at large,&nbsp;&nbsp;
+much larger values of the accuracy, as you&nbsp;
+give it more and more examples. So this is&nbsp;&nbsp;
+the kind of behavior that at least model&nbsp;
+designers in this in this other regime,&nbsp;&nbsp;
+which I know is somewhat different from scientific&nbsp;
+applications, which are much more small scale,
+but this is sort of the regime that&nbsp;
+people are working in nowadays,&nbsp;&nbsp;
+in the space of large language models,&nbsp;
+or even models like alpha fold and so on,&nbsp;&nbsp;
+which have a lot of training&nbsp;
+data and very large size,
+but there's a lot of empirical work, essentially,&nbsp;
+to try to figure out the best way to scale up a&nbsp;&nbsp;
+model. So if you have some amount of resources&nbsp;
+that you want to devote to training a model,
+let's say you have a fixed amount of&nbsp;
+computational resources that you're&nbsp;&nbsp;
+willing to spend, then there's an optimal&nbsp;
+way to allocate that those resources to&nbsp;&nbsp;
+either to some amount that you should pick&nbsp;
+the amount of training data that you need
+in a specific way, and you can pick the model&nbsp;
+size in a specific way. And there's some trade&nbsp;&nbsp;
+off. If your model, for example, is too small&nbsp;
+relative to the amount of data that you have,&nbsp;&nbsp;
+then you may not actually be getting all of&nbsp;
+being able to extract all the information that&nbsp;&nbsp;
+you could from that data set, or vice versa,&nbsp;
+if your training set is too small relative to&nbsp;&nbsp;
+the size of your model, you don't actually&nbsp;
+have enough information for the you know,&nbsp;&nbsp;
+the richness of the model. You have many more&nbsp;
+parameters that you could be using that you're not&nbsp;&nbsp;
+essentially using. So there is a bit of a trade&nbsp;
+off here, and the community has been looking at
+figuring out the best ways to scale&nbsp;
+up so that it's compute optimal.
+I won't go too much into the details of what.
+We've looked at, but we we
+did some theoretical work, essentially trying to&nbsp;
+analyze what gives rise to these scaling laws,&nbsp;&nbsp;
+what what controls these trends?&nbsp;
+And this is important for any model,&nbsp;&nbsp;
+even in the physical sciences. So often you're&nbsp;
+interested in the physical sciences is in you&nbsp;&nbsp;
+have a fixed amount of data, and you just&nbsp;
+want to know how good is the model right now,&nbsp;&nbsp;
+the quality of the fit. But it could be that&nbsp;
+you're in a situation, maybe you're working&nbsp;&nbsp;
+with experimentalists or something, where you&nbsp;
+could potentially obtain more data over time,&nbsp;&nbsp;
+let's say, and then the model that you would want&nbsp;
+to choose is actually not the model that has the&nbsp;&nbsp;
+best fit right now, it's the model that whose rate&nbsp;
+of improvement is actually pretty good as well. So&nbsp;&nbsp;
+it's just another metric to look at, because you&nbsp;
+might be able to do more with with such a model&nbsp;&nbsp;
+if you had just a little bit more data, or just&nbsp;
+a little bit bigger model in terms of its size.
+So I'll maybe just skip a bit over this,&nbsp;
+since it's maybe a bit too much kind of in the
+there's, there might be a question on the&nbsp;
+chat, but I'll, I'll, I won't go into the&nbsp;&nbsp;
+details of this, just to say that we&nbsp;
+looked at this problem theoretically,
+looking at the loss as a function of the amount&nbsp;
+of data D, and for us, the model size, but it was&nbsp;&nbsp;
+related to the width of the neural network.&nbsp;
+And we were able to derive these power laws
+as a function of the amount&nbsp;
+of data D or the model size,&nbsp;&nbsp;
+and they have certain exponents, which&nbsp;
+is what I'm highlighting in color. So&nbsp;&nbsp;
+that's telling you about this rate&nbsp;
+of improvement, alpha d or alpha W.
+The short of it is, is that one of the things we&nbsp;
+found, which I can summarize as a just high level&nbsp;&nbsp;
+rule of thumb, is that if you have, if you're&nbsp;
+looking at scaling one of these parameters on&nbsp;&nbsp;
+its own, either the amount of data that you&nbsp;
+have or the size of the model. So D or n,
+there are different regimes&nbsp;
+of scaling that kick in. So
+what happened? What happens&nbsp;
+is that if you're scaling up,&nbsp;&nbsp;
+if you have these two variables&nbsp;
+d and the variable n1,
+of them will be the bottleneck in the scaling. So&nbsp;&nbsp;
+let's say it's a very intuitive rule,&nbsp;
+but let's say you're in this regime so
+the amount of data you have relative to the&nbsp;
+size of the model. Where this constant is&nbsp;&nbsp;
+not something we know, but it's, it's some,&nbsp;
+you know, rough regime where this is true.&nbsp;&nbsp;
+Then if you look at the data sites, data says,&nbsp;
+data set, size, scaling, D. So what happens if&nbsp;&nbsp;
+my model is large? I'm I have a certain amount&nbsp;
+of data, and I want to increase the amount of&nbsp;&nbsp;
+what would happen if I increase the amount&nbsp;
+of data, you get some particular exponent,&nbsp;&nbsp;
+alpha d, we call this. We gave this, this regime&nbsp;
+a name. It's called resolution limited. It has&nbsp;&nbsp;
+to do with how well you resolve the data&nbsp;
+manifold, essentially. So this exponent,&nbsp;&nbsp;
+alpha d is actually pretty complicated.&nbsp;
+It depends both on the data and the neural&nbsp;&nbsp;
+architecture. And I'll mention, I'll give some&nbsp;
+few examples of what controls this power law.
+The exact same idea is true if you now switch the&nbsp;
+roles of the variables. So now let's say you're&nbsp;&nbsp;
+in this regime where you have a lot of data, you&nbsp;
+have a small model, and you're just looking at&nbsp;&nbsp;
+the what happens when you scale the size of the&nbsp;
+model. Again, the model size is the bottleneck,&nbsp;&nbsp;
+and you get some exponent, alpha, W, which is&nbsp;
+complicated in general, one should go measure it,
+but, but it has to do with, again, this resolution&nbsp;
+of of a data manifold. But if you're in this&nbsp;&nbsp;
+other regimes, which I'm in this table, I'm&nbsp;
+putting on the diagonals. So for example,&nbsp;&nbsp;
+if you're in this regime where you&nbsp;
+have a certain model size and you&nbsp;&nbsp;
+have a lot of training data, if you&nbsp;
+keep increasing the amount of data,
+your exponent, the rate at which you improve is&nbsp;
+actually just some fixed constant equal to one.&nbsp;&nbsp;
+So the gains you know from this are kind of&nbsp;
+potentially a marginal or not. And something&nbsp;&nbsp;
+similar happens when you again reverse the two&nbsp;
+variables. So at a high level, this is all just&nbsp;&nbsp;
+to say that you can partition this space of&nbsp;
+2d, space of data scaling and model scaling&nbsp;&nbsp;
+into different regimes. You can categorize them,&nbsp;
+and you can understand that certain regimes are.
+Actually a quite related to each other and B, you&nbsp;
+can understand what controls the scaling in those&nbsp;&nbsp;
+regimes. And then there are other regimes where it&nbsp;
+really has to do with how well you model the data&nbsp;&nbsp;
+manifold and so on. So these are just empirical&nbsp;
+results to kind of demonstrate that we see these&nbsp;&nbsp;
+exponents alpha equal to one in these diagonal&nbsp;
+regimes, regardless of what the problem is. So&nbsp;&nbsp;
+these are like different data sets, different&nbsp;
+models. They all improve at the same rate, alpha&nbsp;&nbsp;
+equal to one. Same with this down here, but on&nbsp;
+the off diagonals, which correspond to these other&nbsp;&nbsp;
+regimes, we see very problem dependent exponents.&nbsp;
+So that's sort of the high level takeaway.
+I'll say one final thing, which is&nbsp;
+that the power laws in these regimes,&nbsp;&nbsp;
+on the off day, off diagonals that you have are&nbsp;
+actually related to power laws that you see in&nbsp;&nbsp;
+the data. So if you take, and this is maybe&nbsp;
+more details than something I'll get into.&nbsp;&nbsp;
+But if you take those kernels that I showed you&nbsp;
+alluded to earlier in the beginning of the talk,
+and if we want to just study, let's say, the&nbsp;
+scaling of a Gaussian process or of a kernel&nbsp;&nbsp;
+method, it turns out you can understand&nbsp;
+that pretty well, and it's very related to
+the properties of the kernel when it's evaluated&nbsp;
+on training data. So, for example, imagine&nbsp;&nbsp;
+that I take one of the kernels, let's say the&nbsp;
+kernel from the fully connected network that I&nbsp;&nbsp;
+had earlier in in the large with derivation.&nbsp;
+And I just want to understand what is the&nbsp;&nbsp;
+data scaling of a model with that kernel&nbsp;
+like what controls that? This is actually&nbsp;&nbsp;
+a better understood problem, and in this&nbsp;
+case, you can actually be pretty precise&nbsp;&nbsp;
+about what controls it. One of the big factors&nbsp;
+is just the eigenvalue spectrum of that kernel&nbsp;&nbsp;
+matrix when you evaluate it on the training&nbsp;
+data. And if you look at real data, one of&nbsp;&nbsp;
+the properties, unlike many theoretical models,&nbsp;
+is that one of the properties it displays, is&nbsp;&nbsp;
+that it has a power law dependence. So if I look&nbsp;
+at the eigenvalues lambda i as a function of i,&nbsp;&nbsp;
+there's some power law behavior as a function&nbsp;
+of the index i of the eigenvalue that power lot&nbsp;&nbsp;
+depends on the difficulty of the data set&nbsp;
+and the structure of the kernel. So here,&nbsp;&nbsp;
+just to tune the complexity of the data, what&nbsp;
+we're doing is coarse graining image data. So
+so for example, as we go from one to 14, what&nbsp;
+we're doing is taking images, and, you know,
+coarse graining them, so just averaging&nbsp;
+them locally until we produce images of&nbsp;&nbsp;
+lower and lower resolution. And that produces&nbsp;
+that's as we go up to these pink numbers,&nbsp;&nbsp;
+and that changes the spectrum of the kernel,&nbsp;
+because it changes the complexity of that&nbsp;&nbsp;
+data set and the task that you have to&nbsp;
+perform, which is interpreting either&nbsp;&nbsp;
+a high resolution image or a low resolution&nbsp;
+image. So this is all just to just to say that
+or highlight that these how a model scales&nbsp;
+its scaling behavior, and these power laws
+in some of these regimes where&nbsp;
+it's very data dependent,&nbsp;&nbsp;
+it depends on the data manifold can be tied&nbsp;
+back to power laws that originate in real,&nbsp;&nbsp;
+natural data, like the real world has&nbsp;
+power law data in it. When you look at
+what it looks like in these covariance&nbsp;
+functions or kernel functions,
+okay, I'll maybe skip over some of the predictions&nbsp;
+that come. There's there's more details of&nbsp;&nbsp;
+of of our theory and what we predict. But again,&nbsp;
+the the takeaways, we can observe these different&nbsp;&nbsp;
+regimes with exponent alpha equal to one, as&nbsp;
+well as exponents that are very different and&nbsp;&nbsp;
+dependent on the problem. As you see here, alpha&nbsp;
+d, that is around point two. Alpha p, again,&nbsp;&nbsp;
+around point two, this is now in a setting&nbsp;
+which involves pre training and fine tuning,&nbsp;&nbsp;
+so it's a pretty practically relevant setting. So&nbsp;
+I'll skip over these. I'll just say that there's&nbsp;&nbsp;
+also these connections between scaling and&nbsp;
+the dimensionality, effective dimensionality,&nbsp;&nbsp;
+of the data manifold. And so we've done, we&nbsp;
+had done experiments where we looked at the&nbsp;&nbsp;
+correlation between the data scaling exponent&nbsp;
+and the dimensionality of the data manifold,&nbsp;&nbsp;
+and essentially alpha d goes as&nbsp;
+one over the effective dimension
+of the problem.
+Problem, and you can see, for different data sets,&nbsp;
+at least, there's a rough correlation in that,
+the larger the dimensionality,
+the harder the problem and the scaling.
+So
+just a few other empirical observations&nbsp;
+that might interest you again? If,&nbsp;&nbsp;
+if you were to look at scaling&nbsp;
+for any models that you work with,
+but modifying the task affects the&nbsp;
+scaling, of course. So for example,&nbsp;&nbsp;
+let me point to this example on the&nbsp;
+right. If you corrupt data with noise,
+then it becomes more difficult, and&nbsp;
+the scaling of that same model as you&nbsp;&nbsp;
+increase the noise. So those are the kind&nbsp;
+of the blue numbers, the scaling worsens,&nbsp;&nbsp;
+both the num both the curves shift upwards, but&nbsp;
+their slope also changes. So the efficiency of&nbsp;&nbsp;
+the model on that data set is much worse.&nbsp;
+On the other hand, if you actually just&nbsp;&nbsp;
+change the task to be something that's kind of&nbsp;
+semantically very similar to the original task,&nbsp;&nbsp;
+you don't change the efficiency, at least&nbsp;
+within these experiments, you just shift the
+curves up and down.
+You can also look at architectural differences&nbsp;
+within certain families of neural network models.&nbsp;&nbsp;
+So this is like a very classic ml setup, where&nbsp;
+you have a wide ResNet model. It's a family of&nbsp;&nbsp;
+models that you can make deeper or wider, and&nbsp;
+you can look at the scaling on real data sets,&nbsp;&nbsp;
+and what you find is depth, again, kind of roughly&nbsp;
+shifts the curves up and down, but if you change&nbsp;&nbsp;
+the width quite a lot, and as you make the network&nbsp;
+wider, it actually has a worse slope. Actually,&nbsp;&nbsp;
+this is connected to what I mentioned earlier&nbsp;
+about the efficiency of kernels compared to neural&nbsp;&nbsp;
+network models. What these curves essentially are&nbsp;
+doing is the pink one is, say, a neural network&nbsp;&nbsp;
+model of a particular width, and as we increase&nbsp;
+the width, we actually get closer to these kernel&nbsp;&nbsp;
+regimes and kernels don't scale as efficiently&nbsp;
+as neural networks once you have enough data,&nbsp;&nbsp;
+and you can see that worse efficiency&nbsp;
+here, data efficiency in this blue line.
+Finally, I'll just mention that another&nbsp;
+kind of very connected emerging area is,&nbsp;&nbsp;
+how can we? How can you do better&nbsp;
+than the power laws that you have
+that are kind of fixed, you're stuck&nbsp;
+with depending on the model that you&nbsp;&nbsp;
+choose and your data set. And there, it's&nbsp;
+known that you could beat the scaling laws,&nbsp;&nbsp;
+the power law form, if you sub select&nbsp;
+your data in a very strategic manner.&nbsp;&nbsp;
+So if like somehow you knew which data&nbsp;
+would be the right ones to select,&nbsp;&nbsp;
+you could actually get this kind of Sigmoidal&nbsp;
+improvement as a function of the amount of data.
+It levels off at some point. But for very small&nbsp;
+data sets, that means that it's much better to&nbsp;&nbsp;
+actually, you know, strategically sub select the&nbsp;
+data, rather than use all the data that you have,&nbsp;&nbsp;
+kind of randomly sampled IID from, from your&nbsp;
+set. And so figuring out the way to do this is&nbsp;&nbsp;
+sort of a it's a continuing area of research, but&nbsp;
+something to keep in mind, especially when you,&nbsp;&nbsp;
+when you are in these data limited regimes, or you&nbsp;
+can, you know, wisely choose the data or where to&nbsp;&nbsp;
+sample if you're doing active learning and so on&nbsp;
+in these in these settings. Okay, so maybe just to&nbsp;&nbsp;
+summarize kind of the two portions of this talk.&nbsp;
+And thanks for your patience and interest, because&nbsp;&nbsp;
+this was more focused on, sort of like, what are&nbsp;
+the foundational principles we kind of understand&nbsp;&nbsp;
+on on of neural networks and ml at the moment?&nbsp;
+And I just wanted to kind of reiterate these two,&nbsp;&nbsp;
+which was the first was that neural architectures,&nbsp;
+very general class of neural network models,&nbsp;&nbsp;
+different architectures, all naturally give rise&nbsp;
+to Gaussian processes and rich compositional&nbsp;&nbsp;
+kernels that can be useful as methods.&nbsp;
+They're more useful in low data regimes where&nbsp;&nbsp;
+traditionally Gaussian processes and kernels are&nbsp;
+used. I think if you're gonna, if you do use such&nbsp;&nbsp;
+models, it's worth considering these compared to,&nbsp;
+compared to traditional Gaussian processes with&nbsp;&nbsp;
+traditional kernels, because there's a good chance&nbsp;
+these might do pretty well for your application,
+like one, one other difference in a.
+Addition to the compositionality that&nbsp;
+I actually forgot to mention is that&nbsp;&nbsp;
+these kernels are non local kernels. Local&nbsp;
+kernels like a natural radial basis function,&nbsp;&nbsp;
+so it gives larger weight to inputs in the&nbsp;
+feature space that are closer together,
+but neural networks and their associated&nbsp;
+kernels are in some ways more powerful models,&nbsp;&nbsp;
+because it allows you to give a correlation,&nbsp;&nbsp;
+a similarity to features that are potentially&nbsp;
+very different in their original input space,&nbsp;&nbsp;
+even though they're similar in some higher&nbsp;
+dimensional, non linear space. So non locality&nbsp;&nbsp;
+is actually another way in which these kernels are&nbsp;
+different than kind of traditional kernels. They&nbsp;&nbsp;
+can be useful for Bayesian modeling&nbsp;
+if you want principled uncertainty&nbsp;&nbsp;
+estimates or marginal likely likelihood&nbsp;
+estimates and so on. And then the second
+topic that I talked about was thinking about&nbsp;
+scaling laws, so kind of just the changing&nbsp;&nbsp;
+perspective from not just how well does the&nbsp;
+model do right now with my fixed setting of&nbsp;&nbsp;
+a fixed amount of data and a fixed model size,&nbsp;
+but if I change these knobs Just a little bit,
+which models are actually more efficient? And&nbsp;
+if I could get to that regime, then they would&nbsp;&nbsp;
+actually be better models, so that, as a is&nbsp;
+another angle for model comparison. And then&nbsp;&nbsp;
+also thinking about Data Selection strategies,&nbsp;
+so that you can scale better than the kind of&nbsp;&nbsp;
+default power law scaling that that you would&nbsp;
+have if you, if you just sampled data randomly,&nbsp;&nbsp;
+IIT. And with that, think I will just&nbsp;
+thank you for your interest. And that&nbsp;&nbsp;
+kind of wraps up everything I wanted to to&nbsp;
+tell you about today. Thank you, fantastic.
+Wonderful talk,
+but we have a quick questions. I&nbsp;
+don't know you can see that or not,&nbsp;&nbsp;
+but let's start from the Elon's&nbsp;
+questions. Elon, if you are there,&nbsp;&nbsp;
+would you mind you unmute yourself&nbsp;
+and ask your questions. I Yes,
+if not, I can, is the sum from when you&nbsp;
+talk about the scaling law? He was asking,&nbsp;&nbsp;
+is the sum form really the optimal he was&nbsp;
+asking, how about the product power law,&nbsp;&nbsp;
+like product form instead of the sound form?&nbsp;
+Oh, can. Is there a chance to see the questions,&nbsp;&nbsp;
+actually, is yes. Well, there is a, if you go to&nbsp;
+the top of the yes, there's a options on the top,
+and then
+there's here at chat, yes, yes. If you&nbsp;
+open that window, then you will see all the
+all the questions in the chat? Oh, I see you see&nbsp;
+that? Yes. Great. Okay, cool, yeah. Let's start&nbsp;&nbsp;
+from the elons. The very first one is asking, is&nbsp;
+the sum form really the optimal field? That's a&nbsp;&nbsp;
+great father. That's a great question. It may not&nbsp;
+be. So what people have observed is usually in a&nbsp;&nbsp;
+lot of the regimes that they've studied, I think&nbsp;
+the dominant ones are first the sums, like first,&nbsp;&nbsp;
+you treat them semi independently, but there&nbsp;
+might be correction terms that have to do with&nbsp;&nbsp;
+this product. So by no means is is the form that&nbsp;
+I wrote down kind of the the ground truth tried&nbsp;&nbsp;
+and true form. It's more like functional fits&nbsp;
+that people have done. And for certain problems,&nbsp;&nbsp;
+it might be that indeed adding that product form&nbsp;
+is actually very important and very good fit.
+It just seems to be the case that for a&nbsp;
+lot of these cases, the additive form is,
+is kind of a dominant, good&nbsp;
+fit. That's true. Well, okay,&nbsp;&nbsp;
+all right. Our next question is by CO he's&nbsp;
+asking, Could you comment on the divergent&nbsp;&nbsp;
+behavior in the bottom left figure of the&nbsp;
+taxonomy? You know what he's talking about.
+Figures, yes, I think this one, yes. It&nbsp;
+looks like the power loads diverse from&nbsp;&nbsp;
+the data as one scales to larger width,&nbsp;
+which is different from the other figures&nbsp;&nbsp;
+that show continuing improvement.&nbsp;
+Yes. That's also a great observation,&nbsp;&nbsp;
+great question. It's actually just an artifact&nbsp;
+of this experiment. So this experiment is kind&nbsp;&nbsp;
+of done really. These regimes that I've talked&nbsp;
+about are kind of asymptotic regimes. We don't&nbsp;&nbsp;
+have a lot of control when n is of the order&nbsp;
+of D. So there's this crossover that happens&nbsp;&nbsp;
+in between these two regimes, and&nbsp;
+that crossover regime is actually.
+Uh,
+described, and kind of known to&nbsp;
+be described by double descent,&nbsp;&nbsp;
+like phenomenon if, for example, your&nbsp;
+model is not very well regularized.&nbsp;&nbsp;
+So what you what you should focus on, I&nbsp;
+think, for the theory, agreement is just
+this left part of the of the experiment, because&nbsp;
+this is trying to be in a regime where n is much&nbsp;&nbsp;
+smaller than D. But just as a artifact of&nbsp;
+our experiments, we had finite amount of D,&nbsp;&nbsp;
+so there's a point at which N becomes of order d,&nbsp;
+and then we wouldn't observe power loss scaling.&nbsp;&nbsp;
+We see a crossover to a different behavior.&nbsp;
+So actually, all of these curves are kind of,
+what you would actually observe is like&nbsp;
+this is sort of one half of one portion&nbsp;&nbsp;
+of a regime. There's a crossover that happens,&nbsp;&nbsp;
+and you would actually end up in this regime if&nbsp;
+you were on the other side of that crossover.
+Makes sense. Makes sense. Thank you very&nbsp;
+much. Cool. Okay, next question is by Peter,&nbsp;&nbsp;
+perhaps the alpha d to alpha W transition is&nbsp;
+a function of a variance of the data versus&nbsp;&nbsp;
+variance of the model parameters.&nbsp;
+What do you think about that?
+I'm not quite sure what the alpha&nbsp;
+d to alpha W transition is. Is it
+describing this transition?
+Peter, if you're there, if&nbsp;
+you can clarify your question,&nbsp;&nbsp;
+use it. I don't know if you can hear me.&nbsp;
+Yeah, we can hear you. Yeah, great. Thank you.
+Yeah. I just, I have limited&nbsp;
+experience in this field,&nbsp;&nbsp;
+so I may be saying things that don't&nbsp;
+make any sense, but it seems to me,
+you're you're in, you're going from one&nbsp;
+domain to another with these, you know,&nbsp;&nbsp;
+with the difference in differences,&nbsp;
+and it seems like the variance,&nbsp;&nbsp;
+certainly the variance in the data, is going&nbsp;
+to affect how well these things perform. And&nbsp;&nbsp;
+you alluded to that. I think it's some&nbsp;
+of your other slides. But there's also
+the way the model is defined and how good your&nbsp;
+model is, in terms of matching the real physics&nbsp;&nbsp;
+of the model, there's going to be, there's going&nbsp;
+to be variances in the in the model parameters as&nbsp;&nbsp;
+well. And I would think that that that. So what&nbsp;
+I'm trying to say is I could imagine a situation&nbsp;&nbsp;
+where you have a very good bottle and there really&nbsp;
+isn't a lot of variance in the model parameters.&nbsp;&nbsp;
+You just have to figure out what they are&nbsp;
+and if you have enough, and but you got a&nbsp;&nbsp;
+bunch of variants in your data. And if you&nbsp;
+get enough, the more and more data you get,&nbsp;&nbsp;
+the tighter and tighter your your model&nbsp;
+gets to predicting the model parameters.
+And then, and then, the&nbsp;
+other end of that regime is
+you.
+You're very good at measuring your your
+your data, you have very little&nbsp;
+uncertainty in your data.
+So vice versa to what I just said, Sorry,&nbsp;&nbsp;
+I don't know. I mean, I'm, I'm&nbsp;
+just throwing that out there.
+No, that's also a great question. So a&nbsp;
+couple of points. So I think the variance&nbsp;&nbsp;
+that you're looting. You alluded to, maybe&nbsp;
+things that I would separate. So there's&nbsp;&nbsp;
+like the variance of the data coming from&nbsp;
+the fact that you sub selected some amount&nbsp;&nbsp;
+of data there. So it's like a finite batch.&nbsp;
+There's a finite size to it. Maybe you also&nbsp;&nbsp;
+have uncertainty in your regression targets.&nbsp;
+That's also a source of variance these things,
+there's also another source of variance&nbsp;
+from model parameters coming from the&nbsp;&nbsp;
+choice of initialization and&nbsp;
+randomness of the optimization.
+So each time you run an optimization&nbsp;
+and you choose the initialization so on,&nbsp;&nbsp;
+you may get a slightly different model. So&nbsp;
+these sources of variance are actually both in&nbsp;&nbsp;
+the theory and these experiments have been sort&nbsp;
+of averaged out. So if I go back to the way I&nbsp;&nbsp;
+kind of define my setup, well, model, model error&nbsp;
+versus data error. That's really what I'm going,&nbsp;&nbsp;
+where I'm going to with this, and I think that's&nbsp;
+what you're trying to to explain here. I hope
+so, how they relate to it's actually, um, we&nbsp;
+actually don't, I think touch about touch on that&nbsp;&nbsp;
+too much. So the way I kind of defined, I didn't&nbsp;
+go into this, but we are in our theory problem and&nbsp;&nbsp;
+many of these other theory problems we average out&nbsp;
+over those other sources of variance. So expect.
+Over d here means averaging over the&nbsp;
+draws of a finite size, D, capital D&nbsp;&nbsp;
+samples. So I pick different batches,&nbsp;
+and that does have different variances,&nbsp;&nbsp;
+but I'm going to average over that to&nbsp;
+get at least understand the average&nbsp;&nbsp;
+effect. I'm also going to average over&nbsp;
+the choice of random initialization
+and in the experiments, what we're&nbsp;
+doing, and you're you're right that&nbsp;&nbsp;
+if you went out and just measured, we&nbsp;
+do do a little bit of this averaging
+to produce these empirical results. So,&nbsp;
+like you would do multiple runs from&nbsp;&nbsp;
+different initializations, we draw different&nbsp;
+batches of data so we can match, you know,&nbsp;&nbsp;
+so we can have some connection to the theory.&nbsp;
+If you went out right now and ran a model
+with you know, if you tried to do this&nbsp;
+experiment, what you would find are plots&nbsp;&nbsp;
+that are curves that actually do have a lot&nbsp;
+more randomness in them because of that now,&nbsp;&nbsp;
+especially in kind of smaller scale, smaller&nbsp;
+data, smaller model size regimes. Now in these&nbsp;&nbsp;
+other settings, like large language models, the&nbsp;
+models and the data set sizes are so large that&nbsp;&nbsp;
+essentially they become self averaging. So&nbsp;
+they when they run like if they were to look&nbsp;&nbsp;
+at the variance between different runs,&nbsp;
+they don't see a lot of randomness. So&nbsp;&nbsp;
+there is, depending on the absolute sizes of these&nbsp;
+things, the amount of data and the model size,&nbsp;&nbsp;
+there is this randomness or variance that I've&nbsp;
+averaged out over here and you would observe
+and that matters as well, and you're totally right&nbsp;
+to ask about that. But there's a second part to&nbsp;&nbsp;
+your question where you said, like, how well does&nbsp;
+the model fit to the data? Kind of an alignment?&nbsp;&nbsp;
+Does the model have the right inductive bias?&nbsp;
+Does it align well to the data? And that's the&nbsp;&nbsp;
+question that we're trying to get at in this&nbsp;
+in this work, and others in theory. So like,&nbsp;&nbsp;
+there you you want to average just to even&nbsp;
+understand that problem, you want to average&nbsp;&nbsp;
+out all the other sources of randomness. And&nbsp;
+even there, the the value of alpha d and alpha&nbsp;&nbsp;
+W in these two regimes that I mentioned, on the&nbsp;
+off diagonal kind of categorizations or tables,&nbsp;&nbsp;
+they do depend on this alignment. It's It's&nbsp;
+essentially a how well your model aligns&nbsp;&nbsp;
+to the data. And in this kernel setting,&nbsp;
+there's actually a precise notion of that.
+Okay, I do to paraphrase what you just said.
+Well, I'm not exactly sure, but I I understand&nbsp;
+where you're going. I'm not sure I understand&nbsp;&nbsp;
+how it in the implications for the various&nbsp;
+variables. But so when, when you're in a
+the worse, I guess. What I'd like to the question&nbsp;
+I want to ask is, the better your model is,
+the better your model fits the actual data.
+How does that change? That it sounds like that&nbsp;&nbsp;
+reduces the the the alpha D or the&nbsp;
+alpha W. Am I getting that right?
+It increases it. So it's, there's&nbsp;
+a steeper slope. In general,
+there's, there's an addition, there's a constant&nbsp;
+shift to all of these that we can't these are,&nbsp;&nbsp;
+oh yeah, alpha is the power law parameter,
+yeah. So that would make sense. It would the&nbsp;
+higher the increase, the steeper the slope,&nbsp;&nbsp;
+the better you get. Okay, yeah. So that's&nbsp;
+true, and that amount of alignment,&nbsp;&nbsp;
+so the constant shifts, we can't say much about&nbsp;
+there theoretically, but at least the efficiency,&nbsp;&nbsp;
+the rate of improvement. So the slope of these&nbsp;
+lines does is governed by some notion of alignment&nbsp;&nbsp;
+between the model and the data. And&nbsp;
+actually, in the setting of kernels,&nbsp;&nbsp;
+or Gaussian processes, you can that's that's&nbsp;
+now well understood it, it is actually literally&nbsp;&nbsp;
+like an alignment between the regression&nbsp;
+values and eigenvectors of this matrix.
+And so these would be, these are actually&nbsp;
+things that you could measure ahead of time,&nbsp;&nbsp;
+just to kind of have an assessment, at&nbsp;
+least for kernels and Gaussian processes,&nbsp;&nbsp;
+how well they you know whether they're good models&nbsp;
+for the data just simply by looking at these&nbsp;&nbsp;
+eigenvalues and looking at the Eigen vectors.&nbsp;
+I think are you saying that you could use,&nbsp;&nbsp;
+potentially use this to as an assessment of&nbsp;
+the quality of your model for for kernels and&nbsp;&nbsp;
+Gaussian processes? I think you could for neural&nbsp;
+network models, there isn't an exact because of&nbsp;&nbsp;
+these actual so this all is kind of based on&nbsp;
+these infinite with results that I mentioned
+so but for for finite with&nbsp;
+neural networks, there's no such&nbsp;&nbsp;
+kind of exact notion. There's maybe some&nbsp;
+heuristics that are similar that you.
+Could use, okay,
+thank you.
+Thank you. Thank you, Peter, and thank you&nbsp;
+yes, for answering the question. And next,&nbsp;&nbsp;
+do you have a time? By the way, it's I do. Okay,&nbsp;
+awesome. Okay. The next question is by Kevin,&nbsp;&nbsp;
+is there a way to initialize weight and&nbsp;
+bias of a finite sized neural network so&nbsp;&nbsp;
+that it approximates GP kernel&nbsp;
+with desired hyper parameters.
+Oh, that's a good,
+interesting question, question. So if you take&nbsp;
+the finite size network already and you just&nbsp;&nbsp;
+choose the you can choose the initialization of&nbsp;
+the weights and the biases. So there are these
+variances, sigma squared w, sigma&nbsp;
+squared B, that I didn't write down,&nbsp;&nbsp;
+but I alluded to those show up in the kernel&nbsp;
+as well. If you choose those to be the same,&nbsp;&nbsp;
+then the finite size network with finite size&nbsp;
+hidden layers already, you could use those&nbsp;&nbsp;
+feature vectors to construct the kernel, and&nbsp;
+it would be like a finite size approximation&nbsp;&nbsp;
+to the kernel. It may not be the optimal one. So&nbsp;
+there might be actually mathematically smarter&nbsp;&nbsp;
+things that you could do. But it is true&nbsp;
+that if you took those, if you just took,&nbsp;&nbsp;
+for example, the representations of&nbsp;
+a randomly initialized neural network
+of finite size and took those&nbsp;
+feature vectors and use them to&nbsp;&nbsp;
+construct like a covariance matrix.&nbsp;
+It would be like a it would be some
+like a kernel matrix. That matrix,&nbsp;
+as you make the width larger,&nbsp;&nbsp;
+is exactly the kernel. So that is a finite size&nbsp;
+approximation of it. I guess you can use that as&nbsp;&nbsp;
+the initial weights and bias and then let it&nbsp;
+train with the final size of the neural net,
+whatever the data you have.
+That might be a strategy. Well, that,
+I guess so, for a GP,
+for the neural net, not the GP, but&nbsp;
+you could, you maybe say the question,&nbsp;&nbsp;
+would you like to train the neural network in&nbsp;
+a different way? Yeah. I mean, you start with&nbsp;&nbsp;
+a weight and bias, which is corresponding to&nbsp;
+the GP kernel with the desired hyper parameter,&nbsp;&nbsp;
+and they use that and they as an&nbsp;
+initial guess of rates and bias,&nbsp;&nbsp;
+and then train them using, you know, the data&nbsp;
+you have. Oh, so, so figure out this is like,&nbsp;&nbsp;
+figure out the optimal hyper parameters,&nbsp;
+weight and biases from the GP. Yeah,
+yeah, motivated by the GP, yes, yeah, you you&nbsp;
+could do you could do that. I actually suspect&nbsp;&nbsp;
+it might not make too much of a difference. As&nbsp;
+long as you're there are some pretty good regimes&nbsp;&nbsp;
+of weight and bias variances for neural networks&nbsp;
+that have been calculated, and as long as you're&nbsp;&nbsp;
+kind of in that regime, so nothing too kind of&nbsp;
+pathological. A lot of neural networks end up
+giving good results, at least if you have&nbsp;
+enough data and the model size is large enough,&nbsp;&nbsp;
+so I suspect performance wise,&nbsp;
+it might not have a big effect,
+but you certainly could do that, right?&nbsp;
+Kevin, do you have a follow up question?
+I think, I think that's a good enough&nbsp;
+explanation. Thank you so much. Okay,
+next question is by Hannah Nelson.
+She's saying I interpreted the graphs as&nbsp;
+being in terms of train error. Should we&nbsp;&nbsp;
+expect similar scaling results on data&nbsp;
+which is outside our collective data?&nbsp;&nbsp;
+That's a great question. Yeah,&nbsp;
+so these graphs were the were
+plotting the test error, but they it's true&nbsp;
+that they're the evaluation and the training&nbsp;&nbsp;
+data are from the same distribution. So&nbsp;
+it's an in distribution setting. And if&nbsp;&nbsp;
+you we're going to look at the test&nbsp;
+error on out of distribution data.
+So many works have done that.
+They do see scaling laws, but it actually they can&nbsp;&nbsp;
+get very different kinds of behavior.&nbsp;
+So sometimes you know when the data,
+it really just depends on the out of distribution&nbsp;
+data and how well it aligns to the like pre&nbsp;&nbsp;
+trained, trained model. So there are cases where&nbsp;
+it improves with these other scaling variables,&nbsp;&nbsp;
+but maybe after a certain scale, it&nbsp;
+actually gets worse. Sometimes it just&nbsp;&nbsp;
+improves monotonically. Sometimes it gets worse&nbsp;
+monotonically. So there's been all sorts of
+kind of types of behaviors observed,&nbsp;
+and it's a great thing to do, I think,
+but it's really there isn't much control on it.
+So.
+Okay? And she also has another&nbsp;
+comment or question. Oh,&nbsp;&nbsp;
+she says this is test data. Yes, okay,
+okay. She's saying the more parameters doing&nbsp;
+better with the scaling things. Reminds me&nbsp;&nbsp;
+of accuracy boosts from Bootstrap&nbsp;
+aggregations in three classifiers.
+One other question from her, I've&nbsp;
+seen it thrown around that the curves&nbsp;&nbsp;
+or graphs of training laws can be used to&nbsp;
+approximate the dimension of the manifolds&nbsp;&nbsp;
+of distributions we are trying to learn.&nbsp;
+In your opinion, is this a sound practice,
+I think it's going to be a pretty noisy&nbsp;
+estimate, unless maybe there's a specific&nbsp;&nbsp;
+setting that you're thinking of where there are&nbsp;
+some, like rigorous or semi rigorous results. I&nbsp;&nbsp;
+kind of the plots that I showed where there&nbsp;
+was a correlation between the exponent and&nbsp;&nbsp;
+some measurement of the data manifold,&nbsp;
+which I also didn't specify or get into&nbsp;&nbsp;
+the details of was sort of loose. I think&nbsp;
+estimates of manifold dimensionality are
+are tricky to get right, and kind of&nbsp;
+noisy on their own. And so I think&nbsp;&nbsp;
+also the relationship between those two can be
+maybe not super robust, unless there's maybe&nbsp;&nbsp;
+a specific setting that you're&nbsp;
+thinking of, to my knowledge,
+awesome. Okay, I have a question. I have a&nbsp;
+tons of questions. I was fascinated by your&nbsp;&nbsp;
+Gaussian process, Connell, you know the method.
+But let me ask another questions related to the,&nbsp;
+you know, the slide you showed, introducing as&nbsp;&nbsp;
+a active research area right now, about by&nbsp;
+choosing certain training data selectively,&nbsp;&nbsp;
+you can get much better scaling laws. Yeah,&nbsp;
+and that one that is very attractive to us,&nbsp;&nbsp;
+especially because the data we are getting&nbsp;
+is usually associated with a high fidelity,&nbsp;&nbsp;
+you know, the computational model simulations.&nbsp;
+And, you know, just getting one data is is very&nbsp;&nbsp;
+costly. So we, we want to choose those,&nbsp;
+you know, the training data very wisely,&nbsp;&nbsp;
+so that when we train the either neural network or&nbsp;
+Gaussian model or some other data driven approach,&nbsp;&nbsp;
+we would like to, you know, get the much better&nbsp;
+scaling or convergence right with as few As data&nbsp;&nbsp;
+as possible, since those data is coming from&nbsp;
+physics simulations, we can utilize this a&nbsp;&nbsp;
+lot of like the physical prior knowledge,&nbsp;
+right? You know, the conservation of blow,&nbsp;&nbsp;
+each physics has a different the basics property&nbsp;
+to satisfy what would be your insight like?
+You know, do you think you know,&nbsp;
+using those domain knowledge from&nbsp;&nbsp;
+the physics side and bringing into those sampling,
+you know, training data sampling procedure
+will will be essential to give us a this&nbsp;
+much better scaling or convergence behavior?
+Absolutely, yeah. I think, I do think that in
+and
+in low data regimes and small models,&nbsp;
+certainly, the more inductive,&nbsp;&nbsp;
+the more intuition you put into it, I&nbsp;
+think the better, in general, it can do.
+I wouldn't. I wouldn't, I think it's&nbsp;
+kind of a, really an ongoing question,&nbsp;&nbsp;
+what are the best heuristics&nbsp;
+to use, even on the ML side?
+So, so yeah, I would say, I think I would trust,&nbsp;
+personally, if I were working in a domain I knew&nbsp;&nbsp;
+well, I would trust my intuition, actually, for&nbsp;
+how to do that sub sampling. At the moment, I can&nbsp;&nbsp;
+say that in these regimes, often, well, there are&nbsp;
+a number of heuristics out there since this paper&nbsp;&nbsp;
+was published, but one thing that people have&nbsp;
+been doing is kind of kind of, in a ways, it's&nbsp;&nbsp;
+a form of cheating because, and I think this is&nbsp;
+what this paper had done, which was kind of use a&nbsp;&nbsp;
+large there was a larger model that was trained on&nbsp;
+this data set that was used to suggest, kind of,&nbsp;&nbsp;
+to pick the example. So maybe the places where&nbsp;
+there was greatest error. I don't quite remember&nbsp;&nbsp;
+the metric, but one of the catches was, and in a&nbsp;
+lot of large scale ml settings, they kind of one&nbsp;&nbsp;
+of the catches is that they might have already&nbsp;
+access to some large model to point them to,
+to which subset they might want&nbsp;
+to keep, and then they might build&nbsp;&nbsp;
+something like a foundation data set. So&nbsp;
+just pruning the data, the original data.
+Set that is, let's say, a benchmark data set&nbsp;&nbsp;
+that everybody uses to some sub&nbsp;
+sampled set that is then fixed,&nbsp;&nbsp;
+and others would use that to train on. And one of&nbsp;
+the things that's been kind of observed is that
+maybe a lot of models, at least in&nbsp;
+these other like kind of mainstream&nbsp;&nbsp;
+ml communities that are used kind of share,
+they have similar notions of what is a&nbsp;
+good example or a hard example, you know,&nbsp;&nbsp;
+a hard example or an easy example. So that,&nbsp;
+therefore, the the large model that is sort&nbsp;&nbsp;
+of like a teacher can kind of point, can that&nbsp;
+signal that you would use from a larger model&nbsp;&nbsp;
+that is like a teacher is actually useful for a&nbsp;
+smaller model, but this might not transfer across&nbsp;&nbsp;
+domains and so on. So this is one of the ways&nbsp;
+that people have been kind of getting around this,
+by kind of bootstrapping and kind&nbsp;
+of using this having access to this&nbsp;&nbsp;
+teacher model to produce that pruned data&nbsp;
+set that then is actually pretty good for&nbsp;&nbsp;
+small models that you would then train&nbsp;
+on with fewer data, with fewer samples.
+All right. Well, thank you, Yasmine, for&nbsp;
+the wonderful talk and as well as the&nbsp;&nbsp;
+wonderful Q and A sessions, I think we have&nbsp;
+to let you go. We want to keep you longer,&nbsp;&nbsp;
+but you know, we would like to&nbsp;
+respect your your schedule too.&nbsp;&nbsp;
+So we are so happy that you came to us and&nbsp;
+then gave a wonderful talk, and, you know,&nbsp;&nbsp;
+give us chance to discuss things. Hopefully&nbsp;
+after this, if you allow maybe the collaboration
+is encouraged, then we can actually do the&nbsp;
+collaborations on some of the scientific&nbsp;&nbsp;
+discovery through this question and wonderful&nbsp;
+research on this neural network scaling law,
+is it? Do you think it's, oh, yes, I'm happy&nbsp;
+to chat further and discuss, okay, okay, yeah,&nbsp;&nbsp;
+please. Audience, please reach out to Dr&nbsp;
+Bari, and for the future collaboration,&nbsp;&nbsp;
+I will do myself, you know, for the future&nbsp;
+collaboration, reach out to you. Okay with that,&nbsp;&nbsp;
+let's end our seminar today, and which&nbsp;
+was wonderful seminar, okay, let me
+push the stop button for the record.

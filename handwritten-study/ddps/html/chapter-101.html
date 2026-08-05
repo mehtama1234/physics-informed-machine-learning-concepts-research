@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chapter 101 - Steer A Wild Flow With A Small Model</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="sidebar">
+        <h1>DDPS Study</h1>
+        <a href="index.html">Start</a>
+        <a href="review-path.html">Review Path</a>
+        <a href="plain-words.html">Plain Words</a>
+        <a href="method-map.html">Method Map</a>
+        <a href="self-check.html">Self Check</a>
+        <a href="capstone.html">Capstone</a>
+        <a href="theme-index.html">Theme Index</a>
+        <a href="domain-map.html">Domain Map</a>
+        <a href="paper-reader.html">Paper Reader</a>
+        <a href="common-mistakes.html">Common Mistakes</a>
+        <a href="study-plan.html">Study Plan</a>
+        <a href="math-map.html">Math Map</a>
+        <a href="prerequisite-map.html">Prerequisite Map</a>
+        <a href="cheat-sheet.html">Cheat Sheet</a>
+        <a href="chapter-98.html">Chapter 98</a>
+        <a href="chapter-99.html">Chapter 99</a>
+        <a href="chapter-100.html">Chapter 100</a>
+        <a href="chapter-101.html">Chapter 101</a>
+        <a href="chapter-102.html">Chapter 102</a>
+        <a href="chapter-103.html">Chapter 103</a>
+        <a href="chapter-104.html">Chapter 104</a>
+        <a href="chapter-105.html">Chapter 105</a>
+        <a href="chapter-106.html">Chapter 106</a>
+        <a href="chapter-107.html">Chapter 107</a>
+        <a href="chapter-108.html">Chapter 108</a>
+        <a href="chapter-109.html">Chapter 109</a>
+        <a href="chapter-110.html">Chapter 110</a>
+        <a href="chapter-111.html">Chapter 111</a>
+        <a href="chapter-112.html">Chapter 112</a>
+        <a href="chapter-113.html">Chapter 113</a>
+        <a href="chapter-114.html">Chapter 114</a>
+        <a href="chapter-115.html">Chapter 115</a>
+        <a href="chapter-116.html">Chapter 116</a>
+        <a href="chapter-117.html">Chapter 117</a>
+        <a href="chapter-118.html">Chapter 118</a>
+        <a href="chapter-119.html">Chapter 119</a>
+        <a href="chapter-120.html">Chapter 120</a>
+        <a href="chapter-121.html">Chapter 121</a>
+        <a href="chapter-122.html">Chapter 122</a>
+        <a href="chapter-123.html">Chapter 123</a>
+        <a href="chapter-124.html">Chapter 124</a>
+        <a href="chapter-125.html">Chapter 125</a>
+        <a href="chapter-126.html">Chapter 126</a>
+        <a href="chapter-127.html">Chapter 127</a>
+        <a href="chapter-128.html">Chapter 128</a>
+        <a href="chapter-129.html">Chapter 129</a>
+        <a href="chapter-130.html">Chapter 130</a>
+        <a href="chapter-131.html">Chapter 131</a>
+        <a href="chapter-132.html">Chapter 132</a>
+        <a href="chapter-133.html">Chapter 133</a>
+        <a href="chapter-134.html">Chapter 134</a>
+        <a href="chapter-135.html">Chapter 135</a>
+        <a href="chapter-136.html">Chapter 136</a>
+        <a href="chapter-137.html">Chapter 137</a>
+        <a href="from-zero.html">From Zero</a>
+        <a href="pinn-from-zero.html">PINNs From Zero</a>
+        <a href="rom-from-zero.html">ROMs From Zero</a>
+        <a href="manifold-from-zero.html">Manifolds From Zero</a>
+        <a href="synthesis.html">Synthesis</a>
+        <a href="big-picture.html">Big Picture</a>
+        <a href="examples.html">Examples</a>
+        <a href="bridge.html">AISE Bridge</a>
+        <a href="audit.html">Transcript Audit</a>
+      </nav>
+      <main class="content">
+        <p class="eyebrow">Narrative chapter</p>
+        <h1>Steer A Wild Flow With A Small Model</h1>
+
+        <p>This chapter uses video 104, Francesco Ballarin's DDPS talk on regularized reduced order models for control of Navier-Stokes equations. The talk is about a practical control problem: how can we steer a complicated fluid flow toward a desired flow shape without running a huge expensive simulation every time we need a control decision?</p>
+
+        <p>The first-principles issue is easy to state. A fluid flow has motion everywhere in space and time. If the Reynolds number is large, the flow can develop sharp, unstable, swirling behavior. A full Navier-Stokes simulation can track it, but it is too expensive for repeated control. A reduced model is fast, but it can become unstable or unphysical if it throws away the wrong details. The lecture combines three tools: feedback control, regularization, and reduced order modeling.</p>
+
+        <section class="lesson-claim-chain" aria-label="Plain first-principles reading guide for regularized reduced flow control">
+          <h2>Read This Chapter As One Claim</h2>
+          <p>Start with the control problem. A flow is not one number. It is a whole moving field, with wakes, vortices, separation, pressure effects, and wall behavior. If we want the flow to move toward a desired shape, the full Navier-Stokes solver can tell us what is happening, but it is too slow to run every time a controller asks what force to apply. A reduced model makes the decision cheap by keeping only a few flow modes. That speed creates a new risk: the small model can become rough, unstable, or over-smoothed. This chapter says a useful reduced flow controller has to balance three things at once. Feedback must steer the current flow toward the target. Regularization must tame rough high-Reynolds behavior. The reduced model must keep enough real vortex and separation behavior that a design optimizer does not learn from fake flow physics.</p>
+          <div class="lesson-claim-grid">
+            <div><strong>Everyday problem</strong><span>You need fast control decisions for a whole velocity field, but the full flow solver is too expensive to run repeatedly.</span></div>
+            <div><strong>Shared promise</strong><span>POD reduction, feedback control, and regularization can make a small online model steer the flow toward a target.</span></div>
+            <div><strong>Hidden danger</strong><span>A reduced flow model can create fake kinetic energy, become numerically rough, or smooth away real vortices and separation.</span></div>
+            <div><strong>First rejection test</strong><span>Compare new inputs against the full reference and check whether stabilization is too weak, too strong, or timed correctly.</span></div>
+          </div>
+        </section>
+
+        <div class="flow-control-core-map" aria-label="The lecture combines feedback control, regularization, and reduced order modeling">
+          <div>large flow simulation</div>
+          <div>desired target flow</div>
+          <div>regularized small model</div>
+          <div>fast control decision</div>
+        </div>
+
+        <h2>The Flow Is Governed By Velocity And Pressure</h2>
+        <p>The physical model is the time-dependent incompressible Navier-Stokes equations. In everyday words, those equations describe how fluid velocity changes while respecting incompressibility: fluid moves, pushes, swirls, diffuses through viscosity, and satisfies pressure constraints.</p>
+
+        <p>The test cases are standard fluid benchmarks: flow past a cylinder and flow over a backward-facing step. Both are useful because they produce separated wakes and difficult flow structures without needing a full industrial geometry.</p>
+
+        <div class="navier-stokes-map" aria-label="Navier-Stokes flow tracks velocity, pressure, walls, inlet, outlet, and wake behavior">
+          <div>inlet flow</div>
+          <div>walls and obstacle</div>
+          <div>wake forms</div>
+          <div>velocity field evolves</div>
+        </div>
+
+        <h2>The Reduced Model Compresses Time Behavior</h2>
+        <p>The reduced order model is built from snapshots of a full finite element simulation. The method uses proper orthogonal decomposition, or POD. A plain way to say it is: watch the full flow for many time instants, find the main motion patterns, and keep only the most important patterns.</p>
+
+        <p>After that, the unknown flow is written as a weighted sum of a few modes. Instead of solving for velocity at every mesh point, the reduced model solves for a small list of time-dependent coefficients. The expensive full simulation becomes a small nonlinear dynamical system.</p>
+
+        <div class="pod-flow-map" aria-label="POD turns full flow snapshots into a small set of dominant motion modes">
+          <div>many full snapshots</div>
+          <div>dominant flow modes</div>
+          <div>few coefficients</div>
+          <div>small dynamical system</div>
+        </div>
+
+        <h2>Divergence-Free Modes Let Pressure Drop Out</h2>
+        <p>For incompressible flow, pressure usually appears because it enforces the no-compression rule. In this talk's reduced model, the basis functions are built to be divergence-free. That means the incompressibility constraint is already built into the reduced space.</p>
+
+        <p>Because of that, the online reduced model can focus on velocity and does not need to solve for pressure in the main presentation. This is one reason the reduced system can be computationally attractive.</p>
+
+        <div class="pressure-drop-map" aria-label="Divergence-free reduced modes satisfy incompressibility and remove pressure from the online solve">
+          <div>incompressible flow</div>
+          <div>divergence-free modes</div>
+          <div>pressure constraint handled</div>
+          <div>velocity-only online solve</div>
+        </div>
+
+        <h2>Feedback Control Means React To The Current Error</h2>
+        <p>The control goal is to steer the current velocity toward a target velocity. The target is a flow shape we want. The current flow is what the system is doing now. The control is a forcing term added to the momentum equation.</p>
+
+        <p>This is not full optimal control. The talk is not asking for the absolute best control after solving a large extra adjoint problem. It asks for something more practical: add a force that makes the distance between current flow and target flow decrease over time. The control is called feedback because it reacts to the current difference between the two flows.</p>
+
+        <div class="feedback-error-map" aria-label="Feedback control reacts to the current distance between the flow and the target">
+          <div>current flow</div>
+          <div>target flow</div>
+          <div>measure difference</div>
+          <div>apply force</div>
+        </div>
+
+        <h2>The Old Control Law Needed A Large Enough Gain</h2>
+        <p>The talk compares a previous feedback control law with a new version. The old theorem guarantees exponential convergence only when a gain parameter, called gamma, is larger than a certain lower bound. For laminar flow, where viscosity is large enough, that lower bound can be harmless.</p>
+
+        <p>But the target setting is harder. The talk is interested in flows that mimic turbulent behavior, where viscosity is small and Reynolds number is large. In that case the old lower bound can make gamma too constrained. If gamma is too small, the old control may fail or oscillate instead of steering the flow cleanly.</p>
+
+        <div class="gamma-problem-map" aria-label="The older feedback law can fail when small viscosity requires a larger control gain">
+          <div>small viscosity</div>
+          <div>large Reynolds number</div>
+          <div>old gain bound</div>
+          <div>possible failure</div>
+        </div>
+
+        <h2>The New Control Law Removes That Restriction</h2>
+        <p>The proposed control law adds another term that is still linear in the difference between current velocity and target velocity. The value of that design choice is practical. Linear terms can be assembled efficiently in the reduced model, so the method stays compatible with fast online computation.</p>
+
+        <p>The theorem then guarantees convergence for any nonnegative gamma. In the numerical comparison, both old and new controls work when gamma is large enough. When gamma is small, the old control fails while the new control still drives the error down.</p>
+
+        <div class="new-control-map" aria-label="The proposed control law keeps linear assembly while improving convergence guarantees">
+          <div>add linear error term</div>
+          <div>keep assembly efficient</div>
+          <div>allow small gamma</div>
+          <div>error decreases</div>
+        </div>
+
+        <h2>Regularization Is Needed When The Flow Gets Rough</h2>
+        <p>Small viscosity makes the flow harder to compute. Sharp structures and unstable behavior become more important. Even without control, Navier-Stokes discretizations often need stabilization or regularization when the Reynolds number grows.</p>
+
+        <p>The speaker's reasoning is pragmatic. The feedback-controlled equation is only a slight modification of Navier-Stokes because it adds a forcing term. So it is natural to ask whether regularization ideas already used for Navier-Stokes can help the controlled system too.</p>
+
+        <div class="regularization-need-map" aria-label="Small viscosity motivates regularization because rough flow structures become harder to compute">
+          <div>small viscosity</div>
+          <div>rough flow structures</div>
+          <div>unstable computation risk</div>
+          <div>regularize the solve</div>
+        </div>
+
+        <h2>Evolve-Filter-Relax Has Three Simple Steps</h2>
+        <p>The first regularization technique is evolve-filter-relax. Step one evolves the feedback-controlled flow. Step two filters the result by solving a smoothing problem. Step three relaxes by taking a weighted average between the unfiltered and filtered velocities.</p>
+
+        <p>This is why the speaker calls the method practical. If a Navier-Stokes or feedback-control solver already exists, the extra work is not a full rewrite. The filter is a Poisson-like smoothing solve, and the relax step is a linear combination.</p>
+
+        <div class="efr-map" aria-label="Evolve-filter-relax evolves the flow, smooths it, and blends filtered and unfiltered velocity">
+          <div>evolve controlled flow</div>
+          <div>filter velocity</div>
+          <div>blend velocities</div>
+          <div>smoother controlled result</div>
+        </div>
+
+        <h2>Always Filtering Can Create A Plateau</h2>
+        <p>The convergence result has a useful warning. Regularization can make the early decrease faster, but it can also leave a residual plateau. In plain terms, smoothing helps the flow settle at first, but if you keep smoothing forever, the method may stop improving beyond a certain error level.</p>
+
+        <p>That motivates an adaptive strategy. Use regularization early, when its faster decrease is helpful. Later, when the regularization benefit has faded and the plateau would dominate, switch the relaxation parameter off. The numerical test shows this middle path: close to the always-regularized curve early, and close to the unregularized curve later.</p>
+
+        <div class="adaptive-filter-map" aria-label="Adaptive regularization uses filtering early and turns it off before the plateau dominates">
+          <div>filter helps early</div>
+          <div>constant filtering plateaus</div>
+          <div>switch off later</div>
+          <div>keep improving</div>
+        </div>
+
+        <h2>The Reduced Model Also Needs Regularization</h2>
+        <p>After regularizing the high-fidelity model, the lecture asks whether the reduced model needs the same treatment. The answer in the presented test is yes. If the reduced online model keeps the evolve-filter-relax steps, the error decreases more smoothly and stays lower.</p>
+
+        <p>If the full model is regularized but the reduced model drops the filter and relax steps, the reduced trajectory is less regular. This is a useful lesson: a reduced model is not automatically stable just because its training data came from a stabilized full model. The small online model may need its own version of the same stabilizing idea.</p>
+
+        <div class="rom-regularization-map" aria-label="The reduced model performs better when regularization is kept in the online phase">
+          <div>regularized full model</div>
+          <div>plain reduced model</div>
+          <div>regularized reduced model</div>
+          <div>smoother lower error</div>
+        </div>
+
+        <h2>The Second Regularization Avoids Too Much Smoothing</h2>
+        <p>The second part of the talk introduces an approximate deconvolution regularization. The older Leray idea replaces the nonlinear advection velocity with a filtered velocity. That can stabilize the model, but the filtered velocity may be too diffusive. It can wash out too much motion.</p>
+
+        <p>The proposed version introduces a deconvolved velocity: something between the original velocity and the filtered velocity. The goal is to keep enough smoothing to stabilize the reduced model without making the flow artificially dull.</p>
+
+        <div class="deconvolution-map" aria-label="Approximate deconvolution keeps a velocity between raw and overly filtered flow">
+          <div>raw velocity</div>
+          <div>filtered velocity</div>
+          <div>deconvolved middle</div>
+          <div>less overdiffusion</div>
+        </div>
+
+        <h2>The Backward-Facing Step Shows The Tradeoff</h2>
+        <p>The final test is a backward-facing step at Reynolds number around 1500. The setup is intentionally hard for the reduced model: only a small number of POD modes are used, which gives large speedups but creates a less accurate basis.</p>
+
+        <p>The comparison uses kinetic energy and velocity error. The standard Galerkin reduced model shows kinetic energy increasing in an unphysical way. The classical Leray reduced model makes kinetic energy decrease too much, which means it is over-diffusive. The proposed deconvolution model is not perfect, but it stays closer to the finite element reference.</p>
+
+        <div class="step-test-map" aria-label="Backward-facing-step results compare unstable Galerkin, overdiffusive Leray, and deconvolution regularization">
+          <div>Galerkin energy grows</div>
+          <div>Leray over-smooths</div>
+          <div>deconvolution balances</div>
+          <div>closer to reference</div>
+        </div>
+
+        <h2>The Q And A Clarifies The Limits</h2>
+        <p>In Q&A, the speaker confirms that the theorem can allow time-dependent target velocities, but the target needs smoothness in space and time. The tests shown use time-independent targets for simplicity.</p>
+
+        <p>Another question asks what happens if the initial flow is very far from the target. In the theorem, the initial difference appears as a multiplicative constant, so the bound still has the same structure. Numerically, though, a very different initial flow can make the nonlinear solver harder to converge. This distinction matters: a theorem can allow a case while the computation still becomes harder.</p>
+
+        <div class="qa-flow-map" aria-label="The Q&A separates theorem guarantees from practical nonlinear solver difficulty">
+          <div>time-varying target allowed</div>
+          <div>smoothness needed</div>
+          <div>large initial gap allowed</div>
+          <div>solver may struggle</div>
+        </div>
+
+        <h2>How This Connects To Design And Topology</h2>
+        <p>Topology and design optimization often ask for a shape that creates a useful flow: less drag, better mixing, quieter wakes, more stable separation, or controlled heat transfer. A full flow simulation can be too slow to use inside every design step. A reduced model can be fast enough, but only if it stays physically believable.</p>
+
+        <p>This lecture gives a design pattern. Compress the flow into dominant modes so decisions are cheap. Add feedback control so the system can be steered toward a desired target. Add regularization so the reduced flow does not become unstable or unphysical when Reynolds number is large. Then check whether the stabilization is too weak, too strong, or adaptively timed.</p>
+
+        <p>For topology, the warning is direct. A shape optimizer will exploit a reduced model's mistake. If the reduced model creates unphysical energy growth, the optimizer may prefer a design that only works in the bad model. If the regularization smooths away real vortices or separation, the optimizer may miss the feature that controls the real design. The reduced model must be fast, but it must also keep the right flow behavior.</p>
+
+        <div class="flow-design-bridge" aria-label="Design and topology need reduced flow models that stay fast, controlled, and physically believable">
+          <div>candidate shape</div>
+          <div>reduced flow model</div>
+          <div>control and regularization</div>
+          <div>trustworthy design step</div>
+        </div>
+
+        <h2>The Chapter In One Chain</h2>
+        <p>First, flow control needs to steer a current velocity field toward a desired target field. Second, full Navier-Stokes simulations are too expensive for repeated online control. Third, POD reduced order modeling keeps the main time-dependent flow patterns and solves only for a few coefficients. Fourth, divergence-free reduced modes allow the online model to focus on velocity. Fifth, feedback control adds a force based on the current error between the flow and the target. Sixth, this is more practical than full optimal control because it avoids an additional adjoint solve. Seventh, an older feedback law needs the gain gamma to be large enough, which is restrictive when viscosity is small. Eighth, the proposed law adds a linear error term and improves convergence for small gamma. Ninth, small viscosity still makes the flow numerically rough, so regularization is needed. Tenth, evolve-filter-relax smooths the flow through evolve, filter, and blend steps. Eleventh, filtering helps early but can create a plateau if kept forever. Twelfth, adaptive regularization turns filtering off after its benefit fades. Thirteenth, the reduced online model should also keep regularization, not only inherit regularized training data. Fourteenth, approximate deconvolution reduces over-smoothing by using a velocity between raw and filtered flow. Fifteenth, the backward-facing-step test shows the balance between unstable Galerkin, overdiffusive Leray, and the proposed regularized model. Sixteenth, design and topology can use this pattern when fast flow-control models must remain physically credible.</p>
+
+        <div class="note">
+          <p>The chapter's core idea: a small flow model is useful for control only if it is not merely fast. It must steer toward the target, avoid unphysical roughness, and avoid smoothing away the flow structures the design decision depends on.</p>
+        </div>
+
+        <section class="lesson-review" aria-label="End of chapter understanding check for regularized reduced flow control">
+          <h2>How To Test Whether You Understood This Chapter</h2>
+          <div class="lesson-review-grid">
+            <div><strong>Explain the three tools</strong><span>Say what POD reduction, feedback control, and regularization each contribute to the flow-control problem.</span></div>
+            <div><strong>Use the gain story</strong><span>Explain why the old control law can fail for small gamma and why the new linear error term helps.</span></div>
+            <div><strong>Catch both bad extremes</strong><span>Describe the difference between a Galerkin ROM with fake energy growth and a Leray ROM that over-smooths the flow.</span></div>
+            <div><strong>Connect to topology</strong><span>Before using the reduced model in shape design, name the wake, vortex, separation, or heat-transfer feature that must survive regularization.</span></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

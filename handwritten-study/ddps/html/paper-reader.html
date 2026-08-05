@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DDPS Paper Reader</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="sidebar">
+        <h1>DDPS Study</h1>
+        <a href="index.html">Start</a>
+        <a href="review-path.html">Review Path</a>
+        <a href="plain-words.html">Plain Words</a>
+        <a href="method-map.html">Method Map</a>
+        <a href="self-check.html">Self Check</a>
+        <a href="capstone.html">Capstone</a>
+        <a href="theme-index.html">Theme Index</a>
+        <a href="domain-map.html">Domain Map</a>
+        <a href="paper-reader.html">Paper Reader</a>
+        <a href="common-mistakes.html">Common Mistakes</a>
+        <a href="study-plan.html">Study Plan</a>
+        <a href="math-map.html">Math Map</a>
+        <a href="prerequisite-map.html">Prerequisite Map</a>
+        <a href="cheat-sheet.html">Cheat Sheet</a>
+        <a href="audit.html">Transcript Audit</a>
+      </nav>
+      <main class="content">
+        <p class="eyebrow">Use on any new paper</p>
+        <h1>Paper Reader Worksheet</h1>
+
+        <p>This page turns the whole handwritten course into a reading protocol. Use it when you open a new scientific machine-learning paper and do not want to drown in method names. Fill these boxes in ordinary words before trusting the paper's claim.</p>
+
+        <div class="paper-reader-map" aria-label="Read a scientific machine learning paper from claim to rejection test">
+          <div>claim</div>
+          <div>physical burden</div>
+          <div>evidence</div>
+          <div>rejection test</div>
+        </div>
+
+        <section class="paper-reader-step">
+          <h2>1. What Is The Paper Claiming?</h2>
+          <p>Write the claim without adjectives. Avoid words like robust, scalable, accurate, general, or foundation until the paper proves them.</p>
+          <p><strong>Good sentence:</strong> The model predicts pressure fields for new geometries faster than the full solver.</p>
+          <p><strong>Weak sentence:</strong> The paper proposes a powerful AI framework for physics.</p>
+        </section>
+
+        <section class="paper-reader-step">
+          <h2>2. What Physical Pain Created The Method?</h2>
+          <p>Name the real problem. Is the full solver too slow? Are observations sparse? Is the geometry changing? Is the state hidden? Is the system chaotic? Is uncertainty the decision blocker?</p>
+          <p>If there is no physical pain, the method may be an algorithm looking for a reason to exist.</p>
+        </section>
+
+        <section class="paper-reader-step">
+          <h2>3. What Burden Does Learning Carry?</h2>
+          <p>Learning might carry the equation residual, a reduced coordinate system, a field-to-field operator, a sensor-to-state map, a controller, a prior distribution, a posterior update, or an uncertainty estimate.</p>
+          <p>Do not let the paper hide behind "we use a neural network." Ask what job the network is actually doing.</p>
+        </section>
+
+        <section class="paper-reader-step">
+          <h2>4. What Evidence Supports The Claim?</h2>
+          <p>Separate evidence types. Training data is not validation. A pretty plot is not a stress test. A benchmark is not proof of physical transfer unless the benchmark changes the thing the paper claims to handle.</p>
+          <p>Look for changed geometry, changed parameters, changed grid, changed boundary condition, longer rollout, noisier data, unseen regime, or real experimental data.</p>
+        </section>
+
+        <section class="paper-reader-step">
+          <h2>5. What Is The Honest Baseline?</h2>
+          <p>A method should be compared to the right alternative. Sometimes the baseline is the full solver. Sometimes it is a classical ROM, Kalman filter, adjoint method, Gaussian process, POD model, finite-volume solver, or simpler neural network.</p>
+          <p>If the baseline is weak, the win may be smaller than the paper makes it sound.</p>
+        </section>
+
+        <section class="paper-reader-step">
+          <h2>6. What Physical Rule Must Not Break?</h2>
+          <p>Write the rule in plain words. Mass should not vanish. Energy should not grow without cause. A fracture should stay connected if the simulator needs connectivity. A controller should not violate safety. A probability estimate should cover the true outcome at the promised rate.</p>
+          <p>This is the rule you check before believing speed or accuracy numbers.</p>
+        </section>
+
+        <section class="paper-reader-step">
+          <h2>7. What Changed Case Would Expose The Shortcut?</h2>
+          <p>Every serious claim needs a changed-case test. Change the geometry, resolution, Reynolds number, material, initial condition, sensor layout, noise level, forcing, time horizon, or regime. The right change depends on the paper's promise.</p>
+          <p>If the paper claims generalization but only tests nearby samples, write "generalization not proved."</p>
+        </section>
+
+        <section class="paper-reader-step">
+          <h2>8. What Uncertainty Is Missing?</h2>
+          <p>Ask which doubt sources are included: data noise, parameter uncertainty, model-form error, architecture choice, discretization, training randomness, out-of-distribution inputs, and future forcing.</p>
+          <p>A single error bar is not enough if it ignores the uncertainty that controls the decision.</p>
+        </section>
+
+        <section class="paper-reader-step">
+          <h2>9. What Decision Would This Support?</h2>
+          <p>Name the action. Design a wing. Place a sensor. Inject CO2. Control a PDE. Choose a material. Trust a digital twin. Run the full solver only when needed.</p>
+          <p>If no decision changes, the method may still be interesting, but its practical value is less clear.</p>
+        </section>
+
+        <section class="paper-reader-step">
+          <h2>10. Final Reader Verdict</h2>
+          <p>End with one of these sentences.</p>
+          <div class="paper-verdict-grid">
+            <div><strong>Believe locally</strong><span>The paper proves the claim only for the tested regime.</span></div>
+            <div><strong>Promising but unproved</strong><span>The idea is useful, but the changed-case evidence is missing.</span></div>
+            <div><strong>Reject for now</strong><span>The method breaks the physical rule or lacks a fair baseline.</span></div>
+            <div><strong>Trust for action</strong><span>The evidence covers the decision, uncertainty, and failure boundary.</span></div>
+          </div>
+        </section>
+
+        <h2>The One-Line Template</h2>
+        <p>This paper should be read as: "Because blank is hard, the authors use blank to carry blank; I would trust it only when blank, and I would reject it if blank."</p>
+
+        <p>For the background maps, use <a href="method-map.html">Method Map</a>, <a href="domain-map.html">Domain Map</a>, <a href="theme-index.html">Theme Index</a>, and <a href="capstone.html">Capstone</a>. For traps to avoid while reading, use <a href="common-mistakes.html">Common Mistakes</a>.</p>
+      </main>
+    </div>
+  </body>
+</html>

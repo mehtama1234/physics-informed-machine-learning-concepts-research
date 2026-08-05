@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chapter 128 - Control The Equation While Learning What It Is</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="sidebar">
+        <h1>DDPS Study</h1>
+        <a href="index.html">Start</a>
+        <a href="review-path.html">Review Path</a>
+        <a href="plain-words.html">Plain Words</a>
+        <a href="method-map.html">Method Map</a>
+        <a href="self-check.html">Self Check</a>
+        <a href="capstone.html">Capstone</a>
+        <a href="theme-index.html">Theme Index</a>
+        <a href="domain-map.html">Domain Map</a>
+        <a href="paper-reader.html">Paper Reader</a>
+        <a href="common-mistakes.html">Common Mistakes</a>
+        <a href="study-plan.html">Study Plan</a>
+        <a href="math-map.html">Math Map</a>
+        <a href="prerequisite-map.html">Prerequisite Map</a>
+        <a href="cheat-sheet.html">Cheat Sheet</a>
+        <a href="chapter-98.html">Chapter 98</a>
+        <a href="chapter-99.html">Chapter 99</a>
+        <a href="chapter-100.html">Chapter 100</a>
+        <a href="chapter-101.html">Chapter 101</a>
+        <a href="chapter-102.html">Chapter 102</a>
+        <a href="chapter-103.html">Chapter 103</a>
+        <a href="chapter-104.html">Chapter 104</a>
+        <a href="chapter-105.html">Chapter 105</a>
+        <a href="chapter-106.html">Chapter 106</a>
+        <a href="chapter-107.html">Chapter 107</a>
+        <a href="chapter-108.html">Chapter 108</a>
+        <a href="chapter-109.html">Chapter 109</a>
+        <a href="chapter-110.html">Chapter 110</a>
+        <a href="chapter-111.html">Chapter 111</a>
+        <a href="chapter-112.html">Chapter 112</a>
+        <a href="chapter-113.html">Chapter 113</a>
+        <a href="chapter-114.html">Chapter 114</a>
+        <a href="chapter-115.html">Chapter 115</a>
+        <a href="chapter-116.html">Chapter 116</a>
+        <a href="chapter-117.html">Chapter 117</a>
+        <a href="chapter-118.html">Chapter 118</a>
+        <a href="chapter-119.html">Chapter 119</a>
+        <a href="chapter-120.html">Chapter 120</a>
+        <a href="chapter-121.html">Chapter 121</a>
+        <a href="chapter-122.html">Chapter 122</a>
+        <a href="chapter-123.html">Chapter 123</a>
+        <a href="chapter-124.html">Chapter 124</a>
+        <a href="chapter-125.html">Chapter 125</a>
+        <a href="chapter-126.html">Chapter 126</a>
+        <a href="chapter-127.html">Chapter 127</a>
+        <a href="chapter-128.html">Chapter 128</a>
+        <a href="chapter-129.html">Chapter 129</a>
+        <a href="chapter-130.html">Chapter 130</a>
+        <a href="chapter-131.html">Chapter 131</a>
+        <a href="chapter-132.html">Chapter 132</a>
+        <a href="chapter-133.html">Chapter 133</a>
+        <a href="chapter-134.html">Chapter 134</a>
+        <a href="chapter-135.html">Chapter 135</a>
+        <a href="chapter-136.html">Chapter 136</a>
+        <a href="chapter-137.html">Chapter 137</a>
+        <a href="from-zero.html">From Zero</a>
+        <a href="pinn-from-zero.html">PINNs From Zero</a>
+        <a href="rom-from-zero.html">ROMs From Zero</a>
+        <a href="manifold-from-zero.html">Manifolds From Zero</a>
+        <a href="synthesis.html">Synthesis</a>
+        <a href="big-picture.html">Big Picture</a>
+        <a href="examples.html">Examples</a>
+        <a href="bridge.html">AISE Bridge</a>
+        <a href="audit.html">Transcript Audit</a>
+      </nav>
+      <main class="content">
+        <p class="eyebrow">Narrative chapter</p>
+        <h1>Control The Equation While Learning What It Is</h1>
+
+        <p>This chapter uses video 132, Alessandro Alla's DDPS talk on data-driven algorithms for online identification and control of partial differential equations. The plain problem is easy to state: you want to steer a physical system, but you do not fully know the equation that drives it.</p>
+
+        <p>That is different from the usual classroom control problem. In the usual version, the equation is given first. Then you design a control signal that pushes the state toward the target. Here the controller is partly blind. It can touch the system, watch the response, and update its guess. The talk asks whether identification and control can happen together instead of as two separate projects.</p>
+
+        <section class="lesson-claim-chain" aria-label="Plain first-principles reading guide for online PDE identification and control">
+          <h2>Read This Chapter As One Claim</h2>
+          <p>The controller is not allowed to pretend it knows the whole equation. It must act, watch, learn, and act again. If the possible physics terms are known, it can estimate their coefficients while controlling the state. If the full problem is too incomplete for a normal solver, a PINN can combine sparse observations, residual structure, and boundary clues. The shared idea is that data should change the next control action, not merely explain the experiment afterward.</p>
+          <div class="lesson-claim-grid">
+            <div><strong>Everyday problem</strong><span>You need to steer a heat, flow, reaction, or structural field, but the coefficient, boundary data, initial data, or active physical term is partly unknown.</span></div>
+            <div><strong>Shared promise</strong><span>Couple identification and control so each controlled trajectory improves the model used for the next feedback action.</span></div>
+            <div><strong>Hidden danger</strong><span>The sparse route fails if the candidate library is wrong; the PINN route can be inaccurate, costly, or hard to optimize.</span></div>
+            <div><strong>First rejection test</strong><span>Test learned controls in the real solver or experiment under new states, changed coefficients, partial observations, and design geometries.</span></div>
+          </div>
+        </section>
+
+        <div class="online-control-core-map" aria-label="Online control learns the unknown equation while steering the system">
+          <div>start with incomplete dynamics</div>
+          <div>apply a control based on a guess</div>
+          <div>watch the system move</div>
+          <div>update the equation and control</div>
+        </div>
+
+        <h2>The Everyday Version</h2>
+        <p>Imagine trying to drive a strange rental car down a steep road. You do not know how strong the brakes are. You do not know how much the steering lags. You do not know how the car reacts on wet pavement. A reckless driver would pretend the car is familiar. A careful driver presses the brake gently, watches the response, updates their sense of the car, and then chooses the next action.</p>
+
+        <p>This talk is the mathematical version of that careful behavior. The system is not a car but a PDE: heat spreading, fluid moving, a Burgers shock sharpening, or an Allen-Cahn state choosing between stable shapes. The control is not a foot on a pedal but a forcing term placed into the equation. The lesson is not "learn a model someday, then control it later." The lesson is "use each controlled motion as evidence about the equation, then improve the next control."</p>
+
+        <h2>What Control Means Here</h2>
+        <p>A PDE state is a changing field. It is not one number. It may be temperature along a rod, velocity over a region, concentration in a reactor, or displacement across a structure. To control it means to push that field toward a desired behavior. In the talk, the desired behavior is usually simple: drive the state toward zero, keep it stable, or make it follow a target.</p>
+
+        <p>The cost function is the scorekeeper. It penalizes a state that stays far from the target and a control that is too large. This is why the problem is not "use the strongest possible force." Strong control may fix the state but waste energy or damage the system. Weak control may be cheap but fail to move the state. The controller has to trade these against each other.</p>
+
+        <div class="control-score-map" aria-label="The controller balances state error and control effort">
+          <div>state is far from target</div>
+          <div>control can push it back</div>
+          <div>large control has a cost</div>
+          <div>best action balances both</div>
+        </div>
+
+        <h2>The First Route: Known Menu, Unknown Amounts</h2>
+        <p>The first half of the talk uses a sparse-identification idea. This is not discovery from nothing. The speaker assumes a library of possible PDE terms is known. The missing part is the coefficient in front of each term. In simple words, you know the possible ingredients but not the recipe amounts.</p>
+
+        <p>For example, the true equation may contain diffusion, advection, a Burgers nonlinear term, a third derivative term, or a polynomial reaction term. The method is allowed to choose how much of each term is present. If diffusion is present, its coefficient should become nonzero. If a candidate term is not part of the real equation, its coefficient should move near zero.</p>
+
+        <div class="library-coefficient-map" aria-label="Sparse online identification assumes candidate equation terms and learns coefficients">
+          <div>candidate terms are known</div>
+          <div>true coefficients are hidden</div>
+          <div>trajectory gives evidence</div>
+          <div>regression updates the coefficients</div>
+        </div>
+
+        <p>This matters because control needs the equation. If the controller thinks the system is mostly diffusive, it will act differently than if the system is dominated by advection or a nonlinear shock-forming term. A wrong coefficient can create a wrong control. The talk's first route says: do not wait for a perfect model offline. Keep estimating the coefficients while the system is being controlled.</p>
+
+        <h2>The Online Loop</h2>
+        <p>The loop has four steps. First, choose an initial guess for the unknown coefficients. Second, compute a feedback control from that guessed model. Third, apply the control and observe the actual trajectory. Fourth, use the observed trajectory to solve a regression problem for the coefficients. Then repeat until the coefficient estimate stops changing much.</p>
+
+        <p>The transcript connects this to a reinforcement-learning style assumption: the model is not fully known, but the system can be observed after an input is applied. The difference is that this method is not trying to collect many episodes before acting. It is trying to learn on the fly, from the trajectory it is already producing.</p>
+
+        <div class="online-loop-map" aria-label="Online identification and control repeats guess, control, observe, update">
+          <div>guess coefficients</div>
+          <div>solve state-dependent Riccati control</div>
+          <div>observe controlled trajectory</div>
+          <div>fit better coefficients</div>
+        </div>
+
+        <h2>Why Riccati Equations Enter The Story</h2>
+        <p>For linear systems with a quadratic cost, the linear quadratic regulator gives a clean feedback law. It comes from a Riccati equation. The talk starts there because it is the control workhorse: if the model is known and the cost is quadratic, the Riccati solution tells you how to turn the current state into a control action.</p>
+
+        <p>The PDE examples are nonlinear, so the speaker uses a state-dependent Riccati idea. At the current state, freeze the nonlinear system into a local form, solve a Riccati-like problem there, and use the resulting feedback control. This is suboptimal, not magic. It assumes that the value function looks locally quadratic. But it gives a practical controller for large nonlinear systems.</p>
+
+        <div class="riccati-freeze-map" aria-label="State-dependent Riccati control freezes the nonlinear system locally">
+          <div>linear quadratic control has a Riccati recipe</div>
+          <div>nonlinear PDE has no one fixed matrix</div>
+          <div>freeze the current state locally</div>
+          <div>compute a usable feedback action</div>
+        </div>
+
+        <p>The computational pain is also clear. A discretized PDE can have thousands or tens of thousands of state variables. A Riccati equation over that state can become enormous. The talk mentions large dimensions and the need for efficient solvers such as Jacobian-free Newton-Krylov methods and, in related work, model reduction.</p>
+
+        <h2>Concrete Case: Burgers-Type Dynamics</h2>
+        <p>The viscous Burgers example is a good first mental picture. Burgers dynamics can create steep fronts, so it is not just smooth heat spreading. In the talk's first-part experiment, the method knows the possible terms but not their coefficients. It observes a trajectory, identifies that low diffusion and the Burgers nonlinearity are the active pieces, and keeps the other candidate terms near zero.</p>
+
+        <p>Then it compares three situations: uncontrolled motion, controlled motion when the equation is known, and controlled motion while the equation is being identified. The uncontrolled state behaves differently because no one is steering it. The controlled state with known dynamics is the best reference. The online identification-control result follows it closely after the early guess improves.</p>
+
+        <div class="burgers-control-map" aria-label="Burgers control compares no control, known-model control, and learned-model control">
+          <div>uncontrolled state keeps its natural motion</div>
+          <div>known model gives reference control</div>
+          <div>online method learns active terms</div>
+          <div>learned control nearly tracks reference</div>
+        </div>
+
+        <h2>The First Route Breaks If The Menu Is Wrong</h2>
+        <p>The question period makes the most important limit explicit. Sparse regression can only choose from the library it is given. If an essential term is missing from that library, the method may not recover the real equation. The speaker agrees with this. The method is not pure equation discovery from a blank page. It works in a setting where the structure is partly known and the coefficients are unknown.</p>
+
+        <p>That limit is not a small footnote. It is the first-principles boundary of the method. A controller can only be as honest as the model class it is allowed to use. If the real physical effect is absent from the candidate terms, the regression may fit the observations with the wrong explanation, and the control law may be trustworthy only inside the observed regime.</p>
+
+        <div class="wrong-library-map" aria-label="Sparse identification fails when the true term is missing from the candidate library">
+          <div>true physics includes a missing term</div>
+          <div>library cannot represent it</div>
+          <div>regression picks a misleading substitute</div>
+          <div>control may fail when conditions change</div>
+        </div>
+
+        <h2>The Second Route: PINNs When The Problem Is Incomplete</h2>
+        <p>The second half changes approach. Instead of the online sparse library loop, it uses physics-informed neural networks for identification and control. The speaker's reason is practical: sometimes the usual numerical method cannot even be set up because the problem description is incomplete. You may not know the boundary condition, the initial condition, the final condition, or a coefficient in the state equation.</p>
+
+        <p>A PINN is useful here because its loss can combine several weak pieces of information. It can fit sparse data, reduce the PDE residual, and match boundary observations if they exist. In the talk, the network is used not just to approximate a state but to identify an unknown parameter and then solve an optimal-control problem.</p>
+
+        <div class="pinn-missing-data-map" aria-label="PINNs combine sparse data, residuals, and boundary observations when the PDE problem is incomplete">
+          <div>few observations are available</div>
+          <div>some problem data is missing</div>
+          <div>PDE residual adds structure</div>
+          <div>network estimates state, parameter, and control</div>
+        </div>
+
+        <h2>The Two-Stage PINN Design</h2>
+        <p>The PINN part uses two stages. In the first stage, the method uses data from the uncontrolled problem to identify the unknown part of the dynamics. This is more realistic because controlled data may not exist yet. In the second stage, after the coefficient is estimated, a new network is trained for the control problem. Its outputs include the state, the control, and the adjoint variable from the optimality system.</p>
+
+        <p>The adjoint is the backward-looking variable that tells the optimizer how changing the state affects the final cost. You do not need to treat it as mysterious. It is bookkeeping for blame. If the final error is too large, the adjoint carries information backward through the equation so the optimizer can adjust the control.</p>
+
+        <div class="two-stage-pinn-map" aria-label="The PINN method first identifies from uncontrolled data and then solves the control system">
+          <div>stage one: learn unknown coefficient from uncontrolled data</div>
+          <div>stage two: train state, control, and adjoint</div>
+          <div>compare against full numerical solution</div>
+          <div>test the PINN control inside the real solver</div>
+        </div>
+
+        <h2>Concrete PINN Cases</h2>
+        <p>The talk tests viscous Burgers and Allen-Cahn problems. In Burgers, the unknown parameter is the diffusion. Two regimes matter: a more diffusive case and an advection-dominated case. The advection-dominated case is harder because information moves and steepens instead of simply smoothing out. The method uses very few data points, no full initial condition, sparse boundary observations, and residual points inside the domain.</p>
+
+        <p>In Allen-Cahn, the uncontrolled system can settle toward stable states such as plus one or minus one. The control problem tries to push the state toward zero instead. That is a useful example because it shows control fighting the natural preference of the system. The network again identifies the unknown diffusion and learns a control that roughly matches the known-problem numerical reference.</p>
+
+        <div class="pinn-examples-map" aria-label="PINN examples include Burgers and Allen-Cahn control with unknown diffusion">
+          <div>Burgers: diffusion versus advection</div>
+          <div>Allen-Cahn: stable natural states</div>
+          <div>few data and sparse boundary points</div>
+          <div>control drives the state toward zero</div>
+        </div>
+
+        <h2>The Speaker's Honest Warning About PINNs</h2>
+        <p>The most useful part of the talk may be the caution. The speaker says that if the full PDE problem is known, classical numerical methods are usually better on speed and accuracy. PINNs do not automatically beat solvers. In his experiments, errors around 10 to the minus 2 or 10 to the minus 3 were acceptable for the study, but that is not the same as high-accuracy numerical simulation.</p>
+
+        <p>So the reason to use a PINN here is not fashion. The reason is that the ordinary solver needs a complete mathematical problem. If you do not know enough to give that complete problem, a PINN can fuse scattered clues: a few state measurements, a residual formula, partial boundary information, and an unknown parameter. When the full problem is known, use the solver. When the full problem is not known, the PINN may be the only workable starting point.</p>
+
+        <div class="pinn-honesty-map" aria-label="PINNs are useful for incomplete problems but not automatically faster or more accurate than solvers">
+          <div>known full PDE: numerical solver wins</div>
+          <div>missing data: solver may not start</div>
+          <div>PINN combines partial evidence</div>
+          <div>validate before trusting the control</div>
+        </div>
+
+        <h2>The Robotics Question</h2>
+        <p>The Q and A asks whether the first approach could apply to robotics. The answer stays consistent with the rest of the talk. The hard part is not writing a feedback controller after a model has been chosen. The hard part is choosing a library of candidate dynamics. If robotic equations can be put into a useful state-dependent form and the candidate terms are sensible, the sparse-identification route may be doable. If the library is unknown, the method loses its foundation.</p>
+
+        <p>This is a good general lesson for design fields. Whether the system is a robot arm, a thermal device, a soft structure, a building flow path, or a topology-optimized material, the learning method needs a vocabulary. It must know what kinds of causes are allowed. A poor vocabulary can make the learned controller look confident while hiding the real cause.</p>
+
+        <h2>The Design And Topology Connection</h2>
+        <p>Topology and design problems often ask for control under uncertainty. You may change a channel network, a porous material, a heat-sink layout, a soft-robot body, or an actuator placement. Each change alters how signals move through the domain. The controller then needs to know which physical terms matter in that new shape.</p>
+
+        <p>The first route says: if you know the possible terms, learn the coefficients while steering. That could help when the geometry changes the strength of diffusion, transport, reaction, damping, or coupling. The second route says: if the geometry or experiment gives only partial observations, use sparse data plus residual structure to infer enough of the problem to control it. Both routes are about the same bigger need: design loops should not only predict what a shape does; they should learn how to act on that shape when the model is incomplete.</p>
+
+        <div class="design-control-map" aria-label="Design and topology control need model learning because shape changes the dynamics">
+          <div>shape changes how fields move</div>
+          <div>unknown coefficients change control</div>
+          <div>partial sensors leave gaps</div>
+          <div>learn enough dynamics to steer the design</div>
+        </div>
+
+        <h2>How This Connects To Earlier Chapters</h2>
+        <p>This chapter connects directly to equation discovery, PINNs, reduced models, and control. It connects to Chapter 100 and Chapter 124 because it uses data to identify equations. It connects to the PINN chapters because it uses residuals and sparse observations when the problem is incomplete. It connects to the reduced-control chapters because full Riccati control for a discretized PDE can become too large unless efficient solvers or reduced models are used.</p>
+
+        <p>The new idea is the timing. Earlier chapters often separate learning and use: first build a surrogate, then deploy it. Here the system is being controlled while it is still being learned. That is why the word online matters. The model is not a static report. It is part of the act of steering.</p>
+
+        <h2>The Boundary Of The Claim</h2>
+        <p>The claim is not that the method can control any unknown PDE. It cannot. The sparse route needs a good candidate library. The state-dependent Riccati route is suboptimal and can be expensive. The PINN route can struggle with convergence, optimizer choice, cost, and accuracy. The transcript even discusses optimizer difficulties and suggestions such as alternatives to Adam or Adam plus LBFGS.</p>
+
+        <p>The honest claim is narrower and more useful: if the unknown part of the dynamics has a learnable form, and if the system can be observed while being acted on, then identification and control can be coupled. If the complete PDE problem is missing but partial data and residual structure exist, a PINN can help build a control solution where a standard solver has too little information.</p>
+
+        <div class="online-boundary-map" aria-label="Online PDE identification and control needs a good library, observations, and validation">
+          <div>not discovery from a blank page</div>
+          <div>not guaranteed optimal control</div>
+          <div>not a replacement for known solvers</div>
+          <div>use when missing dynamics blocks control</div>
+        </div>
+
+        <h2>What You Should Remember</h2>
+        <p>The heart of the lecture is simple: control requires a model, but sometimes the model is partly unknown. One answer is to learn the missing coefficients while the system is running. Another answer is to use a PINN when the PDE problem is too incomplete for a normal solver. Both answers treat data as something that should change the controller, not just decorate a paper after the fact.</p>
+
+        <p>If you remember only one sentence, remember this: do not steer a system as if you know the equation when the experiment is still telling you what the equation is. Watch, identify, control, recheck, and respect the limits of the model class you chose.</p>
+
+        <section class="lesson-review" aria-label="End of chapter understanding check for online PDE identification and control">
+          <h2>How To Test Whether You Understood This Chapter</h2>
+          <div class="lesson-review-grid">
+            <div><strong>Explain online learning simply</strong><span>The model is updated while the system is being controlled. The next action is based on the current best equation estimate, not a fixed offline model.</span></div>
+            <div><strong>Explain the library route</strong><span>If the possible equation terms are known, sparse regression can estimate which coefficients are active from the controlled trajectory.</span></div>
+            <div><strong>Explain the PINN route</strong><span>If the PDE problem is incomplete, a PINN can combine sparse data, residual terms, and boundary clues to estimate state, parameter, adjoint, and control.</span></div>
+            <div><strong>Connect it to topology and design</strong><span>Changing a channel, porous layout, soft body, actuator, or material topology changes how signals move, so a controller must learn enough of the new dynamics to act safely.</span></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

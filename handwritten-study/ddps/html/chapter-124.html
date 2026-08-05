@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chapter 124 - Make One Noisy Movie Confess Its Equation</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="sidebar">
+        <h1>DDPS Study</h1>
+        <a href="index.html">Start</a>
+        <a href="review-path.html">Review Path</a>
+        <a href="plain-words.html">Plain Words</a>
+        <a href="method-map.html">Method Map</a>
+        <a href="self-check.html">Self Check</a>
+        <a href="capstone.html">Capstone</a>
+        <a href="theme-index.html">Theme Index</a>
+        <a href="domain-map.html">Domain Map</a>
+        <a href="paper-reader.html">Paper Reader</a>
+        <a href="common-mistakes.html">Common Mistakes</a>
+        <a href="study-plan.html">Study Plan</a>
+        <a href="math-map.html">Math Map</a>
+        <a href="prerequisite-map.html">Prerequisite Map</a>
+        <a href="cheat-sheet.html">Cheat Sheet</a>
+        <a href="chapter-98.html">Chapter 98</a>
+        <a href="chapter-99.html">Chapter 99</a>
+        <a href="chapter-100.html">Chapter 100</a>
+        <a href="chapter-101.html">Chapter 101</a>
+        <a href="chapter-102.html">Chapter 102</a>
+        <a href="chapter-103.html">Chapter 103</a>
+        <a href="chapter-104.html">Chapter 104</a>
+        <a href="chapter-105.html">Chapter 105</a>
+        <a href="chapter-106.html">Chapter 106</a>
+        <a href="chapter-107.html">Chapter 107</a>
+        <a href="chapter-108.html">Chapter 108</a>
+        <a href="chapter-109.html">Chapter 109</a>
+        <a href="chapter-110.html">Chapter 110</a>
+        <a href="chapter-111.html">Chapter 111</a>
+        <a href="chapter-112.html">Chapter 112</a>
+        <a href="chapter-113.html">Chapter 113</a>
+        <a href="chapter-114.html">Chapter 114</a>
+        <a href="chapter-115.html">Chapter 115</a>
+        <a href="chapter-116.html">Chapter 116</a>
+        <a href="chapter-117.html">Chapter 117</a>
+        <a href="chapter-118.html">Chapter 118</a>
+        <a href="chapter-119.html">Chapter 119</a>
+        <a href="chapter-120.html">Chapter 120</a>
+        <a href="chapter-121.html">Chapter 121</a>
+        <a href="chapter-122.html">Chapter 122</a>
+        <a href="chapter-123.html">Chapter 123</a>
+        <a href="chapter-124.html">Chapter 124</a>
+        <a href="chapter-125.html">Chapter 125</a>
+        <a href="chapter-126.html">Chapter 126</a>
+        <a href="chapter-127.html">Chapter 127</a>
+        <a href="chapter-128.html">Chapter 128</a>
+        <a href="chapter-129.html">Chapter 129</a>
+        <a href="chapter-130.html">Chapter 130</a>
+        <a href="chapter-131.html">Chapter 131</a>
+        <a href="chapter-132.html">Chapter 132</a>
+        <a href="chapter-133.html">Chapter 133</a>
+        <a href="chapter-134.html">Chapter 134</a>
+        <a href="chapter-135.html">Chapter 135</a>
+        <a href="chapter-136.html">Chapter 136</a>
+        <a href="chapter-137.html">Chapter 137</a>
+        <a href="from-zero.html">From Zero</a>
+        <a href="pinn-from-zero.html">PINNs From Zero</a>
+        <a href="rom-from-zero.html">ROMs From Zero</a>
+        <a href="manifold-from-zero.html">Manifolds From Zero</a>
+        <a href="synthesis.html">Synthesis</a>
+        <a href="big-picture.html">Big Picture</a>
+        <a href="examples.html">Examples</a>
+        <a href="bridge.html">AISE Bridge</a>
+        <a href="audit.html">Transcript Audit</a>
+      </nav>
+      <main class="content">
+        <p class="eyebrow">Narrative chapter</p>
+        <h1>Make One Noisy Movie Confess Its Equation</h1>
+
+        <p>This chapter uses video 128, Selim Esedoglu's introduction and Professor Sung Ha Kang's DDPS talk on identifying differential equations from a single observation with numerical methods. The motivation is direct: suppose you see one interesting physical event, maybe only once, and you have a noisy time-dependent recording of it. Can the recording tell you what differential equation was driving the motion?</p>
+
+        <p>The first-principles problem is that the data does not say the equation out loud. A movie gives values of a state over space and time. An equation asks how time change relates to spatial patterns such as the state itself, its slope, its curvature, or products of these quantities. To discover the equation, the method must turn the movie into possible terms, decide which terms are really present, and estimate their coefficients.</p>
+
+        <section class="lesson-claim-chain" aria-label="Plain first-principles reading guide for identifying equations from one noisy movie">
+          <h2>Read This Chapter As One Claim</h2>
+          <p>The chapter is about making one imperfect movie answer a hard question: what rule made this motion? The movie itself is not enough. You need a menu of possible terms, careful denoising so derivatives do not become noise machines, sparse selection so the equation stays readable, and a second judge that evolves the proposed equation forward. A term is not real just because it fits a derivative table. It has to help the equation replay the motion.</p>
+          <div class="lesson-claim-grid">
+            <div><strong>Everyday problem</strong><span>You may have only one noisy recording of a physical event, but you still need the mechanism behind spreading, transport, reaction, smoothing, or pattern formation.</span></div>
+            <div><strong>Shared promise</strong><span>Build a dictionary of possible mechanisms, select a sparse support, fit coefficients, and validate by numerical time evolution.</span></div>
+            <div><strong>Hidden danger</strong><span>Noise, derivative amplification, correlated dictionary columns, boundary assumptions, and bad denoising can create a clean-looking but false law.</span></div>
+            <div><strong>First rejection test</strong><span>Run candidate equations forward on held-out time windows and check whether support, coefficients, and evolution error stay stable under denoising choices.</span></div>
+          </div>
+        </section>
+
+        <div class="ident-big-picture-map" aria-label="Equation identification turns one noisy movie into a candidate differential equation">
+          <div>one noisy time movie</div>
+          <div>many possible equation terms</div>
+          <div>sparse support selects active terms</div>
+          <div>numerical evolution checks the equation</div>
+        </div>
+
+        <h2>The Everyday Version</h2>
+        <p>Imagine watching one video of a spill spreading across a floor. You want to know the rule: is it simply diffusing outward, being pushed by a draft, reacting with the surface, or doing several things at once? You cannot rerun the accident. You only have one imperfect recording. If you measure slopes or curvatures from a noisy image, the noise becomes worse. So the hardest part is not writing down possible rules. The hardest part is avoiding fake rules created by noisy derivatives.</p>
+
+        <p>This is why the talk keeps returning to numerical methods. Equation discovery is not only a sparse-regression problem. It is also a derivative-estimation problem, a denoising problem, a model-selection problem, and a validation problem.</p>
+
+        <h2>The Dictionary Is The Menu Of Possible Terms</h2>
+        <p>The method starts by building a dictionary. A dictionary is a list of possible terms that might appear in the equation: a constant term, the state itself, powers of the state, spatial derivatives, products like the state times its derivative, and higher derivatives. The speaker emphasizes that they try to include terms systematically rather than handpicking only the expected answer.</p>
+
+        <p>Once the dictionary is built, each candidate term becomes a column in a matrix. The time derivative becomes the target vector. The problem becomes: which columns, when combined, best explain the observed time change? The active columns are called the support. Their numbers are the coefficient values. For example, a Burgers-type equation might need only a nonlinear transport term and perhaps a diffusion term, while the rest of the dictionary should be zero.</p>
+
+        <div class="dictionary-support-map" aria-label="A dictionary of possible PDE terms becomes a sparse linear system">
+          <div>candidate terms become matrix columns</div>
+          <div>time derivative becomes target</div>
+          <div>support means nonzero terms</div>
+          <div>coefficients give equation strengths</div>
+        </div>
+
+        <h2>Why Noise Is So Dangerous</h2>
+        <p>If the observed state is noisy, derivatives make the noise louder. A first derivative can amplify small wiggles. A second derivative amplifies them more. Higher-order derivatives are even worse. That means a method may confidently select the wrong term because the derivative column is mostly measuring noise rather than physics.</p>
+
+        <p>This explains why plain sparsity is not enough. Lasso or another sparse method may return a small set of nonzero terms, but the set can still be wrong. A coefficient can look large because the noisy column happened to fit the target, not because the term belongs in the equation.</p>
+
+        <div class="noise-derivative-map" aria-label="Derivative estimation amplifies measurement noise">
+          <div>data contains small noise</div>
+          <div>first derivative magnifies wiggles</div>
+          <div>second derivative magnifies more</div>
+          <div>false equation terms can appear</div>
+        </div>
+
+        <h2>Denoising Is Not Optional</h2>
+        <p>The earliest IDent method used moving-average least squares because it gave an approximation-order guarantee. The point was not just to smooth the picture until it looked nice. The denoising step had to preserve the numerical order of the approximation. Later robust IDent improved this with successive denoising differentiation: smooth, differentiate, smooth again, differentiate again, and repeat as needed.</p>
+
+        <p>That may sound excessive, but it addresses the real failure mode. Each derivative step can reintroduce or amplify noise, so each derivative step needs its own cleanup. The talk shows that better denoising can change what noise levels the method can tolerate, especially for equations with diffusion or higher derivatives.</p>
+
+        <div class="successive-denoise-map" aria-label="Successive denoising cleans data before and between derivative steps">
+          <div>denoise the state</div>
+          <div>differentiate once</div>
+          <div>denoise the derivative</div>
+          <div>repeat for higher derivatives</div>
+        </div>
+
+        <h2>Sparsity Needs A Second Judge</h2>
+        <p>The equation is assumed to be sparse: only a few terms from the dictionary should be active. But the speaker repeatedly stresses that sparse selection alone is not reliable. The method therefore adds model selection. After sparse selection proposes candidate supports, the method asks a more physical question: if this proposed equation starts from the observed initial condition and evolves forward, does it reproduce the observed data?</p>
+
+        <p>This is the time-evolution error. It uses a numerical PDE solver as the judge. The wrong equation may fit the derivative matrix locally but drift away when evolved. The right equation should regenerate the movie better, especially when the time step is refined. This brings numerical convergence back into equation discovery.</p>
+
+        <div class="time-evolution-test-map" aria-label="Candidate equations are checked by evolving them forward in time">
+          <div>sparse solver proposes terms</div>
+          <div>fit coefficients on selected support</div>
+          <div>evolve candidate equation forward</div>
+          <div>choose the one matching the movie</div>
+        </div>
+
+        <h2>Multi-Shooting Makes The Test Practical</h2>
+        <p>Running every candidate equation from the beginning to the final time can be slow. It can also give errors a long time to accumulate. The improved version uses a multi-shooting idea. Instead of one long evolution, take several shorter windows, start from several points in the observed data, and add the mismatch over those windows.</p>
+
+        <p>This keeps the same principle but makes the comparison cheaper and easier to parallelize. The candidate equation is still tested by whether it can move the state correctly in time, but it is tested in several shorter bursts rather than one long march.</p>
+
+        <h2>Weak Form Identification Moves Derivatives Away From Noisy Data</h2>
+        <p>The weak-form version changes the problem from pointwise differentiation to integration. Multiply the equation by a smooth test function and integrate. Then use integration by parts to move derivatives from the noisy data onto the smooth test function. This is a major improvement because the test function is chosen by us and can be made clean.</p>
+
+        <p>The weak form is one of the most important first-principles moves in the talk. If differentiating noisy data is dangerous, do not keep doing it directly. Rewrite the equation so the derivatives fall on something smooth. The method still builds a feature matrix and still uses sparsity, but the columns are better behaved.</p>
+
+        <div class="weak-ident-map" aria-label="Weak form moves derivatives from noisy data onto smooth test functions">
+          <div>multiply by smooth test function</div>
+          <div>integrate the equation</div>
+          <div>move derivatives by parts</div>
+          <div>reduce noise sensitivity</div>
+        </div>
+
+        <h2>Use The Dynamic Parts For Coefficients</h2>
+        <p>After the support is identified, coefficients are found by least squares. But the talk shows that even this can be improved. Not every region of the data is equally informative. Flat areas where little changes happen may add rows to the fit without teaching much about the dynamics. Regions where the state and slope vary strongly carry more information.</p>
+
+        <p>The narrow-fit idea uses high-dynamic regions for coefficient recovery. This is another simple lesson: do not average the equation over parts of the movie where almost nothing is happening and expect that to sharpen the physical constants. Fit where the physics is active.</p>
+
+        <div class="dynamic-fit-map" aria-label="Coefficient fitting improves when it focuses on high-dynamic regions">
+          <div>flat regions add little information</div>
+          <div>active regions show the dynamics</div>
+          <div>fit coefficients on informative data</div>
+          <div>coefficient recovery improves</div>
+        </div>
+
+        <h2>Fourier IDent Uses The Meaningful Frequency Region</h2>
+        <p>The Fourier version works in frequency space. That can help when the data has many useful modes, but it creates its own issue: some Fourier responses are huge and others are tiny. The method therefore partitions or restricts the frequency domain to the meaningful region suggested by smoothness theory and by the data itself.</p>
+
+        <p>The point is not that Fourier space is automatically better. The point is that every representation needs a way to ignore unhelpful or noisy parts. In physical space, that can mean high-dynamic-region fitting. In Fourier space, it can mean using the frequency region where the signal has enough trustworthy content.</p>
+
+        <div class="fourier-region-map" aria-label="Fourier identification uses only meaningful frequency regions">
+          <div>transform data to frequency space</div>
+          <div>responses vary by scale</div>
+          <div>keep meaningful frequency regions</div>
+          <div>fit equation from trusted content</div>
+        </div>
+
+        <h2>Variable Coefficients Need Groups</h2>
+        <p>The talk then extends from one fixed equation to equations whose coefficients can vary. A coefficient may change across space or time. It may even turn a term on in one region and off in another. To represent this, the method expands each coefficient in finite-element-like basis functions. One original dictionary term becomes a group of columns, one for each basis function.</p>
+
+        <p>Because the columns now come in groups, the sparse selection must also happen by groups. Group lasso and group subspace pursuit select whole term families rather than isolated columns. Model selection is again needed, using ideas such as basis expansion or residual reduction. The repeated pattern remains: set up the linear system carefully, denoise carefully, select sparse support carefully, then fit coefficients.</p>
+
+        <div class="variable-coeff-map" aria-label="Variable coefficients expand each term into a group of basis columns">
+          <div>coefficient changes over the domain</div>
+          <div>expand it in local basis functions</div>
+          <div>one term becomes a group of columns</div>
+          <div>group sparsity selects active term families</div>
+        </div>
+
+        <h2>The Topology And Design Connection</h2>
+        <p>This chapter connects to topology and design because discovered equations are often used to explain how shape, material layout, or spatial structure affects motion. If you are studying a pattern-forming material, a moving interface, a microstructure movie, or a flow around a designed shape, the equation tells you what mechanisms are active: diffusion, transport, reaction, dispersion, or higher-order smoothing.</p>
+
+        <p>For topology optimization or geometry design, this matters because the designer needs the right rule, not just a curve fit. If the discovered equation invents a fake diffusion term from noise, the design loop may smooth away a real sharp feature. If it misses a transport term, the design may place material or sensors in the wrong place. Equation discovery becomes useful only when the identified law survives numerical evolution and coefficient checks.</p>
+
+        <div class="ident-design-map" aria-label="Equation discovery supports design only when it identifies real mechanisms">
+          <div>observed pattern comes from shape and physics</div>
+          <div>dictionary names possible mechanisms</div>
+          <div>validated equation explains the motion</div>
+          <div>design loop uses the real mechanism</div>
+        </div>
+
+        <h2>A Concrete Example</h2>
+        <p>Suppose you film a chemical stain spreading through a porous sheet. You want to know whether it is mostly diffusing, being advected by a hidden flow, reacting with the material, or changing behavior in different regions. You have one noisy video. A naive method differentiates the video and may mistake camera noise for a high-order physical term.</p>
+
+        <p>The workflow from this talk would build a dictionary of possible mechanisms, denoise before estimating derivatives, use sparse selection to propose a small set of terms, and then run the candidate equation forward from the first frame. If the candidate cannot reproduce later frames, reject it. If the material behaves differently across the sheet, use variable coefficients and group sparsity so the equation can say where each mechanism is active.</p>
+
+        <h2>The Boundary Of The Claim</h2>
+        <p>The talk is honest that this is a hard problem. Three-dimensional PDE discovery is possible in principle but computationally difficult. Large dictionaries can be ill-conditioned or rank deficient. Sparse solvers can give different answers when dictionary columns are highly correlated. Weak and Fourier methods have assumptions, such as equation form or periodic-padding choices, that may not fit every dataset. Boundary behavior can matter.</p>
+
+        <p>So the claim is not "one video always reveals the true law." The claim is: from one noisy time-dependent observation, numerical methods can make equation identification much more disciplined. The method has to control noise, derivative error, sparse support selection, model validation, and coefficient fitting. Without those guards, the discovered equation can be a story told by the noise.</p>
+
+        <div class="ident-boundary-map" aria-label="Single-observation equation discovery has clear limits">
+          <div>not guaranteed for poor data</div>
+          <div>large dictionaries can be ill-conditioned</div>
+          <div>boundary assumptions can affect results</div>
+          <div>validated evolution gives stronger evidence</div>
+        </div>
+
+        <h2>What You Should Remember</h2>
+        <p>The simplest version of the lecture is this: write down a large menu of possible terms, use the noisy movie to propose a sparse equation, then force that equation to prove itself by evolving in time. The important work is in the details: denoise before and between derivatives, avoid trusting sparse regression alone, use weak forms when derivatives are too noisy, fit coefficients where dynamics is visible, and use group structure when coefficients vary.</p>
+
+        <p>Across the DDPS course, this chapter strengthens a recurring rule. Learning the law is not the same as fitting a signal. A law must regenerate motion, survive noise, and explain which physical mechanisms are actually present. Numerical methods are not extra decoration here. They are the discipline that keeps equation discovery from becoming pattern matching.</p>
+
+        <section class="lesson-review" aria-label="End of chapter understanding check for identifying equations from one noisy movie">
+          <h2>How To Test Whether You Understood This Chapter</h2>
+          <div class="lesson-review-grid">
+            <div><strong>Explain the dictionary</strong><span>The dictionary is the menu of possible equation terms. Sparse support means only a few terms from that menu are allowed to remain active.</span></div>
+            <div><strong>Explain why denoising repeats</strong><span>Each derivative can amplify noise again, so robust identification may need smoothing before and between derivative steps rather than one cosmetic cleanup.</span></div>
+            <div><strong>Explain the second judge</strong><span>A sparse equation must be evolved forward with a numerical solver. If it cannot replay the movie over time, the local derivative fit was not enough.</span></div>
+            <div><strong>Connect it to topology and design</strong><span>For shapes, materials, interfaces, and microstructures, a discovered law is useful only if it identifies real mechanisms such as diffusion, transport, reaction, or dispersion.</span></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

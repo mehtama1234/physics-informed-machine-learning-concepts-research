@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chapter 68 - Compute Only The Rows And Columns That Matter</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="sidebar">
+        <h1>DDPS Study</h1>
+        <a href="index.html">Start</a>
+        <a href="review-path.html">Review Path</a>
+        <a href="plain-words.html">Plain Words</a>
+        <a href="method-map.html">Method Map</a>
+        <a href="self-check.html">Self Check</a>
+        <a href="capstone.html">Capstone</a>
+        <a href="theme-index.html">Theme Index</a>
+        <a href="domain-map.html">Domain Map</a>
+        <a href="paper-reader.html">Paper Reader</a>
+        <a href="common-mistakes.html">Common Mistakes</a>
+        <a href="study-plan.html">Study Plan</a>
+        <a href="math-map.html">Math Map</a>
+        <a href="prerequisite-map.html">Prerequisite Map</a>
+        <a href="cheat-sheet.html">Cheat Sheet</a>
+        <a href="chapter-01.html">Chapter 1</a>
+        <a href="chapter-02.html">Chapter 2</a>
+        <a href="chapter-03.html">Chapter 3</a>
+        <a href="chapter-04.html">Chapter 4</a>
+        <a href="chapter-05.html">Chapter 5</a>
+        <a href="chapter-06.html">Chapter 6</a>
+        <a href="chapter-07.html">Chapter 7</a>
+        <a href="chapter-08.html">Chapter 8</a>
+        <a href="chapter-09.html">Chapter 9</a>
+        <a href="chapter-10.html">Chapter 10</a>
+        <a href="chapter-11.html">Chapter 11</a>
+        <a href="chapter-12.html">Chapter 12</a>
+        <a href="chapter-13.html">Chapter 13</a>
+        <a href="chapter-14.html">Chapter 14</a>
+        <a href="chapter-15.html">Chapter 15</a>
+        <a href="chapter-16.html">Chapter 16</a>
+        <a href="chapter-17.html">Chapter 17</a>
+        <a href="chapter-18.html">Chapter 18</a>
+        <a href="chapter-19.html">Chapter 19</a>
+        <a href="chapter-20.html">Chapter 20</a>
+        <a href="chapter-21.html">Chapter 21</a>
+        <a href="chapter-22.html">Chapter 22</a>
+        <a href="chapter-23.html">Chapter 23</a>
+        <a href="chapter-24.html">Chapter 24</a>
+        <a href="chapter-25.html">Chapter 25</a>
+        <a href="chapter-26.html">Chapter 26</a>
+        <a href="chapter-27.html">Chapter 27</a>
+        <a href="chapter-28.html">Chapter 28</a>
+        <a href="chapter-29.html">Chapter 29</a>
+        <a href="chapter-30.html">Chapter 30</a>
+        <a href="chapter-31.html">Chapter 31</a>
+        <a href="chapter-32.html">Chapter 32</a>
+        <a href="chapter-33.html">Chapter 33</a>
+        <a href="chapter-34.html">Chapter 34</a>
+        <a href="chapter-35.html">Chapter 35</a>
+        <a href="chapter-36.html">Chapter 36</a>
+        <a href="chapter-37.html">Chapter 37</a>
+        <a href="chapter-38.html">Chapter 38</a>
+        <a href="chapter-39.html">Chapter 39</a>
+        <a href="chapter-40.html">Chapter 40</a>
+        <a href="chapter-41.html">Chapter 41</a>
+        <a href="chapter-42.html">Chapter 42</a>
+        <a href="chapter-43.html">Chapter 43</a>
+        <a href="chapter-44.html">Chapter 44</a>
+        <a href="chapter-45.html">Chapter 45</a>
+        <a href="chapter-46.html">Chapter 46</a>
+        <a href="chapter-47.html">Chapter 47</a>
+        <a href="chapter-48.html">Chapter 48</a>
+        <a href="chapter-49.html">Chapter 49</a>
+        <a href="chapter-50.html">Chapter 50</a>
+        <a href="chapter-51.html">Chapter 51</a>
+        <a href="chapter-52.html">Chapter 52</a>
+        <a href="chapter-53.html">Chapter 53</a>
+        <a href="chapter-54.html">Chapter 54</a>
+        <a href="chapter-55.html">Chapter 55</a>
+        <a href="chapter-56.html">Chapter 56</a>
+        <a href="chapter-57.html">Chapter 57</a>
+        <a href="chapter-58.html">Chapter 58</a>
+        <a href="chapter-59.html">Chapter 59</a>
+        <a href="chapter-60.html">Chapter 60</a>
+        <a href="chapter-61.html">Chapter 61</a>
+        <a href="chapter-62.html">Chapter 62</a>
+        <a href="chapter-63.html">Chapter 63</a>
+        <a href="chapter-64.html">Chapter 64</a>
+        <a href="chapter-65.html">Chapter 65</a>
+        <a href="chapter-66.html">Chapter 66</a>
+        <a href="chapter-67.html">Chapter 67</a>
+        <a href="chapter-68.html">Chapter 68</a>
+        <a href="chapter-69.html">Chapter 69</a>
+        <a href="chapter-70.html">Chapter 70</a>
+        <a href="chapter-71.html">Chapter 71</a>
+        <a href="chapter-72.html">Chapter 72</a>
+        <a href="chapter-73.html">Chapter 73</a>
+        <a href="chapter-74.html">Chapter 74</a>
+        <a href="chapter-75.html">Chapter 75</a>
+        <a href="chapter-76.html">Chapter 76</a>
+        <a href="chapter-77.html">Chapter 77</a>
+        <a href="chapter-78.html">Chapter 78</a>
+        <a href="chapter-79.html">Chapter 79</a>
+        <a href="chapter-80.html">Chapter 80</a>
+        <a href="chapter-81.html">Chapter 81</a>
+        <a href="chapter-82.html">Chapter 82</a>
+        <a href="chapter-83.html">Chapter 83</a>
+        <a href="chapter-84.html">Chapter 84</a>
+        <a href="chapter-85.html">Chapter 85</a>
+        <a href="chapter-86.html">Chapter 86</a>
+        <a href="chapter-87.html">Chapter 87</a>
+        <a href="chapter-88.html">Chapter 88</a>
+        <a href="chapter-89.html">Chapter 89</a>
+        <a href="chapter-90.html">Chapter 90</a>
+        <a href="chapter-91.html">Chapter 91</a>
+        <a href="chapter-92.html">Chapter 92</a>
+        <a href="chapter-93.html">Chapter 93</a>
+        <a href="chapter-94.html">Chapter 94</a>
+        <a href="chapter-95.html">Chapter 95</a>
+        <a href="chapter-96.html">Chapter 96</a>
+        <a href="chapter-97.html">Chapter 97</a>
+        <a href="chapter-98.html">Chapter 98</a>
+        <a href="chapter-99.html">Chapter 99</a>
+        <a href="chapter-100.html">Chapter 100</a>
+        <a href="chapter-101.html">Chapter 101</a>
+        <a href="chapter-102.html">Chapter 102</a>
+        <a href="chapter-103.html">Chapter 103</a>
+        <a href="chapter-104.html">Chapter 104</a>
+        <a href="chapter-105.html">Chapter 105</a>
+        <a href="chapter-106.html">Chapter 106</a>
+        <a href="chapter-107.html">Chapter 107</a>
+        <a href="chapter-108.html">Chapter 108</a>
+        <a href="chapter-109.html">Chapter 109</a>
+        <a href="chapter-110.html">Chapter 110</a>
+        <a href="chapter-111.html">Chapter 111</a>
+        <a href="chapter-112.html">Chapter 112</a>
+        <a href="chapter-113.html">Chapter 113</a>
+        <a href="chapter-114.html">Chapter 114</a>
+        <a href="chapter-115.html">Chapter 115</a>
+        <a href="chapter-116.html">Chapter 116</a>
+        <a href="chapter-117.html">Chapter 117</a>
+        <a href="chapter-118.html">Chapter 118</a>
+        <a href="chapter-119.html">Chapter 119</a>
+        <a href="chapter-120.html">Chapter 120</a>
+        <a href="chapter-121.html">Chapter 121</a>
+        <a href="chapter-122.html">Chapter 122</a>
+        <a href="chapter-123.html">Chapter 123</a>
+        <a href="chapter-124.html">Chapter 124</a>
+        <a href="chapter-125.html">Chapter 125</a>
+        <a href="chapter-126.html">Chapter 126</a>
+        <a href="chapter-127.html">Chapter 127</a>
+        <a href="chapter-128.html">Chapter 128</a>
+        <a href="chapter-129.html">Chapter 129</a>
+        <a href="chapter-130.html">Chapter 130</a>
+        <a href="chapter-131.html">Chapter 131</a>
+        <a href="chapter-132.html">Chapter 132</a>
+        <a href="chapter-133.html">Chapter 133</a>
+        <a href="chapter-134.html">Chapter 134</a>
+        <a href="chapter-135.html">Chapter 135</a>
+        <a href="chapter-136.html">Chapter 136</a>
+        <a href="chapter-137.html">Chapter 137</a>
+        <a href="from-zero.html">From Zero</a>
+        <a href="pinn-from-zero.html">PINNs From Zero</a>
+        <a href="rom-from-zero.html">ROMs From Zero</a>
+        <a href="manifold-from-zero.html">Manifolds From Zero</a>
+        <a href="synthesis.html">Synthesis</a>
+        <a href="big-picture.html">Big Picture</a>
+        <a href="examples.html">Examples</a>
+        <a href="lesson-001.html">Lesson 001</a>
+        <a href="lesson-002.html">Lesson 002</a>
+        <a href="lesson-003.html">Lesson 003</a>
+        <a href="bridge.html">AISE Bridge</a>
+        <a href="audit.html">Transcript Audit</a>
+      </nav>
+      <main class="content">
+        <p class="eyebrow">Narrative chapter</p>
+        <h1>Compute Only The Rows And Columns That Matter</h1>
+
+        <section class="lesson-claim-chain" aria-label="Plain first-principles reading guide for CUR and time-dependent low-rank models">
+          <h2>Read This Chapter As One Claim</h2>
+          <p>Start with a simulation that is too big in the most literal way: too many grid cells, too many chemical species, too many random samples, too many sensitivities, and too much data to store. The hope is that the giant table is not truly full of unrelated information. Maybe many columns move together, many rows repeat the same pattern, and only a few moving shapes explain most of what matters at each moment. This chapter is about following those shapes and computing only the sampled pieces needed to keep them honest.</p>
+          <div class="lesson-claim-grid">
+            <div>
+              <strong>Everyday problem</strong>
+              <span>The full simulation is so large that running it, saving it, or evaluating every nonlinear term destroys the promised speedup.</span>
+            </div>
+            <div>
+              <strong>Shared promise</strong>
+              <span>Represent the large state with a few moving patterns, then sample key rows and columns instead of rebuilding the whole matrix.</span>
+            </div>
+            <div>
+              <strong>Hidden danger</strong>
+              <span>A compressed model can secretly become expensive again if every step still requires the full state or the full nonlinear right-hand side.</span>
+            </div>
+            <div>
+              <strong>First rejection test</strong>
+              <span>If the current state is not close to low rank, or the sampled rows and columns miss shocks, fronts, or active chemistry, the reduction is not carrying the physics.</span>
+            </div>
+          </div>
+        </section>
+
+        <p>This chapter uses video 71, Hassan Babaee's DDPS talk on CUR matrix decomposition for scalable reduced-order modeling of nonlinear partial differential equations using time-dependent bases. The talk is about a very practical problem: some simulations are too large to run, store, or even evaluate in the ordinary way.</p>
+
+        <p>The first-principles question is simple. If a huge simulation keeps repeating the same hidden patterns, can we follow those few patterns instead of carrying every variable, every sample, every species, and every grid point?</p>
+
+        <div class="cur-core-chain" aria-label="Large simulation data can be compressed by time-dependent low-rank structure and sampled rows and columns">
+          <div>huge simulation</div>
+          <div>repeated patterns</div>
+          <div>moving small basis</div>
+          <div>sample key rows and columns</div>
+        </div>
+
+        <h2>The Real Cost Is Not One Number</h2>
+        <p>When the talk shows chemically reacting flow, the cost is not just that the solver takes time. The solver may need to track many chemical species, many reactions, many grid points, and many time steps. A larger mechanism can have hundreds or even a thousand species. That means the computer must move and store a huge amount of information before it even starts doing useful arithmetic.</p>
+
+        <p>That matters because memory and file writing can become the wall. A simulation may compute tiny fast events, but the machine may only save snapshots every many time steps because saving everything is too expensive. Then the scientist owns a detailed solver but only a coarse memory of what happened.</p>
+
+        <div class="simulation-cost-stack" aria-label="Large simulations are expensive because of variables, grid points, memory, file writing, and arithmetic">
+          <div>many variables</div>
+          <div>many grid points</div>
+          <div>huge memory and files</div>
+          <div>slow full solve</div>
+        </div>
+
+        <h2>A Matrix Is A Way To Line Up Many Related Things</h2>
+        <p>The talk keeps turning problems into matrices. That sounds abstract, but the idea is plain. Put one related field beside another related field. In uncertainty quantification, each column can be one random sample. In sensitivity analysis, each column can be the response to one parameter. In reacting flow, the columns can represent species or combinations of species.</p>
+
+        <p>Once the information is lined up, we can ask whether the columns are really independent. Often they are not. Many columns move together because the physics ties them together. If many species rise and fall in coordinated ways, or many samples share the same wave shape, the matrix may be close to low rank.</p>
+
+        <div class="matrix-as-related-fields" aria-label="A matrix lines up related simulation fields so shared patterns can be found">
+          <div>sample 1</div>
+          <div>sample 2</div>
+          <div>sample 3</div>
+          <div>shared pattern underneath</div>
+        </div>
+
+        <h2>Low Rank Means Few Moving Patterns Explain A Lot</h2>
+        <p>Low rank does not mean the physics is easy. It means that, at one instant, much of the large state can be rebuilt from a small number of patterns. A pattern may be a moving flame structure, a shock shape, a composition mixture, or a sensitivity direction.</p>
+
+        <p>The important word is instant. A system can be complicated over a long time and still be low rank at each moment. The useful patterns can change as the flow moves. That is why the talk focuses on time-dependent bases instead of fixed bases learned once from old data.</p>
+
+        <div class="instant-low-rank-map" aria-label="Instantaneous low rank means a few current patterns explain a large state at this moment">
+          <div>large state now</div>
+          <div>few current patterns</div>
+          <div>small coefficients</div>
+          <div>rebuild useful state</div>
+        </div>
+
+        <h2>The Basis Is Not Chosen From A Shelf</h2>
+        <p>Classical scientific computing often chooses a basis first: Fourier waves, polynomials, grid functions, or other standard shapes. Those are useful, but they do not automatically know where the important structure is. In high dimensions, choosing too many generic shapes becomes painfully expensive.</p>
+
+        <p>Babaee's route is different. Let the governing equation move the basis. The basis is not just fitted after a pile of full simulations. It evolves while the reduced model evolves. The physics residual tells the basis how to turn, stretch, and follow the current structure.</p>
+
+        <div class="basis-from-equation-map" aria-label="Time-dependent bases are moved by the governing equation rather than chosen as fixed shapes">
+          <div>do not pick fixed shapes</div>
+          <div>write matrix equation</div>
+          <div>minimize residual</div>
+          <div>basis follows physics</div>
+        </div>
+
+        <h2>This Avoids The Usual Data Trap</h2>
+        <p>A data-driven reduced model usually needs full-order simulation data first. That can be a problem when the full simulation is exactly what we cannot afford. It can also be fragile when new conditions are not represented in the old data.</p>
+
+        <p>The time-dependent low-rank approach does not start by collecting a large training set. It starts from the governing equation, initial condition, and boundary condition. That does not make the method free, but it changes the promise: the reduced state is being evolved from the equation instead of copied from past examples.</p>
+
+        <div class="data-trap-escape" aria-label="Equation-driven low-rank evolution avoids needing a large full-order training set first">
+          <div>full data may be impossible</div>
+          <div>old data may not extrapolate</div>
+          <div>use the equation directly</div>
+          <div>adapt during the solve</div>
+        </div>
+
+        <h2>Sensitivity Analysis Shows The First Win</h2>
+        <p>Suppose a model has hundreds of uncertain parameters. A direct sensitivity calculation may require one extra PDE solve per parameter or per output. The talk gives a reacting-flow example where the full sensitivity object has many species and many reaction parameters. Solving every sensitivity field separately is the blunt-force route.</p>
+
+        <p>The low-rank view asks whether those sensitivity fields are correlated. If they are, solve for a small number of evolving sensitivity modes and small coefficient matrices instead. In the example discussed, a handful of modes can track the dominant sensitivity structure, turning hundreds of sensitivity equations into only a few effective equations.</p>
+
+        <div class="sensitivity-compression-map" aria-label="Correlated sensitivities can be compressed into a few evolving modes">
+          <div>many parameters</div>
+          <div>many sensitivity fields</div>
+          <div>fields are correlated</div>
+          <div>solve few modes</div>
+        </div>
+
+        <h2>The Combustion Example Makes The Idea Concrete</h2>
+        <p>Combustion is hard because chemistry creates many coupled species. The species are not isolated. They move, react, and change together. A reduced basis can act like a smaller set of effective species: not one real chemical each, but mixtures that carry the dominant behavior of many species at once.</p>
+
+        <p>This is why the question near the end of the talk is useful. A listener asks whether the new basis corresponds to algebraic combinations of the original species. The answer is yes: each mode is a linear combination of the original species. In plain words, the reduced model tracks groups of species that tend to travel together.</p>
+
+        <div class="combustion-species-map" aria-label="Combustion species can be represented by a smaller set of moving mixture modes">
+          <div>many chemical species</div>
+          <div>species move together</div>
+          <div>mixture modes</div>
+          <div>smaller chemistry state</div>
+        </div>
+
+        <h2>The Catch Is Nonlinear Physics</h2>
+        <p>For a nonlinear PDE, the right-hand side of the equation can be expensive to evaluate. If the reduced model has to rebuild the whole huge state just to compute the nonlinear terms, the savings disappear. This is the same old reduced-model problem: compression helps only if the expensive physics can also be evaluated cheaply.</p>
+
+        <p>Older approaches can handle some special nonlinear forms by rewriting the equations carefully. That can be fast, but it is intrusive. Every new solver or new physics model may need custom algebra and months of implementation work. The talk wants a more general route.</p>
+
+        <div class="nonlinear-cost-warning" aria-label="Nonlinear right-hand sides can erase low-rank savings if the full state must be rebuilt">
+          <div>compressed state</div>
+          <div>rebuild full state</div>
+          <div>evaluate nonlinear physics</div>
+          <div>savings vanish</div>
+        </div>
+
+        <h2>CUR Says Do Not Compute The Whole Matrix</h2>
+        <p>CUR decomposition is the main tool in the talk. Imagine a large matrix whose entries are expensive to compute. CUR says: choose important columns, choose important rows, use their intersections to connect them, and approximate the full matrix from those pieces.</p>
+
+        <p>The everyday picture is a survey. We do not interview every person in a city if a carefully chosen sample can reveal the structure. Here the sample is not random guesswork. The method chooses rows and columns where the current low-rank structure says the action is concentrated.</p>
+
+        <div class="cur-sampling-diagram" aria-label="CUR samples selected columns and rows plus their intersections instead of evaluating the full matrix">
+          <div>selected columns</div>
+          <div>selected rows</div>
+          <div>small intersection</div>
+          <div>approximate full matrix</div>
+        </div>
+
+        <h2>The Sample Points Move With The Physics</h2>
+        <p>The row and column samples are time dependent. They are not picked once and frozen. In the Burgers-equation shock example, the selected points move toward the sharp fronts, because that is where the important change is happening.</p>
+
+        <p>This is a central first-principles lesson. If the solution is flat in most places and sharp in a few places, spending equal work everywhere is wasteful. CUR tries to spend work where the right-hand side of the equation carries the most information.</p>
+
+        <div class="moving-sample-points" aria-label="CUR sample points move toward shocks and other active regions">
+          <div>flat regions</div>
+          <div>sharp front appears</div>
+          <div>samples move there</div>
+          <div>compute where action is</div>
+        </div>
+
+        <h2>Uncertainty Quantification Is Another Natural Fit</h2>
+        <p>In uncertainty quantification, we often run many versions of the same model with different random inputs. That creates a huge matrix: rows are physical degrees of freedom and columns are samples. If the samples share structure, the full collection may be low rank at each time.</p>
+
+        <p>The talk uses this setting to show the scaling point. Without sparse row and column sampling, the cost grows with the full number of grid points and samples. With the CUR-style approach, the model only evaluates selected pieces of the right-hand side and can handle cases too large to store as a full matrix on an ordinary machine.</p>
+
+        <div class="uq-sample-matrix-map" aria-label="Uncertainty quantification creates a large matrix of many random samples that can be compressed if samples share structure">
+          <div>many random samples</div>
+          <div>same physics underneath</div>
+          <div>low-rank sample matrix</div>
+          <div>sample sparse pieces</div>
+        </div>
+
+        <h2>This Is Not Magic Compression</h2>
+        <p>The talk is careful about the condition for success. The problem must be expressible as a matrix differential equation, and that matrix must be close to low rank at each instant. If the state is high rank at each instant, the method loses much of its advantage.</p>
+
+        <p>One combustion case in the talk needs a relatively high rank because the chemistry changes suddenly. That is not a failure of honesty; it is the method telling us the system really has many active directions at that moment. The method works best when the physics has repeated structure that can be followed by a small moving subspace.</p>
+
+        <div class="method-boundary-map" aria-label="The method needs a matrix equation and instantaneous low-rank structure">
+          <div>need matrix equation</div>
+          <div>need low rank now</div>
+          <div>sudden rich physics raises rank</div>
+          <div>use when structure repeats</div>
+        </div>
+
+        <h2>How This Connects To PINNs And Scientific Computing</h2>
+        <p>The talk closes by placing this method between classical solvers and machine learning. Classical solvers choose basis functions from a known library. PINNs let optimization search for useful functions. Time-dependent low-rank models let the governing equation evolve a compact basis without solving a large neural-network training problem.</p>
+
+        <p>So the shared theme is not "use AI." The shared theme is: stop wasting degrees of freedom in places where they do not explain the physics. A good method should put representation power where the structure actually lives.</p>
+
+        <div class="classical-pinn-tdb-map" aria-label="Classical bases, PINNs, and time-dependent bases are different ways to choose representation power">
+          <div>classical fixed basis</div>
+          <div>PINN learned basis</div>
+          <div>time-moving basis</div>
+          <div>put effort where needed</div>
+        </div>
+
+        <h2>Why This Matters For Design And Topology</h2>
+        <p>Design and topology optimization repeatedly change geometry, material layout, boundary conditions, or operating parameters. Each candidate can require a large PDE solve. If we also need uncertainty, sensitivities, or chemistry, the cost can become impossible.</p>
+
+        <p>This chapter gives a design lesson. Look for shared structure across designs, samples, species, or parameter sensitivities. Let the basis move when the important structure moves. Then use CUR-like sampling so the reduced model does not secretly pay for the full nonlinear physics. In topology work, that can mean spending computation near interfaces, fronts, active constraints, or failure regions instead of treating every cell as equally informative.</p>
+
+        <div class="cur-design-bridge" aria-label="CUR and time-dependent bases help design by following active structure and sampling expensive physics sparsely">
+          <div>many candidate designs</div>
+          <div>shared moving structure</div>
+          <div>sample active regions</div>
+          <div>faster design loops</div>
+        </div>
+
+        <h2>The Chapter In One Chain</h2>
+        <p>First, many scientific simulations are too expensive because they carry huge numbers of variables, grid points, samples, species, and files. Second, these huge objects can often be lined up as matrices. Third, if the columns or rows share patterns, the matrix is close to low rank at one instant. Fourth, a time-dependent basis lets those few patterns move with the physics instead of staying frozen. Fifth, this can compress sensitivities, uncertainty samples, and combustion chemistry. Sixth, nonlinear PDEs create a new bottleneck because evaluating the right-hand side may require the full state. Seventh, CUR decomposition avoids computing the whole right-hand-side matrix by sampling important rows and columns. Eighth, those sample points move in time, often toward shocks, fronts, or active regions. Ninth, the method works when the problem can be written as a matrix equation and is low rank at each instant. Tenth, for design and topology, the lesson is to spend computation where the physics is changing, not everywhere equally.</p>
+
+        <div class="note">
+          <p>The chapter's core idea: do not compress a simulation and then quietly pay for the full simulation again. Follow the few moving patterns, and compute only the rows and columns needed to keep those patterns honest.</p>
+        </div>
+
+        <section class="lesson-review" aria-label="End of chapter understanding check for CUR and time-dependent low-rank models">
+          <h2>How To Test Whether You Understood This Chapter</h2>
+          <div class="lesson-review-grid">
+            <div>
+              <strong>Explain low rank from zero</strong>
+              <span>Low rank means many parts of a large table are moving in related ways, so a few patterns can rebuild most of the useful information at one moment. It does not mean the physics is simple forever.</span>
+            </div>
+            <div>
+              <strong>Explain why the basis moves</strong>
+              <span>A fixed library of shapes can miss a shock, flame, or front as it travels. A time-dependent basis lets the important patterns turn and move with the equation instead of staying frozen in shapes chosen before the solve.</span>
+            </div>
+            <div>
+              <strong>Explain why CUR is needed</strong>
+              <span>If the reduced model has to compute the whole nonlinear matrix before compressing it, the savings vanish. CUR keeps the cost small by sampling selected rows, selected columns, and their intersections.</span>
+            </div>
+            <div>
+              <strong>Connect this to topology and design</strong>
+              <span>In topology optimization, the expensive information is often concentrated near interfaces, loads, active constraints, failure regions, or moving fronts. This chapter says to spend computation where the design physics is changing, not uniformly across every cell.</span>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

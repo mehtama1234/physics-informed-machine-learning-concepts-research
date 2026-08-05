@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chapter 100 - Make The Data Write A Readable Equation</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="sidebar">
+        <h1>DDPS Study</h1>
+        <a href="index.html">Start</a>
+        <a href="review-path.html">Review Path</a>
+        <a href="plain-words.html">Plain Words</a>
+        <a href="method-map.html">Method Map</a>
+        <a href="self-check.html">Self Check</a>
+        <a href="capstone.html">Capstone</a>
+        <a href="theme-index.html">Theme Index</a>
+        <a href="domain-map.html">Domain Map</a>
+        <a href="paper-reader.html">Paper Reader</a>
+        <a href="common-mistakes.html">Common Mistakes</a>
+        <a href="study-plan.html">Study Plan</a>
+        <a href="math-map.html">Math Map</a>
+        <a href="prerequisite-map.html">Prerequisite Map</a>
+        <a href="cheat-sheet.html">Cheat Sheet</a>
+        <a href="chapter-98.html">Chapter 98</a>
+        <a href="chapter-99.html">Chapter 99</a>
+        <a href="chapter-100.html">Chapter 100</a>
+        <a href="chapter-101.html">Chapter 101</a>
+        <a href="chapter-102.html">Chapter 102</a>
+        <a href="chapter-103.html">Chapter 103</a>
+        <a href="chapter-104.html">Chapter 104</a>
+        <a href="chapter-105.html">Chapter 105</a>
+        <a href="chapter-106.html">Chapter 106</a>
+        <a href="chapter-107.html">Chapter 107</a>
+        <a href="chapter-108.html">Chapter 108</a>
+        <a href="chapter-109.html">Chapter 109</a>
+        <a href="chapter-110.html">Chapter 110</a>
+        <a href="chapter-111.html">Chapter 111</a>
+        <a href="chapter-112.html">Chapter 112</a>
+        <a href="chapter-113.html">Chapter 113</a>
+        <a href="chapter-114.html">Chapter 114</a>
+        <a href="chapter-115.html">Chapter 115</a>
+        <a href="chapter-116.html">Chapter 116</a>
+        <a href="chapter-117.html">Chapter 117</a>
+        <a href="chapter-118.html">Chapter 118</a>
+        <a href="chapter-119.html">Chapter 119</a>
+        <a href="chapter-120.html">Chapter 120</a>
+        <a href="chapter-121.html">Chapter 121</a>
+        <a href="chapter-122.html">Chapter 122</a>
+        <a href="chapter-123.html">Chapter 123</a>
+        <a href="chapter-124.html">Chapter 124</a>
+        <a href="chapter-125.html">Chapter 125</a>
+        <a href="chapter-126.html">Chapter 126</a>
+        <a href="chapter-127.html">Chapter 127</a>
+        <a href="chapter-128.html">Chapter 128</a>
+        <a href="chapter-129.html">Chapter 129</a>
+        <a href="chapter-130.html">Chapter 130</a>
+        <a href="chapter-131.html">Chapter 131</a>
+        <a href="chapter-132.html">Chapter 132</a>
+        <a href="chapter-133.html">Chapter 133</a>
+        <a href="chapter-134.html">Chapter 134</a>
+        <a href="chapter-135.html">Chapter 135</a>
+        <a href="chapter-136.html">Chapter 136</a>
+        <a href="chapter-137.html">Chapter 137</a>
+        <a href="from-zero.html">From Zero</a>
+        <a href="pinn-from-zero.html">PINNs From Zero</a>
+        <a href="rom-from-zero.html">ROMs From Zero</a>
+        <a href="manifold-from-zero.html">Manifolds From Zero</a>
+        <a href="synthesis.html">Synthesis</a>
+        <a href="big-picture.html">Big Picture</a>
+        <a href="examples.html">Examples</a>
+        <a href="bridge.html">AISE Bridge</a>
+        <a href="audit.html">Transcript Audit</a>
+      </nav>
+      <main class="content">
+        <p class="eyebrow">Narrative chapter</p>
+        <h1>Make The Data Write A Readable Equation</h1>
+
+        <p>This chapter uses video 103, George Bollas's DDPS talk on physics-informed machine learning through symbolic regression. The talk is about a different kind of learning goal. Instead of only asking a model to predict the next number, it asks the model to discover an equation that a human can read.</p>
+
+        <p>The first-principles problem is this: engineering systems often hide an important state that we cannot measure directly. A cutting tool wears down. A heat exchanger slowly fouls. A reactor has reaction, flow, and diffusion inside it, but we may only have a sensor at the outlet. A black-box model can guess the output, but it may not explain what is happening. Symbolic regression tries to turn the data into a small formula that carries the mechanism.</p>
+
+        <section class="lesson-claim-chain" aria-label="Plain first-principles reading guide for physics-informed symbolic regression">
+          <h2>Read This Chapter As One Claim</h2>
+          <p>Start with the hidden-state problem. The thing that matters may be tool wear, fouling resistance, reaction order, a diffusion correction, or a shape-dependent coefficient. We may not measure that hidden thing directly. We may only see outlet concentration, vibration, audio, power, temperature, or some other indirect signal. A black box can learn to predict the signal, but it may leave the engineer with no story about the mechanism. Symbolic regression asks for a different kind of answer: a small readable equation. Physics-informed symbolic regression narrows the search to terms that make sense for the system, such as accumulation, convection, diffusion, reaction, resistance, wear, or damping. The value is not that the formula is automatically true. The value is that people can inspect it, test its signs and terms, insert it into a known model, and improve it as more evidence arrives.</p>
+          <div class="lesson-claim-grid">
+            <div><strong>Everyday problem</strong><span>The important condition is hidden, and the available sensors only show indirect clues.</span></div>
+            <div><strong>Shared promise</strong><span>Symbolic regression can turn scarce engineering data into a small equation that humans can read and challenge.</span></div>
+            <div><strong>Hidden danger</strong><span>A readable formula can still be wrong if the candidate terms, time history, sensor features, or known physics are insufficient.</span></div>
+            <div><strong>First rejection test</strong><span>Insert the discovered equation back into the physical model and check whether it predicts new histories, faults, or design cases.</span></div>
+          </div>
+        </section>
+
+        <div class="symbolic-core-map" aria-label="Symbolic regression turns measurements into readable equations">
+          <div>hidden physical state</div>
+          <div>sparse noisy data</div>
+          <div>search over formulas</div>
+          <div>readable equation</div>
+        </div>
+
+        <h2>The Point Is A Glass Box, Not Just A Predictor</h2>
+        <p>The speaker starts with the idea of analogous systems. Mechanical, electrical, hydraulic, chemical, and thermal systems can often share similar equation shapes. Something accumulates. Something flows. Something resists motion. Something reacts, dissipates, or stores energy.</p>
+
+        <p>That is why an equation matters. If the learned model says "this term is diffusion, this term is convection, this term is reaction," then an engineer can argue about the result. A neural network may predict well, but a readable equation gives people a way to inspect the what, the how, and the why.</p>
+
+        <div class="glass-box-map" aria-label="A glass-box model exposes the physical parts of the answer">
+          <div>accumulation</div>
+          <div>flow or diffusion</div>
+          <div>reaction or wear</div>
+          <div>explainable model</div>
+        </div>
+
+        <h2>The Machining Example Explains The Need</h2>
+        <p>In precision machining, a worn tool can create sparks, smoke, noise, and bad parts. But the actual tool wear may only be known after removing the tool and measuring it under a microscope. That is too late for real-time control or maintenance.</p>
+
+        <p>The useful signals may be indirect: force, friction, power, audio, vibration, and other sensor streams. Some of those signals have physics we already understand. Some contain patterns that are hard to write down by hand. The practical question becomes: can we combine known physics with data-rich signals to infer the hidden condition of the system?</p>
+
+        <div class="machining-map" aria-label="Tool wear is hidden but leaves traces in force, power, audio, and vibration">
+          <div>tool wears</div>
+          <div>force and power shift</div>
+          <div>audio and vibration shift</div>
+          <div>digital twin updates</div>
+        </div>
+
+        <h2>Physics-Informed Learning Means Biasing The Search</h2>
+        <p>The talk defines physics-informed machine learning broadly. Sometimes we inject physics into a machine-learning model. Sometimes we inject machine learning into a physics-based model. Either way, we use what we already know so the model does not have to learn everything from scratch.</p>
+
+        <p>For a plug flow reactor, an engineer expects accumulation, diffusion, convection, and reaction. If data come from a chemical reactor, we do not need to search every possible formula in the universe. We can search formulas built from the kinds of terms that make sense for that system. This is not cheating. It is using domain knowledge to make the search smaller and more meaningful.</p>
+
+        <div class="physics-bias-map" aria-label="Known physics narrows the symbolic-regression search">
+          <div>know the system type</div>
+          <div>choose possible terms</div>
+          <div>search combinations</div>
+          <div>less data needed</div>
+        </div>
+
+        <h2>SINDy Needs A Library Of Guesses</h2>
+        <p>The talk reviews sparse regression methods such as SINDy. The basic idea is to build a library of possible terms, such as variables, powers, derivatives, products, diffusion terms, and convection terms. Then choose only the few terms needed to explain the data.</p>
+
+        <p>This works well when the true terms are already in the library. The weakness is also clear. If the important functional form is not listed, sparse regression cannot select it. It can only choose from the menu it was given.</p>
+
+        <div class="sindy-map" aria-label="Sparse regression chooses from a library of candidate terms">
+          <div>candidate library</div>
+          <div>sparse selection</div>
+          <div>right term included</div>
+          <div>fast readable result</div>
+        </div>
+
+        <h2>Symbolic Regression Searches The Formula Shape</h2>
+        <p>Symbolic regression is more open-ended. It starts with variables and simple operations, such as addition, subtraction, multiplication, powers, sine, cosine, or exponentials, depending on what the user allows. The algorithm builds expression trees and evolves them through mutation and crossover.</p>
+
+        <p>In plain words, it tries many little formulas, keeps the ones that fit better without becoming too complicated, mixes parts of good formulas, and keeps searching. The output is still a formula, not a hidden vector of neural-network weights.</p>
+
+        <div class="formula-search-map" aria-label="Symbolic regression evolves expression trees into readable formulas">
+          <div>variables</div>
+          <div>allowed operations</div>
+          <div>mutate and combine</div>
+          <div>formula tree</div>
+        </div>
+
+        <h2>DiscoPDE Tests Equation Discovery On Reactors</h2>
+        <p>The speaker's DiscoPDE framework is first shown on a plug flow reactor. The ground-truth equation has accumulation, diffusion, convection, and a reaction term. The setup is deliberately hard in an engineering way: the system has spatial behavior inside the reactor, but the measurement may only be the outlet concentration over time.</p>
+
+        <p>For each candidate formula, the method assigns parameters, integrates the reactor model, compares the predicted outlet measurement to the observed data, and scores the formula with a penalty for overfitting. Evolution then creates new candidate formulas. The loop repeats until a good readable equation is found.</p>
+
+        <div class="discopde-loop-map" aria-label="DiscoPDE evolves candidate equations and checks them through integration">
+          <div>candidate equation</div>
+          <div>estimate parameters</div>
+          <div>integrate model</div>
+          <div>score against data</div>
+        </div>
+
+        <h2>The Reactor Tests Show Both Power And Cost</h2>
+        <p>For the simple plug flow reactor, the method can recover the right equation. The speaker then makes the test less trivial: suppose we know the system is a reactor, but we do not know whether it is a plug flow reactor or a stirred tank reactor, and we do not know the reaction order. The method recovers the plug flow form in most trials and the stirred tank form in many trials.</p>
+
+        <p>The cost is not hidden. The speaker says discovering one differential equation can take about twenty minutes in those tests. That is the main tradeoff. Symbolic regression can be more creative and work with fewer sensors, but integrating every candidate equation over space and time can be slow.</p>
+
+        <div class="reactor-tradeoff-map" aria-label="Equation discovery can work from scarce reactor data but costs time">
+          <div>few sensors</div>
+          <div>correct reactor form</div>
+          <div>readable physics</div>
+          <div>expensive search</div>
+        </div>
+
+        <h2>Multiple Equations Can Be Evolved Together</h2>
+        <p>Real systems often have more than one balance law. The talk shows coupled mass and energy balances in a reactor. One equation describes concentration. Another describes temperature. The reaction term links both.</p>
+
+        <p>The symbolic search is split into pieces: expressions that depend on concentration, expressions that depend on temperature, and expressions that depend on both. This uses chemical knowledge without fully prescribing the answer. The method can evolve coupled equations in parallel and recover the governing structure in the demonstration.</p>
+
+        <div class="coupled-equation-map" aria-label="Mass and energy equations can be searched together with shared reaction structure">
+          <div>mass balance</div>
+          <div>energy balance</div>
+          <div>shared reaction term</div>
+          <div>coupled model</div>
+        </div>
+
+        <h2>No Discovery Method Wins Everywhere</h2>
+        <p>The talk compares sparse regression, weak SINDy, genetic programming with solvers, and PINN-style symbolic approaches. Weak SINDy is fast. DeepMoD and PINN-style approaches use neural-network surrogates and automatic differentiation. DiscoPDE is robust to scarce sensor data but slower.</p>
+
+        <p>The honest message is that there is no perfect method. If you know the candidate terms and have enough clean data, sparse methods can be excellent. If you need a more creative formula search, symbolic regression helps. If integration is too expensive, automatic differentiation becomes attractive. If the data are noisy, derivative estimates can become fragile.</p>
+
+        <div class="method-choice-map" aria-label="Different equation-discovery methods trade speed, noise robustness, scarcity, and creativity">
+          <div>speed</div>
+          <div>noise robustness</div>
+          <div>scarce data</div>
+          <div>creative formulas</div>
+        </div>
+
+        <h2>Automatic Differentiation Avoids Repeated Integration</h2>
+        <p>The speaker then borrows an idea from physics-informed neural networks. Instead of integrating every candidate equation, learn or propose a state function and use automatic differentiation to compute derivatives. That can make the fitness check much cheaper.</p>
+
+        <p>This is the same reason PINNs became useful for inverse problems. If the equation is partly known, the model can fit the data and penalize violations of the equation at the same time. Symbolic regression can use the same principle but with smaller readable formulas rather than large neural networks.</p>
+
+        <div class="autodiff-map" aria-label="Automatic differentiation checks candidate formulas without solving every full trajectory">
+          <div>candidate state formula</div>
+          <div>differentiate automatically</div>
+          <div>check PDE residual</div>
+          <div>avoid full integration</div>
+        </div>
+
+        <h2>Known Physics And Unknown Physics Can Share The Page</h2>
+        <p>One Q&A question asks whether it is circular to use physics to discover physics. The answer is useful. Sometimes we know nothing about the right-hand side of the equation. Sometimes we know part of the PDE and only need to discover one missing function. Sometimes we know a large accurate system model and only one fault-progression term is unknown.</p>
+
+        <p>That is not one problem. It is a spectrum. The modeler should say honestly what is known, what is assumed, and what is being discovered. Symbolic regression is most helpful when there is a gap that needs a readable formula.</p>
+
+        <div class="known-unknown-map" aria-label="Symbolic regression can discover all physics, missing terms, or fault functions depending on what is known">
+          <div>known physics</div>
+          <div>unknown term</div>
+          <div>data constrains it</div>
+          <div>readable missing piece</div>
+        </div>
+
+        <h2>The Heat-Exchanger Example Is A Fault Story</h2>
+        <p>The aircraft heat-exchanger example makes the method concrete. The heat exchanger is part of the system that conditions pressurized cabin air. Fouling adds thermal resistance over time. If we can learn the function that describes that fouling growth, we can predict remaining useful life.</p>
+
+        <p>The system model is large: after discretization it has many equations. The unknown is small: one algebraic function of time for fouling resistance. The method uses symbolic regression twice. First, information-theory ideas produce an inferential or soft sensor that carries information about the fault. Second, symbolic regression searches for the fault-growth equation that best explains the sensor history when inserted back into the full system model.</p>
+
+        <div class="fault-prognosis-map" aria-label="Heat-exchanger fouling uses a large known model and a small discovered fault function">
+          <div>large heat-exchanger model</div>
+          <div>soft fault sensor</div>
+          <div>discover fouling law</div>
+          <div>remaining useful life</div>
+        </div>
+
+        <h2>More Time History Makes The Fault Law Clearer</h2>
+        <p>Early in the heat-exchanger experiment, there is not enough history to know the final fouling curve. The remaining useful life estimate can be badly wrong. As more data arrive, the learned fault-growth function improves and the remaining-life prediction moves toward the true value.</p>
+
+        <p>This is another first-principles lesson. Some truths cannot be learned at the beginning because the evidence has not happened yet. A method may need an expanding time window before it can distinguish a harmless early trend from a serious long-term fault.</p>
+
+        <div class="history-window-map" aria-label="Fault prediction improves as more time history becomes available">
+          <div>short history</div>
+          <div>uncertain fault curve</div>
+          <div>longer history</div>
+          <div>better remaining life</div>
+        </div>
+
+        <h2>Audio And Frequency Features May Still Be Useful</h2>
+        <p>In Q&A, the speaker notes that some useful data streams are not directly physical in an obvious way. Audio frequency features or wavelet features from a machine may not map cleanly to a familiar force or temperature term. Still, symbolic regression can sometimes select readable combinations that expose a pattern humans can inspect.</p>
+
+        <p>This is a softer kind of interpretability. The equation may not be the true physical law, but it can still be a readable diagnostic rule. That is useful when the goal is fault detection, sensor fusion, or maintenance rather than discovering a textbook PDE.</p>
+
+        <div class="sensor-feature-map" aria-label="Symbolic regression can make readable diagnostic rules from indirect sensor features">
+          <div>audio or vibration</div>
+          <div>frequency features</div>
+          <div>selected expression</div>
+          <div>readable diagnostic clue</div>
+        </div>
+
+        <h2>How This Connects To Design And Topology</h2>
+        <p>Design and topology work often creates systems where the governing behavior changes with shape. A new channel layout changes convection. A porous microstructure changes diffusion. A thermal design changes heat transfer. A structural layout changes stiffness, damping, and failure paths. If a surrogate only predicts output without exposing the mechanism, the optimizer can exploit it in ways that do not survive real testing.</p>
+
+        <p>Symbolic regression gives a possible middle path. Use simulations or experiments to discover a small equation that explains how a design variable affects the response. If the equation is readable, the designer can ask whether it makes physical sense. If it has a wrong term, a missing term, or a coefficient with the wrong sign, the mistake is easier to see than in a black-box surrogate.</p>
+
+        <p>For topology, the most useful version is often not "discover all physics from nothing." It is "we know most of the physics, but this reduced coordinate, closure term, wear law, heat-transfer correction, or shape-dependent coefficient is missing." That is exactly the known-unknown pattern in the talk.</p>
+
+        <div class="symbolic-design-map" aria-label="Symbolic regression can expose missing design-dependent terms in topology and engineering models">
+          <div>new topology</div>
+          <div>response changes</div>
+          <div>discover missing term</div>
+          <div>inspect before optimizing</div>
+        </div>
+
+        <h2>The Chapter In One Chain</h2>
+        <p>First, many engineering decisions depend on hidden states that are not directly measured. Second, black-box prediction may not explain the hidden mechanism. Third, symbolic regression searches for a readable formula from data. Fourth, physics-informed learning narrows that search by using what engineers already know about accumulation, flow, diffusion, reaction, wear, or resistance. Fifth, SINDy is fast when the right candidate terms are already in the library. Sixth, symbolic regression is more creative because it searches the formula shape. Seventh, DiscoPDE evolves candidate reactor equations, estimates parameters, integrates them, and scores them against measured data. Eighth, this can recover reactor equations from scarce measurements, but the integration step is expensive. Ninth, coupled mass and energy equations can be evolved together when shared structure is known. Tenth, no equation-discovery method dominates across speed, noise, scarcity, and creativity. Eleventh, automatic differentiation can reduce cost by checking derivatives without repeatedly solving every full model. Twelfth, partial knowledge is not a flaw; sometimes the useful task is to discover only the missing function. Thirteenth, the heat-exchanger example uses a large known model plus a discovered fouling law to predict remaining useful life. Fourteenth, early fault predictions can be weak until enough history arrives. Fifteenth, indirect sensors such as audio or vibration can still support readable diagnostic formulas. Sixteenth, design and topology can use symbolic regression to expose missing shape-dependent terms before optimization trusts a surrogate.</p>
+
+        <div class="note">
+          <p>The chapter's core idea: do not ask data only for a number. When decisions need understanding, ask data for a small equation that can be checked, argued with, and improved.</p>
+        </div>
+
+        <section class="lesson-review" aria-label="End of chapter understanding check for physics-informed symbolic regression">
+          <h2>How To Test Whether You Understood This Chapter</h2>
+          <div class="lesson-review-grid">
+            <div><strong>Name the hidden thing</strong><span>For machining, reactors, or heat exchangers, say what state or law is hidden and what indirect sensor signal reveals it.</span></div>
+            <div><strong>Separate library from search</strong><span>Explain why SINDy needs the right candidate terms, while symbolic regression can search more formula shapes at higher cost.</span></div>
+            <div><strong>Use the fault story</strong><span>Describe why remaining useful life improves only after enough time history reveals the fouling-growth law.</span></div>
+            <div><strong>Connect to topology</strong><span>Before optimizing a new shape, state which missing shape-dependent term the readable equation must explain.</span></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

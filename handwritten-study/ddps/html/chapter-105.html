@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chapter 105 - Compress The Flow But Keep The Doubt Visible</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="sidebar">
+        <h1>DDPS Study</h1>
+        <a href="index.html">Start</a>
+        <a href="review-path.html">Review Path</a>
+        <a href="plain-words.html">Plain Words</a>
+        <a href="method-map.html">Method Map</a>
+        <a href="self-check.html">Self Check</a>
+        <a href="capstone.html">Capstone</a>
+        <a href="theme-index.html">Theme Index</a>
+        <a href="domain-map.html">Domain Map</a>
+        <a href="paper-reader.html">Paper Reader</a>
+        <a href="common-mistakes.html">Common Mistakes</a>
+        <a href="study-plan.html">Study Plan</a>
+        <a href="math-map.html">Math Map</a>
+        <a href="prerequisite-map.html">Prerequisite Map</a>
+        <a href="cheat-sheet.html">Cheat Sheet</a>
+        <a href="chapter-98.html">Chapter 98</a>
+        <a href="chapter-99.html">Chapter 99</a>
+        <a href="chapter-100.html">Chapter 100</a>
+        <a href="chapter-101.html">Chapter 101</a>
+        <a href="chapter-102.html">Chapter 102</a>
+        <a href="chapter-103.html">Chapter 103</a>
+        <a href="chapter-104.html">Chapter 104</a>
+        <a href="chapter-105.html">Chapter 105</a>
+        <a href="chapter-106.html">Chapter 106</a>
+        <a href="chapter-107.html">Chapter 107</a>
+        <a href="chapter-108.html">Chapter 108</a>
+        <a href="chapter-109.html">Chapter 109</a>
+        <a href="chapter-110.html">Chapter 110</a>
+        <a href="chapter-111.html">Chapter 111</a>
+        <a href="chapter-112.html">Chapter 112</a>
+        <a href="chapter-113.html">Chapter 113</a>
+        <a href="chapter-114.html">Chapter 114</a>
+        <a href="chapter-115.html">Chapter 115</a>
+        <a href="chapter-116.html">Chapter 116</a>
+        <a href="chapter-117.html">Chapter 117</a>
+        <a href="chapter-118.html">Chapter 118</a>
+        <a href="chapter-119.html">Chapter 119</a>
+        <a href="chapter-120.html">Chapter 120</a>
+        <a href="chapter-121.html">Chapter 121</a>
+        <a href="chapter-122.html">Chapter 122</a>
+        <a href="chapter-123.html">Chapter 123</a>
+        <a href="chapter-124.html">Chapter 124</a>
+        <a href="chapter-125.html">Chapter 125</a>
+        <a href="chapter-126.html">Chapter 126</a>
+        <a href="chapter-127.html">Chapter 127</a>
+        <a href="chapter-128.html">Chapter 128</a>
+        <a href="chapter-129.html">Chapter 129</a>
+        <a href="chapter-130.html">Chapter 130</a>
+        <a href="chapter-131.html">Chapter 131</a>
+        <a href="chapter-132.html">Chapter 132</a>
+        <a href="chapter-133.html">Chapter 133</a>
+        <a href="chapter-134.html">Chapter 134</a>
+        <a href="chapter-135.html">Chapter 135</a>
+        <a href="chapter-136.html">Chapter 136</a>
+        <a href="chapter-137.html">Chapter 137</a>
+        <a href="from-zero.html">From Zero</a>
+        <a href="pinn-from-zero.html">PINNs From Zero</a>
+        <a href="rom-from-zero.html">ROMs From Zero</a>
+        <a href="manifold-from-zero.html">Manifolds From Zero</a>
+        <a href="synthesis.html">Synthesis</a>
+        <a href="big-picture.html">Big Picture</a>
+        <a href="examples.html">Examples</a>
+        <a href="bridge.html">AISE Bridge</a>
+        <a href="audit.html">Transcript Audit</a>
+      </nav>
+      <main class="content">
+        <p class="eyebrow">Narrative chapter</p>
+        <h1>Compress The Flow But Keep The Doubt Visible</h1>
+
+        <p>This chapter uses video 108, Gianluca Iaccarino's DDPS talk on autoencoders for aerodynamic predictions. The talk begins with a familiar idea: compression. A ZIP file compresses information without losing it. SVD compresses a matrix or image by keeping only its strongest linear patterns. An autoencoder is another compression tool, but it uses nonlinear neural networks, so it can compress flow fields in ways a linear method may not.</p>
+
+        <p>The first-principles question is not only "can we predict a new aerodynamic field quickly?" The deeper question is "how do we know when the fast prediction should be trusted?" A neural flow prediction can look visually plausible even when it is wrong. The lecture is really about building confidence into the compression process.</p>
+
+        <section class="lesson-claim-chain" aria-label="Plain first-principles reading guide for trustworthy aerodynamic autoencoders">
+          <h2>Read This Chapter As One Claim</h2>
+          <p>Start with the design need. An airfoil or aircraft flow field is expensive to simulate, but a design loop may need many cases. An autoencoder tries to compress each full flow field into a few hidden numbers and decode those numbers back into a field. That can be powerful because the hidden numbers may organize real physics: angle of attack, thickness, stall, separation, and unsteady history. The danger is that a decoded flow can look smooth and believable even when it is outside the training support. This chapter says the compressed model must show its doubt. If one latent variable is overloaded, the failure should be visible. If data is missing, an ensemble should widen the confidence band. If cheap inviscid data misses viscous separation, multifidelity learning should expose that missing physics rather than hiding it.</p>
+          <div class="lesson-claim-grid">
+            <div><strong>Everyday problem</strong><span>You need many fast aerodynamic fields, but a plausible generated field can be wrong outside the data it learned from.</span></div>
+            <div><strong>Shared promise</strong><span>Nonlinear autoencoders can compress flow fields into latent coordinates that reveal regimes such as low angle, stall, and thickness effects.</span></div>
+            <div><strong>Hidden danger</strong><span>Extrapolation, missing data, overloaded latent variables, and low-fidelity physics can make the surrogate overconfident.</span></div>
+            <div><strong>First rejection test</strong><span>Check ensemble spread, latent-space failure, data coverage, and whether high-fidelity samples cover separation or viscosity effects.</span></div>
+          </div>
+        </section>
+
+        <div class="aero-core-map" aria-label="Autoencoders compress flow fields but must report confidence">
+          <div>expensive CFD flow</div>
+          <div>compressed latent space</div>
+          <div>fast reconstructed field</div>
+          <div>confidence needed</div>
+        </div>
+
+        <h2>High-Fidelity Aerodynamics Is Accurate But Limited</h2>
+        <p>Modern simulations can predict lift and flow behavior around aircraft with high accuracy, using large-scale computing. But design needs many cases: different shapes, angles of attack, motions, and operating conditions. Even if one simulation is feasible, thousands of simulations are not easy.</p>
+
+        <p>That is why the speaker studies autoencoders. The hope is to build a database of high-fidelity aerodynamic calculations, compress the flow fields, and use the compressed model to generate approximate solutions for cases that were not directly simulated.</p>
+
+        <div class="cfd-limit-map" aria-label="Accurate CFD is costly when design needs many aerodynamic cases">
+          <div>full aircraft or airfoil</div>
+          <div>large simulation</div>
+          <div>many design queries</div>
+          <div>need fast surrogate</div>
+        </div>
+
+        <h2>Steady And Unsteady Airfoils Show Different Difficulty</h2>
+        <p>The talk uses airfoil behavior to ground the method. In a steady setting, lift increases almost linearly with angle of attack at low angles. Then stall appears: the flow separates and lift stops following the simple line.</p>
+
+        <p>In an unsteady setting, the airfoil moves periodically, changing its angle of attack over time. The lift curve can loop because the flow depends not only on the current angle but also on whether the airfoil is moving nose-up or nose-down. That history effect makes the compressed representation harder.</p>
+
+        <div class="stall-motion-map" aria-label="Airfoil lift changes from linear behavior to stall and unsteady loops">
+          <div>low angle</div>
+          <div>linear lift</div>
+          <div>stall and separation</div>
+          <div>unsteady loop</div>
+        </div>
+
+        <h2>An Autoencoder Learns A Bottleneck</h2>
+        <p>An autoencoder is trained to reproduce its input. The encoder squeezes the input flow field into a small latent vector. The decoder expands that latent vector back into a reconstructed flow field.</p>
+
+        <p>The bottleneck is the point. If the latent vector has only two or three numbers, the network must learn the most important hidden coordinates of the data. For aerodynamic fields, those hidden coordinates may line up with physical changes such as angle of attack, airfoil thickness, stall, and separation.</p>
+
+        <div class="autoencoder-bottleneck-map" aria-label="An autoencoder compresses a flow field through a small latent bottleneck">
+          <div>input flow field</div>
+          <div>encoder</div>
+          <div>small latent vector</div>
+          <div>decoder reconstruction</div>
+        </div>
+
+        <h2>The First Test Tries To Break The Model</h2>
+        <p>The lecture describes a simple geometry experiment. Train on single bodies and then ask the autoencoder to predict flow around multiple bodies, a geometry outside the training scope. The prediction looks reasonable at first glance. It even seems to show interactions between objects.</p>
+
+        <p>But when compared with the true solution, discrepancies appear. That is the dangerous part. A wrong neural prediction may still look physically believable. This motivates the central confidence question: if we do not want to run the true CFD every time, how can the model itself warn us when it is outside its comfort zone?</p>
+
+        <div class="plausible-wrong-map" aria-label="A prediction outside the training scope can look reasonable while still being wrong">
+          <div>trained on one body</div>
+          <div>asked for many bodies</div>
+          <div>prediction looks plausible</div>
+          <div>true error hidden</div>
+        </div>
+
+        <h2>The Workflow Has Four Steps</h2>
+        <p>The proposed workflow is careful. First, build the database of airfoil geometries and flow solutions. Second, train the autoencoder. Third, condition the latent space by mapping known inputs such as thickness and angle of attack into latent variables. Fourth, use the decoder to generate new reconstructed solutions.</p>
+
+        <p>Latent-space conditioning matters because the autoencoder only sees flow fields during training. It does not automatically know which angle of attack or thickness produced each field. Conditioning builds the bridge from physical input variables to latent coordinates.</p>
+
+        <div class="aero-workflow-map" aria-label="The workflow builds data, trains the autoencoder, conditions latent variables, and generates new flow fields">
+          <div>build flow database</div>
+          <div>train autoencoder</div>
+          <div>map inputs to latent space</div>
+          <div>decode new solution</div>
+        </div>
+
+        <h2>The Latent Space Starts To Reveal Physics</h2>
+        <p>When the latent variables are plotted, the low-angle linear regime appears ordered. At low angle of attack, airfoil thickness has little effect on lift, so the compressed representation can stay simple. Near stall, thickness matters more and the latent space becomes more structured.</p>
+
+        <p>This is important because the autoencoder was not directly given lift curves as the training target. It was only asked to compress flow fields. The fact that the latent space separates regimes suggests that the compression has discovered physically meaningful organization.</p>
+
+        <div class="latent-physics-map" aria-label="Latent variables organize low-angle, stall, and thickness effects">
+          <div>flow fields only</div>
+          <div>latent coordinates</div>
+          <div>linear and stall regimes</div>
+          <div>physics appears</div>
+        </div>
+
+        <h2>One Latent Variable Fails In An Interpretable Way</h2>
+        <p>The speaker deliberately compresses too much. If the database depends on both thickness and angle of attack, one latent variable should not be enough everywhere. At low angles, it can work because thickness barely matters. At higher angles, different thicknesses produce different behavior, and one coordinate cannot represent all cases.</p>
+
+        <p>The failure is visible: multiple latent values are needed for the same angle of attack. That is a good kind of failure. It tells us the model has reached the limit of what that bottleneck can carry.</p>
+
+        <div class="one-latent-failure-map" aria-label="A one-dimensional latent space works only until thickness becomes important">
+          <div>one latent variable</div>
+          <div>works at low angle</div>
+          <div>stall needs thickness</div>
+          <div>bottleneck fails visibly</div>
+        </div>
+
+        <h2>Unsteady Motion Needs Short-Time Clues</h2>
+        <p>For oscillating airfoils, the same angle of attack can have different flow depending on whether the airfoil is moving up or down. In Q&A, the speaker explains that their batches include short bursts of several cases. This gives the model a small amount of time-change information, almost like a local rate of change.</p>
+
+        <p>The talk does not claim a complete latent-space dynamics model. It gives enough short-time context for the shown cases. If the oscillation frequency becomes another varying input, more information would be needed.</p>
+
+        <div class="unsteady-burst-map" aria-label="Short batches distinguish nose-up and nose-down states at the same angle">
+          <div>same angle</div>
+          <div>nose-up path</div>
+          <div>nose-down path</div>
+          <div>short-time batch helps</div>
+        </div>
+
+        <h2>Sequential Training Keeps Lower-Dimensional Meaning</h2>
+        <p>The training process grows the latent dimension in sequence. Start with a one-dimensional latent space, then two, then three, and so on. This helps find the smallest latent size that gives good reconstruction.</p>
+
+        <p>The key detail is that lower-dimensional information is not discarded. The lower-order latent space conditions the higher-order latent space. This is meant to keep the representation organized as the bottleneck grows, somewhat like how SVD adds ordered directions, even though the autoencoder is nonlinear.</p>
+
+        <div class="sequential-latent-map" aria-label="Sequential training grows latent dimension while preserving lower-dimensional structure">
+          <div>latent size one</div>
+          <div>condition size two</div>
+          <div>condition size three</div>
+          <div>organized latent growth</div>
+        </div>
+
+        <h2>Nonlinear Compression Beats Linear SVD Here</h2>
+        <p>The talk compares SVD and autoencoders. SVD is a linear compression method. It can work, but the latent representation may wrap around itself and become hard to interpolate. The nonlinear autoencoder can organize the airfoil family more cleanly with fewer latent variables.</p>
+
+        <p>This is the practical reason for using an autoencoder instead of only SVD. The aerodynamic data may not be low-rank in a linear sense, but it may still lie near a low-dimensional nonlinear surface.</p>
+
+        <div class="svd-autoencoder-map" aria-label="Autoencoders can compress nonlinear aerodynamic families with fewer latent variables than SVD">
+          <div>SVD is linear</div>
+          <div>latent space tangles</div>
+          <div>autoencoder is nonlinear</div>
+          <div>cleaner compression</div>
+        </div>
+
+        <h2>Confidence Comes From An Ensemble</h2>
+        <p>The uncertainty section is the most important part for trusting the method. In physical simulation, uncertainty can come from uncertain inputs or modeling assumptions. In machine learning, uncertainty also comes from the data itself and the architecture chosen for the model.</p>
+
+        <p>The speaker trains an ensemble of deterministic autoencoders with different architectures and related choices. Their spread gives a confidence interval for predictions. Large spread means low confidence. Small spread means the model family agrees more strongly.</p>
+
+        <div class="ensemble-confidence-map" aria-label="An ensemble of autoencoders estimates confidence through prediction spread">
+          <div>many autoencoders</div>
+          <div>different architectures</div>
+          <div>prediction spread</div>
+          <div>confidence interval</div>
+        </div>
+
+        <h2>Missing Data Shows Up As Low Confidence</h2>
+        <p>The dataset is intentionally small, around a few dozen cases, because high-fidelity aerodynamic data are expensive. The study leaves some regions under-sampled or outside the training range. The ensemble confidence interval grows in those regions.</p>
+
+        <p>That is the behavior we want. If the angle of attack is beyond the trained range, or if there is a gap in the data, the model should not speak with the same confidence as it does inside a well-covered region. The uncertainty estimate becomes a guide for where the database needs more simulations.</p>
+
+        <div class="data-gap-map" aria-label="Uncertainty grows in extrapolation and intentionally missing data regions">
+          <div>covered data region</div>
+          <div>missing angle gap</div>
+          <div>extrapolation region</div>
+          <div>wider uncertainty</div>
+        </div>
+
+        <h2>Deterministic Autoencoders Help Separate Uncertainty Sources</h2>
+        <p>The talk deliberately uses deterministic autoencoders rather than making the autoencoder itself variational. The reason is separation. The ensemble can estimate uncertainty in outputs and latent variables without assuming a particular Gaussian or mixture model inside one autoencoder.</p>
+
+        <p>In this clean simulation-data setting, variational autoencoders were not necessary. In Q&A, the speaker notes that noisy experimental data could make variational pieces more useful. For the presented goal, clean deterministic compression plus ensemble statistics gives clearer source separation.</p>
+
+        <div class="deterministic-uq-map" aria-label="Deterministic ensembles separate latent, architecture, data, and input uncertainty">
+          <div>clean simulation data</div>
+          <div>deterministic autoencoders</div>
+          <div>latent statistics</div>
+          <div>separate uncertainty sources</div>
+        </div>
+
+        <h2>Multifidelity Training Reuses Cheap Physics</h2>
+        <p>The final work-in-progress piece is multifidelity. Train first on cheaper low-fidelity data, such as inviscid solutions. Then add high-fidelity viscous data and condition the latent space so the low-fidelity information remains represented while new latent variables capture the added physics.</p>
+
+        <p>At low angles of attack, where inviscid and viscous descriptions may align better, the latent spaces can stay consistent. Added variables can then represent viscosity effects. But the Q&A warning is important: if the low-fidelity model misses the key physics, its latent information may not help.</p>
+
+        <div class="multifidelity-aero-map" aria-label="Multifidelity autoencoders condition high-fidelity latent variables on low-fidelity structure">
+          <div>cheap inviscid data</div>
+          <div>train first latent space</div>
+          <div>add viscous data</div>
+          <div>separate fidelity effects</div>
+        </div>
+
+        <h2>How This Connects To Design And Topology</h2>
+        <p>Design and topology optimization often needs fast evaluation of flow, pressure, drag, lift, heat, or stress fields for many candidate shapes. Autoencoders offer a way to compress full fields, not only scalar outputs. That matters because a designer may later need pressure distribution, separation location, wake structure, or local loads, not only a lift coefficient.</p>
+
+        <p>The lecture's warning is equally important. A generated field can look smooth and believable while still being wrong outside the training support. A topology optimizer will exploit that weakness. So a useful autoencoder surrogate should carry a confidence signal, reveal when the latent space is overloaded, and point toward where new high-fidelity samples are needed.</p>
+
+        <p>For topology, multifidelity is especially promising. Cheap coarse physics can cover many shapes. Expensive high-fidelity simulations can be added where the cheap model misses viscosity, separation, shock, turbulence statistics, or boundary-layer behavior. The latent space should make those missing effects visible instead of hiding them.</p>
+
+        <div class="aero-design-bridge" aria-label="Topology design can use autoencoder fields only when confidence and fidelity limits are visible">
+          <div>many candidate shapes</div>
+          <div>compressed flow fields</div>
+          <div>confidence and fidelity checks</div>
+          <div>safer design search</div>
+        </div>
+
+        <h2>The Chapter In One Chain</h2>
+        <p>First, high-fidelity aerodynamic simulations are accurate but too expensive for large design searches. Second, autoencoders compress flow fields through a nonlinear bottleneck. Third, the decoder can reconstruct or generate approximate new flow fields quickly. Fourth, steady airfoil behavior is simple at low angle of attack and harder near stall. Fifth, unsteady motion creates different states at the same angle depending on motion history. Sixth, a prediction outside the training scope can look plausible while still being wrong. Seventh, latent-space conditioning maps physical inputs such as thickness and angle of attack to compressed coordinates. Eighth, the latent space can reveal physical regimes even when the model only trained on flow fields. Ninth, using too few latent variables can fail in a visible, interpretable way. Tenth, short-time batches help distinguish nose-up and nose-down unsteady states. Eleventh, sequential training grows latent dimension while preserving earlier structure. Twelfth, nonlinear autoencoders can compress these aerodynamic families better than linear SVD. Thirteenth, ensembles of deterministic autoencoders provide confidence intervals. Fourteenth, missing data and extrapolation should create wider uncertainty. Fifteenth, multifidelity training can reuse low-fidelity physics while adding high-fidelity corrections. Sixteenth, design and topology should use these surrogates only when uncertainty, data coverage, and fidelity limits remain visible.</p>
+
+        <div class="note">
+          <p>The chapter's core idea: fast flow generation is not enough. The compressed model must also show where its answer is supported by data and where it is guessing beyond what it has learned.</p>
+        </div>
+
+        <section class="lesson-review" aria-label="End of chapter understanding check for trustworthy aerodynamic autoencoders">
+          <h2>How To Test Whether You Understood This Chapter</h2>
+          <div class="lesson-review-grid">
+            <div><strong>Explain the bottleneck</strong><span>Say how an encoder, latent vector, and decoder turn a full flow field into a fast reconstructed field.</span></div>
+            <div><strong>Use the airfoil physics</strong><span>Explain why low-angle flow, stall, thickness, and nose-up versus nose-down motion need different latent information.</span></div>
+            <div><strong>Read the confidence signal</strong><span>Describe why an ensemble should show wider uncertainty in missing-data or extrapolation regions.</span></div>
+            <div><strong>Connect to topology</strong><span>Before trusting a shape search, state which separation, wake, pressure, viscosity, or boundary-layer feature needs high-fidelity support.</span></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

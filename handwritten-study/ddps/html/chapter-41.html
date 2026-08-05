@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chapter 41 - Learn The Small Solver Instead Of Calling It Every Time</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="sidebar">
+        <h1>DDPS Study</h1>
+        <a href="index.html">Start</a>
+        <a href="review-path.html">Review Path</a>
+        <a href="plain-words.html">Plain Words</a>
+        <a href="method-map.html">Method Map</a>
+        <a href="self-check.html">Self Check</a>
+        <a href="capstone.html">Capstone</a>
+        <a href="theme-index.html">Theme Index</a>
+        <a href="domain-map.html">Domain Map</a>
+        <a href="paper-reader.html">Paper Reader</a>
+        <a href="common-mistakes.html">Common Mistakes</a>
+        <a href="study-plan.html">Study Plan</a>
+        <a href="math-map.html">Math Map</a>
+        <a href="prerequisite-map.html">Prerequisite Map</a>
+        <a href="cheat-sheet.html">Cheat Sheet</a>
+        <a href="chapter-01.html">Chapter 1</a>
+        <a href="chapter-02.html">Chapter 2</a>
+        <a href="chapter-03.html">Chapter 3</a>
+        <a href="chapter-04.html">Chapter 4</a>
+        <a href="chapter-05.html">Chapter 5</a>
+        <a href="chapter-06.html">Chapter 6</a>
+        <a href="chapter-07.html">Chapter 7</a>
+        <a href="chapter-08.html">Chapter 8</a>
+        <a href="chapter-09.html">Chapter 9</a>
+        <a href="chapter-10.html">Chapter 10</a>
+        <a href="chapter-11.html">Chapter 11</a>
+        <a href="chapter-12.html">Chapter 12</a>
+        <a href="chapter-13.html">Chapter 13</a>
+        <a href="chapter-14.html">Chapter 14</a>
+        <a href="chapter-15.html">Chapter 15</a>
+        <a href="chapter-16.html">Chapter 16</a>
+        <a href="chapter-17.html">Chapter 17</a>
+        <a href="chapter-18.html">Chapter 18</a>
+        <a href="chapter-19.html">Chapter 19</a>
+        <a href="chapter-20.html">Chapter 20</a>
+        <a href="chapter-21.html">Chapter 21</a>
+        <a href="chapter-22.html">Chapter 22</a>
+        <a href="chapter-23.html">Chapter 23</a>
+        <a href="chapter-24.html">Chapter 24</a>
+        <a href="chapter-25.html">Chapter 25</a>
+        <a href="chapter-26.html">Chapter 26</a>
+        <a href="chapter-27.html">Chapter 27</a>
+        <a href="chapter-28.html">Chapter 28</a>
+        <a href="chapter-29.html">Chapter 29</a>
+        <a href="chapter-30.html">Chapter 30</a>
+        <a href="chapter-31.html">Chapter 31</a>
+        <a href="chapter-32.html">Chapter 32</a>
+        <a href="chapter-33.html">Chapter 33</a>
+        <a href="chapter-34.html">Chapter 34</a>
+        <a href="chapter-35.html">Chapter 35</a>
+        <a href="chapter-36.html">Chapter 36</a>
+        <a href="chapter-37.html">Chapter 37</a>
+        <a href="chapter-38.html">Chapter 38</a>
+        <a href="chapter-39.html">Chapter 39</a>
+        <a href="chapter-40.html">Chapter 40</a>
+        <a href="chapter-41.html">Chapter 41</a>
+        <a href="chapter-42.html">Chapter 42</a>
+        <a href="chapter-43.html">Chapter 43</a>
+        <a href="chapter-44.html">Chapter 44</a>
+        <a href="chapter-45.html">Chapter 45</a>
+        <a href="chapter-46.html">Chapter 46</a>
+        <a href="chapter-47.html">Chapter 47</a>
+        <a href="chapter-48.html">Chapter 48</a>
+        <a href="chapter-49.html">Chapter 49</a>
+        <a href="chapter-50.html">Chapter 50</a>
+        <a href="chapter-51.html">Chapter 51</a>
+        <a href="chapter-52.html">Chapter 52</a>
+        <a href="chapter-53.html">Chapter 53</a>
+        <a href="chapter-54.html">Chapter 54</a>
+        <a href="chapter-55.html">Chapter 55</a>
+        <a href="chapter-56.html">Chapter 56</a>
+        <a href="chapter-57.html">Chapter 57</a>
+        <a href="chapter-58.html">Chapter 58</a>
+        <a href="chapter-59.html">Chapter 59</a>
+        <a href="chapter-60.html">Chapter 60</a>
+        <a href="chapter-61.html">Chapter 61</a>
+        <a href="chapter-62.html">Chapter 62</a>
+        <a href="chapter-63.html">Chapter 63</a>
+        <a href="chapter-64.html">Chapter 64</a>
+        <a href="chapter-65.html">Chapter 65</a>
+        <a href="chapter-66.html">Chapter 66</a>
+        <a href="chapter-67.html">Chapter 67</a>
+        <a href="chapter-68.html">Chapter 68</a>
+        <a href="chapter-69.html">Chapter 69</a>
+        <a href="chapter-70.html">Chapter 70</a>
+        <a href="chapter-71.html">Chapter 71</a>
+        <a href="chapter-72.html">Chapter 72</a>
+        <a href="chapter-73.html">Chapter 73</a>
+        <a href="chapter-74.html">Chapter 74</a>
+        <a href="chapter-75.html">Chapter 75</a>
+        <a href="chapter-76.html">Chapter 76</a>
+        <a href="chapter-77.html">Chapter 77</a>
+        <a href="chapter-78.html">Chapter 78</a>
+        <a href="chapter-79.html">Chapter 79</a>
+        <a href="chapter-80.html">Chapter 80</a>
+        <a href="chapter-81.html">Chapter 81</a>
+        <a href="chapter-82.html">Chapter 82</a>
+        <a href="chapter-83.html">Chapter 83</a>
+        <a href="chapter-84.html">Chapter 84</a>
+        <a href="chapter-85.html">Chapter 85</a>
+        <a href="chapter-86.html">Chapter 86</a>
+        <a href="chapter-87.html">Chapter 87</a>
+        <a href="chapter-88.html">Chapter 88</a>
+        <a href="chapter-89.html">Chapter 89</a>
+        <a href="chapter-90.html">Chapter 90</a>
+        <a href="chapter-91.html">Chapter 91</a>
+        <a href="chapter-92.html">Chapter 92</a>
+        <a href="chapter-93.html">Chapter 93</a>
+        <a href="chapter-94.html">Chapter 94</a>
+        <a href="chapter-95.html">Chapter 95</a>
+        <a href="chapter-96.html">Chapter 96</a>
+        <a href="chapter-97.html">Chapter 97</a>
+        <a href="chapter-98.html">Chapter 98</a>
+        <a href="chapter-99.html">Chapter 99</a>
+        <a href="chapter-100.html">Chapter 100</a>
+        <a href="chapter-101.html">Chapter 101</a>
+        <a href="chapter-102.html">Chapter 102</a>
+        <a href="chapter-103.html">Chapter 103</a>
+        <a href="chapter-104.html">Chapter 104</a>
+        <a href="chapter-105.html">Chapter 105</a>
+        <a href="chapter-106.html">Chapter 106</a>
+        <a href="chapter-107.html">Chapter 107</a>
+        <a href="chapter-108.html">Chapter 108</a>
+        <a href="chapter-109.html">Chapter 109</a>
+        <a href="chapter-110.html">Chapter 110</a>
+        <a href="chapter-111.html">Chapter 111</a>
+        <a href="chapter-112.html">Chapter 112</a>
+        <a href="chapter-113.html">Chapter 113</a>
+        <a href="chapter-114.html">Chapter 114</a>
+        <a href="chapter-115.html">Chapter 115</a>
+        <a href="chapter-116.html">Chapter 116</a>
+        <a href="chapter-117.html">Chapter 117</a>
+        <a href="chapter-118.html">Chapter 118</a>
+        <a href="chapter-119.html">Chapter 119</a>
+        <a href="chapter-120.html">Chapter 120</a>
+        <a href="chapter-121.html">Chapter 121</a>
+        <a href="chapter-122.html">Chapter 122</a>
+        <a href="chapter-123.html">Chapter 123</a>
+        <a href="chapter-124.html">Chapter 124</a>
+        <a href="chapter-125.html">Chapter 125</a>
+        <a href="chapter-126.html">Chapter 126</a>
+        <a href="chapter-127.html">Chapter 127</a>
+        <a href="chapter-128.html">Chapter 128</a>
+        <a href="chapter-129.html">Chapter 129</a>
+        <a href="chapter-130.html">Chapter 130</a>
+        <a href="chapter-131.html">Chapter 131</a>
+        <a href="chapter-132.html">Chapter 132</a>
+        <a href="chapter-133.html">Chapter 133</a>
+        <a href="chapter-134.html">Chapter 134</a>
+        <a href="chapter-135.html">Chapter 135</a>
+        <a href="chapter-136.html">Chapter 136</a>
+        <a href="chapter-137.html">Chapter 137</a>
+        <a href="from-zero.html">From Zero</a>
+        <a href="pinn-from-zero.html">PINNs From Zero</a>
+        <a href="rom-from-zero.html">ROMs From Zero</a>
+        <a href="manifold-from-zero.html">Manifolds From Zero</a>
+        <a href="synthesis.html">Synthesis</a>
+        <a href="big-picture.html">Big Picture</a>
+        <a href="examples.html">Examples</a>
+        <a href="lesson-001.html">Lesson 001</a>
+        <a href="lesson-002.html">Lesson 002</a>
+        <a href="lesson-003.html">Lesson 003</a>
+        <a href="bridge.html">AISE Bridge</a>
+        <a href="audit.html">Transcript Audit</a>
+      </nav>
+      <main class="content">
+        <p class="eyebrow">Narrative chapter</p>
+        <h1>Learn The Small Solver Instead Of Calling It Every Time</h1>
+
+        <section class="lesson-claim-chain">
+          <h2>Read This Chapter As One Claim</h2>
+          <p>A large engineering model often needs an answer that only a smaller, richer physics model can give. Neural operators are useful here when they learn that small model's response well enough to become a cheap closure law inside the large simulation.</p>
+          <div class="lesson-claim-grid">
+            <div>
+              <strong>Everyday problem</strong>
+              <span>The big structure needs stress or another averaged response, but computing every grain, slip system, defect, or field at every point is too expensive.</span>
+            </div>
+            <div>
+              <strong>Shared promise</strong>
+              <span>Train on many small-scale solves, then replace repeated calls to the small solver with a learned map from loading history to material response.</span>
+            </div>
+            <div>
+              <strong>Hidden danger</strong>
+              <span>The learned map may look accurate on familiar histories while forgetting causality, material memory, resolution changes, or new loading paths.</span>
+            </div>
+            <div>
+              <strong>First rejection test</strong>
+              <span>Reject the closure if it cannot run inside the real code, preserve stress history, pass causality checks, and stay credible under changed geometry or loading.</span>
+            </div>
+          </div>
+        </section>
+
+        <p>This chapter uses video 44, Kaushik Bhattacharya's DDPS talk on multiscale modeling and neural operators. The talk is about a common materials problem: the big structure needs a material law, but the real material law lives inside a small-scale microstructure calculation.</p>
+
+        <p>The first-principles idea is this. A large simulation cannot carry every grain, slip system, electron field, or liquid-crystal domain everywhere. So the large simulation asks a smaller simulation, "if I deform you this way, what stress do you give back?" The small simulation answers. That answer becomes the closure law for the large simulation.</p>
+
+        <div class="small-solver-closure-chain" aria-label="Small-scale solver provides closure for large-scale simulation">
+          <div>large model needs stress</div>
+          <div>small model sees microstructure</div>
+          <div>small model returns response</div>
+          <div>large model can continue</div>
+        </div>
+
+        <h2>Why Multiscale Modeling Exists</h2>
+        <p>Materials have structure at many sizes. Magnesium has grains with different orientations and many slip or twinning systems. Liquid crystal elastomers have rubber elasticity mixed with liquid-crystal ordering. Defects in crystals depend on electronic structure near the core and far-field behavior away from it.</p>
+
+        <p>A single full-resolution calculation from electrons to a whole part is usually impossible. Multiscale modeling deals with this by letting two neighboring scales talk. The large scale supplies a boundary condition or deformation history. The small scale solves its local physics and sends back an averaged response.</p>
+
+        <div class="multiscale-pair-talk" aria-label="Neighboring scales communicate in multiscale modeling">
+          <div>macro deformation</div>
+          <div>micro boundary condition</div>
+          <div>micro physics solve</div>
+          <div>filtered macro stress</div>
+        </div>
+
+        <h2>The Brutal Cost Of Calling The Small Solver</h2>
+        <p>The straightforward method is expensive. At every grid point in the large finite-element model, call a small microstructure solver. Do that again at every time step. This is often called an FE-squared style calculation.</p>
+
+        <p>The waste is painful. The small solve may produce rich fields, but the large model usually only needs a filtered answer such as stress. So we pay for huge fine-scale calculations and then throw most of the information away.</p>
+
+        <div class="fe-square-cost" aria-label="FE-squared calls the small solver too often">
+          <div>many macro grid points</div>
+          <div>micro solve at each point</div>
+          <div>repeat every time step</div>
+          <div>too expensive for design</div>
+        </div>
+
+        <h2>What A Neural Operator Learns</h2>
+        <p>The talk is careful about what is being learned. It is not only fitting a few parameters in a formula someone already wrote down. The goal is to learn the solution operator: the whole map from an input function to an output function.</p>
+
+        <p>For crystal plasticity, the input can be a deformation history. That is a whole curve over time, not one number. The output can be a stress history, also a whole curve. The neural operator learns the map from one history to the other.</p>
+
+        <div class="operator-map-story" aria-label="Neural operators map input functions to output functions">
+          <div>input history</div>
+          <div>function, not one number</div>
+          <div>learn the map</div>
+          <div>output history</div>
+        </div>
+
+        <h2>Why Resolution Independence Matters</h2>
+        <p>Training data may be sampled on one grid, but the later simulation may need another grid. If the learned model only memorizes a particular grid size, it is not really learning the operator. It is learning the discretization.</p>
+
+        <p>Bhattacharya's group uses projection and lifting ideas, including PCA-based representations, to compress functions into useful coordinates and lift them back. The important outcome is that the learned map can behave consistently when tested at different resolutions.</p>
+
+        <div class="resolution-independent-operator" aria-label="A useful neural operator should not be tied to one grid">
+          <div>train on one resolution</div>
+          <div>compress function shape</div>
+          <div>learn in reduced space</div>
+          <div>use at new resolution</div>
+        </div>
+
+        <h2>More Detail Needs More Data</h2>
+        <p>The talk also shows a warning. If the reduced representation keeps too few modes, it may miss detail. If it keeps too many modes, the neural network may not have enough data to learn them well. More expressive representations need more training examples.</p>
+
+        <p>This is a useful design rule. Do not make the learned operator bigger just because a bigger model feels more powerful. Ask whether the training data can actually support the resolution and complexity you are asking it to learn.</p>
+
+        <div class="operator-data-balance" aria-label="Operator complexity must match available data">
+          <div>too few modes</div>
+          <div>miss detail</div>
+          <div>too many modes</div>
+          <div>need much more data</div>
+        </div>
+
+        <h2>Learning Fields Can Beat Learning Only Energy</h2>
+        <p>One example in the talk comes from density-functional calculations. Instead of only learning energy directly, the model learns electronic fields and then uses those fields to compute energy. That gave lower error.</p>
+
+        <p>The lesson is broad. Sometimes the best target is not the final scalar number. Learning a richer physical field can give the model a better internal object, and the desired number can be derived from it. This is close to treating machine learning as a preconditioner: a good fast initial guess for an expensive physics solve.</p>
+
+        <div class="field-before-scalar" aria-label="Learning a richer field can improve derived quantities">
+          <div>learn energy directly</div>
+          <div>acceptable error</div>
+          <div>learn electronic field</div>
+          <div>derive energy better</div>
+        </div>
+
+        <h2>The Crystal Plasticity Case</h2>
+        <p>The main materials example is crystal plasticity. A small unit cell contains grains. Each grain has many slip and twin systems. The input is a deformation-gradient history. The desired output is a stress history.</p>
+
+        <p>The training data is generated by applying many deformation histories, solving the small-scale model, and recording the stress response. The learned neural operator can then serve as a material model inside a larger finite-element calculation.</p>
+
+        <div class="crystal-plasticity-flow" aria-label="Crystal plasticity neural operator maps deformation history to stress history">
+          <div>polycrystal microstructure</div>
+          <div>deformation history</div>
+          <div>small plasticity solve</div>
+          <div>stress history learned</div>
+        </div>
+
+        <h2>Causality Must Be Learned Or Built In</h2>
+        <p>A physical material cannot let future deformation change past stress. If two loading paths are identical until a certain time, their stress responses should also be identical until that time.</p>
+
+        <p>The architecture discussed in the talk did not force causality at the start, so this became a test. The learned operator was checked on paths that share the same early history and split later. The responses stayed together until the input paths split, showing that the data taught the operator the causal behavior.</p>
+
+        <div class="causality-loading-test" aria-label="Material response should not depend on future loading">
+          <div>same early loading</div>
+          <div>later paths split</div>
+          <div>early stress must match</div>
+          <div>causality check passes</div>
+        </div>
+
+        <h2>Using The Learned Model In A Real Code</h2>
+        <p>The group wrote the learned operator as a user material model inside Abaqus. Then it could be used in punch and Taylor impact simulations with different boundary conditions and geometries.</p>
+
+        <p>The cost comparison is the practical punchline. The learned material model was slower than a simple empirical law, but still close enough to be usable. A true concurrent multiscale calculation would be vastly more expensive. The learned operator aims for multiscale accuracy at something closer to traditional constitutive-law cost.</p>
+
+        <div class="learned-vumat-cost" aria-label="Learned material model trades offline cost for fast repeated use">
+          <div>offline micro solves</div>
+          <div>train operator once</div>
+          <div>use as Abaqus material</div>
+          <div>avoid concurrent cost</div>
+        </div>
+
+        <h2>The Fixed-History Problem</h2>
+        <p>One limitation is that the first architecture expects a whole history over a known time window. If the later simulation runs longer than that window, the model is awkward to use. Real engineering simulations do not always know the full duration in advance.</p>
+
+        <p>This motivates a Markov-style update: given the current deformation, current rate, and some hidden state, predict the next stress and update the hidden state. That is closer to how many material laws are used in finite-element codes.</p>
+
+        <div class="fixed-history-limit" aria-label="Whole-history operators can be awkward for long simulations">
+          <div>needs full time window</div>
+          <div>longer run is awkward</div>
+          <div>learn update rule</div>
+          <div>hidden state carries memory</div>
+        </div>
+
+        <h2>Hidden State Is The Material Memory</h2>
+        <p>Plastic materials remember what happened before. A simple current strain value is not enough. The material may carry plastic strain, texture, damage, or other hidden internal variables.</p>
+
+        <p>The talk explores learning this hidden state rather than assuming it ahead of time. In simple one-dimensional tests, the learned hidden variable tracked the real plastic strain up to an unimportant transformation. That is important because it suggests the model can discover a compact memory variable from input-output histories.</p>
+
+        <div class="hidden-state-memory" aria-label="Learned hidden variables can represent material memory">
+          <div>current strain</div>
+          <div>not enough information</div>
+          <div>learn hidden state</div>
+          <div>memory predicts response</div>
+        </div>
+
+        <h2>Fourier And Graph Operators Have A Different Trade</h2>
+        <p>The talk also discusses broader neural-operator architectures such as Fourier neural operators and graph-kernel operators. These can be powerful for learning solution maps of PDEs, super-resolution, and sparse data settings.</p>
+
+        <p>But they can be expensive to evaluate repeatedly. In multiscale material modeling, the learned model may be called many times inside a larger code. A method that is excellent for learning a PDE once may be too slow as a repeated material-law call.</p>
+
+        <div class="operator-architecture-trade" aria-label="Operator architecture choice depends on repeated-use cost">
+          <div>Fourier or graph operator</div>
+          <div>strong PDE learner</div>
+          <div>evaluation can cost more</div>
+          <div>choose for workflow</div>
+        </div>
+
+        <h2>How This Connects To Design And Topology</h2>
+        <p>Topology optimization often asks a large structure to choose where material should go. But the answer depends on the material law. If the material response comes from grains, slip, phase domains, defects, or microstructure evolution, then a simple local empirical law may miss the design-relevant behavior.</p>
+
+        <p>The design lesson is to learn the closure that the large design loop actually needs. The learned small solver should be cheap enough to call many times, faithful enough to preserve stress history and memory, and tested enough that it does not invent nonphysical responses under new loading paths.</p>
+
+        <div class="operator-design-bridge" aria-label="Neural operators can provide learned closures for design loops">
+          <div>topology chooses structure</div>
+          <div>microstructure sets response</div>
+          <div>learn closure map</div>
+          <div>design sees better material law</div>
+        </div>
+
+        <h2>The Chapter In One Chain</h2>
+        <p>First, large material simulations need closure laws that tell them stress from deformation history. Second, those closure laws often come from smaller-scale physics such as grains, slip systems, domains, or electronic fields. Third, calling the small solver at every large grid point is too expensive. Fourth, a neural operator tries to learn the small solver's input-output map, not merely fit parameters in a hand-written formula. Fifth, because inputs and outputs can be functions, the model must handle histories and fields rather than only vectors. Sixth, projection and lifting can help learn a resolution-independent operator. Seventh, more retained detail requires more training data. Eighth, crystal-plasticity examples show that learned operators can map deformation histories to stress histories and can pass causality checks. Ninth, putting the learned operator into Abaqus turns it into a practical material model that is far cheaper than concurrent multiscale simulation. Tenth, the next step is learning update rules and hidden state variables so the model carries material memory without requiring a fixed full history.</p>
+
+        <div class="note">
+          <p>The chapter's core idea: neural operators are useful here because they can turn an expensive small-scale solver into a reusable closure law. The win is not just speed; it is making microstructure-informed material response cheap enough to use inside real design and impact calculations.</p>
+        </div>
+
+        <section class="lesson-review">
+          <h2>How To Test Whether You Understood This Chapter</h2>
+          <div class="lesson-review-grid">
+            <div>
+              <strong>Say the problem without solver words</strong>
+              <p>The large model keeps asking a costly small model the same kind of question. Learn that answer pattern once so the large model can keep moving.</p>
+            </div>
+            <div>
+              <strong>Explain why history matters</strong>
+              <p>A material does not respond only to its current deformation. Plastic strain, damage, texture, and other hidden memory can change the next stress.</p>
+            </div>
+            <div>
+              <strong>Connect it to topology and design</strong>
+              <p>A topology optimizer may place material differently when the material law includes microstructure, slip, damage, or impact history instead of a simple fixed stiffness.</p>
+            </div>
+            <div>
+              <strong>State the honest limit</strong>
+              <p>A learned closure is not trustworthy just because it is fast. It must be tested for causality, resolution changes, new loading paths, repeated-call cost, and behavior inside the actual engineering code.</p>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

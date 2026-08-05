@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chapter 117 - Let The Weak Form Clean The Data</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="sidebar">
+        <h1>DDPS Study</h1>
+        <a href="index.html">Start</a>
+        <a href="review-path.html">Review Path</a>
+        <a href="plain-words.html">Plain Words</a>
+        <a href="method-map.html">Method Map</a>
+        <a href="self-check.html">Self Check</a>
+        <a href="capstone.html">Capstone</a>
+        <a href="theme-index.html">Theme Index</a>
+        <a href="domain-map.html">Domain Map</a>
+        <a href="paper-reader.html">Paper Reader</a>
+        <a href="common-mistakes.html">Common Mistakes</a>
+        <a href="study-plan.html">Study Plan</a>
+        <a href="math-map.html">Math Map</a>
+        <a href="prerequisite-map.html">Prerequisite Map</a>
+        <a href="cheat-sheet.html">Cheat Sheet</a>
+        <a href="chapter-98.html">Chapter 98</a>
+        <a href="chapter-99.html">Chapter 99</a>
+        <a href="chapter-100.html">Chapter 100</a>
+        <a href="chapter-101.html">Chapter 101</a>
+        <a href="chapter-102.html">Chapter 102</a>
+        <a href="chapter-103.html">Chapter 103</a>
+        <a href="chapter-104.html">Chapter 104</a>
+        <a href="chapter-105.html">Chapter 105</a>
+        <a href="chapter-106.html">Chapter 106</a>
+        <a href="chapter-107.html">Chapter 107</a>
+        <a href="chapter-108.html">Chapter 108</a>
+        <a href="chapter-109.html">Chapter 109</a>
+        <a href="chapter-110.html">Chapter 110</a>
+        <a href="chapter-111.html">Chapter 111</a>
+        <a href="chapter-112.html">Chapter 112</a>
+        <a href="chapter-113.html">Chapter 113</a>
+        <a href="chapter-114.html">Chapter 114</a>
+        <a href="chapter-115.html">Chapter 115</a>
+        <a href="chapter-116.html">Chapter 116</a>
+        <a href="chapter-117.html">Chapter 117</a>
+        <a href="chapter-118.html">Chapter 118</a>
+        <a href="chapter-119.html">Chapter 119</a>
+        <a href="chapter-120.html">Chapter 120</a>
+        <a href="chapter-121.html">Chapter 121</a>
+        <a href="chapter-122.html">Chapter 122</a>
+        <a href="chapter-123.html">Chapter 123</a>
+        <a href="chapter-124.html">Chapter 124</a>
+        <a href="chapter-125.html">Chapter 125</a>
+        <a href="chapter-126.html">Chapter 126</a>
+        <a href="chapter-127.html">Chapter 127</a>
+        <a href="chapter-128.html">Chapter 128</a>
+        <a href="chapter-129.html">Chapter 129</a>
+        <a href="chapter-130.html">Chapter 130</a>
+        <a href="chapter-131.html">Chapter 131</a>
+        <a href="chapter-132.html">Chapter 132</a>
+        <a href="chapter-133.html">Chapter 133</a>
+        <a href="chapter-134.html">Chapter 134</a>
+        <a href="chapter-135.html">Chapter 135</a>
+        <a href="chapter-136.html">Chapter 136</a>
+        <a href="chapter-137.html">Chapter 137</a>
+        <a href="from-zero.html">From Zero</a>
+        <a href="pinn-from-zero.html">PINNs From Zero</a>
+        <a href="rom-from-zero.html">ROMs From Zero</a>
+        <a href="manifold-from-zero.html">Manifolds From Zero</a>
+        <a href="synthesis.html">Synthesis</a>
+        <a href="big-picture.html">Big Picture</a>
+        <a href="examples.html">Examples</a>
+        <a href="bridge.html">AISE Bridge</a>
+        <a href="audit.html">Transcript Audit</a>
+      </nav>
+      <main class="content">
+        <p class="eyebrow">Narrative chapter</p>
+        <h1>Let The Weak Form Clean The Data</h1>
+
+        <p>This chapter uses video 120, David Bortz's DDPS talk on why the weak form is stronger than it first appears. The talk is about learning equations or parameters from measured dynamics without repeatedly solving the forward model. The central problem is brutal but ordinary: data is noisy, the system may be chaotic, derivatives may be high order, and direct differentiation of measurements can destroy the estimate.</p>
+
+        <p>The main idea is to reverse the usual solver story. Finite elements use weak forms to solve equations. Here, the weak form is used to learn equations from data. Instead of guessing parameters, solving the differential equation, comparing to data, and repeating, the method plugs the data into an integrated version of the equation and solves a linear algebra problem for the unknown terms.</p>
+
+        <section class="lesson-claim-chain" aria-label="Plain first-principles reading guide for weak-form equation discovery">
+          <h2>Read This Chapter As One Claim</h2>
+          <p>Suppose you filmed a physical system and want to learn the rule behind it. The obvious idea is to measure position, velocity, curvature, and other derivatives at every point. That is exactly where noisy data hurts you. Tiny measurement errors can become huge derivative errors. This chapter says to ask a softer question. Instead of demanding the exact derivative at one point, average the equation over a small clean window, move derivatives onto a smooth test shape that you control, and use many such averaged balances to discover which physical terms the data supports.</p>
+          <div class="lesson-claim-grid">
+            <div><strong>Everyday problem</strong><span>You want readable equations from noisy, chaotic, shocked, or high-derivative data without rerunning a full solver for every parameter guess.</span></div>
+            <div><strong>Shared promise</strong><span>Use weak-form averages to turn equation discovery into a better-conditioned regression over candidate physical terms.</span></div>
+            <div><strong>Hidden danger</strong><span>The method can still fail if the term library is wrong, variables are hidden, scales are badly conditioned, or the data never excites the effect you want to learn.</span></div>
+            <div><strong>First rejection test</strong><span>Check recovered terms under new windows, noise levels, rescalings, trajectories, and held-out simulations before treating the equation as real.</span></div>
+          </div>
+        </section>
+
+        <div class="weakform-big-picture-map" aria-label="Weak-form system identification turns noisy dynamics data into a regression problem">
+          <div>noisy measured dynamics</div>
+          <div>avoid direct derivatives</div>
+          <div>use weak-form averages</div>
+          <div>solve for equation terms</div>
+        </div>
+
+        <h2>The Old Way Solves Too Much</h2>
+        <p>A common parameter-fitting workflow is expensive. Guess parameters. Run the ODE or PDE solver. Compare the simulated trajectory to measured data. Adjust the guess. Run again. This is often called output-error fitting because the comparison is made between model output and data output.</p>
+
+        <p>For simple systems this can work. For chaotic or stiff PDEs it can become painful. If the system is spatio-temporally chaotic, a tiny mismatch at the beginning can become a huge mismatch later. Then the optimizer may punish a parameter for a phase shift rather than for the wrong equation. The Kuramoto-Sivashinsky example in the talk makes this vivid: the data is chaotic, the equation has fourth derivatives and nonlinear terms, and forward-solve fitting can spread across seconds to hundreds of seconds with wildly different accuracy.</p>
+
+        <div class="output-error-map" aria-label="Output-error fitting repeatedly solves the model and can fail badly for chaotic dynamics">
+          <div>guess parameters</div>
+          <div>solve full model</div>
+          <div>compare trajectory</div>
+          <div>chaos magnifies mismatch</div>
+        </div>
+
+        <h2>Equation Error Skips The Forward Solve</h2>
+        <p>The alternative is equation error. Suppose the equation is built from candidate terms: maybe u, u squared, a spatial derivative, a fourth derivative, or an interaction term. If the right equation is a sparse combination of these candidates, then the unknowns are the coefficients multiplying them.</p>
+
+        <p>This is the idea behind SINDy: build a library of possible terms, plug the data into that library, and use sparse regression to keep only the terms that matter. For the diffusion equation, for example, the library might contain many candidates, but only the second-derivative term should survive. The output is not only a black-box predictor. It is a readable equation.</p>
+
+        <div class="equation-error-map" aria-label="Equation-error methods plug data into candidate equation terms and solve for sparse coefficients">
+          <div>choose candidate terms</div>
+          <div>plug data into library</div>
+          <div>sparse regression selects terms</div>
+          <div>readable equation emerges</div>
+        </div>
+
+        <h2>The Derivative Problem Is The Trap</h2>
+        <p>Equation-error methods have a serious weakness. They often need derivatives of the measured data. If the data is noisy, finite differences can amplify the noise badly. A small time step sits in the denominator. That can make the derivative estimate explode even when the original data looks only mildly noisy.</p>
+
+        <p>Smoothing before differentiating does not fully remove the danger. The result can depend on the smoothing basis and can introduce bias. Shocks create another problem: the solution may not be classically smooth, so the derivative may not behave like the clean classroom formula. This is why the weak form enters.</p>
+
+        <div class="derivative-trap-map" aria-label="Finite-difference derivatives of noisy data can amplify noise and bias equation discovery">
+          <div>data has noise</div>
+          <div>finite difference divides by small step</div>
+          <div>noise becomes derivative error</div>
+          <div>wrong equation can be selected</div>
+        </div>
+
+        <h2>The Weak Form Moves The Derivative Off The Data</h2>
+        <p>The weak-form move is integration by parts. Instead of differentiating the noisy data directly, multiply the equation by a smooth test function and integrate. Then move the derivative from the data onto the test function. The test function is chosen by us, so it can be smooth, compactly supported, and zero at the boundary of its small window.</p>
+
+        <p>In everyday words, the method asks the data a softened question. It does not ask, "what is your exact derivative at this noisy point?" It asks, "over this small window, when I average you against this clean shape, what equation balance do you satisfy?" That averaging reduces noise, and moving derivatives onto the test function avoids differentiating the raw measurement.</p>
+
+        <div class="integration-by-parts-map" aria-label="Integration by parts moves derivatives from noisy data onto known smooth test functions">
+          <div>multiply by test function</div>
+          <div>integrate over a window</div>
+          <div>move derivative onto test function</div>
+          <div>data is averaged, not differentiated</div>
+        </div>
+
+        <h2>The Test Function Is A Smudging Magnifying Glass</h2>
+        <p>The speaker describes test functions as compact shapes that are shifted through the domain. Each placement creates one equation. Moving the test function across space and time creates many equations. Together they form a matrix problem: G times the unknown coefficient vector equals b.</p>
+
+        <p>The test function does two jobs at once. It smooths the data through integration, and after integration by parts it acts like a derivative smoother. The method is still local enough to detect dynamics in different regions, but it is not pointwise enough to be destroyed by every noisy sample.</p>
+
+        <div class="test-window-map" aria-label="A compact test function slides through data to create many weak-form equations">
+          <div>choose smooth window</div>
+          <div>slide through space-time</div>
+          <div>each window gives an equation</div>
+          <div>many windows form G w equals b</div>
+        </div>
+
+        <h2>There Is A Balance Between Noise And Numerics</h2>
+        <p>The method is not magic. The test function size and shape matter. If the window is too small, numerical discretization error can dominate. If it is too large, the method may smooth away useful information or become limited by noise in another way. The talk breaks the residual into parts: noise error, parameter error, and numerical integration error.</p>
+
+        <p>This gives a practical tuning principle. Choose test functions where the numerical error is controlled and the noise has been sufficiently averaged. The speaker shows that Fourier information from the data can help pick a wave-number cutoff and translate that into a useful test-function scale. For the Kuramoto-Sivashinsky fourth derivative, the weak derivative of noisy data can closely track the true weak derivative after the right choice.</p>
+
+        <div class="noise-numerics-map" aria-label="Weak-form accuracy depends on balancing noise error and numerical integration error">
+          <div>small window: numerical error</div>
+          <div>large noise: noise floor</div>
+          <div>choose transition scale</div>
+          <div>weak derivative stays reliable</div>
+        </div>
+
+        <h2>Scaling The Variables Can Decide Whether Linear Algebra Works</h2>
+        <p>The talk gives a concrete KdV example where the time scale, space scale, and solution magnitude differ by many orders. If the regression matrix is formed without rescaling, its condition number can become enormous. Then the linear algebra may be numerically meaningless even if the mathematical idea is sound.</p>
+
+        <p>After rescaling the variables so the numbers live on comparable ranges, the condition number drops dramatically. This is an important practical lesson. Weak-form learning is fast because it becomes linear algebra, but linear algebra still has rules. Units, scales, matrix conditioning, library normalization, and floating-point arithmetic decide whether the answer can be trusted.</p>
+
+        <div class="conditioning-map" aria-label="Rescaling variables improves the condition number of the weak-form regression system">
+          <div>time, space, value scales differ</div>
+          <div>matrix becomes ill-conditioned</div>
+          <div>rescale variables</div>
+          <div>linear solve becomes trustworthy</div>
+        </div>
+
+        <h2>The Examples Show Why This Is Useful</h2>
+        <p>The talk reports strong examples across ODEs and PDEs. Lorenz dynamics with ten percent noise can recover parameters with less than one percent error in fractions of a second. Burgers equations with shocks can still recover the correct sparse term under extreme noise levels. Kuramoto-Sivashinsky chaos can recover the important terms and parameters where forward-solve approaches struggle. Other examples include KdV, nonlinear Schrodinger, Navier-Stokes, porous media, sine-Gordon, and reaction-diffusion systems.</p>
+
+        <p>The reason these examples matter is not just speed. They show a different route for model discovery. Instead of proposing many candidate PDEs and solving them one by one, weak-form SINDy can test a large library of possible terms through regression. That makes model selection cheaper, more robust to noise, and easier to connect to uncertainty estimates.</p>
+
+        <div class="example-suite-map" aria-label="Weak-form discovery works across chaotic ODEs, shock PDEs, and higher-derivative systems">
+          <div>Lorenz with noise</div>
+          <div>Burgers shocks</div>
+          <div>Kuramoto-Sivashinsky chaos</div>
+          <div>many PDE libraries become testable</div>
+        </div>
+
+        <h2>Cell Migration Turns Trajectories Into Rules</h2>
+        <p>One application is cell migration. The experimental setting is a sheet of skin cells where part is cut away and the cells move into the wound. Instead of only fitting a continuum PDE, the group studies interacting particle rules: attraction and repulsion, alignment, and drag. Each cell trajectory can be used to infer the rules that guided that cell.</p>
+
+        <p>In synthetic mixtures inspired by data, the method can recover different cell types from unlabeled trajectories. A cell that follows nearby cells, avoids crowding, or aligns with cells in front of it leaves a behavioral signature in its trajectory. The learned potentials then become a bridge to biology: instead of only saying "the cells moved this way," the model suggests what kind of sensing or biochemical mechanism might explain the motion.</p>
+
+        <div class="cell-rules-map" aria-label="Weak-form trajectory learning can infer interaction rules and classify cell subpopulations">
+          <div>unlabeled cell tracks</div>
+          <div>learn attraction and alignment rules</div>
+          <div>cluster by behavior</div>
+          <div>connect motion to biology</div>
+        </div>
+
+        <h2>Reduced Models Can Learn Their Own Latent Dynamics</h2>
+        <p>The talk also connects the weak form to reduced-order modeling. One example keeps Hamiltonian structure while reducing a higher-dimensional oscillator. Another uses latent-space dynamics identification: compress high-dimensional PDE data through an autoencoder or POD-like map, learn the reduced dynamics, then expand back to the full field.</p>
+
+        <p>The important point is that weak-form SINDy can make the learned latent dynamics robust to noise. In the examples, even with fifty percent noise in the original data, the reduced model can retain useful prediction accuracy and large speedups. This connects directly to earlier chapters on ROMs: compression alone is not enough; the dynamics inside the compressed coordinates must also be learned cleanly.</p>
+
+        <div class="latent-rom-map" aria-label="Weak-form SINDy can learn robust dynamics inside compressed latent coordinates">
+          <div>compress full field</div>
+          <div>learn latent equation</div>
+          <div>avoid noisy derivatives</div>
+          <div>fast reduced prediction</div>
+        </div>
+
+        <h2>The Theory Says When Recovery Becomes Reliable</h2>
+        <p>The speaker highlights consistency results. For a large class of models with linear and bilinear terms, and with the highest power in an individual variable no more than quadratic, the method can recover the correct model asymptotically as enough continuum data is added. Many equations in mathematical physics fall into this class.</p>
+
+        <p>The probability plots show the idea. With high noise and very coarse data, recovery can fail. As more data and resolution are added, the probability of recovering the correct terms approaches one. Less noise makes recovery easier. The useful lesson is that model discovery is not only a heuristic search; under the right assumptions, there are statements about when the right sparse equation should be recovered.</p>
+
+        <div class="consistency-map" aria-label="With enough data, weak-form sparse recovery can become reliable for broad physics libraries">
+          <div>choose valid model class</div>
+          <div>noise and coarse data can fail</div>
+          <div>add resolution and samples</div>
+          <div>correct terms recover with high probability</div>
+        </div>
+
+        <h2>Hidden Variables Are The Next Hard Problem</h2>
+        <p>A major limitation is that the method needs data for the variables appearing in the equation error. In an epidemic model, we may observe hospitalizations but not every susceptible or asymptomatic person. In pharmacology, we may measure blood concentration but not drug concentration inside every organ. In many physical systems, the measured variable is only a shadow of the full state.</p>
+
+        <p>The talk describes a route using differential algebra to reduce the model to equations involving observed variables. That can make weak-form inference possible even when some states are hidden. This is still work in progress, but it matters because real science rarely gives all variables cleanly.</p>
+
+        <div class="hidden-variable-map" aria-label="Hidden variables require reducing equations to observed quantities before weak-form inference">
+          <div>important state is unobserved</div>
+          <div>only partial measurements exist</div>
+          <div>use differential algebra reduction</div>
+          <div>infer from observable equations</div>
+        </div>
+
+        <h2>How This Connects To Topology And Design</h2>
+        <p>Topology and design problems often ask for equations or parameters from messy data: material behavior from experiments, closure terms from fine simulations, effective transport from microstructure, continuum laws from atomistic data, or reduced dynamics from high-fidelity fields. Directly differentiating that data can be a bad idea, especially when the data contains noise, shocks, discontinuities, stiff scales, or nonlocal interactions.</p>
+
+        <p>The weak-form lesson is useful here. If the candidate law can be written as a library of terms, test those terms through averaged equation balances rather than through raw pointwise derivatives. For topology, that could mean discovering effective stiffness, diffusion, perfusion, reaction, or flow terms from simulations across many designs. It could also help decide which terms belong in a surrogate before optimizing geometry around it.</p>
+
+        <p>The Q&A adds a practical warning for nonlocal physics and atomistic-to-continuum learning. Nonlocal terms can be included if the library allows them, but the data must actually contain enough information to identify them. If the trajectories or simulations do not excite a nonlocal interaction, regression cannot invent reliable evidence for it. Diversity of training data is therefore not optional; it is part of identifiability.</p>
+
+        <div class="weakform-design-bridge-map" aria-label="Weak-form learning can identify effective laws for topology, materials, nonlocal physics, and design surrogates">
+          <div>messy simulation or experiment</div>
+          <div>candidate physical law library</div>
+          <div>weak-form regression selects terms</div>
+          <div>design surrogate gets readable physics</div>
+        </div>
+
+        <h2>Where The Method Should Not Be Overclaimed</h2>
+        <p>The weak form does not remove modeling judgment. The library still matters. If the correct term is missing, the sparse regression cannot select it. If the library is absurdly large or contains huge powers like u to the tenth without physical reason, numerical rank and scale problems can appear. If variables are hidden, more work is needed before the equation-error system is valid.</p>
+
+        <p>The method also needs care with test functions, window sizes, noise levels, data resolution, variable scaling, and identifiability. It is fast because it becomes regression, but that also means it inherits the duties of regression: check conditioning, uncertainty, errors-in-variables behavior, and whether the data supports the terms being estimated.</p>
+
+        <div class="weakform-boundary-map" aria-label="Weak-form discovery still depends on library quality, scaling, resolution, and identifiability">
+          <div>wrong library gives wrong search</div>
+          <div>bad scaling hurts conditioning</div>
+          <div>hidden variables need reduction</div>
+          <div>data must excite the terms</div>
+        </div>
+
+        <h2>The Chapter In One Chain</h2>
+        <p>First, direct output-error fitting repeatedly solves the model and can fail or become expensive for chaotic, noisy, or stiff dynamics. Second, equation-error methods plug data into candidate equation terms and solve for the coefficients directly. Third, the trap is that those methods often require derivatives of noisy data, and finite differences amplify noise. Fourth, the weak form fixes this by multiplying by smooth test functions, integrating, and moving derivatives from the data onto the test functions. Fifth, sliding many test functions through the data creates a linear regression system. Sixth, test-function scale must balance numerical integration error against noise error. Seventh, variable rescaling is necessary so the regression matrix is not ruined by conditioning. Eighth, this gives robust, accurate, fast recovery on examples such as Lorenz, Burgers, Kuramoto-Sivashinsky, KdV, nonlinear Schrodinger, Navier-Stokes, porous media, sine-Gordon, and reaction-diffusion systems. Ninth, the same idea can infer cell interaction rules from unlabeled trajectories. Tenth, weak-form discovery can learn latent reduced dynamics after compression. Eleventh, consistency theory says correct model recovery becomes reliable for broad linear and bilinear physics libraries as enough data is added. Twelfth, hidden variables require extra reduction before inference. Thirteenth, for topology, materials, atomistic-to-continuum modeling, and design, the practical lesson is to learn readable effective equations from averaged balances instead of trusting noisy pointwise derivatives.</p>
+
+        <div class="note">
+          <p>The chapter's core idea: if noisy data makes derivatives unreliable, stop asking the data for pointwise derivatives. Ask the equation in averaged form, move derivatives onto functions you control, and let linear algebra identify the physical terms the data actually supports.</p>
+        </div>
+
+        <section class="lesson-review" aria-label="End of chapter understanding check for weak-form equation discovery">
+          <h2>How To Test Whether You Understood This Chapter</h2>
+          <div class="lesson-review-grid">
+            <div><strong>Explain the derivative trap</strong><span>Finite differences divide by small time or space steps, so mild measurement noise can become large derivative noise and lead to the wrong equation.</span></div>
+            <div><strong>Explain the weak-form move</strong><span>Multiply by a smooth test function, integrate over a small window, and move derivatives from noisy data onto the clean function through integration by parts.</span></div>
+            <div><strong>Explain why scaling matters</strong><span>The regression is only trustworthy if the columns are numerically comparable. Bad units or variable scales can make the matrix look informative while the solve is unstable.</span></div>
+            <div><strong>Connect it to topology and design</strong><span>Use averaged balances to learn effective stiffness, diffusion, reaction, flow, or closure laws from simulations and experiments before building design surrogates around them.</span></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

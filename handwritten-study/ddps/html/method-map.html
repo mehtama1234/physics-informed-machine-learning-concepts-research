@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DDPS Problem To Method Map</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="sidebar">
+        <h1>DDPS Study</h1>
+        <a href="index.html">Start</a>
+        <a href="review-path.html">Review Path</a>
+        <a href="plain-words.html">Plain Words</a>
+        <a href="method-map.html">Method Map</a>
+        <a href="self-check.html">Self Check</a>
+        <a href="capstone.html">Capstone</a>
+        <a href="theme-index.html">Theme Index</a>
+        <a href="domain-map.html">Domain Map</a>
+        <a href="paper-reader.html">Paper Reader</a>
+        <a href="common-mistakes.html">Common Mistakes</a>
+        <a href="study-plan.html">Study Plan</a>
+        <a href="math-map.html">Math Map</a>
+        <a href="prerequisite-map.html">Prerequisite Map</a>
+        <a href="cheat-sheet.html">Cheat Sheet</a>
+        <a href="from-zero.html">From Zero</a>
+        <a href="big-picture.html">Big Picture</a>
+        <a href="synthesis.html">Synthesis</a>
+        <a href="examples.html">Examples</a>
+        <a href="audit.html">Transcript Audit</a>
+      </nav>
+      <main class="content">
+        <p class="eyebrow">Choose from the problem</p>
+        <h1>Problem To Method Map</h1>
+
+        <p>Use this page when you know the physical problem but do not know which part of the course to read. Start from the first column. Do not start from the method name. The method is only useful if it carries the burden created by the problem.</p>
+
+        <div class="method-core-map" aria-label="Choose a scientific machine learning method from the physical burden">
+          <div>start with the pain</div>
+          <div>name the evidence</div>
+          <div>choose the method family</div>
+          <div>test the weak point</div>
+        </div>
+
+        <h2>Quick Chooser</h2>
+        <div class="method-table-wrap">
+          <table class="method-table">
+            <thead>
+              <tr>
+                <th>Everyday Problem</th>
+                <th>Study This Family</th>
+                <th>Why It Helps</th>
+                <th>First Thing To Check</th>
+                <th>Where To Read</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>You have few measurements, but you know the equation should be obeyed.</td>
+                <td>Physics-informed learning</td>
+                <td>It uses the equation as training pressure when data is sparse.</td>
+                <td>Do the loss terms balance, or does one rule drown out the others?</td>
+                <td><a href="pinn-from-zero.html">PINNs From Zero</a>, <a href="chapter-01.html">Chapter 1</a>, <a href="chapter-102.html">Chapter 102</a></td>
+              </tr>
+              <tr>
+                <td>The full simulator is too slow to run thousands of times.</td>
+                <td>Reduced order modeling</td>
+                <td>It builds a smaller stand-in for repeated prediction, design, or control.</td>
+                <td>Does the small model preserve the motion, not just the snapshots?</td>
+                <td><a href="rom-from-zero.html">ROMs From Zero</a>, <a href="chapter-09.html">Chapter 9</a>, <a href="chapter-91.html">Chapter 91</a></td>
+              </tr>
+              <tr>
+                <td>The important feature moves, bends, shocks, or changes regime.</td>
+                <td>Transport-aware and nonlinear coordinates</td>
+                <td>They stop a simple moving pattern from looking artificially high-dimensional.</td>
+                <td>Can the representation follow the moving feature in a changed case?</td>
+                <td><a href="chapter-18.html">Chapter 18</a>, <a href="chapter-24.html">Chapter 24</a>, <a href="chapter-47.html">Chapter 47</a></td>
+              </tr>
+              <tr>
+                <td>You need a rule from one whole field to another whole field.</td>
+                <td>Operator learning</td>
+                <td>It learns maps between functions, such as input fields to solution fields.</td>
+                <td>Does it survive new grids, boundary conditions, geometries, or regimes?</td>
+                <td><a href="chapter-98.html">Chapter 98</a>, <a href="chapter-125.html">Chapter 125</a>, <a href="chapter-131.html">Chapter 131</a></td>
+              </tr>
+              <tr>
+                <td>You must choose sensors or reconstruct a full state from sparse data.</td>
+                <td>State estimation and sensor placement</td>
+                <td>They ask which measurements reveal the hidden state well enough.</td>
+                <td>Are the chosen sensors actually seeing the modes or features that matter?</td>
+                <td><a href="chapter-13.html">Chapter 13</a>, <a href="chapter-80.html">Chapter 80</a>, <a href="chapter-123.html">Chapter 123</a></td>
+              </tr>
+              <tr>
+                <td>The model must decide an action, not only predict a field.</td>
+                <td>Control and differentiable simulation</td>
+                <td>They connect prediction to gradients, policies, constraints, and decisions.</td>
+                <td>Does the controller exploit a model blind spot or violate safety?</td>
+                <td><a href="chapter-08.html">Chapter 8</a>, <a href="chapter-58.html">Chapter 58</a>, <a href="chapter-128.html">Chapter 128</a></td>
+              </tr>
+              <tr>
+                <td>The shape or connectivity of the design changes the physics.</td>
+                <td>Geometry-aware and topology-aware learning</td>
+                <td>They keep track of how physical shape changes fields, regimes, and constraints.</td>
+                <td>Does the model preserve the connected pathway or boundary that controls the outcome?</td>
+                <td><a href="chapter-69.html">Chapter 69</a>, <a href="chapter-129.html">Chapter 129</a>, <a href="chapter-137.html">Chapter 137</a></td>
+              </tr>
+              <tr>
+                <td>You want to infer the hidden equation or structure from data.</td>
+                <td>Equation discovery and coherent-structure analysis</td>
+                <td>They search for the simpler rule, mode, or pattern behind noisy observations.</td>
+                <td>Does the discovered structure predict new time, new conditions, or only replay the data?</td>
+                <td><a href="chapter-113.html">Chapter 113</a>, <a href="chapter-124.html">Chapter 124</a>, <a href="chapter-136.html">Chapter 136</a></td>
+              </tr>
+              <tr>
+                <td>The system is hidden and observations arrive over time.</td>
+                <td>Data assimilation</td>
+                <td>It updates a model or forecast as new evidence arrives.</td>
+                <td>Could the data identify the hidden state, or is the posterior just copying the prior?</td>
+                <td><a href="chapter-134.html">Chapter 134</a>, <a href="chapter-137.html">Chapter 137</a></td>
+              </tr>
+              <tr>
+                <td>The model answer needs a believable error bar or risk estimate.</td>
+                <td>Uncertainty quantification</td>
+                <td>It attaches doubt to predictions, parameters, architectures, data, or discretization.</td>
+                <td>Which source of uncertainty is missing from the estimate?</td>
+                <td><a href="chapter-135.html">Chapter 135</a>, <a href="chapter-137.html">Chapter 137</a></td>
+              </tr>
+              <tr>
+                <td>You need many plausible worlds, not one best answer.</td>
+                <td>Generative modeling</td>
+                <td>It samples possible fields, structures, or futures from a learned distribution.</td>
+                <td>Are the samples physically valid, connected correctly, and useful for the decision?</td>
+                <td><a href="chapter-125.html">Chapter 125</a>, <a href="chapter-131.html">Chapter 131</a>, <a href="chapter-137.html">Chapter 137</a></td>
+              </tr>
+              <tr>
+                <td>A model claims it can help across many scientific tasks.</td>
+                <td>Scientific foundation models</td>
+                <td>They try to reuse large learned representations across equations, materials, and geometries.</td>
+                <td>Was generalization tested across real physical changes, or only nearby examples?</td>
+                <td><a href="chapter-132.html">Chapter 132</a>, <a href="chapter-135.html">Chapter 135</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>How To Use The Map</h2>
+        <p>Pick the row that describes the pain, then read the listed pages. After reading, come back and write the claim in one sentence: "This method helps because it carries blank, but I should reject it if blank." If that sentence is vague, the method is not understood yet.</p>
+
+        <div class="method-use-map" aria-label="Use the method map by moving from problem to claim to rejection test">
+          <div>choose the row by problem</div>
+          <div>read the linked chapters</div>
+          <div>write the method claim in plain words</div>
+          <div>write the rejection test</div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

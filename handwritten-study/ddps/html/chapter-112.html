@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chapter 112 - Build The Solver Into The Network</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="sidebar">
+        <h1>DDPS Study</h1>
+        <a href="index.html">Start</a>
+        <a href="review-path.html">Review Path</a>
+        <a href="plain-words.html">Plain Words</a>
+        <a href="method-map.html">Method Map</a>
+        <a href="self-check.html">Self Check</a>
+        <a href="capstone.html">Capstone</a>
+        <a href="theme-index.html">Theme Index</a>
+        <a href="domain-map.html">Domain Map</a>
+        <a href="paper-reader.html">Paper Reader</a>
+        <a href="common-mistakes.html">Common Mistakes</a>
+        <a href="study-plan.html">Study Plan</a>
+        <a href="math-map.html">Math Map</a>
+        <a href="prerequisite-map.html">Prerequisite Map</a>
+        <a href="cheat-sheet.html">Cheat Sheet</a>
+        <a href="chapter-98.html">Chapter 98</a>
+        <a href="chapter-99.html">Chapter 99</a>
+        <a href="chapter-100.html">Chapter 100</a>
+        <a href="chapter-101.html">Chapter 101</a>
+        <a href="chapter-102.html">Chapter 102</a>
+        <a href="chapter-103.html">Chapter 103</a>
+        <a href="chapter-104.html">Chapter 104</a>
+        <a href="chapter-105.html">Chapter 105</a>
+        <a href="chapter-106.html">Chapter 106</a>
+        <a href="chapter-107.html">Chapter 107</a>
+        <a href="chapter-108.html">Chapter 108</a>
+        <a href="chapter-109.html">Chapter 109</a>
+        <a href="chapter-110.html">Chapter 110</a>
+        <a href="chapter-111.html">Chapter 111</a>
+        <a href="chapter-112.html">Chapter 112</a>
+        <a href="chapter-113.html">Chapter 113</a>
+        <a href="chapter-114.html">Chapter 114</a>
+        <a href="chapter-115.html">Chapter 115</a>
+        <a href="chapter-116.html">Chapter 116</a>
+        <a href="chapter-117.html">Chapter 117</a>
+        <a href="chapter-118.html">Chapter 118</a>
+        <a href="chapter-119.html">Chapter 119</a>
+        <a href="chapter-120.html">Chapter 120</a>
+        <a href="chapter-121.html">Chapter 121</a>
+        <a href="chapter-122.html">Chapter 122</a>
+        <a href="chapter-123.html">Chapter 123</a>
+        <a href="chapter-124.html">Chapter 124</a>
+        <a href="chapter-125.html">Chapter 125</a>
+        <a href="chapter-126.html">Chapter 126</a>
+        <a href="chapter-127.html">Chapter 127</a>
+        <a href="chapter-128.html">Chapter 128</a>
+        <a href="chapter-129.html">Chapter 129</a>
+        <a href="chapter-130.html">Chapter 130</a>
+        <a href="chapter-131.html">Chapter 131</a>
+        <a href="chapter-132.html">Chapter 132</a>
+        <a href="chapter-133.html">Chapter 133</a>
+        <a href="chapter-134.html">Chapter 134</a>
+        <a href="chapter-135.html">Chapter 135</a>
+        <a href="chapter-136.html">Chapter 136</a>
+        <a href="chapter-137.html">Chapter 137</a>
+        <a href="from-zero.html">From Zero</a>
+        <a href="pinn-from-zero.html">PINNs From Zero</a>
+        <a href="rom-from-zero.html">ROMs From Zero</a>
+        <a href="manifold-from-zero.html">Manifolds From Zero</a>
+        <a href="synthesis.html">Synthesis</a>
+        <a href="big-picture.html">Big Picture</a>
+        <a href="examples.html">Examples</a>
+        <a href="bridge.html">AISE Bridge</a>
+        <a href="audit.html">Transcript Audit</a>
+      </nav>
+      <main class="content">
+        <p class="eyebrow">Narrative chapter</p>
+        <h1>Build The Solver Into The Network</h1>
+
+        <p>This chapter uses video 115, Jianshun Wang's DDPS talk on neural differentiable physics. The talk asks how far we can push the blend between numerical PDE solvers and deep learning. The important move is not merely adding a physics penalty to a loss function. The talk tries to put pieces of the numerical method directly inside the neural architecture.</p>
+
+        <p>The first-principles problem is this: pure data-driven rollout models can look good for a short time and then drift, shift phase, accumulate error, or leave the physical regime. Classical solvers have physics, but they can be slow, incomplete, or uncertain because closures, material laws, initial conditions, boundary conditions, and parameters are often not fully known. Neural differentiable physics tries to keep the known operators fixed, learn the missing pieces, and make the whole object trainable end to end.</p>
+
+        <section class="lesson-claim-chain" aria-label="Plain first-principles reading guide for neural differentiable physics">
+          <h2>Read This Chapter As One Claim</h2>
+          <p>Start from a practical rule: do not make a neural network relearn what you already know. If you know that a fluid convects, diffuses, follows pressure gradients, and couples to a moving structure, those pieces should not be hidden as anonymous weights when they can be built into the model. But the known solver may still be too coarse or incomplete. This chapter lives in the middle. Fixed numerical pieces carry the trusted physics, trainable pieces fill the missing closure or correction, and differentiability lets the whole hybrid model be trained, rolled forward, and used for inverse problems.</p>
+          <div class="lesson-claim-grid">
+            <div><strong>Everyday problem</strong><span>A black-box rollout drifts, but a pure solver may be too slow or may miss unknown closure, material, or small-scale effects.</span></div>
+            <div><strong>Shared promise</strong><span>Build known solver operators into the network, then learn the parts that physics or the coarse grid does not fully provide.</span></div>
+            <div><strong>Hidden danger</strong><span>If the embedded physics is too coarse, the learned correction is weakly coupled, or the training cases are narrow, long rollouts can still fail.</span></div>
+            <div><strong>First rejection test</strong><span>Try unseen Reynolds numbers, jet positions, random initial states, coupled fluid-structure cases, and geometry or topology changes.</span></div>
+          </div>
+        </section>
+
+        <div class="ndp-core-map" aria-label="Neural differentiable physics blends known PDE operators with trainable neural parts">
+          <div>pure data rollout drifts</div>
+          <div>classical solver may be incomplete</div>
+          <div>known operators stay inside</div>
+          <div>unknown parts are learned</div>
+        </div>
+
+        <h2>Why A Plain Neural Simulator Fails</h2>
+        <p>The talk uses MeshGraphNet-style neural simulation as a starting point. A graph network learns to map the current state to the next state. Then it rolls forward one step at a time. This can produce visually impressive solid, fluid, and fluid-structure examples.</p>
+
+        <p>But the speaker shows the failure modes. In a cylinder-flow case, the long rollout may still look physically plausible while the drag coefficient is out of phase with the CFD reference. In a channel with a changing inlet jet, the prediction starts reasonably and then becomes noisy and unphysical. The problem is accumulated error: a small one-step mistake becomes the next input, then grows over the rollout.</p>
+
+        <div class="rollout-failure-map" aria-label="Pure next-step neural simulators can accumulate errors during long rollouts">
+          <div>learn state to next state</div>
+          <div>roll forward repeatedly</div>
+          <div>phase shift or noise appears</div>
+          <div>long rollout loses trust</div>
+        </div>
+
+        <h2>Better Architecture Alone Is Not Enough</h2>
+        <p>The group tried stronger sequence machinery, such as temporal transformers and graph encoders. Those improve the comparison in some cases. But the speaker says the main robustness and generalization problems remain.</p>
+
+        <p>This is an important point. If the model fails because it has no firm physical structure, simply making the black box larger or more modern may not solve the reason for failure. A bigger sequence model can fit more patterns, but it may still extrapolate poorly to new Reynolds numbers, new initial conditions, new boundary conditions, or new material parameters.</p>
+
+        <div class="architecture-limit-map" aria-label="More advanced sequence architecture can improve fit without solving physics robustness">
+          <div>add memory or attention</div>
+          <div>short-term fit improves</div>
+          <div>physics is still mostly black-box</div>
+          <div>generalization remains fragile</div>
+        </div>
+
+        <h2>Physics May Be Partial, Not Complete</h2>
+        <p>Real physical models often sit between two extremes. We are not blind: we usually know some governing structure, such as convection, diffusion, pressure gradients, conservation, or coupling. But we may not know everything. Turbulence closures, constitutive relations, unresolved small scales, boundary conditions, material properties, and patient-specific inputs can be uncertain or unknown.</p>
+
+        <p>That is why a standard PINN loss can be the wrong tool. If the full residual is not known, there may be no complete equation to penalize. Even when the equation is known, a residual loss can make training a difficult multi-objective optimization problem. The talk instead asks how to use the known pieces as architecture.</p>
+
+        <div class="partial-physics-map" aria-label="Scientific systems often have known operators but unknown closures and inputs">
+          <div>known PDE pieces</div>
+          <div>unknown closure or input</div>
+          <div>soft residual may be incomplete</div>
+          <div>architecture can carry known physics</div>
+        </div>
+
+        <h2>Neural Layers Already Resemble Numerical Schemes</h2>
+        <p>The bridge comes from noticing that neural-network building blocks have numerical-method relatives. A residual connection resembles a forward Euler time step: take the current state, apply a change, and add it back. This viewpoint leads naturally to neural ODEs.</p>
+
+        <p>Convolutions can resemble finite-difference approximations of spatial differential operators. Diffusion, gradients, and convection can be written as local stencil operations on a grid. Graph kernels and message passing can resemble finite-volume operations on irregular domains. Recurrent structures can resemble time stepping. Attention can be interpreted in relation to higher-order time integration ideas.</p>
+
+        <div class="layer-scheme-map" aria-label="Common neural layers can be related to numerical time and space discretizations">
+          <div>residual block</div>
+          <div>time step</div>
+          <div>convolution or graph kernel</div>
+          <div>spatial operator</div>
+        </div>
+
+        <h2>A Solver Is A Special Network With Human-Chosen Weights</h2>
+        <p>If every piece of the neural architecture is fixed by the known PDE and chosen numerical scheme, the network becomes a conventional numerical solver. Its "weights" are not learned from data; they are set by human knowledge of the equation and discretization.</p>
+
+        <p>Neural differentiable physics lives between this solver end and the pure neural-network end. Known operators can be fixed. Unknown terms can be trainable. Couplings can be partly prescribed and partly learned. Because the whole object is differentiable, the model can be trained like a neural network while still carrying real numerical structure.</p>
+
+        <div class="solver-network-map" aria-label="A classical solver can be viewed as a fixed neural architecture based on known equations">
+          <div>all physics known</div>
+          <div>fixed numerical operators</div>
+          <div>classical solver</div>
+          <div>no data learning needed</div>
+        </div>
+
+        <h2>The Hybrid Recurrent Unit Encodes Fluid Operators</h2>
+        <p>The concrete architecture in the talk is a PDE-integrated convolutional LSTM for fluid dynamics. The recurrent unit contains blocks corresponding to convection, diffusion, and pressure gradient. These blocks are informed by the Navier-Stokes momentum equation. Some parts are fixed by PDE operators, while other parts remain trainable.</p>
+
+        <p>The learning step is much larger than a normal numerical time step, and the model runs on a much coarser spatial grid. That is where learning earns its place: it helps the coarse, fast model behave more like the high-fidelity simulation while the embedded physics prevents it from behaving like an unconstrained black box.</p>
+
+        <div class="hybrid-unit-map" aria-label="A PDE-integrated recurrent unit combines convection, diffusion, pressure, and trainable corrections">
+          <div>convection block</div>
+          <div>diffusion block</div>
+          <div>pressure-gradient block</div>
+          <div>trainable missing physics</div>
+        </div>
+
+        <h2>The Jet Example Shows Less Error Accumulation</h2>
+        <p>The channel-with-jet example compares a pure black-box one-step predictor against the PDE-integrated predictor. Both have comparable network size. The difference is that one has physical operators embedded in the recurrent unit and the other makes everything trainable.</p>
+
+        <p>On test cases with new jet positions and Reynolds numbers, the black-box model captures early dynamics and then becomes noisy or unphysical, especially at higher Reynolds number. The PDE-integrated model stays much closer to the CFD reference over long rollouts. The plotted errors show smaller growth and much less scatter across test cases.</p>
+
+        <div class="jet-result-map" aria-label="The PDE-integrated jet model reduces rollout error and scatter across Reynolds numbers and jet positions">
+          <div>new jet position</div>
+          <div>new Reynolds number</div>
+          <div>black box scatters</div>
+          <div>PDE-integrated rollout holds</div>
+        </div>
+
+        <h2>Kolmogorov Flow Tests Coarse Turbulence Forecasting</h2>
+        <p>The talk then uses two-dimensional forced homogeneous isotropic turbulence, also called Kolmogorov flow. The DNS reference is very fine, while the learned model operates on a much coarser grid and larger time step.</p>
+
+        <p>Both the black-box ConvLSTM and the PDE-integrated ConvLSTM can forecast some learned trajectory behavior. But the black-box version shows more noise and faster error growth. A pure coarse Navier-Stokes solver with an SGS model also fails because the resolution is too coarse and damps out the features. The hybrid model is valuable because neither pure data nor pure coarse physics is enough.</p>
+
+        <div class="kolmogorov-map" aria-label="Kolmogorov flow shows the hybrid model beating both black-box learning and pure coarse physics">
+          <div>DNS is expensive</div>
+          <div>coarse solver damps details</div>
+          <div>black box accumulates error</div>
+          <div>hybrid keeps dynamics longer</div>
+        </div>
+
+        <h2>Random Initial Conditions Make The Test Harder</h2>
+        <p>The speaker makes the turbulence test harder by starting from randomly generated initial conditions not seen in training and rolling out much longer. The black-box baseline fails badly. The pure coarse solver also loses the flow features. The PDE-integrated model still tracks the dynamics much better.</p>
+
+        <p>This matters because real engineering use rarely asks for only the exact training initial condition. Digital twins, design studies, and uncertainty work need new conditions. A model that only repeats familiar trajectories is not enough.</p>
+
+        <div class="random-ic-map" aria-label="Random unseen initial conditions reveal whether the model generalizes beyond training trajectories">
+          <div>training initial condition</div>
+          <div>random unseen condition</div>
+          <div>black box fails</div>
+          <div>hybrid generalizes better</div>
+        </div>
+
+        <h2>Fluid-Structure Interaction Needs Coupled Physics</h2>
+        <p>The same framework is applied to fluid-structure interaction. The model encodes FSI dynamics in the recurrent unit, and the interaction between fluid and structure is enforced through an immersed boundary method. The implementation is vectorized and differentiable in JAX.</p>
+
+        <p>The talk uses vortex-induced vibration and flow over flexible beams as examples. Again, the hybrid model reduces error accumulation compared with a black-box ConvLSTM. A weakly coupled approach, where a neural network separately learns a discrepancy and is then inserted into a PDE solver, can become unstable and even blow up. The speaker stresses that neural differentiable physics is not merely plugging a neural correction into an old solver; it is building a new differentiable hybrid solver-network.</p>
+
+        <div class="fsi-map" aria-label="Fluid-structure interaction uses immersed-boundary coupling inside a differentiable hybrid model">
+          <div>vortex-induced vibration</div>
+          <div>immersed-boundary coupling</div>
+          <div>weak correction can blow up</div>
+          <div>hybrid solver-network is stable</div>
+        </div>
+
+        <h2>Differentiable Solvers Make Inverse Problems Natural</h2>
+        <p>At the solver end of the spectrum, the group builds GPU-accelerated differentiable CFD and FSI solvers in JAX. A classical solver written this way is still physics-based, but it can also be differentiated through and trained or optimized like a neural network.</p>
+
+        <p>That enables inverse problems. For example, an unknown stiffness parameter in a vortex-induced vibration setup can be inferred by gradient-based optimization. The same idea extends to differentiable solvers for high-dimensional phonon Boltzmann transport equations used in nanoscale heat transfer in transistor-like geometries.</p>
+
+        <div class="jax-solver-map" aria-label="JAX differentiable solvers allow gradient-based inverse problems and high-dimensional transport">
+          <div>GPU differentiable solver</div>
+          <div>gradients through simulation</div>
+          <div>infer unknown parameters</div>
+          <div>extend to phonon transport</div>
+        </div>
+
+        <h2>Turbulence Is Not One Deterministic Movie</h2>
+        <p>The final major section turns to generative turbulence. A deterministic model tries to reproduce one DNS trajectory. But turbulence is a stochastic process: many different instantaneous fields can share the same statistics. Matching one movie frame-by-frame is not the same as learning the distribution of possible turbulent fields.</p>
+
+        <p>Training only on mean profiles or Reynolds stresses is also insufficient because two flows can share those statistics while having different coherent structures. The goal is to learn the probability distribution of the spatial-temporal turbulence process well enough to generate new physically plausible realizations.</p>
+
+        <div class="turbulence-distribution-map" aria-label="Turbulence needs distribution learning, not only one deterministic trajectory or a few statistics">
+          <div>one DNS path</div>
+          <div>many possible realizations</div>
+          <div>same statistics can hide different structures</div>
+          <div>learn the flow distribution</div>
+        </div>
+
+        <h2>Generative Models Create New Turbulent Realizations</h2>
+        <p>The talk describes normalizing-flow and diffusion-based models for spatial-temporal turbulence. Normalizing flows learn a complex distribution through invertible transformations. Diffusion models start from noise and denoise toward a physical field. These methods can generate different instantaneous flow fields whose statistics match the reference.</p>
+
+        <p>Scaling is the hard part. Direct 3D convolution on large turbulence data has severe memory limits. The later conditional neural-field latent diffusion approach compresses high-dimensional flow into a lower-dimensional latent space, performs diffusion there, and decodes back to physical space. This helps with arbitrary geometries and unstructured meshes.</p>
+
+        <div class="generative-turbulence-map" aria-label="Latent diffusion and neural fields scale generative turbulence beyond direct 3D convolutions">
+          <div>normalizing flow or diffusion</div>
+          <div>learn turbulent distribution</div>
+          <div>direct 3D memory is hard</div>
+          <div>latent neural field scales better</div>
+        </div>
+
+        <h2>Conditional Generation Turns Sparse Clues Into Full Fields</h2>
+        <p>The most practical generative result is conditional generation. Given sparse sensor velocities, low-resolution scans, or a low-resolution simulation, the trained diffusion model can generate a high-resolution flow realization consistent with that condition.</p>
+
+        <p>With only one sensor, the generated samples remain scattered because the condition is weak. As more sensors are added, the samples converge toward the particular observed realization. With low-resolution flow data, the method can recover high-resolution turbulent structure and statistics better than simple interpolation.</p>
+
+        <div class="conditional-generation-map" aria-label="Conditional generation reconstructs high-resolution turbulent fields from sparse sensors or low-resolution simulations">
+          <div>sparse sensors</div>
+          <div>low-resolution scan</div>
+          <div>posterior sampling</div>
+          <div>high-resolution realization</div>
+        </div>
+
+        <h2>The Q&A Gives The Practical Cost Boundary</h2>
+        <p>The speaker explains that training cost depends on the case. For some FSI examples, training is comparable to running one high-fidelity simulation, and then the payoff comes when the trained model is reused for many new simulations. If the model is used once, the training overhead may not be worth it.</p>
+
+        <p>The Q&A also notes that generative turbulence models can require expensive training and lots of data, and can memorize if overtrained. The proposed path is to use a physics-integrated neural solver for large geometry-dependent structures, then use a conditional generative model for small-scale high-frequency structures that have more universal statistics.</p>
+
+        <div class="cost-boundary-map" aria-label="Training cost pays off only when the hybrid model is reused many times and generative models avoid memorization">
+          <div>training has overhead</div>
+          <div>reuse gives payoff</div>
+          <div>generative models need data</div>
+          <div>physics base reduces burden</div>
+        </div>
+
+        <h2>How This Connects To Physics, Design, And Topology</h2>
+        <p>Topology and design problems often change geometry, material fields, boundary conditions, and parameters. A pure black-box model trained on a few cases can fail as soon as the design moves outside familiar territory. A pure solver can be too slow or incomplete if closures, microscale physics, or material evolution are unknown.</p>
+
+        <p>The chapter's lesson is to keep known physical operators inside the model and learn only what must be learned. For topology, this could mean fixed finite-volume or finite-element operators for conservation, trainable closures for unresolved effects, differentiable simulation for gradients, and generative refinement for missing high-resolution flow or stress structures.</p>
+
+        <p>The Q&A directly touches high-dimensional input fields like topology density or heterogeneous material properties. The speaker's answer is that if the field is continuous or structured, its intrinsic dimension may be lower than the mesh dimension, so dimension reduction and operator learning can help. But this is not magic: the model still needs tests across the design space and must not be trusted simply because it runs fast.</p>
+
+        <div class="ndp-design-bridge" aria-label="Topology design can use fixed physics operators, learned closures, differentiable gradients, and generative refinement">
+          <div>changing geometry or density field</div>
+          <div>fixed conservation operators</div>
+          <div>learn unresolved physics</div>
+          <div>faster tested design loop</div>
+        </div>
+
+        <h2>The Chapter In One Chain</h2>
+        <p>First, scientific simulation needs speed, robustness, and physical credibility. Second, conventional solvers can be slow or incomplete when closures, inputs, and parameters are uncertain. Third, pure neural rollout models can accumulate error, shift phase, and fail outside training conditions. Fourth, stronger black-box sequence architectures help but do not remove the physics gap. Fifth, physics may be partial, so a complete PINN residual may not be available. Sixth, neural layers can be connected to numerical schemes: residual blocks to time stepping, convolutions to spatial stencils, graph kernels to finite-volume operations. Seventh, a classical solver is a special network whose operators are fixed by human physics. Eighth, neural differentiable physics builds hybrid solver-networks with fixed known operators and trainable unknown pieces. Ninth, the jet example shows reduced rollout error under new Reynolds numbers and jet positions. Tenth, Kolmogorov turbulence shows the hybrid model beating both pure black-box learning and pure coarse physics. Eleventh, random initial conditions expose generalization. Twelfth, FSI examples show the value of embedding coupled physics through immersed-boundary structure. Thirteenth, JAX differentiable solvers enable inverse problems and high-dimensional transport solvers. Fourteenth, turbulence generation should learn distributions, not only one deterministic trajectory. Fifteenth, conditional latent diffusion can reconstruct high-resolution turbulent fields from sparse or low-resolution clues. Sixteenth, the larger design lesson is to build the solver into the network wherever the physics is known, and learn only the missing parts.</p>
+
+        <div class="note">
+          <p>The chapter's core idea: do not choose between a rigid solver and a loose black box too quickly. A useful scientific model can be a differentiable hybrid: numerical operators where physics is known, trainable pieces where physics is missing, and generated detail where only statistics can be trusted.</p>
+        </div>
+
+        <section class="lesson-review" aria-label="End of chapter understanding check for neural differentiable physics">
+          <h2>How To Test Whether You Understood This Chapter</h2>
+          <div class="lesson-review-grid">
+            <div><strong>Explain the middle path</strong><span>A pure network learns everything from data. A pure solver fixes everything from equations. Neural differentiable physics fixes the known operators and trains the uncertain parts.</span></div>
+            <div><strong>Explain why rollouts matter</strong><span>A one-step prediction can look good while repeated use drifts out of phase, grows noise, or becomes unphysical. The real test is whether the model stays credible after many steps.</span></div>
+            <div><strong>Explain the inverse-problem value</strong><span>Because the hybrid solver-network is differentiable, unknown inputs such as stiffness or transport parameters can be adjusted by gradients until simulated behavior matches observations.</span></div>
+            <div><strong>Connect it to topology and design</strong><span>Changing a shape or material layout changes the physics path. A useful design surrogate should keep conservation and coupling operators explicit while learning unresolved stresses, flow details, heat effects, or closures.</span></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,1533 @@
+So, good morning, everyone.
+Welcome to the DDPS seminar.
+Before we introduce our invited
+speaker today, let's go over
+some rules as usual. First of
+all, please mute yourself during
+the talk. If you have immediate
+questions, you're welcome to
+unmute and ask or otherwise,
+please use the chat room to pose
+your question and show that we
+will address your questions at
+the end
+in the q&a session. Second,
+today's seminar is open to extra
+external audience so no
+classified discussion is
+allowed. Finally, the talk will
+be recorded and upload to our
+YouTube channel. Now, let me
+introduce our speaker. It is an
+honor to host Matias Cho who
+goes by tear tear is currently
+an associate professor in the
+Department of Mathematics at
+Emory University since 2022.
+Before that, he held faculty
+positions at Virginia Tech and
+Texas State University, and he
+was a postdoctoral fellow at
+Emory University. He obtained
+his doctorate degree from the
+University of Lubbock and
+master's degree from the
+University of Hamburg, both in
+Germany. Thea is a Humboldt
+fellow and an active member of
+Siam. The focus of TMS research
+is on solving ill posed and
+large scale inverse problems
+with applications in different
+disciplines, such as image
+processing, dynamical systems,
+he develops and analyzed,
+efficient numerical methods with
+regularization, randomized
+methods, patient immersion, and
+scientific machine learning to
+date here will present his work
+on big data in real problems,
+promoting sparsity and learning
+to recognize, please enjoy the
+wonderful talk. Now without
+further ado, let me hand it to
+Tia by asking one random
+question. So besides Atlanta,
+and Savannah, what is your
+favorite city in Georgia?
+In Georgia? Savannah.
+So when I did you exclude
+Savannah? Yeah, maybe excluding
+Savannah? Okay. So maybe Athens,
+I need to go then to Georgia
+State.
+University of Georgia, which is
+nice town over there. Yeah, I
+heard that also. Okay. Yeah.
+Yeah, the stage is all yours
+right now. Okay. Thanks so much
+for having me, Tony. And for
+introduce for the introduction,
+I'm very excited to talk about
+some of my research with you.
+And and
+that can be also a discussion
+about about some new directions.
+And I'm very happy if you
+interrupt me if you have any
+questions or comment comments
+throughout the talk. So I would
+be happy about that. So
+let me start here. Let's see.
+Oh, yeah, there we go. I wanted
+to start with a little bit more
+of my introduction. So first of
+all, here in the front, you see
+Emory University. And in the
+background, you see the skyline
+from Atlanta. So that is a
+pretty city, as well. And I'm
+sitting right in this building
+here with a observatory over
+here somewhere at the side. And
+of course, it's not for right
+now, but very green, light green
+at the moment. So Emory
+University is nicely located
+close to Atlanta, or in Atlanta.
+And, yeah, it's always nice to
+visit that place. All right.
+As Tony already said, so my work
+is somewhere in the field of
+inverse problems, machine,
+scientific machine learning UQ,
+dynamical systems all involved.
+And I just made it a little bit
+schematic over here. So in in
+the intersection of these
+methods, nevertheless, central
+to all what I'm doing two major
+things, and that is a model and
+data. And with that, I think I
+fit somehow within the theme of
+the seminar, which is data
+driven, physical simulations. So
+what I'm particularly interested
+in is inverse problems. So here
+I'm did a very simple sketch of
+what are they derive more of
+what I assumed what is data
+model driven? If I have just
+data given my model model, less
+information could be just a line
+and I cannot extrapolate
+information out of this regime
+where my data gives me good
+information.
+On the other hand, if I would
+have just a model, the model
+lines could go lie everywhere.
+When I don't have any proper
+information. However, both
+together might give me good
+predictions for future events or
+for
+Why
+things we haven't observed.
+So this is a big regime. And
+today, I want to talk
+specifically about inverse
+problem and how, how better to
+illustrate this with some
+images. And I give here, just a
+simple image, the glaring
+example, this one here, let's
+assume that it's all true image.
+And let's assume we have some
+blur in there. And we assume
+this is done by some forward
+operation, maybe some kernel,
+some Gaussian kernel, and we get
+a blurred image. And actually,
+interest is coming from a
+blurred and noisy image to go
+back to the true image. So we
+can write this down as a linear
+problem. And we have done that
+many, many times, before going
+the opposite direction, is
+essentially just inverting the
+operator, and we should get back
+our image. If we were to do that
+here in this example, that leads
+to a total failure of recovering
+the information we actually
+want, although I have the true
+model in there. So what happens
+so the part of inverse problems
+is that it is ill posed meaning
+noise in the data, or in the
+model or in the Numerix, even
+though can be amplified. So and
+that is summarized by the notion
+of powerlessness, or ill
+conditioned of an operator and
+we say a problem is ill posed if
+a solution does not exist, is
+not unique, or does not depend
+continuously on the data. And
+that goes back to what Mr. We
+are seeing here on the very
+right.
+All right, that that is more or
+less the stage of inverse
+problems and illustrated with
+some, some images. And we can
+write this in many different
+forms. And I don't want to take
+the Bayesian approach, I will
+here just look at the
+variational approach, we
+typically have a data
+fidelity term or loss function
+between the model and the data.
+And to stabilize the data fit,
+we need some prior knowledge,
+which is encoded in typically
+some regularization. And this
+regularization might depend in
+some of some hyper parameters,
+which are imposed regularization
+parameters, or in your, in your
+Gaussian, or if you have other
+distributions, where your
+regularizer comes from some
+other terms, which might
+influence
+your prior knowledge, which you
+want to introduce into your
+system. So as we have seen
+earlier, just looking at the
+data, fidelity, John might lead
+to an ill posed problem, and we
+need to establish
+this standard example here is
+taken off problem where we have
+a data fidelity form over here
+with some regularization term,
+where we want the solution to be
+close, yes, somehow, in some
+sense to zero. That is the
+standard setup. And of course,
+we are doing this for many,
+many, many years. But how Where
+are still the challenges? And
+one thing is definitely the
+dimensionality is if we think
+about, yeah, training a neural
+network as an inverse problem is
+definitely the dimensionality
+involved in that or if we have
+reconstructions of some medical
+MRI images, which are four four
+dimensional, then this problem
+goes fast out of hand and
+standard methods do not
+necessarily apply. Another
+thing, which I already
+talked a little bit about is the
+regularization. It's how do I
+include this for example, how do
+I take a regularization
+parameter, this is up royally
+not necessarily known. It is
+sometimes derived from the noise
+distribution of our problem, but
+that is not necessarily there.
+And the last thing is probably
+the uncertainty quantification.
+If we want for large scale
+problems, also to know a little
+bit about how certain we are
+about our inverse solution, then
+this one is typically
+computationally very expensive,
+and this is a challenge to work
+on that.
+All right, I will mostly talk
+about the first two parts and
+for now at least ignore a little
+bit uncertainty finding
+vacation but although it is a
+topic on its own.
+Alright, more specifically, I
+want to talk about
+a new project and new method we
+developed and this is what we
+call variable projected
+augmented Lagrangian. And now
+we'll get into a lot of details
+over there, the Arctic paper you
+can find over here.
+We're lucky to get some funding
+and I want to acknowledge NSF
+there and this is a joint
+project with Rosie we're not and
+Petrus three nails.
+All right, let's dive into that
+and look at the following. I
+want to solve the following
+inverse problems here I have a
+data fidelity term and you see
+I, for simplicity, I'm looking
+at a linear problem and some
+regularization term. And you saw
+taken off regularization has a 2
+million square here we look at a
+one norm and some matrix d over
+here as well with some operator
+which
+we want to project our solution
+onto. And typically what we want
+is sparsity in our solution and
+L one
+zero type norm is not suitable
+or computationally too
+expensive, we use the one norm
+over here, which promotes
+sparsity in general is rip
+condition is satisfied and so
+on. Nevertheless, we have done
+that many times. And this is
+typically referred to as a
+generalized lasso problem, the
+generalized come through an
+operator da, otherwise, we just
+call it lasso problem.
+All right, and some
+regularization parameter over
+here.
+All right, so to give you an
+example, where these type of
+problems come up, and this is
+definitely a similar
+signal processing, more
+specifically signal compression,
+where the signal needs to
+compress and you want a lot of
+pieces to be zero compressed
+sensing. And you already see
+these are all topics which came
+up especially in the late 2000s
+and started 2000s. And
+dictionary learning is something
+else but also denoising image
+deep learning and other things,
+I will talk about a couple of
+potential applications, it's a
+wide variety, which we can look
+at.
+So, this generalized lasso is
+computationally expensive, since
+we need iterative methods to
+solve this, we cannot directly
+solve it like the chicken off
+problems, if we have not enough
+not too large problem, and we
+can just invert but here we
+typically need iterative method.
+And it is computed internally
+more challenging than for
+example, that
+then the point I already made
+also here, we typically don't
+know the regularization
+parameter, how can we determine
+this parameter, especially in
+the sentence, or in the settings
+of L one regularization, which
+is not standard, many tools have
+been developed for the L two
+norm for the chicken off problem
+with the L. One, it is a little
+bit harder.
+Of course, there is a zoo of
+methods out there to attack this
+generalized lasso problem. And I
+stated a couple of
+methods over here. And if you
+want to, I actually put one more
+animal into into the zoo, but I
+want to convince you that there
+is a good reason and to use
+these kind of methods. Alright,
+to start with, I just want to be
+on the same page that everyone
+can hopefully follow. I want to
+introduce ADMM and derive it and
+just see how we develop the
+variable protected augmented
+Lagrangian.
+Alright,
+let's keep going. So this was
+our problem over here. And we
+can reformulate ages by
+introducing just a surrogate
+variable, here, the y. And what
+we do is we are just enforcing
+the Y to be equal to dx. We're
+just replacing this piece. In
+general, that might be a bad
+idea. Everyone who has some
+optimization will say okay, a
+constrained optimization problem
+is significantly harder than an
+unconstrained optimization
+problem. Why would we do that?
+Well,
+We'll get to that. So the first
+thing you do is okay, I have
+this constraint problem, I form
+a lot the logwatch function and
+include also a penalty term. And
+this is a quadratic penalty term
+where we call this the augmented
+Lagrangian here, I have my
+Lagrangian multipliers over
+here. And this is my augmented
+Lagrangian where I not enforce
+it strictly, but have some
+penalty term when y is not equal
+to dx.
+And
+you see that the last two terms
+are some quadratic terms. And we
+can reshuffle these bowls and
+just reformulate this both
+together to have it in this
+form, which is easier to, to
+handle. And then the c takes the
+form of our Lagrange multiplier
+with some some factor over here.
+Of course, the lambda over here
+is an additional penalty
+parameter, which penalizes our
+nonconformity to our constraint.
+All right, this is augmented
+Lagrangian. And before I start
+talking about ADMM, again, I
+want to scale back and say,
+let's look at a generic
+function. And for simplicity,
+let let f be strictly convex.
+And I want to assume it's
+separable. Meaning I have two
+sets of variables, which have
+different meanings or which I
+can separate, you can think
+about, if you are familiar with
+a lot of training neural
+networks, each layer has a set
+of
+parameters and they have
+different meanings, they are
+interact,
+but they have different meanings
+or might live on different
+scales, right, or you may have
+some linear parameters and some
+nonlinear parameters.
+How can you solve these kinds of
+generic problems. So actually,
+what we have seen this, we just
+artificially introduced variable
+in our previous slide. So this
+one can come through an Yeah,
+reformulation of a separate into
+a separate problem, or naturally
+appearing in applications and
+one example is super resolution,
+where you have a lot of small
+images, and you want to
+reconstruct largest image with
+sub pixel information.
+Let me tell you what we could
+do. So the first approach is
+just ignore that we have two
+different variables, right, and
+just combine them both together
+and take your favorite method to
+use an iterative optimization
+method, maybe that's a some
+gradient descent method, or
+some, some BFGS, or whatever
+optimization method you want.
+Over here, and you want to
+minimize that, go back. Sorry
+for that. And this is one
+approach, that oftentimes
+suffers some slow convergence,
+especially if the Para variables
+are on different scales or have
+very different meanings. To
+combat this, there are typically
+two approaches which you can use
+one is called in the descent,
+what you're doing there is
+you're taking your favorite
+optimization method, again,
+going in one direction, a step,
+and then in the other direction
+step, and you're continuing this
+process over and over again.
+And there's a third approach,
+which is called alternating
+direction, and the alternating
+direction, instead of going a
+step in a direction you're
+optimizing in this direction,
+and then you optimize in the
+opposite direction. And you
+continue this approach over and
+over again.
+So and I think this is lost. In
+illustration, over here, we are
+very close to our ADMM method,
+alternating direction, we had
+two variables in here, and we
+are alternating essentially over
+this verb. So that is ADMM.
+Essentially, essentially, you
+have an update on your parameter
+X, minimizing this problem over
+here, then you update your y
+minimizing this problem and the
+Lagrange multiplier and I don't
+want to say too much that you
+can update them as well. Instead
+of increasing the penalty
+parameter, you can use this
+approach. So now, let's digest
+this a little bit. And what what
+just happened. So first of all,
+we have here suddenly linearly
+squares problems since our y is
+constant. This one is now easy
+to solve, right? We know we can
+solve a linear least squares
+problems, since y is constant.
+That's perfect, wonderful to do.
+The second thing is this guy
+over here, if you look at the
+why it goes in here and here and
+is not convoluted by a matrix
+means all these optimization
+problems are independent, first
+of all, and it is the so called
+shrinkage problem. So we can
+actually have an analytic
+solution for that, by this
+computer.
+It's not complicated, but but it
+might have an easy update for
+me. Okay, details, we don't need
+to know about this, right. But
+this is fairly straightforward
+and to do.
+And then the last part is the
+update on the Lagrange
+multipliers.
+So if we look at this method,
+where is the computational most
+effort we need to put in that
+is, of course, the first part
+over here, then I have some
+matrices A and D, and I need to
+solve this linear
+problem. So if I take a standard
+method, it will be somehow of
+the complexity of some however,
+many iterations I took in my
+auto iteration, times the
+dimensionality times and square
+some somewhere around this. But
+of course, since line four is
+the most expensive one, we
+typically do an iterative method
+to solve this. And we don't even
+potentially accurately solve
+that maybe go just a couple of
+iterations, right?
+Another way is to do pre the the
+pre computed decomposition of
+these matrices before and
+because you're always applying
+the same matrix. So you can
+could do something like that as
+the factorization if you
+consider consider the normal
+equations, right? Something like
+that.
+All right. So, so far, so good,
+and that is ADMM. But I didn't
+tell you that there is actually
+a fourth option of what we
+discussed earlier. And the
+fourth option is the variable
+projection.
+Before we did optimization
+optimization as updates that
+updates that or ignoring, but
+you can also hibernate this
+update in one direction, and
+optimize in the other one.
+And this is what we call a
+variable projection. And we can
+actually write it in this form,
+like I showed over here and
+update just of X and somehow
+eliminate the second variable
+within the first burger.
+Okay, so this one was actually
+developed in the early 70s by
+cola era. And that was
+particularly that for the
+separable nonlinear problems,
+where you have a of x where x is
+a nonlinear operator or
+nonlinear parameter, determining
+your operator, and y is a linear
+variable. So for this, it has
+been developed. And we could
+easily apply this also for, for
+the generalized lasso approach.
+So all we need to do is changing
+line for when we do an update on
+the linear problem, and then
+solve for the second one. I want
+to just to emphasize over here
+that we do an X actually
+opposite to what what, what the
+variable projection was intended
+to. And that is
+updating the linear and
+optimizing over the nonlinear
+because the non year is actually
+straightforward. So this is what
+we call them variable projected
+augmented Grandstream.
+And if you look at this,
+did I have it over here? I think
+my might have put it in the next
+slide. This is a projected
+problem over here. And several
+nice things happen to to this
+update is if I compute gradient
+information, the nonlinear
+problem goes away because we
+have optimality. So a lot of
+computational pieces will get
+easier.
+Here, you could, for example,
+steak as the step direction, the
+negative gradient, right
+That would be one option. But
+there are other choices, right.
+And this is just one one of.
+And I also could compute a line
+search parameter actually, I
+could, for simplicity here, just
+use the linearize line search
+parameter, the optimal
+linearize, nine search
+parameter, and then it would be
+something like a conjugate
+gradients, just one conjugate
+gradient step in my linear
+problem.
+And the content computational
+cost, if I'm looking at this
+algorithm, it just reduces here
+from n squared to n. That is,
+what the differences. And since
+we are now in the realm of
+standard optimization methods, I
+could use any optimization
+method to use for my for my
+search direction, and standard
+stopping criteria as you can
+impose on on this unconstrained
+optimization.
+All right, so I think it is a
+good time to first look, look at
+an example of how this works.
+Let's, let's let's let's see
+that, or I just summarized
+everything, again, over here was
+a particular choice. This is
+just a simple choice I can think
+of to make it
+work, then my thing is about
+they're just matrix vector
+multiplies. There's no inversion
+in there. And the algorithm is
+very straightforward. So there's
+no SQL, which I need to pack in
+there, like with ADMM, and so
+on, this will just need per
+iteration to matrix vector
+multiplies with A and D and one
+transpose or one, I joined for
+that for each.
+All right.
+Before I show the Numerix, just
+just a quick and I put a couple
+of things under the rock, but we
+can show that if we use the
+variable protected romantic
+Lagrangian method, and we can
+show that the method will
+converge, there's uniqueness, we
+need to show uniqueness of the
+projected problem. And then we
+need to show that the variable
+projection method converges, and
+then later on that augmented
+Lagrangian method converges, and
+we are coupling all of these
+elements together, then into
+one.
+All right, so now now we have
+time for some numerical
+experiments. Let's start with a
+couple of things. First of all,
+this is a de noising problem,
+the simples what we can think of
+so the operator A is just the
+identity. And the D operator
+here comes from total variation,
+meaning what I actually want in
+the derivative derivative in
+each direction, I want just a
+few jumps, right. And that is
+what the D operator does over
+here. So it's a two D, two,
+total variation,
+we are comparing to ADM, and
+there we use LS QR for the inner
+solve. And here for just
+illustration, we pick a
+regularization parameter 10 and
+a standard stopping criteria
+takes 10 to the minus four. And
+let's see how both of these
+methods perform. So, here on the
+left, you see the iteration
+count and the red residual over
+here and a lock 10 And here is
+the arrow over here. So, what
+you will see is that the
+residual and also the arrows go
+nearly to the identical value.
+So relative errors are nearly
+identical.
+But what you see see is ADMM
+uses less iterations, then we
+use
+however, this is an arbitrary
+count, right? Because what does
+iterations really mean? So, we
+want to look at what is the
+actual work we are doing. So, we
+are looking at the wall clock
+time.
+And there the picture looks very
+different. If we look on the
+left, we are looking at sizes of
+this image and just increase the
+sizes. And we also compare to
+taken off solution of course,
+taken off as just a linear
+invert inversion and the time is
+very fast. However, the
+reconstruction will be terrible.
+Because that is not we want
+don't want an L to
+regularize over here. And if you
+look at the wall clock time,
+that blue one the V V Powell
+variable projection and method
+is significantly faster, despite
+they both produce essentially
+the same image, the curves of
+the relative error lie on the
+same path over here
+And if we look at the timings
+over here, how ADMM Fizzers
+report looks like it is, yeah,
+between seven and nine speed up.
+And I also looked at the number
+of
+matrix vector multiplications,
+which I needed within ADMM. Or
+deeper
+that I was already encouraging.
+Let me show you another image
+over here that came from the
+beginning.
+The girl was at all earring over
+here. And what I just did, I
+did an inpainting example. And
+there's essentially an indicator
+function, which we have over
+here. And what I did as a small
+test is what happens when I
+change my regularization
+parameter, too much timing and
+to my relative error. And you
+see, if I take a small
+regularization error, then my
+timing is very bad. And if I
+take it too high, it will be bad
+as well. But when I hit around
+about a good reconstruction,
+that method is fairly fast.
+So that shows the importance of
+regularization property. But how
+do I select this work?
+And there are many different
+methods already out there. As I
+mentioned, discrepancy
+principle, up rd, and
+generalized cross validation,
+they're all methods, which we
+can utilize. However, they get a
+little bit computationally
+expensive. And they don't
+generalize to the L one, so
+easily more needs to be put in
+there. What we took a different
+approach, we said, we want to
+learn the regularization. So
+what we assume is there is a
+mapping from our observation to
+our regularization parameter.
+And I put this boldface here,
+since we think about this not
+only as a regularization
+parameter, some hyper parameters
+or some information about your
+priors,
+you can construct an neural
+network, which you parameterize
+to approximate this mapping, and
+you learn this mapping. And
+here, I just for completeness, I
+just wrote down a new on the
+network, but I think I don't
+need to, in this crowd, go
+through many details there, you
+know, what a neural network is,
+you're mapping from B to the
+regular zation. And it's
+parameterised with all the
+weights and bias terms, and you
+will want to learn on the
+parameters in this network to
+get a good mapping from B to the
+regularization. That means, once
+I've learned this,
+a new B, I'm getting, I just
+need to forward propagate
+through my network and get a
+regularization.
+Just some details on the how we
+pick the loss function and so
+on. And let me just summarize
+what we do the learning is an
+offline phase, we generate some
+training data, some B and some
+Optima regularization parameter,
+we can do that since we are in
+the training phase, and we know
+the underlying truth over there.
+Then we set up the neural
+network and learn the neural
+network from this data in the
+offline phase, we get a new B
+propagate forward, and then we
+can compute the inverse problem.
+So notice here, I don't want to
+throw away the physical model.
+Right? I'm learning just on the
+prior, I don't learn the mapping
+from B to the reconstructions. I
+want to still have the physics
+in my system, but I want to
+induce inflammation on my
+prayer.
+All right, here is a simple
+example for heat equation one
+the heat equation, just proof of
+concept. And he I looked a look
+at the taken off problem
+generated a bunch of random
+signals with some noise and I
+even chose different noise
+levels right with this, I can do
+this all however I want.
+I compare this methods to UPI,
+ie GCV. These are standard
+methods and discrepancy
+principle I cut out because
+otherwise you wouldn't see
+anything in the picketers that
+perform underperformed
+significantly. There's another
+method which is on on the
+optimal experiment comes from
+optimal experimental design. And
+then I use two different neural
+networks. One is a dnn and one
+is an RM or extreme learning
+machine, which is just a linear
+network essentially
+Without
+activation.
+So as we learn on some training
+data, so let me show you the
+results over here. On the left
+hand side, you will look at the
+test set. And we look at the
+difference between our recovered
+parameter and the optimal. And I
+use all these different methods,
+this is should be an I O ID
+sorry for that. And, of course,
+it should be around zero, that
+would be optimal, right. So, to
+hit the optimal parameters, and
+you'll see, the DNS performs
+extremely well over here
+compared to any of the
+statistical methods, or to the
+linearized model.
+If we translate this in the
+reconstruction arrow over here,
+in the right hand side, you will
+see, this is the optimal I can
+do and the black over here and I
+can zoom in and you see, the dnn
+pretty much captured very well.
+Right.
+Okay, that is good.
+All right. So, the disadvantage
+of of standard method is,
+is that it is very expensive to
+compute the regularization
+parameter, and it is not always
+optimal. But you don't need any
+learning process within that why
+dnn seven yd s needs learning to
+generate you regularization
+parameter.
+But the dnn is performed
+extremely well and adapted to
+your data. Once you get a new
+data in, you get a new
+regularization prompt. And
+especially for these data, which
+I was presented.
+I took one more example from
+tomography over here, which is
+also a linear operation. And I
+slowly curve back to the
+generalized lasso problem.
+Let me go back. If you don't are
+not familiar with tomography
+tomography,
+you essentially have a source
+and a receiver over here and
+you're having line integrals and
+you
+compute that attenuation
+coefficient, and you are
+essentially put your data in one
+line you are observed over here,
+and then you're rotating and
+input all the data on here. But
+from this, we call it sinogram.
+You want to reconstruct the
+image. And this is the shape
+Logan Phantom. And they are
+randomized ship logon we use for
+training, this data over here.
+The set up is as we had before,
+with some noise levels. And I
+don't want to go into the
+details only that we use a
+regularization now, which is the
+generalized lasso problem, where
+we cannot so easily use
+statistical standard statistical
+methods to estimate the
+regularization. And here are
+some test images or training
+images we have over here. And
+let me just do quickly, the dnn
+set up of course, this we are
+operating on images. So we are
+talking about Convolutional
+Neural Networks makes the
+training easier.
+Small mode not on that actually
+training this network to the
+regularization form it is
+extremely easy. You're going to
+one dimension, this is not large
+dimensional problem, right,
+you're going from a large
+dimensional to a one dimensional
+part which is
+piece of cake for these neural
+networks.
+Okay, that is all set up. How we
+learn we do use atom and mini
+batches with certain learning
+rate over here.
+And I look at the two different
+dnns, the dnn and
+the shallow network over over
+here and you see the optimal
+regularization parameter
+compared to the to the optimal
+compared to the learned
+regularization parameter. And if
+this one is
+around this line over here would
+be best and you'll see that dnn
+does pretty well, the LRM cannot
+learn so well. Because it's a
+linear mapping, you might get
+even negative regularization
+parameters, which in this case
+is not of any value. Okay, so
+how how does now the performance
+look there? If I look at the
+distribution of my discrepancy
+between my learned one and the
+optimal one, I see I'm very well
+performed very
+Well With My dnn
+looking over here with a
+relative error, and the density
+over here, the optimal is
+highlighted in black, and the
+dnn, I think we can ignore the
+linear the neural network, it
+performs pretty well. And I want
+to point something out, which I
+was surprised about. And that
+is,
+why is our new neural network
+better than the optimal one that
+cannot be? And
+I, at a certain point, notice
+that the optimal regularization
+parameter, I numerically solved.
+And in some cases, it didn't
+find it wasn't a local minima.
+And it never found the optimal
+one, why the neural net network
+was able to compensate even for
+that, which was very impressive.
+Of course, we did a lot of other
+experiments, for example, took
+out total out of sample images,
+which generated still very sick,
+very good results. All right,
+I'm circling back to a couple of
+applications to give you some
+time. Give us some time for for
+discussion. This is a very
+exciting recent work, we are
+working on five d MRI, cardiac
+MRI, and if you asked me what
+five d MRI is, I don't know what
+the five d actually means. Yeah.
+That
+it sounds strange, but it comes
+not from me, okay. The point
+five d means actually, it comes
+through two different phases,
+respiratory and the cardiac and
+you want to reconstruct
+3d volume in time was a
+respiratory and cardiac phase.
+And this was a project we, we
+just recently started, and we
+looked at ADMM, which they
+standard used, and we just
+implemented V. Powell, on a very
+small scale. And this is a
+timing from 14.4 hours to 4.5.
+And that is just just the
+simplest form we could do. That
+is just the starting point. And
+if you think about you want your
+results of a cardiac image, very
+fast, 14.4 hours is not
+reasonable. But 4.5 goes already
+in this right direction.
+Nevertheless, in the beginning,
+I showed you a speed up of seven
+to nine, where they're not there
+yet. So there's still something
+to do. There's also other two
+methods we can use or under
+sampling, where we are now, not
+yet. Nevertheless, the sizes of
+the problem are extremely large,
+and data size is extremely
+large. And
+these methods are
+performing pretty well on this
+example.
+A question I often get is,
+what is where's the difference
+between variable projection
+augmented Lagrangian compared to
+ADMM.
+And then ADM m where you don't
+solve all till the very end,
+actually, we never do this
+right, you have an inexact ADMM
+and that's what most people are
+using. However, in ADMM, the Y
+is always fixed in the first
+problem to optimize over x or to
+find an x here, we don't need
+this here, it is adopted because
+we are on a different manifold.
+And this I just illustrate by
+using for example, a linear
+different regularization,
+different step size different
+learning rate over here, which
+is not just the linearized one,
+if I choose that, I go to the
+con convergence much faster over
+here in just 40 iteration or 30
+iteration compare to 120. Why
+the step lengths so is
+significantly different. So the
+methods are really different
+there you are operating on
+different manifests.
+Because there are so many
+applications I want to just show
+you some I played around with
+which are just fun to do. And
+this one is for example,
+trend graph trend filtering
+where with missing data, so you
+have here, for example, the
+roadmap nap of Minnesota, and
+you have some trend in the data,
+and there are some missing black
+dots and you want to read,
+reconstruct this information of
+the two data and you can
+Do that RIA L one
+regularization, here, the
+operator looks a little bit
+different than just the
+standard, find a difference.
+One, but it is fun, fun to play
+these kinds of problems. And
+they they are solved very fast.
+Here's another problem, which I
+mentioned already in the
+beginning. So which is super
+resolution, you have a bunch of
+small resolution images. And now
+I put 10. A Tony on the spot.
+What do you think what the is?
+Can you identify what the image
+is?
+An astronaut. Yeah, exactly.
+That's an astronaut. And if you
+actually do the sub pixel
+information, and you do the
+reconstruction, this is a true
+one in this reconstruction I'm
+getting it was the power over
+here. I don't know if I have
+another example. I have one
+more. But that is already in my
+conclusion, I think I finished
+up hopefully, about in time. So
+my first three years federal
+protection is under utilized.
+And it is fun to play with that
+and can give surprisingly good
+results and many different ways.
+We used it also and, and
+training neural networks,
+separable neural networks, which
+I didn't talk about today. But
+if you're looking at some spots
+recover with some lateral
+problems, people have some fast
+convergence. Of course, this is
+just the beginning of things we
+are investigating. One thing is
+I so far, I talked about
+nonlinear linear operators,
+Nanya operators, we don't need
+to change our code. Our code
+works for nonlinear operators as
+well. But we haven't played with
+that as well. So if there are
+some nonlinear PDE is involved
+with that, that will be very
+interesting. We just last week,
+try to do
+dictionary learning here you see
+the first results, actually, I
+have already better results. So
+we ran it already twice and the
+dictionary learning but more to
+come in the future. I didn't
+talk about much about changing
+the norms, you can do this with
+a separable function as well. If
+you are separating the splitting
+of the variables, you can
+leverage, there are some points
+as well.
+My collaborator works on joint
+inversion at the moment, if you
+have two different modalities,
+and you want to join this
+information. For example, in sub
+surface imaging, we are doing
+that right now. And looking at
+some results over there. I
+talked very briefly about
+convergence. But there's still a
+lot more to do. And where I want
+to go and I spent some time on
+randomized methods, I want to
+include them in this framework
+as well so that we can go to
+larger dimensions even then we
+are doing right now, I talked a
+bit about the selection of the
+regularization parameter. But
+there is still lots to do and
+depends a little bit still on
+the operator, how can we get
+information out of that, that's
+also something we are currently
+working on. And I just showed
+you this simple version of the
+puzzle with a certain
+descent direction, and step size
+selection. But we can generalize
+this. And we can use different
+things. We already started that
+as well. And it works fine. But
+there's still a long way to go.
+And with this. I'm happy to take
+any questions. Thank you,
+everyone.
+Yeah, thank you very much, RTF
+for the wonderful talk. I
+believe everyone enjoyed his
+talk as much as I do. So now is
+the q&a section. So please feel
+free to unmute yourself and ask
+questions.
+Yeah, maybe I can start by
+asking you a question. So I am
+curious about
+the neural network approach for
+getting the the regularization
+parameter. So I can see that
+getting the parameter in the
+online face is cheap. But in the
+offline phase, you have to solve
+for the optimal parameters. So
+how expensive is that labeling
+process? Actually, you hit the
+nail on the head, you know that
+that does expand invensis part
+at the moment over here.
+And
+then you're training the neural
+network is a piece of cake,
+really that that is the easy
+part, but finding the optimal
+parameters. Yeah, not
+necessarily even convex
+problems. And we we went already
+in some directions that is
+reinforcement learning that will
+We are learning it on the fly,
+what a good parameter is not the
+optimal, but ignoring what the
+optimal is but trying to
+reconstruct the image of the
+optimal parameter. So trying to
+ignore that one. However, so far
+that is also computationally
+expensive and reinforcement
+learning is not really proud to
+converge very fast. So, that is
+something we are working on
+right now. But
+good question. Very good
+question. I see. Yeah, thanks
+for the answer. So,
+so, is there a question from the
+audience?
+Yep.
+Yeah, thanks for great talk. I'm
+PhD from UT Austin. So, I just
+following
+single and quiet questions, I
+just follow that and
+I think there is a paper that
+people reach the, the author,
+they, they train the trainer
+parameters in the inverse
+problem framework, they train
+the
+regularizer and
+regularization parameter at the
+same times. And they achieve a
+better than the normal thicken
+up regulations. I mean, in that
+work is like, not only trained,
+optimum regularization
+parameter, but they weren't so
+trained.
+I think the inverse map at the
+same time, so, yeah, I just
+mentioned that. So, you can look
+on that and coloration here are
+talking about 10 Bhutan's work
+on then.
+No, no. Okay. Okay. So there is
+some work on there as well. And
+what we try to avoid over here
+is learning the inverse map from
+from b to x, then, that is the
+inverse problem. And I know that
+there's tons of work out there,
+and it's very interesting, but
+we wanted to keep the physical
+model really in place. We didn't
+want to touch this piece. But
+you're right, there's a lot of
+interesting workout.
+Nevertheless, whatever paper you
+have, there in mind, please send
+it to me, I'm very interested
+about developments, which are
+their true. Yeah, it'd be
+because what I have in my eyes,
+you know, like,
+instead of, we just waste a
+resource to train only the
+regularization parameter, right?
+Learning, like the the approach
+learning regularizer they also
+have the same meaning. They
+include the optimum
+regularization parameter with
+the priors, like the,
+like the proper regularizer for
+inverse problems. So which, like
+we have, like one,
+one cue to birth, something like
+that, instead of only white
+realization, I wish. So to be
+honest, we That's why I did it a
+bold face. So we learned not
+only one regularization
+parameter, we did multiple
+different things. One thing is,
+for example, what we learned,
+which was was interesting, how
+many
+iterative assaults I should do
+in my inversion process, because
+that is, for example, implicit
+regularization, right? So then I
+have my V, and I will get how
+many iterations? Should I When
+should I start this my
+directions? Right? Other things
+is, for example, you might want
+to have
+a mean or some covariance
+information, right? So you want
+parameterize covariance or so
+you want to maybe learn that
+one? Yeah, this is these are all
+different option, which, which
+is really great. And we haven't
+explored everything yet. But I'm
+really very curious. Please send
+me the paper or the link to the
+paper. Yeah, thank you. Yep. And
+yeah, I just like, one one was
+not like you mentioned about big
+data. inverse problem, right?
+And then if we have big data,
+and we need to do further
+optimize around for training
+data, I think is very expensive.
+Yeah. So there's some work we
+did on iterative. So it's on
+sketching, it touches sketching.
+If you have your larger and you
+just use pieces of your data.
+And there's relationship is
+between the sampled
+regularization parameters a SAM
+add regularization to the sample
+problem to the overall
+regularization parameter. And if
+you're doing interdit sell
+something you can actually learn
+the regularization, why you are
+going, which is very
+interesting, and we applied this
+For for linear problems, this is
+called slim tic sample limited
+memory taken off. Or then for
+neural networks. This is called
+Sample limited memory training.
+So slim train. Oh, do you have
+that work on your watch scholar?
+Yeah, it should be. It's called.
+If you look slim train, then you
+will find it. I hope so. Okay,
+thank you. Great. Yeah, thank
+you so much.
+Okay, so it gets some fruitful
+discussion. So are there any
+more questions from the
+audience?
+So, if we try to
+this is, this is in down. I'm
+currently a postdoc at Purdue
+University. And thanks for your
+wonderful talk. My question is
+related to Kim, maybe turn to
+page 23rd Or somewhere, or you
+have figures showing the how the
+accuracy will change with
+respect to the choice of
+regularization.
+This one, yes, yeah, this figure
+on the left top or at the top?
+And I'm wondering that for the
+data driven case, we actually
+have the noise model, right. So
+we have some principles that we
+can actually choose a relative,
+okay, parameter mu. Right. So
+maybe not an optimal for each
+measurement, but it's an okay,
+one. So my question is that was
+a reconstruction be quite
+sensitive to the choice of mu
+when it is near this relative
+good regularization parameter?
+That is an extremely good
+question, right? And first of
+all, I want to answer, it always
+depends on the application,
+right? So how sensitive your
+regularization parameter is,
+right? We see here, for example,
+their regularization parameter
+with 10 to the minus four and 10
+to the minus two, will give a
+give me the pretty much the same
+result, right? And that
+if we have a good method to just
+a priori, estimated, plugged in,
+right, that that will definitely
+help. If I'm looking though, at
+the discrepancy principle, or
+yeah, you UPI E or generalized
+cost value, for large scale
+problems, they're extremely
+expensive, because you need need
+to invert this system multiple
+times. Right. So and that
+becomes very expensive. And
+that's why we are currently
+working on using the DNS
+particular for this problem, but
+also including information about
+the operator. So that not only
+be but also the operator, just
+some small information is in
+there, that we can have a quick
+information about
+the regularization parameter,
+and you're right, maybe
+additional information, maybe
+noise variance. If I know that I
+should plug it in, right, I can
+get out. There's something out
+and I would love to include
+that. Yeah.
+Thank you, thank you for your
+answer.
+I yeah, I just like have the
+following command on this one as
+well, there is active subspace
+methods for inverse problems.
+So,
+actually, I did we shot on that
+and if we apply an active
+subspace
+or inverse problem here, so we
+all latch, like over
+regularization parameter, we we
+we still get good results like
+the others a real robot, not
+squid over realisations
+parameter. So you will not have
+the inaccurate go blows up on
+with the lacks regulation
+parameter.
+Maybe I don't follow, follow I
+you saying you want an iterative
+approach to just use
+large singular values
+essentially, to reconstruct, or
+do you want to? Yeah, yeah. can
+apply that. Yes. Yeah, that
+would be an iterative
+method. And but that is
+typically more for L to
+regularization. For our one, it
+becomes a little bit more
+difficult, right?
+Yes. Yeah, I agree. Yeah. Thank
+you.
+Okay, so if there are no more
+questions, let's thank antiA for
+his wonderful talk and sharing
+his excellent results of us.
+Okay.
+Recording here

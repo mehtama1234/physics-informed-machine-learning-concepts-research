@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chapter 118 - Make Ocean Models Cheap Without Forgetting The Eddies</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="sidebar">
+        <h1>DDPS Study</h1>
+        <a href="index.html">Start</a>
+        <a href="review-path.html">Review Path</a>
+        <a href="plain-words.html">Plain Words</a>
+        <a href="method-map.html">Method Map</a>
+        <a href="self-check.html">Self Check</a>
+        <a href="capstone.html">Capstone</a>
+        <a href="theme-index.html">Theme Index</a>
+        <a href="domain-map.html">Domain Map</a>
+        <a href="paper-reader.html">Paper Reader</a>
+        <a href="common-mistakes.html">Common Mistakes</a>
+        <a href="study-plan.html">Study Plan</a>
+        <a href="math-map.html">Math Map</a>
+        <a href="prerequisite-map.html">Prerequisite Map</a>
+        <a href="cheat-sheet.html">Cheat Sheet</a>
+        <a href="chapter-98.html">Chapter 98</a>
+        <a href="chapter-99.html">Chapter 99</a>
+        <a href="chapter-100.html">Chapter 100</a>
+        <a href="chapter-101.html">Chapter 101</a>
+        <a href="chapter-102.html">Chapter 102</a>
+        <a href="chapter-103.html">Chapter 103</a>
+        <a href="chapter-104.html">Chapter 104</a>
+        <a href="chapter-105.html">Chapter 105</a>
+        <a href="chapter-106.html">Chapter 106</a>
+        <a href="chapter-107.html">Chapter 107</a>
+        <a href="chapter-108.html">Chapter 108</a>
+        <a href="chapter-109.html">Chapter 109</a>
+        <a href="chapter-110.html">Chapter 110</a>
+        <a href="chapter-111.html">Chapter 111</a>
+        <a href="chapter-112.html">Chapter 112</a>
+        <a href="chapter-113.html">Chapter 113</a>
+        <a href="chapter-114.html">Chapter 114</a>
+        <a href="chapter-115.html">Chapter 115</a>
+        <a href="chapter-116.html">Chapter 116</a>
+        <a href="chapter-117.html">Chapter 117</a>
+        <a href="chapter-118.html">Chapter 118</a>
+        <a href="chapter-119.html">Chapter 119</a>
+        <a href="chapter-120.html">Chapter 120</a>
+        <a href="chapter-121.html">Chapter 121</a>
+        <a href="chapter-122.html">Chapter 122</a>
+        <a href="chapter-123.html">Chapter 123</a>
+        <a href="chapter-124.html">Chapter 124</a>
+        <a href="chapter-125.html">Chapter 125</a>
+        <a href="chapter-126.html">Chapter 126</a>
+        <a href="chapter-127.html">Chapter 127</a>
+        <a href="chapter-128.html">Chapter 128</a>
+        <a href="chapter-129.html">Chapter 129</a>
+        <a href="chapter-130.html">Chapter 130</a>
+        <a href="chapter-131.html">Chapter 131</a>
+        <a href="chapter-132.html">Chapter 132</a>
+        <a href="chapter-133.html">Chapter 133</a>
+        <a href="chapter-134.html">Chapter 134</a>
+        <a href="chapter-135.html">Chapter 135</a>
+        <a href="chapter-136.html">Chapter 136</a>
+        <a href="chapter-137.html">Chapter 137</a>
+        <a href="from-zero.html">From Zero</a>
+        <a href="pinn-from-zero.html">PINNs From Zero</a>
+        <a href="rom-from-zero.html">ROMs From Zero</a>
+        <a href="manifold-from-zero.html">Manifolds From Zero</a>
+        <a href="synthesis.html">Synthesis</a>
+        <a href="big-picture.html">Big Picture</a>
+        <a href="examples.html">Examples</a>
+        <a href="bridge.html">AISE Bridge</a>
+        <a href="audit.html">Transcript Audit</a>
+      </nav>
+      <main class="content">
+        <p class="eyebrow">Narrative chapter</p>
+        <h1>Make Ocean Models Cheap Without Forgetting The Eddies</h1>
+
+        <p>This chapter uses video 121, Annalisa Quaini's DDPS talk on reducing the cost of ocean modeling with a data-driven reduced-order model and large eddy simulation. The talk starts from a clear engineering problem: ocean simulations cover huge regions, need fine meshes, and often need long time intervals. Even simplified models can take days.</p>
+
+        <p>The proposed path has two parts. First, use a reduced-order model so the trained model can predict future ocean states very quickly. Second, use a physics-driven large eddy simulation method to make the expensive training data cheaper. The point is not to replace ocean physics with a loose black box. The point is to keep enough physics to avoid nonphysical behavior while reducing the cost where the full simulation is wasteful.</p>
+
+        <section class="lesson-claim-chain" aria-label="Plain first-principles reading guide for ocean reduced models and large eddy simulation">
+          <h2>Read This Chapter As One Claim</h2>
+          <p>Ocean simulation is expensive because the map is huge, the important motion includes small eddies, and the time span is long. A small model can make prediction fast, but it may throw away the very eddies and vorticity patterns that make the ocean behave correctly. A coarse simulation can make training data cheaper, but it may invent nonphysical oscillations if it ignores the missing small scales. This chapter says both sides must be made credible: compress the solution for fast prediction, and use a physics-aware filter so cheap training runs still behave like ocean physics.</p>
+          <div class="lesson-claim-grid">
+            <div><strong>Everyday problem</strong><span>Full ocean runs take days, but a tiny surrogate or plain coarse mesh can forget important eddies, interfaces, and vorticity.</span></div>
+            <div><strong>Shared promise</strong><span>Use POD-LSTM for fast modal prediction and LES filtering to make coarse training simulations physically safer.</span></div>
+            <div><strong>Hidden danger</strong><span>If POD modes decay slowly, ten modes may be too few; if the filter or mesh is wrong, cheap data can teach the surrogate the wrong physics.</span></div>
+            <div><strong>First rejection test</strong><span>Compare stream function, potential vorticity, gyre averages, interface behavior, forcing changes, and discarded-mode energy against resolved runs.</span></div>
+          </div>
+        </section>
+
+        <div class="oceanrom-big-picture-map" aria-label="The talk combines reduced-order prediction with large eddy simulation to lower ocean modeling cost">
+          <div>full ocean run is expensive</div>
+          <div>ROM predicts cheaply after training</div>
+          <div>LES makes training data cheaper</div>
+          <div>physics keeps eddies honest</div>
+        </div>
+
+        <h2>Why Ocean Simulation Is Expensive</h2>
+        <p>Ocean modeling is expensive for three ordinary reasons that stack on top of each other. The domain is large. The mesh must be fine enough to resolve important scales. The time interval is long because ocean circulation evolves over long periods. A method that is tolerable on a small lab domain can become impractical when stretched across ocean basins.</p>
+
+        <p>The talk uses ocean gyres as a motivating picture. Gyres are large rotating current systems spanning thousands of kilometers. They matter for nutrient transport, phytoplankton, circulation, and climate-related questions. The model also includes stratification, meaning the ocean is treated as layers rather than as one perfectly mixed slab.</p>
+
+        <div class="ocean-cost-map" aria-label="Ocean simulations are expensive because domains are large, meshes are fine, and time intervals are long">
+          <div>large basin-scale domain</div>
+          <div>fine mesh requirement</div>
+          <div>long time interval</div>
+          <div>expensive simulation</div>
+        </div>
+
+        <h2>The Physics Model Is Simplified But Still Hard</h2>
+        <p>The model is the two-layer quasi-geostrophic equation. Quasi-geostrophic models come from the incompressible Navier-Stokes equations after simplifying assumptions for mid-latitude, wind-driven ocean dynamics. The ocean is wide compared with its depth, so shallow-water reasoning enters. The beta-plane approximation treats a local patch of the Earth as a tangent plane.</p>
+
+        <p>A one-layer quasi-geostrophic model assumes constant density, temperature, and depth. The talk uses a two-layer version to capture stratification. The top layer is driven by wind. The bottom layer feels friction from the ocean floor. The two layers are coupled: the top-layer vorticity and stream function interact with the bottom-layer stream function, and the bottom layer interacts back.</p>
+
+        <div class="two-layer-qg-map" aria-label="The two-layer quasi-geostrophic model captures wind-driven stratified ocean motion">
+          <div>top layer: wind driven</div>
+          <div>bottom layer: floor friction</div>
+          <div>layers exchange motion</div>
+          <div>gyres and stratification appear</div>
+        </div>
+
+        <h2>The Mesh Must Resolve The Munk Scale</h2>
+        <p>The speaker emphasizes a mesh requirement tied to the Munk scale. The Munk scale depends on the domain size and on the ratio of Rossby number to Reynolds number. Large Reynolds number and small Rossby number make the problem harder because the important length scale becomes smaller.</p>
+
+        <p>In realistic water, viscosity is tiny, which would make the Reynolds number huge and force an extremely fine mesh. In practice, ocean simulations often use an artificially increased eddy viscosity so the mesh can be coarser. The speaker describes this as the crudest kind of large eddy simulation: unresolved small-scale effects are pushed into a constant artificial viscosity.</p>
+
+        <div class="munk-scale-map" aria-label="The Munk scale sets a fine mesh requirement, especially at high Reynolds and low Rossby numbers">
+          <div>real viscosity is tiny</div>
+          <div>Reynolds number becomes large</div>
+          <div>Munk scale forces fine mesh</div>
+          <div>eddy viscosity makes mesh affordable</div>
+        </div>
+
+        <h2>The Baseline Run Still Takes Days</h2>
+        <p>The benchmark is a two-gyre test on a rectangular nondimensional domain. With Rossby number ten to the minus three and Reynolds number 450, the mesh used to resolve the Munk scale is 256 by 512. Running 100 time units on a standard server takes about eight days and five hours.</p>
+
+        <p>The computed solution shows strong convection dominance. That means features are transported around strongly, and unresolved structures can create oscillations or instability. This is why the later large eddy simulation piece matters. It is not enough to make the mesh coarse; the missing energy transfer must be handled somehow.</p>
+
+        <div class="baseline-run-map" aria-label="The resolved two-gyre simulation takes over eight days and shows convection-dominated behavior">
+          <div>256 by 512 mesh</div>
+          <div>100 time units</div>
+          <div>over eight days</div>
+          <div>convection-dominated dynamics</div>
+        </div>
+
+        <h2>The ROM Tries To Predict Only A Few Coefficients</h2>
+        <p>The reduced-order model begins with snapshots from the full solution. Proper orthogonal decomposition, or POD, finds spatial modes. The full field is then approximated as a time average plus a small number of modal shapes multiplied by time-dependent coefficients. Instead of predicting every mesh value, the ROM predicts those coefficients.</p>
+
+        <p>The data-driven part uses an LSTM, a recurrent neural network designed for sequence prediction. It learns how the modal coefficients evolve in time. The first half of the simulation interval is used for training, and the second half is used as a prediction test. In this talk, only time prediction is shown, but the speaker notes ongoing work on physical parameters using randomized POD.</p>
+
+        <div class="pod-lstm-map" aria-label="The data-driven ROM uses POD modes and an LSTM to predict modal coefficients">
+          <div>collect solution snapshots</div>
+          <div>POD finds spatial modes</div>
+          <div>LSTM learns coefficient history</div>
+          <div>future fields reconstruct cheaply</div>
+        </div>
+
+        <h2>Ten Modes Are Fast But They Throw Away A Lot</h2>
+        <p>The speaker intentionally keeps only ten POD modes to prioritize speed. That choice makes the online ROM extremely fast: predicting the remaining 50 time units takes less than a second. But ten modes are a harsh compression for this problem.</p>
+
+        <p>The reason is the POD eigenvalue decay. For some flows, the first few modes capture most of the energy. For the quasi-geostrophic ocean case, the eigenvalues decay very slowly. The discarded modes still matter to the dynamics. With ten modes, the stream function keeps roughly 50 to 60 percent of its eigenvalue energy, but potential vorticity keeps only around 10 to 20 percent. That explains why stream-function averages reconstruct better than potential-vorticity averages.</p>
+
+        <div class="slow-pod-decay-map" aria-label="Slow POD eigenvalue decay means a small basis throws away dynamically relevant ocean modes">
+          <div>keep only ten modes</div>
+          <div>online ROM is subsecond</div>
+          <div>vorticity energy mostly discarded</div>
+          <div>accuracy suffers near interfaces</div>
+        </div>
+
+        <h2>The Surprising Part Is Stability</h2>
+        <p>Even with aggressive compression, the ROM remains stable in the reported experiments. The time-averaged stream functions reproduce the gyre shape and magnitude well. Potential vorticity is less accurate, especially near the interface, but away from that region the averages are still meaningful.</p>
+
+        <p>The time-dependent modal coefficients are also compared. The ROM reconstructs the training window and predicts the unseen window. Considering how much potential-vorticity energy was discarded, the agreement is surprisingly good. The speaker highlights that no instability appeared even though relevant modes were removed.</p>
+
+        <div class="rom-stability-map" aria-label="The POD-LSTM ROM remains stable even with aggressive mode truncation">
+          <div>many modes discarded</div>
+          <div>stream-function gyres remain clear</div>
+          <div>vorticity is less accurate</div>
+          <div>prediction does not blow up</div>
+        </div>
+
+        <h2>The Training Data Is Still Too Expensive</h2>
+        <p>The ROM solves only the online part. It still needs snapshots from a full-order run. If the full 100-unit simulation takes more than eight days, then generating the first half of the data can still take roughly four days. That is too expensive if many training runs or parameter studies are needed.</p>
+
+        <p>This motivates the second half of the talk. The group wants cheaper full-order training data without simply trusting an unstable coarse simulation. They choose a physics-driven large eddy simulation approach rather than a second data-driven shortcut.</p>
+
+        <div class="training-data-cost-map" aria-label="The ROM is fast online but still needs expensive full-order training snapshots">
+          <div>ROM needs snapshots</div>
+          <div>training window still costs days</div>
+          <div>parameter studies multiply cost</div>
+          <div>need cheaper physical data generation</div>
+        </div>
+
+        <h2>LES Models What The Coarse Mesh Cannot Resolve</h2>
+        <p>In turbulent or convection-dominated flow, a coarse mesh cannot represent all eddies. Direct numerical simulation resolves all relevant scales, but ocean modeling cannot afford that. Large eddy simulation resolves the larger structures and models the effect of the smaller unresolved structures.</p>
+
+        <p>The unresolved small scales usually remove energy from the resolved flow. If a coarse solver does not model that removal, it may produce nonphysical oscillations. Sometimes the simulation crashes, which is at least obvious. Worse, it may keep running and produce a result that looks like a solution while not being physical.</p>
+
+        <div class="les-purpose-map" aria-label="LES resolves large eddies and models the dissipative effect of unresolved small eddies">
+          <div>coarse mesh misses small eddies</div>
+          <div>unresolved scales dissipate energy</div>
+          <div>coarse solver can oscillate</div>
+          <div>LES adds modeled dissipation</div>
+        </div>
+
+        <h2>Evolve, Filter, Relax Is The Practical Algorithm</h2>
+        <p>The LES method is presented as an evolve-filter-relax algorithm. First, evolve the current state with the existing solver, but treat the result as intermediate. Second, filter that intermediate state to remove nonphysical oscillations. Third, relax by taking a linear combination of the evolved state and the filtered state.</p>
+
+        <p>This three-step structure is useful because it is modular. A solver built for lower-Reynolds or easier cases can be upgraded by adding filtering and relaxation. When the steps are rewritten, the method is equivalent to solving the original problem plus an extra explicitly treated term designed to dissipate energy. So the algorithm looks like a practical time-stepping wrapper, but it also has the interpretation of an LES model.</p>
+
+        <div class="efr-map" aria-label="Evolve-filter-relax adds modular LES dissipation to an existing solver">
+          <div>evolve with base solver</div>
+          <div>filter the intermediate field</div>
+          <div>relax toward filtered field</div>
+          <div>extra term dissipates energy</div>
+        </div>
+
+        <h2>The Indicator Decides Where To Filter</h2>
+        <p>The spatial filter is nonlinear because it uses an indicator function. The indicator takes values near zero where the solution is smooth enough and filtering is not needed. It takes values closer to one where oscillations or under-resolved behavior suggest filtering should be added.</p>
+
+        <p>The chosen indicator is more mathematics-based than physics-based. It compares the evolved variable with what can be reconstructed after applying a linear Helmholtz filter and an approximate inverse. If the field is smooth, the filter changes little and reconstruction works. If the field has large element-to-element oscillations, the filter smooths them and the approximate inverse cannot fully reconstruct them, so the indicator becomes large.</p>
+
+        <div class="indicator-map" aria-label="The nonlinear LES indicator adds artificial diffusion only where the coarse solution needs filtering">
+          <div>smooth region</div>
+          <div>indicator near zero</div>
+          <div>oscillatory region</div>
+          <div>indicator near one</div>
+        </div>
+
+        <h2>The Coarse LES Run Beats A Plain Coarse Run</h2>
+        <p>The talk compares three results: a resolved reference, a coarse two-layer quasi-geostrophic run without the nonlinear filter, and a coarse run with the filter. The plain coarse simulation gives a nonphysical stream-function average. Adding the nonlinear filter recovers gyre shapes and magnitudes much closer to the resolved reference.</p>
+
+        <p>The time savings are large. Instead of waiting eight days for the resolved full run, the filtered coarse simulation can run in hours or less depending on the mesh. The speaker notes that a very coarse mesh can become too coarse to recover an accurate approximation, but the filtered result is much better than simply running the coarse solver without modeled dissipation.</p>
+
+        <div class="coarse-les-map" aria-label="The nonlinear filter makes coarse ocean simulations more physical and much cheaper">
+          <div>plain coarse mesh is nonphysical</div>
+          <div>nonlinear filter adds local dissipation</div>
+          <div>gyre shape improves</div>
+          <div>runtime drops from days to hours</div>
+        </div>
+
+        <h2>The Q&A Gives The Practical Limits</h2>
+        <p>The Q&A clarifies that the benchmark wind forcing is time independent: a sine function in the meridional direction chosen to produce two gyres. A realistic wind forcing would vary in time, and that predictive case has not been tested in the presented work. That matters because an LSTM trained on one forcing pattern may not automatically generalize to changing wind.</p>
+
+        <p>The look-back window in the LSTM is another practical limit. The speaker says it was the most sensitive hyperparameter. The group started with small windows and increased them until accuracy stopped improving. A window of ten worked best, and longer windows began to overfit. The best window did not appear tied to the number of POD modes.</p>
+
+        <div class="oceanrom-qa-map" aria-label="The Q&A highlights wind forcing and LSTM look-back window as practical limits">
+          <div>benchmark wind is fixed</div>
+          <div>time-varying wind not tested</div>
+          <div>look-back window is sensitive</div>
+          <div>ten steps worked best here</div>
+        </div>
+
+        <h2>How This Connects To Topology And Design</h2>
+        <p>Topology and design problems often face the same tension as ocean modeling. The full physics is too expensive to solve many times. A small surrogate can be fast but may discard modes, eddies, boundary layers, or interface features that control the design objective. A coarse simulation can be cheap but nonphysical if the missing scales are not modeled.</p>
+
+        <p>The lesson is to separate the two costs. First, ask how to make prediction cheap after training: that is the ROM question. Second, ask how to make the training data cheaper without poisoning the surrogate: that is the LES question. For topology optimization in fluids, heat transfer, or materials, this could mean using reduced modal coordinates for fast design sweeps while using physics-based filtering or closure to generate training fields that do not contain coarse-grid artifacts.</p>
+
+        <p>The caution is that slow eigenvalue decay is a warning light. If the first few modes do not carry enough energy, a tiny basis may give a fast but incomplete model. In design, that missing part may be exactly the stress concentration, vortex, thermal plume, or interface feature that decides whether the design works.</p>
+
+        <div class="ocean-design-bridge-map" aria-label="Design surrogates need cheap prediction and physically credible training data">
+          <div>many design runs are needed</div>
+          <div>ROM makes prediction cheap</div>
+          <div>LES keeps coarse data physical</div>
+          <div>check discarded modes before trusting</div>
+        </div>
+
+        <h2>Where The Method Should Not Be Overclaimed</h2>
+        <p>The presented ROM is tested on one benchmark with fixed parameters and fixed wind forcing. Parametric extension is ongoing. The POD basis is deliberately small, so some quantities, especially potential vorticity near interfaces, are not highly accurate. The LES filter improves coarse simulations, but a mesh can still be too coarse for useful accuracy.</p>
+
+        <p>The LSTM is also a learned sequence model, so it needs validation outside the training interval and, eventually, across parameter and forcing changes. The method is promising because it combines physics-driven and data-driven savings, but each part has its own failure mode: POD truncation loses information, LSTM can overfit or fail to extrapolate, and LES closure can add the wrong amount of dissipation if the indicator or filter scale is poorly chosen.</p>
+
+        <div class="oceanrom-boundary-map" aria-label="The combined ROM and LES approach still depends on basis size, validation, forcing, mesh, and filter choices">
+          <div>fixed benchmark only</div>
+          <div>small POD basis loses energy</div>
+          <div>LSTM may not extrapolate forcing</div>
+          <div>filter scale must be checked</div>
+        </div>
+
+        <h2>The Chapter In One Chain</h2>
+        <p>First, ocean simulations are expensive because the domain is large, the mesh must resolve small scales, and the time interval is long. Second, the two-layer quasi-geostrophic model simplifies Navier-Stokes while keeping wind-driven gyres and stratification. Third, resolving the Munk scale still requires a fine mesh, and one benchmark full run takes over eight days. Fourth, a POD-LSTM ROM compresses the field into modal coefficients and predicts future coefficients quickly. Fifth, keeping ten modes makes online prediction take less than a second, but the quasi-geostrophic eigenvalues decay slowly, so important vorticity information is discarded. Sixth, the ROM is still surprisingly stable and captures stream-function gyre averages better than potential vorticity. Seventh, the training snapshots remain expensive, so the second goal is cheaper full-order data. Eighth, LES resolves large eddies and models the dissipative effect of unresolved small eddies. Ninth, evolve-filter-relax adds modular filtering and relaxation to an existing solver. Tenth, the nonlinear indicator decides where artificial diffusion is needed. Eleventh, filtered coarse runs recover gyre structure much better than plain coarse runs and cut runtime from days to hours. Twelfth, Q&A limits include fixed wind forcing and trial-and-error look-back selection. Thirteenth, for topology and design, the practical lesson is to make both sides credible: fast reduced prediction and physically trustworthy training data.</p>
+
+        <div class="note">
+          <p>The chapter's core idea: a fast ocean surrogate is only useful if the small model and the cheap training solver both respect the eddies they cannot fully resolve. Compression saves time, but modeled dissipation keeps the coarse physics from lying.</p>
+        </div>
+
+        <section class="lesson-review" aria-label="End of chapter understanding check for ocean reduced models and large eddy simulation">
+          <h2>How To Test Whether You Understood This Chapter</h2>
+          <div class="lesson-review-grid">
+            <div><strong>Explain the two savings</strong><span>The ROM saves online prediction time after training. The LES filter saves snapshot-generation time by making a coarse run more physical.</span></div>
+            <div><strong>Explain the POD warning</strong><span>POD keeps the strongest modes, but slow eigenvalue decay means many discarded modes still matter. Fast prediction can be incomplete prediction.</span></div>
+            <div><strong>Explain evolve-filter-relax</strong><span>The solver first evolves the field, then filters out under-resolved oscillations, then relaxes toward the filtered state to add modeled dissipation.</span></div>
+            <div><strong>Connect it to topology and design</strong><span>For fluid, heat, or material design, fast surrogates need both cheap prediction and trustworthy training fields, especially around vortices, hot spots, interfaces, and stress concentrations.</span></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chapter 130 - Add Plasma Collisions Without Breaking The Physics</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="sidebar">
+        <h1>DDPS Study</h1>
+        <a href="index.html">Start</a>
+        <a href="review-path.html">Review Path</a>
+        <a href="plain-words.html">Plain Words</a>
+        <a href="method-map.html">Method Map</a>
+        <a href="self-check.html">Self Check</a>
+        <a href="capstone.html">Capstone</a>
+        <a href="theme-index.html">Theme Index</a>
+        <a href="domain-map.html">Domain Map</a>
+        <a href="paper-reader.html">Paper Reader</a>
+        <a href="common-mistakes.html">Common Mistakes</a>
+        <a href="study-plan.html">Study Plan</a>
+        <a href="math-map.html">Math Map</a>
+        <a href="prerequisite-map.html">Prerequisite Map</a>
+        <a href="cheat-sheet.html">Cheat Sheet</a>
+        <a href="chapter-98.html">Chapter 98</a>
+        <a href="chapter-99.html">Chapter 99</a>
+        <a href="chapter-100.html">Chapter 100</a>
+        <a href="chapter-101.html">Chapter 101</a>
+        <a href="chapter-102.html">Chapter 102</a>
+        <a href="chapter-103.html">Chapter 103</a>
+        <a href="chapter-104.html">Chapter 104</a>
+        <a href="chapter-105.html">Chapter 105</a>
+        <a href="chapter-106.html">Chapter 106</a>
+        <a href="chapter-107.html">Chapter 107</a>
+        <a href="chapter-108.html">Chapter 108</a>
+        <a href="chapter-109.html">Chapter 109</a>
+        <a href="chapter-110.html">Chapter 110</a>
+        <a href="chapter-111.html">Chapter 111</a>
+        <a href="chapter-112.html">Chapter 112</a>
+        <a href="chapter-113.html">Chapter 113</a>
+        <a href="chapter-114.html">Chapter 114</a>
+        <a href="chapter-115.html">Chapter 115</a>
+        <a href="chapter-116.html">Chapter 116</a>
+        <a href="chapter-117.html">Chapter 117</a>
+        <a href="chapter-118.html">Chapter 118</a>
+        <a href="chapter-119.html">Chapter 119</a>
+        <a href="chapter-120.html">Chapter 120</a>
+        <a href="chapter-121.html">Chapter 121</a>
+        <a href="chapter-122.html">Chapter 122</a>
+        <a href="chapter-123.html">Chapter 123</a>
+        <a href="chapter-124.html">Chapter 124</a>
+        <a href="chapter-125.html">Chapter 125</a>
+        <a href="chapter-126.html">Chapter 126</a>
+        <a href="chapter-127.html">Chapter 127</a>
+        <a href="chapter-128.html">Chapter 128</a>
+        <a href="chapter-129.html">Chapter 129</a>
+        <a href="chapter-130.html">Chapter 130</a>
+        <a href="chapter-131.html">Chapter 131</a>
+        <a href="chapter-132.html">Chapter 132</a>
+        <a href="chapter-133.html">Chapter 133</a>
+        <a href="chapter-134.html">Chapter 134</a>
+        <a href="chapter-135.html">Chapter 135</a>
+        <a href="chapter-136.html">Chapter 136</a>
+        <a href="chapter-137.html">Chapter 137</a>
+        <a href="from-zero.html">From Zero</a>
+        <a href="pinn-from-zero.html">PINNs From Zero</a>
+        <a href="rom-from-zero.html">ROMs From Zero</a>
+        <a href="manifold-from-zero.html">Manifolds From Zero</a>
+        <a href="synthesis.html">Synthesis</a>
+        <a href="big-picture.html">Big Picture</a>
+        <a href="examples.html">Examples</a>
+        <a href="bridge.html">AISE Bridge</a>
+        <a href="audit.html">Transcript Audit</a>
+      </nav>
+      <main class="content">
+        <p class="eyebrow">Narrative chapter</p>
+        <h1>Add Plasma Collisions Without Breaking The Physics</h1>
+
+        <p>This chapter uses video 134, Jingwei Hu's DDPS talk on structure-preserving particle methods for collisional plasmas. The talk is not mainly a data-driven method talk. It is a numerical-methods talk about building a reliable simulator for plasma dynamics, and the speaker argues that such a simulator can later become a useful baseline for data-driven control, inverse problems, and multi-query studies.</p>
+
+        <p>The first-principles problem is this: plasma is made of many charged particles. They move through electric and magnetic fields, and they also collide. If the simulation follows only the field-driven motion and treats collisions as a noisy afterthought, it can lose the physical accounting that makes long simulations meaningful. The goal is to include collisions while preserving the quantities the equation itself preserves.</p>
+
+        <section class="lesson-claim-chain" aria-label="Plain first-principles reading guide for structure-preserving collisional plasma simulation">
+          <h2>Read This Chapter As One Claim</h2>
+          <p>The chapter says collisions must be part of the physics, not a loose patch after the fact. Charged particles move in fields, but in dense plasma they also nudge each other through many small encounters. Those encounters should conserve mass, momentum, and energy while pushing the velocity distribution toward equilibrium. A useful particle method must represent that collision effect, smooth the particle distribution enough for the formulas to make sense, and choose a time step that does not destroy the accounting the equation protects.</p>
+          <div class="lesson-claim-grid">
+            <div><strong>Everyday problem</strong><span>Plasma design needs long simulations, but naive collision add-ons can add noise, leak energy, or erase the real velocity-space relaxation.</span></div>
+            <div><strong>Shared promise</strong><span>Rewrite collision diffusion as particle transport from regularized entropy, then correct the time update so total energy stays controlled.</span></div>
+            <div><strong>Hidden danger</strong><span>The method can be costly, regularization can be delicate, and preserving energy may still leave Gauss's law, momentum, weights, or multispecies behavior unresolved.</span></div>
+            <div><strong>First rejection test</strong><span>Check mass, momentum, total energy, entropy decay, Gauss's law, relaxation rates, collision strength, and long-time nonlinear plasma behavior.</span></div>
+          </div>
+        </section>
+
+        <div class="collisional-plasma-core-map" aria-label="Collisional plasma simulation must combine particle motion, fields, and collisions without losing structure">
+          <div>charged particles move in fields</div>
+          <div>collisions reshape velocities</div>
+          <div>simulation must conserve what physics conserves</div>
+          <div>entropy should move in the right direction</div>
+        </div>
+
+        <h2>The Everyday Version</h2>
+        <p>Imagine tracking a crowd in a train station. People walk through the station, respond to signs, and bump into each other. If you model only the walking and signs, you miss the crowding. If you add random bumps without rules, you may accidentally create or destroy people, momentum, or energy in the bookkeeping. A good crowd simulator must let bumps happen without violating basic accounting.</p>
+
+        <p>Plasma is harder because the "crowd" lives in phase space: each particle has a position and a velocity. The distribution is six-dimensional before time is even counted. That is why particle methods are attractive. Instead of filling a huge grid in position and velocity, they track many representative particles.</p>
+
+        <h2>The Governing Picture</h2>
+        <p>The equation in the talk is the Vlasov-Maxwell-Landau system. The Vlasov part transports the particle distribution through position and velocity. The Maxwell part evolves the electric and magnetic fields. The Landau collision operator models many small-angle Coulomb collisions between charged particles.</p>
+
+        <p>The unknown distribution function says how many particles sit near each position and velocity. Its moments give charge density and current density, which feed Maxwell's equations. Maxwell's fields then push the particles through the Lorentz force. That coupling is why the simulator cannot treat the particles and fields as unrelated pieces.</p>
+
+        <div class="vlasov-maxwell-map" aria-label="Vlasov-Maxwell-Landau couples distribution, fields, forces, and collisions">
+          <div>distribution in position and velocity</div>
+          <div>moments produce charge and current</div>
+          <div>Maxwell fields push particles</div>
+          <div>Landau operator adds collisions</div>
+        </div>
+
+        <h2>Why The Landau Collision Term Matters</h2>
+        <p>The Landau operator looks complicated because it is nonlinear, integral, and differential at the same time. But its role can be explained simply. It changes the velocity distribution through a mix of diffusion and drift. Diffusion spreads velocities. Drift moves them in a directed way. Together they model the cumulative effect of many weak charged-particle encounters.</p>
+
+        <p>The operator has a deep structure. It conserves mass, momentum, and energy. It also drives entropy in the correct direction, pushing the velocity distribution toward a Maxwellian equilibrium. These are not decorative properties. They are the guardrails that keep the simulation from inventing unphysical plasma behavior.</p>
+
+        <div class="landau-structure-map" aria-label="The Landau operator conserves mass, momentum, energy, and dissipates entropy">
+          <div>collisions act in velocity space</div>
+          <div>mass, momentum, and energy are conserved</div>
+          <div>entropy decays in the correct direction</div>
+          <div>distribution moves toward Maxwellian shape</div>
+        </div>
+
+        <h2>Why Standard PIC Is Not Enough</h2>
+        <p>Particle-in-cell, or PIC, is the standard large-scale plasma method. It represents the distribution by particles, pushes them through fields, and solves the fields on a mesh. For collisionless plasma, this is natural because the particle paths follow characteristic curves. With care, PIC can preserve important structure.</p>
+
+        <p>Collisions are the harder part. Common collisional algorithms are often Monte Carlo in nature and added as a separate split step. That can introduce statistical noise. It can also break the conservation and entropy properties that the collisionless method worked hard to preserve. The lecture asks whether collisions can be built into the particle method more directly and deterministically.</p>
+
+        <div class="pic-collision-problem-map" aria-label="PIC handles collisionless plasma well but collision add-ons can be noisy and non-structure-preserving">
+          <div>PIC tracks particles and fields</div>
+          <div>collisionless motion fits particle paths</div>
+          <div>Monte Carlo collision steps add noise</div>
+          <div>structure can be lost after splitting</div>
+        </div>
+
+        <h2>The Key Trick: Treat Diffusion Like Transport</h2>
+        <p>The lecture builds the idea from the heat equation. Particle methods are natural for transport but not for diffusion. Heat diffusion seems to smear mass everywhere, while particles move along paths. The trick is to rewrite diffusion in a transport-like form using the gradient of the log of the density. Then the diffusion can be viewed as particles moving with a special velocity field.</p>
+
+        <p>This log expression is not just algebra. The log of the density is tied to the variation of Boltzmann entropy. If the method regularizes at the entropy level, it has a chance to preserve entropy structure instead of merely smoothing a formula. That is the conceptual bridge from heat diffusion to the Landau collision operator.</p>
+
+        <div class="log-transport-map" aria-label="Diffusion can be rewritten as transport using a log-density velocity tied to entropy">
+          <div>diffusion is hard for particles</div>
+          <div>rewrite it with gradient of log density</div>
+          <div>log density comes from entropy variation</div>
+          <div>particles move with a collision velocity</div>
+        </div>
+
+        <h2>Regularization Makes The Particle Formula Legal</h2>
+        <p>A particle distribution is a sum of point masses. Taking a log of point masses does not make sense. The method therefore smooths the particle distribution with kernels. In velocity space, a Gaussian or B-spline kernel can be used. For the spatially inhomogeneous case, the method also needs a physical-space kernel, because two particles almost never sit at exactly the same position.</p>
+
+        <p>The speaker describes the physical-space regularization as localizing particles to a neighborhood. In simple words, a particle should collide with particles near it, not with particles at a completely unrelated location. B-spline kernels are natural in the physical space because they match common PIC practice and have compact support, which helps cost.</p>
+
+        <div class="kernel-regularization-map" aria-label="Kernels smooth particle distributions so the log and entropy formulas are computable">
+          <div>raw particles are point masses</div>
+          <div>log of point masses is not defined</div>
+          <div>kernels smooth position and velocity</div>
+          <div>nearby particles can exchange collision effects</div>
+        </div>
+
+        <h2>The Collision Becomes An Effective Force</h2>
+        <p>After the regularized entropy construction, the Landau collision term can be written as a velocity field acting on particles. The method then adds this collision-induced velocity update beside the usual Lorentz-force update. That is why the speaker calls it a unified approach: transport, electromagnetic forcing, and collisions all appear inside one particle system.</p>
+
+        <p>The formula is expensive because each particle can interact through sums involving many other particles. But it is deterministic after initialization. The payoff is that the discrete weak form mirrors the continuous weak form closely enough to preserve the right collision properties: mass, momentum, energy, and entropy decay for the collision part.</p>
+
+        <div class="effective-force-map" aria-label="The regularized Landau collision term acts like an effective force in particle velocity updates">
+          <div>regularized entropy defines collision velocity</div>
+          <div>collision term enters particle acceleration</div>
+          <div>weak form mirrors the continuous operator</div>
+          <div>collision structure is preserved</div>
+        </div>
+
+        <h2>Time Stepping Can Break The Win</h2>
+        <p>A semi-discrete particle method is not enough. The simulation still advances in time, and a careless time step can destroy the conservation that the particle formula preserved. The speaker says early experiments with simple forward Euler time stepping gave bad conservation behavior. That forced a second design problem: choose a time discretization that preserves total energy.</p>
+
+        <p>Fully implicit midpoint or trapezoidal methods can conserve energy, but they are not practical here because collisions are expensive and the goal is to keep the collision treatment explicit. The talk therefore builds an almost explicit time scheme with a correction at the particle level. The correction nudges the updated particle velocities so the kinetic and field energy accounting closes.</p>
+
+        <div class="time-correction-map" aria-label="Energy-preserving time stepping corrects particle velocities while keeping collisions explicit">
+          <div>forward Euler breaks conservation</div>
+          <div>implicit methods are too costly</div>
+          <div>explicit midpoint gives a predicted update</div>
+          <div>particle-level correction restores energy</div>
+        </div>
+
+        <h2>What The Correction Does</h2>
+        <p>The correction is designed to be as small as possible while satisfying the needed energy equality. The first version perturbs the update by about a third-order time-step effect. The improved version adds extra electric-field prediction steps so the correction becomes smaller, roughly fourth order in the time step.</p>
+
+        <p>This detail matters because conservation alone is not enough. A method can conserve the wrong thing if it makes large artificial corrections. The correction must preserve energy without ruining accuracy. The talk explicitly checks that the correction stays small enough to keep the overall second-order time accuracy.</p>
+
+        <div class="correction-size-map" aria-label="The energy correction must be small enough not to damage accuracy">
+          <div>energy equality gives the target</div>
+          <div>velocity correction is local to particles</div>
+          <div>version one correction is small</div>
+          <div>version two makes it even smaller</div>
+        </div>
+
+        <h2>Example: Weibel Instability</h2>
+        <p>The first numerical picture is the Weibel instability. Without collisions, the velocity distribution starts from two Gaussian-like beams and reaches a metastable-looking structure. When a very small collision strength is added, the velocity distribution already changes noticeably. Increasing the collision strength drives the velocity distribution toward a single Gaussian shape.</p>
+
+        <p>This example shows the physical meaning of the entropy story. Collisions do not just add noise. They push velocity distributions toward equilibrium. A structure-preserving method should show that tendency without faking it through arbitrary smoothing.</p>
+
+        <div class="weibel-collision-map" aria-label="In Weibel instability, collisions drive the velocity distribution toward a Gaussian equilibrium">
+          <div>two-beam velocity distribution starts unstable</div>
+          <div>collisionless case keeps sharper structure</div>
+          <div>small collisions change the outcome</div>
+          <div>stronger collisions move toward Gaussian equilibrium</div>
+        </div>
+
+        <h2>Example: Two-Stream Instability</h2>
+        <p>The second example is the two-stream instability. In the collisionless case, the phase-space plot shows the familiar vortex-like structure. As collision strength increases, that vortex structure is gradually destroyed, and the distribution moves closer to a Gaussian in velocity.</p>
+
+        <p>The energy comparison is the main numerical proof point. The Boris scheme is already respected, but its total energy error is around the scale of 10 to the minus 5 or 10 to the minus 4 in the shown tests. The first proposed energy-corrected version brings the error near 10 to the minus 9. The improved version pushes it near 10 to the minus 12 or 10 to the minus 11, close to machine precision.</p>
+
+        <div class="two-stream-energy-map" aria-label="Two-stream tests show collision effects and much stronger total energy conservation">
+          <div>collisionless two-stream forms vortices</div>
+          <div>collisions weaken the vortex structure</div>
+          <div>Boris has small but visible energy drift</div>
+          <div>corrected scheme nearly preserves energy</div>
+        </div>
+
+        <h2>The Q And A Boundaries</h2>
+        <p>The questions reveal important limits. One question asks about Gauss's law. The answer is that the collision modification itself does not seem to be the source of that issue, but the full energy-conserving discretization uses an Ampere formulation and does not strictly preserve Gauss's law. So the method chooses energy preservation in the full time discretization, not every invariant at once.</p>
+
+        <p>Another question asks whether momentum is sacrificed for energy. For the collision part, mass, momentum, and energy are all preserved. For the full time-discrete system, the speaker says they do not yet have a way to preserve momentum and energy simultaneously, so they choose energy. Other questions ask about regularization parameters, macroparticle weights, multispecies collisions, large mass ratios, and comparison to analytic relaxation tests. These are not afterthoughts; they are the practical edges of making the method usable.</p>
+
+        <div class="plasma-boundary-qa-map" aria-label="The Q and A clarifies Gauss law, momentum, parameter choice, and multispecies limits">
+          <div>collision part preserves mass, momentum, and energy</div>
+          <div>full time scheme prioritizes total energy</div>
+          <div>regularization parameters remain delicate</div>
+          <div>multispecies and mass-ratio cases need care</div>
+        </div>
+
+        <h2>The Design And Data-Driven Connection</h2>
+        <p>This chapter matters for the broader course because not every useful scientific-ML ingredient is itself a neural network. Sometimes the needed contribution is a better simulator. A deterministic, structure-preserving particle method can become a trustworthy engine for repeated queries: control, inverse problems, parameter studies, or learning tasks that need many plasma simulations.</p>
+
+        <p>For fusion design, plasma control, actuator placement, magnetic confinement, and uncertainty studies, the simulator must not quietly leak energy or erase collision physics. If a learning method is trained on simulations with the wrong conservation behavior, it can learn the wrong world. Structure preservation is therefore part of data quality.</p>
+
+        <div class="plasma-data-bridge-map" aria-label="Structure-preserving plasma solvers can support later data-driven control and inverse problems">
+          <div>learning needs trustworthy simulation data</div>
+          <div>collisions change plasma behavior</div>
+          <div>energy and entropy structure protect fidelity</div>
+          <div>solver becomes a baseline for multi-query tasks</div>
+        </div>
+
+        <h2>How This Connects To Earlier Chapters</h2>
+        <p>This chapter connects to the earlier plasma particle chapter because both care about particle methods that preserve hidden structure. It also connects to Chapter 128 because both chapters worry about control and inverse problems downstream. A controller built on a bad plasma simulator inherits that simulator's false physics. It connects to the numerical-solver chapters because the central message is the same: the discretization is part of the model, not a neutral implementation detail.</p>
+
+        <p>The chapter also connects to topology and design in a practical way. Fusion devices, magnetic-field layouts, plasma-facing materials, and actuator placements are design problems. Collisions affect what designs are safe or effective in dense plasma regimes. A design loop needs the simulator to keep the accounting honest before it trusts optimization or learning on top of it.</p>
+
+        <h2>The Boundary Of The Claim</h2>
+        <p>The claim is not that all plasma simulation problems are solved. The method is expensive because collision sums are costly. The choice of regularization parameters is delicate, especially in full inhomogeneous simulations. The full time discretization does not preserve every possible invariant simultaneously. Gauss's law, momentum in the full scheme, varying weights, and multispecies extensions remain important practical concerns.</p>
+
+        <p>The honest claim is narrower and strong: by rewriting the Landau collision operator through entropy/log structure, regularizing it carefully, and pairing it with a corrected explicit time integrator, one can build a deterministic particle method for collisional plasma that preserves key collision structure and achieves very strong total energy conservation in the tested cases.</p>
+
+        <div class="collisional-plasma-limit-map" aria-label="The method is powerful but still has cost, parameter, and invariant tradeoffs">
+          <div>collision sums are expensive</div>
+          <div>regularization choices matter</div>
+          <div>not all invariants are preserved at once</div>
+          <div>tested gains are strongest for energy and entropy structure</div>
+        </div>
+
+        <h2>What You Should Remember</h2>
+        <p>The heart of the lecture is that collisions cannot be treated as a casual add-on. In plasma, collisions change the velocity distribution and drive it toward equilibrium. If they are added with noisy or structure-breaking steps, the simulation can lose the very physical laws it is meant to respect.</p>
+
+        <p>If you remember one sentence, remember this: make the particle method carry the collision physics inside its own motion, and make the time step respect the same accounting as the equation.</p>
+
+        <section class="lesson-review" aria-label="End of chapter understanding check for structure-preserving collisional plasma simulation">
+          <h2>How To Test Whether You Understood This Chapter</h2>
+          <div class="lesson-review-grid">
+            <div><strong>Explain the Landau role</strong><span>The collision term changes velocities through diffusion and drift, conserves key quantities, and moves the distribution toward a Maxwellian equilibrium.</span></div>
+            <div><strong>Explain the regularization need</strong><span>Particles are point masses, so logs and entropy variations are not directly defined. Kernels smooth position and velocity enough to compute collision effects.</span></div>
+            <div><strong>Explain the time-step danger</strong><span>A good semi-discrete formula can still lose conservation after time stepping. The correction nudges particle velocities so energy accounting closes.</span></div>
+            <div><strong>Connect it to topology and design</strong><span>Fusion devices, magnetic layouts, plasma-facing materials, and actuator designs need simulation data whose collision, energy, and entropy behavior are physically trustworthy.</span></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

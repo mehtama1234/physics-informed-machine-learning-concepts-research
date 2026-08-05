@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DDPS Review Path</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="sidebar">
+        <h1>DDPS Study</h1>
+        <a href="index.html">Start</a>
+        <a href="review-path.html">Review Path</a>
+        <a href="plain-words.html">Plain Words</a>
+        <a href="method-map.html">Method Map</a>
+        <a href="self-check.html">Self Check</a>
+        <a href="capstone.html">Capstone</a>
+        <a href="theme-index.html">Theme Index</a>
+        <a href="domain-map.html">Domain Map</a>
+        <a href="paper-reader.html">Paper Reader</a>
+        <a href="common-mistakes.html">Common Mistakes</a>
+        <a href="study-plan.html">Study Plan</a>
+        <a href="math-map.html">Math Map</a>
+        <a href="prerequisite-map.html">Prerequisite Map</a>
+        <a href="cheat-sheet.html">Cheat Sheet</a>
+        <a href="from-zero.html">From Zero</a>
+        <a href="big-picture.html">Big Picture</a>
+        <a href="synthesis.html">Synthesis</a>
+        <a href="examples.html">Examples</a>
+        <a href="chapter-01.html">Chapter 1</a>
+        <a href="chapter-137.html">Chapter 137</a>
+        <a href="audit.html">Transcript Audit</a>
+      </nav>
+      <main class="content">
+        <p class="eyebrow">Start learning here</p>
+        <h1>How To Learn This Area Without Watching The Videos</h1>
+
+        <p>This page is the review route through the handwritten DDPS course. It is for the moment when the chapter list feels too large and the field feels like disconnected method names. The route starts from the physical problems, then names the tools only after the need for each tool is clear.</p>
+
+        <p>The whole topical area is trying to solve one repeating problem: physical simulation is trusted because it follows equations, but it is often too slow, too uncertain, too high-dimensional, or too hard to run many times. Scientific machine learning tries to make simulation, inference, control, and design faster without losing the physical reasons the answer should be believed.</p>
+
+        <div class="review-core-map" aria-label="The whole course moves from expensive physics to usable decisions">
+          <div>physical system is costly or hidden</div>
+          <div>data gives partial evidence</div>
+          <div>learning builds a faster or smaller model</div>
+          <div>physics checks decide whether to trust it</div>
+        </div>
+
+        <h2>Read These First</h2>
+        <p>Do not start by reading every chapter in order. Start with the pages that build the mental floor.</p>
+
+        <div class="review-card-grid">
+          <a class="review-card" href="from-zero.html">
+            <strong>1. From Zero</strong>
+            <span>The plain reason this field exists, assuming no PDE or neural-network background.</span>
+          </a>
+          <a class="review-card" href="cheat-sheet.html">
+            <strong>2. Cheat Sheet</strong>
+            <span>The shortest keep-open version of the course logic.</span>
+          </a>
+          <a class="review-card" href="big-picture.html">
+            <strong>3. Big Picture</strong>
+            <span>The core tension: faster prediction versus physical trust.</span>
+          </a>
+          <a class="review-card" href="examples.html">
+            <strong>4. Examples And Diagrams</strong>
+            <span>Heat, wings, moving dye, shocks, and the first concrete pictures.</span>
+          </a>
+          <a class="review-card" href="plain-words.html">
+            <strong>Plain Words</strong>
+            <span>The recurring method names translated into everyday language.</span>
+          </a>
+          <a class="review-card" href="method-map.html">
+            <strong>Method Map</strong>
+            <span>Choose which chapter family to study from the physical problem you have.</span>
+          </a>
+          <a class="review-card" href="math-map.html">
+            <strong>Math Map</strong>
+            <span>The recurring math words explained without formulas.</span>
+          </a>
+          <a class="review-card" href="prerequisite-map.html">
+            <strong>Prerequisite Map</strong>
+            <span>See what to understand before each major idea.</span>
+          </a>
+          <a class="review-card" href="study-plan.html">
+            <strong>Study Plan</strong>
+            <span>A paced route with a concrete output after each reading block.</span>
+          </a>
+          <a class="review-card" href="self-check.html">
+            <strong>Self Check</strong>
+            <span>Practice explaining the ideas back in plain words before reading more chapters.</span>
+          </a>
+          <a class="review-card" href="capstone.html">
+            <strong>Capstone</strong>
+            <span>The whole course retold as one end-to-end story.</span>
+          </a>
+          <a class="review-card" href="theme-index.html">
+            <strong>Theme Index</strong>
+            <span>See where every chapter range fits in the larger structure.</span>
+          </a>
+          <a class="review-card" href="domain-map.html">
+            <strong>Domain Map</strong>
+            <span>See how the same ideas show up in fluids, materials, medicine, plasma, climate, design, and subsurface systems.</span>
+          </a>
+          <a class="review-card" href="paper-reader.html">
+            <strong>Paper Reader</strong>
+            <span>Use the course as a worksheet for judging new scientific ML papers.</span>
+          </a>
+          <a class="review-card" href="common-mistakes.html">
+            <strong>Common Mistakes</strong>
+            <span>Avoid the traps that make the field feel like disconnected jargon.</span>
+          </a>
+          <a class="review-card" href="synthesis.html">
+            <strong>No-Video Synthesis</strong>
+            <span>The first connected explanation before the full chapter path.</span>
+          </a>
+        </div>
+
+        <h2>The First-Principles Spine</h2>
+        <p>Every chapter is a variation on this chain. If a page does not make sense, return to this chain and ask which step is being handled.</p>
+
+        <div class="review-spine-map" aria-label="The first-principles chain for scientific machine learning">
+          <div>What is too slow, hidden, unstable, or uncertain?</div>
+          <div>What evidence do we actually have?</div>
+          <div>What physical rule must survive compression or learning?</div>
+          <div>What test would expose a false shortcut?</div>
+        </div>
+
+        <h2>Arc 1: Why Fast Simulation Is Hard</h2>
+        <p>Start with Chapters 1 to 12. These chapters explain why one expensive solver is not enough. The problems include PINN training failure, moving shocks, nonlinear manifolds, black-box solvers, entropy-stable numerics, coupled heart models, differentiable physics, reduced dynamics, and hybrid digital twins.</p>
+
+        <p>The everyday idea is this: a calculator is useful only if it can answer quickly, repeatedly, and under the conditions you care about. A physical solver may be accurate but too slow for design loops, uncertainty studies, control, or bedside decisions. The first arc explains why we need smaller models and why smaller models can fail.</p>
+
+        <div class="review-arc-map" aria-label="Arc one moves from expensive solvers to trustworthy reduced tools">
+          <div><a href="chapter-01.html">Chapter 1</a>: why full simulation is hard</div>
+          <div><a href="chapter-03.html">Chapter 3</a>: why numerical safety matters</div>
+          <div><a href="chapter-09.html">Chapter 9</a>: learn the small machine</div>
+          <div><a href="chapter-12.html">Chapter 12</a>: let the twin learn the gap</div>
+        </div>
+
+        <h2>Arc 2: Compression Must Respect Motion</h2>
+        <p>Read Chapters 13 to 24 when you want the reduced-model story. The recurring issue is that physical states often do not vary along a flat low-dimensional plane. Waves move. Shocks shift. Materials have hidden fine structure. If compression ignores motion, it needs too many coordinates or gives the wrong future.</p>
+
+        <p>The important simple sentence is: do not compress only the picture; compress the reason the picture changes. This is where nonlinear manifolds, local reduced spaces, transport-aware coordinates, learned kernels, and multiscale closure enter.</p>
+
+        <div class="review-arc-map" aria-label="Arc two explains motion-aware and multiscale compression">
+          <div><a href="chapter-13.html">Chapter 13</a>: let sensors tell the state</div>
+          <div><a href="chapter-18.html">Chapter 18</a>: align moving features</div>
+          <div><a href="chapter-21.html">Chapter 21</a>: preserve hidden scales</div>
+          <div><a href="chapter-24.html">Chapter 24</a>: nearby is not always enough</div>
+        </div>
+
+        <h2>Arc 3: Dynamics Has Geometry</h2>
+        <p>Read Chapters 25 to 47 for Koopman, observables, nonlinear coordinates, charts, and manifolds. This is the part of the course that explains why the shape of state space matters. A system can have steady states, cycles, unstable boundaries, and chaotic regions. A good reduced model should preserve those objects when they are relevant.</p>
+
+        <p>Topology enters here in plain language. It means the state space can be divided into regions with different futures, and those dividing shapes matter. In later chapters this becomes concrete in pipe-flow transition, design boundaries, and hidden subsurface pathways.</p>
+
+        <div class="review-arc-map" aria-label="Arc three explains geometry, observables, and nonlinear state-space structure">
+          <div><a href="chapter-35.html">Chapter 35</a>: watch the right quantity</div>
+          <div><a href="chapter-42.html">Chapter 42</a>: choose coordinates that reveal order</div>
+          <div><a href="chapter-47.html">Chapter 47</a>: use local maps when one map folds truth</div>
+          <div><a href="chapter-136.html">Chapter 136</a>: find the small shape that carries the flow</div>
+        </div>
+
+        <h2>Arc 4: Learning Must Survive Control And Design</h2>
+        <p>Read Chapters 48 to 69 for control, differentiable programming, safety, optimization, topology, and manufacturing. In these chapters, prediction is not the end. The model must help choose an action: move a robot, control a PDE, design a geometry, place material, control a melt pool, or change an operating policy.</p>
+
+        <p>The design lesson is direct: a learned model used inside an optimizer will be pushed into hard cases. If the model has only learned familiar examples, the optimizer may exploit its blind spots. That is why uncertainty, constraints, physical residuals, safety certificates, and out-of-distribution checks matter.</p>
+
+        <div class="review-arc-map" aria-label="Arc four connects learning to control, optimization, and design">
+          <div><a href="chapter-58.html">Chapter 58</a>: train the controller through the model</div>
+          <div><a href="chapter-61.html">Chapter 61</a>: make safety part of control</div>
+          <div><a href="chapter-69.html">Chapter 69</a>: design the part and process together</div>
+          <div><a href="chapter-129.html">Chapter 129</a>: let learning shape the geometry</div>
+        </div>
+
+        <h2>Arc 5: Operators, Sensors, And Data Workflows</h2>
+        <p>Read Chapters 70 to 103 for neural operators, sensor placement, streaming data, balanced truncation, operator learning, and reusable PINNs. The common problem is that we do not only want one output for one input. We often want a map from whole fields to whole fields, or from sparse measurements to a full state, across many parameter choices.</p>
+
+        <p>The key distinction is between learning an answer and learning a rule for producing answers. Operator learning tries to learn the rule. Sensor placement asks which small pieces of evidence are enough to recover the state. Data workflow chapters ask how to handle huge simulations while they are running, not after everything has been saved.</p>
+
+        <div class="review-arc-map" aria-label="Arc five covers operators, sensors, and large data workflows">
+          <div><a href="chapter-80.html">Chapter 80</a>: make the data workflow part of the model</div>
+          <div><a href="chapter-91.html">Chapter 91</a>: keep reachable and visible modes</div>
+          <div><a href="chapter-98.html">Chapter 98</a>: learn maps between fields</div>
+          <div><a href="chapter-102.html">Chapter 102</a>: reuse trained PINNs like a reduced basis</div>
+        </div>
+
+        <h2>Arc 6: Discovery, Foundation Models, And Trust</h2>
+        <p>Read Chapters 104 to 137 for the modern end of the course: turbulence structure, equation discovery, latent scientific representations, materials foundation models, scientific foundation-model definitions, data assimilation, uncertainty quantification, SSMs, and generative subsurface inference.</p>
+
+        <p>This arc is where the field becomes ambitious and risky. Models are asked to generalize across equations, materials, geometries, observations, and future tasks. The more general the claim, the stronger the evidence must be. A model that is fast and broad but cannot say where it fails is not yet a dependable scientific tool.</p>
+
+        <div class="review-arc-map" aria-label="Arc six covers discovery, foundation models, uncertainty, and assimilation">
+          <div><a href="chapter-124.html">Chapter 124</a>: make one movie confess its equation</div>
+          <div><a href="chapter-132.html">Chapter 132</a>: define foundation models carefully</div>
+          <div><a href="chapter-135.html">Chapter 135</a>: make models say how much to trust them</div>
+          <div><a href="chapter-137.html">Chapter 137</a>: guess the underground honestly</div>
+        </div>
+
+        <h2>How To Review A Chapter</h2>
+        <p>For each chapter, ignore the method name at first. Ask four questions before trying to memorize vocabulary.</p>
+
+        <div class="review-question-grid">
+          <div><strong>Problem</strong><span>What physical or decision problem forced this method to exist?</span></div>
+          <div><strong>Evidence</strong><span>What data, equation, measurement, simulation, or prior knowledge is available?</span></div>
+          <div><strong>Move</strong><span>What does the method change: coordinates, loss, operator, sensor, prior, simulator, or controller?</span></div>
+          <div><strong>Failure</strong><span>What first test would show that the shortcut is not trustworthy?</span></div>
+        </div>
+
+        <h2>The End-To-End Goal</h2>
+        <p>The real learning goal is not to know 137 isolated talks. The goal is to be able to look at a new scientific machine-learning paper and say, in everyday words, what burden the method carries.</p>
+
+        <p>By the end, you should be able to explain the chain without hiding behind jargon: what is expensive or hidden, what evidence exists, what physical rule must be preserved, what the learning model replaces, what decision it supports, and what would make you reject the result.</p>
+      </main>
+    </div>
+  </body>
+</html>

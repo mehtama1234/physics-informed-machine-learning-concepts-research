@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chapter 129 - Let Learning Shape The Geometry, Not Fake The Physics</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="sidebar">
+        <h1>DDPS Study</h1>
+        <a href="index.html">Start</a>
+        <a href="review-path.html">Review Path</a>
+        <a href="plain-words.html">Plain Words</a>
+        <a href="method-map.html">Method Map</a>
+        <a href="self-check.html">Self Check</a>
+        <a href="capstone.html">Capstone</a>
+        <a href="theme-index.html">Theme Index</a>
+        <a href="domain-map.html">Domain Map</a>
+        <a href="paper-reader.html">Paper Reader</a>
+        <a href="common-mistakes.html">Common Mistakes</a>
+        <a href="study-plan.html">Study Plan</a>
+        <a href="math-map.html">Math Map</a>
+        <a href="prerequisite-map.html">Prerequisite Map</a>
+        <a href="cheat-sheet.html">Cheat Sheet</a>
+        <a href="chapter-98.html">Chapter 98</a>
+        <a href="chapter-99.html">Chapter 99</a>
+        <a href="chapter-100.html">Chapter 100</a>
+        <a href="chapter-101.html">Chapter 101</a>
+        <a href="chapter-102.html">Chapter 102</a>
+        <a href="chapter-103.html">Chapter 103</a>
+        <a href="chapter-104.html">Chapter 104</a>
+        <a href="chapter-105.html">Chapter 105</a>
+        <a href="chapter-106.html">Chapter 106</a>
+        <a href="chapter-107.html">Chapter 107</a>
+        <a href="chapter-108.html">Chapter 108</a>
+        <a href="chapter-109.html">Chapter 109</a>
+        <a href="chapter-110.html">Chapter 110</a>
+        <a href="chapter-111.html">Chapter 111</a>
+        <a href="chapter-112.html">Chapter 112</a>
+        <a href="chapter-113.html">Chapter 113</a>
+        <a href="chapter-114.html">Chapter 114</a>
+        <a href="chapter-115.html">Chapter 115</a>
+        <a href="chapter-116.html">Chapter 116</a>
+        <a href="chapter-117.html">Chapter 117</a>
+        <a href="chapter-118.html">Chapter 118</a>
+        <a href="chapter-119.html">Chapter 119</a>
+        <a href="chapter-120.html">Chapter 120</a>
+        <a href="chapter-121.html">Chapter 121</a>
+        <a href="chapter-122.html">Chapter 122</a>
+        <a href="chapter-123.html">Chapter 123</a>
+        <a href="chapter-124.html">Chapter 124</a>
+        <a href="chapter-125.html">Chapter 125</a>
+        <a href="chapter-126.html">Chapter 126</a>
+        <a href="chapter-127.html">Chapter 127</a>
+        <a href="chapter-128.html">Chapter 128</a>
+        <a href="chapter-129.html">Chapter 129</a>
+        <a href="chapter-130.html">Chapter 130</a>
+        <a href="chapter-131.html">Chapter 131</a>
+        <a href="chapter-132.html">Chapter 132</a>
+        <a href="chapter-133.html">Chapter 133</a>
+        <a href="chapter-134.html">Chapter 134</a>
+        <a href="chapter-135.html">Chapter 135</a>
+        <a href="chapter-136.html">Chapter 136</a>
+        <a href="chapter-137.html">Chapter 137</a>
+        <a href="from-zero.html">From Zero</a>
+        <a href="pinn-from-zero.html">PINNs From Zero</a>
+        <a href="rom-from-zero.html">ROMs From Zero</a>
+        <a href="manifold-from-zero.html">Manifolds From Zero</a>
+        <a href="synthesis.html">Synthesis</a>
+        <a href="big-picture.html">Big Picture</a>
+        <a href="examples.html">Examples</a>
+        <a href="bridge.html">AISE Bridge</a>
+        <a href="audit.html">Transcript Audit</a>
+      </nav>
+      <main class="content">
+        <p class="eyebrow">Narrative chapter</p>
+        <h1>Let Learning Shape The Geometry, Not Fake The Physics</h1>
+
+        <p>This chapter uses video 133, Rafael Pastore's DDPS talk on input-space scientific machine learning for PDE-constrained optimization of geometries. The talk is about designing physical objects whose behavior is governed by equations: optical metasurfaces, thermal devices, mechanical metamaterials, and chemistry-facing optical devices.</p>
+
+        <p>The first-principles problem is this: the thing you design is a shape or material layout, but the thing you care about is a physical result. A pattern of holes changes heat flow. A nanoscale pattern changes how light bends. A mechanical layout changes stiffness or motion. To know whether the design is good, you must solve the governing PDE. The PDE solver is expensive, but it is also the part that keeps the answer physical.</p>
+
+        <section class="lesson-claim-chain" aria-label="Plain first-principles reading guide for input-space PDE-constrained geometry design">
+          <h2>Read This Chapter As One Claim</h2>
+          <p>The chapter is about where machine learning should sit in a design loop. If learning replaces the physics too casually, the optimizer may find a shape that only fools the shortcut. If learning helps create better candidate geometries, smaller search spaces, or better low-fidelity inputs, the real PDE solver can still judge the result. That is the main discipline here: let learning shape the geometry and spend solver calls more intelligently, but make the governing equation decide whether the device actually works.</p>
+          <div class="lesson-claim-grid">
+            <div><strong>Everyday problem</strong><span>Geometry and topology design spaces are huge, non-convex, and expensive because each candidate shape needs a PDE solve.</span></div>
+            <div><strong>Shared promise</strong><span>Learn useful shape representations or physics-enhanced low-fidelity inputs so optimization searches better candidates with fewer solver calls.</span></div>
+            <div><strong>Hidden danger</strong><span>A surrogate can be more expensive than it saves, or a learned latent space can omit fabrication limits, solver failures, or useful topology motifs.</span></div>
+            <div><strong>First rejection test</strong><span>Count total solver calls, inspect generated geometries, run the certified PDE solver, and compare fabricated or high-fidelity performance.</span></div>
+          </div>
+        </section>
+
+        <div class="input-geometry-core-map" aria-label="Geometry design changes a PDE input and the solver judges the physical result">
+          <div>choose a geometry or material layout</div>
+          <div>solver computes the physical field</div>
+          <div>objective scores the device behavior</div>
+          <div>search for a better geometry</div>
+        </div>
+
+        <h2>The Everyday Version</h2>
+        <p>Imagine designing a showerhead. You can drill holes in many places. The pattern determines where the water goes. If you had a perfect water-flow simulator, you could test a pattern, see the spray, and improve it. But each test is slow. You might be tempted to replace the simulator with a quick guess. That is dangerous: a design that looks good to the guess may fail when real water flows through it.</p>
+
+        <p>The talk's answer is careful. Use learning to choose better hole patterns, better shape descriptions, and better search directions. Do not ask learning to pretend it knows the water physics unless that shortcut has been paid for and checked. In the main design story, the solver remains the judge.</p>
+
+        <h2>What Input Space Means</h2>
+        <p>Input space means the machine learning acts on the input to the PDE solver. For geometry design, that input is the geometry: where material exists, where holes are placed, how thick parts are, what the period of a repeating structure is, or what pattern will be fabricated. Output-space learning tries to learn the PDE solution or a physical property directly. Input-space learning instead learns a better way to represent or generate candidate inputs.</p>
+
+        <p>This distinction is the backbone of the lecture. If you learn the output, you may be rediscovering known physics through data, and the learned model may fail outside its training region. If you learn the input representation, the solver still enforces the physics at optimization time. The learned part helps the search; the solver supplies the law.</p>
+
+        <div class="input-vs-output-map" aria-label="Input-space learning changes geometry while output-space learning replaces the solver">
+          <div>output-space learning predicts fields or properties</div>
+          <div>wrong surrogate can create nonphysical designs</div>
+          <div>input-space learning proposes geometries</div>
+          <div>real solver checks the physics</div>
+        </div>
+
+        <h2>Why Geometry Optimization Is Hard</h2>
+        <p>The design vector can be huge. A simple device might have ten geometric parameters. A topology-optimization grid can have thousands, millions, or even more degrees of freedom. Each design requires a PDE solve to evaluate the physical fields. For optical devices, that may mean Maxwell's equations. For heat devices, it may mean diffusion. For mechanics, it may mean elasticity.</p>
+
+        <p>The objective can also be nasty. It may be non-convex, which means many different designs look locally good but only some are truly strong. A gradient method can climb to a nearby local optimum, but if that optimum is bad, the next run often starts over from a new initial guess. The speaker calls this memoryless: after an expensive optimization run, most of the previous solver calls are not reused.</p>
+
+        <div class="geometry-hard-map" aria-label="Geometry optimization is expensive because the design space is large and non-convex">
+          <div>many shape variables</div>
+          <div>each score needs a PDE solve</div>
+          <div>many local optima</div>
+          <div>old failed runs should teach the next search</div>
+        </div>
+
+        <h2>The Adjoint Is The Scaling Trick</h2>
+        <p>Gradient-based optimization is still the baseline because the adjoint method makes gradients affordable. A naive gradient calculation would ask: what happens if I change parameter 1, parameter 2, parameter 3, and so on? If there are a million parameters, that would be impossible.</p>
+
+        <p>The adjoint method rearranges the chain rule. Instead of solving one sensitivity problem per parameter, it solves one related adjoint problem and then computes the gradient with respect to all parameters. That is why gradient methods scale to huge design spaces. The talk does not present adjoints as mystical. It presents them as clever bookkeeping: reparenthesize the derivative so one extra solve gives the information needed for many parameters.</p>
+
+        <div class="adjoint-scaling-map" aria-label="The adjoint method turns many sensitivity solves into one related solve">
+          <div>naive gradient: one solve per parameter</div>
+          <div>huge design has too many parameters</div>
+          <div>adjoint rearranges the chain rule</div>
+          <div>one related solve gives the full gradient</div>
+        </div>
+
+        <h2>Surrogates Have A Cost Ledger</h2>
+        <p>The talk is unusually practical about surrogate models. A surrogate is only useful if the total cost is lower than the baseline. It is not enough to say the trained model evaluates quickly. You must also count the training data, and that training data usually comes from expensive PDE solves.</p>
+
+        <p>The cost comparison is simple. Baseline optimization calls the solver many times. Surrogate optimization calls the surrogate many times, but before that it pays to generate training data and train the model. If the surrogate will be reused often enough, or if the training data need is low enough, it can win. If not, it is an expensive detour.</p>
+
+        <div class="surrogate-cost-map" aria-label="A surrogate must count both training cost and fast evaluation cost">
+          <div>baseline cost: solver calls during optimization</div>
+          <div>surrogate cost: training data plus fast calls</div>
+          <div>data generation is usually the expensive part</div>
+          <div>surrogate wins only when the ledger closes</div>
+        </div>
+
+        <h2>Physics-Enhanced Deep Surrogates</h2>
+        <p>The first method in the talk is a physics-enhanced deep surrogate. It still predicts a scalar property, such as complex transmission through an optical structure, but it does not use a plain black-box neural network. Instead, the last layer is a low-fidelity PDE solver. The neural network learns how to transform the input geometry so the cheap solver gives a good answer for the property that matters.</p>
+
+        <p>This is a subtle idea. The cheap solver alone is wrong. In Maxwell problems, low-fidelity solvers can miss resonances badly. A plain neural network has no physical layer at the end. The physics-enhanced surrogate sits between them: the neural network changes the input to the cheap solver, and the cheap solver still produces the final physical-field-based output.</p>
+
+        <div class="peds-map" aria-label="Physics-enhanced deep surrogate uses a neural input transform before a low-fidelity solver">
+          <div>geometry parameters enter the model</div>
+          <div>neural net transforms the geometry</div>
+          <div>cheap solver computes the property</div>
+          <div>training makes cheap physics useful</div>
+        </div>
+
+        <p>The examples include Maxwell optics, diffusion, and reaction-diffusion. The reported benefit is not just faster evaluation; the method can need far less data than a plain neural-network baseline for the same error. That matters because the training data are PDE solves. The speaker's point is not "put a neural network everywhere." It is "use the known equation where it helps, and make learning repair the part that is cheap but inaccurate."</p>
+
+        <h2>The Stronger Design Move: Learn The Search Space</h2>
+        <p>The second method is more central to the talk's input-space message. Here the real PDE solver stays in the loop. The learned model does not predict the final property. It generates a geometry from a smaller latent vector. Then the true solver evaluates that geometry. The machine learning therefore shapes the search space, while the solver certifies the physics.</p>
+
+        <p>This is powerful because geometry has reusable structure. Good optical patterns may share motifs. Good thermal designs may share channel patterns. Good mechanical metamaterials may share holes, ribs, or connected regions. If learning can build a compact language of useful shapes, the optimizer can search that language instead of directly searching thousands of raw pixels.</p>
+
+        <div class="latent-search-map" aria-label="Representation learning searches a small geometry space while the true solver evaluates candidates">
+          <div>latent vector has few variables</div>
+          <div>decoder turns it into a geometry</div>
+          <div>true PDE solver evaluates the device</div>
+          <div>optimizer searches useful shape features</div>
+        </div>
+
+        <h2>The Chicken And Egg Problem</h2>
+        <p>To learn a useful shape language, you need examples of useful shapes. But if you already had many excellent designs, the optimization problem would be partly solved. The talk handles this by using early-stopped topology optimization runs. During a topology run, the early stage often finds the rough placement of holes or material regions. Later stages refine the exact shapes.</p>
+
+        <p>So the method stops several topology runs early. Those designs are not final optima, but they contain useful topology. Instead of throwing them away, the method uses them as training data for a representation. It also augments them with erosion and dilation, meaning slightly shrinking or growing the material regions. That teaches the representation nearby shape variations.</p>
+
+        <div class="early-topology-map" aria-label="Early-stopped topology optimization provides useful design features before final shape refinement">
+          <div>run topology optimization briefly</div>
+          <div>keep rough hole and material layout</div>
+          <div>augment by erosion and dilation</div>
+          <div>train a compact geometry representation</div>
+        </div>
+
+        <h2>The Augmented Reality Deflector</h2>
+        <p>The main device example is an optical deflector for augmented reality. The goal is to send red, green, and blue light to the same deflection angle. That is hard because ordinary optical behavior is chromatic: different colors often bend differently. The design is a repeated metasurface structure with a complex pattern, periods in two directions, and thickness parameters.</p>
+
+        <p>The learned representation reduces the design space from about 6,000 degrees of freedom to eight latent variables, with additional physical parameters included in the Bayesian optimization. Each Bayesian optimization step still calls the certified physics solver. The model is not guessing whether the device works. It proposes a geometry, and Maxwell physics judges it.</p>
+
+        <div class="ar-deflector-map" aria-label="The augmented reality deflector seeks one angle for red, green, and blue light">
+          <div>red, green, and blue should deflect together</div>
+          <div>metasurface pattern controls scattering</div>
+          <div>latent variables generate candidate designs</div>
+          <div>Maxwell solver checks efficiency</div>
+        </div>
+
+        <p>The reported comparison is concrete. The learned-representation Bayesian optimization used roughly 700 simulations for the training data and about 350 more for optimization. The comparison topology-optimization study used about 14,000 simulations across many runs. The learned search reached strong efficiencies across colors and led to a fabricated device with experimental performance better than the previous state of the art, though blue degraded somewhat after fabrication.</p>
+
+        <h2>Why Bayesian Optimization Fits The Latent Space</h2>
+        <p>Bayesian optimization is useful when each evaluation is expensive and the number of search variables is modest. It builds a model of where good candidates might be, balances exploration and exploitation, and decides what to try next. It would struggle directly in a raw 6,000-dimensional pixel space. But after the autoencoder compresses geometry to a small latent space, Bayesian optimization becomes more practical.</p>
+
+        <p>This is another example of matching the tool to the representation. The optimizer did not become magically powerful. The learned geometry language made the search problem smaller and more structured, so a sample-efficient optimizer had a chance.</p>
+
+        <div class="bayes-latent-map" aria-label="Bayesian optimization works better after geometry is compressed to a small latent space">
+          <div>raw pixel space is too large</div>
+          <div>autoencoder compresses useful geometry</div>
+          <div>Bayesian optimization samples carefully</div>
+          <div>expensive solver calls are spent better</div>
+        </div>
+
+        <h2>The Explainability Point</h2>
+        <p>In the Q and A, the speaker explains why the physical layer matters for interpretability. In the physics-enhanced surrogate, the final output comes from a solver layer. That means you can inspect the geometry and the physical fields that led to the prediction. The model does not end with an opaque correction layer after the physics.</p>
+
+        <p>For the latent design method, the explanation is even clearer. The machine learning output is a geometry, not a hidden physical answer. You can look at the shape. You can fabricate it. You can pass it through a trusted solver. This does not make the method automatically transparent in every detail, but it gives concrete objects to inspect instead of only neural activations.</p>
+
+        <h2>The Design And Topology Connection</h2>
+        <p>This talk is directly about topology. Topology means the large structure of connected regions and holes: where material exists, where voids exist, and how paths connect. In optical metasurfaces, topology controls scattering pathways. In thermal devices, it controls heat paths. In mechanical metamaterials, it controls load paths. In chemistry-linked optical devices, it controls how light is delivered to a chemical task.</p>
+
+        <p>The important shift is that topology optimization is not only a final optimizer. It can also be a data generator. Early topology runs reveal useful design motifs before they become final polished designs. Those motifs can teach a learned representation. Then the learned representation lets another optimizer search a smaller, more meaningful design space.</p>
+
+        <div class="topology-design-map" aria-label="Topology provides reusable design motifs for learned geometry representations">
+          <div>topology decides holes and connections</div>
+          <div>early runs reveal useful motifs</div>
+          <div>latent space stores shape features</div>
+          <div>design search reuses those motifs</div>
+        </div>
+
+        <h2>How This Connects To Earlier Chapters</h2>
+        <p>This chapter connects to surrogate-model chapters because it keeps asking whether a surrogate actually saves cost. It connects to reduced-model chapters because it compresses the design search space, not necessarily the PDE solution space. It connects to topology-aware learning because holes, connected regions, and geometric motifs matter more than raw pixels. It connects to PINN and operator-learning chapters by drawing a boundary: sometimes replacing the solver is useful, but here the solver is often too valuable to remove.</p>
+
+        <p>It also connects to Chapter 128. There, the controller needed to learn missing dynamics while acting. Here, the optimizer needs to learn a useful geometry language while still trusting the solver for the physical result. Both chapters reject blind black-box replacement. They use learning where the bottleneck really is.</p>
+
+        <h2>The Boundary Of The Claim</h2>
+        <p>The method is not for every design problem. The speaker narrows the scope. It needs a setting where the PDE solve is expensive but still possible hundreds or thousands of times. If you can only afford three solver calls, this is probably too data-hungry. If the objective is convex or easy, the existing optimizer may be enough. If the design can be parameterized simply, a learned representation may be unnecessary.</p>
+
+        <p>There are also open questions. How many latent variables should be used? How many early topology samples are enough? How should fabrication constraints be built into the representation? How should solver failures be handled when generated geometries are difficult? The talk treats these as active research questions, not solved details.</p>
+
+        <div class="input-boundary-map" aria-label="Input-space learning helps hard design problems but has clear limits">
+          <div>needs enough solver calls to learn</div>
+          <div>not needed for easy convex problems</div>
+          <div>latent size and data quality matter</div>
+          <div>fabrication and solver failures still matter</div>
+        </div>
+
+        <h2>What You Should Remember</h2>
+        <p>The heart of the lecture is this: in PDE-constrained design, the physics solver is not the enemy. It is expensive, but it is also the reason the design can be trusted. Input-space scientific machine learning tries to shorten the path to discovery by learning better geometries, better search spaces, and better low-fidelity inputs while keeping the governing physics visible.</p>
+
+        <p>If you remember only one sentence, remember this: let machine learning help choose the shapes, but make the equation judge whether the shapes work.</p>
+
+        <section class="lesson-review" aria-label="End of chapter understanding check for input-space PDE-constrained geometry design">
+          <h2>How To Test Whether You Understood This Chapter</h2>
+          <div class="lesson-review-grid">
+            <div><strong>Explain input-space learning</strong><span>The learned model changes the PDE input, such as geometry or material layout. It does not have to replace the physical output calculation.</span></div>
+            <div><strong>Explain the cost ledger</strong><span>A fast surrogate only wins if training data, training time, and optimization calls together cost less than the baseline solver workflow.</span></div>
+            <div><strong>Explain early topology data</strong><span>Early-stopped topology runs can reveal useful hole and material motifs before final refinement, giving a learned representation something meaningful to encode.</span></div>
+            <div><strong>Connect it to topology and design</strong><span>Holes, connected regions, channels, ribs, and metasurface motifs can be the reusable search language, but Maxwell, heat, elasticity, or reaction-diffusion physics still judges performance.</span></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

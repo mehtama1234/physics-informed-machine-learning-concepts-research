@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chapter 114 - Make The Network Learn The Detail It Missed</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="sidebar">
+        <h1>DDPS Study</h1>
+        <a href="index.html">Start</a>
+        <a href="review-path.html">Review Path</a>
+        <a href="plain-words.html">Plain Words</a>
+        <a href="method-map.html">Method Map</a>
+        <a href="self-check.html">Self Check</a>
+        <a href="capstone.html">Capstone</a>
+        <a href="theme-index.html">Theme Index</a>
+        <a href="domain-map.html">Domain Map</a>
+        <a href="paper-reader.html">Paper Reader</a>
+        <a href="common-mistakes.html">Common Mistakes</a>
+        <a href="study-plan.html">Study Plan</a>
+        <a href="math-map.html">Math Map</a>
+        <a href="prerequisite-map.html">Prerequisite Map</a>
+        <a href="cheat-sheet.html">Cheat Sheet</a>
+        <a href="chapter-98.html">Chapter 98</a>
+        <a href="chapter-99.html">Chapter 99</a>
+        <a href="chapter-100.html">Chapter 100</a>
+        <a href="chapter-101.html">Chapter 101</a>
+        <a href="chapter-102.html">Chapter 102</a>
+        <a href="chapter-103.html">Chapter 103</a>
+        <a href="chapter-104.html">Chapter 104</a>
+        <a href="chapter-105.html">Chapter 105</a>
+        <a href="chapter-106.html">Chapter 106</a>
+        <a href="chapter-107.html">Chapter 107</a>
+        <a href="chapter-108.html">Chapter 108</a>
+        <a href="chapter-109.html">Chapter 109</a>
+        <a href="chapter-110.html">Chapter 110</a>
+        <a href="chapter-111.html">Chapter 111</a>
+        <a href="chapter-112.html">Chapter 112</a>
+        <a href="chapter-113.html">Chapter 113</a>
+        <a href="chapter-114.html">Chapter 114</a>
+        <a href="chapter-115.html">Chapter 115</a>
+        <a href="chapter-116.html">Chapter 116</a>
+        <a href="chapter-117.html">Chapter 117</a>
+        <a href="chapter-118.html">Chapter 118</a>
+        <a href="chapter-119.html">Chapter 119</a>
+        <a href="chapter-120.html">Chapter 120</a>
+        <a href="chapter-121.html">Chapter 121</a>
+        <a href="chapter-122.html">Chapter 122</a>
+        <a href="chapter-123.html">Chapter 123</a>
+        <a href="chapter-124.html">Chapter 124</a>
+        <a href="chapter-125.html">Chapter 125</a>
+        <a href="chapter-126.html">Chapter 126</a>
+        <a href="chapter-127.html">Chapter 127</a>
+        <a href="chapter-128.html">Chapter 128</a>
+        <a href="chapter-129.html">Chapter 129</a>
+        <a href="chapter-130.html">Chapter 130</a>
+        <a href="chapter-131.html">Chapter 131</a>
+        <a href="chapter-132.html">Chapter 132</a>
+        <a href="chapter-133.html">Chapter 133</a>
+        <a href="chapter-134.html">Chapter 134</a>
+        <a href="chapter-135.html">Chapter 135</a>
+        <a href="chapter-136.html">Chapter 136</a>
+        <a href="chapter-137.html">Chapter 137</a>
+        <a href="from-zero.html">From Zero</a>
+        <a href="pinn-from-zero.html">PINNs From Zero</a>
+        <a href="rom-from-zero.html">ROMs From Zero</a>
+        <a href="manifold-from-zero.html">Manifolds From Zero</a>
+        <a href="synthesis.html">Synthesis</a>
+        <a href="big-picture.html">Big Picture</a>
+        <a href="examples.html">Examples</a>
+        <a href="bridge.html">AISE Bridge</a>
+        <a href="audit.html">Transcript Audit</a>
+      </nav>
+      <main class="content">
+        <p class="eyebrow">Narrative chapter</p>
+        <h1>Make The Network Learn The Detail It Missed</h1>
+
+        <p>This chapter uses video 117, Qing-Yao Lai's DDPS talk on machine-precision neural networks for multiscale dynamics. The talk starts from a very concrete failure: neural networks can learn the smooth, large part of a physical field while missing the small, sharp, fast-changing detail. In weather, flow, and PDE problems, that missing detail is not cosmetic. It can grow during time rollout and make the model unstable or wrong.</p>
+
+        <p>The talk's main idea is simple enough to say without jargon. Do not force one neural network to learn everything at once. Let the first network learn the big easy part. Look at what it missed. Then train another network to learn that leftover error. Then repeat. Each stage is a repair job for the previous stage. With the right scaling, those repairs can push the error close to machine precision.</p>
+
+        <section class="lesson-claim-chain" aria-label="Plain first-principles reading guide for multiscale neural correction">
+          <h2>Read This Chapter As One Claim</h2>
+          <p>Picture a weather map, a turbulent flow, or a stress field in a thin structure. The broad shape may be easy to see, but the small ripples, sharp gradients, and local hot spots can decide what happens next. A neural network often learns the broad smooth part first and leaves the fine part behind. This chapter says to stop treating that leftover as harmless noise. Measure what the first model missed, rescale it so the next model can actually see it, and keep adding focused correction stages until the small physical detail is no longer buried.</p>
+          <div class="lesson-claim-grid">
+            <div><strong>Everyday problem</strong><span>A surrogate can look visually right while missing fine scales that later grow, destabilize a rollout, or change a design decision.</span></div>
+            <div><strong>Shared promise</strong><span>Train the first network on the main field, then train later networks on the residual errors at their own natural size and frequency scale.</span></div>
+            <div><strong>Hidden danger</strong><span>If scaling is too aggressive, points are too sparse, or stopping is careless, the correction stage may overfit or chase sampling error.</span></div>
+            <div><strong>First rejection test</strong><span>Check spectra, gradients, PDE residuals, long rollouts, and design-critical small features rather than trusting the picture by eye.</span></div>
+          </div>
+        </section>
+
+        <div class="mpnn-big-picture-map" aria-label="Multi-stage neural networks learn the main field first and then learn leftover errors">
+          <div>one network misses fine detail</div>
+          <div>measure what remains</div>
+          <div>next network learns the leftover</div>
+          <div>repeat until error is tiny</div>
+        </div>
+
+        <h2>The Big Failure Is Blurry Physics</h2>
+        <p>Machine-learning weather models can be impressive. After expensive training, they can forecast quickly and capture the large-scale wind pattern. But the speaker shows a problem in the spectrum: the model can match the low wave numbers while losing high wave numbers. In plain terms, it gets the broad shapes and loses the fine texture.</p>
+
+        <p>That matters because a physical field is not only its outline. In weather, small structures can affect later evolution. In turbulence, small scales can carry gradients and dissipation. In waves, a small phase or frequency error can grow. If a learned emulator is rolled forward step after step, each small missed detail becomes part of the next input. The model is then not merely blurry. It can drift, blow up, or become physically useless.</p>
+
+        <div class="blurry-emulator-map" aria-label="Neural emulators can capture large scales while losing fine scales that later cause rollout error">
+          <div>large weather pattern looks right</div>
+          <div>fine scales are smoothed out</div>
+          <div>rollout reuses its own errors</div>
+          <div>forecast can drift or blow up</div>
+        </div>
+
+        <h2>Spectral Bias Means The Network Learns Low Frequencies First</h2>
+        <p>The talk names the root difficulty as spectral bias. The everyday version is this: a neural network tends to learn slow, smooth variation before it learns fast wiggles. If the target function has both a broad hill and a tight ripple, the broad hill is usually learned first. The ripple takes much longer and may never be represented accurately enough in practical training.</p>
+
+        <p>The speaker gives a simple reason. During gradient descent, the learning signal for high frequencies can become very small. If the gradient is tiny, the optimizer has little push in the direction needed to learn those details. So adding more training steps or a bigger network is not automatically enough. The bottleneck is the way the network learns, not only the number of parameters it owns.</p>
+
+        <div class="spectral-bias-map" aria-label="Spectral bias makes neural networks learn smooth features before high-frequency details">
+          <div>smooth part gives strong learning signal</div>
+          <div>fine wiggle gives weak signal</div>
+          <div>training appears stuck</div>
+          <div>high-frequency error remains</div>
+        </div>
+
+        <h2>Scaling The Input Helps The Network See Finer Detail</h2>
+        <p>One fix is to rescale the first layer weights with a factor the talk calls kappa. You can think of kappa as a zoom control for the input. If the network is trying to learn a high-frequency feature, the input needs to be scaled so the optimizer can feel that feature strongly enough.</p>
+
+        <p>This is related to Fourier features, but the implementation in the talk does not need to add cosine features in the same way. It uses a scaling factor and, in the strongest examples, a sine activation. The warning is important: larger kappa is not always better. Too much scaling can make the network overfit the training points and create false wiggles between them. There is an effective range, and it is connected to the dominant frequency in the thing being learned.</p>
+
+        <div class="kappa-zoom-map" aria-label="The kappa scaling factor helps high-frequency features become learnable but can overfit if too large">
+          <div>feature is too fine</div>
+          <div>increase input scaling</div>
+          <div>optimizer sees the detail</div>
+          <div>too much scaling makes false wiggles</div>
+        </div>
+
+        <h2>The Multi-Stage Trick Is Error Peeling</h2>
+        <p>The main algorithm is a multi-stage neural network. The first network gives a leading approximation. It may be wrong by about ten to the minus four. Instead of asking that same network to grind forever, the method computes the residual error and trains a second network on that error. The combined answer becomes first network plus a small correction from the second network.</p>
+
+        <p>Then the same thing happens again. The third network learns what the first two still missed. In the one-dimensional examples, the error drops from around ten to the minus four to ten to the minus eight, then ten to the minus eleven, then near ten to the minus thirteen. The later errors tend to have higher dominant frequency. So the stages behave like peeling: remove the big smooth layer first, then expose and learn the finer remaining layer.</p>
+
+        <div class="error-peeling-map" aria-label="Each stage learns the residual left behind by previous stages">
+          <div>stage 1 learns main function</div>
+          <div>stage 2 learns first residual</div>
+          <div>stage 3 learns smaller residual</div>
+          <div>combined error approaches machine precision</div>
+        </div>
+
+        <h2>Why A Small Error Needs Its Own Scale</h2>
+        <p>A later-stage error may be tiny in magnitude. If the neural network is asked to learn that tiny function directly, the training signal can be weak. The method therefore writes the correction as a small number times an order-one function. The small number carries the size of the correction, while the network learns a normal-sized shape.</p>
+
+        <p>This is the perturbation-theory flavor of the method. In first-principles language, it separates "how big is the correction?" from "what shape is the correction?" That separation makes the next network's job easier. It does not have to notice a tiny signal buried in the full solution. It is told to focus on the leftover shape at its own scale.</p>
+
+        <div class="small-error-scale-map" aria-label="A small correction is represented as a small magnitude times a normal-sized function">
+          <div>leftover error is tiny</div>
+          <div>estimate its size</div>
+          <div>learn a normal-sized shape</div>
+          <div>multiply back by the small scale</div>
+        </div>
+
+        <h2>The Flow Snapshot Example Shows The Same Problem In Two Dimensions</h2>
+        <p>The talk then moves from a one-dimensional toy function to a two-dimensional incompressible flow. The network takes coordinates as input and outputs a stream function. The first network already gives a good-looking field, but the error picture contains wiggles. In the spectrum, the usual pattern appears: low wave numbers are captured, high wave numbers are wrong.</p>
+
+        <p>After the second and third stages, the field error drops dramatically, and the energy spectrum of the neural representation lines up with the target spectrum much better. This is the key physical point: matching the picture by eye is not enough. A field can look right at large scale while having the wrong spectrum. The multi-stage method is trying to make the representation faithful across scales.</p>
+
+        <div class="flow-spectrum-map" aria-label="The multi-stage method repairs the high-wave-number error in a two-dimensional flow snapshot">
+          <div>flow image looks close</div>
+          <div>spectrum reveals missing detail</div>
+          <div>later stages fit residual wiggles</div>
+          <div>energy spectrum aligns across scales</div>
+        </div>
+
+        <h2>PINNs Have A Harder Version Of The Same Problem</h2>
+        <p>The second major part asks whether this can help physics-informed neural networks. A PINN tries to represent a PDE solution with a neural network. It computes the PDE residual using automatic differentiation and trains the network so the residual and boundary errors are small.</p>
+
+        <p>The hard part is that, in a PDE solve, we usually do not know the true solution. In ordinary data fitting, the second stage can train on the known error: target minus prediction. For a PDE, there may be no target function. The talk's move is to use the previous stage's PDE residual as the source of information for the next stage. The equation itself tells us what the first network failed to satisfy.</p>
+
+        <div class="pinn-residual-teacher-map" aria-label="For PDEs, the residual from one stage becomes the training signal for the next stage">
+          <div>true solution is unknown</div>
+          <div>first PINN leaves PDE residual</div>
+          <div>residual defines next correction problem</div>
+          <div>next stage reduces equation error</div>
+        </div>
+
+        <h2>The Residual Gives Both Size And Frequency</h2>
+        <p>The talk walks through simple ODE and PDE examples to show why the residual is enough to guide the next stage. The residual has a dominant frequency. That frequency is close to the dominant frequency of the solution error. The residual also has a magnitude. By balancing the dominant terms in the equation, the method estimates the size of the next correction.</p>
+
+        <p>For higher derivatives, the same idea changes by the derivative order. For nonlinear equations, the higher-stage correction can often be treated with a linearized equation because the correction is small. This does not mean nonlinear physics disappears. It means the leftover correction around the current approximation can be small enough that the next repair problem is effectively linear at leading order.</p>
+
+        <div class="residual-info-map" aria-label="A PDE residual can reveal the size and frequency of the next correction">
+          <div>measure residual size</div>
+          <div>find residual frequency</div>
+          <div>estimate correction scale</div>
+          <div>train next-stage PDE correction</div>
+        </div>
+
+        <h2>Why This Is Not A Replacement For Every Solver</h2>
+        <p>The speaker is explicit that PINNs are usually more attractive for inverse problems than for ordinary forward solves. If all you need is a standard diffusion equation solved once, a classical numerical method will usually be faster and more reliable. The talk uses simple forward examples because they have exact solutions, which makes it possible to validate the method.</p>
+
+        <p>The real target is harder: problems where high precision matters, the unknown is not just a state but also a parameter or profile, and deriving a classical adjoint or solver workflow may be difficult. In those cases, a high-precision neural representation can be useful because it gives a smooth differentiable object while driving the equation residual very low.</p>
+
+        <div class="solver-boundary-map" aria-label="Multi-stage PINNs are most useful for hard inverse PDE problems, not routine forward solves">
+          <div>ordinary forward PDE</div>
+          <div>classical solver often wins</div>
+          <div>hard inverse PDE</div>
+          <div>high-precision differentiable fit can help</div>
+        </div>
+
+        <h2>The Euler Blow-Up Example Shows Why Precision Matters</h2>
+        <p>The most ambitious example concerns the Euler equations, which are the Navier-Stokes equations with zero viscosity. A long-standing question is whether smooth finite-energy initial data can form a singularity in finite time. Near a possible blow-up, the smallest and largest length scales can span many orders of magnitude. That makes the problem extremely hard for direct numerical simulation.</p>
+
+        <p>The group reduces the problem into a self-similar domain and uses a multi-stage PINN to search for solution profiles and an unknown parameter. This is an inverse problem, not a normal time-forward solve. The speaker reports that the neural network found approximate smooth self-similar solutions showing singular behavior, with accuracy checked by substituting the result back into the equations and measuring the residual.</p>
+
+        <div class="euler-blowup-map" aria-label="The multi-stage PINN searches for self-similar Euler profiles connected to possible finite-time blow-up">
+          <div>Euler blow-up is open</div>
+          <div>near singularity has many scales</div>
+          <div>search self-similar profiles</div>
+          <div>verify by PDE residual</div>
+        </div>
+
+        <h2>The Q&A Draws The Practical Boundaries</h2>
+        <p>The Q&A keeps the method grounded. One question asks whether measuring error with stronger norms, such as including gradient error, might naturally emphasize high frequencies. The speaker says that is a good direction and that the current work mostly uses simpler error measures, with related gradient-enhanced PINN losses in some examples.</p>
+
+        <p>Another question asks whether simply adding many more parameters lets a network capture more frequencies. The speaker's answer is essentially no, not reliably. The architecture may have enough capacity, but the optimization path still controls what gets learned. Another question asks about collocation points in PINNs. The answer is that each stage still needs enough points; otherwise the limiting error comes from undersampling rather than from the network's spectral learning problem.</p>
+
+        <p>The stopping rule is another boundary. Many quantities can be automated, including estimating kappa from the previous residual. But deciding when to stop a stage is still partly manual in the current work. That matters for honest use: the algorithm is powerful, but it is not a push-button guarantee for every problem.</p>
+
+        <div class="qa-boundary-map" aria-label="The Q&A highlights norms, parameter count, collocation density, and stopping rules as practical limits">
+          <div>error norm changes what is emphasized</div>
+          <div>more parameters do not fix learning alone</div>
+          <div>collocation points must be dense enough</div>
+          <div>stage stopping still needs care</div>
+        </div>
+
+        <h2>How This Connects To Topology And Design</h2>
+        <p>Topology optimization often creates multiscale fields. A material-density field may have broad regions, thin members, holes, boundary layers, stress concentrations, or small flow features. If a surrogate smooths away those details, the optimizer may learn the wrong design lesson. It may remove a small structure that carries load, miss a small hot spot, or trust a flow prediction whose fine-scale spectrum is wrong.</p>
+
+        <p>The lesson from this talk is to inspect what the model misses, not just what it predicts. A first surrogate may get the broad response right. A second stage may need to learn the residual stress, residual temperature, residual pressure, or residual equation violation. In design, this could mean using staged networks to preserve small but important features, especially when the surrogate will be rolled forward, differentiated, or used inside an optimizer.</p>
+
+        <p>The warning is equally important. If the design problem is routine and a classical solver is cheap enough, use the solver. The staged neural method earns its place when the field is multiscale, high precision matters, inverse parameters are involved, and ordinary methods are too expensive or hard to differentiate through.</p>
+
+        <div class="topology-detail-map" aria-label="Topology design can fail if learned surrogates smooth out small load, heat, or flow features">
+          <div>design has small critical features</div>
+          <div>surrogate smooths them away</div>
+          <div>optimizer trusts wrong signal</div>
+          <div>residual stages repair the missed detail</div>
+        </div>
+
+        <h2>The Chapter In One Chain</h2>
+        <p>First, neural emulators can look right at large scale while missing fine-scale physical detail. Second, this happens because neural networks tend to learn low frequencies before high frequencies. Third, small missed details can grow during time rollout and make an emulator unstable or inaccurate. Fourth, input scaling through kappa helps the optimizer learn higher-frequency features, but too much scaling can overfit. Fifth, sine activations and scaling can improve high-frequency fitting. Sixth, a multi-stage network lets the first model learn the main function and later models learn the residual errors. Seventh, each residual is treated at its own size scale, so the later network learns a normal-sized correction rather than a tiny buried signal. Eighth, two-dimensional flow examples show that the method repairs high-wave-number spectral errors, not just visual errors. Ninth, for PINNs, the true solution is unavailable, so the previous PDE residual becomes the teacher for the next correction. Tenth, the residual provides both a dominant frequency and an estimated correction size. Eleventh, nonlinear equations can often yield a leading-order linear correction problem because the correction is small. Twelfth, the method is most useful for difficult inverse PDE problems, not routine forward solves. Thirteenth, the Euler example shows how high-precision neural representations can help search for multiscale singular solutions. Fourteenth, for topology and design, the practical lesson is to make the surrogate learn the detail it missed before trusting it inside an optimizer.</p>
+
+        <div class="note">
+          <p>The chapter's core idea: when a neural network misses the fine physical detail, do not only make it bigger. Find the leftover error, scale it so it can be learned, and train the next stage to repair exactly what the previous stage failed to capture.</p>
+        </div>
+
+        <section class="lesson-review" aria-label="End of chapter understanding check for multiscale neural correction">
+          <h2>How To Test Whether You Understood This Chapter</h2>
+          <div class="lesson-review-grid">
+            <div><strong>Explain spectral bias simply</strong><span>The network tends to learn smooth, slow variation before tight wiggles. That is why a prediction can look good at large scale but fail in the fine-scale spectrum.</span></div>
+            <div><strong>Explain error peeling</strong><span>Each stage learns what the previous stages missed. The correction is scaled so the network learns a normal-sized leftover shape instead of a tiny buried signal.</span></div>
+            <div><strong>Explain the PINN version</strong><span>When the true PDE solution is unknown, the previous stage's equation residual becomes the clue for the next correction's size and dominant frequency.</span></div>
+            <div><strong>Connect it to topology and design</strong><span>Thin members, small holes, boundary layers, hot spots, and stress concentrations can decide the design. A surrogate should repair those missed details before an optimizer trusts it.</span></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

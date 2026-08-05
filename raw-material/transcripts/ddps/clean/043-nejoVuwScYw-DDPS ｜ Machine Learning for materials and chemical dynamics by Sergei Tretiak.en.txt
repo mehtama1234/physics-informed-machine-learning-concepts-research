@@ -1,0 +1,1562 @@
+all right
+um all right welcome to the ddps seminar
+everyone before we introduce our invited
+speaker let's go over some rules and
+logistics first of all please mute
+yourself during the talk unless you have
+questions if you have questions
+you're welcome to unmute and ask
+otherwise please use
+chat room to post your questions so that
+we can address them in q a session at
+the end second today's ddps seminar is
+open to external audiences
+therefore no class by discussion is
+allowed
+please watch out finally the talk today
+will be recorded and uploaded
+in our youtube channel that's about it
+now let me introduce our speaker today
+it is an honor
+to host sergey uh
+chattya
+who is a t1 deputy group leader in the
+theoretical division of division at los
+alamos national lab
+and los alamos national lab fellow he
+received his master's degree in physics
+in 1994 from moscow institute of physics
+and technology
+and his chemistry doctorate in 1998 from
+the university of rochester
+he was then a director funded
+postdoctoral fellow from 1999 until 2001
+and subsequently became a staff
+scientist at
+los alamos national lab and a member of
+the doe funded center for integrated
+nanotechnology technologies
+sergey also
+deserves as an absolute professor at the
+university of california santa barbara
+from 2015 to present
+and at skulkov institute of science and
+technology in russia from 2013 to
+present he became an american physical
+society fellow in 2014 and the fellow of
+the royal society of chemistry in 2019
+he has also received a humboldt research
+award in 2021 the los alamos
+postdoctoral distinguished mentor award
+in 2015 and the los alamos uh the fellow
+prize for research in 2010 his research
+interests include development of
+electronic structure methods for
+molecular optical
+properties non-linear optical response
+of organic
+chromophores
+non-diabetic the dynamics of
+electronically excited states optical
+response of confined ex
+excitement in con
+conjugated polymers carbon nanotubes
+semiconductor nanoparticles mixed-hailed
+pair of perovskit
+and the molecular aggregates the use of
+machine learning and data science toward
+modeling electronic and chemical
+properties
+priac has published more than 300
+scientific publications cited more than
+20 000 times
+and he has presented more than 300
+invited and keynote folks in the u.s and
+abroad today survey will give a talk
+with the title of machine learning for
+materials and
+chemical dynamics please expect a
+wonderful talk from him and enjoy it of
+course
+now without further ado let me pass the
+button to sergey by asking one random
+questions
+the question is what is your favorite
+things to do other than research
+oh other than research remember that i'm
+living in los alamos in new mexico
+new mexico is a land of enchantment and
+there are three favorite things for one
+to do in the northern new mexico which
+is
+biking i'm gluten biker
+skiing downfield skiing and hiking
+so those are three favorite things that
+i like to do
+that sounds very good i mean and sounds
+very healthy so
+i guess it's good for you
+i can't name a forcing
+and actually uh
+my mentor jean luc breda he is a big
+professor in
+arizona at one point he visited los
+alamos and
+um
+he looked at me and said well why don't
+you do the real chemistry
+because i'm theoretical chemist and then
+uh since then i start brewing beer so
+that's a real experimental chemistry and
+it's fascinating to do every day
+all right sounds good the stage is yours
+yep thank you so much yansu for a kind
+introduction and it's in order to
+present the
+ddps seminar
+and
+let me start with introducing uh
+some research topics that i would be
+happy to discuss offline that typically
+my team is interested in so for many
+many i'm theoretical chemists as i
+mentioned and for many many years we
+have been
+looking at the dynamics of excited
+states
+when you initiate joint electron phonon
+dynamics and you have a fascinating
+evolution of the wave function as you
+could see on those movies and in this
+revolution the electronic energy
+migrates to
+ionic degrees of freedom and back and as
+a result of this dynamics you could
+describe those phenomena such as energy
+and charge transfer and then you could
+build something like
+effective model for description of
+energy and just charge transfer as john
+sue was saying that i'm a member of
+synth center for integrated
+nanotechnologies and there we are
+looking at various nanosystems for
+example uh
+as you know that quantum materials have
+been
+latest push toward exciting technologies
+and we have been looking at the
+functionalized carbon nanotubes where
+the chemical group is attached to the
+surface of the nanocube and this makes
+them a quantum emitters so that those
+nanotubes can emit a very pure light a
+similar development has been going on in
+the length of uh quantum dots where the
+semiconductor nano crystal
+becomes a quantum emitter which is
+possible to use for example for quantum
+information transduction or just to
+making an optical quantum computer
+and of course peroxide materials have
+been
+recent newcomers as a functional
+materials used for a number of
+technologies i will name a few such as
+photovoltaics lightning
+um
+in in los alamos we have been
+particularly
+interested in using parasite materials
+for detection purposes such as gamma ray
+and x-ray detectors
+and of course over the past five years
+we have been very interested in pushing
+the methodology forward by invoking data
+science and machine learning and this
+part would be a subject of my today's
+talk
+uh this is my plan for today so first of
+all i will briefly introduce to machine
+learning approaches as their challenges
+as you apply them to chemical and
+material systems
+then i will skip perhaps like a decade
+of development all over the world and
+talk about uh
+some recent development and in
+particular answer the question how do
+you make your database from which you
+are learning
+so i'll talk about active learning
+strategy on an example of
+aluminum force fields
+then i will
+introduce into a major drawback of the
+current machine learning framework which
+is
+locality
+and then our outlines from
+recipes how we can potentially overcome
+this uh
+fundamental locality limit and describe
+non-local effects for
+charge systems such as anions and
+cations
+and for excited states
+so let's go ahead along this plan and
+essentially
+i'm not going to introduce you in
+machine learning and the famous example
+is how you examine the photograph and
+pixelated image and come up with the
+input of a doc and in the course of my
+presentation i will be solely focused on
+the
+neural networks more specifically
+convenient convolutional neural networks
+where you are parsing the information
+through the layers of the networks and
+at the end of the day
+you have something chemical on this side
+and then you are trying to assign a
+label which would be a desired property
+on that side
+so let me just introduce to you a big
+picture
+a chemist perspective on the material
+science
+you start with atoms
+then you make bonds come up with
+molecules nanoparticles 2d 3d structure
+and much larger systems such as polymers
+and biological systems
+so that you could see that there is a
+clear distinction between local
+properties
+such as
+bonds
+energy
+charge atomic charges and global
+properties what is the total energy of
+your systems
+what would be excited states what how
+the electronic density is distributed
+what is spectroscopic properties how you
+could
+manage energy and charge transport in
+this in those systems
+so that's where the machine learning can
+come handy when you're going across the
+array of materials
+and then the question is can we outsmart
+conventional quantum chemistry
+will artificial intelligence or ml be an
+answer
+for cutting the corners
+and
+most importantly what would be the
+technical ways to address the
+observables
+such as energies
+dynamical propagation parameters
+hamiltonians and so on
+so
+again sort of like to introduce you to
+the length of
+theoretical chemistry there is a speed
+versus accuracy gap
+if you are trying to solve the quantum
+equation such as stranger equation then
+the exact solution will cost you an
+exponential expense with respect to the
+system size
+when you go down in
+apply some approximation and dft is one
+popular
+you encode first principle approximation
+of course you could just
+downscale
+your experience to maybe let n and the
+power of three
+on this side on this side there is a
+classical force field
+where you forgot the quantum mechanics
+and use the simple model when you have
+balls on the springs
+however in this key on this side the
+error is large and on this side as the
+error is small and what we would like to
+achieve with machine learning is
+to embrace both sides to cut the corner
+so now
+let's talk about a simple example
+molecular dynamics
+to
+do the classical molecular dynamics
+let's say in the bomb opengyme regime
+you need to solve the newtonian equation
+of motion
+where the main thing would be the
+gradient
+the forces acting on a particular atom
+you can then get those gradients as the
+derivatives of cos of the energy and the
+energy you could get from the solution
+of the change equation
+that's where the expense for quantum
+mechanical simulations is coming into
+the picture
+so now we are asking so in principle how
+can we bypass the quantum mechanical
+simulations and one way to bypass it
+would be the classical force field which
+enable millions of atoms of simulations
+versus hundreds of atoms if you are
+using the quantum force field in the
+length of so-called
+abenitial molecular dynamics
+so again sort of like we are trying to
+utilize machine learning and in
+particular i'll be talking about
+supervised machine learning when we have
+a set of inputs
+and the set of variables we are learning
+the unknown functions
+and we are training this unknown
+function to the predescribed data sets
+and once how we are getting to those
+data sets would be a major subject of my
+talk and of course the supervised
+machine learning has been used for
+multiple texts such as regression and
+classification many applications i
+already showed you the image recognition
+and there are multiple examples of
+algorithms
+so just to
+test this in the context of chemistry
+our structure would define us a
+descriptors
+whereas the properties would be defined
+as the labels
+again so we are passing this through the
+neural network and of course we would
+like uh to train so that our neural
+network will perform accurately
+so prediction versus reference benchmark
+and then we are using those neural
+networks to simulate some desired
+physical properties such as
+spectra
+okay so but what is
+most missing in this picture that would
+be so-called extensibility and
+transferability tests which are
+extremely important
+so as a
+extensibility means that if you are
+training on the data set that is
+generated for small system let's say
+it's for small molecules you're asking
+the question how well
+your neural networks will perform for
+much larger system for much larger
+molecules such as proteins
+and the second question is about
+transferability
+for a chemist i would say what if you
+are training your neural network for one
+molecular family such as non-aromatic
+compound and you would like to transfer
+your neural network to
+perform for aromatic compounds which are
+very different systems
+will get any useful results
+of course this is a big question to
+answer and answering to these questions
+to some extent is extremely important
+before you start jumping into uh
+simulations of the properties
+again sort of like this is another
+picture just
+showing the big picture that we need to
+establish the relationship between
+structure and properties and now let's
+go into the
+specific recipes how one can we can do
+that
+so typically once you start
+the applying the neural network in
+chemistry you entertain the idea of
+locality
+let me have
+this simple equation that you have a
+property
+and it could be anything for example
+like total energy of your system
+and then you are presenting this
+property as a sum of the individual
+energies of your atoms
+okay and this underpins the idea of
+locality
+and then how you can do that
+you entertain concept of effective atoms
+in the specific chemical environment so
+this is a molecule
+you associate
+with each nuclear center
+some effective atoms take into account
+the effect of
+immediate chemical environment subject
+to a certain cutoff
+the certain cutoff would be on the order
+of about five answers
+and wi-fi answers
+the answer is that you need to go beyond
+the length of the typical chemical bonds
+remember that we are talking about
+chemistry and chemists are saying that
+the old chemistry is
+local
+okay so now uh
+then i will go beyond this uh thing and
+then discuss two specific properties
+with specific things one is how we can
+construct a proper training set
+by embracing both
+chemical space
+chemical space means that if you change
+one molecule to another one
+and conformational space
+and conformational space means that if
+you are making dynamics of the molecule
+and the molecule goes through some kind
+of reaction barrier which
+sort of like entails the
+change of the structure and then the
+final challenge would be how we can
+overcome the locality approximation
+this central idea in the building the
+neural networks
+so
+the fundamental idea came from the
+seminal work of baylor and paranal
+they were first to construct this neural
+network when they said that the energy
+of the system would be a sum of the
+energies of individual atoms
+and each individual atom is described by
+its specific
+neural network that is trained
+and
+remember that i showed you a picture of
+the photograph of the of the dog so
+similar like you pixelate the picture
+you describe the atom with atomic
+environment vector
+and this atomic environment vector will
+usually
+include radial description
+and angular description so the radial
+description means that it gives you an
+information what are the atoms in the
+neighborhood
+and angular description gives what are
+the angles and of course uh the angle
+give you some kind of uh implicit
+information about chemical bonding for a
+given
+atom
+so this was the original bella and
+perinella uh
+neural network and
+after that there have been
+almost two decades of development maybe
+15 years
+and during that those neural networks
+have been complicated a lot and in los
+alamos we have been
+helping to develop and improve several
+types of neural networks which are
+essentially some adapted versions like
+what is published by the big companies
+such as google like tensorflow and so
+forth
+so the first one would be any family
+which is a modified baylor approach the
+second one would be hypnom family which
+was developed by
+captain barras and nick lovers at los
+alamos
+and the main feature would be
+interacting layers and the third one
+would be aimnet by all ssr which
+features a self-consistent loop
+so any family was developed by legendary
+by justin smith and adrian rodger and
+justin was a postdoc at los alamos and
+now he is happily working at nvidia so
+we are suffering from this sucking up
+the talent from uh
+national labs universities to the uh
+industrial companies
+so anyway i will uh talk a little bit
+about those ones and just i'll give you
+the some big pictures by saying this was
+the original um bellerin perinella and
+this type is uh
+keep an eye on and this one would be
+aimnet so you could see there are a lot
+of things that is going on inside of the
+neural networks and i will describe in
+my talk some of those things
+okay now first of all let's talk about
+databases because
+if you are
+going on the land of machine learning
+the databases make a critical difference
+for the quality of your product
+so and surprisingly
+we have been using so-called ensemble
+disagreement
+but it's very simple approach
+which is showing you where on the face
+space you have
+a lack of training
+so let's imagine that instead of a
+single neural network you are training
+several neural networks
+and then you run the dynamics in
+parallel across those neural networks
+and see
+whether the answers are agreeing to each
+other
+in general if the answers do agree
+then
+we conclude that the
+neural networks had adequate training
+and this phase space is covered if the
+answers disagree
+that perhaps we need to add more points
+so this general principle serves for
+uncertainty quantification which is
+critical for training and also it
+underpins the active learning approach
+which is helping to automate this
+process
+so what it means is that just imagine
+that you have let's say the cpu cluster
+and gpu cluster gpu is running neural
+nets dynamics and cpu is doing reference
+quantum mechanical simulations
+so the
+neural nets after several cycles are
+asking cpu to produce more data
+and cpu is producing more data there is
+a retraining of the neural nets more
+dynamics and the new data is requested
+in fact sort of like you can just go
+away and in a week uh
+time you could come back and gather your
+hopefully improved uh neural nets
+okay
+so
+and again sort of like the active
+learning is allowing us to undercut
+and optimally choose the data sets
+so just this approach is this is disney
+plot for
+several data sets qm9
+we are starting from molecular systems
+qm9 is a data set of the small molecules
+which are in the ground and the ground
+state
+any one
+would be those molecules which are
+stretched along the conformation so
+that's a dynamically induced
+data set which was obtained by
+stretching along the normal modes so
+here we have
+50k of species here we have 20 millions
+of species
+and now if we are using the active
+learnings and 20 millions can
+be reduced to
+about 5 million so that without any uh
+negative effect to the quality of the
+training sets and then one could just
+analyze those systemic plots and
+see some type of typical chemical bond
+bonds that you could see in those
+molecular systems
+that's a principle
+for active learning
+and in particular active learning
+becomes
+very important when you're trying to
+transfer
+from low fidelity methods to the higher
+fidelity methods
+and that could be sort of like i'm not
+going to talk about this one but it is
+possible to do and then you need to use
+active learning here and there
+so let's talk about livermore we were
+happy enough to occupy sierra for a
+couple of months before it went to the
+production and as you know so you're
+hosting sierra and this is a number one
+on the top 500 list
+hotel number two on the top 500 list yes
+so we have been using sierra and
+occupying almost the whole thing by
+trying to develop the aluminum
+interatomic potentials namely what we
+have been doing we have been starting
+from melt
+namely a random arrangement of the
+aluminum atoms in the periodic cell
+so that the density function theory has
+been calculating those and of course you
+need to just to throw away some
+unphysical arrangement for example when
+the atoms are way too close to each
+other those are would be unphysical
+so that
+this way you start with the principle
+that you don't know anything about the
+system
+and you would like to learn
+not only the non-equilibrium dynamics
+but also you would like to learn the
+equilibrium confirmations so at the end
+of the day once you accomplish this
+active learning uh
+cycles many cycles
+so that it was done was done completely
+automatically without human
+interventions
+sort of like hands-free approach and
+then you start
+seeing and visualizing what is going on
+then you could
+sort of like identify what are the
+preferred crystalli
+stable crystals what would be the liquid
+phase what would be the shock
+configuration and highly disordered
+configuration
+okay so that's a principle and then of
+course at the end of the day
+you take those data you take those
+interatomic potentials which would be
+the machine learned force field
+and you conduct massive molecular
+dynamics
+on your laptop
+because you're now down to the
+linear cost of simulations and this has
+been done on the laptop
+and
+at the end of the day sort of
+you have this
+shock formations
+and
+this is about 1.3 millions of
+aluminum atoms
+simulations
+so now
+that's how you gather the data
+what
+would be the future approach for
+gathering the data
+how do we sample the phase space where
+we want this is learning of unknown
+think about catalytic reactions
+frequently when we are talking about
+catalysis
+and i'm really happy to see that now we
+are pushing toward green energies to the
+towards the hydrogen economy
+and when we are talking about catalysis
+it's all about
+learning what what is happening to the
+energy barriers
+and frequently we don't know where those
+energy barriers are and the question is
+how one can pinpoint
+and learn adequately from the energy for
+the energy barriers
+and here we have been recently
+developing two ideas one was the active
+learning combined with the transition
+path sampler so you have reactant and
+you have products
+and you could use something like nudge
+elastic band
+to pinpoint one pass through the barrier
+and then you use active learning
+to sort of like sample the
+phase space around the barrier
+to learn a force field to describe some
+kind of catalytic reactions
+and the second would be a bias dynamics
+where your uncertainty will push you
+toward unknown phase space
+those would be an important improvement
+on the land of
+machine learning
+okay so let me move on and address the
+second topic of my talk is how to
+overcome the locality change
+now let's talk about first about charge
+systems
+when i'm talking to to my data science
+colleague i was challenged
+so for example i'm asking the question
+what if you have a bucket of material
+when i drop a single electron there
+where would this electron end up
+in which corner and how the localized s
+electron would be
+even on the level of a simple molecule
+when i'm dropping the electron
+whether the electron would end up on the
+right side or on the left side
+and maybe if when you start rotating
+around the bond which is in the middle
+at some point the localization of the
+electron will change and the electron
+would be delocalized completely over the
+molecule
+so
+again sort of like also important
+question then the entropy in green
+energy technology or
+some
+electrochemistry
+ionization potential the energy to take
+away the electron or electron affinity
+the energy to add the electron are some
+kind of main properties for quantum
+chemistry we are usually
+using gft flavors in experiment you are
+using cycle voltammetry
+now if you would like to start learning
+about electronic properties then you
+need to
+discretize the electronic density
+remember that the electrons are making a
+cloud around the molecule so this is a
+molecule that's your electronic density
+which forms the electrostatic potential
+which is relevant to all those charge
+states now you would like to discretize
+this density and you would like to
+assign
+the point charge to every atom and
+remember those point charges underpin
+virtually all
+classical force fields
+but there is no charge partitioning
+schemes and so those things are ill
+conditions again i can go in depth into
+this question but for now let's think
+about that let's say that one need to
+take care about this partition in
+particular
+so now
+here we have been using aim eight atoms
+in molecule molecules
+and
+with this approach we were able to
+overcome the locality approximation
+and the locality the approximation is
+overcome by two important improvements
+number one
+usually like in any type of bela
+etherionella type of things we are
+starting with atomic environment vector
+and end up with energy
+so here there is a feedback loop
+to the atomic feature environment
+which is updated several times
+think about it as a
+mean field loop or self-consistent loop
+that you are using some somewhere like
+in hartree fox theory or density
+functional theory however in this case
+there is no variation of principle and
+there is no guarantee that it will ever
+converge but as a result
+after two or three iterations you are
+improving your answer quite a bit
+particularly for
+non-locality things when you remember
+this non-locality when the electron is
+not over ending up on the atoms but they
+becoming
+local delocalized somewhere else
+and the second thing is to introduce the
+atomic weight factors
+underpinning the idea of neutral spin
+equilibration
+those atomic weight factors are in fact
+can be associated to the weight
+how this particular atom is
+participating in this uh
+the localization
+okay so and then we apply this thing and
+try to uh learn the distribution of the
+charges on the molecule this is uh our
+air molecule
+beyond the data set that has been
+trained
+now we have anionic species and cationic
+species
+that's how your spin density is
+delocalized of course when we have a
+cation then the electron is the
+localizing here the hole is the
+localizing
+now this would be your
+individual charges with the palette
+which are color-coded
+and this would be your so-called nbo
+charge partition partitioning scheme i
+won't go into the details but this would
+be my reference dft data to which i'm
+comparing to
+okay so this guys and now when i'm
+starting from an iron cation the
+originally my neural network does not
+know about non-locality and distribution
+of the charge but once you start doing
+this self-consistent loop with the
+weight factors at the end of the day
+you're learning them properly
+so that you do a various test
+extensivity and sensibility
+transferability
+but
+and you get approximately 4k cal per
+mole
+accuracy for ionization potential and
+electron affinity
+and in fact if you start comparing your
+reference ground truth or dft simulation
+to even better ground truth which would
+be an experiment
+then the difference would be on the
+order of 10 to 20 kcal per mole so which
+means that
+machine learning is already able to
+overcome the dft error bar
+so now
+once you do that you would like to do
+some applications you could apply the
+conceptual dft
+which deals with uh electronic activity
+with chemical hardness electrophilicity
+procure indices and just one thing so
+for example one could just look at the
+electrophilic uh reactions
+and those electrophilic reactions are
+frequently underpinned the drug
+development and many industrial
+companies are interested in this
+and in fact one could do quantum
+mechanical free radio selectivity
+prediction for the
+data sets which were not originally in
+the training set for the machine
+learning and in fact those predictions
+are on par with the best
+prediction of models that have been
+using at least partially the quantum
+mechanics
+so this is sounds very uh encouraging
+for the success of machine learning in
+such complicated phenomena where you
+always have
+the localized charge dynamics which
+involves some region of space which is
+impossible to describe with the usual
+local approximation in the machine
+learning
+so finally let me briefly talk about
+triplet states which would be an excited
+state this would be your singlet state
+potential energy surface and triplet
+state and triplet state for example
+are responsible for
+phosphorescence
+triplet states are becoming important
+for so-called tdf thermally activated
+delay fluorescence when they serve as
+storage
+for energy and then you could extract
+the storage and use it for the light
+emission but it what is most important
+is to describe those
+transition energies singley to triplet
+state transition and triplet back to the
+singlet from its equilibrium geometry
+and of course you could just describe
+this in terms of the regions of
+conformational space
+which are relevant to those
+geometries and
+you start learning again on the example
+of small molecules
+and it's not surprising that you have
+your accuracy for your data sets for
+your validation data set on the order of
+a couple kkl per month
+so far it's not surprising it is
+expected because you are learning uh
+some
+features of the potential energy surface
+so now
+in a moment i would like to do the
+transferability and the transferability
+will fail if you are using the normal
+locality bound networks so that we need
+again to go beyond the transferability
+and here we are using so-called hypno
+model
+and there are again two features in the
+hypno model which allow you to go beyond
+the transferability
+the one feature would be those green
+bars
+those green bars are interaction layers
+and they describe interaction between
+atoms
+for physicists i can
+make an analogy of those green bars
+to the many body perturbation theory
+like the second order third order and so
+forth
+so this way we are
+making the machine learning aware that
+there is something else beyond this
+limitation sphere of the radius of five
+answers
+the second important things would be
+again
+assignment of the weight
+so that
+you have those local energies and you're
+assigning the weight to those local
+energies which is a learnable
+quality
+so that we'll come to the physical
+interpretation of those rates in a
+moment
+but in fact that we are learning those
+weights and this is a participation of a
+given pattern
+in the excited states
+and remember that our excited states are
+always delocalized
+which precludes the using of the locally
+bound approaches so now
+when i have been talking about
+transferability this is what i mean
+this is our training set
+training sets are always some small
+molecules up to like 15 non-hydrogen
+atoms
+and most of the molecules are
+non-aromatic
+if you are talking about practical
+application of the triplet states then
+we are talking about
+phosphorescence and mostly aromatic
+compounds
+which has many benzene rings fused
+together so that the aromaticity extends
+over the large length scales and in fact
+sort of like we have this uh aromatic
+compounds
+where non-locality effects would be uh
+extremely important
+so now
+remember the test set with those small
+molecules
+extensibility test was large molecules
+are market molecules and if you will use
+the usual hypnom
+where the
+locality effects are pronounced then you
+won't get any good results as expected
+for aromatic compounds but if you are
+using hippanian lock
+where you are using those weights
+then the results improve
+even though we don't have particularly
+good
+accuracy and our accuracy is 10k kcl per
+mole versus reference dft and i remind
+you that the reference dft usually
+versus experiment has
+of the same order of error
+so still the going over non-locality
+effects is extremely important
+now let's talk about those weights
+and in fact
+those weights are reflecting the
+distribution of the spin density over
+atoms
+so in the simplistic jargon
+we haven't been doing the quantum
+mechanics
+we have been operating just with
+energies that is coming from the quantum
+mechanics
+however the machine learning was able to
+infer
+where the density is and where the
+special distribution of the wave
+function would be
+so just enjoy those movies
+this is reference dft and this is a
+keep lock
+and you could see there is not exact but
+approximate
+consistency between those representation
+so what it means
+to us is uh the distribution of the wave
+function is an important parameters to
+learn in the future
+but this is fantastic so i change the
+geometry of the molecule
+and my machine learning is able to
+sort of like to predict to some extent
+the evolution of the charge distribution
+and the evolution of the
+um
+wave function on the
+of the particular excitation of the
+model
+so and where is the future
+in the previous slides i tried to
+demonstrate you that coordinates and
+velocities of particles are not enough
+to describe the dynamics
+think about it you dissociate the water
+in one case you have charged species and
+in other cases you have radicals
+so that those species cannot be
+described by the coordinates and
+velocity and you need the auxiliary
+variables you need to build the ml
+models which are electron aware
+if i will talking about shock
+distribution which is dear to the heart
+at the livermore as well
+then the shock distribution has other
+parameters such as for example like
+temperature
+and temperature can play this role of
+electron aware auxiliary variable
+so that the simulation history and
+memory effects are extremely important
+and
+introducing
+immediate direct flavors of quantum
+mechanics in the learning such as
+polarization charge distribution would
+be very important for the development of
+future machine learning models and one
+example would be charge equilibration
+models when you explicitly take into
+account the charges and equilibrate them
+in amount
+okay so this brings me to about 45
+minutes of my talk and let me conclude
+that overall in the length of chemistry
+and material science ml and ai
+approaches are here to stay
+and all together machine learning is not
+an automatic procedure
+in fact
+it is very hard to find qualified people
+to do in this work because the person
+needs to understand the physical
+background and in parallel
+have a good understanding of the data
+science
+the approach to your results from
+machine learning as a black box
+framework
+have some healthy skepticism when you
+are trying to interpret the results
+uh to me
+and this term goes back to misha chetkov
+who
+taught me this about ten years ago
+physics and four machine learning one
+needs to build as much physical
+intuition into the machine learning and
+i try to demonstrate these examples of
+like
+introducing the weight for a particular
+atoms which reflect the distribution of
+the wave function
+so one specific problem is the next
+frontier for ml
+there have been way too many uh
+demonstration of proof of principle but
+what if we'll take some experimental
+problem and try to do the ml to solve
+this experimental problem
+and in particular one important thing is
+how we can fuse the data fuse the data
+that are coming from quantum chemistry
+quantum mechanics and those data that
+are coming from
+experiment
+and those data frequently where you have
+very different nature and different
+error bars
+and finally sort of like um
+common standards and user-friendly
+machine learning codes are
+coming and hopefully in a few years
+we'll be able to take something like
+gaussian or
+wasp from the
+shelf and do their simulations
+using building the machine learning and
+some molecular dynamics codes like some
+gears alongside have already
+extensive sets of machine learning
+models and extensive set of interatomic
+potentials there
+again sort of like
+look at this so now we could just say
+that the
+[Music]
+reactive chemistry is possible to
+describe this machine learning uh
+frameworks you could see that this
+hydrogen will migrate this is a reaction
+chemical reaction
+one could describe uh reactive chemistry
+for example a growth of nanoparticles
+this is a
+growth of the carbon structure out of
+the hot carbon mix at
+like a couple of thousand temperature
+so you can
+you have a very strong
+reactive dynamics there
+this is already possible to do with
+machine learning so you could see growth
+of
+fullerenes or graphenes
+there and again sort of like uh
+center for integrated technology great
+ue uh user facility
+you're welcome to be our users and
+los alamos has a very strong program for
+students and postdocs and finally i need
+to acknowledge many many people
+participating in this work there is a
+team at los alamos working on machine
+learning captain barros ben nagin justin
+smith is now at nvidia
+anders nicholson uh gallon grabbing
+walter malone assumes the faculty
+position nick lovers in valley and every
+time we have about 10 summer students we
+have very close collaboration with
+experiment for example like how we can
+describe the shock physics how can we
+describe the self-assembly of materials
+and external collaborators such as
+olessa science and then rain rover
+so with that let me thank for your kind
+attention and i'm happy to answer any
+questions thank you thank you so much
+for the wonderful talk um it was very
+informative and i learned a lot um
+so okay as sergey said let's have a q a
+sessions um if you have questions please
+mute yourself maybe or
+yeah
+sure
+the first question
+comes up in the chat room uh
+sure team uh
+asked can you comment on how many data
+points are needed to start the active
+learning process
+okay so let's go back to the active
+learning yeah
+so the answer is it depends
+so if you look at the different machine
+learning models
+particularly if you are using neural
+networks those neural networks
+frequently have about
+10 hundred
+and ten
+hundred thousand of uh parameters
+so it's uh
+many many parameters with those
+parameters you could fit everything so
+that
+overfitting is becoming a real problem
+so that to start the active learning
+procedure you need just to learn to
+something
+for example
+on the land of um
+say so let me go back to
+this particular picture
+so here
+you uh try to use any one basis basis
+you start with learning about
+you have five million data points in
+this data data set
+perhaps you could start with uh like 10
+000
+of data points and then augment those 10
+000 to
+um maybe 200 000 to 500
+using the active learning
+thank you thank you for the comment uh
+so
+if you are using
+something like apple cluster if you are
+using dft then you need to augment it by
+a factor of 10 everything
+if you are using for example like uh
+periodic boundary conditions for the
+aluminum you could start with a thousand
+data points
+just
+active learning should be intimately
+bound to the number of parameters that
+you are optimizing in your neural
+networks
+how how about
+i because
+they are actually
+basing thinking about applying active
+learning in an experimental um to guide
+experiment in with um
+3d printing um here at livermore in a
+project so i'm actually thinking about
+like simpler models like gaussian
+process do you have any experience with
+um like yeah active learning with
+experiment data which is
+like way way less than the um dftn
+simulation data and comments about
+this
+absolutely absolutely so remember here
+i'm talking about quantum chemistry and
+quantum chemistry is producing a lot of
+data
+and we have a lot of parameters in the
+neural networks
+you mentioned the keyword which is
+gaussian regression
+the gaussian regression is
+um
+has much less parameters so you could
+get away with much smaller points if you
+are trying to fit and guide the
+experiment
+so a better question that we are
+that
+should be answered right now is
+how to guide the experiment not only
+based on experimental data
+which would belong to the sort of like
+the
+land of robotic labs or the land of
+materials informatics but also to
+add some descriptors which are coming
+from molecular modeling
+i guess
+much better guidance can be obtained in
+this case
+if for example you will introduce
+some
+constraint and
+i just saw in the chat that domain
+informed machine learning
+so this would be a typical jargon that
+you could use uh
+for this research
+okay
+thank you for the comments
+okay so um
+the following question is about the
+domain informed and now for this case
+now how does one choose the best phase
+space for a given category in molecular
+modeling for chemistry
+well sort of um again
+it depends uh
+the
+on the chemical and conformational space
+and there could be different strategies
+what do you want to learn
+let's say something if you want to learn
+the
+interatomic potentials for
+not strong linear equilibrium for near
+equilibrium dynamics
+then you could make you may start with
+the data points for active learning
+which are close to the equilibrium data
+points and then expand them to the
+non-equilibrium regime
+if you are learning to just strongly
+non-equilibrium dynamics such as shock
+physics such as reactive uh chemistry
+then
+you need to push your active learning
+into those regions
+so our example of um
+aluminum type of
+inter-atomic potential
+is where we started from complete maps
+which was overkill and we had like
+hands-free machine learning only because
+we had sierra to our disposal
+but if you look at the development of
+inter atomic potentials even when people
+have been using the active learning then
+people usually have been starting from
+the crystal phases and augmented the
+phase space to non-equilibrium
+conditions
+again domain information is a keyword
+okay
+thank you
+all right uh the next question is from
+james do you see the future of ml um in
+the inter-atomic potential field being
+more
+geared towards mapping structural and
+chemical
+information directly to a black box
+function or more towards using ml to
+learn parameter sets for more physics
+informed functional forms such as the
+eam
+well
+those are two different schools of
+thought
+again sort of like if i would like to do
+the
+in quotes classical molecular dynamics
+by propagating newtonian equation of
+motion
+then
+in one school of solar i'm just saying
+that i will use the black box type of
+approach
+and train machine learning neural nets
+to this
+in a black box type of fashion which are
+really hard to interpret
+and one need just to go
+across the extensibility transferability
+test
+the advantage is is that
+perhaps this black box would be a little
+bit more flexible
+and automatically will account for
+unknown uh face space when
+perhaps some physical um
+domain like knowledge will uh
+guide
+the learning
+but again sort of like the drawback it's
+still the black box
+on the other hand you could just take
+from off shelf some kind of
+classical force fields
+and you use machine learning to
+reparameterize those force fields
+this is also valid and we have been
+doing this by trying to reparameterize
+for example like um
+the hederal angles based on the density
+functional theory
+this way you will retain your physical
+picture
+like very clear description in terms of
+like balls on the springs
+but
+this physical picture it has a limited
+application to non-equilibrium
+conditions
+so i guess both will have
+some existence in the future
+and both will be augmented with some
+auxiliary variables
+and it has been already drawn for
+example in the length of the polarizable
+force fields
+again it's very hard to say
+what will win but for sure
+the current classical force field that
+we are using right now will be displaced
+with force field which will have some
+machine learning flavor
+okay um the next question is from andre
+uh sergey the performance of nn is
+strongly dependent on its structure for
+example number of layers etc
+same is true for the gaussian process
+regression and has any work done on
+optimizing the nn gpr for given data
+sets in the applications you considered
+it's a very difficult question
+and it's a
+there is no yes or no or answer to this
+question
+and
+frequently
+all this knowledge is quite empirical
+just i will add
+to this knowledge for example
+one empirical parameter would be the cut
+off radius
+now the another empirical parameter is
+how many
+layers uh neural network layers you will
+put there
+and if for example we have been
+entertaining this for a while
+and at some point we wanted to do
+the
+transfer learning
+we wanted to train the neural networks
+to dft data and transfer learn to
+couple cluster data
+so perhaps i can just show you some of
+the pictures
+yeah perhaps you could look at those
+things and
+um the original uh neural network that
+we have been using for dft had about 300
+000 parameters
+in the neural networks
+and we are able to avoid overfitting by
+calculating 5 million points
+now for the couple cluster data we are
+able to calculate only 500 points
+and the number of parameters would be
+way too many to avoid overfitting and
+then sort of like justin has been fixing
+some of the parameters
+except
+[Music]
+letting some parameter go now what would
+be the parameters where you will let go
+in the middle of the neural net or at
+the end of the neural net
+and the
+[Music]
+fitting procedure was very different
+and the results were very different for
+the middle uh
+or
+the last layer uh parameters so again
+sort of like
+while people are making progress to
+interpretability and to a rational
+design
+of something like neural networks but
+most of the current work to me has been
+done on the
+empirical basis
+or when people are sort of um
+refer to the previous experience and to
+other works
+there is no clear um
+there is a
+algorithm development on the
+neural architecture
+so-called nas and the argon national lab
+is doing
+yeah um so naes is one of those efforts
+just that is trying to put some sanity
+in to the multitude of the neural
+networks that is existing in europe in
+the u.s et cetera
+yeah yeah so that might that might help
+of course i mean when you say physics
+informed
+um
+you mean by um you know taking
+taking account
+you know existing physics knowledge and
+and and then design the neural net
+accordingly right i saw that yes
+there are different schools of thought
+about it
+while i personally like physics inform
+learning and i personally like to
+incorporate like chemistry intuition
+from a
+chemist who is saying this will work and
+this will not
+some people could argue that we need to
+get rid of it and to apply the approach
+that we have been doing for aluminum
+without any presumption
+and perhaps the ml will infer some
+unknown
+pathways or known face space regions
+which goes beyond the
+existing physics of chemistry knowledge
+right um
+i i guess we can go for further than
+that and that not just you know
+taking advantage of the intuition but
+also um if there is a um existing first
+principle um extruding the equations for
+example then
+if you can incorporate that into the
+neural net model that would be
+wonderful you know a lot of people
+incorporation of the hard physical
+restraints
+is uh
+always beneficial
+yeah
+all right sounds good is there any other
+questions from audience like i don't see
+it from chat room but you can amuse
+yourself and ask directly yeah we can
+chat so
+what um i guess no
+well let's thank our speaker sergey for
+the wonderful talk today
+thank you so much for attending and
+thank you hopefully sort of like it
+wasn't so bad and
+if you have other questions feel free to
+reach me
+and i would be happy to answer or to
+hook you up with other members of the
+team so that
+there is an endless sky's the limit to
+interactions and collaborations
+wonderful wonderful thank you so much
+again for the wonderful talk sergey um
+okay let me push the start button for
+the recording

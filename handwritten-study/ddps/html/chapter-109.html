@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chapter 109 - Keep The Quiet State That Controls The Flow</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="sidebar">
+        <h1>DDPS Study</h1>
+        <a href="index.html">Start</a>
+        <a href="review-path.html">Review Path</a>
+        <a href="plain-words.html">Plain Words</a>
+        <a href="method-map.html">Method Map</a>
+        <a href="self-check.html">Self Check</a>
+        <a href="capstone.html">Capstone</a>
+        <a href="theme-index.html">Theme Index</a>
+        <a href="domain-map.html">Domain Map</a>
+        <a href="paper-reader.html">Paper Reader</a>
+        <a href="common-mistakes.html">Common Mistakes</a>
+        <a href="study-plan.html">Study Plan</a>
+        <a href="math-map.html">Math Map</a>
+        <a href="prerequisite-map.html">Prerequisite Map</a>
+        <a href="cheat-sheet.html">Cheat Sheet</a>
+        <a href="chapter-98.html">Chapter 98</a>
+        <a href="chapter-99.html">Chapter 99</a>
+        <a href="chapter-100.html">Chapter 100</a>
+        <a href="chapter-101.html">Chapter 101</a>
+        <a href="chapter-102.html">Chapter 102</a>
+        <a href="chapter-103.html">Chapter 103</a>
+        <a href="chapter-104.html">Chapter 104</a>
+        <a href="chapter-105.html">Chapter 105</a>
+        <a href="chapter-106.html">Chapter 106</a>
+        <a href="chapter-107.html">Chapter 107</a>
+        <a href="chapter-108.html">Chapter 108</a>
+        <a href="chapter-109.html">Chapter 109</a>
+        <a href="chapter-110.html">Chapter 110</a>
+        <a href="chapter-111.html">Chapter 111</a>
+        <a href="chapter-112.html">Chapter 112</a>
+        <a href="chapter-113.html">Chapter 113</a>
+        <a href="chapter-114.html">Chapter 114</a>
+        <a href="chapter-115.html">Chapter 115</a>
+        <a href="chapter-116.html">Chapter 116</a>
+        <a href="chapter-117.html">Chapter 117</a>
+        <a href="chapter-118.html">Chapter 118</a>
+        <a href="chapter-119.html">Chapter 119</a>
+        <a href="chapter-120.html">Chapter 120</a>
+        <a href="chapter-121.html">Chapter 121</a>
+        <a href="chapter-122.html">Chapter 122</a>
+        <a href="chapter-123.html">Chapter 123</a>
+        <a href="chapter-124.html">Chapter 124</a>
+        <a href="chapter-125.html">Chapter 125</a>
+        <a href="chapter-126.html">Chapter 126</a>
+        <a href="chapter-127.html">Chapter 127</a>
+        <a href="chapter-128.html">Chapter 128</a>
+        <a href="chapter-129.html">Chapter 129</a>
+        <a href="chapter-130.html">Chapter 130</a>
+        <a href="chapter-131.html">Chapter 131</a>
+        <a href="chapter-132.html">Chapter 132</a>
+        <a href="chapter-133.html">Chapter 133</a>
+        <a href="chapter-134.html">Chapter 134</a>
+        <a href="chapter-135.html">Chapter 135</a>
+        <a href="chapter-136.html">Chapter 136</a>
+        <a href="chapter-137.html">Chapter 137</a>
+        <a href="from-zero.html">From Zero</a>
+        <a href="pinn-from-zero.html">PINNs From Zero</a>
+        <a href="rom-from-zero.html">ROMs From Zero</a>
+        <a href="manifold-from-zero.html">Manifolds From Zero</a>
+        <a href="synthesis.html">Synthesis</a>
+        <a href="big-picture.html">Big Picture</a>
+        <a href="examples.html">Examples</a>
+        <a href="bridge.html">AISE Bridge</a>
+        <a href="audit.html">Transcript Audit</a>
+      </nav>
+      <main class="content">
+        <p class="eyebrow">Narrative chapter</p>
+        <h1>Keep The Quiet State That Controls The Flow</h1>
+
+        <p>This chapter uses video 112, Alberto Padovan's DDPS talk on non-intrusive optimization of projection operators and reduced-order dynamics. The talk is about reduced models for fluid systems, especially systems where small-looking parts of the state can strongly control what happens later.</p>
+
+        <p>The first-principles problem is simple. A full fluid simulation has too many numbers to use cheaply inside control, optimization, or repeated design. A reduced model keeps only a few coordinates. But if the reduced model keeps only the loudest-looking motion, it may throw away the quiet variable that drives the future. This lecture asks how to build a small model that keeps the states that matter dynamically, not only the states that carry the most energy.</p>
+
+        <section class="lesson-claim-chain" aria-label="Plain first-principles reading guide for oblique reduced dynamics">
+          <h2>Read This Chapter As One Claim</h2>
+          <p>Start with a simple worry. You are watching a large physical system, and most of the visible motion is in a few big patterns. It is natural to keep those big patterns and throw away the rest. But some systems are controlled by small causes. A tiny upstream push can decide a downstream wake. A thin bridge in a material can decide whether a structure carries load. A weak-looking vortex can decide the phase of the next motion. This chapter says a reduced model must keep the parts that affect the future, not only the parts that look large right now.</p>
+          <div class="lesson-claim-grid">
+            <div><strong>Everyday problem</strong><span>A small model is needed for repeated control or design, but the obvious compression may keep the loud motion and lose the cause.</span></div>
+            <div><strong>Shared promise</strong><span>Learn both the reduced dynamics and the direction used to compress the full state, so quiet-but-important influence is not erased.</span></div>
+            <div><strong>Hidden danger</strong><span>A model can reconstruct snapshots well and still predict the wrong response if it discards a low-energy state that drives the output.</span></div>
+            <div><strong>First rejection test</strong><span>Force the system with a new impulse, sinusoid, small geometry change, or topology feature and check whether timing, strength, and output still match.</span></div>
+          </div>
+        </section>
+
+        <div class="quiet-core-map" aria-label="A reduced model must keep quiet states that control future motion">
+          <div>full fluid state is huge</div>
+          <div>small model keeps few directions</div>
+          <div>quiet state may control future</div>
+          <div>projection must notice it</div>
+        </div>
+
+        <h2>A Reduced Model Has Three Jobs</h2>
+        <p>The talk describes a common reduced-model pipeline. First, an encoder compresses the large state into a low-dimensional state. Second, reduced dynamics move that low-dimensional state forward in time. Third, a decoder maps the low-dimensional state back to an approximate full field or output.</p>
+
+        <p>For this talk, the encoder and decoder are linear. They are matrices. The reduced dynamics are continuous-time polynomial equations learned from data. The key choice is not a neural network architecture. The key choice is the projection: how the full state is compressed into the small state and how that small state is interpreted.</p>
+
+        <div class="rom-three-jobs-map" aria-label="A reduced model compresses, evolves, and reconstructs a high-dimensional state">
+          <div>encode full state</div>
+          <div>evolve small state</div>
+          <div>decode or observe</div>
+          <div>cheap prediction</div>
+        </div>
+
+        <h2>Orthogonal Projection Takes The Shortest Drop</h2>
+        <p>An orthogonal projection is the familiar picture from geometry. You have a point in a high-dimensional space and a lower-dimensional plane. You drop the point straight down to the plane in the shortest perpendicular direction. POD-Galerkin does this using the most energetic snapshot directions.</p>
+
+        <p>This is sensible when energy tells the whole story. If the largest motions also control the future, then keeping high-energy modes works well. But fluids and other non-normal systems often do not behave that politely.</p>
+
+        <div class="orthogonal-drop-map" aria-label="Orthogonal projection drops the state onto energetic POD directions">
+          <div>snapshot data</div>
+          <div>POD finds energetic modes</div>
+          <div>drop straight to plane</div>
+          <div>works when energy is enough</div>
+        </div>
+
+        <h2>Oblique Projection Drops Along A Chosen Direction</h2>
+        <p>An oblique projection still lands on the reduced subspace, but it does not have to fall straight down. It projects along another chosen direction. That extra choice gives the reduced model more freedom.</p>
+
+        <p>In the lecture's language, one subspace says where the reduced state lives. Another matrix helps decide the direction along which the full state is projected. This matters because the second direction can carry information about states that are not energetic but are dynamically important.</p>
+
+        <div class="oblique-direction-map" aria-label="Oblique projection uses both a target subspace and a projection direction">
+          <div>target reduced subspace</div>
+          <div>separate projection direction</div>
+          <div>extra degree of freedom</div>
+          <div>quiet influence can enter</div>
+        </div>
+
+        <h2>Non-Normal Systems Hide Important Low-Energy States</h2>
+        <p>The speaker uses the word non-normal for systems where energy can move in surprising ways. In plain terms, a small or fast-decaying state can strongly affect the large visible motion. If a reduced model ignores that quiet state, it may predict the wrong output even if it captured most of the snapshot energy.</p>
+
+        <p>The Q&A gives the cleanest explanation. In a toy system, POD sees that two states are energetic and that a third state decays quickly. A POD model may drop the third state. But the third state strongly affects the dynamics of the first two. Oblique projection can keep the energetic subspace while choosing a projection direction that accounts for the quiet third state.</p>
+
+        <div class="non-normal-map" aria-label="A low-energy state can control high-energy dynamics in a non-normal system">
+          <div>state three looks small</div>
+          <div>POD may discard it</div>
+          <div>state three drives states one and two</div>
+          <div>oblique projection keeps its effect</div>
+        </div>
+
+        <h2>Intrusive Oblique Methods Are Powerful But Costly</h2>
+        <p>Balanced truncation is an older control-theory method that can produce useful oblique projections. It looks at controllability and observability: how inputs can move the system and how internal states show up in outputs. That is exactly the kind of thinking needed when quiet states matter.</p>
+
+        <p>But balanced truncation is intrusive. It needs the governing equations, a linearization, and adjoint information. Another previous trajectory-optimization method also needs to differentiate through the full solver along a trajectory. That can be too much when the solver is a large CFD code, a proprietary code, or simply not built for adjoints.</p>
+
+        <div class="intrusive-oblique-map" aria-label="Intrusive oblique methods use solver internals such as linearizations and adjoints">
+          <div>balanced truncation</div>
+          <div>needs linearization</div>
+          <div>needs adjoint</div>
+          <div>hard with black-box CFD</div>
+        </div>
+
+        <h2>Operator Inference Learns Dynamics From Data</h2>
+        <p>Operator inference is a non-intrusive alternative. It collects full-order trajectories, projects them onto POD modes, estimates time derivatives, and fits reduced polynomial dynamics. This avoids opening the solver internals.</p>
+
+        <p>The limitation is that standard operator inference still uses an orthogonal POD projection. It learns the reduced dynamics from data, but it compresses the state in the same energy-first way. If the system needs oblique projection to account for quiet dynamic influence, operator inference may miss it.</p>
+
+        <div class="opinf-limit-map" aria-label="Operator inference learns reduced dynamics from data but usually keeps POD's orthogonal projection">
+          <div>collect trajectories</div>
+          <div>project with POD</div>
+          <div>fit polynomial dynamics</div>
+          <div>still energy-first compression</div>
+        </div>
+
+        <h2>NITROM Learns The Projection And The Dynamics Together</h2>
+        <p>The main method in the talk is NITROM, a non-intrusive trajectory-based optimization of reduced-order models. It does not assume the POD projection is already the right compression. It learns the projection operator and the reduced dynamics at the same time from full-order trajectory data.</p>
+
+        <p>The method chooses a target subspace, a projection-direction matrix, and reduced polynomial dynamics so that the reduced model's observed output matches the full model's observed output over training trajectories. The optimization lives on geometric spaces called Grassmann and Stiefel manifolds, but the simple meaning is this: some variables represent subspaces, and the algorithm respects that rotating a basis can represent the same subspace.</p>
+
+        <div class="nitrom-map" aria-label="NITROM learns oblique projection and polynomial reduced dynamics together from trajectories">
+          <div>trajectory data</div>
+          <div>learn target subspace</div>
+          <div>learn projection direction</div>
+          <div>learn reduced dynamics</div>
+        </div>
+
+        <h2>The Gradient Is Like Backpropagation Through A Small Model</h2>
+        <p>To optimize the reduced model, NITROM needs gradients of the output-matching error with respect to the learned projection and dynamics. The talk derives these gradients in closed form using Lagrange multipliers and reduced adjoint equations.</p>
+
+        <p>The speaker compares the procedure to backpropagation. The important point is that the backpropagation happens through the reduced model, not through the full CFD solver. That is why the method remains non-intrusive. It uses full-order data, but it does not need to differentiate the full-order solver.</p>
+
+        <div class="small-backprop-map" aria-label="NITROM computes gradients through the reduced model without differentiating the full solver">
+          <div>match output data</div>
+          <div>reduced adjoint equations</div>
+          <div>closed-form gradients</div>
+          <div>no full-solver adjoint</div>
+        </div>
+
+        <h2>The Toy Model Shows The Need For Oblique Projection</h2>
+        <p>The first example has only three states. When the parameter is small, the system behaves almost normally. Orthogonal methods such as POD-Galerkin and operator inference work well. There is no strong need for oblique projection.</p>
+
+        <p>When the parameter is larger, the quiet third state becomes dynamically important. The orthogonal methods degrade. The oblique methods perform much better on step inputs and on sinusoidal inputs that were not used for training. This example is deliberately small because it isolates the reason the projection matters.</p>
+
+        <div class="toy-oblique-map" aria-label="The toy system works with orthogonal projection only until a quiet state becomes dynamically important">
+          <div>small parameter</div>
+          <div>orthogonal works</div>
+          <div>large parameter</div>
+          <div>oblique needed</div>
+        </div>
+
+        <h2>Ginzburg-Landau Tests Input-Output Prediction</h2>
+        <p>The second example is the complex Ginzburg-Landau equation, a one-dimensional PDE. It mimics a spatially developing flow: force the system upstream and observe a response downstream. The goal is not simply reconstructing every state. The goal is predicting the output history caused by inputs.</p>
+
+        <p>NITROM is trained on impulse responses and tested on unseen impulses and sinusoidal forcing. The oblique models track the ground truth output much better than orthogonal POD-Galerkin and operator inference. Testing on sinusoids matters because it checks whether the model learned useful dynamics, not merely the impulse examples it saw.</p>
+
+        <div class="ginzburg-map" aria-label="Ginzburg-Landau tests whether a model trained on impulses can predict downstream output under unseen forcing">
+          <div>upstream input</div>
+          <div>downstream output</div>
+          <div>train on impulses</div>
+          <div>test on sinusoids</div>
+        </div>
+
+        <h2>The Cavity Flow Raises The Difficulty</h2>
+        <p>The third example is a two-dimensional incompressible lid-driven cavity at Reynolds number 8300. The top wall moves, and a localized body force is placed near the top right corner. The target is the whole velocity field, not just one scalar output.</p>
+
+        <p>The flow shows transient energy growth. Energy decays first, then spikes back up around early times before the system settles. That spike is a signature of non-normal behavior. A reduced model that misses it can get the phase and strength of the vortical structures wrong.</p>
+
+        <div class="cavity-growth-map" aria-label="The lid-driven cavity has transient energy growth that tests non-normal reduced models">
+          <div>lid-driven cavity</div>
+          <div>localized forcing</div>
+          <div>energy spikes after decay</div>
+          <div>non-normal test case</div>
+        </div>
+
+        <h2>NITROM Keeps Amplitude And Phase Closer</h2>
+        <p>For the cavity, the models are trained on impulse responses and tested on unseen impulses and sinusoidal inputs. NITROM keeps the error lower during the energy-growth region and tracks long-time oscillations well.</p>
+
+        <p>The speaker points to vorticity snapshots. POD-Galerkin and operator inference can underestimate or overestimate vortical structures and can be out of phase. NITROM better captures both amplitude and phase. In physical terms, it predicts not only how strong the swirl is, but when and where the swirl appears.</p>
+
+        <div class="phase-amplitude-map" aria-label="NITROM better captures both the strength and timing of vortex structures">
+          <div>vorticity strength</div>
+          <div>phase of structures</div>
+          <div>orthogonal models drift</div>
+          <div>NITROM tracks closer</div>
+        </div>
+
+        <h2>The Q&A Gives The Honest Limits</h2>
+        <p>The Q&A clarifies several boundaries. Early-time error can be higher because the initial condition may be far from the learned low-dimensional subspace. The reduced and full trajectories may synchronize after the full state enters the useful subspace.</p>
+
+        <p>Long-time extrapolation can work when the learned dynamics are genuinely good and the test input is still represented by information in the training data. But if the input has no signature in the training set, the model can fail like any other data-driven model. Chaotic systems would require extra care because adjoint-like gradients through long chaotic trajectories can blow up.</p>
+
+        <div class="nitrom-limits-map" aria-label="NITROM can extrapolate in time when dynamics are learned but remains data-distribution limited">
+          <div>early initial mismatch</div>
+          <div>long-time dynamics can work</div>
+          <div>out-of-distribution inputs risky</div>
+          <div>chaos needs extra care</div>
+        </div>
+
+        <h2>Time Windows And Parameters Are Natural Next Steps</h2>
+        <p>The host asks about time-windowing. If early dynamics and later dynamics behave differently, one could use different reduced bases for different time windows. That could reduce the early-time error by giving the initial high-energy phase its own tailored space.</p>
+
+        <p>The host also asks about parameterized ROMs. The speaker says that a natural extension would interpolate across parameter space, but interpolation must happen carefully because the learned objects live on manifolds. The method must preserve the projection property while moving between parameter values.</p>
+
+        <div class="future-steps-map" aria-label="Time windows and parameter interpolation are natural next extensions of NITROM">
+          <div>early phase basis</div>
+          <div>late phase basis</div>
+          <div>parameter interpolation</div>
+          <div>preserve projection structure</div>
+        </div>
+
+        <h2>How This Connects To Physics, Design, And Topology</h2>
+        <p>Control and design care about cause and effect. A tiny actuator, geometry change, rib, slot, or material patch may have low energy in the state but a large effect on the response. If a reduced model only keeps high-energy modes, it may look good in reconstruction but fail for control or optimization.</p>
+
+        <p>Topology optimization has the same danger. A small connection, thin ligament, boundary-layer feature, or wake trigger may not dominate the energy norm, but it may decide stiffness, stability, drag, heat transfer, acoustic output, or failure. The lecture's oblique-projection lesson says: do not compress only by what looks largest. Compress by what changes the decision.</p>
+
+        <p>NITROM is especially relevant when the solver is available as data but not as an easy adjoint-enabled object. It gives a way to learn reduced dynamics and an oblique projection from trajectories. For design, that means a model can be trained from full simulations and then used in faster control or optimization loops while keeping quiet-but-important directions in play.</p>
+
+        <div class="oblique-design-bridge" aria-label="Design reduced models must keep low-energy features that control decisions">
+          <div>small design feature</div>
+          <div>low energy in snapshots</div>
+          <div>large effect on response</div>
+          <div>oblique ROM keeps influence</div>
+        </div>
+
+        <h2>The Chapter In One Chain</h2>
+        <p>First, full fluid models are too large for repeated control, optimization, and design. Second, reduced models compress the state, evolve a small state, and reconstruct or observe the output. Third, POD uses an orthogonal projection onto energetic directions. Fourth, energetic directions are not always the directions that control the future. Fifth, non-normal systems can have low-energy states that strongly affect high-energy motion. Sixth, oblique projection adds a separate projection direction that can account for those quiet states. Seventh, intrusive oblique methods can work but need solver internals such as linearizations and adjoints. Eighth, operator inference is non-intrusive but usually keeps POD's orthogonal projection. Ninth, NITROM learns the oblique projection and polynomial reduced dynamics together from trajectory data. Tenth, it computes gradients through the reduced model rather than through the full CFD solver. Eleventh, the toy model shows when oblique projection becomes necessary. Twelfth, the Ginzburg-Landau example tests upstream forcing and downstream output prediction. Thirteenth, the cavity flow tests transient energy growth and vortical phase. Fourteenth, NITROM better preserves amplitude and phase under unseen sinusoidal forcing. Fifteenth, the method still depends on training coverage and needs care for chaotic systems, time windows, and parameters. Sixteenth, the bigger design lesson is to keep the quiet state that changes the response, not only the loud state that dominates energy.</p>
+
+        <div class="note">
+          <p>The chapter's core idea: a reduced model should not only ask "what motion is biggest?" It should ask "what hidden or quiet part changes the output I care about?"</p>
+        </div>
+
+        <section class="lesson-review" aria-label="End of chapter understanding check for oblique reduced dynamics">
+          <h2>How To Test Whether You Understood This Chapter</h2>
+          <div class="lesson-review-grid">
+            <div><strong>Explain the failure of loud-only compression</strong><span>POD can keep the patterns with the most energy, but energy is not the same as importance. A small state can steer a later large response.</span></div>
+            <div><strong>Explain oblique projection without jargon</strong><span>Instead of dropping the full state straight onto the small space, the model drops it along a chosen direction. That extra direction can carry information about hidden causes.</span></div>
+            <div><strong>Explain why non-intrusive matters</strong><span>The method learns from full simulation trajectories without needing to open the full solver, linearize it, or build a full adjoint. That makes it useful when the solver is hard to modify.</span></div>
+            <div><strong>Connect it to topology and design</strong><span>A tiny hole, rib, ligament, actuator, or boundary feature may barely show up in energy, but it can decide drag, stability, stiffness, heat flow, or failure. The reduced model must preserve that decision-making influence.</span></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

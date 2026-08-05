@@ -1,0 +1,1096 @@
+All right, welcome everyone to DTPs seminar&nbsp;
+today, before we introduce our invited speaker,&nbsp;&nbsp;
+let's go over some rules and logistics. First&nbsp;
+of all, please mute yourself during the talk,
+but if you have questions, you&nbsp;
+cannot mute and ask questions&nbsp;&nbsp;
+during the talk. But otherwise, if you want to be
+don't, you don't. If you don't want&nbsp;
+to interrupt the presentations,&nbsp;&nbsp;
+you can use chat room and post your&nbsp;
+questions so that we can address them&nbsp;&nbsp;
+in Q and A session at the end. Second, today's&nbsp;
+DDPS seminar is open to external audience,&nbsp;&nbsp;
+therefore no classified discussion is&nbsp;
+allowed. So please watch out. Finally,&nbsp;&nbsp;
+the talk today will be recorded and uploaded&nbsp;
+in our YouTube channel. That's about it. Let&nbsp;&nbsp;
+me introduce our speaker today. It is an honor to&nbsp;
+host Dr Kyung Min Yao, who is a research scientist&nbsp;&nbsp;
+at IBM TJ Watson Research Center. He received a&nbsp;
+PhD in applied math from Brown University in 2011
+before joining IBM and research in 2013
+he was a postdoctoral fellow at the Lawrence&nbsp;
+Berkeley National Lab. Dr Yao has been working&nbsp;&nbsp;
+on a range of research areas from soft matter&nbsp;
+physics to atmospheric sciences. Since joining&nbsp;&nbsp;
+IBM Research, his research interest has&nbsp;
+been focused on hybrid physics, statistics,&nbsp;&nbsp;
+models and deep learning for random dynamical&nbsp;
+systems. Today, Dr Yao will talk about reducing&nbsp;&nbsp;
+data resolution for better reconstruction, super&nbsp;
+resolution of Navier stokes flow. I'm sure we are&nbsp;&nbsp;
+going to hear a wonderful talk. Now, let me before&nbsp;
+we before I pass the button to the doctor. Yeah,&nbsp;&nbsp;
+let me ask a in somewhat informal&nbsp;
+questions to get to know him better.
+So
+I know you like to travel with family,&nbsp;&nbsp;
+and I happens to know that your wife&nbsp;
+is, you know, some artists, yeah, job,
+if you can share your the most favorite, the place&nbsp;
+you have been so far and and, Hello, yeah. So it's&nbsp;&nbsp;
+more like a so my spare time is mostly devoted to&nbsp;
+helping out my wife, and she's actually painter.&nbsp;&nbsp;
+Bucha also does a photography and so on. So we&nbsp;
+kind of most impressed, most interesting places.&nbsp;&nbsp;
+We traveled to our Iceland. So we went to Iceland&nbsp;
+like three times or in the winter, so that you&nbsp;&nbsp;
+don't really got interrupted by any other people.&nbsp;
+So it was quite fascinating. If you go Iceland in&nbsp;&nbsp;
+winter, always be prepared, because, you know,&nbsp;
+sometimes this can happen one time, the first&nbsp;&nbsp;
+time we went to Iceland, then we actually got&nbsp;
+stuck in a mountain and stayed night in the car,&nbsp;&nbsp;
+and the next day we walked down the mountain to&nbsp;
+get rescued. So it was very fascinating place to&nbsp;&nbsp;
+us. Was it because of the snowstorm? Yeah, because&nbsp;
+of snow, I rented a small car which couldn't move,&nbsp;&nbsp;
+so I tried to shovel it out, but it didn't&nbsp;
+work. So yeah, next day we walked like three,&nbsp;&nbsp;
+four hours to find a farm and get rescued. So oh&nbsp;
+my goodness, that sounds devastating. Devastating.&nbsp;&nbsp;
+It was interesting. It was interesting. Okay,&nbsp;
+well, thank you for sharing though. Okay, well,&nbsp;&nbsp;
+thank you for sharing interesting story. Okay,&nbsp;
+the floor is yours. Okay, great. Thank you,&nbsp;&nbsp;
+Dr Cha for the introduction and the invitation.&nbsp;
+So I'm Kyung Min from IBM Research. The topic&nbsp;&nbsp;
+I'm going to talk today is mostly about&nbsp;
+like good old fashioned state estimation&nbsp;&nbsp;
+problem. But here the interest is that when we&nbsp;
+use super resolutions, sometimes we can get a&nbsp;&nbsp;
+better reconstruction of the ground truth state,&nbsp;
+particularly when the data is noisy. So this is&nbsp;&nbsp;
+the joint study with my collaborators,&nbsp;
+Maggie Mike and Segi. So in this study,&nbsp;&nbsp;
+we almost all contributed equally. Maggie mostly&nbsp;
+did the numerical simulations, and Mike and Segi&nbsp;&nbsp;
+were responsible for the theoretical derivations.&nbsp;
+I just did a little bit of everything. So so this&nbsp;&nbsp;
+is actually motivation of the study. When you have&nbsp;
+some observation of physical phenomena. It's very&nbsp;&nbsp;
+difficult to get away from corruption. This is&nbsp;
+one example how they actually measure the fluid&nbsp;&nbsp;
+velocity. The device shown on top left is called&nbsp;
+Particle Tracking velocimetry. We call it PTV. So.
+So in this PTB, they have suspensions&nbsp;
+of neutrally buoyant particles,&nbsp;&nbsp;
+and the movement of this neutral rebound&nbsp;
+particle is captured by high speed camera,&nbsp;&nbsp;
+so that you eventually end up&nbsp;
+with some images, something like
+bottom left. And then if you can&nbsp;
+identify the positions of the particle,&nbsp;&nbsp;
+comparing both images, then you can find, you&nbsp;
+can approximate the velocity at some locations.&nbsp;&nbsp;
+And you can imagine, if we&nbsp;
+use this kind of device,&nbsp;&nbsp;
+then the measurement we are getting out&nbsp;
+of this PTV is highly noisy, so the high&nbsp;&nbsp;
+resolution measurement we can get into something&nbsp;
+look like top left corner on the right figure.
+Although we can have some small scale&nbsp;
+structures, the data is highly corrupted,&nbsp;&nbsp;
+so it's very difficult to understand what's really&nbsp;
+going on. And then later, if we change the, say,&nbsp;&nbsp;
+some parameters such as the length of average&nbsp;
+or green space, or length of correlations,&nbsp;&nbsp;
+then you can move from the top left to the bottom&nbsp;
+right. So at this stage, now we have the much&nbsp;&nbsp;
+smooth velocity field. But the problem is that&nbsp;
+now all the high, small scale structures went&nbsp;&nbsp;
+away. So now the question we have is that, how can&nbsp;
+we what kind of resolution we want to work with,&nbsp;&nbsp;
+and how can we deal with the noise? So one of the&nbsp;
+interesting thing, one of the interesting, one of&nbsp;&nbsp;
+the interest is that if we can start from this&nbsp;
+bottom right corner that you've barely smoothed&nbsp;&nbsp;
+out low resolution information. And if we can use&nbsp;
+this information to reconstruct this high scale,&nbsp;&nbsp;
+a very high wave number phenomena, then&nbsp;
+that's going to be the ideal scenario,&nbsp;&nbsp;
+and that's where the super resolution&nbsp;
+comes in. So super resolution is this&nbsp;&nbsp;
+is not like a new area. Super resolution&nbsp;
+has been studied for a few decades. Now,&nbsp;&nbsp;
+the classical super resolution problem is actually&nbsp;
+using a sequence of low resolution images to&nbsp;&nbsp;
+reconstruct the high resolution data. So when you&nbsp;
+have some observation function which is fixed,&nbsp;&nbsp;
+the observation function in this case is&nbsp;
+denoted by this matrix, M, for example.
+Then this high resolution the ground truth&nbsp;
+data is projected on this low resolution&nbsp;&nbsp;
+image by observation function. And then, as&nbsp;
+we combine different frames of moving object,&nbsp;&nbsp;
+then different areas are captured by this, this&nbsp;
+observation function, then the basic idea is that&nbsp;&nbsp;
+we can stitch these different information&nbsp;
+together to generate the high resolution,&nbsp;&nbsp;
+high resolution image. So in this example, they&nbsp;
+actually shows that if we combine these many,&nbsp;&nbsp;
+like 55 low resolution frames, then they could&nbsp;
+come up with this high resolution, high resolution
+reconstruction of ground truth.
+But we with the development of deep learning now,&nbsp;
+the idea of super resolution has been changes&nbsp;&nbsp;
+that, instead of solving optimization problems&nbsp;
+to reconstruct the high resolution information&nbsp;&nbsp;
+by using a low resolution sequence of low&nbsp;
+resolutions. Now the idea is that we do every of&nbsp;&nbsp;
+these reconstruction in the training time. So once&nbsp;
+we have a tremendous amount of training data, then&nbsp;&nbsp;
+we do we can actually find a structure from this&nbsp;
+low resolution image to generate high resolution&nbsp;&nbsp;
+reconstruction, so that instead of having multiple&nbsp;
+images, now in deep learning time, we are mostly&nbsp;&nbsp;
+looking at a single image super resolution, that&nbsp;
+we just give this information. And we want to zoom&nbsp;&nbsp;
+in to we want to zoom into these rectangles and&nbsp;
+get a high resolution image. So this results show&nbsp;&nbsp;
+these super resolutions for this super resolution&nbsp;
+for this particular area, and this Bicubic is just&nbsp;&nbsp;
+like a simple bicu interpolation, which is mostly&nbsp;
+similar to the low resolution data we have. But&nbsp;&nbsp;
+when you apply this deep learning method, as shown&nbsp;
+here, the deep learning method provides much more&nbsp;&nbsp;
+realistic images than the and simple by keeping&nbsp;
+interpolations. So thanks to the success of deep&nbsp;&nbsp;
+learning in this single image, super resolutions&nbsp;
+now it has been applied to many different physical&nbsp;&nbsp;
+problems in first example shown here. Now they&nbsp;
+are. They went to really extreme. The super&nbsp;&nbsp;
+resolution problems that people usually looked&nbsp;
+at is mostly like four times or eight times.
+Super resolution. But in this particular&nbsp;
+study, they looked at a 50 times super&nbsp;&nbsp;
+resolution problem that they started to&nbsp;
+start from very low resolution image,&nbsp;&nbsp;
+and then they obscured it to the medium they&nbsp;
+have two models. One is that of scaling from&nbsp;&nbsp;
+low resolution to medium resolution, and they&nbsp;
+have another model stage of scaling from medium&nbsp;&nbsp;
+resolution to high resolutions. So that they&nbsp;
+claimed that if we have this step wide approaches,&nbsp;&nbsp;
+they could achieve 50 times super&nbsp;
+resolutions. And model was applied&nbsp;&nbsp;
+to some global scale climate problems. In&nbsp;
+this case, they the what's shown on the&nbsp;&nbsp;
+left is the original low resolution image,&nbsp;
+and using the method they can generate,&nbsp;&nbsp;
+they can generate the super resolution data shown&nbsp;
+on the right, which looks much more realistic,
+but more quantitative. Study is shown on&nbsp;
+the right. In this case, in this study,&nbsp;&nbsp;
+they are looking at the top round&nbsp;
+channel flows. So here it's mostly&nbsp;&nbsp;
+like a four time super resolution problem.&nbsp;
+The right most column shows the DN Omega&nbsp;&nbsp;
+simulation. That's the ground truth. And&nbsp;
+when they supply the low resolution data,&nbsp;&nbsp;
+which is shown on the left, then their neural&nbsp;
+network can generate the higher resolution data,&nbsp;&nbsp;
+which looks much more realistic. And what's very&nbsp;
+what's interesting in this study is that when you&nbsp;&nbsp;
+look at the energy spectrum of the super&nbsp;
+resolution research that is shown on here
+in this
+energy spectrum, the black line is ground truth,&nbsp;
+and the vertical line shown here is the cut off&nbsp;&nbsp;
+length, meaning that they generate the low&nbsp;
+resolution data by using spectral filter,&nbsp;&nbsp;
+which cuts off All the old high wave number of&nbsp;
+information after the reconstruction, the energy&nbsp;&nbsp;
+spectrum of the reconstructed field is shown as&nbsp;
+symbols which is almost identical to the ground&nbsp;&nbsp;
+truth. So it means that this is super resolution&nbsp;
+method can actually recover the ground truth,
+which is very generating the images that is very&nbsp;
+close to the physical phenomena that's happening.&nbsp;&nbsp;
+But what we actually need to
+remember here is that even though there&nbsp;
+was success in Super, you know, applying&nbsp;&nbsp;
+super resolutions for the physical problems, the&nbsp;
+super resolution is a reported problem, so that&nbsp;&nbsp;
+you don't really have a unique solutions to match&nbsp;
+the low resolution data. So there can be infinite&nbsp;&nbsp;
+number of solutions to match the low resolution&nbsp;
+data from high resolutions. One example shown here&nbsp;&nbsp;
+is that on the left we can have apparently broad&nbsp;
+image of Obama. But after the reconstruction, they&nbsp;&nbsp;
+get someone else. And what is shown here is that&nbsp;
+they have the very broad image of some person,&nbsp;&nbsp;
+and they their neural network is generating&nbsp;
+many different possibilities, and all of these&nbsp;&nbsp;
+possibilities apparently different people can&nbsp;
+match the low resolution data. So in a sense,&nbsp;&nbsp;
+super resolution is important problem. There is&nbsp;
+no unique solution. So one possibility is that if&nbsp;&nbsp;
+we have the recall super resolution reconstruction&nbsp;
+of a single image to image, then the reconstructed&nbsp;&nbsp;
+field may satisfy the kinematic conditions. For&nbsp;
+example, if we have incompressible flows, then it&nbsp;&nbsp;
+may satisfy the mass conservation. But there is no&nbsp;
+guarantee that this satisfies the net, satisfy the&nbsp;&nbsp;
+reconstruct field satisfies this a dynamic&nbsp;
+constraint, such as moment conservation.&nbsp;&nbsp;
+So there are new studies that comes out.&nbsp;
+They in this individual studies, the people&nbsp;&nbsp;
+are started looking at the sequence to sequence&nbsp;
+reconstruction. So now we are going back to the&nbsp;&nbsp;
+classical time of day. We try to reconstruct.&nbsp;
+We try to do the super resolution based on&nbsp;&nbsp;
+the sequential information and in to actually&nbsp;
+satisfies the dynamic constraint. So in this plot,
+the top, in this study, what they did is&nbsp;
+that they are looking at the sequence of&nbsp;&nbsp;
+low resolution images centered around the&nbsp;
+high resolution reconstruction they want&nbsp;&nbsp;
+to have. And then in this plot, the&nbsp;
+figure on the right is ground truth,&nbsp;&nbsp;
+and one left is the multiple, multiple time&nbsp;
+step snapshot reconstruction, and the left&nbsp;&nbsp;
+is single natural reconstruction.&nbsp;
+So it looks almost the same, but.
+The multiple snapshot is a little bit better.&nbsp;
+So when you get the statistical properties&nbsp;&nbsp;
+that is shown here, again, this is the energy&nbsp;
+spectrum of turbulent flows. The black line&nbsp;&nbsp;
+is ground truth. And here, this blue line&nbsp;
+is the multiple snapshot reconstruction,&nbsp;&nbsp;
+and this red line is a single snapshot&nbsp;
+reconstruction. So they actually showed&nbsp;&nbsp;
+that having multiple snapshots to the&nbsp;
+reconstruction super resolution has a&nbsp;&nbsp;
+better accuracy than single snapshot, one single&nbsp;
+snapshot to snapshot of super resolutions.
+And this is the study that just came out in&nbsp;
+this society, they also have the similar idea.
+Instead of minimizing the error between low&nbsp;
+resolution and high resolution in each snapshot,&nbsp;&nbsp;
+now they are proposing to have a time marching&nbsp;
+error to satisfy the dynamic constraint and in&nbsp;&nbsp;
+fear on the right in this figure, the left&nbsp;
+first column is ground truth. Second column&nbsp;&nbsp;
+is the low resolution data. They essentially&nbsp;
+take the scales and and the compute the and get&nbsp;&nbsp;
+the average inside of scale. And right columns&nbsp;
+are super resolution reconstructions using this&nbsp;&nbsp;
+dynamic loss. And you can see that they are very&nbsp;
+close with okay. Do you have Kirsten, Yes, Doctor,&nbsp;&nbsp;
+can you talk about conservation properties like&nbsp;
+mass, momentum and energy in this super resolution
+because they are important for&nbsp;
+incompressible flows? Yeah,&nbsp;&nbsp;
+that's actually very good, Kirsten, so
+in this case,
+that's actually one of the purpose why we&nbsp;
+want to, why this author was going into this,
+this kind of time matching loss to the time&nbsp;
+matching rules, essentially having compelling the&nbsp;&nbsp;
+moment momentum conservations between the ground&nbsp;
+juice data and the super in the super resolution&nbsp;&nbsp;
+models to satisfy, so that each likely to satisfy&nbsp;
+the momentum conservation. But in always that
+the this is this provides a soft constraint, not&nbsp;
+harder constraint. So always, the issues with this&nbsp;&nbsp;
+deep learning model is that it's very hard to&nbsp;
+make the model to satisfy the hard constraint.&nbsp;&nbsp;
+So we it may approximately satisfy the moment&nbsp;
+conservation, but not exactly also same story&nbsp;&nbsp;
+goes to the mass conservation. So usually you&nbsp;
+need to have the actual mass conservation in
+in the in rows function. Otherwise&nbsp;
+it's going to be very tricky to
+trick it to 35 Okay, so with a&nbsp;
+different another question here,&nbsp;&nbsp;
+yeah, it says the Sean is asking, what is the&nbsp;
+definition for the N theta and variable fee?
+Oh, this fee is a time marching operator,
+and U is ground truth value.
+And then here what it is that it is first&nbsp;
+to C is a projection to the low resolution&nbsp;&nbsp;
+data. And then n we and then we apply N for the&nbsp;
+reconstruction, then applying it to the time,&nbsp;&nbsp;
+much more parameter. So we first to have&nbsp;
+the ground truth to the low resolutions,&nbsp;&nbsp;
+and then neural network to reconstruct&nbsp;
+high resolutions. And then applying time,&nbsp;&nbsp;
+much more parameter, and comparing these two.&nbsp;
+So the anyway, the method here is that if you&nbsp;&nbsp;
+look at this error plot. So this figure, the&nbsp;
+vertical line is the l2 error. Horizontal line&nbsp;&nbsp;
+is some computation parameters. And this green&nbsp;
+line is a single snapshot super resolutions.&nbsp;&nbsp;
+And this red line, this blue line, is multi&nbsp;
+snapshot of super resolutions, and it shows the&nbsp;&nbsp;
+multi snap super resolutions has a smaller errors&nbsp;
+than the single snap charge. So it has better
+it has a better approximation of ground truth.&nbsp;
+And what's interesting in this study is that
+they compare the flow field predictions using the&nbsp;
+data or simulations, and the super resolutions,&nbsp;&nbsp;
+data simulation, in this case, may&nbsp;
+use Newtonian logic. And what they&nbsp;&nbsp;
+found is that when there is a&nbsp;
+noise in the initial conditions,
+then in Super resolutions, the noise
+in Super later, super resolution method, the&nbsp;
+noise effect of the noise doesn't propagate a lot,&nbsp;&nbsp;
+you know, in downstream, so that the noise is&nbsp;
+quickly removed while they are you they when they&nbsp;&nbsp;
+use data or simulations, the noise propagates&nbsp;
+much longer, meaning that super resolution or.
+Also has some denouement capability.
+So the
+so this also did study essentially&nbsp;
+say that in Super resolutions,&nbsp;&nbsp;
+we want to have some dynamic we want to improve&nbsp;
+some dynamic effect. And that's actually what&nbsp;&nbsp;
+we are interested in in in this study. So&nbsp;
+if we simply, if we simplify the system,&nbsp;&nbsp;
+now we can have, we can simplify the system&nbsp;
+in this way that we have the original system,&nbsp;&nbsp;
+that that has the equation, that has the&nbsp;
+time machine system of a high resolution&nbsp;&nbsp;
+information denoted by mu, H, and we, and we,&nbsp;
+when we and then from this original system,&nbsp;&nbsp;
+now we get the high resolution information that&nbsp;
+is filtered to generate the low resolution data.
+And then we have another system that is&nbsp;
+called observer this observer system is&nbsp;&nbsp;
+supposed to have the high same occasion with&nbsp;
+the high resolution system. But this observer,
+this observer system, doesn't really&nbsp;
+have the same initial conditions as&nbsp;&nbsp;
+well as it. It doesn't really have the direct&nbsp;
+information over this high resolution ground&nbsp;&nbsp;
+truth. We only have an observation of this low&nbsp;
+resolution information. Then the and DC, this&nbsp;&nbsp;
+very simple schematic, explains that is&nbsp;
+captured the essence of this dynamic,&nbsp;&nbsp;
+super resolution problem we are looking at. Then&nbsp;
+the next question we can naturally have is that
+when we have very complex nonlinear dynamical&nbsp;
+system that is used that can be chaotic,&nbsp;&nbsp;
+such as neighbors applications, then for&nbsp;
+chaotic systems, what we know is that even&nbsp;&nbsp;
+small perturbations eventually make the make two&nbsp;
+systems diverge. But in this observer system,&nbsp;&nbsp;
+we don't, we don't see the ground truth&nbsp;
+of this high resolution information.&nbsp;&nbsp;
+We only see the filtered low resolution&nbsp;
+information. Then the question is that,&nbsp;&nbsp;
+when the system is chaotic, whether this&nbsp;
+is a super resolution model can really
+approximate the ground truth or not,
+and
+in TRA and the answer to this question is&nbsp;
+comes from very interesting phenomena called&nbsp;&nbsp;
+Chaos synchronization. So chaos synchronization&nbsp;
+means that when you have two chaotic systems,&nbsp;&nbsp;
+sometimes by exchanging informations,&nbsp;
+these two chaos systems can synchronize&nbsp;&nbsp;
+with each other. So this is one of the&nbsp;
+early examples of chaos synchronization,&nbsp;&nbsp;
+that on the left hand we have the&nbsp;
+original Ross equations, RO system,&nbsp;&nbsp;
+and on the right hand we have another Ross&nbsp;
+system that is starting from different initial&nbsp;&nbsp;
+conditions. But what they found is that if&nbsp;
+we share, if we have one of the dimensions&nbsp;&nbsp;
+of this original system to drive this observer,&nbsp;
+this observer system, then eventually we can,&nbsp;&nbsp;
+we can get this observer system synchronized&nbsp;
+with the original system. So that this kind&nbsp;&nbsp;
+of synchronized synchronization of character&nbsp;
+system has been studied, studies extensively,&nbsp;&nbsp;
+and there is a very nice review of this corporate&nbsp;
+dynamic system in this in this paper. So this&nbsp;&nbsp;
+kind of Kirsten synchronization was actually&nbsp;
+observed in turbulent flows. So in this study,
+they what they in this, this is very interesting&nbsp;
+study where they have this navy soxification,&nbsp;&nbsp;
+and they use some kind of spectra filter to&nbsp;
+generate the low resolution data denoted by u1
+and then now they have the observer system. This&nbsp;
+observer system only using this low resolution&nbsp;&nbsp;
+data and moving in time. What they found&nbsp;
+is that this delta t is the deviation of&nbsp;&nbsp;
+this this this observer system from the ground&nbsp;
+truth, and then what they found is that this,
+this, this deviation is actually diminishing&nbsp;
+to the motion accuracy. And the rate of this
+decay of the deviation is exponentially fast,&nbsp;
+so that they actually found when, when the
+when, when the low resolution data covers&nbsp;
+up to 10 or 15 times comor of time scale,
+then you can the this low resolution,&nbsp;
+this is super resolution, six.
+Can actually recover the ground truth&nbsp;
+almost exactly. So here the left one&nbsp;&nbsp;
+is the input data. That's the low resolution&nbsp;
+data, and the right column is the is the super&nbsp;&nbsp;
+resolution reconstruction that that really&nbsp;
+preserve a very small scale characteristics,&nbsp;&nbsp;
+and it actually converges the&nbsp;
+original high resolution system.
+So the same study has been there also has been
+same study on the chaos synchronization in&nbsp;
+neighbor sub flows. And what they suggested&nbsp;&nbsp;
+is that this chaos synchronization in neighbors&nbsp;
+applications actually occurs over a wide range&nbsp;&nbsp;
+of a parameters. And then they they suggested&nbsp;
+that this chaos synchronization is actually a&nbsp;&nbsp;
+properties of networkation, not the spec,&nbsp;
+not related to specific data or simulation&nbsp;&nbsp;
+algorithms. So this type of convergence&nbsp;
+of observer system to super resolution,&nbsp;&nbsp;
+observer system to to to ground truth has&nbsp;
+been studied a lot in data or simulation&nbsp;&nbsp;
+community. So this is one of the old study&nbsp;
+that was done by orphan TT. This is very&nbsp;&nbsp;
+classic study that should mathematically&nbsp;
+show proof that in 2d tolerance, that this
+this super resolution also so data or&nbsp;
+simulation actually converges to the ground&nbsp;&nbsp;
+truth. In more recent studies, they actually&nbsp;
+mathematically proved, also intuitive flows&nbsp;&nbsp;
+that when you use a super when you have super&nbsp;
+resolution models, under certain conditions&nbsp;&nbsp;
+that this is super resolution, the error of this&nbsp;
+super resolution model decreases exponentially&nbsp;&nbsp;
+fast and converges to the ground truth system&nbsp;
+with the motion accuracy. So what essentially&nbsp;&nbsp;
+says is that when we have a very clean system&nbsp;
+that is noise, that doesn't contain any noise,&nbsp;&nbsp;
+then super resolution model have the potential&nbsp;
+to actually reconstruct the ground truth,&nbsp;&nbsp;
+in particular for the Navy assort fluid. Then&nbsp;
+let's go back to the motivation in the beginning&nbsp;&nbsp;
+that we start now. We are looking at the system&nbsp;
+that is not noise free. We are interested in&nbsp;&nbsp;
+reconstruction of noise observations. Then we have&nbsp;
+many different behaviors. We have depending on the&nbsp;&nbsp;
+filter we are using, we can have many different&nbsp;
+resolutions. Now we want to have some guideline,&nbsp;&nbsp;
+watch the resolution we want to work with, and if&nbsp;
+we want to, if we use some of these resolutions,&nbsp;&nbsp;
+whether we have a guarantee of some kind&nbsp;
+of convergence to the ground truth system,&nbsp;&nbsp;
+so that, so far, there are many studies of super&nbsp;
+resolutions in for dynamic, turbulent flows and&nbsp;&nbsp;
+many physical systems. Most of this, most of&nbsp;
+the studies have been, have been empirical,&nbsp;&nbsp;
+and what we wanted to do achieve in this study&nbsp;
+is to provide some theoretical guideline whether&nbsp;&nbsp;
+this is super resolution model is actually working&nbsp;
+well if it works under what kind of conditions.
+So let me now talk about the problem setup of our&nbsp;
+study here we are still looking at two dimension,&nbsp;&nbsp;
+two dimensional, turbulent flows. The original&nbsp;
+system we are we are interested is that we&nbsp;&nbsp;
+are using is something called chrome work&nbsp;
+flow. This is essentially two dimensional&nbsp;&nbsp;
+incompressible Navier solicitation. And here&nbsp;
+the driving force is given by some signs,&nbsp;&nbsp;
+some sinusoidal function, some sine function.&nbsp;
+And then the computational domain is periodic.&nbsp;&nbsp;
+So we have two pi in two pi in both directions,&nbsp;
+and we use a pseudo spectra solver with 512,
+mode in each directions. So in the initial&nbsp;
+conditions, we randomly generate the initial&nbsp;&nbsp;
+conditions by by seeding a very high wave&nbsp;
+number of vertices. And then as time goes,&nbsp;&nbsp;
+we the vortices evolved to generate the turbulent&nbsp;
+field, as shown here. This plot is starting. This&nbsp;&nbsp;
+plot is a time evolution of the vorticity field,&nbsp;
+starting from time equal to zero to 13. So
+now we have the observer system.&nbsp;
+The Observer system is same as,&nbsp;&nbsp;
+the same as the ground truth system, so each&nbsp;
+it has, it's still neighbors application to&nbsp;&nbsp;
+the but this observer system has a different&nbsp;
+initial condition than the ground truth system,&nbsp;&nbsp;
+because we don't, we don't know the initial&nbsp;
+conditions, and this observer system is.
+Output to the ground truth by this feedback&nbsp;
+mechanism. Here l is some parameter that related&nbsp;&nbsp;
+to the relaxation time scale of this observer&nbsp;
+system to the ground truth. And this C is a rule.&nbsp;&nbsp;
+This is a role, resolution, projection operator,&nbsp;
+and this C is defined as in this equation.&nbsp;&nbsp;
+Essentially, what this operator does is we compute&nbsp;
+average velocity in sub domain denoted by omega j,&nbsp;&nbsp;
+and then we distribute this average over the&nbsp;
+over this subdomain. So if you look at the figure&nbsp;&nbsp;
+on the right, then this is the total computational&nbsp;
+domain. Then we divide this total computational&nbsp;&nbsp;
+domain into a disjoint subdomains, and in each&nbsp;
+subdomain we compute the average velocity,
+and then they distribute this average,&nbsp;
+average velocity within this sub domain.&nbsp;&nbsp;
+So we have a piecewise continuous velocity&nbsp;
+field in in in the in the whole domain.
+And this observer system is solved by a second&nbsp;
+order finite, different finite element method,&nbsp;&nbsp;
+so so that it has lower order accuracy than&nbsp;
+the one used for the data generation process&nbsp;&nbsp;
+and and this priority should satisfy some of&nbsp;
+the regularity conditions that is shown here.
+But I will get back to this&nbsp;
+conditions later in the talk.
+And we generate the noise observation,&nbsp;
+the noise observation, is generated by&nbsp;&nbsp;
+adding a adding white noise to the&nbsp;
+ground truth. So this is a small y,&nbsp;&nbsp;
+so this you is a high resolution ground truth.&nbsp;
+And then we add a random noise, white noise&nbsp;&nbsp;
+to this ground truth, to have noise observations.&nbsp;
+And then we apply this low resolution operator&nbsp;&nbsp;
+C to the high resolution noise observation to&nbsp;
+generate the data that we are supplying to the&nbsp;&nbsp;
+observer. So this Y denotes the data, and this&nbsp;
+figure shows the process that the left figure&nbsp;&nbsp;
+is the ground truth velocity. And then when&nbsp;
+we add the noise, the corrupted data looks&nbsp;&nbsp;
+like the figure on the mirror. And then the&nbsp;
+role resolution projection of this corrupted&nbsp;&nbsp;
+data that is we are supplying to the super&nbsp;
+resolution model is shown on the right. So,
+so So this low resolution data is, of&nbsp;
+course, much less, no easy than the&nbsp;&nbsp;
+than this high resolution data, but it is&nbsp;
+also very different from the ground truth,&nbsp;&nbsp;
+because we are filtering out many of the&nbsp;
+important, many of the small scale information.&nbsp;&nbsp;
+So in this, in this, in this corruption process,&nbsp;
+we don't actually request this noise, noise eta to&nbsp;&nbsp;
+be Gaussian, but we assume that this noise, this&nbsp;
+noise has a finite variance. So that we apply,&nbsp;&nbsp;
+we introduce a regularity conditions.&nbsp;
+This regularity condition means that
+this integral inside the bracket is&nbsp;
+essentially a variance of the noise,&nbsp;&nbsp;
+and this variance of the noise multiplied&nbsp;
+by some constant is less than one,&nbsp;&nbsp;
+meaning that so we we assume that there are&nbsp;
+some positive coefficient r which can be used&nbsp;&nbsp;
+to bound the variance, so as long as the noise&nbsp;
+is bounded, then this condition is satisfied.
+Now the main results,
+main research of the of our study, is&nbsp;
+summarized here, but here I'm not going to
+explain details about these theorems, but&nbsp;
+essentially, what we try to show in this&nbsp;&nbsp;
+theorem is that when we have this observer system&nbsp;
+which is coupled to the ground truth by using the&nbsp;&nbsp;
+low resolution observation, then this observer&nbsp;
+system converges exponentially fast to the&nbsp;&nbsp;
+neighborhood of the ground truth. And when there&nbsp;
+is when there is no noise in the observation,&nbsp;&nbsp;
+what is found before was that this G will&nbsp;
+exactly converge to you. But when there is noise,&nbsp;&nbsp;
+then then this observer system converges to&nbsp;
+you, but each only stage in the neighborhood&nbsp;&nbsp;
+not exactly converging to the ground truth, so&nbsp;
+that we have the convergence zone where this&nbsp;&nbsp;
+perturbation part of the velocity field&nbsp;
+converges to the original ground truth.
+Us. And once, once this
+observer is inside of this error bound,&nbsp;
+then each going, each going to stay there&nbsp;&nbsp;
+without, without escaping, so that this&nbsp;
+convergence zone is global, attracting.
+So this is so here, this&nbsp;
+is the main research of the
+study. And let me just briefly&nbsp;
+sketch what this theorem actually
+derived and what what actually what it actually&nbsp;
+means. So we first start from the weak form&nbsp;&nbsp;
+of the nabius application. That here the first&nbsp;
+line the weak form of the ground truth system,&nbsp;&nbsp;
+and the bottom is the observer system. And&nbsp;
+we subtracted these two to get the evolution&nbsp;&nbsp;
+equation of the error. So here, in this equation,&nbsp;
+what denoted by E, is the is the error, error term&nbsp;&nbsp;
+that the ground truth velocity field are subjected&nbsp;
+by the observer velocity field. And then the
+idea of this proof is that if we can&nbsp;
+find the bound of each of these terms,&nbsp;&nbsp;
+then we can have we can understand how this&nbsp;
+evolutionification will behave so but I'm not&nbsp;&nbsp;
+going to explain details about all of the other&nbsp;
+terms does. But what we are interested in here is&nbsp;&nbsp;
+what happens with something happening in this&nbsp;
+term. In this term, F is the driving force of&nbsp;&nbsp;
+the nebucha that's known, and this is capital F,&nbsp;
+is each the feedback force, so that this capital&nbsp;&nbsp;
+F is essentially a combination of the driving&nbsp;
+force with this observer, low resolution input.
+And then if we manipulate this capital app driving&nbsp;
+force term, now we can decompose it into two&nbsp;&nbsp;
+terms. One is that we have the projection&nbsp;
+of the error, and another term is the low&nbsp;&nbsp;
+resolution projection of the noise, and so that if&nbsp;
+we look at this term now, we can actually compute&nbsp;&nbsp;
+the upper bound of this inner product, as shown&nbsp;
+here. And what we are again in this upper bound,&nbsp;&nbsp;
+what we are interested in is only what's happening&nbsp;
+with this inner product between between the noise&nbsp;&nbsp;
+and the error term. So here, this is actually&nbsp;
+typo. It should be eta, not psi. But anyway,&nbsp;&nbsp;
+what we're interested in is only this in inner&nbsp;
+product between noise and the error term and then&nbsp;&nbsp;
+the bound of this noise. This noise in a product&nbsp;
+is shown here. So they refer to just write out,&nbsp;&nbsp;
+write down the definition of the inner product,&nbsp;&nbsp;
+and then we use the regularity condition that we&nbsp;
+introduced it before to come to get the bound,&nbsp;&nbsp;
+to get the bound of the of this inner product&nbsp;
+and at the end, at the end of the day,&nbsp;&nbsp;
+after doing some manipulations, now, we can&nbsp;
+find the upper bound of this inner product
+in terms of the l2 error and the&nbsp;
+coefficient sigma is defined in&nbsp;&nbsp;
+here. The Sigma depends on the size of the&nbsp;
+sub domain. This H is a side of sub domain,&nbsp;&nbsp;
+and r is the parameter that depends&nbsp;
+on the variance of the knowledge.
+So
+after doing, again, after doing, after doing&nbsp;
+some manipulation, this is again, writing down&nbsp;&nbsp;
+this inner product, and we we looked at what have&nbsp;
+what's happening inside of this inner product,&nbsp;&nbsp;
+between knowledge and error. Then we end up&nbsp;
+with some we end up with some conditions that&nbsp;&nbsp;
+we can find, some corruption to Delta features&nbsp;
+between zero and one. And once you have the&nbsp;&nbsp;
+conditions that this delta multiplied by&nbsp;
+L to error is larger than the the sigma,&nbsp;&nbsp;
+sigma coefficient from the regularity conditions,&nbsp;
+then what we can? We can? We can further reduce&nbsp;&nbsp;
+the the temporal time evolution of error into&nbsp;
+this form. And then if we have further conditions&nbsp;&nbsp;
+that the that the first term is less than the&nbsp;
+second term, then we can even simplify the error.
+Evolution equation shown here. So what it&nbsp;
+essentially says is that the upper bound of&nbsp;&nbsp;
+the time evolution over l2 error, l to error means&nbsp;
+that the super resolution reconstruction and the&nbsp;&nbsp;
+ground truth is bounded is exponentially decaying&nbsp;
+function. So we have the relaxation process that&nbsp;&nbsp;
+the upper bound of l2 error is decaying, and then&nbsp;
+to up to get this term. We actually made some&nbsp;&nbsp;
+of the assumptions that this l2 error is bigger&nbsp;
+than this coefficient sigma. So in other words,&nbsp;&nbsp;
+when this add to error is bigger, bigger than&nbsp;
+this, bigger than the right hand side, then&nbsp;&nbsp;
+error is decaying exponentially fast. And when&nbsp;
+add to error is less than the right hand side,&nbsp;&nbsp;
+then we don't know, we don't know whether&nbsp;
+it's going to decrease or increase but,
+but that's not our interest at this&nbsp;
+time. So based on these conditions,&nbsp;&nbsp;
+now we can have the zone of&nbsp;
+convergence, meaning that
+when add to error, is bigger than&nbsp;
+this joinable convergence, denoted by,&nbsp;&nbsp;
+denoted by here, then it's already exponentially,&nbsp;
+exponentially fastly decreasing, so that this&nbsp;&nbsp;
+joint of convergence essentially provides us&nbsp;
+the upper bound of l2 error. Now let's look at&nbsp;&nbsp;
+this upper bound a little bit more closely, so&nbsp;
+that this is the definition of the joint error,&nbsp;&nbsp;
+the conversion stone, then from the regular from&nbsp;
+the regularity conditions we had before. Again,&nbsp;&nbsp;
+what the what's happening inside&nbsp;
+of this bracket? It is just the
+variance averaged over the domain. And&nbsp;
+let's say we have the computational grid,&nbsp;&nbsp;
+or data grid that is shown here, that is&nbsp;
+high resolution data with grid size delta x,&nbsp;&nbsp;
+and we have a subdomain that is shown in this red&nbsp;
+rectangles that have size h. Then we can define a&nbsp;&nbsp;
+compression ratio that's the ratio between the&nbsp;
+size of the subdomain and the grid space. Then,&nbsp;&nbsp;
+using this compression ratio, now, we can show&nbsp;
+that whatever that the every expectation of this
+integration inside the bracket can&nbsp;
+be written as sigma square. That's&nbsp;&nbsp;
+the variance of the noise divided by&nbsp;
+c square. That's the compared to this&nbsp;&nbsp;
+compression ratio. Larger C means&nbsp;
+that we have a coarse resolutions.
+So using these conditions at the using&nbsp;
+these conditions at the end of the day,&nbsp;&nbsp;
+we can bound all of the expressions, and we find&nbsp;
+that the zone of convergence can be expressed by&nbsp;&nbsp;
+this equation, so that here this omega is the&nbsp;
+size of the computational domain, and data is&nbsp;&nbsp;
+some parameter positive parameter we can choose.&nbsp;
+Then what this equation essentially says is that&nbsp;&nbsp;
+the upper bound of error is proportional to the&nbsp;
+variance, standard deviation of the noise. But&nbsp;&nbsp;
+what's interesting is that it's actually inversely&nbsp;
+proportional to the grid size, so as long so if we&nbsp;&nbsp;
+each very counter intuitive, because when you&nbsp;
+have the high larger information, the usual&nbsp;&nbsp;
+intuition is that we want to somehow work with&nbsp;
+this high resolution information to get a better&nbsp;&nbsp;
+reconstruction. But what this research actually&nbsp;
+says is that if we reduce the resolution of the
+of this super resolution system, then&nbsp;
+we can resolution over the input data to&nbsp;&nbsp;
+super resolution, we can actually have a better&nbsp;
+reconstruction so that this, this Coronavirus,&nbsp;&nbsp;
+actually summarizes all of the derivations all&nbsp;
+over the profile just outlined that this figure,&nbsp;&nbsp;
+the quantity on the left, defines over the&nbsp;
+joinable convergence, and this general conversion,&nbsp;&nbsp;
+that the upper bound of error is essentially&nbsp;
+decreased when you when the data resolution&nbsp;&nbsp;
+gets closer so that, so here, that's the&nbsp;
+theoretical results. Now we are trying to
+show the not now we are trying to see that if the&nbsp;
+theoretical results can be observed in the actual&nbsp;&nbsp;
+numerical experiment. So here we do so. So this is&nbsp;
+our line of the numerical experiment. The original&nbsp;&nbsp;
+system, the two dimensional negotiation, was&nbsp;
+solved by the pseudo spectral method. And we are.
+Using 512 flier mode for to solve this&nbsp;
+neighbor substitution. And the observer&nbsp;&nbsp;
+system is now solved by second order&nbsp;
+finite element method. And then again,&nbsp;&nbsp;
+shown on the right is the high resolution grid.&nbsp;
+And we have this sub domain denoted by this
+red curve,
+and then we this. The size of this&nbsp;&nbsp;
+domain is denoted by h, and we have&nbsp;
+compression ratio that's giving us
+the this giving us the ratio of super&nbsp;
+resolution and the noise magnitude here&nbsp;&nbsp;
+is that the variance of noise is proportional&nbsp;
+to the turbulent kinetic energy. Turbulent&nbsp;&nbsp;
+kinetic energy is defined, defined on here,&nbsp;
+and then we use it different we looked at the
+different primary range that the viscosity&nbsp;
+change from zero to one, five to 009,
+and then different noisy letters&nbsp;
+and different compression ratios.
+And the actual code is, is, you&nbsp;
+can find the actual code in this,
+in this GitHub report, the this is open source&nbsp;
+code. You can, you can download and test it.
+So this is
+the research of the bellow theory construction&nbsp;
+for the parameter range shown here. So then now we&nbsp;&nbsp;
+are looking at the compression ratio of 32 meaning&nbsp;
+that we are looking at 32 times super resolutions.&nbsp;&nbsp;
+So this is the ground truth state in the initial&nbsp;
+conditional ground truth state, and we superposed&nbsp;&nbsp;
+noise to the initial state. And then this is the&nbsp;
+low resolution input data that is averaged by 3232&nbsp;&nbsp;
+by 32 grid. And then the right figure showing here&nbsp;
+is a super resolution reconstruction, but initial&nbsp;&nbsp;
+condition is of Super Regional reconstruction&nbsp;
+is just like almost zero in this case.
+And then after some time, here we are looking at t&nbsp;
+equal to eight. Then we then figure on the left is&nbsp;&nbsp;
+ground truth, and we have the corrupted data. And&nbsp;
+then eventually the reconstruction shown on the&nbsp;&nbsp;
+right is very close to the ground truth. And the&nbsp;
+figure on the figure on the middle is the actual,&nbsp;&nbsp;
+actual role resolution data that was supplied to&nbsp;
+the super resolution models. So that, if you look&nbsp;&nbsp;
+at the figure on the bottom, then the left, this&nbsp;
+is the velocity field in the center of the domain.
+This is the
+horizontal velocity at the center of domain.&nbsp;
+And you can see that this is a ground truth and&nbsp;&nbsp;
+this is the low resolution data, and super&nbsp;
+resolution reconstruction, in this case,&nbsp;&nbsp;
+becomes very close to ground truth, even though&nbsp;
+low resolution data doesn't really have this&nbsp;&nbsp;
+high small scale structures. So this figure,&nbsp;
+it shows the reconstruction error at one time&nbsp;&nbsp;
+snap. This is a snapshot. It's the same snapshot&nbsp;
+at t equal to eight. And here we are looking at&nbsp;&nbsp;
+the error field at different compression ratio.&nbsp;
+Compression ratio one means that each like a data&nbsp;&nbsp;
+or simulation algorithm, and then we apply the&nbsp;
+super resolutions. Then, as you can see here, that&nbsp;&nbsp;
+as we increase the compression ratio, then the&nbsp;
+error gets smaller and smaller. And in this case,&nbsp;&nbsp;
+if you get the color bar, the color bar changes&nbsp;
+from point one to minus one, while the color bar,&nbsp;&nbsp;
+color bar of the ground truth changes from two&nbsp;
+to minus two, so that the error range here is&nbsp;&nbsp;
+much smaller than the actual velocity field.&nbsp;
+And this is consistent with the study that I&nbsp;&nbsp;
+explained in the beginning that when you had where&nbsp;
+they found that the super resolution models have
+very strong characteristics in the denoising&nbsp;
+cap, very strong, very strong denoising&nbsp;&nbsp;
+capability. And we also showed that when you&nbsp;
+use super resolution, the error becomes much&nbsp;&nbsp;
+less than as we increase the size of the&nbsp;
+as we increase the size of the sub domains.
+And now we are looking at the convergence of&nbsp;
+this super resolution, the relative error.&nbsp;&nbsp;
+In this case, it is defined by l2 error divided&nbsp;
+by the velocity fluctuations. And the reason is&nbsp;&nbsp;
+that based on the joint definition of the general&nbsp;
+convergence and the definition of this variance of&nbsp;&nbsp;
+the noise. Now what you can see is that this&nbsp;
+is a relative error. Should should scare as
+the conversion stone like it should&nbsp;
+decay at the compression ratio. So&nbsp;&nbsp;
+if you look at this case, so you both of&nbsp;
+them are from same knowledge level, 1.6
+Is at different viscosity. What you can see is&nbsp;
+that, as we so this line is the c equal to one,&nbsp;&nbsp;
+meaning that there is no compression.&nbsp;
+And as we increase the compression ratio,&nbsp;&nbsp;
+the super resolution ratio, then we see that the&nbsp;
+relative error actually decreases. And then in the&nbsp;&nbsp;
+beginning, we also starting from different&nbsp;
+we are starting from zero velocity field,&nbsp;&nbsp;
+so we have different initial velocity than the&nbsp;
+ground truth. And this the the deviation from the&nbsp;&nbsp;
+ground truth decays exponentially fast. So that&nbsp;
+is consistent with the geo record predictions. One&nbsp;&nbsp;
+other thing we observe is that as we increase the&nbsp;
+size of sub domain, the super resolution ratio,&nbsp;&nbsp;
+and it first decrease, but then eventually,&nbsp;
+when we when we decrease the super when you&nbsp;&nbsp;
+increase super resolution ratio further than the&nbsp;
+error starting to diverge, the system starting&nbsp;&nbsp;
+to diverge from the ground truth. So the each&nbsp;
+first decreasing and each going up to here.&nbsp;&nbsp;
+That's because in theoretical predictions, we have&nbsp;
+some necessary conditions for the convergence,&nbsp;&nbsp;
+that the size of the subdomain, the ratio of&nbsp;
+the super resolution should be bounded by some&nbsp;&nbsp;
+constant multiplied by the viscosity, which is&nbsp;
+inversely proportional to the Reynolds number.
+Now, for the interest of time, I'm going&nbsp;
+to skip this figure and just go going to&nbsp;&nbsp;
+explain about this last figure. So in&nbsp;
+this last figure. Now this is actually&nbsp;&nbsp;
+summarization of all the experiments here&nbsp;
+we are looking at three different viscosity&nbsp;&nbsp;
+and the vertical axis is the relative error.&nbsp;
+Horizontal axis is the super resolution ratio,&nbsp;&nbsp;
+and different color means the different&nbsp;
+uh. Noise, noise level, so that
+going from top to bottom, we have, we have&nbsp;
+noise from change, noise level change from 1.6
+to zero, so that the line on the bottom is&nbsp;
+actually noise free, super resolution case.&nbsp;&nbsp;
+So what the fourth thing we notice is that if&nbsp;
+you look at if you see the figures, the the line&nbsp;&nbsp;
+here is C to the minus point five. So we actually&nbsp;
+see that when we increase the compression ratio,&nbsp;&nbsp;
+the error is a decrease error, error decreases,&nbsp;
+but the but the ratio that error decreases is&nbsp;&nbsp;
+actually much slower than the theoretical&nbsp;
+predictions. In theoretical predictions,&nbsp;&nbsp;
+we predicted C to the minus one, but in numerical&nbsp;
+experiment, we have c to the minus point five.
+But one reason that we have
+slower convergence is because of&nbsp;
+the you, because we are using a low,&nbsp;&nbsp;
+low order of CFP solver for the observers. The&nbsp;
+ground truth was generated by spectral method,&nbsp;&nbsp;
+while the low observer was solved by&nbsp;
+second order finite element method.&nbsp;&nbsp;
+The reason we use a low order, low order&nbsp;
+safety solver for the observer is that
+we want to mimic the real life scenario where we&nbsp;
+don't really have that kind of high resolution&nbsp;&nbsp;
+info. We don't really have that kind of high&nbsp;
+fidelity models to reconstruct the velocity&nbsp;&nbsp;
+field. So if we use the if you use the highly&nbsp;
+accurate pseudo spectral method, then this
+error, this noise free reconstruction,&nbsp;
+should going further down here,&nbsp;&nbsp;
+so that each electrolys to the ground truth&nbsp;
+with the motion accuracy. But instead of,&nbsp;&nbsp;
+instead, since we are using low low&nbsp;
+water Solver, we have the finite error,&nbsp;&nbsp;
+and this finite error may contribute to&nbsp;
+this slower decay of the of the error
+we observe in numerical experiments. And another&nbsp;
+observation is that as we increase the compression&nbsp;&nbsp;
+ratio and as we reduce the viscosity, then&nbsp;
+now the relative error first decreases,&nbsp;&nbsp;
+but each now starting to increase as we as&nbsp;
+we increase the super resolution ratio C,&nbsp;&nbsp;
+so each because in smaller viscosity, we&nbsp;
+have more strict regularity conditions.&nbsp;&nbsp;
+And then if we use a higher compression&nbsp;
+ratio, and eventually we are going to we&nbsp;&nbsp;
+are by we are violating the necessary&nbsp;
+conditions for the convergence.
+Now we finally get to the&nbsp;
+conclusions. So in conclusions,&nbsp;&nbsp;
+what you have done is more like a&nbsp;
+theoretical analysis of super resolution.
+We try to provide some guidelines or theoretical&nbsp;
+understanding why the super resolution works,&nbsp;&nbsp;
+or if the super resolution of this complex system&nbsp;
+actually works so that, and what we found is the&nbsp;&nbsp;
+counter intuitively, this theoretical analysis&nbsp;
+indicates a decrease of estimation error. That&nbsp;&nbsp;
+was very interesting. But one of the so in&nbsp;
+this summary, what the most interesting part&nbsp;&nbsp;
+is the last item that there is a limitations over&nbsp;
+the current study, because the diorica analysis&nbsp;&nbsp;
+is mostly limited to isotropic flows, and the&nbsp;
+estimate we are getting is very conservative,&nbsp;&nbsp;
+meaning that the error bound we provide as a&nbsp;
+general convergence actually should be much&nbsp;&nbsp;
+larger than what it should be. So we are it's&nbsp;
+actually for the follow up study that we are&nbsp;&nbsp;
+looking at. Then, how can you expand the&nbsp;
+current analysis to more complex flows,&nbsp;&nbsp;
+such as some inhomogeneous, turbulent&nbsp;
+flows, and how can you get a more sharper&nbsp;&nbsp;
+arrow bound than what we currently have so&nbsp;
+far? So thank you for your attention, and
+thank you. Thank you so much for the&nbsp;
+wonderful talk. Very fascinating,
+awesome. Let's have a Q, a sessions. Okay,&nbsp;
+so there are some questions in the chat room&nbsp;&nbsp;
+by Sean. I think he already left, but he said,&nbsp;
+Thank you for the nice talk. Perhaps a missing&nbsp;&nbsp;
+reference from Tama he was sharing, so there's&nbsp;
+a link for the paper. Okay, you wanted to share&nbsp;&nbsp;
+with you. Okay? The next question is by Kevin.&nbsp;
+He's asking, what's an intuitive explanation for&nbsp;&nbsp;
+the increasing accuracy with course on Mesh,&nbsp;
+while measurement noise is smoothed out by&nbsp;&nbsp;
+course of mesh, high frequency flow features&nbsp;
+can be preserved by observer flow model?
+Yes, that, yeah, that's actually very, very good&nbsp;
+question. So that one is that we are smoothing&nbsp;&nbsp;
+out by using this filter. Naturally, we are&nbsp;
+smoothing out the noise. Then that's good.&nbsp;&nbsp;
+But also we are submitting out the small&nbsp;
+scale features together with the noise,&nbsp;&nbsp;
+so that the question is that there is a balance&nbsp;
+that and so that even though we are submitting out&nbsp;&nbsp;
+the small high like high wave number features,&nbsp;
+by using this observer in Navier solicitation,&nbsp;&nbsp;
+we have some kind of, there is energy&nbsp;
+cascade is happening. That is the
+that is energy is cascading from small,&nbsp;&nbsp;
+large scale to small scales. And&nbsp;
+when we have sufficient, when this
+have,
+when, when this energy cascade&nbsp;
+happens at a certain scale, less than,
+less than certain scales, then&nbsp;
+we can actually recover all these&nbsp;&nbsp;
+high scale phenomena. That's actually, that's&nbsp;
+actually what founding, that's actually what,&nbsp;&nbsp;
+what we found in this study, that even though&nbsp;
+we have, we don't have information at very,&nbsp;&nbsp;
+very small scale. Say that even though we&nbsp;
+we filter all the information about 1015,&nbsp;&nbsp;
+times Coronavirus scale, we can actually&nbsp;
+recover all of these missing information.
+We can exactly recover all of these missing&nbsp;
+informations by by through the energy cascade,&nbsp;&nbsp;
+so that now the what we try to looking at is&nbsp;
+actually a balance between these two. One is&nbsp;&nbsp;
+that we are having filtering effect. But if&nbsp;
+we filter too much, then we cannot recover&nbsp;&nbsp;
+the ground truth. So that we are looking at the&nbsp;
+we try to get a get a theory that what, how can&nbsp;&nbsp;
+you have the balance between these noise filtering&nbsp;
+effect as the reconstruction of the ground shoes.
+I think your error bounds analysis is kind of&nbsp;
+showing that story as well. Yes, exactly. So the&nbsp;&nbsp;
+coarse mesh doesn't, shouldn't exceed certain&nbsp;
+upper bounds, otherwise you cannot recover
+the high frequency. That's why we have&nbsp;
+this. Yeah, we have noise. We have&nbsp;&nbsp;
+this necessary condition and this new each&nbsp;
+viscosity, essentially the right hand side,&nbsp;&nbsp;
+define the dissipation rate. So they each&nbsp;
+related to the Coronavirus care in turbulence,
+so that he should be he the super logical&nbsp;
+ratio is a function of some Coronavirus care?
+Yeah, probably, but, but we&nbsp;
+actually looked at 2d so we
+that's also one of the limitations of the current&nbsp;
+study. I see, okay, already fascinating for the 2d
+next question is by Dave. Thank you for.
+A very interesting talk. Your examples were for&nbsp;
+2d turbulence, where the energy naturally flows&nbsp;&nbsp;
+from small to large scales, inverse cascade.&nbsp;
+How would your approach work for 3d turbulence,&nbsp;&nbsp;
+when the energy flows from large to small scale?&nbsp;
+That's a that's a good Kirsten. That's very good&nbsp;&nbsp;
+question. We, frankly speaking, we again, that's&nbsp;
+actually why I have the last item in the in the&nbsp;&nbsp;
+conclusions, that we certainly admit that there&nbsp;
+are limitations of the current story, and because&nbsp;&nbsp;
+of the mathematical lack of mathematical tools,&nbsp;
+we usually cannot. It's very hard to go to 3d
+to do actual proof of convergence in three&nbsp;
+turbulence. But what we have seen is that&nbsp;&nbsp;
+there is some physical explorations about&nbsp;
+what's happening in 3d flows. So in this study,&nbsp;&nbsp;
+they actually showed they have some theoretical&nbsp;
+derivations of the say critical length scale&nbsp;&nbsp;
+to recover the high resolution information.&nbsp;
+So we believe that the similar behavior can&nbsp;&nbsp;
+be absorbed in 3d but the actual mathematical&nbsp;
+proof of convergence is still long way to go.
+Okay, all right, next question is by Shima,&nbsp;
+thank you so much for such a great talk. I&nbsp;&nbsp;
+really enjoyed it. I'm also curious about three&nbsp;
+different flow, which is more important, okay,
+we are working on it, but
+everything takes time understand,
+that's awesome. Okay, so I guess I can&nbsp;
+ask questions related to the studies,&nbsp;&nbsp;
+questions in the beginning,
+you know, observing the preserving the those,&nbsp;
+conservation of law or some physical property
+that's still challenging. Yes, accomplish,&nbsp;
+right, right. Okay, so the deep learning models
+always the tricky part is that,
+how can you make a input, you know, incorporate&nbsp;
+hard constraint? It already tricky part so that we&nbsp;&nbsp;
+have got many physical solutions, and we want to&nbsp;
+reduce the space of solutions that is actually not&nbsp;&nbsp;
+mathematically feasible, physically feasible, but&nbsp;
+that process is still open. Kirsten, I believe.
+Yeah, so still. I mean, the work&nbsp;
+you have presented today is very&nbsp;&nbsp;
+impressive already. Thank you, yeah.&nbsp;
+Thank you. So I keep up the good work. I
+I think it's we can wrap up the seminar today.&nbsp;
+Let's thank our speaker for the wonderful talk and
+through this opportunity, and we can, you&nbsp;
+know, you know, establish some collaboration&nbsp;&nbsp;
+between Lawrence Livermore and your group,&nbsp;
+and sure, we can do greater things together.
+But thank you so much for the&nbsp;
+wonderful talk. Thank you, yeah,
+okay, that concludes. Today's the seminar with.

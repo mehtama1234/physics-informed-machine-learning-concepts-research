@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chapter 123 - Move The Sensors With The Moving State</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="sidebar">
+        <h1>DDPS Study</h1>
+        <a href="index.html">Start</a>
+        <a href="review-path.html">Review Path</a>
+        <a href="plain-words.html">Plain Words</a>
+        <a href="method-map.html">Method Map</a>
+        <a href="self-check.html">Self Check</a>
+        <a href="capstone.html">Capstone</a>
+        <a href="theme-index.html">Theme Index</a>
+        <a href="domain-map.html">Domain Map</a>
+        <a href="paper-reader.html">Paper Reader</a>
+        <a href="common-mistakes.html">Common Mistakes</a>
+        <a href="study-plan.html">Study Plan</a>
+        <a href="math-map.html">Math Map</a>
+        <a href="prerequisite-map.html">Prerequisite Map</a>
+        <a href="cheat-sheet.html">Cheat Sheet</a>
+        <a href="chapter-98.html">Chapter 98</a>
+        <a href="chapter-99.html">Chapter 99</a>
+        <a href="chapter-100.html">Chapter 100</a>
+        <a href="chapter-101.html">Chapter 101</a>
+        <a href="chapter-102.html">Chapter 102</a>
+        <a href="chapter-103.html">Chapter 103</a>
+        <a href="chapter-104.html">Chapter 104</a>
+        <a href="chapter-105.html">Chapter 105</a>
+        <a href="chapter-106.html">Chapter 106</a>
+        <a href="chapter-107.html">Chapter 107</a>
+        <a href="chapter-108.html">Chapter 108</a>
+        <a href="chapter-109.html">Chapter 109</a>
+        <a href="chapter-110.html">Chapter 110</a>
+        <a href="chapter-111.html">Chapter 111</a>
+        <a href="chapter-112.html">Chapter 112</a>
+        <a href="chapter-113.html">Chapter 113</a>
+        <a href="chapter-114.html">Chapter 114</a>
+        <a href="chapter-115.html">Chapter 115</a>
+        <a href="chapter-116.html">Chapter 116</a>
+        <a href="chapter-117.html">Chapter 117</a>
+        <a href="chapter-118.html">Chapter 118</a>
+        <a href="chapter-119.html">Chapter 119</a>
+        <a href="chapter-120.html">Chapter 120</a>
+        <a href="chapter-121.html">Chapter 121</a>
+        <a href="chapter-122.html">Chapter 122</a>
+        <a href="chapter-123.html">Chapter 123</a>
+        <a href="chapter-124.html">Chapter 124</a>
+        <a href="chapter-125.html">Chapter 125</a>
+        <a href="chapter-126.html">Chapter 126</a>
+        <a href="chapter-127.html">Chapter 127</a>
+        <a href="chapter-128.html">Chapter 128</a>
+        <a href="chapter-129.html">Chapter 129</a>
+        <a href="chapter-130.html">Chapter 130</a>
+        <a href="chapter-131.html">Chapter 131</a>
+        <a href="chapter-132.html">Chapter 132</a>
+        <a href="chapter-133.html">Chapter 133</a>
+        <a href="chapter-134.html">Chapter 134</a>
+        <a href="chapter-135.html">Chapter 135</a>
+        <a href="chapter-136.html">Chapter 136</a>
+        <a href="chapter-137.html">Chapter 137</a>
+        <a href="from-zero.html">From Zero</a>
+        <a href="pinn-from-zero.html">PINNs From Zero</a>
+        <a href="rom-from-zero.html">ROMs From Zero</a>
+        <a href="manifold-from-zero.html">Manifolds From Zero</a>
+        <a href="synthesis.html">Synthesis</a>
+        <a href="big-picture.html">Big Picture</a>
+        <a href="examples.html">Examples</a>
+        <a href="bridge.html">AISE Bridge</a>
+        <a href="audit.html">Transcript Audit</a>
+      </nav>
+      <main class="content">
+        <p class="eyebrow">Narrative chapter</p>
+        <h1>Move The Sensors With The Moving State</h1>
+
+        <p>This chapter uses video 127, Cecilia Pagani's DDPS talk on dynamical approximation and sensor placement for state estimation in transport problems. The talk starts from an inverse problem. There is a full physical state moving in space and time, but we do not get to see all of it. We only get a few measurements from sensors. From those partial measurements, we want to reconstruct the whole state.</p>
+
+        <p>The first-principles issue is that partial measurements are not enough by themselves. If you only know six numbers from a field, infinitely many fields could match those six numbers. To make reconstruction possible, you need prior information. Here the prior information is not a vague guess. It is the fact that the unknown state comes from a known evolution model with some unknown parameter.</p>
+
+        <section class="lesson-claim-chain" aria-label="Plain first-principles reading guide for adaptive sensing of moving states">
+          <h2>Read This Chapter As One Claim</h2>
+          <p>The chapter starts with a simple observation: a sensor is useful only if it can see the thing that matters. In transport problems, the important feature may move across the domain. A fixed sensor can be excellent at the beginning and almost useless later. A fixed reduced basis has the same weakness: it may need many modes just to represent the same shape in many locations. This chapter says to make estimation dynamic. Move the sensors toward the informative region, move the approximation space with the evolving state, and keep both tied to the physical model.</p>
+          <div class="lesson-claim-grid">
+            <div><strong>Everyday problem</strong><span>A few fixed measurements cannot reconstruct a moving wave, plume, crack, flame, or hot spot after the feature leaves the measured region.</span></div>
+            <div><strong>Shared promise</strong><span>Use a model-based prior, adaptive sensor locations, and a time-dependent reduced space so estimation follows the moving state.</span></div>
+            <div><strong>Hidden danger</strong><span>The method depends on useful model dynamics, movable or reconfigurable sensing, stable observations, and enough structure in the moving feature.</span></div>
+            <div><strong>First rejection test</strong><span>Track beta, reconstruction error, conserved quantities, sensor speed, and performance when the feature changes path or leaves the learned regime.</span></div>
+          </div>
+        </section>
+
+        <div class="moving-state-big-picture-map" aria-label="State estimation combines partial sensors, a model prior, and adaptive reconstruction">
+          <div>full moving state is hidden</div>
+          <div>only a few sensors report values</div>
+          <div>model prior restricts possible states</div>
+          <div>adaptive reconstruction follows the motion</div>
+        </div>
+
+        <h2>The Everyday Version</h2>
+        <p>Imagine trying to track a bright spot moving across a dark room using a few fixed cameras. If the spot passes through a camera's view, that camera is useful. If the spot moves away, the camera keeps reporting darkness. The camera is not broken, but it is no longer informative. If you keep trusting it as if it still sees the event, your estimate becomes poor.</p>
+
+        <p>Transport problems have the same trouble. A wave, pulse, front, or localized packet moves. A fixed sensor can be excellent at one time and useless later. The natural fix is to let the sensing strategy move with the state, or at least to place sensors where the current approximation says information will be useful.</p>
+
+        <h2>Why Transport Breaks Static Reconstruction</h2>
+        <p>Transport means that information moves through space. A wave packet in the Schrodinger equation, a pollutant plume, a heat front, a fluid feature, or a charged particle bunch can be localized. If sensors sit in one region while the state moves elsewhere, the observations stop seeing the important part.</p>
+
+        <p>There is a second problem. Transported states are often hard to approximate with one small fixed linear space. A moving bump needs many fixed basis functions if the basis is not allowed to move. That is why classical low-rank reduction can become large and expensive for transport-dominated systems. The shape is simple locally, but its location changes.</p>
+
+        <div class="transport-problem-map" aria-label="Transport makes fixed sensors and fixed bases weak">
+          <div>state is localized</div>
+          <div>state moves through the domain</div>
+          <div>fixed sensors can miss it</div>
+          <div>fixed bases need many modes</div>
+        </div>
+
+        <h2>The PBDW Starting Point</h2>
+        <p>The baseline method is called parameterized background data-weak, or PBDW. The name is less important than the idea. You have two sources of information. First, you have an approximation space: a small space where plausible states are expected to live. Second, you have an observation space: the information your sensors can provide. PBDW finds a state that matches the measurements while staying as close as possible to the approximation space.</p>
+
+        <p>There is a stability condition behind this. The approximation space and the observation space must see each other. If the observation space is nearly blind to the approximation space, reconstruction becomes unstable. The talk describes this with a constant called beta. When beta is healthy, the measurements and the prior space work together. When beta goes toward zero, the reconstruction can blow up or become qualitatively wrong.</p>
+
+        <div class="pbdw-balance-map" aria-label="PBDW balances approximation error and observation stability">
+          <div>approximation space says what states are plausible</div>
+          <div>observation space says what sensors see</div>
+          <div>beta measures whether sensors see the space</div>
+          <div>small beta makes reconstruction unstable</div>
+        </div>
+
+        <h2>The Error Has Two Doors</h2>
+        <p>The reconstruction error is controlled by two things. One is approximation error: how well the chosen low-dimensional space can represent the true state. The other is observation stability: whether the sensors are placed so that they can distinguish the states inside that space. A good basis with bad sensors is not enough. Good sensors with a bad basis are not enough either.</p>
+
+        <p>This is the main design lesson of the method. State estimation is not only a sensor-placement problem and not only a reduced-model problem. It is the coupling of both. You choose what small space will represent the possible states, and you choose where to measure so that the measurements can actually identify a point in that space.</p>
+
+        <div class="two-error-door-map" aria-label="Reconstruction needs both a good approximation space and useful observations">
+          <div>bad approximation space misses the true state</div>
+          <div>bad sensor placement cannot identify the state</div>
+          <div>both errors combine in the bound</div>
+          <div>method updates both over time</div>
+        </div>
+
+        <h2>Move The Sensors</h2>
+        <p>The first adaptation is sensor movement. If sensors are local, their locations define the observation space. Moving the sensors changes what information the reconstruction can see. The talk proposes choosing sensor trajectories that keep the stability constant strong over a time interval. A regularization term prevents the sensors from moving with unrealistic speed.</p>
+
+        <p>In plain words: do not leave the sensor where the wave used to be. Move it toward where the current approximation says the informative part is going. The goal is not movement for its own sake. The goal is to keep the measurement space aligned with the current low-dimensional state space.</p>
+
+        <div class="moving-sensor-map" aria-label="Sensors move to keep observing the support of the solution">
+          <div>sensor starts near useful information</div>
+          <div>wave moves away</div>
+          <div>static sensor becomes inactive</div>
+          <div>dynamic sensor follows the support</div>
+        </div>
+
+        <h2>Move The Approximation Space Too</h2>
+        <p>The second adaptation is the approximation space. Instead of building one global reduced space for all times and all parameters, the method builds a local-in-time space. At each time, the basis functions are allowed to evolve. The solution is represented by time-dependent coefficients and time-dependent basis elements.</p>
+
+        <p>This is the same insight as moving a camera with the action. A moving localized state may be low-dimensional at each instant, even if its whole time history is hard to represent with one fixed linear space. By updating the basis, the method keeps the reduced representation small.</p>
+
+        <div class="moving-basis-map" aria-label="A time-dependent basis keeps a moving state low-dimensional">
+          <div>one fixed basis must cover all positions</div>
+          <div>transport makes that basis large</div>
+          <div>time-dependent basis follows the state</div>
+          <div>small space remains useful</div>
+        </div>
+
+        <h2>How The Basis Learns To Move</h2>
+        <p>The talk uses the Dirac-Frenkel variational principle. The name sounds heavy, but the picture is simple. The true evolution equation gives a velocity field: it says how the state wants to move next. If the reduced approximation follows that full velocity exactly, it may leave the reduced space. So the method projects the velocity onto the tangent space of the reduced manifold. It follows the closest allowed motion inside the approximation family.</p>
+
+        <p>This makes the reduced space dynamic rather than static. The basis evolves according to the model, not only according to old snapshot data. That is why the speaker distinguishes the method from a purely data-driven black box. It needs the differential operator, but it does not need a global archive of future solution snapshots.</p>
+
+        <div class="tangent-projection-map" aria-label="The model velocity is projected onto the tangent space of the reduced approximation">
+          <div>full model says how the state moves</div>
+          <div>full velocity may leave reduced space</div>
+          <div>project velocity onto tangent space</div>
+          <div>basis evolves with the dynamics</div>
+        </div>
+
+        <h2>The Algorithm As A Loop</h2>
+        <p>The full algorithm repeats a practical loop. Start with an approximation space and sensor locations. Move the sensors over the next time interval to keep the observation stable. Take new measurements. Reconstruct the state with PBDW. Then update the approximation space using the dynamical low-rank idea. Repeat.</p>
+
+        <p>This loop is the heart of the chapter. The method does not assume that the best sensors or the best reduced space at time zero remain best forever. Transport changes the problem as it moves. The algorithm changes with it.</p>
+
+        <div class="state-estimation-loop-map" aria-label="The adaptive state-estimation loop updates sensors, measurements, reconstruction, and basis">
+          <div>update sensor locations</div>
+          <div>collect measurements</div>
+          <div>reconstruct with PBDW</div>
+          <div>update approximation space</div>
+        </div>
+
+        <h2>Why Structure Preservation Matters</h2>
+        <p>Many transport problems conserve important quantities. The talk discusses Hamiltonian and symplectic structure for a Newtonian-system formulation. In simple terms, the reconstruction should not casually destroy the physical bookkeeping of the system. If the original dynamics conserves a quantity, the reduced reconstruction should preserve it exactly when possible, or at least keep the error tied to the reconstruction error.</p>
+
+        <p>This matters because a state estimate is not only a picture. It may be used for prediction, control, or diagnosis. If the reconstruction violates the physics badly, later decisions built on it can drift. A physically structured approximation space can keep the recovered flow closer to the original system's rules.</p>
+
+        <div class="structure-preserve-map" aria-label="Structure-aware approximation protects conserved quantities">
+          <div>transport systems carry conserved quantities</div>
+          <div>bad reconstruction breaks physical bookkeeping</div>
+          <div>structured basis preserves key geometry</div>
+          <div>conservation error follows reconstruction error</div>
+        </div>
+
+        <h2>The Schrodinger Example</h2>
+        <p>The numerical example uses a nonlinear Schrodinger equation in one spatial dimension. The state has real and imaginary parts, and a localized hump travels through the domain. With static sensors, the sensors begin near the action but eventually the hump moves away. Once that happens, beta decays and the reconstruction becomes unstable. The final reconstructed state can be qualitatively wrong.</p>
+
+        <p>With moving sensors and a dynamic approximation space, the sensors follow the moving support of the solution. Beta stays healthier. The reconstruction error remains close to the best error the approximation space can achieve. The reconstructed real and imaginary parts overlap the high-fidelity reference well, and the Hamiltonian behaves much better than in the static-sensor case.</p>
+
+        <div class="schrodinger-result-map" aria-label="Moving sensors improve reconstruction of a traveling Schrodinger wave packet">
+          <div>localized wave packet travels</div>
+          <div>static sensors lose information</div>
+          <div>moving sensors keep beta stable</div>
+          <div>reconstruction tracks the reference</div>
+        </div>
+
+        <h2>The Topology And Design Connection</h2>
+        <p>This chapter connects to topology and design through the question of where information lives. A localized state occupies only part of the domain at a given time. Its support moves. Its shape may stay simple while its position changes. That is a geometric fact about the solution set. If the reduced space and sensor placement ignore that geometry, they spend effort in the wrong places.</p>
+
+        <p>In engineering design, this appears whenever a moving feature controls the decision: a shock moving over a wing, a pollutant plume moving through a city, a crack front moving through a part, a flame front moving through a combustor, or a wave packet moving through a plasma. A static sensor grid may need many sensors to cover every possible location. A moving or adaptive sensing strategy can use fewer sensors by following the feature that matters.</p>
+
+        <div class="moving-feature-design-map" aria-label="Design and topology decisions often depend on tracking moving localized features">
+          <div>decision depends on a moving feature</div>
+          <div>static grid wastes sensors away from the feature</div>
+          <div>adaptive sensors follow information</div>
+          <div>design loop sees the state that matters</div>
+        </div>
+
+        <h2>A Concrete Example</h2>
+        <p>Suppose a factory wants to monitor a hot spot moving through a thin manufactured sheet. The full temperature field is expensive to measure. A few infrared sensors can move along rails. If the sensors stay fixed near the left side, they will be useful early and useless after the hot spot moves right. The reconstruction may then say the sheet is safe when the hot spot is actually elsewhere.</p>
+
+        <p>The method from this talk would use a thermal transport model to keep a small approximation of where the hot spot can be. It would move sensors to keep seeing that low-dimensional space, reconstruct the full state from the new readings, and update the approximation as the hot spot moves. The value is not only a prettier temperature map. It is a better decision about where the part is at risk.</p>
+
+        <h2>The Boundary Of The Claim</h2>
+        <p>The talk is careful about what is assumed. The presented setting uses exact observations and no model error. The method has been shown on academic tests, with some two-dimensional tests mentioned, but not full industrial three-dimensional deployment. Moving sensors may not be possible in every experiment. The method also depends on knowing the governing model well enough to evolve the approximation space.</p>
+
+        <p>So the claim is not "always move sensors" and not "state estimation is solved." The claim is: for transport-dominated problems with localized moving states, fixed sensors and fixed global bases can fail for understandable reasons. If sensors can move and the approximation space can adapt according to the dynamics, reconstruction can remain stable with a smaller number of measurements.</p>
+
+        <div class="moving-state-boundary-map" aria-label="The method works best for localized moving states with movable sensors and a useful model">
+          <div>not for unknown physics black boxes</div>
+          <div>not always possible if sensors are fixed hardware</div>
+          <div>not yet a complete industrial recipe</div>
+          <div>strong when localized transport can be tracked</div>
+        </div>
+
+        <h2>What You Should Remember</h2>
+        <p>The core lesson is that sensing is part of the model. If the thing you want to reconstruct moves, then the observation strategy and the approximation space should move too. Otherwise, the math will tell you what your eyes already know: sensors looking at the wrong place cannot reconstruct the right state.</p>
+
+        <p>Across the DDPS course, this chapter connects inverse problems, reduced models, structure preservation, and adaptive sensing. It gives a concrete answer to a recurring question: how do we use a small number of measurements without fooling ourselves? We make the prior space small but dynamic, place sensors where that space is visible, and keep the reconstruction tied to the physical structure of the transport model.</p>
+
+        <section class="lesson-review" aria-label="End of chapter understanding check for adaptive sensing of moving states">
+          <h2>How To Test Whether You Understood This Chapter</h2>
+          <div class="lesson-review-grid">
+            <div><strong>Explain the two failures</strong><span>A bad reduced space cannot represent the true moving state. Bad sensors cannot distinguish states inside the reduced space. State estimation needs both parts aligned.</span></div>
+            <div><strong>Explain beta simply</strong><span>Beta measures whether the sensors can see the approximation space. When beta becomes small, reconstruction becomes unstable because different plausible states look too similar to the sensors.</span></div>
+            <div><strong>Explain the moving basis</strong><span>A transported shape may stay simple if the basis follows it. The model projects the full dynamics onto the allowed motion of the reduced space.</span></div>
+            <div><strong>Connect it to topology and design</strong><span>For shocks, plumes, crack fronts, flame fronts, wave packets, and moving hot spots, design decisions need sensors and reduced models that follow where information actually lives.</span></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

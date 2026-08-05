@@ -1,0 +1,2079 @@
+i will yup definitely
+okay it's being recorded i
+believe
+yes it is okay let me officially start
+okay
+welcome to the ddps seminar everyone
+before we introduce our invited speaker
+let's go over some rules and logistics
+first of all please mute yourself during
+the talk unless you have questions
+if you have questions you are welcome to
+admit and ask otherwise please use chat
+room to post your questions so that we
+can address them in q a session at the
+end
+second today's ddps seminar is open to
+external audiences therefore no
+classified discussion is allowed so
+please watch out finally the talk today
+will be recorded and uploaded in our
+youtube channel
+that's about it now let me introduce our
+speaker today
+it is an honor to host michael mahoney
+who is a professor at the university of
+california at berkeley in the department
+of statistics and
+at the international computer science
+institute icsi
+is also an amazon scholar as well as a
+faculty scientist at the lawrence
+berkeley national laboratory he works on
+algorithmic and statistical aspects of
+modern large-scale data analysis
+much of his in
+his recent research has focused on
+large-scale
+um
+large-scale
+machine learning including randomized
+matrix algorithms and randomized
+numerical linear algebra geometric
+network analysis tools for structural
+extraction in large info informatics
+graphs
+scalable implicit regularization methods
+computational methods for neural network
+analysis physics informed machine and
+learning and application in
+genetics and astronomy medical imaging
+social network analysis and internet
+internet data analysis
+as you can hear pretty much everything
+he touched on
+he received his phd from yale university
+with a dissertation in computational
+statist statistical mechanics and he has
+worked and taught at yale university in
+the mathematics department
+at yahoo research and at stanford
+university in the mathematics department
+among other things he is on the national
+advisory committee of the statistical
+and applied mathematical sciences
+institutes
+he was on the national research
+council's committee on the analysis of
+massive data
+he co-organized the simon's institute's
+fall 2013 and 2008-18 programs on the
+foundations of the data science
+and there are many
+awards he
+he got and more information is available
+at his web page
+okay today michael will talk about
+toward combining principled scientific
+models and principle machine learning
+methods which is very interesting topics
+so please enjoy and expect a wonderful
+talk now without further ado let me pass
+the button
+michael by asking one random question as
+usual today's random question is what is
+your favorite things to do other than
+research
+what's the favorite thing to do other
+than research
+um that's a good question and i'll tell
+you something that i haven't been able
+to do in a number of years but um so i i
+don't wouldn't say i did a lot but i did
+it a number of times and i enjoy it and
+i hope at some point to get back to it
+i like to go scuba diving
+oh wow and occasionally people say oh i
+do that i do snorkeling and and and in a
+sort of um teasing way i say the only
+reason you like snorkeling is because
+you've never done scuba diving
+i mean they seem to me qualitatively
+different and i'm not sure why it just
+seems very sort of
+i like the beach but not i mean the
+beach is okay but then you get sand in
+your shoes and it's a little messy but
+you know going into the different world
+we're underground underwater and so on
+um it seems very uh
+um otherworldly so um i'll do a thumbs
+up for scuba diving how about that
+that's great uh sounds dangerous though
+so um scuba diving i mean like a lot of
+things that driving a car is dangerous
+right um
+if if you if you know nothing it can be
+but um
+i took a class actually a a fun fact
+before it begins was mentioned that i
+was my phd was in computational
+statistical mechanics
+after that i moved to theoretical
+computer science and large scale
+statistical data analysis
+and worked on that for a number of years
+and now in the last couple years gone
+back and looked at sort of scientific
+machine learning problems from the
+perspective of ml but knowing a lot
+about physics right so my dissertation
+was in liquid state statistical
+mechanics
+and so there's a lot of models for water
+you want this for protein hydration and
+so it wasn't icing models near phase
+transitions it was liquid state
+and um and so
+the state of the art then the
+centerpiece of my dissertation was
+getting a model for liquid water that
+was as good as the best existing models
+and in addition got on the nose the
+temperature of maximum density
+and um and that was important you know
+for a range of reasons it wasn't clear
+you could get that within the class of
+parametrized sort of simple interaction
+site models
+so i'm wrapping up my dissertation and
+it's a bunch of things related to this
+but this was sort of the centerpiece
+and it was at that time that i thought
+why don't i try out scuba diving so this
+wasn't a total non-sequitur it gets back
+to the scuba diving so the point is i
+was
+the world's expert in the density
+properties of water
+and so i think it was the last or second
+to last semester before the dissertation
+was wrapping up
+and scuba diving can be dangerous but if
+you get certified and i had a very good
+class actually
+where you walk through the physics of
+stuff so if you're down at 50 or 100
+feet you can constantly breathe out if
+you have a problem and shoot straight up
+to the to the surface it's a problem if
+you're in a cave or in a boat under a
+shipwreck or something so you gotta be a
+little careful but you can just
+constantly breathe out and and um avoid
+bends and you know things like this
+and it's just pv equals nrt it's basic
+physics and basic chemistry so you need
+i took a class you need in water i need
+a written exam and i got one question
+wrong on the exam
+what is that and that had to do with the
+density of water
+it's you are an expert on it right
+i mean the answer is 0.997 in the units
+i always used
+the units on the test or units i didn't
+know you know as force pounds versus
+inverse light years or something i mean
+it was units i didn't recognize and so
+i rec i pulled the only number i i
+marked a check next to the only number i
+recognized
+which um i just recognized from reading
+the book was the density of air so it
+was a factor of a thousand off so i just
+recognized the numeric value but didn't
+recognize the units so that was sort of
+a lesson
+for me in um
+so literally the world's acts but i got
+the density wrong so this is a lesson in
+um
+how to design tests that really
+extract whether someone's learned
+something and so i teach classes now and
+that's sort of something i keep in the
+back of my mind all right great all
+right thank you michael stacy right
+yours
+that's a long answer to the fun fact
+i hope you don't have a second fun fact
+question we'll never get no no no it's
+all it's it's let's go to the technical
+now but that was sort of a preamble
+which wasn't a total non-sequitur in the
+sense that um
+you know i did computational statistical
+mechanics and so i was a user of of
+linear algebra and a user of
+a range of sort of techniques
+um and and in the last however many
+years sort of developed them in the
+context of machine learning
+and a lot of
+scientists i mean i work in industry but
+also like scientific problems
+and it's a source of endless frustration
+for me so hopefully people in this room
+or audience are listening and
+will meet me either halfway or quarter
+away
+so oftentimes what people say is oh i
+want to use machine learning for such
+and such
+and
+in my answer being sympathetic to the
+scientific problems such and such but
+also realizing this is an
+interdisciplinary space and different
+areas have very different standards i
+want to say yeah but i want to use such
+and such for machine learning
+so you have a scientific problem what
+can you do to help me not vice versa
+and i think framing the question that
+way is sometimes useful for people to
+think about because otherwise i'm a
+machine learning person and i'm just a
+tool that gets buried in a method
+section at the back of your paper
+and of course the flip side is if i
+publish in a machine learning venue i
+publish a toy scientific data set or a
+toy non-scientific data set and the ml
+people don't care about the details of
+the data set they want the method
+and so what i want to talk about today
+is sort of trying to get beyond that and
+trying to combine what i'll call
+principled scientific models with
+principled machine learning models
+and so we did a lot of work on
+randomized linearity and other things
+over the years that really sort of are
+very interdisciplinary and oftentimes
+the best methods there um
+the reason the two areas are in them are
+different and sometimes inconsistent you
+know area a likes the method because of
+such and such area b likes it for
+basically an incompatible reason
+worst case versus statistical properties
+interesting properties machine learning
+or generalization versus usefulness in
+the scientific domain they can be very
+different and so what i want to do today
+is to try and sort of lay out you know
+it's a toward combining so it's not the
+final word but a progress report on some
+of the recent experiences we've had with
+trying to get you know methods that are
+really interesting for machine learning
+but mapping in very non-trivial ways to
+sort of scientific methodology
+right
+so um
+something that's very common in
+scientific problems is modeling um
+space and time and so we're going to be
+dealing with this
+and so we want to be modeling spatial
+and temporal behavior
+and um
+that's something that's not obviously
+first class in machine learning right in
+machine learning you define features the
+data may come from a spatial domain but
+maybe not if you're working on
+computer vision there might be some
+structure to the image but you might be
+working on internet ads or something
+where there's not an obvious spatial
+component
+and so um think about what's peculiar
+about space and time especially if you
+want to be applying machine learning
+methods
+so um
+so how can we integrate domain insight
+with data data-driven methods this is
+going to be the basic question and when
+we ran when we started the
+tripods and the foundations of data
+analysis institute at berkeley we had a
+couple foundational questions just
+scalable algorithms and statistical
+inference but one of the foundational
+questions was how do you combine in a
+principled way
+domain-driven models with data-driven
+models
+and so that's sort of the question we
+want to address
+one thing that's gotten of interest in
+recent years is neural networks
+and so i'll be talking about two
+examples of that but i think the
+questions the basic questions more
+general than that and we've had results
+over the years we've thought about that
+so
+um that's informed our sort of
+approaches here
+all right so um
+so i want to talk about
+sort of two main topics and then i
+wanted to
+mention a couple other related
+developments at the end just to sort of
+put it on your radar
+um and have me back in a couple years
+and i'll tell you about how those
+results play out i mean we have a pr i
+think i have a pretty good idea
+of of uh how those will play out but but
+they're sort of um
+recent developments that are working
+progress having to do with the temporal
+sequential properties
+i want to talk about two other things
+we've been thinking about for a number
+of years
+the first has to do with um
+physics-informed neural networks so
+physics-informed
+neural networks are a class of models
+that a particular group of people have
+developed
+and roughly the idea is i want to
+minimize a loss
+like in machine learning and i tack on
+domain insight as a regularizer
+um
+it's it's a special case of what's going
+on instead of scientific machine
+learning and um and we want to study a
+particularly simple version of that to
+understand
+um what's going on from the machine
+learning perspective and in particular
+from the optimization stochastic
+optimization perspective
+um
+and what i think we'll see is that we're
+going to be able to identify some
+failure modes with tying those two
+things together in sort of a vanilla way
+and i think if you tie them together in
+a somewhat non
+vanilla way you still have the same
+failure modes and they have to do with
+sort of
+what it means
+to have a constraint you know a physical
+constraint versus not physical
+constraint and as is the constraint a
+hard constraint or soft constraint and
+these are sort of details of the
+optimization
+that machine learning methodology
+handles in one way and in some cases
+physically you need to handle in a very
+different way and so the idea in the
+back your mind is usually machine
+learning constraints are just
+suggestions and so you just need to
+satisfy them very approximately if at
+all
+um in a lot of scientific problems
+constraints are important if you want to
+constrain your energy and you want to
+iterate your simulation if you don't
+conserve energy
+your simulation blows up and so it's
+it's it's it needs to be handled in a
+much stronger way and respected and so
+there's some interesting issues about
+the details of the constraint that i
+think that work sort of highlights
+the next thing i want to talk about
+again is um
+something that
+matters scientifically but also matters
+qua machine learning and this has to do
+with the idea of continuity in in most
+cases in machine learning you do
+training and testing on a given set of
+data and it's basically discrete i mean
+you can put a t there you know and call
+it continuous but basically the
+methodology the design decisions that
+you make
+um are discrete and if you want to learn
+something like a continuous model how do
+you do it i mean oftentimes you said
+learn i said you'll specify a set of
+basis functions learn parameters for
+those basis functions so machine
+learning you're really learning
+something discrete those parameters you
+can fix the basis functions
+um you might try and adjust the basis
+functions but where does continuity
+really enter and so we'll get to that
+um
+but in the back of your mind before you
+get to that ask yourself
+you know a version of this question
+already appears in numerical analysis
+right in numerical analysis
+um in scientific computing you typically
+think geez i have a continuous pde
+but i can't write down a continuous
+thing on a computer so i discretize it
+and so what does it mean for a discrete
+representation of a number to be
+approximately continuous so what does it
+mean for a
+a discrete algorithm a numerical
+integrator to meaningfully approximate a
+continuous function and so so how would
+you quantify that i mean um and so we'll
+get to an example of how to do that so
+numerical analysis is a range of ways to
+quantify that and we'll use some similar
+ideas there
+so um details of the optimization um
+details of what it means for discrete
+things to approximate continuous things
+clearly both important on the scientific
+side but also
+um cutting across the way ml methodology
+is usually developed
+and the other related developments that
+will basically be having to do with time
+series
+temporal or sequential modeling
+um
+time really doesn't appear in the
+structure of of a lot of modern machine
+learning it appears in econometrics and
+sort of older schools sort of
+statistical techniques
+but a lot of modern machine learning um
+think kernels think boosting think
+neural networks i mean
+um it's classification it's regression
+it's ranking i mean so so time doesn't
+really appear as a first class citizen
+you sort of graft it on separately if at
+all
+um and so um can you get beyond that and
+so those are these are the things i'll
+mention at the end all right
+and
+um
+this is a slightly different form you
+usually have zoom and some things on the
+side so either interrupt if you have a
+question or if there's a channel with um
+that you can post comments and i can't
+see that but post the comments and and
+um
+you know either someone can interrupt
+during or after with questions i'm happy
+to do it either way
+all right so let's talk about um
+understanding um what can go right or
+wrong when you're when you're trying to
+couple um machine learning methodologies
+and scientific methodology and let's use
+these physics and form neural networks
+just as an example
+um
+so physics and foreign neural networks
+um are class of models carnegie doctors
+and others have developed that it's it's
+a nice very nice sort of hello world way
+to do a range of things
+and they've done a lot of work there and
+and i i sort of like them because um you
+know i don't it's not the final word and
+for some things you want to do other
+stuff but but it was a nice sort of
+let's call it hydrogen atom for us to
+sort of look at
+how ml methods and physical methods sort
+of might couple together
+so the usual approach in machine
+learning think think ridge regression if
+you want to do that is sort of given on
+the right here you have an optimization
+i want to minimize least squares or some
+loss and maybe i have a constraint it's
+an l1 or it's an l2 you know it's a
+ridge regression or a lasso constraint
+so i optimize f plus lambda g and make
+it a soft constraint i might it could be
+a hard constraint minimize f such that g
+is is equal to some value or less than
+equal to some value but the way it works
+in machine learning is you you take that
+hard constraint you relate it with a
+soft constraint with this lagrange dual
+mechanism and so you've been basically
+minimize f plus lambda g
+so the the physics inform the pin
+approach does something different you
+have a bunch of data points
+and i want to minimize the loss on those
+data points
+but then rather than using an l1 or an
+l2 ball the constraint is basically a
+linear differential operator i mean on
+the left i have a particular example
+berger's equations for fluid flow but
+you have a linear operator and so it's a
+differential operator and so let's just
+use that as the physical insight the
+domain inside and tack that operator on
+as your constraint g although here i'm
+using the letters l plus lambda f so
+um minimize bunch of data points subject
+to a constraint that's given by the
+physics
+now the question that comes from this
+form i mean so you're not going to
+status neither of those are going to be
+zero exactly so you're already in the
+lagrange dual and optimizing this
+approximately
+now um the usual interpretation of this
+as well there's a trade-off you know if
+lambdas 1 or 0.1 or 10 you know these
+two terms one matters more or less the
+fact that there's a lambda here i mean
+people might say well i could set it to
+be zero or non-zero
+um
+as long as i stay away from zero
+infinity i can put lambda before this or
+i could put lambda before this and i
+think in a lot of people's mind the
+data's primary minimizing the loss and
+tack on the the second term as sort of a
+prior bias in yourself towards you know
+small norm balls or in this case physics
+in a lot of physical applications i
+think it's sort of reversed and this
+constraint the physical thing the
+structure the pde matters more and so
+you really should think of the lambda as
+being over here now of course it doesn't
+matter if you think of lambda as
+permitting it to be zero or infinite but
+um when it's the problem set up and then
+if you call black box code
+um you can get very different results in
+those two cases
+so what the pin approach does is adopt
+sort of an ml methodology now the first
+thing to know for machine learning is
+that um
+there's a range of typically stochastic
+optimizers first order stochastic
+optimizer stochastic gradient descent
+now vanilla stochastic gradient descent
+doesn't do so well
+and so you get a range of variants of it
+there's um sgd with momentum there's
+atom there's attagrad
+just a whole zoo of methods and
+they all have hyper parameters
+and it turns out that in you know the
+best variant of sgd for computer vision
+it's different than the best variant of
+sgd
+or natural language processing is
+different than the best variant of sgd
+for recommendation systems
+and it's also different than what what
+people would use in pins i mean in pins
+often as people would use lbfgs or
+something like that that's not what's
+used in those other areas and so even
+the stochastic optimizer itself
+um
+becomes a hyper parameter to fiddle with
+and so the question we wanted to ask is
+sort of how does this behave if you call
+any of a range of optimizers with an ml
+methodology and so
+um the long story short is we see that
+this method will work pretty well for
+nice values of these various physical
+parameters and they'll break pretty
+quickly for not nice now you could
+criticize us and say well you should use
+atom prime or atom coupled with lbfgs
+coupled with something else i think the
+qualitative points we'll be talking
+about about lost landscapes and and um
+and the details the optimization would
+hold true i mean future work i mean
+prove that right or wrong but i think
+that'll that when the dust settles
+that'll be right
+and and the lesson here is you need to
+go beyond that vanilla coupling to
+extract insight from scientific problems
+so this is the tldr and i'll walk you
+through a range of examples on some
+slides so we investigated pins and we
+looked at a range of common problems
+convection reaction reaction diffusion
+and um
+and from the ml perspective they're all
+the same they're just some pde that we
+want to deal with right of course
+scientifically they're very different so
+the question is you know we want to
+combine in a principled way the two
+areas
+and so we want to get a little bit
+beyond just the vanilla cut and paste
+but but we also want to do it in a way
+that from the ml side these views them
+as sort of um
+physical things as opposed to the
+universe of other things that it could
+be which is you know natural language or
+whatever so a bunch of work here on pins
+a lot of nice work that sort of informed
+what we're doing we're going to
+investigate these three i'll walk
+through one in a little bit more detail
+on the other two in a little bit less
+detail so let's say we want to learn
+convection with pins we have the
+differential equation up here beta is
+the the convection parameter in this
+particular case you have a nice clean
+analytical solution we're going to be
+able to compare against we have initial
+conditions in periodic boundary
+conditions so the loss that i had a few
+slides back takes this form we have a
+loss which is you know a sum of squares
+plus
+lambda which is a lagrange parameter
+plus call it l sub b which is an l2 for
+the you know boundary conditions and
+initial conditions so we're not
+satisfying this in a hard way we're
+satisfying a soft way and now let's call
+this with some some optimizer and um
+we've interacted with with
+pin people they say we'll do this
+particular protocol with adam and lbfjs
+we didn't know it at the time we
+our code's publicly available so do a
+git poll if you want to compare against
+this we we compared with what we could
+um in terms of what was available and
+and what we saw is roughly the following
+um
+the quantitative values will change
+depending i think on the specific
+optimize you have the qualitative points
+i think will be robust to this
+um at low speeds at low values of the
+beta parameter the pin learns a good
+model so on the on the left here we have
+the the error between the computed
+solution and the correct solution
+um
+for this convection problem and as a
+function of beta you see that error it's
+not zero it's actually ten to the minus
+three or something so it's not great and
+this a lot of these methods seem to
+peter out at ten to the minus three or
+ten to the minus four for reasons i
+think that are probably partially
+understood
+and as beta gets larger it gets worse
+and at some point it sort of chokes and
+there's a sharp transition
+and um
+the exact solution on the right is shown
+um for bait equals 30 where you're in
+this regime after it's choked and the
+predicted pin solution so you get
+something very
+at early times it satisfies the boundary
+conditions right you see here the bottom
+matches up to the top
+but um beyond that if you have a you
+have basically a problem propagating the
+information
+all right
+um so beta equals 10 before you have
+that problem you get perfect you know
+basically perfect resolution
+reconstruction this looks sort of bad
+but but look at the scale of the y-axis
+on this difference it's a couple orders
+of magnitude less than the second third
+row so so basically the eyeball test
+says the predicted and exact solutions
+are the same beta equals 50 beta equals
+70 it gets gets much worse very quickly
+um
+all right learning reaction you see the
+same thing it's a different differential
+operator
+uh periodic boundary conditions initial
+conditions loss function of the same
+form for small values of rho it's not
+paid it's a different it's a different
+physical parameter if you're less than
+10 to the zero we should probably have
+the larger range of row here but if
+you're less than 10 to the zero less
+than one um you know the quality is a
+little bit worse than you saw before but
+down at just above 10 to the minus 2 and
+then it chokes and has a problem once
+you get up above
+10 or something
+training a pin is going to be sensitive
+to the initial value the exact solutions
+on the left the predictive solutions on
+the right here's for row equals 5 or 10
+which is in that regime where you have
+problems
+you know if you're depending on the
+resolution to screen and your eyeballs
+you know you get something here so it's
+not it's not all purple but
+it quickly degrades
+um reaction diffusion same sort of
+situation here you have a new in a row
+parameter but the same sort of set up
+initial conditions periodic conditions
+loss function of the same sort of form
+and um similarly
+exact solution predicted pin solution
+you just have you know in this case you
+actually do propagate the middle region
+through in time
+we could be better or worse if we vary
+those parameters but but it
+fails to learn sort of the the full
+physics in some sense now this is not an
+expressivity problem the network can
+learn this um this is a issue about the
+optimizer and so the point is you can
+say well you should use this optimizer
+that optimizer i think in ml there's not
+a there's not good theory to guide why
+different optimizers perform people
+typically we use stochastic first order
+methods there's lots and lots of papers
+having theory that having to do with how
+these methods converge in nice convex
+problems very very little that really
+provides qualitative or quantitative
+insight
+into how different versions of
+stochastic optimization methods would
+perform on realistic cv nlp
+recommendation systems scientific ml i
+mean sort of problems i think this is a
+nice sort of open
+class of problems on the ml side
+so challenges with pins we started a
+bunch of basic things
+we saw that coupling these things
+together
+in ways that would be very natural for
+an ml problem had very
+um very sort of immediate choke points
+and and so there's failure modes and the
+failure modes is i mean
+i don't want to say we couldn't have
+done better on the on the pin problem
+itself we can and and you know others
+have in subsequent work to these papers
+what i want to say is that when viewed
+from the perspective the ml methodology
+there's these natural failure modes that
+that the two sort of approaches don't
+impedance match well so i'm gonna i'm
+gonna provide some evidence having to do
+it that this has to do with the form of
+the differential operator
+and then i want to um provide sort of
+two ways to quote solve this problem
+that i think if you're in machine
+learning you'll say yeah that makes
+sense because that's a learning paradigm
+i can appeal to if you're on the science
+side you'll say yeah that's trivial
+that's what i would do anyway
+which again gets to the comment i made
+before that the standards of these areas
+are sort of very different
+so um
+if you look at the lost landscape via
+say the hessian you know the second
+eigenvalues
+um if you look at the lost landscape
+what we see is something that's sort of
+rather unusual from an ml perspective
+from an ml perspective if you add more
+regularization the lost landscape
+typically gets nicer and flatter and
+what we see here is that that's not the
+case if we add more regularization and
+we see it very strongly as a function of
+this beta parameter let's say the
+physical parameter
+that um we either learn or don't learn
+as we change that what we see is that
+the landscape becomes
+much
+choppier
+and the scale of the y-axis the scale of
+the
+non-niceness
+gets much uh much worse
+and so we're adding this this with a
+range of other things that i'm not going
+to have a chance to get into i think is
+arising because we're we're calling a
+black box ml method to solve this
+and the usual thought is that these
+regularizers are nice convex balls and
+that's not what's going on here what's
+going on here is that these are
+differential operators that will have a
+non-trivial null space and a range of
+other things like that and so solving
+the problem exactly quote exactly
+or with a reasonably high quality method
+like lbfgs versus solving the problem
+approximately with a lagrange dual and
+stochastic optimization
+um is is just very different they're
+just very different
+and so i think what the state of the art
+and pins now would do is run a
+stochastic first order method like atom
+it's sort of like a temperature
+annealing and then run lb fgs and so
+they're they're doing sort of an explore
+phase and an exploit phase
+which is consistent with what we're
+talking about here but here um as you
+add more regularization um and a lot of
+times the lost landscapes gets worse and
+i think that's because probably the
+non-trivial null space so open question
+how to come up with better stochastic
+optimization algorithms for constrained
+optimization dealing with non-trivial
+null spaces that's sort of a nice sort
+of question raised by this work
+um and so you see that um
+similarly as if that was a function of
+beta this is a function of uh
+was there a question
+all right
+what's your question i don't know okay
+you can go on
+so now you know what do you do with this
+and and in machine learning off
+sometimes the people complain that
+machine learners sort of
+do an old thing and just give it a new
+name and then some truth to that and
+some not truth to that so let's leave i
+want to leave that discussion aside for
+a second but there's two approaches that
+would be natural in machine learning and
+one's going to be called curriculum
+regularization and one's going to be
+called sequence to sequence learning
+curriculum regulation roughly says start
+training the neural network with a
+simple ode or pde and then make it
+problem harder so choose a nice value of
+the beta parameter and then increase it
+you know show the problem um
+nice data and then gradually make the
+data worse sequence to sequence learning
+is instead of predicting the entire
+state space
+you know start at the left and march to
+the right
+i think both of these things are sort of
+the obvious thing from a scientific
+perspective and so you might say oh
+that's not so interesting
+interesting thing here is that
+um
+a an approach in machine learning to get
+good inference to get good
+generalization is to do empirical risk
+minimization
+you know minimize error on the data
+points and if your model class isn't too
+bad et cetera et cetera you get good
+inference that's sort of bread and
+butter machine learning theory that's
+not what neural networks are doing
+because the back prop step damages that
+but but you know you can do that so then
+if you're doing machine learning neural
+networks because the back prop step can
+you get good generalization so there's a
+lot of work on that
+these are sort of column learning
+paradigms they're ways to frame a
+problem such that if you if you
+interrogate the data in a certain way
+you might get certain inferential
+guarantees
+now you might say oh this is the obvious
+thing to do from a scientific
+perspective but getting that right for
+machine learning and
+statistical learning theory is rather
+non-trivial and so informally you can
+think of curriculum regularization as a
+little like simulated annealing except
+you're not changing a temperature
+parameter you're changing the physical
+parameter to make the data easy to hard
+but this is a hard thing for machine
+learning to deal with because now you're
+having a change in the distribution of
+the data and a lot of the theory doesn't
+deal with that so well so
+these two approaches are
+nice
+you know open questions quantum machine
+learning here and i think um
+if if scientific machine learners engage
+this more aggressively rather than less
+aggressive they would inform how machine
+learners frame their questions to be
+more useful for scientific nl problems
+so um if you do both of these the method
+does better so curriculum regularization
+here's the beta parameter you start with
+easy values and anneal up to the harder
+values um you know you go from the left
+to the right so if you do this um you do
+you do better so the networks have the
+capacity to learn this and if you anneal
+the quality of the data analogously to a
+simulated annealing but now you're
+basically annealing the quality of the
+data um you can you can get good results
+in the convection problem similarly for
+the other problems here's some numbers
+to justify that um similarly in the
+reaction case you can go from the plot
+we had before where it's basically all
+purple here the quality is a little less
+good and there's some non-trivial
+structure that we're trying to
+understand but basically you can learn
+this
+um
+um on the bottom right which is roughly
+what we had we some of the curvature
+properties of this are a little bit
+different but um you know you get the
+sort of course properties right um the
+lost landscape one thing that was
+interesting here that we didn't expect
+is um the scale of the y-axis stayed
+similar
+meaning that's a function of beta
+but the choppiness got much nicer
+meaning meaning that it as we annealed
+this the choppiness of the landscape got
+better even if the scale of the y-axis
+got better and so this has i think um
+interesting implications for learning
+from non-trivially structured and
+non-convex regularizers namely for
+example differential operators of these
+non-trivial null spaces
+if you do the sequence for sequence
+learning roughly you march from left to
+right rather than learning the whole
+state space you march from left to right
+and you go from the middle to the right
+which is a much better approximation of
+the left than the middle clearly
+um here's some numbers to justify that
+these are the papers this is actually
+the first pin paper it's going to appear
+in the nurbs which is the top ml venue
+next month this is actually the first
+pinned paper on machine learning
+uh in in a in a machine learning venue
+all right so i think pins is a nice
+example of things in general but it's a
+very simple setup to begin to ask how we
+can bridge the gap between scientific
+models and and machine learning models
+and i think we just identified a number
+of failure points that were interesting
+on the ml side um you might say oh this
+is trivial scientifically because i
+would have done this otherwise but um
+but vice versa this is things that the
+ml people think are trivial that um
+scientists spend a lot of time on so i
+think coming up with principled ways to
+bridge that gap this is an example of
+how to do that and i think we opened up
+a bunch of interesting questions that
+we're following up with
+both on the ml side and on the
+scientific side
+all right so i'm not going to go into
+those follow-ups because i want to give
+you another example of this
+and
+any other failure modes and here's one
+that i think is particularly interesting
+and maybe relevant for a lot of people
+who work on
+pdes of various forms in particular
+um
+let's say we want to learn people talk
+about learning physics learning f equals
+m a and learning i mean what does that
+even mean
+um what does it mean to learn a
+continuous model from discrete data so
+the intuition might be geez you know i
+have a lot of points i just discretized
+very finely and you see obviously that
+curve is sort of smooth and so it's sort
+of approximately continuous but
+probably a lot of you know there's a lot
+of mathematical subtleties there
+and people in scientific computing and
+numerical analysis spend a lot of time
+worrying about it so what does it mean
+for a discrete model to approximate a
+continuous model
+so let's go into that so continuous
+in-depth neural networks so we're going
+to this is going to be
+a structured class of models um that's
+gotten a lot of attention in ml where
+you can vary a depth parameter and in
+the setup we have we're going to be
+learning dynamical systems and you
+should think of this as
+a one over time parameter all right
+so resonance are a class of models that
+have gotten a lot of attention um
+machine learning for certain problems
+um and roughly what they do is the
+following you have a state at um time
+call it time t or depth t
+that's x of t and i want to go to x of t
+plus one and this edge means that in the
+model i have a link between these two
+states
+um and so t plus one might be the same
+as t t but i also learned some
+difference you know the future state is
+the current state plus some difference
+and call that a residual unit there may
+be stuff going on here that we don't do
+or don't understand um but
+it's something um
+so recent work has pointed out that the
+structure of this if you would write
+this picture as an equation this is x of
+t plus one is equal to x of t
+plus a residual
+and if you slip a delta t in here
+and they don't make it one but make it
+delta t that's going to be important we
+get to you know it looks a little like a
+different discretization of a
+differential equation
+so um can we slip that delta t in here
+is this syntactic form enough
+um and the spoiler alerts that it's it's
+not no it's it's not going to be like so
+we want to do is to come up with a
+meaningful way to think about these sort
+of continuous problems
+so what does it even mean to learn that
+when we say resonance learn forward or
+representation of a dynamical system
+that was an euler discretization
+um
+so one way to answer it is you know can
+sort of have a situation where a
+dynamical system is meaningful
+so let's look at a few sort of hello
+world versions of that and see if it is
+is meaningful
+um
+what you should note is that we're doing
+something very different than what's
+typically done in scientific computing
+and numerical analysis right there
+you start with something continuous i
+want to integrate sine of x from zero to
+pi
+i discretize it in a bunch of pieces and
+then i do the trapezoid rule or whatever
+and i add up the pieces and i get you
+know whatever the integral of sine of x
+from zero to pi is
+um
+and if i cut my trapezoid steps a little
+bit smaller you know i might get a
+better result maybe i shouldn't use
+trapezoid i should use a higher order
+integrator because i can get the same
+quality with a smaller number of
+function evaluations that's a very
+typical thing
+and so what you're doing is you're
+quantifying the extent to which this
+discrete thing is close to the
+continuous thing by a sequence of models
+and you say they get sort of better as
+delta t gets smaller
+um we're really going the other
+direction we have a discrete thing and
+we want to say are you learning the
+continuous thing now there may or may
+not be a continuous thing here right i
+mean i could be doing a pde
+but if i'm applying resonance it could
+be classifying images into cats and dogs
+right so
+this continuous thing might be a
+physical differential equation we want
+to learn
+it might just be that we want to say
+we're near a continuous model
+because that might provide sort of
+capacity control
+in in the machine learning sense of the
+word and be a good model even if there's
+not really a continuous model under the
+hood so really going in the other
+direction i want to keep that sort of in
+mind
+so let's say we have a dynamical system
+we're going to we're going to study that
+and we're going to be um
+learning basically a a residual that
+says the future is now plus an update
+and so we're going to study a training
+um
+such that um
+such that the x of t
+plus one or x of t plus delta t is some
+function that is the original delta t
+plus some difference g let's call it and
+think of this as a numerical method on g
+and so numerical integrators will
+approximate the integral with a discrete
+series of applications of this we have
+some scheme and so we're going to try
+and do something analogous
+so the point here is going to be the
+syntactic similarity just the sort of
+syntactic similarity of the euler
+discretization really is not enough
+um
+to say that that this particular
+discrete model is a meaningful
+approximation of the continuous thing
+um
+in numerical analysis and we're going to
+apply
+those ideas to come up with um basically
+a convergence test a convergence test
+for a sequence of machine learning
+models to say that these models are
+meaningfully learning a continuous model
+so for a given integrator let's say that
+we cut delta t
+in half or quarter or eighth which might
+mean double the number of layers or
+increase the number of layers so it's
+basically a notion of time step
+refinement the error should go to zero
+if you're going to learn something
+meaningfully continuous the error should
+go to zero as you get more continuous as
+the discrete thing becomes more
+closer approximation to a continuous
+thing in the sense of this this time
+step refinement um in addition you know
+one
+integrator a model a
+may be better than model b if the rate
+of convergence is faster
+and so um
+you know the same dx dt with different
+integrators that should be able to
+substitute different integrators and
+they should approach the same solution
+at their respective rates for example so
+we can verify these things using a
+convergence test um and so these these
+these the idea of these convergence
+tests is critical for a lot of numerical
+integration schemes in pdes and
+elsewhere and so we're applying it in in
+machine learning in a sense
+so does do resnet units um satisfy these
+properties if yes then we should be able
+to take a sequence of models and alter
+them in very particular ways and see
+them get better and worse in very
+particular ways
+if no then the model should just behave
+in some way that doesn't respect the
+continuity properties which is very
+different all right so here's what we're
+going to do run it run a set of
+experiments make a data set with one
+delta t
+delta t is one right you know it's
+whatever it is we're going to train
+three models
+using g um
+and and and then we're going to freeze g
+and perform that convergence test
+and the hypothesis is that a b and c the
+things we had on the previous page
+should hold so they either will hold or
+they won't hold
+so the three models are going to be
+forward euler the thing we had before
+midpoint which is sort of euler plus
+plus you do it a two-step version of it
+if you're familiar with midpoint you
+know what it is and if not it's a
+slightly more complicated a numerical
+integration scheme which we could
+instantiate in the model where the
+residual block has some internal
+structure that is a couple residual
+blocks with with certain weights
+and we can also go to rk4 which is yet a
+better numerical integrator but in
+certain senses where you have a slightly
+more complicated residual block so you
+know we have a bunch of residual blocks
+that talk to each other in a certain way
+and i'll have a picture that we'll put
+up like this
+and so we'll work
+in one case um
+for ground truth or we have an
+analytical solution another case we'll
+look at some error and i'll show you
+something but um
+for the simple first case let's look at
+where we have a ground truth solution
+so let's train the models they all
+perform well um and so there's a ground
+truth which is in blue there's a
+numerical euler an orange which does
+well but then it diverges meaning just
+numerical analysis of euler and then
+there's the learned model with the ml
+protocol i just gave you with euler and
+rk4 and green and red and they're right
+on top of the blue you can't see a
+difference
+um
+what you see here on the right is that
+um
+well this is two different this is this
+space and a position but but you see in
+both cases the oil gets worse but then
+the ml models do sort of very well there
+in both cases all right
+so now let's
+let's um
+oops
+let's look at um what if we cut delta t
+in half if we cut delta t in half which
+is the orange gets better the orange is
+the numerical version of euler so the
+numerical analysis method gets better
+but what you see is the green remember
+the green here is the ode oil the
+learned neural network the ode gets
+worse the ode model the ode net model
+gets worse
+um the rk-4 doesn't if we go out longer
+it may but for right here so this is
+already a warning sign that
+the numerical method's performing as it
+should the ml method's not let's go
+beyond sort of one point estimate so
+look at the plot on the left so um
+what you see here is is in red
+when i train at delta t equals zero or
+the delta t equals uh is ten to the zero
+one
+um and then i apply the model at a half
+a quarter in eighth and sixteenth two
+four six eight
+what you see is that the quality this is
+log scale on both axes the quality of
+the model is pretty good at one so it's
+a good discrete model the error is
+pretty small
+but if you apply it at different delta
+t's it just totally chokes this is this
+egregious sort of failure mode where it
+doesn't pass the convergence test at all
+so it really really is not a meaningful
+discrete approximation to anything
+continuous it's a good discrete model
+but not good continuous model if you
+apply it to midpoint or rk-4 the model
+gets better
+sort of gradually as as you get more
+time steps going from the left to the
+right is smaller delta t
+deeper depth
+there's two very different slopes and
+and before it sort of levels off
+midpoint in rk for you get roughly the
+expected slopes after that it sort of
+levels off where this level's off
+depends on the noise properties of the
+data and a range of other things
+um the plot on the right shows swapping
+between integrators let me just not get
+into that but you see sort of similar
+trend so the point here is that
+euler chokes is a good discrete model
+but not a good continuous one you can
+easily see this by checking the
+convergence
+test that we put forward midpoint and
+rk4 are better
+um
+and um i'll say a little bit more
+the the the main contribution here is
+the is the is the uh methodology to
+evaluate convergence tests because we
+have examples where euler's fine or
+midpoint can choke so there's some other
+it's not it's not just that oil is bad
+midpoint's good it's but you know we can
+we can test and we can see
+sometimes oil is fine sometimes
+midpoints not so the results show that
+um
+the usual methodology and machine
+learning which is evaluating training
+and testing curves um does not yield
+in general
+models that are meaningfully continuous
+and so if you're trying to do scientific
+machine learning that's a problem maybe
+if you're doing regular machine learning
+that's a problem too and i'll have an
+illustration of that
+um having a peek illustrates that
+essentially the model is overfitting the
+discretization of that time step and so
+i think there's a lot of work here to be
+done to to evaluate sort of model
+qualities that you want to be continuous
+in space and time or space or time
+um and and you know you're gonna if if
+you can you can use that to develop
+models or you can use this this approach
+we have as a diagnostic to assess if the
+model's over fit to that temporal time
+step
+here's a picture to illustrate the
+continuous in depth there's some basis
+functions and we have some extensions um
+so i think this this is a tip of a nice
+iceberg let's say that we don't care
+about scientific mission i really just
+want to classify cats and dogs
+and i want to do it on a cell phone and
+i and you have a different cell phone
+than me so you have more memory than me
+and i'm a cloud provider and i just want
+to train a huge model but i don't want
+to train a model for every version of a
+cell phone that comes out and the point
+is for every version of a different
+memory structure right i want i might
+want models
+that behave gracefully as a function of
+memory size of the constrained model
+so can we use this idea and the answer
+is going to be yes so the plot here i
+have is roughly the same plot i had
+before
+except the the plot before has log log
+scale and delta t it's it's the way
+scientific computing people i think
+would present the that sort of problem
+this is the way ml people would present
+it um there's there's a depth parameter
+so this is not time but it's really one
+over delta t so it's a depth parameter
+numbers a layer in your model there's a
+test error they have a training a test
+set this is a test errors but this is
+the analog of that plot and so you can
+now apply this on c far 10 which is
+which is an image data set that's of
+interest in machine learning and what
+you see is that if you use the euler
+method we use that fails that continuity
+test so here this is images there's no
+no continuous model under the hood but
+we're hypothesizing it we're saying i
+want to work within a class of
+continuous models you know euler does
+better does better boom it does very
+well at depth 32 and then it gets worse
+and gets better and gets worse and gets
+better it's all over the place whereas
+if you use the rk4 version it gets
+better better and then flattens out and
+so you know if i want to give you a
+model and i want to behave gracefully as
+a function of depth and i want to be
+good good good good oops and then um
+good good good and then maybe if i get
+down to depth 16 or 12 or something get
+gradually worse but not totally choke i
+could do that by working with a
+continuous model so using this
+methodology so i think this is an
+example that if scientific ml people
+don't engage ml people more generally ml
+people just do their own thing but even
+just for an ml metric
+the idea that we got from looking at
+continuous nets useful just you know
+even for classifying cats and dogs
+so um we've applied this in a bunch of
+other scientific ml settings um and and
+as i said it's not just that oil are
+good
+oil or bad rk for good we have a sense
+of how this behaves for different
+differential operators and more complex
+problems and so a lot of this is sort of
+work in progress that we're looking at
+and let me just sort of in there sort of
+time skip over that but just mention
+that
+um we have some other examples of how
+that will perform on on
+other types of sort of
+continuous models that are more
+complicated than that um relatively
+simple one we put up
+so in the last couple of minutes i just
+wanted to mention some other related
+developments so what we have is two
+examples of where a i think a
+straightforward coupling of scientific
+methods and machine learning methods
+um
+has failure points and then you know how
+to address those failure points in ways
+that are that are non-trivial for ml
+methodology but also will yield to
+better results um in terms of
+the scientific
+methodology um so here let me talk about
+spatial and
+sorry temporal modeling sequential
+modeling and time really doesn't appear
+much in machine learning theory to first
+order into second order there's been
+some work and just to put up a few
+things so
+rnns are a class of models that um
+deal with with
+sequential data in a certain way
+could be time
+could be dna sequences but where there's
+something that's plausibly a quote time
+series you can view rnns as a dynamical
+system whose temporal evolutions are
+governed by a certain set of
+differential equations there's a hidden
+state h there's a sigma which is some
+non-linearity there's a matrix that you
+know couples hidden to hidden there's a
+hidden to non-hidden
+um an offset a lot of machine learning
+people spend a lot of time talking about
+the sigma this b
+if you're familiar with scientific
+problems this is like saying should i is
+as leonard jones i told you i didn't did
+water way back when is leonard jones the
+12 6 potential
+that in the early days you know you
+could compute a distance squared if
+you're cubed and computing the square
+root is very hard if you cube that
+distance squared you get the sixth term
+and if you square that you get the 12
+term why don't you use a uh
+you know a a 10 6 a 9 6 a 9 5 and a half
+and you do it because you're modeling
+this for computational reasons this is
+like saying a lot of what ml people do
+is to spend time should i worry worrying
+about the details of it is it twelve six
+or nine six so that's sort of like what
+this b and the sigma are doing if you're
+not familiar with that it's a sort of
+weed level detail of the model that
+sometimes are made for computational
+reasons and sometimes make a big
+difference scientifically
+so we have a version of a continuous
+time recurrent unit that describes a
+hidden state evolution there's a well
+understood linear component plus a
+lipschitz non-linearity lipschitz is is
+a way to quantify niceness
+and the goal here was to do as well as
+state of the art on training and test
+curves which is what ml people care
+about but really get a more robust model
+and so the long story short is these
+numbers will justify the former claim
+it's it's good compared to state of the
+art but i think the more interesting
+thing
+in general but also for scientific ml is
+the this because this the form of this
+um you're really robust with respect to
+a range of input perturbations some
+random and some sort of adversarial and
+i think that is very different than a
+lot of the way ml theory and practice is
+set up but it's an increasingly
+important thing just on the ml side but
+it's critical on the scientific ml side
+um we followed it up with sort of a
+noisy rnn which said can we fold can we
+use ideas from stochastic differential
+equations and and and fold a little bit
+of noise into the training process so a
+lot of people add noise to the data and
+and so on we did it in a very particular
+way
+um where we could view noise injection
+as a stochastic learning strategy to
+improve the robustness
+and so i'm not going to sort of go into
+the details but it's a similar set of
+setup in terms of the form of the model
+and we're able to do that and apply it
+to a range of things this is some
+numbers and a picture to justify that
+how it performs well on the on on
+electrocardiogram application
+um theorem
+the noise injection is sort of
+implicitly giving you a statistical
+regularization
+we have other results where that theorem
+is made in a stronger context this is
+actually a more complicated model and so
+we do it in sort of a leading order
+taylor series expansion context
+so um the noise injection the way we did
+it you're you're exactly optimizing a
+regularized version of the functional of
+interest and so that manifests itself
+that you actually get nicer results
+a more robust model
+not necessarily on the training of
+testing data that's that's the the error
+numbers in this table but if you were to
+do this in sort of model space and
+perturb it so it's more robust in model
+space
+um
+something else sort of long expressive
+memory um go from sort of two time
+scales to multiple time scales and so a
+simple version of an ode is a two scale
+od is given in 21 if you're familiar
+with this good if not it's it's it's an
+ode with sort of two characteristic time
+scales fast variables and slow variables
+um
+solving stiff od is as hard as you know
+probably um you can generalize this to a
+multi-scale version and and we have that
+and and you can learn sort of on long
+time scale long time scale sequences so
+these are just things we have in the
+pipeline
+let me wrap up i think the the grand
+challenge here is we want to combine
+data driven models and scientific models
+in a way that's interesting um
+principled for machine learners and for
+scientists and um
+if you're if you're interested in this i
+think this is a nice sort of initial
+example of how to do that and i think
+it's the tip of a big iceberg there's a
+lot more work to be done
+um and and if you're not a a um i mean i
+work at you know lbl also on this
+projects there and as i said sometimes
+the way i try and frame it is you know
+what can you do for me and even if i'm
+interested in what you're doing i think
+asking that question is useful because
+um scientists sometimes say they want to
+just solve scientific problems and
+machine learning is just a tool and if
+you treat it like a tool machine
+learners will walk away and
+do nlp or cv or something if you try and
+engage them there are non-trivial
+problems that if you solve in your
+scientific context will be useful for
+them and they will find interesting
+whether it's example of the of the cfar
+or those other examples
+and so if you want to get ml methodology
+and and
+strong domain driven models sort of
+cooked into um
+ml methodology in a more integrated way
+i'd encourage you to you know use this
+as an example and extend it but but try
+and meet machine learners halfway and
+don't just say you know how can you
+solve my problem but how can we get sort
+of
+that's not how numerical analysis and
+scientific computing evolved right you
+really had to get into the weeds of the
+computer and the architecture and when
+you had a good two-way discussion there
+you had
+real advances on the science as well as
+sort of on the um the non-scientific
+aspects the mathematical aspects so i
+think um we're in a similar situation
+here
+and so hopefully um
+hopefully this is how things will evolve
+so thanks a lot um for your attention
+and if there's any questions i'll be
+glad to
+stay around and answer them for a bit
+thank you thank you so much michael for
+the great talk it was very interesting
+um okay let's have a q and a session
+there's no
+question in the chat room so
+admit yourself if you have questions
+so
+my my brief question on page 18
+if you go back
+[Music]
+you nicely draw the the graph of the
+lost functions
+with epsilon 1 and epsilon 2.
+and i was wondering
+what are those epsilon 1 and epsilon 2
+there's a couple different things these
+could be random axes that lead to
+eigenvalues of a hessian for instance
+you get you get stronger results if you
+look at the light at the lead two
+eigenvalues of a hessian
+we're looking at a million dimensional
+loss landscape and two or if if we try
+three dimensions so there's no perfect
+way to do this so i don't want the
+picture to be approved so there's a
+bunch of evidence this is sort of a
+proof by picture but this is choose
+you know either random or in this case
+you know
+um
+axes that that are stochastic estimates
+of the lead axis of the hessian
+got it
+okay
+so you you chose like the first one or
+two first of all
+two uh the eigen values and yeah and so
+as we have code at a hessian and pi
+hessian to do a range of hessian based
+uh
+methods and so you know if you're
+interested in these sort of
+hessian-based methods you know we can do
+training
+in two times backdrop timeless with
+randomized linear algebra variants of
+hessians so this is these are stochastic
+estimates of the top eigenvalues eigen
+directions of that
+i see got it oh that's very nicely okay
+we have a question from
+emmanuel he asked um thank you for the
+nice talk curiosity
+do you think it is possible to
+instead of using a new term in the loss
+function
+include physics as a as an equation to
+be respected between layers of a neural
+network
+um
+[Music]
+yes
+um
+[Music]
+people like to include it in a loss
+because then
+then you're dealing you're optimizing a
+loss but one of the i mean one of the
+big
+changes in ml
+in the last 10 years whatever is it used
+to be the case that people would say do
+a lot of feature engineering and then
+call a method
+decision trees or ensemble or kernels or
+whatever
+um
+and people shifted to saying well you
+know design architectures and give
+yourself lots of parameters and and let
+the features sort of pop out so you're
+shifting it from feature engineering to
+architecture engineering
+so um
+my interpretation of the question i
+guess is
+um
+can you include include layers
+that
+are more
+domain driven or physics driven i mean
+in some ways that's what convolutions
+are doing they're saying if if you have
+an image there's some local geometry so
+smudge over that and in some ways that's
+what um
+what rnns and subsequent developments to
+rnns and then attention modules and
+transformers are doing in nlp they're
+trying to
+capture the sequential ordering of
+language
+um and so
+question can you do that in sort of a
+more fine-grained way
+um
+knowing that that i have a differential
+operator that's a parabolic or
+hyperbolic operator and cook that into
+the individual layers or something um
+i think the answer is yes i mean a
+different thing you could say as i know
+that i have strong symmetry properties
+and so cook that into the into the
+layers so i think that's the answer
+that's yes also i mean so for bot and
+some people at lbl had some nice results
+where they were doing
+something that sounds like like that
+from state of the art climate modeling
+and you know they needed to use these
+attention and convolutional models but
+not off the shelf they needed to really
+tailor it to the
+to the science and and got some
+non-trivial successes there so i think
+that's a nice uh direction i mean i
+think how those architectural changes
+couple with the optimizers is still a
+good question because if you make those
+changes you might flatten gradients and
+introduce other problems but but the
+short answer is yeah i think so
+great emma emmanuel um he did thumbs up
+so
+[Music]
+that's great is there any other
+questions so you can unmute yourself and
+ask questions
+i really like the the talk um the the
+talk you gave um in a way that
+i mean it's you're introducing some way
+of looking at some perspective of
+looking at the ml and uh
+you know physical science um together
+you know bringing the um the classical
+numerical conversion study
+or some continuation method applying the
+continuous method in the
+main
+optimization
+of the training of the neural net
+so i really like that um yeah i think
+that's a good direction and one that's
+sort of well suited
+i mean it's in general but in particular
+if you think about these things from the
+problem of scientific machine learning
+right right
+uh i had one question uh
+as you talk about uh where you talked on
+some differences between the methods and
+the kinds of models and the approach
+from a machine learning side versus a
+scientific side
+um
+of course there's some real differences
+in the types of models that both kind of
+approaches develop um one's more focused
+on creating
+a model that can be run by a computer
+and the other is more of a what can i
+publish and study and understand the
+theory behind do you have suggestions or
+thoughts on the role of machine learning
+as maybe fitting somewhere else in our
+process
+to help us identify or come up and think
+about new theories or where there's
+correlations and concepts that we may
+not be intuiting without the machine
+learning approach
+um
+so i'm not sure exactly what you're
+asking
+but let me give an answer to something
+that might be that or by analogy or
+something i mean i think
+it sounds like you're saying you know
+you're sitting on the science side and
+you're saying how should i look at this
+and how can i
+do something interesting or useful with
+this right and i think that's that's a
+fair question and i mean an analogy i
+mean is
+who cares about scientific computing and
+optimization and numerical analysis
+right
+you know but but having a a fixed
+infrastructure of support for those sort
+of things
+and people who self-identify as doing
+numerical analysis or scientific
+computing
+um
+and and having them talk to you and and
+say i want to publish in my own area
+because i like this is what i like but
+but you know i'm going to be informed by
+your problems you never really get a
+feedback loop right and so then they ask
+questions that would be different than
+if they didn't talk to you so it's hard
+to say exactly and and and then you get
+i mean computers are done more
+do a lot more these days than invert 10
+by 10 matrices which was the big use
+case in 1940 or 50 or whenever right so
+it's hard to know what developments will
+happen but i think um
+having that sort of in the process
+you know is sort of a critical for
+feedback loop i mean i think there's
+just a lot of scientific questions that
+people would ask of the methods that
+people tend not to ask in in
+machine learning venues where you don't
+have that feedback loop
+and i think that you know that's that's
+um a hard
+sort of a hard thing to support
+especially maybe for i mean i'm assuming
+that you know you guys a little bit like
+lbl right it's a big lab and there's a
+history and stuff but i think
+um
+you know having that be
+at doe sort of a high enough priority
+that you say i'm going to invest in a
+head count and these people are just
+going to do ml i'm not going to but
+they're going to go to lunch with me and
+inform what i do and figure stuff out
+and it's hard for me to imagine that you
+won't have analogous
+sort of successes like you saw
+historically with scientific computing
+um and you know where those would be i
+tried to sort of give you some examples
+of where i think they might be
+the details of the optimization i mean
+how you deal with hard verse cough
+constraints continuous and
+and and i think i mean it's it's useful
+more generally right because if you can
+if you understand what it means to be
+meaningfully continuous in time
+um that actually would be much more
+useful for just ml people if you're
+doing self-driving cars and you want to
+understand you know flow fields of lidar
+detectors and so on
+but some of those light eye detectors
+are going to feed back to some other
+scientific use cases so i think um
+so that seems i don't know if that's
+what you're getting at but it seems like
+you know having that be part of the
+feedback loop
+and not not demand that sort of every
+time someone has something it's very
+strongly tied but having a little bit of
+a longer lease there seems sort of
+um crucial because there's a lot of
+green pastures for ml people to go off
+and do right so i mean and some fraction
+would like to do the scientific problems
+but giving them a sort of a long enough
+lease that they can
+do that and then feedback seems to me to
+be sort of an important thing there um
+so i'd say it's more of a structural
+thing than do this particular direction
+because the ones i laid out may be right
+or wrong but that seems to be the
+bigger issue if that's what you're
+trying to get at
+all right sounds good another question
+from brian gray talk was wondering from
+your perspective what the main value
+p i and ns pins bring over traditional
+numerical methods since they only
+approximately solve the equation since
+obviously traditional numerical methods
+can also solve the same
+pdes um i mean i don't know what value
+does the computer have i mean people
+thought it was going to be to invert 10
+by 10 matrices and it just opened up
+lots of other questions
+i mean i don't want to get in the middle
+of a pin debate some people love them
+and some people hate them i mean i think
+they're a nice initial result to sort of
+bridge this gap and and i don't think to
+the final word and they'll improve
+things but i don't think the question's
+to solve a pde
+i mean
+here's a question if you have access to
+a factor of a million more data than you
+had 20 years ago
+and you wanted to solve pds in some way
+what would you do
+i mean if pins is a framework that
+begins to allow you to couple to ml
+methodology and that's what ml does
+right and so um
+it's it's not to do a better job on
+something someone was doing 20 years ago
+it's to do a better job on something
+different and that something different
+is usually
+um where the data is cheap and and you
+can apply ml methods and if there's an
+impedance mismatch between the ml
+methods and the traditional pd methods
+you're not going to deliver on the
+promise but if you decrease that
+impedance mismatch you can so i wouldn't
+view it through the lens of oh i have an
+old school pde that i wanted to solve 30
+years ago and pins will do better at
+that you know what what different class
+of problems that are
+pde related can they solve yeah
+if i can add that add that
+add something to that uh the pins yeah
+if you're just talking about the the
+fourth uh solution process of the pde
+then
+maybe not as accurate as the traditional
+method but it it does give us a
+innovative way of looking at the inverse
+problem uh which
+which we couldn't do with the
+traditional numerical methods so so
+there are some benefits definitely
+benefit uh through the pins there
+okay is there any other questions um
+all right if not let's thank our speaker
+today it was a wonderful talk i really
+liked it thank you so much michael
+thanks for having me
+i'm glad that you uh accepted our
+invitation to the talk okay thank you
+great thanks for watching
+and um okay let me
+start the record button

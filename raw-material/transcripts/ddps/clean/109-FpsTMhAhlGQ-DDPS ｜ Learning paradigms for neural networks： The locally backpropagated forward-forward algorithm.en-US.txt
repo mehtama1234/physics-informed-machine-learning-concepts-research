@@ -1,0 +1,1040 @@
+Let's start the introduction. All right. Welcome&nbsp;
+to the DDPS seminar everyone. Before we introduce&nbsp;&nbsp;
+our speaker today, let's go over some rules and&nbsp;
+logistics. First of all, please mute yourself&nbsp;&nbsp;
+during the talk. But if you have questions,&nbsp;
+you can unmute and ask questions. Were used&nbsp;&nbsp;
+chatroom to post your questions so that we can&nbsp;
+address them in a q&a session at the end. Second,&nbsp;&nbsp;
+today's DDPS seminar is open to external audience.&nbsp;
+Therefore, no classified discussion is allowed.&nbsp;&nbsp;
+So please watch out. Finally, the talk today&nbsp;
+will be recorded and uploaded in our YouTube&nbsp;&nbsp;
+channel. Okay, let me now briefly introduce our&nbsp;
+speaker today. It is an honor to host Dr. Fabian&nbsp;&nbsp;
+Gianpaolo, who is a research fellow in Computer&nbsp;
+Science and Artificial Intelligence and a member&nbsp;&nbsp;
+of the modal research group at the University of&nbsp;
+maple that Rico to where he received his PhD in&nbsp;&nbsp;
+the mathematics and applications member of the&nbsp;
+editorial board of the journal neural computing&nbsp;&nbsp;
+and applications and he published by a published&nbsp;
+by Springer, and he has co authored articles in&nbsp;&nbsp;
+international journals and conference papers on&nbsp;
+both applicative and methodological research in&nbsp;&nbsp;
+the deep learning field is research interests&nbsp;
+include machine learning and deep learning with&nbsp;&nbsp;
+a particular focus on exploring the dynamics of&nbsp;
+learning these explorations and compasses a wide&nbsp;&nbsp;
+range of topics including the development&nbsp;
+of innovative neural network architectures,&nbsp;&nbsp;
+the investigation on new learning algorithms,&nbsp;
+efficiency and the application of these&nbsp;&nbsp;
+methodologies to solve complex real world&nbsp;
+problems. Today, Dr. Jian power will talk about&nbsp;&nbsp;
+learning paradigms for neural networks and the&nbsp;
+locally back propagated both for the algorithms.
+Please enjoy and expect a&nbsp;
+wonderful talk from him. Now,&nbsp;&nbsp;
+let me ask a questions to our speaker&nbsp;
+just to make this stays somewhat informal.
+Is it okay? Yeah, of course. All&nbsp;
+right. Awesome. So we usually do that.
+Okay.
+Obviously, you're passionate&nbsp;
+about the deep learning, what
+would you share with us the&nbsp;
+moment when you realize that&nbsp;&nbsp;
+you need you want to dive into this community?
+Yeah, this is a good question. You know, I was
+one of those kids that was always&nbsp;
+in front of his computer, you know,&nbsp;&nbsp;
+trying to code and some, something like that.&nbsp;
+So, when I found out that in the department,&nbsp;&nbsp;
+I was a, that was a research group&nbsp;
+dealing with this kind of topics,&nbsp;&nbsp;
+and in particular, on how machine can learn.&nbsp;
+No, I was very fascinated by by by this. So
+I asked them to work with them,&nbsp;
+I started to work with them.&nbsp;&nbsp;
+And so that's how that's why I ended up&nbsp;
+where I am now. Awesome. Awesome. Well,&nbsp;&nbsp;
+these days you you probably are more&nbsp;
+fascinated, fascinated by what they can do.
+All right, the stage is yours. Okay.&nbsp;
+I will share my presentation. So
+can you see the presentation by now? Yeah, yeah,&nbsp;&nbsp;
+but it's not worse. Okay. Can make it for&nbsp;
+Is it now? Yeah, it is. Okay, here. I will
+of course have. Good morning everyone.&nbsp;
+First of all, I would like to thank again&nbsp;&nbsp;
+Jung Soo and the organizers for giving&nbsp;
+me the opportunity to hold the seminar.
+As you also say, they probably&nbsp;
+jump out there is a fellow at&nbsp;&nbsp;
+the University of Naples political Sagunto&nbsp;
+and a member of the model reduction group.
+This is a brief outline on what we are going&nbsp;
+to discuss today we will start by introducing&nbsp;&nbsp;
+briefly some basic concepts on neural networks.&nbsp;
+The way a neural network cities is tailored&nbsp;&nbsp;
+to a specific task and some fundamental&nbsp;
+concepts around the learning process. Then,&nbsp;&nbsp;
+we will move on to some manipulation,&nbsp;
+some experiments about the manipulation&nbsp;&nbsp;
+of the learning dynamics. And we will end the&nbsp;
+presentation by discussing some applications&nbsp;&nbsp;
+of the main ideas we developed in&nbsp;
+the field of federated learning.
+I think the audience is familiar with the concepts&nbsp;
+shown here. So I will just introduce them very,&nbsp;&nbsp;
+very briefly. We know that the neuron is&nbsp;
+the foundation of computational unit, which
+sholden neural networks are built and we also know&nbsp;
+that it can be seen as a two step process first,&nbsp;&nbsp;
+the input undergo a weighted sum,&nbsp;
+which is also added the other term.
+And then the result of this sum is processed&nbsp;
+through a usually nonlinear transformation&nbsp;&nbsp;
+here denoted as lambda, which is&nbsp;
+the activity stream function. So,&nbsp;&nbsp;
+a deep network can be seen as a stack&nbsp;
+of straight up the layers in which the&nbsp;&nbsp;
+neurons are read. And from a general&nbsp;
+perspective, it can be imagined as
+as composed by three main segments.&nbsp;
+Now, the input layer which ingest data,&nbsp;&nbsp;
+the layers that work together&nbsp;
+to extract complex patterns from&nbsp;&nbsp;
+data and to provide the functional&nbsp;
+representation for these patterns.
+And then the output data that provides&nbsp;
+the output that aligns with the task we're&nbsp;&nbsp;
+dealing with it should be underlined that&nbsp;
+some theoretical results exist about this,&nbsp;&nbsp;
+this kind of structure says in particular&nbsp;
+about the approximation power of these kinds&nbsp;&nbsp;
+of structures, as in particular demonstrated by&nbsp;
+the universal approximation theorems. Usually,&nbsp;&nbsp;
+these results concern that the approximation&nbsp;
+capabilities of a feed forward neural network&nbsp;&nbsp;
+consists of the continuous functions and the&nbsp;
+approximation is with respect to the compact&nbsp;&nbsp;
+convergence topology. However, despite the&nbsp;
+importance results like this one have from a
+mathematical perspective in the&nbsp;
+formulation of a neural network,&nbsp;&nbsp;
+they come with a measure of concern somehow,&nbsp;
+they do not provide a construction rule for&nbsp;&nbsp;
+the weights the for the synapses for&nbsp;
+the connections of these networks.
+So, in this scenario, we may say that the deep&nbsp;
+learning problem the learning problem can be seen&nbsp;&nbsp;
+as the problem of learning the connection weights&nbsp;
+of a large computational graph. But in order to&nbsp;&nbsp;
+address this task, we must introduce another basic&nbsp;
+yet fundamental concept in the learning framework,&nbsp;&nbsp;
+which is loss function. This function&nbsp;
+basically measures the discrepancy&nbsp;&nbsp;
+between the models predictions and the target&nbsp;
+values and can be formalized as reported here,&nbsp;&nbsp;
+it's worth noticing that we may see that the&nbsp;
+loss function somehow encapsulates the the&nbsp;&nbsp;
+objective of the task by measuring the models&nbsp;
+deviations from this objective and the in his&nbsp;&nbsp;
+lie the reported the general formulation for a&nbsp;
+loss function with also some desired properties,&nbsp;&nbsp;
+which are actually not always fulfilled.&nbsp;
+And with the concept of loss function,&nbsp;&nbsp;
+we can reframe the learning&nbsp;
+problem as an optimization problem,
+which deals with the loss function in this in this&nbsp;
+framework, our task is to find a set of weights&nbsp;&nbsp;
+that minimizes the loss function. So, considering&nbsp;
+a network made up of N units, we should find&nbsp;&nbsp;
+the learning routes somehow know a way to adjust&nbsp;
+weights in such a way this condition is is fulfill&nbsp;&nbsp;
+the condition reported the partial derivative of&nbsp;
+the loss function with respect to the variations&nbsp;&nbsp;
+the variation of all the all the weights in any&nbsp;
+critical point, it is peculiar to notice that
+even if the research on this topic has been huge,&nbsp;
+somehow only few algorithms have been proposed to&nbsp;&nbsp;
+do that. And with reference to table we may also&nbsp;
+notice that all the familiar learning rules,&nbsp;&nbsp;
+we are used to somehow can be seen as a special&nbsp;
+cases or operations of the two main learning rules&nbsp;&nbsp;
+which are the IBM one and the backpropagation one&nbsp;
+which are different in their essence. However,&nbsp;&nbsp;
+in this framework, another important&nbsp;
+question that arises and that is to&nbsp;&nbsp;
+say what characteristics should learning rules&nbsp;
+have to guarantee an efficient learning process
+following what we say we should require that&nbsp;
+learning rules depend on variables that are&nbsp;&nbsp;
+locally available as shown here. For example, on&nbsp;
+variables that could be the presynaptic activity,&nbsp;&nbsp;
+the postsynaptic activity and the weights itself.
+Then, we must notice here that the targets will&nbsp;
+be considered the local only for the output layer&nbsp;&nbsp;
+of the network. If we stop here, we obtain&nbsp;
+what we call the deep local learning,&nbsp;&nbsp;
+which of course, basically by applying&nbsp;
+these two learning rules layer by layer&nbsp;&nbsp;
+from the input one to output one. However,&nbsp;
+it could be can be demonstrated that in this&nbsp;&nbsp;
+framework for a network it is impossible&nbsp;
+to learn optimally a complex function and&nbsp;&nbsp;
+in order to address this, we must&nbsp;
+require that some sort of input
+Information is
+propagated from the from the targets to the&nbsp;
+internal weights of the architecture. And this is&nbsp;&nbsp;
+what happens in what we call local deep learning&nbsp;
+in which the generic learning rule is modified by&nbsp;&nbsp;
+adding the dependence on some sort of information&nbsp;
+that trust versus the network and arrives to the&nbsp;&nbsp;
+to the deep wait. Moreover, we can also require&nbsp;
+that this information comes in a simplified&nbsp;&nbsp;
+version somehow, for example, depending on on the&nbsp;
+postsynaptic activities, and in this case, we can&nbsp;&nbsp;
+obtain the formulation for the learning rule as&nbsp;
+reported in equation three, which can be proven&nbsp;&nbsp;
+to be equivalent equivalent to a local supervised&nbsp;
+rule in which the targets is directly related&nbsp;&nbsp;
+to the to the to the weight. And why is this&nbsp;
+important because backpropagation for example,&nbsp;&nbsp;
+works just like that. So let's for a moment focus&nbsp;
+on the backpropagation. I think that also there's
+this process is well known here, but I will&nbsp;
+discuss it very very, very briefly. We know&nbsp;&nbsp;
+that the backpropagation is the standard way&nbsp;
+neural network is streaming basically. And it&nbsp;&nbsp;
+can it can be imagine that as a two step process&nbsp;
+to two paths process the forward in the forward&nbsp;&nbsp;
+pass as the information process layers, it is&nbsp;
+transformed by the weights in the activation&nbsp;&nbsp;
+function. So which computational unit and&nbsp;
+in this way, the model is able to produce&nbsp;&nbsp;
+a prediction that can be compared with the&nbsp;
+expected target value. So we can measure the&nbsp;&nbsp;
+distance between these two quantities. In the&nbsp;
+backward pass the information about this error&nbsp;&nbsp;
+is propagated backwards through the network&nbsp;
+by applying the chain rule of calculus to the&nbsp;&nbsp;
+composite function of the loss into the operation&nbsp;
+performed the operations performed by the layers&nbsp;&nbsp;
+of the network. And this is reported in this three&nbsp;
+equation basically, in which we can see how the&nbsp;&nbsp;
+error computed on the last layer of network is&nbsp;
+transmitted to the generic internal weighed by&nbsp;&nbsp;
+the recurrence factor in which is obtained by&nbsp;
+applying the chain rule to the generic feed&nbsp;&nbsp;
+forward the formulation and in the whole training&nbsp;
+process. These two steps are iteratively performed&nbsp;&nbsp;
+until we reach meaning for the loss function&nbsp;
+or you rate until we met a stopping criteria.
+We can also reconnect the backpropagation&nbsp;
+with the concept of local deep local deep&nbsp;&nbsp;
+learning by considering the learning rule in a&nbsp;
+multiplicative form in which appears the target&nbsp;&nbsp;
+now recalling the what is the learning rule&nbsp;
+for the backpropagation which is basically the&nbsp;&nbsp;
+wishbone six here, through some straightforward&nbsp;
+manipulations, we can obtain the formulation for&nbsp;&nbsp;
+these target t in terms of the back propagated&nbsp;
+error. And notice that here we use the simplified&nbsp;&nbsp;
+form of information I have i Since backpropagation&nbsp;
+shows that it is possible actually to deliver the&nbsp;&nbsp;
+same information to all the synapses connected&nbsp;
+to impinging to the same neuron. In this context,&nbsp;&nbsp;
+we can also write down a general formulation for&nbsp;
+this learning rule with backpropagation being a&nbsp;&nbsp;
+special case, in which can we can notice that&nbsp;
+the information depends on the targets on the&nbsp;&nbsp;
+output and all on all the upper layers of&nbsp;
+the network and all the upper derivatives.
+By the way, there is a reason why the back&nbsp;
+propagation is so efficient and then so widely&nbsp;&nbsp;
+used, if we perform a Taylor expansion&nbsp;
+of the error function around the genetic&nbsp;&nbsp;
+weight and also considering more fluctuation&nbsp;
+that product view, we can somehow estimate&nbsp;&nbsp;
+the effectiveness of the information transmitted&nbsp;
+to the points to first order approximation,&nbsp;&nbsp;
+we can see that the information that is sent back&nbsp;
+to the weights can be interpreted in terms of how&nbsp;&nbsp;
+well it approximates the gradient G and since&nbsp;
+the most thorough information about the gradient&nbsp;&nbsp;
+is contained in its direction, estimation of&nbsp;
+a word here, we hold the O returns a measure&nbsp;&nbsp;
+more or less of how good is the corresponding the&nbsp;
+corresponding optimization optimal decision step
+together with radiant information, we&nbsp;
+can also estimate some other quantities,&nbsp;&nbsp;
+which basically deal with the efficiency&nbsp;
+of the transmission of this information.&nbsp;&nbsp;
+A very interesting discussion about&nbsp;
+this topic is in a work of body and&nbsp;&nbsp;
+philosophy from which also this figure is&nbsp;
+taken and demonstrate basically, that in&nbsp;&nbsp;
+this framework of backpropagation is optimal,&nbsp;
+since it achieves both the maximum possible way
+Eat information and maximum&nbsp;
+possible possible improvement.
+Now, despite the optimality of back propagation&nbsp;
+and also it's very efficient implementations&nbsp;&nbsp;
+from a traditional point of view, the&nbsp;
+researcher looking for alternatives to&nbsp;&nbsp;
+these learning algorithms have found more&nbsp;
+and more space in the community. And one&nbsp;&nbsp;
+of the main concern about back propagation&nbsp;
+is its biological plausibility. There is no&nbsp;&nbsp;
+convincing evidence that biological networks&nbsp;
+explicitly propagate rabbit error information
+or store neural activities for the subsequent&nbsp;
+use in a backward pass or again, the requirement&nbsp;&nbsp;
+for such a strict symmetry of the weights across&nbsp;
+the learning seems particularly impossible. So,&nbsp;&nbsp;
+these considerations with also others&nbsp;
+briefly reported there have pushed&nbsp;&nbsp;
+the research in this on&nbsp;
+this on this topic somehow,
+but
+also from a practical point of view totally&nbsp;
+from a theoretical philosophical summary,&nbsp;&nbsp;
+if you want point of view backpropagation shows&nbsp;
+some drawbacks, that limited application and in&nbsp;&nbsp;
+particular, the need for competent with gradient&nbsp;
+of the loss with respect to the real composition&nbsp;&nbsp;
+of the layers functions may be difficult to&nbsp;
+remain not possible in some in some cases,&nbsp;&nbsp;
+the most straightforward example reported here&nbsp;
+is the presence of a blackbox inside the model,&nbsp;&nbsp;
+unless we are listed inside the&nbsp;
+architecture, unless we provide a&nbsp;&nbsp;
+differentiable model for this component&nbsp;
+derivatives cannot be computed and so,&nbsp;&nbsp;
+we cannot apply back propagation. In&nbsp;
+this case, of course, we may rely on&nbsp;&nbsp;
+different strategies for example, reinforcement&nbsp;
+learning or evolutionary algorithm, but often&nbsp;&nbsp;
+these alternatives increase computational&nbsp;
+demands and are less efficient at scale.
+One might wonder, when this limitation when we are&nbsp;
+forced to face with this limitation in real cases,&nbsp;&nbsp;
+here I report in just few examples, for example,&nbsp;
+the integration of AI systems with legacy systems
+that own not always but often lacked&nbsp;
+interfaces for gradient based learning&nbsp;&nbsp;
+or real time dishes and systems in which are&nbsp;
+involved with the question Bayes classifier,&nbsp;&nbsp;
+so rule b systems are again in in techniques&nbsp;
+involving pruning a specification for example,&nbsp;&nbsp;
+as a concern that the network&nbsp;
+architecture search here
+are involved in non differentiable operations&nbsp;
+usually like thresholding or masking are probably&nbsp;&nbsp;
+in the most interesting context, which is the&nbsp;
+integration between the AI systems and humans,&nbsp;&nbsp;
+in which here we must consider as inputs&nbsp;
+or preferences or qualitative feedbacks,&nbsp;&nbsp;
+which are inherently non differentiable and&nbsp;
+which may make reading competition, a problem
+following the some of these considerations,&nbsp;
+in particular, the theoretical ones,
+driven by the impossibility of the&nbsp;
+backpropagation. In December 2022,&nbsp;&nbsp;
+Professor Geoffrey Hinton proposed an&nbsp;
+alternative learning learning procedure&nbsp;&nbsp;
+called the foot forward algorithm, which replaces&nbsp;
+basically the forward pass and backward pass and&nbsp;&nbsp;
+back propagation with two footwork passes&nbsp;
+one on positive data and the other one on&nbsp;&nbsp;
+negative data. And with positive and negative&nbsp;
+data, were basically referring to actual data,&nbsp;&nbsp;
+real data and wrong data. In this framework, each&nbsp;
+layer has its own objective function, who seems&nbsp;&nbsp;
+to be simply described as having an Agnes for&nbsp;
+positive samples and the low goodness for negative&nbsp;&nbsp;
+work. And in particular, the objective of the task&nbsp;
+of the learning process is to achieve a luminance&nbsp;&nbsp;
+value which is significantly above a certain&nbsp;
+threshold, in this case, theta for positive&nbsp;&nbsp;
+samples for real data and significantly below that&nbsp;
+threshold for negative data. So for example, in a&nbsp;&nbsp;
+classification example, and ossification context,&nbsp;
+the goal is to accurately toxify an input vector&nbsp;&nbsp;
+as positive or negative, with the probability for&nbsp;
+an input vector being classified as positive given&nbsp;&nbsp;
+by applying the logistic function to the goodness&nbsp;
+value minus the threshold. And if we Moreover,&nbsp;&nbsp;
+can connect the goodness function with neural&nbsp;
+activities, for example, through the norm as&nbsp;&nbsp;
+reported here, we can write down the layer&nbsp;
+wise loss function as reported in as shown in&nbsp;&nbsp;
+equations 1617 MIT. It's interesting to notice&nbsp;
+that in this scenario, the weight update rule&nbsp;&nbsp;
+becomes in the form reported in the blue box,&nbsp;
+in which we can notice that the information on
+It depends, only loses its dependence on the&nbsp;&nbsp;
+upper derivatives and this somehow&nbsp;
+localizes the learning on on the ear.
+But how does this learning process behave&nbsp;
+in the context of a supervised learning&nbsp;&nbsp;
+task? In this slide the report in&nbsp;
+the a the behavior of the learning&nbsp;&nbsp;
+somehow in the case of classification&nbsp;
+task involving the data set analyst,&nbsp;&nbsp;
+it's worth underlining that Amnesty is very&nbsp;
+well known. And the behavior of simple networks&nbsp;&nbsp;
+training through back propagation on this data&nbsp;
+sets are all are datasets like, like a nice
+well studied in literature. So this&nbsp;
+makes a nice very convenient for testing&nbsp;&nbsp;
+out new learning strategies to see if they&nbsp;
+actually work. However, in this context, for
+for the football football algorithm, the&nbsp;
+classification is, is done by accumulating&nbsp;&nbsp;
+the goodness of all by the first layer for each&nbsp;
+label and then taking the label with the highest&nbsp;&nbsp;
+accumulated goodness. Now, in general, we know&nbsp;
+that deep networks consists of multiple layers,&nbsp;&nbsp;
+and we can see that each layer processes its&nbsp;
+input to and returns to the subsequently or&nbsp;&nbsp;
+what it has extracted, and the network trained by&nbsp;
+backpropagation. This allows for an increasingly&nbsp;&nbsp;
+complex representation of data since the&nbsp;
+learning happens in a year article manners.
+For example, in this, in this case, the MR case,&nbsp;&nbsp;
+we may see that first layers of the architecture&nbsp;
+we extract simpler features, for example, edges,&nbsp;&nbsp;
+and the later layers of the same architecture with&nbsp;
+struct more complex features, for example, shapes,&nbsp;&nbsp;
+but this year article representation of data&nbsp;
+basically allows the network to build a robust&nbsp;&nbsp;
+representation for the data and to provide&nbsp;
+accurate predictions. In the case of the Pew&nbsp;&nbsp;
+for football algorithm instead, it can be said&nbsp;
+that each layer returns measures of consistency&nbsp;&nbsp;
+between the sample and the target. And this can&nbsp;
+be seen from a figure I reported year in which&nbsp;&nbsp;
+is shown the normal neural activities for all the&nbsp;
+layers with respect to the association between the&nbsp;&nbsp;
+sample seven and all the possible targets from&nbsp;
+zero to nine. And we can see that in this case,&nbsp;&nbsp;
+the learning somehow flows through the network&nbsp;
+sensor, each layer receives no feedback,&nbsp;&nbsp;
+what's happening in the later parts of the of&nbsp;
+the structure the structure. And this obviously&nbsp;&nbsp;
+impacts the overall convergence process. The&nbsp;
+figure on the on the left to here report the error&nbsp;&nbsp;
+provided by the layers 123 and the stack calculate&nbsp;
+the cumulative error provided by the stock, which&nbsp;&nbsp;
+goes from one to treat as conservative leaders.&nbsp;
+In this case, we can see that for example, layers&nbsp;&nbsp;
+two and three do not positively contribute to the&nbsp;
+prediction since their marginal contribution is&nbsp;&nbsp;
+negative. Basically, the first layers provides a&nbsp;
+lower group with respect to the others. And the&nbsp;&nbsp;
+same thing can be seen also in the two fingers on&nbsp;
+the writer in which are reported the accuracy of
+stack of layers of increasing dimension from&nbsp;
+one to five from one to 10 and from one to 15.&nbsp;&nbsp;
+And we can see that for the datasets and&nbsp;
+NIST and fashion and NIST in this case,&nbsp;&nbsp;
+and we can see that these three&nbsp;
+lines at some point separate
+indicating that somehow each layer is less&nbsp;
+capable of the preceding layer to understand&nbsp;&nbsp;
+how to work with the input to is receiving.&nbsp;
+And this leads to two main considerations.&nbsp;&nbsp;
+The first is that a neural network trained with&nbsp;
+the Pew football football algorithm struggles&nbsp;&nbsp;
+in learning collective representations. And&nbsp;
+from this follows the fact that the football&nbsp;&nbsp;
+formula or method performs with small networks&nbsp;
+shallow networks networks mean by few layers.
+However, these new learning strategies as&nbsp;
+also some peculiarities we are interested in,&nbsp;&nbsp;
+for example, since the learning is&nbsp;
+somehow local, there is no need for back&nbsp;&nbsp;
+propagation in weights update process. And this is&nbsp;
+interesting since it allows for example, to insert&nbsp;&nbsp;
+in an era architecture, a non differentiable&nbsp;
+black box, I'm going to show potential block&nbsp;&nbsp;
+components without impacting the whole training&nbsp;
+procedure. Moreover, we know that each layer&nbsp;&nbsp;
+directly contribute to the prediction process. And&nbsp;
+this is also interesting if we think for example,
+about the importance of ensembles methodologies&nbsp;
+in the field of machine learning. So we did
+idea of enhancing the efficacy of&nbsp;
+the football football algorithm,&nbsp;&nbsp;
+we developed a methodology whose basic idea&nbsp;
+is to split a neural network in blocks,&nbsp;&nbsp;
+then applying it back propagation inside&nbsp;
+the each block back training each one of&nbsp;&nbsp;
+the blocks according to a full portfolio&nbsp;
+strategy. As watermark here involves the&nbsp;&nbsp;
+third consideration since no error&nbsp;
+information is propagated backwards,&nbsp;&nbsp;
+we can say that the first layer of the network&nbsp;
+somehow will be optimized sooner with respect&nbsp;&nbsp;
+to the other layers of the same architecture.&nbsp;
+But we will discuss this point in few slides.
+In order to make our approach even more efficient,
+basically.
+Basically, the split the strategy has&nbsp;
+been formalized as reported in this slide,&nbsp;&nbsp;
+we can see that the generic neural network can&nbsp;
+be partitioned in capital K in overlapping sub&nbsp;&nbsp;
+networks. And that the fall of the wake&nbsp;
+update process follows a back propagation&nbsp;&nbsp;
+approach inside each sub networks, where the&nbsp;
+error that is propagated backwards depends on&nbsp;&nbsp;
+the witness function evaluated on the last&nbsp;
+layer of the of the, of the block network,&nbsp;&nbsp;
+it's worth not seeing that in this context,&nbsp;
+except for the first one of the blocks whose&nbsp;&nbsp;
+input is simply the data we have for each one of&nbsp;
+the blocks the input will be the output of the&nbsp;&nbsp;
+preceding block. So, we are preserving&nbsp;
+the general feed forward architecture.
+Now, in neural networks trained with&nbsp;
+backpropagation, we know the that&nbsp;&nbsp;
+all the layers interact collaborate&nbsp;
+to minimize the loss function. So,&nbsp;&nbsp;
+we may say that each internal layer is&nbsp;
+loss function, which is computed on the&nbsp;&nbsp;
+last layer with the results of the last&nbsp;
+layer. So, we may say that in the back&nbsp;&nbsp;
+propagation process, each internal layer of&nbsp;
+the architecture is optimized in the sense
+in the sense of giving a good embedding&nbsp;
+to the to the subsequent layers,&nbsp;&nbsp;
+but this factor in our approach means that
+internal layers of the blocks&nbsp;
+will not contribute to the to&nbsp;&nbsp;
+the prediction process and this is&nbsp;
+basically what we are seeing here&nbsp;&nbsp;
+from this figure in which cannot we can&nbsp;
+observe that while four layers 247 and 19.
+While these layers fulfill the condition the&nbsp;
+goodness condition somehow internally years of&nbsp;&nbsp;
+the of the network, do not know how to&nbsp;
+how to fulfill the prediction task No.
+And
+given that sensor, we wanted to push on one side&nbsp;
+the layer interaction but on the other side,&nbsp;&nbsp;
+we wanted to preserve the layer&nbsp;
+West prediction contribution,&nbsp;&nbsp;
+we developed a randomized partitioning&nbsp;
+strategy with basically consists in&nbsp;&nbsp;
+fixing the number of the block of the&nbsp;
+blocks in which the network is split,&nbsp;&nbsp;
+but varying things randomly varying at iFixit the&nbsp;
+number of epochs their sides their extreme and&nbsp;&nbsp;
+this guarantees that more or less during training,&nbsp;
+all the layers will undergo the the optimization&nbsp;&nbsp;
+criterion dictated by the witness function. So&nbsp;
+preserving the characteristic we are interested
+in here, we can observe how the random the random&nbsp;
+reorganization of the of the blocks impacts the&nbsp;&nbsp;
+learning pattern, someone who recovering the&nbsp;
+latest prediction contribution it can be seen from&nbsp;&nbsp;
+the last image here on the on the on the right. Of&nbsp;
+course, in this scenario, two main questions arise
+if the interaction between&nbsp;
+layers is actually improved,&nbsp;&nbsp;
+and if we obtain a better convergence pattern&nbsp;
+of the entire network, and this second questions
+arises from the consideration that now the layers&nbsp;
+are optimized also, in the sense of giving a good&nbsp;&nbsp;
+embedding to the subsequent layers. So we expect a&nbsp;
+more coherent learning pattern across the network.
+And in particular, in this slide,&nbsp;
+we can observe that actually,&nbsp;&nbsp;
+the random mirror organization works somehow as&nbsp;
+expected. We can see that the three lines that
+I've discussed before now, for example,&nbsp;
+in the case of Emily's dataset collapse,&nbsp;&nbsp;
+but also in the case of fashion,&nbsp;
+m&s dataset, even if they
+still separate at some point,&nbsp;
+the pattern of convergence is&nbsp;&nbsp;
+much more coherent is smoother somehow.&nbsp;
+And another thing that we can notice is&nbsp;&nbsp;
+that the overall accuracy is here&nbsp;
+in terms of error is is improved.
+Of course, this proposal strategy&nbsp;
+introduces two other hyper parameters,&nbsp;&nbsp;
+that is to say the number of the blocks&nbsp;
+in which the network is split, and
+the epochs for the random to wait until&nbsp;
+the random reorganization fixing this&nbsp;&nbsp;
+last parameter to fiber we can see on the left&nbsp;
+that actually reducing the number of the blocks
+stabilizes the convergence while increasing&nbsp;
+the number of the blocks returns a convergence&nbsp;&nbsp;
+pattern this time in terms of accuracy&nbsp;
+much more similar to the pure football&nbsp;&nbsp;
+football which is the blue line and&nbsp;
+this is explainable by the fact that
+if the network is fragmented information&nbsp;
+about the layer interaction struggle in&nbsp;&nbsp;
+transversing the local network so, we have&nbsp;
+a behavior like in in football football the&nbsp;&nbsp;
+algorithm 10 blocks means two layers per block&nbsp;
+basically, on the other side, we can see that&nbsp;&nbsp;
+increasing the frequency for the round number&nbsp;
+the organization stabilizes and accelerate the&nbsp;&nbsp;
+convergence in this case, while decreasing this&nbsp;
+frequency produces a slower convergence behavior.
+And this is explainable by the fact that if we&nbsp;
+fix a block for a considerable number of epochs,&nbsp;&nbsp;
+back propagation will saturate somehow with the&nbsp;
+optimization of the last of the block on the last&nbsp;&nbsp;
+layer of the block in terms of witness function,&nbsp;
+while not minimizing the internal layers of the&nbsp;&nbsp;
+block in this sense. So, patterns just&nbsp;
+like for example, this staircase appear,&nbsp;&nbsp;
+which is in the case of the we are dealing&nbsp;
+with 25 epochs wait until we're efficient and&nbsp;&nbsp;
+there was this staircase pattern pattern&nbsp;
+appear. By the way in in both the cases,&nbsp;&nbsp;
+we can observe that the overall of&nbsp;
+convergence overall accuracy is incremented.
+And this somehow shows that the presence&nbsp;
+of that propagated blocks somehow pushes&nbsp;&nbsp;
+the layer interaction and leads to a more&nbsp;
+coherent behavior during the training.
+This is basically a tweak some kind of&nbsp;
+a tweak or we develop the exploiting&nbsp;&nbsp;
+the third characteristic I&nbsp;
+discussed before we wanted to
+Hance the efficiency, the efficiency&nbsp;
+of the learning process. And so we&nbsp;&nbsp;
+exploit it to the sequential refinement of&nbsp;
+the learning procedure, the fact that firstly,&nbsp;&nbsp;
+or something architecture will be&nbsp;
+optimized sooner with respect to&nbsp;&nbsp;
+the later layers of the same architecture&nbsp;
+from the foot forward. And we did this by&nbsp;&nbsp;
+assigning to each layer a probability to be&nbsp;
+trained from from a key square distribution.
+And so the generic block in this in this&nbsp;
+framework will undergo your musician process,&nbsp;&nbsp;
+according to probability given by the&nbsp;
+probabilities of its constitutive blocks
+constitutively sorry,
+in this, in this scenario, we also&nbsp;
+observed the loss function of the first&nbsp;&nbsp;
+of the three node blocks and if it reaches&nbsp;
+a steady state, if it reaches a plateau,&nbsp;&nbsp;
+the parameter phi over the square distribution&nbsp;
+is incremented. In such a way we redistribute&nbsp;&nbsp;
+the probabilities in favor of the later&nbsp;
+layers of the of the architecture.
+Of course, all these after an initial&nbsp;
+global training of the network.
+And we found out that while this trick somehow&nbsp;
+does not impact very much the convergence,&nbsp;&nbsp;
+it impacts the computation of times, we wanted&nbsp;
+to produce a more efficient learning procedure&nbsp;&nbsp;
+with respect to the forward forward so&nbsp;
+we evaluated the computation of times&nbsp;&nbsp;
+variable on the left on the right we can&nbsp;
+see what happens without the random train.&nbsp;&nbsp;
+And we can see here that the frequency of&nbsp;
+the random organization does not impact&nbsp;&nbsp;
+the competition of times while the number&nbsp;
+of the blocks does, but this is quite top&nbsp;&nbsp;
+uses. Since we know that the back propagation&nbsp;
+is very efficient also from a computational&nbsp;&nbsp;
+point of view. So the more delay years in a in&nbsp;
+a block, the less competition time somehow. On&nbsp;&nbsp;
+the right we can see that both the input the&nbsp;
+situations, the random training farther away
+uses
+this quantity,
+almost having the computation&nbsp;
+of time per epoch with respect&nbsp;&nbsp;
+to the football football. So, we&nbsp;
+developed basically a strategy that
+makes this learning process&nbsp;
+even more efficient and so,&nbsp;&nbsp;
+somehow widely usable in real&nbsp;
+contexts and experimental models.
+And given the good results of the lovely&nbsp;
+back propagating the foot forward,&nbsp;&nbsp;
+we tried also to develop some applications
+based on its fundamental ideas, in particular&nbsp;
+in the field of federated learning,&nbsp;&nbsp;
+what is federated learning briefly, we know that&nbsp;
+conventionally I am audits are typically trained&nbsp;&nbsp;
+on single data sets located on a single machine&nbsp;
+and this requires the data to be aggregated,&nbsp;&nbsp;
+but it is not always feasible possible&nbsp;
+to centralize data. And reasons can vary&nbsp;&nbsp;
+from legal to confidential. So, the federated&nbsp;
+learning approach is the federated learning&nbsp;&nbsp;
+is an approach is a paralegal where multiple&nbsp;
+entities could clients collaborate in solving&nbsp;&nbsp;
+machine learning problem under the restriction&nbsp;
+of a central server, and all these while keeping&nbsp;&nbsp;
+their datasets localized. So this paradigm&nbsp;
+shifts the traditional centralized model&nbsp;&nbsp;
+training to more distributed approach, which&nbsp;
+preserves data privacy in allows to hadir to&nbsp;&nbsp;
+legal and confidentiality constraints.&nbsp;
+Of course, this decentralized approach&nbsp;&nbsp;
+is interesting in a plethora of fields, but in&nbsp;
+particular, where the privacy is a is pricked
+constraint, for example, in fields like healthcare&nbsp;
+or military, military research, but it also pushes&nbsp;&nbsp;
+the boundaries somehow of the distributed&nbsp;
+computation for machine and deep learning.
+Since it allows the model training to be conducted&nbsp;
+only on a large scale by distributing the&nbsp;&nbsp;
+computational load across multiple nodes.&nbsp;
+And this is particularly interesting in&nbsp;&nbsp;
+situations where excess extensive simulations&nbsp;
+are required, for example, climate modeling,&nbsp;&nbsp;
+or large scale, industrial precious, but&nbsp;
+how does the training of the local and the&nbsp;&nbsp;
+global model covering the typical federated&nbsp;
+learning in the digital learning setting
+in general, the server initializes, the&nbsp;
+weights for a global model in a random way,&nbsp;&nbsp;
+the levers, this weights to the clients that&nbsp;
+perform some local training on their datasets,&nbsp;&nbsp;
+and then send back the information about&nbsp;
+weights updates to the server that targets&nbsp;&nbsp;
+these information and updates the global&nbsp;
+Moodle and this can be done that the exchange&nbsp;&nbsp;
+of information about the weights update can&nbsp;
+be done by person meeting the gradients or&nbsp;&nbsp;
+transmitting the weights in each training&nbsp;
+epoch for the local clients as for example,&nbsp;&nbsp;
+in fact SGD or waiting for some learning on the on&nbsp;
+the clients and then send him back these weights&nbsp;&nbsp;
+as in fed ABG. And it's important to notice&nbsp;
+that the second approach is usually preferred,&nbsp;&nbsp;
+since it reduces the communication frequency&nbsp;
+and so, the load for the communication channel
+of course, this product comes with its own set of&nbsp;&nbsp;
+challenges in among them probably one&nbsp;
+of the most important one concern the
+the mightiness of data which basically&nbsp;
+refers to different data distributions&nbsp;&nbsp;
+across the continents. This can&nbsp;
+manifest in several forms that&nbsp;&nbsp;
+I briefly report in here, but probably the most,
+the most common one and is the label distribution&nbsp;
+skew in which there is a a very different&nbsp;&nbsp;
+distributions very different there are very&nbsp;
+different distributions of the label across&nbsp;&nbsp;
+the various clients and addressing this set of&nbsp;
+challenges. These these issues is important,&nbsp;&nbsp;
+since the it can these issues may lead to&nbsp;
+inconsistent model updates and degraded&nbsp;&nbsp;
+global performances of the model. In particular&nbsp;
+are well known issue related to the muddiness is&nbsp;&nbsp;
+the Moodle divergence, which consists basically&nbsp;
+in the local Moodle, local models becoming very&nbsp;&nbsp;
+different from charters. And this causes a problem&nbsp;
+when the server aggregates this model so in order&nbsp;&nbsp;
+to obtain the global global model, moreover,&nbsp;
+over multiple communication rounds, this disk
+few branches may accumulate so causing&nbsp;
+the global Moodle to diverge and of course&nbsp;&nbsp;
+negatively impacting the performances&nbsp;
+or of the whole training process.
+Another challenge important challenge in this&nbsp;
+field is what we call device heterogeneity,&nbsp;&nbsp;
+which refers to different hardware&nbsp;
+capabilities among the clients.&nbsp;&nbsp;
+We know that in typical federated&nbsp;
+learning paralegals, the paralegal
+uniform other structures are required across&nbsp;
+client, but this may limit the fullest utilization&nbsp;&nbsp;
+of the computational power, we can think for&nbsp;
+example, a client that is less capable it is&nbsp;&nbsp;
+less powerful than the others which may become&nbsp;
+a straggler slowing down. So the entire training&nbsp;&nbsp;
+procedure. Moreover, the visitor agility may&nbsp;
+also introduce uncertainty instability. Since,&nbsp;&nbsp;
+for example, a device with the limited storage&nbsp;
+capability may struggle in handling large model&nbsp;&nbsp;
+updates, so causing the causing it to depart from&nbsp;
+the training procedure or send incomplete updates.
+Of course, several solutions have been proposed&nbsp;
+to face these two challenges and in particular,&nbsp;&nbsp;
+on one side as a concern on a DNS. Usually&nbsp;
+techniques involve the introduction of&nbsp;&nbsp;
+some regularization terms, which forces the&nbsp;
+weight to not diverge, or in weighting terms
+related to data distributions. That's concerned&nbsp;
+diversity region it some strategies rely on&nbsp;&nbsp;
+client selection, but this may introduce&nbsp;
+biases, if not all the clients equally&nbsp;&nbsp;
+participate to the training process, or&nbsp;
+on split learning which arise privacy&nbsp;&nbsp;
+concerns due to common communication of the&nbsp;
+of the gradients of gradients information.&nbsp;&nbsp;
+So in this scenario, and in particular,&nbsp;
+in order to address the challenge or the&nbsp;&nbsp;
+data origin it with spike into the idea&nbsp;
+of splitting a neural network in blocks&nbsp;&nbsp;
+from the local effect propagated forward in the&nbsp;
+context of federated learning. These strategies,&nbsp;&nbsp;
+this strategy allows us to train different pieces&nbsp;
+of off have a global model on different clients,
+according to some, some rule, which for&nbsp;
+example, can depend on the computational&nbsp;&nbsp;
+capabilities of the client. And this is what is&nbsp;
+briefly described. In this slide, we basically&nbsp;&nbsp;
+imagine that each client receives receives a&nbsp;
+partial replica of the global model consisting
+in a subset of the blocks in which the global&nbsp;
+model is split, perform the training on these&nbsp;&nbsp;
+blocks and then send the weights to the to server&nbsp;
+the aggregates, these weights in order to obtain&nbsp;&nbsp;
+the global model. And this here is reported for&nbsp;
+this operation here is described as for example,&nbsp;&nbsp;
+a an average simple average. But this is not&nbsp;
+a strict constraint in sense that here we can&nbsp;&nbsp;
+use all the aggregation techniques from the&nbsp;
+federated learning field in this made these,
+this technique this approach widely usable.
+In this context, of course, we must recall&nbsp;
+two important facts. That is to say that&nbsp;&nbsp;
+the output of the generic block also serves&nbsp;
+as input for the for the subsequent block,&nbsp;&nbsp;
+we are in our fifth full word context, and&nbsp;
+that the optimization of the generic block&nbsp;&nbsp;
+is somehow aware of what's happening before&nbsp;
+in network but not in the subsequent parts of&nbsp;&nbsp;
+the same network. And this implies&nbsp;
+that the partial replicas of the&nbsp;&nbsp;
+of the global Moodle delivery to the client&nbsp;
+must start from its first block. And this&nbsp;&nbsp;
+means that according of course, to the settings&nbsp;
+of the of the federated learning procedure, but
+there's the possibility that the last few blocks&nbsp;
+of the global Moodle could remain on tree. So&nbsp;&nbsp;
+in order to overcome this issue, we explored the&nbsp;
+sequential refinement of the learning by observing&nbsp;&nbsp;
+the difference for each generic communication&nbsp;
+around the difference between the weights of&nbsp;&nbsp;
+the trained local model, the weight of a block&nbsp;
+of course, of the train of a trained local model&nbsp;&nbsp;
+and the weights of the global model refers to&nbsp;
+the block at the previous communication round,&nbsp;&nbsp;
+which is basically the quantity have reported&nbsp;
+in this in this slide. And if this quantity&nbsp;&nbsp;
+approaches to zero for the majority of the&nbsp;
+clients, this block is frozen is excluded from the
+The training and the structures of&nbsp;
+the partial replica of the global&nbsp;&nbsp;
+Moodle delivery to the clients are modified&nbsp;
+accordingly as reported in this blue box,&nbsp;&nbsp;
+basically, and this is important, if we&nbsp;
+consider that in this way, all the blocks&nbsp;&nbsp;
+over the global model will be trained by all&nbsp;
+the clients involved in this procedure. And
+this is of primary importance since we talked&nbsp;
+before about the neediness of data. So considering&nbsp;&nbsp;
+that each client as its own data set, which&nbsp;
+may be different from the the other data sets&nbsp;&nbsp;
+of the other clients. And this is basically a&nbsp;
+graphical representation of what I just said,&nbsp;&nbsp;
+we can see that in the first communication round,&nbsp;
+the server delivers to the model to the client&nbsp;&nbsp;
+sorry, the batch of replicas of the Moodle&nbsp;
+at some point in the training, if the first&nbsp;&nbsp;
+block reaches a steady state from a training&nbsp;
+point of view, it is frozen it is blocked,&nbsp;&nbsp;
+and the structure of the of the Bastion modals is&nbsp;
+modified adding another block. What's important&nbsp;&nbsp;
+to notice here is that even if the first block,&nbsp;
+although Frozen is still delivered to the client,&nbsp;&nbsp;
+because it is needed for the fifth full&nbsp;
+word learning. Since there is no ongoing&nbsp;&nbsp;
+optimization on this block, it will not&nbsp;
+require intensive computational resources.
+And the methodology of our clients so far has been&nbsp;&nbsp;
+tested using the parallel printing&nbsp;
+multiple clients in particular 10
+Using this aggregation techniques, both for the&nbsp;
+VG and for the products, we are benchmarking our&nbsp;&nbsp;
+method. So we are using techniques were known&nbsp;
+in the field of federated learning. And we also&nbsp;&nbsp;
+simulated the effect of non Idina. So data&nbsp;
+through these Dirichlet distribution whose&nbsp;&nbsp;
+parameter beta basically represent&nbsp;
+the level of Skewness in the data,&nbsp;&nbsp;
+there's one like marker has to be done&nbsp;
+near usually in real monetary scenarios,
+typical values of beta spawns the&nbsp;
+interval of 0.51. In this case,&nbsp;&nbsp;
+we also tested beta 0.3 and 0.1 in order to
+to find out how our algorithm perform also in&nbsp;
+some sort of extreme scenarios. And these are&nbsp;&nbsp;
+basically the results we obtained as beta varies,&nbsp;
+we can see a compare those. So with the IID case,&nbsp;&nbsp;
+in this case, we can see that performances are&nbsp;
+good and consistent, unless beta becomes 0.1,&nbsp;&nbsp;
+where a drop in the accuracy can be observed,&nbsp;
+but it is somehow expected since 0.1 is means
+very different distributions of data&nbsp;
+into risk of modal modal the modal&nbsp;&nbsp;
+divergences are discussing before,&nbsp;
+what's what is not reported here,&nbsp;&nbsp;
+but it is important that is that these&nbsp;
+results are in line with the ones
+that can be found in literature, meaning that this&nbsp;
+idea of splitting the neural network in blocks and&nbsp;&nbsp;
+then training, the blocks from different clients&nbsp;
+actually works and reaches the same levels of&nbsp;&nbsp;
+accuracy of other more standard strategies. We&nbsp;
+also conducted some experiments involving the&nbsp;&nbsp;
+number of the clients in particular we fixed it&nbsp;
+by beta to 0.5. And we let the number of clients&nbsp;&nbsp;
+vary between five and 50. And in this case, we&nbsp;
+can observe more or less the same instance that
+for a reasonable number of clients from&nbsp;
+five to 20, the performances are quite good.
+There is a drop in the accuracies for 50 clients,&nbsp;&nbsp;
+but since we're considering beta equals 0.5,&nbsp;
+but on 50 clients means that few labels some&nbsp;&nbsp;
+quantity will be on on the local data set,&nbsp;
+some will decline. So also in this case,&nbsp;&nbsp;
+we are we're falling in a weakness&nbsp;
+of the federated learning process.
+And finally, we tested the&nbsp;
+behavior of this approach as
+the number of blocks assigned to each client&nbsp;
+is varied. And we compare these results with&nbsp;&nbsp;
+the case of homogeneous federated learning,&nbsp;
+in which all the clients bring all the blocks.
+In this case, we can see that the in&nbsp;
+this measure, these tests are used
+As the as a proxy for measuring the behavior&nbsp;
+of the our approach. In the case, for example,
+all the clients ever are very have a&nbsp;
+very small computational competition,&nbsp;&nbsp;
+very small computational power. And in this case,&nbsp;
+we can see that in the scenario CMB. Basically,&nbsp;&nbsp;
+when some clients train a, all the blocks or&nbsp;
+a in a number of blocks, the performances are&nbsp;&nbsp;
+very good, we can notice a small drop in the&nbsp;
+in the performance is where all the clients&nbsp;&nbsp;
+only train a small number of blocks. But also&nbsp;
+this is somehow expected since in the in the&nbsp;&nbsp;
+procedure that phrase blocks then freeze the first&nbsp;
+block add one more block to the training process,&nbsp;&nbsp;
+probably some sort of information is loose across&nbsp;
+this process. And that's why the performances
+are a little worse. But in any case, in&nbsp;
+line with with what we say with what we&nbsp;&nbsp;
+saw before and also with the case&nbsp;
+of homogeneous federated learning.
+And this basically concludes this, this&nbsp;
+presentation, just a small remark about the&nbsp;&nbsp;
+two weeks permanent somehow the locally&nbsp;
+back propagate two approaches proposed&nbsp;&nbsp;
+the locally back propagated forward and shown&nbsp;
+here. Of course, there are experimental setups,&nbsp;&nbsp;
+we we needed to understand if these approaches
+can actually work. And so we just say&nbsp;
+normally, in the case of a classification&nbsp;&nbsp;
+task involving two simple data set some nice&nbsp;
+temperature on the minister only on fitful word&nbsp;&nbsp;
+architectures. Of course, no one experiments&nbsp;
+will be extended on different architectures,&nbsp;&nbsp;
+different tasks involving more realistic&nbsp;
+data sets. And this is a brief list of&nbsp;&nbsp;
+the references I used for this tool.&nbsp;
+And that's it. I would like to thank&nbsp;&nbsp;
+you for your attention. Thank you. Thank&nbsp;
+you so much for the wonderful talk. But
+let's have a q&a sessions.&nbsp;
+If anyone has questions,&nbsp;&nbsp;
+please unmute yourself and ask questions.
+Have you applied this method to any other data&nbsp;
+set? No. No, as I say, just in the in the end&nbsp;&nbsp;
+of the presentation. The these were preliminary&nbsp;
+investigations, we wanted to understand that if&nbsp;&nbsp;
+this kind of a hybrid methodologies between&nbsp;
+the football forward and back propagation
+actually work
+on an experimental setting. So we were taken&nbsp;
+out to look at the possible difficulties coming&nbsp;&nbsp;
+from different datasets, maybe more realistic&nbsp;
+datasets or stranger neural architectures? No.
+Now, we know that this kind of hybrid&nbsp;
+approaches can be used. Of course, they are not
+usable on all the domains on all the networks, but&nbsp;
+they have potentialities, in my opinion. And so we&nbsp;&nbsp;
+will even investigations about their possible&nbsp;
+usage and the limitations. They have some.
+Although you haven't applied that,&nbsp;
+other than I missed, I missed this. But
+you know, basically to the data. Right,&nbsp;
+sorry, I didn't get your question. We&nbsp;&nbsp;
+use the m&s data and fashion and needs&nbsp;
+to which is pretty similar to feminist.
+So that's basically two dimensional data.
+Exactly, they are using both the cases. So,&nbsp;
+there are two dimensional data, right? We&nbsp;&nbsp;
+didn't try it with three dimensional&nbsp;
+data, like see first 10 For example,&nbsp;&nbsp;
+we didn't actually we conducted some&nbsp;
+experiments for example on CIFAR. But we&nbsp;&nbsp;
+noticed that feed forward network struggle in&nbsp;
+reconstructing patterns are suffer due to the&nbsp;&nbsp;
+high dimensionality of the of the data. So, we&nbsp;
+we should better investigate these aspects or
+try the application of this kind&nbsp;
+of learning strategies on convolute&nbsp;&nbsp;
+other types of net of layers, for&nbsp;
+example, convolutional networks,&nbsp;&nbsp;
+in this case, convolutional&nbsp;
+layers in this case, I see
+any like expectations you have&nbsp;
+based on the experience on this?
+Okay, actually.
+I actually after we worked on this
+literature
+have emerged the some other&nbsp;
+manipulation of the football football
+of the football football algorithm, which&nbsp;
+basically rely on the on the approach
+we had that is to say improve the&nbsp;
+collaboration of the layers. This&nbsp;&nbsp;
+is the probably the main weakness of&nbsp;
+this algorithm. And this is what it&nbsp;&nbsp;
+has to be pushed to widen the range of&nbsp;
+the applicability of this algorithm.
+All these to say the thing that someone&nbsp;
+has tested these, this algorithm on CNN&nbsp;&nbsp;
+is by applying a two step back propagation of&nbsp;
+terminate back propagation. I don't exactly&nbsp;&nbsp;
+remember the name of the paper, but it is&nbsp;
+a very interesting work. So, I think that
+these approaches can be extended to&nbsp;
+at least two different architectures.
+Okay. Thank you. Is there any&nbsp;
+other questions from audience?
+If you do, please unmute and then ask questions.
+If not, well, let's thank our speaker,&nbsp;
+Fabio for the wonderful talk and hopefully&nbsp;&nbsp;
+through this talk. There will be some&nbsp;
+collaboration between Fabio and some&nbsp;&nbsp;
+folks at Lawrence Livermore National Lab&nbsp;
+or any other folks from the outside. Thank&nbsp;&nbsp;
+you. Thank you. Thank you very much. And&nbsp;
+thank you again for for this opportunity.
+Have

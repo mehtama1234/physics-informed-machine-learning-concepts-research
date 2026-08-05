@@ -1,0 +1,1449 @@
+Welcome to the GDPR seminar
+everyone. Before we introduce
+our invited speaker, let's go
+over some rules and logistics.
+First of all, please mute
+yourself during the talk. But if
+you have questions, you can
+unmute, and ask questions or use
+chat room to post your questions
+so that we can address them in
+training session at the end.
+Second, today's DDPS seminar is
+open to external audiences.
+Therefore, no classified
+discussion is allowed. So please
+watch out. Finally, the talk
+today will be recorded and
+uploaded in our YouTube channel.
+That's about it. Now let me
+briefly introduce our speaker
+today. It is an honor to host
+Dr. Jean long Lu who is an
+assistant professor in the
+Department of Mechanical
+Engineering at the University of
+Wisconsin at Madison. The
+current research of his group
+mainly focuses on developing
+data driven methods to learn
+closer models for complex
+dynamical systems, for example,
+multi scale multi physics and
+chaotic systems from direct and
+indirect data. Before joining
+utopia, mass Madison, he was a
+research scientist at Caltech
+working on a data driven climate
+modeling project. He got his PhD
+PhD degree in aerospace
+engineering at Virginia Tech in
+2018. And his dissertation is
+about using Bayesian inference
+and physics important machine
+learning in turbulence modeling
+today Jinlong will present an
+exciting topic, which is data
+driven closure modeling using
+derivative free common methods.
+I'm sure we will hear an
+exciting talk today. But before
+I pass the baton to Jinlong, let
+me ask a couple of questions.
+With you know, just to get to
+know you better, and to make
+this seminar somewhat informal,
+obviously, you're passionate
+about data driven closure
+modeling in general, is there
+any moments in your life when
+you realize that? Wow, this is
+it? This is the field I would
+like to commit my career, if you
+can share that moment. Yeah,
+the interest along this
+direction during my PhD study.
+So first, I joined a group, many
+focus on the condition of
+dynamics research. The just
+because one of the focus of the
+research is turbulence modeling,
+and existing turbulence models.
+I'll say many of them, not good
+enough for real applications and
+motivators to see okay, given
+the fact that amount is
+increasing rapidly in past few
+decades, can we leverage some
+data driven modeling techniques,
+try to help the predictive
+capability of the existing
+models. And that actually leads
+me to further explore this
+direction.
+Yeah. Awesome. Awesome. Last
+question. Second question. I
+understand that you are starting
+your career as an assistant
+professor. Although it was
+short, would you share your
+experience being a professor at
+a university good or bad? It's
+very good. Very good. Okay.
+Yeah. All right. And the
+research here is fantastic.
+Fantastic. And a lot of
+collaborations with within the
+faculties and other other
+department as well, I guess.
+Yeah. Awesome. Awesome. All
+right. Sounds good. The stage is
+yours in law.
+Thank you very much for the
+introduction and the questions.
+So thanks again for the
+invitation. Today, I'm going to
+share some recent works about
+data driven closure modeling
+using 33 kind of methods. So the
+general motivation, this
+direction of work, can you see
+my no somehow it's gone. Can you
+see the screen? Yes. Okay. So,
+the general motivation for this
+direction of work is changing
+proof the modeling of complex
+dynamical systems, for example,
+the Earth system, some energy
+harvesting, or rovers on Mars,
+or some kind of very complex
+physical systems involved in
+engineering applications, and
+common pain. The feature of all
+these systems is that they often
+involve multi scale or multi
+physics process. Since for which
+we cannot afford to numerically
+simulate every details. For
+example, if we take a look at
+the Earth system, we will have
+the cloud microphysics at
+millimeters up to the planetary
+waves can be 10,000 kilometers.
+So as this large wrench scales,
+it would be almost impossible to
+simulate everything else within
+the system. And that's why
+closure models are usually
+needed for some unresolved
+degrees of freedom and the talk
+of today then their focus would
+be to answering your question
+How to Improve closure modeling
+for complex dynamical systems by
+using some data driven methods
+okay. And before diving into the
+details, I like to briefly
+introduce what I mean by culture
+problem. So, let's assume that
+if we have the original system,
+follow this kind of general form
+of the and in practice the
+origin of system state use more
+you hear almost kind of involve
+very high dimensional space and
+simulating every details of that
+would be very, very extensive.
+And in practice, what people
+like to do instead of directly
+solving this equation for
+engineering problems, people
+will try to introduce some
+reduce order state capital U.
+The methods to introduce this
+kind of reduce order state
+include, for example, car
+screening, is a are more recent
+in the auto encoder. Once we
+decide what kind of reduce order
+states we want to work with, it
+will not be difficult to derive
+a corresponding common equation
+for this capital U. But the
+problem is that for the origin
+of Dynamics F, it's usually
+named nonlinear, which means
+that the derived exact form for
+this reducer state usually not
+only involve itself, but also
+involve some misinformation
+carried by the unresolved
+original system state. So the
+closure modeling means that we
+want to propose approximation f
+tilde that only depends on the
+information that we simulate,
+which means the capital U here,
+and hope that the F tilde can
+well approximate the bar the
+exact dynamics for this reduce
+RF state. But in practice, we
+know that it is not usually the
+case that f tilde can
+approximate f bar very well. And
+that's why in recent years,
+people start to think about a
+question, can we quantify the
+difference between these two f
+bar and f tilde was an
+additional term M and M
+basically characterize the arrow
+made by f tilde? And the next
+question is that can we use some
+data to help us determine what
+will be a good m should look
+like. So to make a choice, the B
+or people call it direct data,
+which means that was the hair
+data information about you and
+the true evaluation of M on the
+corresponding view, if we have
+this kind of data pairs, we can
+directly use standard regression
+methods to turn this unknown
+error term. If we want to use
+direct data to achieve that,
+that means that we need to
+estimate the evaluation of M on
+some system state capital U.
+that involve either we evaluated
+this kind of difference, we use
+the temporal derivative minus
+the approximation of tilde or we
+can directly use the difference
+between f bar and f tilde to
+help us get the data about the M
+evaluate on some of you. But
+both approaches they share some
+issues in practice. The first
+approach if we want to get a
+good approximation about the
+temporary delta here is usually
+not practical because your data
+may be noisy or even sparse in
+time, which means that
+estimating this term accurately
+is sometimes difficult in
+practice, on the other hand,
+getting the f bar in order to
+assess the difference between
+the two will involve simulating
+the original system and get the
+information at small you
+unresolved.
+Interrupt, there's a question
+from Chevy, I think it's better
+to answer that right now. So,
+ask about what is the Decker
+superscript before
+Oh Decker indicate that the
+system state corresponding to
+the true system. So, you can
+think that whenever we put the
+debtor here remain that this u
+is gathered instead of
+simulating this approximate
+system is gathered either by
+kind of sensor from the true
+system or if we have some high
+fidelity simulation and we post
+processing to get the
+corresponding capital U for the
+true system. Okay. And, as I
+mentioned that, those kinds of
+approaches, if we want to use
+direct data, which means u and
+M, evaluate on you, as training
+data pairs, we will encounter
+problems in practice. And that
+is the main reason that
+motivates us to think
+alternative approach instead of
+using regression standard
+techniques to kind of cin this
+error term, can we just use some
+indirect data, so, which means
+that we just have some
+observation about the true
+reduce all other systems that
+can tell you and instead of
+assuming that we can directly
+get the corresponding valuation
+of M on U dagger, we just rely
+upon this kind of indirect data,
+can we try to get good form of m
+and calibrated. So, this talk
+will focus on the use of this
+type of data or we call it
+indirect data. And I will many
+demonstrate the learning this
+unknown error term by using what
+we call it coming version. So,
+the next slide, I will briefly
+summarize some key features
+about the ensemble coming
+version Aki, which is the
+optimization method we use to
+help us category to that unknown
+error term. So, the ingress
+problem we try to solve in
+journal form can be viewed as
+the top equation here, we have
+some data y and we also have
+some forward map G that met the
+unknown parameters theta to the
+data space an error here just
+characterize the noise
+associated with the data
+generation process and epi
+formula is intuitive formula and
+j here indicates the index of
+ensemble and M represents the
+index of eti step. So, for the
+AMS you can I step if we look at
+here, we will have the current
+estimation about unknown
+parameters theta and then we
+will be able to plug in the
+current estimation into the
+Florida Map such that we will
+get the corresponding results in
+data space. But we know that
+current estimation may not be
+good enough, which means that
+comparing to the true data,
+there will be some mismatch
+between these two. And then we
+first use normalization factor
+try to normalize this mismatch a
+little bit here, gamma just
+indicate the occurrence of the
+noise and the capital G G
+letters here indicate the
+covariance within the data space
+produced by the Ford Model T.
+And we first normalize this data
+mismatch in data space. And then
+we have another covariance
+matrix between the parameter
+space and the data space. And we
+use this to project the
+normalized mismatch back to the
+parameter space and use that to
+adjust our current estimation
+about theta. And then they will
+give us the result for the theta
+estimation for the next Aki step
+and we will do that iteratively
+until we achieve some
+statistical convergence And at
+the bottom, I just briefly list
+a few advantages of using acai.
+The first point is that as you
+may have noticed that for this
+updating formula, all we need to
+access is the Ford map G
+evaluation, we don't require any
+gradient information about the
+format G, which means that the
+method that we present here is a
+derivative free optimization
+method. And also in practice,
+people find that the ensemble
+coming version just because his
+ensemble base mattered, it tends
+to be robust to noisy
+evaluations of the forum apogee.
+And also the core task here
+actually is equivalent to a
+convex optimization problem,
+which means that we can easily
+incorporate some additional
+constraints into this
+optimization process. And for
+the third part, I will revisit
+that in more details for the
+second part of this talk. But
+before that, let's get to the
+first part of this talk the data
+driven turbulence conversion
+modeling. So, as we already know
+that turbulence actually is
+ubiquitous in many types, flows,
+and in practice, Reynolds
+average navier stokes neurons
+models are still widely used in
+turbulence simulations, even
+though they have limited
+predictive capability for
+complex flows. So if we take a
+look at the rest equation, we
+will say that the only term
+needs to be modeled as sitting
+at the right hand side here is
+what we call Reno stress, how,
+and the difference between the
+touring stress and rents model
+Reno stress is usually unknown
+to us. If we can characterize
+this difference in a relatively
+accurate way, and then we can
+use this difference to help us
+further improve the predictive
+capacity of the rents
+simulations, okay. And the
+general goal, this kind of part
+is tried to propose pipeline
+helpers to characterize the
+difference between those two and
+use that to improve the rent
+simulation. And the example that
+I'm going to use is, well, we
+called flow over periodic hills.
+And the geometry of that flow is
+presented at bottom. So we have
+solid wall on top and bottom.
+And the general flow direction
+is from left to right. And we
+have periodic boundary condition
+for both inlet and outlet. And
+we assume that we have some
+sparse measurement of the renal
+stress.
+Sorry, the res modeled velocity
+you. And the goal here is try to
+estimate the full field.
+Reynolds stress discrepancy,
+whether it's the delta tau here,
+which means that as long as we
+have some data, as far as the
+space about the capital, you
+hear, can we try to estimate the
+delta tau as the full field. And
+if we can do that, we can use
+that to help us improve the
+rents model, we're not stressed,
+and then we can prove the
+simulation results after events.
+Okay. So that will be the
+general goal. And before diving
+into the details of the results,
+I'd like to briefly go through
+the summary of algorithm. So at
+beginning we assume that we can
+sample some realizations about
+the delta tau, the Reno stress
+discrepancy from some prior
+distributions, and then we'll
+have some ensemble of the Delta
+Tau. With that, we can plug in
+this ensemble initial points
+about the bounce house into the
+border model of the rent solver.
+And then we can try to simulate
+to get the corresponding
+velocity field u, capital U
+here. And then we can compare
+the simulated velocity with the
+elevation data which is just the
+sparse velocity at certain
+location. And we use the
+difference between these two to
+help us update the estimation
+about the ensemble of delta tau.
+And we do that intuitively until
+we achieve some statistical
+convergence about delta tau. So
+behind this general pipeline,
+actually, what we're doing here
+is the Bayesian inference. So
+assuming that we have some prior
+distribution about how, and this
+sparse observation provide us
+some likelihood model about the
+probability of observing those
+velocity on those points
+conditioned on the given delta
+tau. And then with these two, we
+want to evaluate the posterior
+distribution, which means that
+the probability distribution of
+delta tau, given the
+information, the velocity
+observation on those sparse
+points, okay. And here,
+actually, there is a question I
+haven't answered yet, is that at
+first, we assume that we have
+some prior distribution that we
+can sample the sample of delta
+tau, that will be the starting
+point of this algorithm. And the
+natural question would be how
+can we construct this prior
+distribution for the delta tau.
+So for the next slide, I will
+briefly introduce how we
+construct the price version of
+the data towel. So in our work,
+the price model is Gaussian
+process, whereas the covariance
+matrix in this detail form
+whereas the square exponential
+kernel and the prior knowledge
+is used to specify the field of
+barons, which is just the sigma
+here, the sigma is fueled with
+inputs, spatial coordinates. And
+for this specific flow, we know
+that the rains models tend to
+perform now good in this fresh
+air region and also this
+recirculation region. And that's
+why we empirically assign larger
+values for the field of bearings
+for the sigma. And after that,
+we can use slowly called Kohala
+expansion, try to get the
+corresponding basis functions
+that we can use to reconstruct
+the Gaussian random feud down at
+home. So at the bottom, I
+present several leading
+components, the candidate basis
+functions, and by linearly
+combine this different modes.
+And then we can have different
+realizations, this Gaussian
+random field for the data at
+home. And that is equivalent to
+say that the remaining task is
+try to estimate how would be the
+optimal way to linear combine
+all the spaces functions such
+that we can have good that had
+helped. And more rigorously,
+that means that we parameterize,
+the standard how, by using the
+basis functions we obtain from
+the Kornilov expansion, and we
+near combine them together using
+some unknown coefficients that
+high and the remaining task is
+given the sparse anticipation
+data about the velocity, we want
+to estimate the posterior
+distribution of unknown
+parameters set high, given the
+information, the sparse
+observation of velocity. Okay,
+so with the brief introduction
+about the algorithm, I'd like to
+show some results about this
+specific case. So on top we have
+the prior distribution of the
+simulated velocity field, some
+vertical profiles, and on the
+bottom, we present the posterior
+velocity distribution on the
+same vertical profiles. Here,
+the green lines indicate the
+ensemble of the simulation. So
+each line correspond to a
+different realization of the
+health and blue lines here
+correspond to the sample mean,
+and realize here correspond to
+the baseline rents results,
+which means that we just use a
+existing res model without
+correcting it. And blank lines
+here correspond to the direct
+numerical simulation data, which
+is a high fidelity simulation,
+we view as the tubes and black
+crosses indicate the location
+that we put the sensors such
+that we can gather the
+corresponding data acity data on
+this points. And as we can see
+that if we sample delta tau from
+the prior distribution and
+plugging into the forest Solver,
+we will get the scattering
+velocity profile for the
+simulated velocity on every
+point. And we also have the
+scattering, whereas the baseline
+array is approximately sitting
+in the middle. And if we
+incorporate data and try to
+estimate the optimal choices for
+those unknown parameters theta
+that help us characterize the
+data, how field and then the
+updated velocity field using the
+posterior distribution of the
+delta of how it's presented at
+bottom, as we can see that in
+many regions, especially the
+recirculation region, we
+achieved much better agreement
+with the choose the high
+fidelity simulation DS here,
+compared to the red lines, the
+baseline red simulation. So, as
+I mentioned that that example,
+is just one of the example that
+we try to characterize air model
+based on some indirect
+measurement data. In that
+context, the air model itself is
+the full acute renal stress. And
+the indirect data is just the
+sparse activation at the
+velocity field. As some of you
+have noticed that, in that
+example, we use the assumption
+that the renal stress that how
+is function instead of the
+result, system state, the
+velocity you we assume that is a
+function of spatial coordinates.
+And more recently, there is
+extension that work that extend
+the assumption of Reno's just
+answer to the velocity itself.
+And if you are interested in
+that extension, I highly
+recommend to the reference list
+on the bottom. Okay, I think I
+see some questions. Should I
+stop and try to answer them?
+Oh, it's up to you. However, you
+will, yeah,
+maybe we can try to answer those
+questions.
+Okay. Do you want me to? Okay.
+There is a question from
+someone. In slide nine, I
+believe that's what he meant by
+G nine, we see a discrepancy
+between DNS and posterior mean
+value, implying that there's a
+modal form error in parameterize
+Vinos stressful model, do you
+have any comment on how such
+error
+so the marries and would be a
+kind of restriction that we put
+here by combining some basis
+functions. So this kind of
+solution space for the data
+towel may not exactly cover the
+to Reno stress discrepancy,
+which means that we still see
+some mismatch between the
+optimal results that we can get
+and the to reference the DNS.
+But as I pointed in many
+regions, we definitely see
+noticeable improvement compared
+to the baseline rents. The in
+order to get closer to the
+truce, I think what we need to
+do is to propose some more
+informative kind of basis
+functions here.
+I see. There's one more question
+from John. On slide nine. Why is
+DNS a single line and not a
+family of blinds like the
+samples?
+That's the course for each
+ensemble here that means that we
+use a different choice for that
+how tried to correct the rents
+model rain or stress for the
+tour in Australia is actually a
+corresponding to the DS
+simulation, which means that for
+the s, there will be just kind
+of one simulation instead of
+kind of many, many or some
+books. Yeah.
+There was one more question from
+Chevy, do you want to answer
+that as well? Oh, yeah. Okay. He
+asked, How often do you assume
+measurement data are available?
+Is it at each time step of the
+baselines over?
+That's a very good question to
+clarify that actually, we are
+looking at the steady case,
+which means that the measurement
+data is just taken in states.
+And we are not considering the
+unsteady case. And probably
+that's the confusion why the DS
+is kind of very serious looking
+likes the choruses already time
+averaged.
+I see. relevant question from me
+is that the sparsity of those
+data in space probably affect
+the performance. Right? Do you
+have any idea how sparse and how
+dense those data needs to be?
+Yeah,
+that's a great question. So in
+this work, we just empirically
+choose those data points, based
+on our prior knowledge about in
+which region rents platform not
+well. Birds, if we want to kind
+of do it's more rigorously,
+actually, that relate to what
+people call optimal design,
+about the experiments.
+Right. Okay. Thank you. No more
+question for now.
+Yeah, no worries. Okay, before
+starting the next part, I think
+I need to plug in the power.
+Okay. Yeah. Then I mean,
+in case that I disappear. Okay.
+Sorry about that.
+We'll take your time.
+Okay, thank you. We are
+glad that we have been q&a
+session. All right, go ahead.
+So then, let's move to the
+second part of this talk,
+imposing sparsity to assemble
+coming version. Okay. So as I
+mentioned, and a brief
+introduction about Aki, that one
+of the advantage of AKI is that
+the core task is equivalent to a
+convex optimization problem,
+which means that if we want to
+further incorporate certain
+types of constraints, we can do
+that in the framework of
+constrained convex optimization
+problem. Okay. And in order to
+illustrate this point, let's
+think that we introduce a new
+variable w is just the
+evaluation of the format. And
+we'll use this new variable to
+augment the existing vector an
+on premises data, and then we
+will also have the corresponding
+Ford map that contain both data
+and juicy data. And whereas,
+this argumentation, we can
+formulate a noisy observed
+dynamical system in such a way
+with the augmented system state
+with data and W and here the h
+matrix is just a projection
+matrix H times B will give us
+the W and the orthogonal part of
+projection will give us the
+theta. So, is all this kind of
+manipulation about the new
+system, then, actually applying
+the AI updating formula every
+step is shown as equivalent to
+solving the bottom optimization
+problem. So, the reason that is
+equivalent to solving this
+problem is that is equivalent to
+applying the standard common
+rotor to this augmented system.
+And if we take a look at the
+optimization problem, that we
+are actually solving that
+contains two parts. And for
+those terms here, the key
+feature is that they are
+quadratic with respect to the V
+vectors, which means that the
+optimization problem that we try
+to solve, although when we apply
+the AKI updating formula, we're
+not actually solving this
+optimization problem, we use
+that analytical form to give us
+the next step estimation about
+the unknown parameters, but this
+process is equivalent to this
+kind of quadratic or convex
+optimization problem presented
+at bottom and building upon
+that, actually wait can refer to
+its limit for the objective
+function to make it more
+compatible, whereas the standard
+form quadratic programming. And
+then imposing sparsity within
+acai actually involves that
+solving this standard quadratic
+programming problem was this one
+penalty or constraint, okay?
+Remember that this projection of
+v will give us theta, so what
+we're looking at here is just
+the ln norm of the unknown
+factor, and we want that to be
+small, so it's smaller or equal
+to some constant gamma, okay.
+And the good thing is that we
+can relate the constrained
+optimization specifically
+imposing sparsity into acai with
+this equivalent constraint
+quadratic programming problem,
+the the only problem here is
+that the constraint here is not
+the typical linear inequality,
+which means that we cannot
+directly call existing package
+to solve this problem. In order
+to address this issue, we borrow
+the idea from famous paper than
+now. So paper and we try to
+introduce two variables,
+auxiliary variables, the plus
+and the minus such that we can
+parameterize V and also absolute
+value of v with these two
+auxiliary variables. So, they
+just correspond to the positive
+and natural part of the V
+itself. And whereas introducing
+this auxiliary variables, we can
+reformulate the constraint
+quadratic programming problem
+presented in the middle and we
+have this kind of final form of
+the quadratic programming
+problem associated whereas the
+auxiliary variables be passed,
+and b minus. And the good thing
+is that with this kind of
+transformation, we will have the
+standard linear inequality,
+which means that for the bottom
+problem, we can directly call
+existing quadratic programming
+package to solve that, and we
+solve that as the additional
+optimization once we have done
+each Aki updating step. Okay.
+So, should I stop here to answer
+your question? You can go
+ahead, I don't see any
+questions. I can check. Okay.
+Yeah. So then, after introducing
+the details of the method, let's
+take a look at a simple example.
+So for the two system, we
+started the model slashing ski
+equation. So at the right hand
+side of this equation, we can
+see that we have three terms.
+And for the model system, we
+assume that we don't know about
+the detail three terms, and the
+right hand side, and we try to
+use linear combinations of some
+redundant bases, and try to
+figure out what will be the
+optimal choices of the
+coefficients unknown
+coefficients, alpha and beta
+sitting in front of those basis
+functions. And instead of doing
+the calibration of alpha beta
+using the standard system
+identification approach, what we
+assume here is that we only have
+access to some time average data
+of the user, instead of the time
+series view. More specifically,
+we're assuming that we have a
+few moments of the new
+autocorrelation of new and the
+spatial correlation of the
+system state you with that, we
+want to see, can we estimate the
+optimal choice for the alpha and
+beta and in this problem is
+designed in such a way that many
+components of alpha and beta a
+should be zero? Because many
+basis functions, they are just
+redundant. And we help
+and you're right before, I
+think, before the slide 18 There
+was a question I missed it,
+Adena, he asked how to check
+whether this problem is getting
+optimized at local minima or the
+global minima. Are we using some
+graphical methods to visualize
+this? Very good question. So for
+this one, we rely upon the
+existing package for the cost
+and convex optimization. So I
+would say in most cases, the
+optimal will be global optimal.
+But there are certain cases, if
+we run into some singularity
+issue, that might complicate
+things that that will manifest
+in the estimated theta. Yeah,
+which means that for their fate,
+if we're plugging into the
+format of G, we will see a clear
+difference between the available
+data we have. Okay. Let's
+proceed with the result part. As
+I mentioned, the goal is try to
+match this time average data and
+try to estimate the unknown
+parameters alpha and beta. And
+here, I just present the results
+in dataspace, using the, what we
+call the sparse epi. And for
+center Aki actually, it can
+achieve similar quality of
+agreement in the data space. But
+when we try to simulate the
+system calibrated by both
+methods under AI, and as far as
+the acai, and we check the
+profile evolve with time, as we
+can see, clearly standard AI, so
+quite different behavior than
+the true system. And as far as
+the acai agree is much better,
+where's the trust system, and we
+try to heart the unknown for all
+the redundant coefficients,
+alpha and beta. And we found
+that for sparse EPI, the
+algorithm managed to push the ln
+norm for all redundant
+coefficients to value very close
+to zero. But that's not the case
+for standard QA, which means
+that if we don't introduce
+sparsity in this case, just
+because we only have limited
+amount of limited indirect data,
+we can run to the overfitting
+issue in the data space. And if
+we assimilate the category
+system overfitting system, the
+result may not agree as well
+whereas the true system, but for
+sparse and UK, I was we
+incorporate the sparsity
+constraint, we managed to
+resolve this issue. Okay. And
+so, for the rest of the talk, I
+would like to briefly share some
+efforts about going beyond
+deterministic closures. So, as
+we mentioned before that the
+general goal is tried to
+characterize difference between
+f bar and tilde, and for most of
+the existing works, we try to
+characterize that with
+deterministic error term. But in
+some applications, especially
+for the applications that we
+have, kind of not a clear scale
+separation, that usually happens
+in many complex systems, that we
+can not rely upon the simple
+case that if we have clear scale
+separation, and then or
+unresolved scales, basically,
+when they aggregate the effect
+will not introduce any
+stochasticity in the kind of
+results system. But for the
+system without a clear scale
+separation. That assumption
+might not hold true anymore.
+That's why we try to introduce
+additional term to characterize
+the stochasticity due to
+neglecting those unresolved
+information explicitly. And
+then, actually, that relates to
+how to chain the M and sigma
+more specifically, how to figure
+out the unknown parameters
+associated with the M and sigma
+function here based on some data
+and that relates to the standard
+problem about estimating the
+unknown parameters in stochastic
+differential equation from some
+data, and there have been
+already different directions
+that can achieve this goal. For
+example, we can use creamer moil
+Amridge, to try to read out the
+m n sigma directly from time
+series data or we can use
+backward Ste or some stochastic
+control approach to try to help
+us optimize the alpha and gamma
+unknown coefficients here or we
+can assume some special
+structure about the problem and
+then we can use what we call
+conditional Gaussian system try
+to derive the analytical form
+that can help us solve for the
+unknown premiums alpha and gamma
+Okay, before our target, we are
+aiming at slightly different
+scenario, that we assume that we
+only have a limited amount of
+indirect data, which means that
+reading the drift, empty and
+diffusion second term directly
+from the time series data would
+be impossible. And also, we try
+to use the derivative free
+optimization method because the
+existence, this wiener process
+will introduce some difficulty,
+especially when we have this
+kind of multiplicator noise term
+sitting front in order
+introducing clarity about
+gradient if we want to use some
+adjunct base metrics. That's why
+we instead just try to stay with
+this derivative free
+optimization method that we have
+introduced before the ensemble
+conversion. And let me briefly
+show two examples that we have
+done along this direction. The
+first one is what we call the
+noisy Lorenz 63 system, or the
+true system is just the standard
+or insistent pass on noise. And
+for the model system, we assume
+that some part within the
+standard system is unknown, and
+also the diffusion coefficient
+of the noisy system is unknown
+to us. And we try to jointly
+learn these two things based on
+some time average data, the
+system state X 1x two and x
+three. And here I present the
+result in data space. When we
+use the stochastic term, or if
+we just don't use the past term,
+just try to use a deterministic
+error term to characterize the
+difference between the model
+system and choose system.
+As we can see here, that the
+comparison against the true
+data, both of them show good
+performance, which means that we
+can at least match the existing
+data in data space. And the
+natural question would be does
+it mean the two models are
+equally good? In order to answer
+this question, we tried to
+simulate both category two
+systems for much longer time and
+try to plot recall invariant
+measure. If some of you are not
+familiar with this terminology,
+you can just think that as the
+probability density function for
+each system state variable, if
+we simulate the system for a
+very long time, as we can see
+that, for the non term behavior
+comparison, if we didn't enable
+the stochastic term, and then
+the imminent measure of the
+characteristic system will be
+noticeably different from the
+true system. But if we joined in
+learn the deterministic or non
+term and also the stochastic
+term together, we can say that
+if we simulate for a much longer
+time, the rent measure or long
+term behavior of the model
+system still agree is pretty
+good, whereas the true system
+but as you may see here is just
+a toy example, that noise is
+designed to be in this
+structure, whereas some wiener
+process and the next example, I
+like to briefly show a different
+setting. Now, we still focus on
+our own system, but we are
+studying the reduced order
+setting that for the two are in
+a system based on the results of
+Professor Palmer about two
+decades ago, that if we do some
+pod transformation, we can
+transform the system to a new
+communist such that the third
+dimension carries least energy.
+So it approximately carries
+about 5% of the system energy
+which means that if we want to
+build a reuse on our model,
+straightforward thought of the
+less just throw away this third
+dimension of course, it's just
+carry a tiny amount of the
+system energy right let's just
+get rid of it. And then we will
+have a two dimensional system.
+But in the original work, sir
+Palmer, a found that that if we
+simulated reduce our system, the
+chaotic behavior basically
+disappear, which means that the
+reduced order system can not
+characterize the true behavior
+of the unknown system. The more
+interestingly he showed that if
+which just introduced some
+noise, just why nice, and then
+we can get the chaotic behavior
+back at least qualitatively. So,
+inspired this kind of
+interesting phenomena, we try to
+instead of just adding some
+empirical white noise into the
+reduced order model, we try to
+add both deterministic and the
+stochastic model into the
+reduced order model. And we
+tried to estimate M one m two
+sigma and sigma two more
+specifically, the unknown
+parameters associated with the
+models based on some time
+average data of a one and a two.
+And at bottom here, I just show
+the key results of this example,
+that if we try to calibrate the
+honor M one m two sigma one and
+sigma two terms based on some
+time averages statistics of a
+one a two and we are earning
+them categorically model and
+simulate the system for a much
+longer time and compare the rent
+measure against the shoe
+invariant measure if anyone were
+to instead of just getting a
+qualitative chaotic behavior
+back for the collaborative
+system, if we use data to help
+us category, more sophisticated
+stochastic model, we can get
+qualitative agreement and the
+long term behavior for the
+reduced order system. So, with
+that, I would like to briefly
+summarize what we have presented
+here. The first is that many
+complex dynamical systems
+involved multi scale dynamics
+without a clear scale
+separation, for which
+numerically resolving all the
+scales is too expensive and
+closure modeling is needed when
+simulating the systems. And also
+it demonstrated the learning of
+closures based on indirect data.
+It can be sparse activation
+space, or it can be time average
+statistics of your time series,
+system state using ensemble
+coming version. And I want to
+emphasize that just because this
+is a derivative free
+optimization method, we don't
+need to access the gradient
+information of your Ford Model
+G. And also sparsity constraint
+can help avoid overfitting in
+the learning of corrosion
+models, when on a indirect data
+is available, and the amount of
+data is limited. And finally, we
+demonstrate that derivative free
+coming version methods also
+enabling the learning of
+stochastic coaches using
+indirect data. So for those who
+are interested in exploring more
+about the common inversion
+matters that I mentioned here.
+So, at bottom, I just attach a
+link about the package of
+different conversion methods
+that was developed and
+maintained by the creamer group
+at Caltech. So with that, I'm
+happy to take questions. Thank
+you.
+Thank you so much long, there
+was a wonderful, insightful
+talk. Yeah, let's let's have a
+q&a sessions. How I can start.
+is,
+you know, the, if you go back to
+slide 14, you introduce like,
+augmentation of new variable,
+right? Yeah. I forgot the
+notation for the new variables.
+W, right. To make the AKI as an
+convex optimization problem, is
+it is it well known? Result? I'm
+not familiar with the and simple
+common inversion, that's
+maybe, yeah, the first work that
+systematically summarize this
+kind of equivalency, I will say
+can be found in this reference.
+So it came out in 2019 90.
+So it's not I guess, not long
+ago, like three years ago, four
+years ago. Yeah. Interesting.
+And also, can you comment about
+those, this computational cost
+of PKI in general?
+That's a good question. So in
+general, the AKI just because
+we're using the updating formula
+Here is our sample base method,
+which means that we need to run
+a bunch of ensemble simulation,
+specifically for the forward map
+GQ, as long as we can kind of
+have kind of parallel computing
+resources, just because each
+Ford evaluation here is like
+kind of isolated, so which means
+that they can be done in a
+parallel way. And another kind
+of expensive part here, some of
+you may notice is the matrix
+inversion here. And the good
+thing is that for this work, we
+only focus on the limited amount
+of data, remember that the kind
+of inversion we performed here
+actually corresponding to the
+dimension of the database. So
+for the limited amount of data,
+this kind of matrix inversion,
+usually, it will not cause any
+trouble, we can just use some
+naive matrix inversion, some
+kind of regular machines, but in
+the situation that if we want to
+perform kind of similar methods
+in high dimensional data space,
+and then we need to be careful
+about the efficiency that this
+matrix inversion key. But the
+good thing is that the gamma
+here is just diagonal matrix in
+many cases, and the covariance
+matrix here, as long as we
+introduce some localization
+technique, it can be a sparse
+matrix, which means that the
+efficiency of extending this
+method to large scale problem
+involve the efficiency of
+solving the inversion of sparse
+matrix. Awesome. Yep. Very nice.
+Slide eight. What,
+what is the motivation of
+choosing crier as a decision
+process? creation process as a
+prior shocking Gaussian
+processes?
+Yeah, that's a great question.
+So one motivation is that we
+want to ensure some smoothness
+about the sampled data. And if
+we just assume Gaussian process,
+and if we use square exponential
+kernel, and then the sample it's
+kind of done at how we came
+through this, Muslims of that,
+so that's kind of one critical
+prior we want to incorporate.
+Another reason that we rely on
+caution is that it's less
+expensive. So, if we want to
+kind of sample from more
+sophisticated kind of stochastic
+process, it tends to be more
+expensive. It's like a trade
+off.
+Yeah. Yeah, those are the
+computational vision and the
+Smoothness reason, but what if
+the prior is not actually
+Gaussian?
+So, if the prior is not actually
+caution, I will say instead of
+directly sampling from that
+prior, because sometimes caution
+prior can be very expensive to
+directly sample ways maybe we
+can try to map caution to
+negotiate. So along that
+direction, so the non Gaussian
+prior generation, because prior
+is more about some kind of
+modeling choices, if we really
+have the kind of physical
+justification to justify some
+non Gaussian prior, I have seen
+relevant work just focusing on
+non caution prior generation by
+using dense the generative
+adversarial network basically,
+you have the mapping from the
+low dimensional Gaussian random
+vector to high dimensional now
+gotten LM actor and then the
+mapped Now, question actor can
+be used as the sample from your
+non question try. Interesting.
+Interesting.
+Okay, thank you so much, Jen
+long. Is there any questions
+from audience? And they've been
+diligent asking your question
+during the talk, so
+I'm happy to answer questions.
+They are All right, good
+questions
+I guess I guess they don't have
+questions. Well, but still, you
+can ask questions in long by
+emailing. And yeah, I'm sure
+sumulong is will be very happy
+to have any questions via email.
+And also some collaboration
+items. You will, you will be
+happy to have a collaboration.
+Yeah. Oh, I sense from ARB
+enough. Does Aki works for high
+dimensional problems,
+yet. So I think that relate to
+partially relate to a question
+that we briefly discuss the
+conditional limitation here. As
+I mentioned, if we have high
+dimensional parameter space,
+that would not cause much issue,
+because here is just kind of
+high dimensional matrix vector
+multiplication. But if the data
+space is high dimensional, and
+then the matrix inversion here
+can hurt us, if we just use
+naive will kind of standard
+general matrix inversion
+techniques. But as I mentioned,
+as long as we introduced some
+localization about this
+covariance matrix, the course
+anyway, we estimate this
+covariance based on the
+ensemble. And usually we don't
+have enough kind of ensemble to
+estimate on the covariance,
+which means that we can just
+focus on what we can estimate a
+relatively accurate way to
+localize that current structure
+and just kind of thresholds,
+other kind of long range
+clearance. And in that way, this
+matrix becomes a sparse matrix.
+And in order to really
+generalize this method to very
+high dimensional data space, as
+long as we can have efficient
+sparse matrix, large sparse
+matrix inversion algorithm, we
+can apply them here, it will be
+a separate kind of direction.
+Adding up as the gain
+localization means to reduce the
+dimensionality.
+Localization means that if we
+estimate this covariance matrix,
+that will be the dimension of
+data space times dimension of
+data space. And actually, some
+of the off diagonal terms, we
+don't have enough information to
+just meet them accurately. And
+then we can just threshold those
+kinds of long range currents,
+which means that we just pick
+those kinds of shot wrench
+covariance information and
+introduce many zeros in other
+parts of the matrix.
+A way of specifying matrix. Any
+other question? Well, if not,
+let's thank our speaker Jean
+long for a very insightful and
+wonderful talk. Very nice. Thank
+you. Yeah,
+bigger approach or the rotation
+and other questions. Thanks.
+Thank you for the nice talk. All
+right. Let's end here. Bye.

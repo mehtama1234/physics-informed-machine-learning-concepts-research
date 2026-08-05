@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chapter 46 - Use Machine Learning Where Scale Information Gets Lost</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="sidebar">
+        <h1>DDPS Study</h1>
+        <a href="index.html">Start</a>
+        <a href="review-path.html">Review Path</a>
+        <a href="plain-words.html">Plain Words</a>
+        <a href="method-map.html">Method Map</a>
+        <a href="self-check.html">Self Check</a>
+        <a href="capstone.html">Capstone</a>
+        <a href="theme-index.html">Theme Index</a>
+        <a href="domain-map.html">Domain Map</a>
+        <a href="paper-reader.html">Paper Reader</a>
+        <a href="common-mistakes.html">Common Mistakes</a>
+        <a href="study-plan.html">Study Plan</a>
+        <a href="math-map.html">Math Map</a>
+        <a href="prerequisite-map.html">Prerequisite Map</a>
+        <a href="cheat-sheet.html">Cheat Sheet</a>
+        <a href="chapter-01.html">Chapter 1</a>
+        <a href="chapter-02.html">Chapter 2</a>
+        <a href="chapter-03.html">Chapter 3</a>
+        <a href="chapter-04.html">Chapter 4</a>
+        <a href="chapter-05.html">Chapter 5</a>
+        <a href="chapter-06.html">Chapter 6</a>
+        <a href="chapter-07.html">Chapter 7</a>
+        <a href="chapter-08.html">Chapter 8</a>
+        <a href="chapter-09.html">Chapter 9</a>
+        <a href="chapter-10.html">Chapter 10</a>
+        <a href="chapter-11.html">Chapter 11</a>
+        <a href="chapter-12.html">Chapter 12</a>
+        <a href="chapter-13.html">Chapter 13</a>
+        <a href="chapter-14.html">Chapter 14</a>
+        <a href="chapter-15.html">Chapter 15</a>
+        <a href="chapter-16.html">Chapter 16</a>
+        <a href="chapter-17.html">Chapter 17</a>
+        <a href="chapter-18.html">Chapter 18</a>
+        <a href="chapter-19.html">Chapter 19</a>
+        <a href="chapter-20.html">Chapter 20</a>
+        <a href="chapter-21.html">Chapter 21</a>
+        <a href="chapter-22.html">Chapter 22</a>
+        <a href="chapter-23.html">Chapter 23</a>
+        <a href="chapter-24.html">Chapter 24</a>
+        <a href="chapter-25.html">Chapter 25</a>
+        <a href="chapter-26.html">Chapter 26</a>
+        <a href="chapter-27.html">Chapter 27</a>
+        <a href="chapter-28.html">Chapter 28</a>
+        <a href="chapter-29.html">Chapter 29</a>
+        <a href="chapter-30.html">Chapter 30</a>
+        <a href="chapter-31.html">Chapter 31</a>
+        <a href="chapter-32.html">Chapter 32</a>
+        <a href="chapter-33.html">Chapter 33</a>
+        <a href="chapter-34.html">Chapter 34</a>
+        <a href="chapter-35.html">Chapter 35</a>
+        <a href="chapter-36.html">Chapter 36</a>
+        <a href="chapter-37.html">Chapter 37</a>
+        <a href="chapter-38.html">Chapter 38</a>
+        <a href="chapter-39.html">Chapter 39</a>
+        <a href="chapter-40.html">Chapter 40</a>
+        <a href="chapter-41.html">Chapter 41</a>
+        <a href="chapter-42.html">Chapter 42</a>
+        <a href="chapter-43.html">Chapter 43</a>
+        <a href="chapter-44.html">Chapter 44</a>
+        <a href="chapter-45.html">Chapter 45</a>
+        <a href="chapter-46.html">Chapter 46</a>
+        <a href="chapter-47.html">Chapter 47</a>
+        <a href="chapter-48.html">Chapter 48</a>
+        <a href="chapter-49.html">Chapter 49</a>
+        <a href="chapter-50.html">Chapter 50</a>
+        <a href="chapter-51.html">Chapter 51</a>
+        <a href="chapter-52.html">Chapter 52</a>
+        <a href="chapter-53.html">Chapter 53</a>
+        <a href="chapter-54.html">Chapter 54</a>
+        <a href="chapter-55.html">Chapter 55</a>
+        <a href="chapter-56.html">Chapter 56</a>
+        <a href="chapter-57.html">Chapter 57</a>
+        <a href="chapter-58.html">Chapter 58</a>
+        <a href="chapter-59.html">Chapter 59</a>
+        <a href="chapter-60.html">Chapter 60</a>
+        <a href="chapter-61.html">Chapter 61</a>
+        <a href="chapter-62.html">Chapter 62</a>
+        <a href="chapter-63.html">Chapter 63</a>
+        <a href="chapter-64.html">Chapter 64</a>
+        <a href="chapter-65.html">Chapter 65</a>
+        <a href="chapter-66.html">Chapter 66</a>
+        <a href="chapter-67.html">Chapter 67</a>
+        <a href="chapter-68.html">Chapter 68</a>
+        <a href="chapter-69.html">Chapter 69</a>
+        <a href="chapter-70.html">Chapter 70</a>
+        <a href="chapter-71.html">Chapter 71</a>
+        <a href="chapter-72.html">Chapter 72</a>
+        <a href="chapter-73.html">Chapter 73</a>
+        <a href="chapter-74.html">Chapter 74</a>
+        <a href="chapter-75.html">Chapter 75</a>
+        <a href="chapter-76.html">Chapter 76</a>
+        <a href="chapter-77.html">Chapter 77</a>
+        <a href="chapter-78.html">Chapter 78</a>
+        <a href="chapter-79.html">Chapter 79</a>
+        <a href="chapter-80.html">Chapter 80</a>
+        <a href="chapter-81.html">Chapter 81</a>
+        <a href="chapter-82.html">Chapter 82</a>
+        <a href="chapter-83.html">Chapter 83</a>
+        <a href="chapter-84.html">Chapter 84</a>
+        <a href="chapter-85.html">Chapter 85</a>
+        <a href="chapter-86.html">Chapter 86</a>
+        <a href="chapter-87.html">Chapter 87</a>
+        <a href="chapter-88.html">Chapter 88</a>
+        <a href="chapter-89.html">Chapter 89</a>
+        <a href="chapter-90.html">Chapter 90</a>
+        <a href="chapter-91.html">Chapter 91</a>
+        <a href="chapter-92.html">Chapter 92</a>
+        <a href="chapter-93.html">Chapter 93</a>
+        <a href="chapter-94.html">Chapter 94</a>
+        <a href="chapter-95.html">Chapter 95</a>
+        <a href="chapter-96.html">Chapter 96</a>
+        <a href="chapter-97.html">Chapter 97</a>
+        <a href="chapter-98.html">Chapter 98</a>
+        <a href="chapter-99.html">Chapter 99</a>
+        <a href="chapter-100.html">Chapter 100</a>
+        <a href="chapter-101.html">Chapter 101</a>
+        <a href="chapter-102.html">Chapter 102</a>
+        <a href="chapter-103.html">Chapter 103</a>
+        <a href="chapter-104.html">Chapter 104</a>
+        <a href="chapter-105.html">Chapter 105</a>
+        <a href="chapter-106.html">Chapter 106</a>
+        <a href="chapter-107.html">Chapter 107</a>
+        <a href="chapter-108.html">Chapter 108</a>
+        <a href="chapter-109.html">Chapter 109</a>
+        <a href="chapter-110.html">Chapter 110</a>
+        <a href="chapter-111.html">Chapter 111</a>
+        <a href="chapter-112.html">Chapter 112</a>
+        <a href="chapter-113.html">Chapter 113</a>
+        <a href="chapter-114.html">Chapter 114</a>
+        <a href="chapter-115.html">Chapter 115</a>
+        <a href="chapter-116.html">Chapter 116</a>
+        <a href="chapter-117.html">Chapter 117</a>
+        <a href="chapter-118.html">Chapter 118</a>
+        <a href="chapter-119.html">Chapter 119</a>
+        <a href="chapter-120.html">Chapter 120</a>
+        <a href="chapter-121.html">Chapter 121</a>
+        <a href="chapter-122.html">Chapter 122</a>
+        <a href="chapter-123.html">Chapter 123</a>
+        <a href="chapter-124.html">Chapter 124</a>
+        <a href="chapter-125.html">Chapter 125</a>
+        <a href="chapter-126.html">Chapter 126</a>
+        <a href="chapter-127.html">Chapter 127</a>
+        <a href="chapter-128.html">Chapter 128</a>
+        <a href="chapter-129.html">Chapter 129</a>
+        <a href="chapter-130.html">Chapter 130</a>
+        <a href="chapter-131.html">Chapter 131</a>
+        <a href="chapter-132.html">Chapter 132</a>
+        <a href="chapter-133.html">Chapter 133</a>
+        <a href="chapter-134.html">Chapter 134</a>
+        <a href="chapter-135.html">Chapter 135</a>
+        <a href="chapter-136.html">Chapter 136</a>
+        <a href="chapter-137.html">Chapter 137</a>
+        <a href="from-zero.html">From Zero</a>
+        <a href="pinn-from-zero.html">PINNs From Zero</a>
+        <a href="rom-from-zero.html">ROMs From Zero</a>
+        <a href="manifold-from-zero.html">Manifolds From Zero</a>
+        <a href="synthesis.html">Synthesis</a>
+        <a href="big-picture.html">Big Picture</a>
+        <a href="examples.html">Examples</a>
+        <a href="lesson-001.html">Lesson 001</a>
+        <a href="lesson-002.html">Lesson 002</a>
+        <a href="lesson-003.html">Lesson 003</a>
+        <a href="bridge.html">AISE Bridge</a>
+        <a href="audit.html">Transcript Audit</a>
+      </nav>
+      <main class="content">
+        <p class="eyebrow">Narrative chapter</p>
+        <h1>Use Machine Learning Where Scale Information Gets Lost</h1>
+
+        <section class="lesson-claim-chain">
+          <h2>Read This Chapter As One Claim</h2>
+          <p>Machine learning is useful in multiscale modeling when it becomes the disciplined bridge between a small-scale truth and a large-scale equation. The learned piece must summarize what the large model removed, not behave like a loose black-box shortcut.</p>
+          <div class="lesson-claim-grid">
+            <div>
+              <strong>Everyday problem</strong>
+              <span>Atoms, molecules, eddies, fibers, or polymer shapes control the large behavior, but carrying all of that detail inside the large simulation is too expensive.</span>
+            </div>
+            <div>
+              <strong>Shared promise</strong>
+              <span>Use lower-scale simulations as expensive teachers, physics as structure, and concurrent learning to build a missing force law, closure, constitutive term, or material relation.</span>
+            </div>
+            <div>
+              <strong>Hidden danger</strong>
+              <span>A fast learned term can fail if it ignores symmetry, extensivity, molecular shape, uncertainty in unexplored states, or the equation it must live inside.</span>
+            </div>
+            <div>
+              <strong>First rejection test</strong>
+              <span>Reject the learned bridge if it cannot explain what lower-scale evidence supports it, what physics constraints it respects, and where active learning still finds uncertainty.</span>
+            </div>
+          </div>
+        </section>
+
+        <p>This chapter uses video 49, Weinan E's DDPS talk on machine learning and multiscale modeling. The talk is not about using a neural network because it is fashionable. It is about a long-standing modeling problem: small-scale physics contains the truth we need, but large-scale simulations cannot afford to carry every small-scale detail.</p>
+
+        <p>The first-principles question is simple. If atoms, molecules, eddies, or fibers control the large behavior, how do we pass only the needed small-scale information upward without inventing an unreliable hand-made rule?</p>
+
+        <div class="scale-info-loss" aria-label="Multiscale modeling loses information between small and large scales">
+          <div>fine-scale physics</div>
+          <div>too expensive to run everywhere</div>
+          <div>large-scale model needs missing term</div>
+          <div>ML estimates the scale bridge</div>
+        </div>
+
+        <h2>Why Multiscale Modeling Hits A Wall</h2>
+        <p>Many scientific models form a ladder. Quantum mechanics sits below density functional theory. Molecular dynamics sits below coarse-grained molecular dynamics. Those sit below continuum mechanics, fluid equations, solid mechanics, and turbulence models.</p>
+
+        <p>Every step up the ladder removes detail. That is necessary because the full lower model is too expensive. But the removed detail does not disappear from reality. It reappears as a missing modeling term: a potential energy function, an exchange-correlation functional, a constitutive law, a closure model, an equation of state, or a turbulence model.</p>
+
+        <div class="model-ladder-gap" aria-label="Each model scale needs terms from the scale below">
+          <div>quantum or molecular truth</div>
+          <div>coarse model removes detail</div>
+          <div>missing term must summarize detail</div>
+          <div>macro simulation becomes possible</div>
+        </div>
+
+        <h2>The Old Choices Were Both Painful</h2>
+        <p>One old choice was to write an empirical rule by hand. That can be fast, but it may fail when the material, molecule, flow, or operating condition changes. A hand-fit potential for one material may not be reliable for another. A hand-made turbulence or non-Newtonian fluid model may work in one setting and break in another.</p>
+
+        <p>The other old choice was to call the expensive lower-scale model directly. That can be more faithful, but it can be impossibly slow. For atomistic systems, density functional theory can compute accurate forces, but doing that inside every molecular-dynamics time step for huge systems is too expensive.</p>
+
+        <div class="old-scale-choices" aria-label="Old multiscale choices trade reliability against cost">
+          <div>hand-made macro rule</div>
+          <div>fast but unreliable</div>
+          <div>direct fine-scale calculation</div>
+          <div>reliable but too expensive</div>
+        </div>
+
+        <h2>Machine Learning Is The Missing Estimator</h2>
+        <p>The speaker's claim is that machine learning helps exactly where older multiscale methods lacked a strong tool: extracting high-dimensional information from small-scale simulations and turning it into a usable large-scale model.</p>
+
+        <p>This is not the same as fitting a curve for display. The aim is an interpretable and reliable physical model. In plain terms, the learned piece should become something a scientist can put inside a simulator and defend: this is the force law, this is the closure term, this is the constitutive update, this is the equation term produced from lower-scale evidence.</p>
+
+        <div class="ml-estimator-role" aria-label="Machine learning estimates the missing bridge term in multiscale models">
+          <div>lower model generates evidence</div>
+          <div>ML learns compact relation</div>
+          <div>physics constraints shape it</div>
+          <div>new physical model term</div>
+        </div>
+
+        <h2>Sequential Learning Is Not Enough Here</h2>
+        <p>In ordinary machine learning, someone often collects the data first, then another person trains a model on that fixed pile. The talk calls that sequential learning. Multiscale modeling needs something more active because each labeled data point can be very expensive.</p>
+
+        <p>The model must learn while deciding what evidence to buy next. Run a simulation. Notice where the current model is unsure. Ask the expensive lower-scale model for labels only there. Retrain. Repeat. This is the practical meaning of concurrent learning in the talk: data generation and model training happen together.</p>
+
+        <div class="concurrent-learning-loop" aria-label="Concurrent learning generates expensive data only where needed">
+          <div>train current model</div>
+          <div>explore new states</div>
+          <div>label only uncertain cases</div>
+          <div>retrain and repeat</div>
+        </div>
+
+        <h2>Deep Potential Molecular Dynamics From Zero</h2>
+        <p>The first main example is molecular dynamics. The atoms move according to Newton's laws, but Newton's laws need forces. The hard part is the potential energy function: it tells the atoms what energy they have at a given arrangement, and forces come from how that energy changes.</p>
+
+        <p>Empirical potentials are cheap but can be unreliable for metals, semiconductors, alloys, chemistry, and bond breaking. Density functional theory is more reliable, but too expensive to call at every time step for very large systems. Deep potential molecular dynamics changes the bargain: use density functional theory as an expensive teacher, train a machine-learned potential, then run molecular dynamics with that learned potential.</p>
+
+        <div class="deep-potential-bargain" aria-label="Deep potential uses DFT as teacher and ML as fast potential">
+          <div>DFT gives accurate labels</div>
+          <div>labels are expensive</div>
+          <div>learn energy and forces</div>
+          <div>run large MD cheaply</div>
+        </div>
+
+        <h2>The Learned Atom Model Must Be Extensive</h2>
+        <p>A molecular model trained on a thousand atoms should not be trapped at a thousand atoms. If the real simulation has a million atoms, the learned rule must extend naturally. That is why the model is built as a sum of local atomic energy contributions.</p>
+
+        <p>In everyday words, each atom looks at its local neighborhood. A small network estimates that atom's contribution to the total energy. Add the contributions from all atoms. This makes the model scale with the number of atoms, instead of being a fixed-size predictor that only works for one system size.</p>
+
+        <div class="extensive-atom-model" aria-label="An extensive atom model sums local energy contributions">
+          <div>one local neighborhood</div>
+          <div>one atomic energy contribution</div>
+          <div>sum over all atoms</div>
+          <div>works for larger systems</div>
+        </div>
+
+        <h2>Symmetry Is Not Decoration</h2>
+        <p>The talk spends time on symmetry because it is a trust requirement. If we shift the whole molecule, rotate it, or relabel identical atoms, the energy should not change. A model that gives a different energy after a harmless relabeling has learned a coordinate accident, not physics.</p>
+
+        <p>A crude way to force symmetry can look good on test points and still fail in long molecular dynamics. The talk gives the reason: small discontinuities appear when atoms enter or leave a local neighborhood or when their ordering changes. A tiny discontinuity may not hurt a static test, but over many time steps it can make total energy drift.</p>
+
+        <div class="symmetry-trust-test" aria-label="Symmetry prevents learned atom models from depending on coordinate accidents">
+          <div>shift, rotate, or relabel</div>
+          <div>energy should stay the same</div>
+          <div>bad symmetry causes drift</div>
+          <div>physics-shaped features fix it</div>
+        </div>
+
+        <h2>Expensive Labels Must Be Bought Carefully</h2>
+        <p>Each labeled molecular configuration requires an expensive quantum-mechanics calculation for energy and forces. So the training set has two jobs that fight each other. It must be broad enough to cover the situations the simulation will meet, and it must be small enough to afford.</p>
+
+        <p>The exploration-labeling-training loop solves this like a careful experiment. Explore configurations. Use an ensemble of learned models to see where predictions disagree. Large disagreement means the model does not know that region well. Label those cases with density functional theory. Then train again.</p>
+
+        <div class="expensive-label-loop" aria-label="Expensive quantum labels are selected by model uncertainty">
+          <div>explore configurations</div>
+          <div>ensemble disagreement</div>
+          <div>DFT labels only needed cases</div>
+          <div>accurate smaller data set</div>
+        </div>
+
+        <h2>The Aluminum-Magnesium Example Shows The Point</h2>
+        <p>For an aluminum-magnesium alloy, the exploration process produced roughly half a million configurations, but the labeling procedure needed fewer than twenty thousand expensive labels. The goal was not to label everything. The goal was to label enough of the right cases.</p>
+
+        <p>This is the practical value of concurrent learning. It turns the expensive lower-scale solver into a teacher that speaks only when the student is uncertain. That can make atomistic simulations far larger while keeping accuracy close to the quantum-mechanics teacher.</p>
+
+        <div class="almg-active-data" aria-label="Aluminum-magnesium active data selection avoids labeling every configuration">
+          <div>many explored configurations</div>
+          <div>few need labels</div>
+          <div>quantum teacher fills gaps</div>
+          <div>large alloy MD becomes practical</div>
+        </div>
+
+        <h2>The Water And Materials Examples Show Why It Matters</h2>
+        <p>The talk mentions water, battery materials, high-entropy alloys, organic chemistry, biomolecular modeling, oxidized surfaces, and large-scale atom simulations. The common issue is the same: if the force model is weak, the later science is weak.</p>
+
+        <p>For water, the learned potential was used to reproduce important phase behavior. For large atom simulations, the approach helped move from thousands of atoms toward enormously larger systems. The big idea is not merely speed. It is using speed after the model has been trained against a more faithful lower-scale source.</p>
+
+        <div class="materials-scale-impact" aria-label="Learned potentials carry quantum-level evidence into larger materials simulations">
+          <div>water phase behavior</div>
+          <div>battery and alloy materials</div>
+          <div>biomolecular and chemistry systems</div>
+          <div>larger faithful simulations</div>
+        </div>
+
+        <h2>The Second Example Is Polymer Fluid Closure</h2>
+        <p>The next scale is larger than atoms. The speaker discusses non-Newtonian fluids, especially polymer solutions. These are fluids whose stress does not behave like plain water. Long molecules stretch, rotate, and remember the flow, so the large-scale stress depends on molecular shape and motion.</p>
+
+        <p>Classical models use hand-made closure rules. They introduce quantities such as a conformation tensor, which is a compact description of how polymer molecules are stretched or oriented. But then the model needs an equation for how that tensor changes, and unknown bracket terms appear. Those unknown terms are the closure problem.</p>
+
+        <div class="polymer-closure-problem" aria-label="Polymer fluid models need learned closure for molecular stress">
+          <div>polymer molecules move</div>
+          <div>macro flow needs stress</div>
+          <div>closure terms are unknown</div>
+          <div>learn them from micro model</div>
+        </div>
+
+        <h2>Closure Means Summarize What Was Removed</h2>
+        <p>Closure is one of the most important words in this area. It means the large-scale equation contains a term that depends on small-scale details the large-scale model no longer tracks. To close the equation, we must express that missing term using the variables the large-scale model does keep.</p>
+
+        <p>For the polymer fluid, the kept variable may be a conformation tensor. The missing term is learned from a microscopic model of the polymer. This is different from blindly searching all possible equations. The starting point is the underlying microscopic physics, and machine learning fills the bracketed terms that formal derivation cannot express cleanly.</p>
+
+        <div class="closure-from-zero" aria-label="Closure expresses removed microscopic detail using kept macroscopic variables">
+          <div>micro detail removed</div>
+          <div>macro variable kept</div>
+          <div>missing bracket term</div>
+          <div>learned closure completes equation</div>
+        </div>
+
+        <h2>Molecular Shape Changes The Large Flow</h2>
+        <p>The polymer examples show why this matters. A dumbbell molecule, a chain molecule, and a star-shaped molecule can produce different large-scale flow behavior. If the closure model cannot feel molecular shape, it cannot make reliable predictions for a new polymer design.</p>
+
+        <p>The learned non-Newtonian fluid model captures stress and velocity behavior better than simpler classical models in the examples described. The practical lesson is that small shape differences at the molecular scale can become large stress differences at the flow scale.</p>
+
+        <div class="molecular-shape-flow" aria-label="Polymer molecular shape changes macroscopic flow stress">
+          <div>dumbbell, chain, or star molecule</div>
+          <div>different stretch response</div>
+          <div>different stress history</div>
+          <div>different macro flow</div>
+        </div>
+
+        <h2>This Is A New Physical Model, Not Just A Speed Trick</h2>
+        <p>The speaker insists that the result should be viewed as a new physical model. That is a high bar. It means the learned piece must respect physics, be tied to lower-scale evidence, fit inside known equations, and remain testable.</p>
+
+        <p>A useful analogy from the talk is the equation of state for real gas. Engineers have long used tables or fitted functions inside larger equations. Here the fitted function is more complicated and may be represented by a neural network, but the role is similar: a lower-level or experimental source supplies a missing physical relation that the large-scale simulator needs.</p>
+
+        <div class="new-physical-model" aria-label="A learned multiscale term can become a physical model component">
+          <div>known governing equation</div>
+          <div>missing relation</div>
+          <div>learned from faithful evidence</div>
+          <div>usable model component</div>
+        </div>
+
+        <h2>How This Connects To Design And Topology</h2>
+        <p>Design and topology optimization often depend on material laws. If the material law cannot feel molecular structure, crystal structure, polymer shape, alloy composition, or microstructure, then the optimized design may be optimized for the wrong material behavior.</p>
+
+        <p>This chapter says the design loop needs a credible scale bridge. For topology, the bridge might connect microstructure to stiffness, failure, damping, heat flow, or stress history. For materials design, it might connect atomistic or molecular choices to continuum properties. For manufacturing, it might connect processing choices to the effective law used by the part-level simulation.</p>
+
+        <div class="scale-design-bridge" aria-label="Design needs material laws that carry lower-scale evidence">
+          <div>microstructure or molecule</div>
+          <div>learned scale bridge</div>
+          <div>part-level simulation</div>
+          <div>design claim gets stronger</div>
+        </div>
+
+        <h2>The Chapter In One Chain</h2>
+        <p>First, multiscale modeling exists because small-scale physics controls large-scale behavior, but carrying every small detail is too expensive. Second, each step up the model ladder creates missing terms such as potentials, closures, constitutive laws, turbulence models, and equations of state. Third, old hand-made terms can be fast but unreliable, while direct lower-scale simulation can be reliable but too expensive. Fourth, machine learning can serve as the data-estimation tool that older multiscale algorithms lacked. Fifth, the learned term must be interpretable, reliable, and constrained by physics, not just accurate on a test set. Sixth, deep potential molecular dynamics uses quantum calculations as expensive labels to learn energy and forces for larger molecular dynamics. Seventh, the atom model must be extensive and respect translation, rotation, and permutation symmetries. Eighth, concurrent learning explores configurations, labels only uncertain cases, and retrains until the model is good enough. Ninth, polymer-fluid closure shows how machine learning can fill missing terms in a larger-scale equation derived from microscopic physics. Tenth, for design and topology, the point is to build material and flow laws that carry lower-scale evidence into part-scale decisions.</p>
+
+        <div class="note">
+          <p>The chapter's core idea: machine learning helps multiscale modeling when it is used as a disciplined bridge between scales. The lower-scale model supplies evidence, physics supplies structure, uncertainty chooses new data, and the final learned term must behave like a usable physical model.</p>
+        </div>
+
+        <section class="lesson-review">
+          <h2>How To Test Whether You Understood This Chapter</h2>
+          <div class="lesson-review-grid">
+            <div>
+              <strong>Say the problem without scale words</strong>
+              <p>The detailed truth is too expensive to use every time. The large model needs a compact rule that carries the important part of that truth forward.</p>
+            </div>
+            <div>
+              <strong>Explain closure in one sentence</strong>
+              <p>Closure means writing the missing effect of removed small details using the variables the large equation still keeps.</p>
+            </div>
+            <div>
+              <strong>Connect it to topology and design</strong>
+              <p>A topology optimizer can make the wrong part if the material law ignores microstructure, alloy composition, molecular shape, damping, failure, heat flow, or stress history.</p>
+            </div>
+            <div>
+              <strong>State the honest limit</strong>
+              <p>The learned bridge earns trust only when it respects symmetries, scales to larger systems, stays tied to lower-scale evidence, and is tested in the large simulator where the decision is made.</p>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

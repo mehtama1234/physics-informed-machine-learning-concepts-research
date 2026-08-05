@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chapter 115 - Choose The Step In Function Space First</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="sidebar">
+        <h1>DDPS Study</h1>
+        <a href="index.html">Start</a>
+        <a href="review-path.html">Review Path</a>
+        <a href="plain-words.html">Plain Words</a>
+        <a href="method-map.html">Method Map</a>
+        <a href="self-check.html">Self Check</a>
+        <a href="capstone.html">Capstone</a>
+        <a href="theme-index.html">Theme Index</a>
+        <a href="domain-map.html">Domain Map</a>
+        <a href="paper-reader.html">Paper Reader</a>
+        <a href="common-mistakes.html">Common Mistakes</a>
+        <a href="study-plan.html">Study Plan</a>
+        <a href="math-map.html">Math Map</a>
+        <a href="prerequisite-map.html">Prerequisite Map</a>
+        <a href="cheat-sheet.html">Cheat Sheet</a>
+        <a href="chapter-98.html">Chapter 98</a>
+        <a href="chapter-99.html">Chapter 99</a>
+        <a href="chapter-100.html">Chapter 100</a>
+        <a href="chapter-101.html">Chapter 101</a>
+        <a href="chapter-102.html">Chapter 102</a>
+        <a href="chapter-103.html">Chapter 103</a>
+        <a href="chapter-104.html">Chapter 104</a>
+        <a href="chapter-105.html">Chapter 105</a>
+        <a href="chapter-106.html">Chapter 106</a>
+        <a href="chapter-107.html">Chapter 107</a>
+        <a href="chapter-108.html">Chapter 108</a>
+        <a href="chapter-109.html">Chapter 109</a>
+        <a href="chapter-110.html">Chapter 110</a>
+        <a href="chapter-111.html">Chapter 111</a>
+        <a href="chapter-112.html">Chapter 112</a>
+        <a href="chapter-113.html">Chapter 113</a>
+        <a href="chapter-114.html">Chapter 114</a>
+        <a href="chapter-115.html">Chapter 115</a>
+        <a href="chapter-116.html">Chapter 116</a>
+        <a href="chapter-117.html">Chapter 117</a>
+        <a href="chapter-118.html">Chapter 118</a>
+        <a href="chapter-119.html">Chapter 119</a>
+        <a href="chapter-120.html">Chapter 120</a>
+        <a href="chapter-121.html">Chapter 121</a>
+        <a href="chapter-122.html">Chapter 122</a>
+        <a href="chapter-123.html">Chapter 123</a>
+        <a href="chapter-124.html">Chapter 124</a>
+        <a href="chapter-125.html">Chapter 125</a>
+        <a href="chapter-126.html">Chapter 126</a>
+        <a href="chapter-127.html">Chapter 127</a>
+        <a href="chapter-128.html">Chapter 128</a>
+        <a href="chapter-129.html">Chapter 129</a>
+        <a href="chapter-130.html">Chapter 130</a>
+        <a href="chapter-131.html">Chapter 131</a>
+        <a href="chapter-132.html">Chapter 132</a>
+        <a href="chapter-133.html">Chapter 133</a>
+        <a href="chapter-134.html">Chapter 134</a>
+        <a href="chapter-135.html">Chapter 135</a>
+        <a href="chapter-136.html">Chapter 136</a>
+        <a href="chapter-137.html">Chapter 137</a>
+        <a href="from-zero.html">From Zero</a>
+        <a href="pinn-from-zero.html">PINNs From Zero</a>
+        <a href="rom-from-zero.html">ROMs From Zero</a>
+        <a href="manifold-from-zero.html">Manifolds From Zero</a>
+        <a href="synthesis.html">Synthesis</a>
+        <a href="big-picture.html">Big Picture</a>
+        <a href="examples.html">Examples</a>
+        <a href="bridge.html">AISE Bridge</a>
+        <a href="audit.html">Transcript Audit</a>
+      </nav>
+      <main class="content">
+        <p class="eyebrow">Narrative chapter</p>
+        <h1>Choose The Step In Function Space First</h1>
+
+        <p>This chapter uses video 118, Marius Zeinhofer's DDPS talk on infinite-dimensional optimization for scientific machine learning. The talk is about a hidden reason many physics-informed learning methods train badly. The problem is not only the neural network. It is also the optimizer. If the loss contains a PDE, the loss carries geometry from the equation, and a plain first-order optimizer may take steps that look reasonable in parameter space but are poor steps for the function we are trying to learn.</p>
+
+        <p>The speaker's main proposal is: first think in function space. Ask what update the ideal function should take if there were no neural network parameterization yet. Then, after that ideal update is clear, project it into the space of changes the neural network can actually make. This reverses the usual habit. Instead of starting with millions of weights and asking Adam to move them, start with the PDE problem itself and ask what the mathematically right motion should be.</p>
+
+        <section class="lesson-claim-chain" aria-label="Plain first-principles reading guide for function-space optimization">
+          <h2>Read This Chapter As One Claim</h2>
+          <p>Imagine you are trying to fix a wrong temperature field, pressure field, stress field, or wave function. The physical equation tells you what kind of correction would actually reduce the error. But a neural network optimizer usually sees only millions of weight knobs. It may turn knobs in a way that barely moves the physical field in the useful direction. This chapter says to reverse the order. First ask what correction the physical function wants. Then ask which weight change can best imitate that correction. The network is only the tool; the field is the thing being fixed.</p>
+          <div class="lesson-claim-grid">
+            <div><strong>Everyday problem</strong><span>A PDE-based loss can train slowly because ordinary parameter steps do not respect the physical shape of the error.</span></div>
+            <div><strong>Shared promise</strong><span>Choose an ideal update in function space, then project it into the changes the current neural network can actually make.</span></div>
+            <div><strong>Hidden danger</strong><span>The PDE-aware step needs large matrices or approximations, so the method can become costly, ill-conditioned, or sensitive to implementation choices.</span></div>
+            <div><strong>First rejection test</strong><span>Compare the proposed update direction with the field correction the PDE wants, not only with loss decrease after a few weight steps.</span></div>
+          </div>
+        </section>
+
+        <div class="funcopt-big-picture-map" aria-label="Function-space optimization chooses the ideal function update before discretizing to network parameters">
+          <div>PDE loss is hard to train</div>
+          <div>choose ideal function update</div>
+          <div>project into network changes</div>
+          <div>train with PDE-aware steps</div>
+        </div>
+
+        <h2>The Failure Is Slow, Stuck Training</h2>
+        <p>The talk begins with examples where scientific machine learning is painfully expensive. Some neural-network wave-function methods for electron problems can require thousands of GPU hours for one solve. Even a simple two-dimensional Poisson equation, written as a PINN, can take many iterations and still stagnate at a mediocre error.</p>
+
+        <p>This is a warning against a common assumption. A PDE loss may be easy to write down, but that does not mean it is easy to optimize. Once derivatives, boundary penalties, residuals, and high-dimensional fields enter the objective, the loss surface is shaped by the equation. If the optimizer ignores that structure, it can spend a long time making small unhelpful parameter moves.</p>
+
+        <div class="slow-training-map" aria-label="PDE terms in the loss can make neural network training slow and stagnant">
+          <div>PDE residual enters loss</div>
+          <div>boundary terms enter loss</div>
+          <div>plain optimizer sees weights</div>
+          <div>error stagnates</div>
+        </div>
+
+        <h2>Do Not Start With The Network</h2>
+        <p>The usual workflow starts with an ansatz: choose a neural network, choose its parameters, define a loss, and train. The talk says to step back. Before choosing the finite parameter object, write the continuous problem. What function space does the solution live in? What energy or residual are we minimizing? What are the mathematical properties of that objective?</p>
+
+        <p>That sounds abstract, but the everyday idea is simple. If you want to fix a bent metal rod, first ask how the rod should move, not how one knob in a complicated machine should turn. The function is the physical object. The parameters are only the knobs we happen to use to produce that function. The method chooses the physically meaningful function update first.</p>
+
+        <div class="before-network-map" aria-label="The continuous PDE problem should define the optimizer before choosing the parameter update">
+          <div>write continuous problem</div>
+          <div>study objective properties</div>
+          <div>choose function-space algorithm</div>
+          <div>discretize last</div>
+        </div>
+
+        <h2>Poisson Shows The Idea In The Cleanest Way</h2>
+        <p>The speaker uses Poisson's equation as the simplest example. The PDE is linear, and the loss is an L2 squared residual plus boundary terms. That makes the function-space objective quadratic. For a quadratic objective, Newton's method is the natural tool because Newton builds and minimizes a quadratic model.</p>
+
+        <p>In exact function space, Newton can converge in one step for this idealized quadratic problem. Of course, we cannot directly compute with all possible functions. So after deriving the function-space Newton step, the method chooses an ansatz, such as a neural network, and projects the ideal update into the network's tangent space. The tangent space is the set of function changes produced by small changes in the network parameters.</p>
+
+        <div class="poisson-newton-map" aria-label="For Poisson, function-space Newton gives an ideal quadratic update that is then projected to the network tangent space">
+          <div>linear PDE</div>
+          <div>quadratic residual loss</div>
+          <div>Newton is ideal in function space</div>
+          <div>project into tangent space</div>
+        </div>
+
+        <h2>The Tangent Space Is What The Network Can Actually Change</h2>
+        <p>A neural network cannot move in every possible function direction. If you slightly change its weights, the output function changes in a specific family of directions. Those directions form the tangent space at the current network. Projecting the ideal function update into that tangent space asks: among the changes this network can make right now, which one best matches the update the PDE wants?</p>
+
+        <p>This is the key bridge between clean mathematics and trainable models. The method does not pretend the network is the whole function space. It uses the function-space update as the target direction, then finds the closest parameter update the current network can express. That is why the resulting update contains a matrix built from derivatives of the network output with respect to parameters and derivatives from the PDE residual.</p>
+
+        <div class="tangent-projection-map" aria-label="The neural tangent space contains the function changes available through parameter updates">
+          <div>ideal function direction</div>
+          <div>network has limited directions</div>
+          <div>project onto tangent space</div>
+          <div>parameter update follows PDE geometry</div>
+        </div>
+
+        <h2>Why This Resembles Natural Gradient</h2>
+        <p>The speaker explains that the group first arrived from a natural-gradient viewpoint. Natural gradient changes the notion of distance so that a step is measured in a more meaningful geometry than plain Euclidean parameter distance. In this setting, the PDE-induced object can act like a metric: it tells the optimizer what counts as a meaningful change in function behavior.</p>
+
+        <p>The function-space viewpoint is broader. When the operator used to map gradients back into update directions is symmetric and acts like an inner product, the method can be read as a natural-gradient or Riemannian-gradient method. But some problems, such as saddle-point or constrained formulations, do not fit a symmetric metric story. The function-space formulation still covers them.</p>
+
+        <div class="natural-gradient-map" aria-label="Natural gradient is one interpretation when the function-space operator behaves like a metric">
+          <div>plain parameter distance is misleading</div>
+          <div>PDE defines meaningful geometry</div>
+          <div>symmetric case looks like natural gradient</div>
+          <div>function-space view is broader</div>
+        </div>
+
+        <h2>Nonlinear PDEs Need A More Robust Step</h2>
+        <p>For nonlinear equations such as Navier-Stokes, the residual loss is no longer convex. Full Newton can become unsafe because the Hessian may be indefinite, so the step may not be a descent direction. The talk's practical choice is Gauss-Newton in function space. Gauss-Newton is designed for nonlinear least-squares problems and is more robust because it linearizes the residual.</p>
+
+        <p>The speaker reports this difference in experiments. Full Newton in function space can work near a minimizer, but away from the minimizer it may step the wrong way. Gauss-Newton gives a more stable descent direction. The same framework applies: choose the right function-space algorithm, then discretize it through the neural network tangent space.</p>
+
+        <div class="nonlinear-gauss-map" aria-label="Nonlinear PDE residuals often use Gauss-Newton in function space because it gives safer descent directions">
+          <div>nonlinear PDE residual</div>
+          <div>full Newton can be indefinite</div>
+          <div>Gauss-Newton linearizes residual</div>
+          <div>step is more robust</div>
+        </div>
+
+        <h2>The Projection Theory Says What Is Being Mimicked</h2>
+        <p>The talk then gives a theory statement. If the function-space update has the right continuity and coercivity properties, the parameter-space method follows the function-space dynamics up to a projection and a step-size error. In plain words: the network update is not arbitrary. It is the best available shadow of the ideal function update, seen through the current network's tangent space.</p>
+
+        <p>The visual example makes this intuitive. For Poisson at initialization, the exact function-space Newton direction points almost directly to the solution. The projected function-space method matches that direction well. Ordinary Newton in parameter space and gradient descent do not. For a flow example, the same pattern appears: the function-space Gauss-Newton direction looks like the desired correction, while the plain parameter updates are much less aligned.</p>
+
+        <div class="projection-theory-map" aria-label="The parameter update follows a projected version of the ideal function-space update">
+          <div>ideal function update</div>
+          <div>project through tangent space</div>
+          <div>small step-size error remains</div>
+          <div>network mimics function dynamics</div>
+        </div>
+
+        <h2>The Price Is A Difficult Matrix</h2>
+        <p>The method works well because it uses more information than a first-order optimizer. That information has a cost. Each step requires assembling or applying a matrix related to the PDE residual and the neural network tangent directions. For nonlocal neural network ansatzes, the matrix is dense. It can be rank deficient and ill-conditioned. Small networks can use direct or regularized solves. Large networks cannot.</p>
+
+        <p>This is the practical turning point in the talk. A beautiful function-space optimizer is not enough if it only works on toy networks. To make it useful, the matrix solve must scale. The speaker discusses two strategies: matrix-free methods using conjugate gradient and cheap-to-invert approximations. Matrix-free methods can scale but may iterate slowly if the matrix is ill-conditioned. The rest of the talk focuses on a Kronecker-factored approximation.</p>
+
+        <div class="matrix-cost-map" aria-label="Function-space optimizers need matrix solves that become difficult for large neural networks">
+          <div>PDE-aware matrix improves step</div>
+          <div>matrix is dense and ill-conditioned</div>
+          <div>direct solve stops scaling</div>
+          <div>need approximation or matrix-free solve</div>
+        </div>
+
+        <h2>K-FAC Makes The Big Matrix Smaller</h2>
+        <p>K-FAC means Kronecker-factored approximation. The rough idea is to replace a huge layer matrix with a product of two smaller matrices. Instead of inverting one enormous block, you invert smaller factors. This gives a dramatic speedup for linear layers because the derivative structure of a layer has a natural Kronecker form.</p>
+
+        <p>The talk is honest that this is an aggressive approximation. It drops cross-layer interactions and approximates each layer block as a Kronecker product. But the approximation has been useful in deep learning, and here it is adapted to the PDE-aware matrix coming from the function-space optimizer. The implementation is technical, using forward-mode or Taylor-mode automatic differentiation to expose derivative structure through the network.</p>
+
+        <div class="kfac-map" aria-label="K-FAC approximates large layer matrices with smaller Kronecker factors">
+          <div>huge layer block</div>
+          <div>drop cross-layer coupling</div>
+          <div>factor into two smaller matrices</div>
+          <div>invert faster</div>
+        </div>
+
+        <h2>The Experiments Show The Scaling Tradeoff</h2>
+        <p>On small Poisson examples, the dense function-space method can be the best because it keeps the full matrix information. But as the network grows, the dense method becomes impractical. The K-FAC version remains among the best-performing methods while scaling to larger networks.</p>
+
+        <p>The talk then moves to higher-dimensional examples, including a heat equation in four spatial dimensions plus time, and a high-dimensional Poisson-style case with up to around a million parameters. The claim is not that the approximation is effortless. The speaker says there is hyperparameter work, trust-region step choices, moving averages for K-FAC matrices, and update schedules. The important point is that the PDE-aware idea can survive beyond tiny demonstrations.</p>
+
+        <div class="scaling-tradeoff-map" aria-label="Dense methods are strongest at small scale while K-FAC keeps PDE-aware optimization usable for larger networks">
+          <div>full matrix is accurate</div>
+          <div>full matrix stops scaling</div>
+          <div>K-FAC keeps useful geometry</div>
+          <div>large networks become feasible</div>
+        </div>
+
+        <h2>What This Means For Scientific ML Practice</h2>
+        <p>The practical message is not "always use this optimizer." The message is sharper: when a scientific ML loss contains a PDE, do not assume a general-purpose optimizer understands the equation. The PDE creates a natural notion of error and correction. A good optimizer should exploit that structure.</p>
+
+        <p>For PINNs, Deep Ritz methods, operator learning, inverse problems, wave-function learning, and other PDE-loss methods, the same diagnostic question applies. What would the right update be if we optimized the function itself? If the parameter update is not a good projection of that, it may waste effort. This gives a first-principles way to judge optimizers instead of choosing them only by habit.</p>
+
+        <div class="practice-map" aria-label="Scientific ML optimizers should be judged by whether they respect the PDE-induced function-space update">
+          <div>PDE loss has structure</div>
+          <div>general optimizer may ignore it</div>
+          <div>function-space step defines target</div>
+          <div>projected optimizer respects the equation</div>
+        </div>
+
+        <h2>How This Connects To Topology And Design</h2>
+        <p>Topology optimization is full of PDE-constrained learning problems. A design changes a material layout, geometry, or control field. The physics may be elasticity, heat, flow, acoustics, or coupled multiphysics. If a neural surrogate or PINN is trained with a residual loss, the optimizer should not treat the problem like ordinary curve fitting. The residual contains the equation's geometry.</p>
+
+        <p>The chapter's lesson for topology is this: before asking how to update network weights, ask what physical field correction the PDE wants. In structural design, that might mean a correction shaped by equilibrium and boundary loads. In thermal design, it might mean a correction shaped by diffusion. In flow design, it might mean a correction shaped by incompressibility, convection, and pressure. The function-space view forces the optimizer to respect those differences.</p>
+
+        <p>The Q&A also gives a realism check. Bigger ansatz classes can represent harder solutions, but they create bigger matrices. Smaller networks may be enough for smooth problems. Highly complex multiphysics or many-electron problems need approximations such as K-FAC, matrix-free solves, or preconditioning. There is no free lunch; the contribution is a disciplined way to spend optimization effort where the PDE says it matters.</p>
+
+        <div class="design-bridge-map" aria-label="Topology and design problems need field updates shaped by the governing PDE, not only parameter gradients">
+          <div>design changes material or geometry</div>
+          <div>PDE defines the correction shape</div>
+          <div>project update into surrogate</div>
+          <div>optimize with physics-aware steps</div>
+        </div>
+
+        <h2>Where The Method Should Not Be Overclaimed</h2>
+        <p>The method asks for more mathematical and implementation work than Adam or L-BFGS. The K-FAC approximation is not trivial to set up. Hyperparameters still matter. Dense matrix methods may fail to scale. K-FAC drops information. Matrix-free solves can be slow. Neural operators are not fully settled in this framework, and the speaker says that case needs more work.</p>
+
+        <p>The most honest use is therefore not as a magic replacement optimizer, but as a design principle. If a PDE-loss method is stuck, ask whether the optimizer is following the correct function-space dynamics. If not, derive the function-space update, project it through the ansatz, and then decide how much of that geometry can be afforded computationally.</p>
+
+        <div class="opt-boundary-map" aria-label="Function-space optimizers are powerful but need implementation effort, approximations, and problem-specific care">
+          <div>implementation is harder</div>
+          <div>matrix cost can dominate</div>
+          <div>approximations drop information</div>
+          <div>use as a disciplined design principle</div>
+        </div>
+
+        <h2>The Chapter In One Chain</h2>
+        <p>First, scientific machine learning gets hard when PDE terms enter the loss. Second, ordinary first-order optimizers can stagnate because they see parameter gradients without understanding the equation's function-space geometry. Third, the method starts from the continuous problem before choosing a neural network ansatz. Fourth, for linear Poisson with squared residual loss, Newton in function space is the natural ideal update. Fifth, the neural network tangent space describes which function changes the current parameters can actually produce. Sixth, the ideal function update is projected into that tangent space to produce a computable parameter update. Seventh, this explains why the method resembles natural gradient when the underlying operator behaves like a metric, while also covering broader nonsymmetric cases. Eighth, nonlinear PDE residuals often call for Gauss-Newton in function space because full Newton can be unstable away from the solution. Ninth, projection theory says the parameter method mimics projected function-space dynamics up to step-size error. Tenth, the price is a dense, ill-conditioned matrix that is hard to invert for large networks. Eleventh, matrix-free solves and K-FAC approximations are ways to scale the idea. Twelfth, K-FAC uses Kronecker structure in layer derivatives to replace huge layer blocks with smaller factors. Thirteenth, experiments show that the scaled version keeps much of the PDE-aware benefit while reaching larger networks. Fourteenth, for topology, multiphysics, and design, the lesson is to choose updates shaped by the governing field equation before trusting a learned surrogate's parameter gradient.</p>
+
+        <div class="note">
+          <p>The chapter's core idea: when the loss contains a PDE, the optimizer should not behave like it is fitting an ordinary spreadsheet. First ask what correction the physical function needs, then make the neural network take the closest step it can afford.</p>
+        </div>
+
+        <section class="lesson-review" aria-label="End of chapter understanding check for function-space optimization">
+          <h2>How To Test Whether You Understood This Chapter</h2>
+          <div class="lesson-review-grid">
+            <div><strong>Explain function space simply</strong><span>Function space means thinking about the whole predicted field as the object being moved. The weights are only one way to make that field move.</span></div>
+            <div><strong>Explain tangent projection</strong><span>The network cannot make every possible field correction. Its tangent space is the set of corrections available through small weight changes, so the ideal PDE update must be projected there.</span></div>
+            <div><strong>Explain the cost boundary</strong><span>PDE-aware steps use stronger information than plain gradients, but that creates dense or ill-conditioned matrix problems. K-FAC and matrix-free solves are scaling compromises.</span></div>
+            <div><strong>Connect it to topology and design</strong><span>When a design changes material, geometry, heat flow, elasticity, or fluid motion, the optimizer should follow field corrections shaped by that governing equation before trusting surrogate weight gradients.</span></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

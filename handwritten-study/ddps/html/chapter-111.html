@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chapter 111 - Make The Network Pass Through The Physics</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="sidebar">
+        <h1>DDPS Study</h1>
+        <a href="index.html">Start</a>
+        <a href="review-path.html">Review Path</a>
+        <a href="plain-words.html">Plain Words</a>
+        <a href="method-map.html">Method Map</a>
+        <a href="self-check.html">Self Check</a>
+        <a href="capstone.html">Capstone</a>
+        <a href="theme-index.html">Theme Index</a>
+        <a href="domain-map.html">Domain Map</a>
+        <a href="paper-reader.html">Paper Reader</a>
+        <a href="common-mistakes.html">Common Mistakes</a>
+        <a href="study-plan.html">Study Plan</a>
+        <a href="math-map.html">Math Map</a>
+        <a href="prerequisite-map.html">Prerequisite Map</a>
+        <a href="cheat-sheet.html">Cheat Sheet</a>
+        <a href="chapter-98.html">Chapter 98</a>
+        <a href="chapter-99.html">Chapter 99</a>
+        <a href="chapter-100.html">Chapter 100</a>
+        <a href="chapter-101.html">Chapter 101</a>
+        <a href="chapter-102.html">Chapter 102</a>
+        <a href="chapter-103.html">Chapter 103</a>
+        <a href="chapter-104.html">Chapter 104</a>
+        <a href="chapter-105.html">Chapter 105</a>
+        <a href="chapter-106.html">Chapter 106</a>
+        <a href="chapter-107.html">Chapter 107</a>
+        <a href="chapter-108.html">Chapter 108</a>
+        <a href="chapter-109.html">Chapter 109</a>
+        <a href="chapter-110.html">Chapter 110</a>
+        <a href="chapter-111.html">Chapter 111</a>
+        <a href="chapter-112.html">Chapter 112</a>
+        <a href="chapter-113.html">Chapter 113</a>
+        <a href="chapter-114.html">Chapter 114</a>
+        <a href="chapter-115.html">Chapter 115</a>
+        <a href="chapter-116.html">Chapter 116</a>
+        <a href="chapter-117.html">Chapter 117</a>
+        <a href="chapter-118.html">Chapter 118</a>
+        <a href="chapter-119.html">Chapter 119</a>
+        <a href="chapter-120.html">Chapter 120</a>
+        <a href="chapter-121.html">Chapter 121</a>
+        <a href="chapter-122.html">Chapter 122</a>
+        <a href="chapter-123.html">Chapter 123</a>
+        <a href="chapter-124.html">Chapter 124</a>
+        <a href="chapter-125.html">Chapter 125</a>
+        <a href="chapter-126.html">Chapter 126</a>
+        <a href="chapter-127.html">Chapter 127</a>
+        <a href="chapter-128.html">Chapter 128</a>
+        <a href="chapter-129.html">Chapter 129</a>
+        <a href="chapter-130.html">Chapter 130</a>
+        <a href="chapter-131.html">Chapter 131</a>
+        <a href="chapter-132.html">Chapter 132</a>
+        <a href="chapter-133.html">Chapter 133</a>
+        <a href="chapter-134.html">Chapter 134</a>
+        <a href="chapter-135.html">Chapter 135</a>
+        <a href="chapter-136.html">Chapter 136</a>
+        <a href="chapter-137.html">Chapter 137</a>
+        <a href="from-zero.html">From Zero</a>
+        <a href="pinn-from-zero.html">PINNs From Zero</a>
+        <a href="rom-from-zero.html">ROMs From Zero</a>
+        <a href="manifold-from-zero.html">Manifolds From Zero</a>
+        <a href="synthesis.html">Synthesis</a>
+        <a href="big-picture.html">Big Picture</a>
+        <a href="examples.html">Examples</a>
+        <a href="bridge.html">AISE Bridge</a>
+        <a href="audit.html">Transcript Audit</a>
+      </nav>
+      <main class="content">
+        <p class="eyebrow">Narrative chapter</p>
+        <h1>Make The Network Pass Through The Physics</h1>
+
+        <p>This chapter uses video 114, Aditi Krishnapriyan's DDPS talk on physics-constrained differentiable solvers. The talk is about a basic tension in scientific machine learning. Neural networks can be fast after training, and they can represent complicated high-dimensional maps. But speed is not enough if the model gives a physically wrong answer when it is used.</p>
+
+        <p>The first-principles question is this: when the network predicts a physical field, what forces it to obey the physical law at test time? A soft physics penalty during training may help, but it does not guarantee that the final deployed model will obey the equation on a new case. This talk explores ways to put the solver, the spectral representation, or the simulation loop directly into the learning process.</p>
+
+        <section class="lesson-claim-chain" aria-label="Plain first-principles reading guide for physics-constrained differentiable solvers">
+          <h2>Read This Chapter As One Claim</h2>
+          <p>Think of a neural network as a fast guesser. For ordinary prediction, a fast guess may be enough. For physics, the guess may later be used by an optimizer, a controller, a simulator, or a design tool. Then the important question is not only whether the guess looks close to training data. The question is whether the guess can survive the physical process it is supposed to serve. This chapter says the physical check should stay inside the prediction path: a solver can adjust the answer, a spectral form can make the equation easier to check, or a simulation loop can punish models that look good for one step and fail later.</p>
+          <div class="lesson-claim-grid">
+            <div><strong>Everyday problem</strong><span>A fast network can output a field that looks plausible but breaks the law when a new case, long rollout, or design loop uses it.</span></div>
+            <div><strong>Shared promise</strong><span>Make the prediction pass through the physics itself, such as a constrained solve, spectral residual, or simulation-in-the-loop test.</span></div>
+            <div><strong>Hidden danger</strong><span>A soft training penalty may look scientific while still letting the deployed model drift, exploit sparse points, or fail on sharp features and long times.</span></div>
+            <div><strong>First rejection test</strong><span>Run the model on unseen boundary conditions, finer grids, longer rollouts, discontinuities, and topology changes, then check conservation and stability.</span></div>
+          </div>
+        </section>
+
+        <div class="diffsolver-core-map" aria-label="A neural prediction should pass through physics at test time, not only see physics during training">
+          <div>network predicts fast</div>
+          <div>physics penalty may be soft</div>
+          <div>test-time law can fail</div>
+          <div>pass through physics layer</div>
+        </div>
+
+        <h2>The Pendulum Example Shows The Basic Failure</h2>
+        <p>The talk starts with a simple damped pendulum. If a network sees only early trajectory data, it can fit those points but miss the later motion. Adding the ODE as a physics-informed loss can improve the prediction because the equation supplies extra information beyond the observed points.</p>
+
+        <p>But the speaker uses this toy example as a warning, not as a final answer. For easy problems, an initial condition plus a PDE or ODE residual may be enough. For harder problems with sharp features, convection, or limited data, simply adding the residual to the loss can fail to converge to the right solution.</p>
+
+        <div class="pendulum-warning-map" aria-label="A physics-informed loss can help a simple pendulum but does not guarantee hard PDE success">
+          <div>fit early data</div>
+          <div>miss later motion</div>
+          <div>add equation penalty</div>
+          <div>helps only when optimization works</div>
+        </div>
+
+        <h2>Soft Constraints Are Not The Same As Enforced Constraints</h2>
+        <p>A standard PINN-style loss asks the network to reduce data error and reduce PDE residual error. That is useful, but it is still a penalty. The network can balance the terms poorly, optimize badly, or satisfy the law only approximately at sampled points.</p>
+
+        <p>The speaker's key concern is deployment. The model must be physically consistent when it is used on a new input, not only while it is being trained. If the forward pass at test time is just a neural network evaluation, the physics law may no longer be actively enforced.</p>
+
+        <div class="soft-hard-map" aria-label="A soft residual penalty is weaker than a test-time constrained solve">
+          <div>soft residual loss</div>
+          <div>sampled training points</div>
+          <div>no hard test-time solve</div>
+          <div>constraint can drift</div>
+        </div>
+
+        <h2>A PDE-Constrained Layer Makes The Network Solve</h2>
+        <p>The first method puts a PDE-constrained optimization problem inside the network. The neural network predicts a set of basis functions or a representation. Then a numerical solver chooses coefficients so that the reconstructed solution better satisfies the conservation law or PDE residual.</p>
+
+        <p>In everyday language, the network does not get to output the final answer by itself. It proposes ingredients. A solver then adjusts those ingredients until the physics constraint is satisfied more directly. The prediction is reconstructed after this solve, so the physics layer is part of the forward pass during training and at test time.</p>
+
+        <div class="pde-layer-map" aria-label="The network proposes basis functions and a solver chooses coefficients that satisfy the PDE">
+          <div>network proposes basis</div>
+          <div>solver picks coefficients</div>
+          <div>PDE residual is minimized</div>
+          <div>prediction exits constrained layer</div>
+        </div>
+
+        <h2>Implicit Differentiation Avoids Backpropagating Through Every Solver Step</h2>
+        <p>If a solver runs many nonlinear least-squares iterations, naive backpropagation through every step can be too expensive or impossible because memory grows with the whole solver history. The talk uses implicit differentiation to avoid that.</p>
+
+        <p>The idea is to differentiate the final solved condition rather than the whole path used to reach it. That decouples the forward solver iterations from the backward training calculation. The network still receives feedback from the solver, but training does not have to store and replay every intermediate solver step.</p>
+
+        <div class="implicit-diff-map" aria-label="Implicit differentiation trains through the final solve without storing every solver iteration">
+          <div>solver takes many steps</div>
+          <div>naive backprop is costly</div>
+          <div>differentiate final condition</div>
+          <div>train end to end</div>
+        </div>
+
+        <h2>Darcy Flow Shows The First Payoff</h2>
+        <p>The first demonstration is Darcy flow, where diffusion coefficients map to a PDE solution. A baseline adds the conservation law as a soft loss. The new model adds the PDE-constrained layer, which acts more like a hard constraint.</p>
+
+        <p>On unseen test cases, the layer-based approach starts lower and keeps improving, while the soft-constraint baseline plateaus. The lesson is not that Darcy flow is the hardest problem. The lesson is that giving the solver a real role in the forward pass can make physical consistency easier to enforce.</p>
+
+        <div class="darcy-layer-map" aria-label="Darcy flow shows the constrained layer improving over a soft physics loss">
+          <div>diffusion coefficient input</div>
+          <div>soft PDE loss plateaus</div>
+          <div>harder constrained layer</div>
+          <div>better unseen test error</div>
+        </div>
+
+        <h2>The Layer Becomes Expensive On Harder Domains</h2>
+        <p>The layer has a cost. If a hard PDE needs many sampled points, both training and inference get slower. The memory cost can force smaller batches, and smaller batches can make training less stable. In the Navier-Stokes setting mentioned in the talk, simply increasing the number of constrained points creates a serious compute tradeoff.</p>
+
+        <p>This matters because the whole reason to use a neural network is to get useful speed at inference. If the physics layer makes the neural method slower than the numerical solver, the method loses much of its practical value.</p>
+
+        <div class="layer-cost-map" aria-label="A constrained layer can become expensive when many points are needed">
+          <div>hard PDE needs many points</div>
+          <div>memory cost grows</div>
+          <div>batch size shrinks</div>
+          <div>speed advantage threatened</div>
+        </div>
+
+        <h2>Mixture Of Experts Splits The Physics Work</h2>
+        <p>To scale the constrained layer, the talk uses a mixture-of-experts idea. The domain is split into subdomains. Each expert solves the constrained problem locally on its subdomain. The separate local solves can run in parallel, and the final solution is reassembled.</p>
+
+        <p>This is domain decomposition brought into a neural architecture. Each expert still enforces a local PDE-constrained optimization problem, but no single expert has to carry the full domain. The Q&A confirms that the expert computations can be parallelized.</p>
+
+        <div class="moe-domain-map" aria-label="Mixture of experts splits a PDE domain into local constrained solves">
+          <div>split domain</div>
+          <div>expert per subdomain</div>
+          <div>local constrained solve</div>
+          <div>parallel physics layer</div>
+        </div>
+
+        <h2>Global Conditions Help The Subdomains Agree</h2>
+        <p>A natural question is whether the subdomains need communication at their boundaries. The speaker says they tried ideas such as overlapping domains, stitching, and smoothing. What worked well was giving each expert the global initial and boundary conditions.</p>
+
+        <p>That gives each local solve enough context to behave consistently without heavy boundary machinery. In the examples shown, the mixture-of-experts version improves stability and accuracy compared with the single constrained layer, especially on hard diffusion-sorption problems with singular behavior.</p>
+
+        <div class="moe-boundary-map" aria-label="Global initial and boundary conditions help local experts avoid boundary mismatch">
+          <div>subdomain boundaries can mismatch</div>
+          <div>give global initial data</div>
+          <div>give global boundary data</div>
+          <div>experts agree better</div>
+        </div>
+
+        <h2>Spectral Learning Moves The Residual Off The Grid</h2>
+        <p>The second theme is neural spectral methods. Grid-based residual losses can depend heavily on sampled physical points. They can be expensive, and they can introduce discretization effects. Spectral methods represent functions with basis expansions such as Chebyshev or Legendre polynomials.</p>
+
+        <p>The method trains in spectral space. The architecture can use spectral transformations, and the PDE loss can be written using spectral coefficients through identities such as Parseval's identity. This avoids forcing everything through a large physical grid during training.</p>
+
+        <div class="spectral-shift-map" aria-label="Neural spectral methods train PDE residuals using spectral coefficients instead of physical grid points">
+          <div>grid residual is point-based</div>
+          <div>choose spectral basis</div>
+          <div>train on coefficients</div>
+          <div>less grid dependence</div>
+        </div>
+
+        <h2>The Basis Choice Has Physical Consequences</h2>
+        <p>The talk notes that Fourier bases are not always best. Chebyshev bases can work better when the problem does not have periodic boundary conditions. That is an example of numerical-method knowledge guiding machine-learning design.</p>
+
+        <p>The Q&A also names an important limit. Spectral methods can struggle with discontinuities or shocks. If the solution has jumps or complex geometry, the basis must be chosen or adapted carefully. The speaker says this is an active direction, including ideas related to finite-element-style domain parameterization.</p>
+
+        <div class="basis-choice-map" aria-label="Spectral basis choice matters for boundaries, discontinuities, and geometry">
+          <div>Fourier likes periodicity</div>
+          <div>Chebyshev handles many boundaries</div>
+          <div>shocks are difficult</div>
+          <div>basis must match physics</div>
+        </div>
+
+        <h2>Reaction-Diffusion And Navier-Stokes Show The Advantage</h2>
+        <p>For a reaction-diffusion system, the spectral approach behaves more like a numerical solver as resolution changes: the grid is less central to the training cost. Physical-space learning can overfit to the training grid or fail to improve smoothly with finer grids.</p>
+
+        <p>For unforced and forced Navier-Stokes examples, the spectral method gives more stable long-time behavior than physical-space training. In the forced case, the physical-space method can blow up over longer times, while the spectral approach remains better behaved.</p>
+
+        <div class="spectral-results-map" aria-label="Spectral learning improves reaction-diffusion and Navier-Stokes behavior compared with physical-space training">
+          <div>reaction-diffusion</div>
+          <div>less grid overfitting</div>
+          <div>forced Navier-Stokes</div>
+          <div>better long-time behavior</div>
+        </div>
+
+        <h2>Molecular Dynamics Needs Simulation-In-The-Loop</h2>
+        <p>The final part shifts from PDEs to molecular dynamics. A neural potential predicts energies and forces. A numerical integrator then rolls the atoms forward in time. A model trained only on energies and forces can look fine briefly but become unstable during longer simulation, such as when a bond stretches unphysically.</p>
+
+        <p>The speaker's idea is to train through the simulation outcome itself. Run the molecular dynamics loop, compute observables, take a loss on those observables, and use implicit differentiation adapted to the stochastic Boltzmann-distribution setting. The method is called a Boltzmann estimator in the talk.</p>
+
+        <div class="md-loop-map" aria-label="Molecular dynamics training uses simulation observables rather than only energies and forces">
+          <div>predict energies and forces</div>
+          <div>run integrator</div>
+          <div>compute observables</div>
+          <div>train through simulation</div>
+        </div>
+
+        <h2>Water Stability Shows Why The Loop Matters</h2>
+        <p>In the water example, standard training produces trajectories that become unstable relatively quickly. After simulation-in-the-loop training, trajectories remain stable much longer. The model can then compute observables such as diffusivity more accurately.</p>
+
+        <p>This is the same principle as the PDE layer, but in a different scientific setting. Do not only train the model to match local pieces. Train it so that the downstream simulation behaves physically when it is actually run.</p>
+
+        <div class="water-stability-map" aria-label="Simulation-in-the-loop training stabilizes water molecular dynamics and improves diffusivity estimates">
+          <div>standard training</div>
+          <div>unstable long rollout</div>
+          <div>loop-based training</div>
+          <div>better diffusivity estimate</div>
+        </div>
+
+        <h2>How This Connects To Physics, Design, And Topology</h2>
+        <p>Design and topology optimization depend on predictions used downstream. It is not enough for a neural field to match a few snapshots if an optimizer will push it into new corners of design space. The model must stay physically credible when queried repeatedly.</p>
+
+        <p>The PDE-constrained layer suggests one path: let the network propose a representation, then force it through a solver before accepting the prediction. The mixture-of-experts version suggests how to do this on larger domains. The spectral method suggests another path: choose a representation where differentiation and residuals are cheaper and more faithful. The molecular-dynamics example adds the same warning at atom scale: train for stable simulation behavior, not just one-step local fit.</p>
+
+        <p>For topology, this means a learned design surrogate should preserve conservation, boundary conditions, stability, and long-rollout behavior. A fast model that violates these during optimization may simply teach the optimizer how to exploit its errors.</p>
+
+        <div class="diffsolver-design-bridge" aria-label="Topology surrogates should pass predictions through physical constraints before design decisions use them">
+          <div>optimizer queries many designs</div>
+          <div>network alone may drift</div>
+          <div>solver or spectral constraint checks field</div>
+          <div>more reliable design loop</div>
+        </div>
+
+        <h2>The Chapter In One Chain</h2>
+        <p>First, neural networks can be fast and expressive after training. Second, scientific use also needs accuracy, reliability, and physical consistency. Third, soft physics losses can help simple problems but do not guarantee correct test-time behavior. Fourth, PDE-constrained layers put a solver inside the network's forward pass. Fifth, the network proposes a representation while the solver chooses coefficients that better satisfy the PDE. Sixth, implicit differentiation trains through the final solved condition without storing every solver step. Seventh, Darcy flow shows the constrained layer improving over a soft penalty. Eighth, hard domains make one large constrained layer expensive. Ninth, mixture of experts splits the domain so local constrained solves can run in parallel. Tenth, global initial and boundary conditions help subdomain experts agree. Eleventh, neural spectral methods move residual training into coefficient space. Twelfth, Chebyshev or Legendre bases can be better than Fourier bases when the physics is not periodic. Thirteenth, discontinuities and complex geometries remain hard for spectral methods. Fourteenth, reaction-diffusion and Navier-Stokes examples show better stability than physical-space residual training. Fifteenth, molecular dynamics also benefits from training through the simulation loop rather than only energies and forces. Sixteenth, the bigger design lesson is that a neural surrogate should pass through the physics that the downstream decision depends on.</p>
+
+        <div class="note">
+          <p>The chapter's core idea: physics should not be a decorative penalty that disappears after training. For serious prediction, the network should pass through a solver, a spectral law, or a simulation loop that keeps the physical check alive when the model is used.</p>
+        </div>
+
+        <section class="lesson-review" aria-label="End of chapter understanding check for physics-constrained differentiable solvers">
+          <h2>How To Test Whether You Understood This Chapter</h2>
+          <div class="lesson-review-grid">
+            <div><strong>Separate penalty from enforcement</strong><span>A penalty asks the network to care about the equation during training. A constrained layer makes the forward prediction itself go through a solve that checks the equation.</span></div>
+            <div><strong>Explain the scaling problem</strong><span>Putting a solver inside the network can be expensive. Mixture of experts splits the domain so local physics checks can run in smaller pieces and in parallel.</span></div>
+            <div><strong>Explain the spectral idea simply</strong><span>Instead of checking the equation point by point on a grid, represent the field with basis coefficients and write the residual in that space when the basis matches the boundary behavior.</span></div>
+            <div><strong>Connect it to topology and design</strong><span>A topology optimizer will search for weaknesses in a surrogate. The model must preserve conservation, boundaries, stability, and long rollouts before it can guide shape or material decisions.</span></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

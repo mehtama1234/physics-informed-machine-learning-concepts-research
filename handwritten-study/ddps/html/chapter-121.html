@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chapter 121 - Let The Network Choose Coefficients, Not Invent The Solver</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="sidebar">
+        <h1>DDPS Study</h1>
+        <a href="index.html">Start</a>
+        <a href="review-path.html">Review Path</a>
+        <a href="plain-words.html">Plain Words</a>
+        <a href="method-map.html">Method Map</a>
+        <a href="self-check.html">Self Check</a>
+        <a href="capstone.html">Capstone</a>
+        <a href="theme-index.html">Theme Index</a>
+        <a href="domain-map.html">Domain Map</a>
+        <a href="paper-reader.html">Paper Reader</a>
+        <a href="common-mistakes.html">Common Mistakes</a>
+        <a href="study-plan.html">Study Plan</a>
+        <a href="math-map.html">Math Map</a>
+        <a href="prerequisite-map.html">Prerequisite Map</a>
+        <a href="cheat-sheet.html">Cheat Sheet</a>
+        <a href="chapter-98.html">Chapter 98</a>
+        <a href="chapter-99.html">Chapter 99</a>
+        <a href="chapter-100.html">Chapter 100</a>
+        <a href="chapter-101.html">Chapter 101</a>
+        <a href="chapter-102.html">Chapter 102</a>
+        <a href="chapter-103.html">Chapter 103</a>
+        <a href="chapter-104.html">Chapter 104</a>
+        <a href="chapter-105.html">Chapter 105</a>
+        <a href="chapter-106.html">Chapter 106</a>
+        <a href="chapter-107.html">Chapter 107</a>
+        <a href="chapter-108.html">Chapter 108</a>
+        <a href="chapter-109.html">Chapter 109</a>
+        <a href="chapter-110.html">Chapter 110</a>
+        <a href="chapter-111.html">Chapter 111</a>
+        <a href="chapter-112.html">Chapter 112</a>
+        <a href="chapter-113.html">Chapter 113</a>
+        <a href="chapter-114.html">Chapter 114</a>
+        <a href="chapter-115.html">Chapter 115</a>
+        <a href="chapter-116.html">Chapter 116</a>
+        <a href="chapter-117.html">Chapter 117</a>
+        <a href="chapter-118.html">Chapter 118</a>
+        <a href="chapter-119.html">Chapter 119</a>
+        <a href="chapter-120.html">Chapter 120</a>
+        <a href="chapter-121.html">Chapter 121</a>
+        <a href="chapter-122.html">Chapter 122</a>
+        <a href="chapter-123.html">Chapter 123</a>
+        <a href="chapter-124.html">Chapter 124</a>
+        <a href="chapter-125.html">Chapter 125</a>
+        <a href="chapter-126.html">Chapter 126</a>
+        <a href="chapter-127.html">Chapter 127</a>
+        <a href="chapter-128.html">Chapter 128</a>
+        <a href="chapter-129.html">Chapter 129</a>
+        <a href="chapter-130.html">Chapter 130</a>
+        <a href="chapter-131.html">Chapter 131</a>
+        <a href="chapter-132.html">Chapter 132</a>
+        <a href="chapter-133.html">Chapter 133</a>
+        <a href="chapter-134.html">Chapter 134</a>
+        <a href="chapter-135.html">Chapter 135</a>
+        <a href="chapter-136.html">Chapter 136</a>
+        <a href="chapter-137.html">Chapter 137</a>
+        <a href="from-zero.html">From Zero</a>
+        <a href="pinn-from-zero.html">PINNs From Zero</a>
+        <a href="rom-from-zero.html">ROMs From Zero</a>
+        <a href="manifold-from-zero.html">Manifolds From Zero</a>
+        <a href="synthesis.html">Synthesis</a>
+        <a href="big-picture.html">Big Picture</a>
+        <a href="examples.html">Examples</a>
+        <a href="bridge.html">AISE Bridge</a>
+        <a href="audit.html">Transcript Audit</a>
+      </nav>
+      <main class="content">
+        <p class="eyebrow">Narrative chapter</p>
+        <h1>Let The Network Choose Coefficients, Not Invent The Solver</h1>
+
+        <p>This chapter uses video 125, Young Jun Hong's DDPS talk on operator networks based on numerical analysis. The talk asks a very practical question: if mathematicians and engineers already know many good ways to solve differential equations, why should a neural network start from nothing? Instead of asking the network to invent the whole solution shape, the speaker asks it to choose the numbers that multiply trusted numerical basis functions.</p>
+
+        <p>The first-principles idea is simple. A solution field is usually not stored as a mystical object. In numerical methods, it is built from pieces. You choose basis functions, multiply them by coefficients, add everything together, and get an approximate solution. The speaker keeps the basis functions from classical numerical analysis and lets the neural network learn the coefficients. That gives the network a smaller, better-shaped job.</p>
+
+        <section class="lesson-claim-chain" aria-label="Plain first-principles reading guide for coefficient-based operator networks">
+          <h2>Read This Chapter As One Claim</h2>
+          <p>The central move is to give the neural network a disciplined job. A finite element or spectral method already knows how to build a field from basis functions, handle many boundaries, compute weak-form residuals, and talk about error. The network does not need to rediscover all of that. It can take the changing input, such as a forcing function or boundary condition, and choose the coefficients for those solver-shaped pieces. Then the reconstructed field stays attached to the numerical structure instead of becoming a freehand image.</p>
+          <div class="lesson-claim-grid">
+            <div><strong>Everyday problem</strong><span>Many related PDE solves are needed, but generic neural operators may need expensive solution data and may ignore useful solver structure.</span></div>
+            <div><strong>Shared promise</strong><span>Keep trusted numerical basis functions and weak forms, then train the network to predict the coefficients for each new input.</span></div>
+            <div><strong>Hidden danger</strong><span>Bad basis choice, poor conditioning, hard geometry, or sharp layers can make the learned coefficient map inaccurate even if the idea is sound.</span></div>
+            <div><strong>First rejection test</strong><span>Change geometry, boundary conditions, forcing, mesh resolution, and layer strength, then check weak residuals, boundary behavior, and error trends.</span></div>
+          </div>
+        </section>
+
+        <div class="coeff-big-picture-map" aria-label="The network predicts coefficients for known numerical basis functions">
+          <div>known numerical basis functions</div>
+          <div>network predicts their coefficients</div>
+          <div>sum builds the solution field</div>
+          <div>weak-form residual trains the map</div>
+        </div>
+
+        <h2>The Problem Operator Networks Try To Solve</h2>
+        <p>A physics-informed neural network usually solves one instance of a problem. Give it one equation, one forcing term, one boundary condition, and one set of parameters. It trains a function that gives the solution for that specific case. If the forcing or initial condition changes enough, you often train again.</p>
+
+        <p>An operator network tries to learn a reusable map. The input could be an initial condition, a forcing function, a material coefficient, or a boundary condition. The output is a whole solution field. Once trained, the same network can answer many related PDE instances quickly. That is why operator learning is attractive for engineering loops, where one design question becomes thousands of nearby simulations.</p>
+
+        <div class="pinn-operator-map" aria-label="PINNs solve one instance while operator networks learn a reusable map">
+          <div>PINN: one equation instance</div>
+          <div>change input, often retrain</div>
+          <div>operator net: learn input-to-solution map</div>
+          <div>many queries after training</div>
+        </div>
+
+        <h2>The Weakness Of A Generic Neural Operator</h2>
+        <p>Neural operators such as DeepONet and Fourier neural operators are powerful because they can learn maps between functions. But the talk stresses a cost. They usually need precomputed input-output data from a numerical PDE solver. That means a trusted solver still has to create many examples before the neural model can train. They may also have generalization error when the new problem is outside what the training data covered.</p>
+
+        <p>The speaker is not rejecting these methods. He is asking whether the numerical method can be placed inside the learning architecture more directly. If a finite element method already knows how to handle a boundary condition, why make the neural network rediscover that? If a spectral method already gives accurate derivatives for known polynomials, why estimate those derivatives through a generic network?</p>
+
+        <h2>The Coefficient Trick</h2>
+        <p>In a Galerkin method, the approximate solution is written as a sum. Each basis function is known. The unknowns are the coefficients. Classical numerical methods solve a linear or nonlinear algebraic problem to find those coefficients. In this talk, the neural network takes the problem input, such as a forcing function, and outputs all the coefficients at once.</p>
+
+        <p>After that, reconstruction is ordinary mathematics. Multiply each basis function by its predicted coefficient and add the pieces. The network is not drawing the field pixel by pixel. It is choosing how much of each trusted shape to use. That is why the method feels like a bridge between old numerical analysis and new machine learning.</p>
+
+        <div class="coefficient-rebuild-map" aria-label="The coefficient trick turns a field prediction into coefficient prediction">
+          <div>input function</div>
+          <div>neural network</div>
+          <div>coefficient vector</div>
+          <div>basis expansion gives solution</div>
+        </div>
+
+        <h2>How The Loss Is Built Without Training Data</h2>
+        <p>The method can train without a precomputed solution dataset because it uses the equation itself. The reconstructed solution is placed into the weak form of the PDE. The weak form asks whether the approximate solution satisfies the equation when tested against chosen test functions. If the left side and right side do not match, the residual becomes the loss.</p>
+
+        <p>This is where numerical analysis matters. The basis functions and test functions are not arbitrary. For a Legendre spectral method, the method can use Legendre basis functions and accurate Gauss-Legendre quadrature. Derivatives are also cleaner because the polynomial form is known. The training signal is therefore not just a pile of sample points. It is a numerical-method residual written in the language that PDE solvers already use.</p>
+
+        <div class="weak-loss-map" aria-label="The PDE weak form provides the training loss">
+          <div>reconstruct trial solution</div>
+          <div>insert it into weak form</div>
+          <div>compare left and right sides</div>
+          <div>train until residual is small</div>
+        </div>
+
+        <h2>Why Boundary Conditions Become Easier</h2>
+        <p>Boundary conditions are often a weak spot for generic neural approaches. A model may approximately satisfy the equation inside the domain but miss the exact behavior at the boundary. The speaker's construction reduces that problem by choosing basis functions that already know the boundary condition. If the basis is built to be zero at the boundary, any sum of those basis functions is also zero there.</p>
+
+        <p>This is a first-principles design choice. Do not ask training to enforce a rule that can be made true by construction. Put the rule into the shape of the approximation space. Then the learning problem starts inside the acceptable set instead of wandering around outside it and being penalized afterward.</p>
+
+        <h2>From Spectral Bases To Finite Elements</h2>
+        <p>Spectral bases are excellent on simple, box-like domains. They can give high accuracy with few basis functions when the geometry and solution are smooth enough. But many engineering domains are not boxes. They have holes, curved boundaries, cutouts, and polygonal shapes. For those cases, finite elements are more natural because they break the domain into smaller pieces and use local basis functions on those pieces.</p>
+
+        <p>The speaker keeps the same overall idea and changes the basis. For simple domains, use Legendre or related spectral polynomials. For irregular domains, use finite element basis functions such as low-order or higher-order polynomial elements. The neural network still predicts coefficients. The reconstruction still builds a solution from basis functions. The weak-form residual still trains the model.</p>
+
+        <div class="basis-choice-map" aria-label="Different numerical bases fit different geometry and accuracy needs">
+          <div>spectral basis: smooth simple domain</div>
+          <div>finite element basis: irregular shape</div>
+          <div>higher-order basis: more accuracy</div>
+          <div>same coefficient-learning idea</div>
+        </div>
+
+        <h2>The Shape And Topology Connection</h2>
+        <p>This matters for topology and design because real design domains are rarely clean rectangles. A heat sink has channels. A bracket has holes. A wing has curved surfaces. A porous material has connected voids. A biological or geological domain may have awkward boundaries. If the learning method only behaves well on a simple square, it cannot carry the real design problem.</p>
+
+        <p>Finite element operator networks are important because they let the learned map live on a mesh that follows the shape. The topology of the domain, meaning what is connected, where holes exist, and how boundaries wrap around the region, is represented by the mesh and the local basis functions. The network learns coefficients on that numerical structure instead of flattening the problem into an image and hoping the geometry survives.</p>
+
+        <div class="geometry-design-map" aria-label="Finite element bases preserve design geometry and topology">
+          <div>real parts have holes and curved boundaries</div>
+          <div>mesh follows the domain</div>
+          <div>basis functions live on the mesh</div>
+          <div>design queries keep geometry visible</div>
+        </div>
+
+        <h2>Sharp Layers Need Special Basis Functions</h2>
+        <p>The talk spends time on singular perturbation problems because they expose a common failure mode. When a small parameter appears in a convection-diffusion problem, the solution may be smooth almost everywhere but change sharply near a boundary or inside the domain. This sharp layer is hard for ordinary machine learning because networks often learn smooth, low-frequency behavior first and struggle with sudden transitions.</p>
+
+        <p>The speaker borrows an old numerical-analysis move: enrich the basis. If asymptotic analysis says the boundary layer has a known shape, add a basis function shaped like that layer. Then the network does not have to manufacture the sharp transition from many ordinary smooth pieces. One well-chosen extra function can carry the difficult feature directly.</p>
+
+        <div class="layer-enrichment-map" aria-label="Boundary layers are handled by adding a basis function shaped like the layer">
+          <div>small parameter creates sharp layer</div>
+          <div>ordinary basis misses the sudden change</div>
+          <div>asymptotic analysis predicts layer shape</div>
+          <div>enriched basis captures it directly</div>
+        </div>
+
+        <h2>The Practical Tradeoff</h2>
+        <p>In the question period, the speaker gives the practical answer. Training this kind of method is slower than simply running a finite element or finite volume solver once. If you only need one very accurate solution, the classical solver may be the better tool. But after training, inference can be fast. If you need many solutions for many forcings, boundary conditions, coefficients, or initial states, the trained operator network can become useful.</p>
+
+        <p>So the target use case is not "replace every solver." The target use case is repeated related solves. That could mean design exploration, uncertainty studies, parameter scans, inverse problems, optimization, or fast previews inside a larger workflow. The training cost is paid once so the many-query stage becomes cheaper.</p>
+
+        <div class="cost-tradeoff-map" aria-label="Training is expensive but repeated inference can be fast">
+          <div>one solve: classical method may win</div>
+          <div>training: neural method costs time</div>
+          <div>many related solves: inference is fast</div>
+          <div>best for loops, scans, and design</div>
+        </div>
+
+        <h2>Why The Error Analysis Matters</h2>
+        <p>The speaker also shows that this approach can be studied with the tools of numerical analysis. As the number of elements increases, the error should generally go down, but the experiments show hiccups where error rises. The first guess was that this might be only a neural-network optimization problem. The analysis points to another culprit: conditioning. The weak-form matrix can become poorly conditioned, and that can hurt the learned approximation.</p>
+
+        <p>This is a useful lesson. When learning is tied to a numerical method, its failures are not only "AI failures." They may be the same old numerical failures in a new container: bad conditioning, bad basis choice, hard geometry, insufficient resolution, or an unstable formulation. That is good news because numerical analysis already has tools for these problems, such as preconditioning and better approximation spaces.</p>
+
+        <div class="error-analysis-map" aria-label="Error comes from approximation, conditioning, and learning">
+          <div>more elements should reduce approximation error</div>
+          <div>conditioning can make training harder</div>
+          <div>preconditioning can help</div>
+          <div>analysis explains the failure mode</div>
+        </div>
+
+        <h2>A Concrete Example</h2>
+        <p>Suppose you are optimizing the shape of a small cooling device. For every candidate shape, you need to solve a steady flow or heat equation with a different forcing or boundary condition. A full finite element solve for every candidate may be expensive. A generic image-based network may struggle when the shape changes or when exact boundary behavior matters.</p>
+
+        <p>With the idea from this talk, you could mesh the domain, choose basis functions that respect the geometry and boundary conditions, and train a network that maps the design input to finite element coefficients. The output is still a field on the mesh. The design loop can ask many nearby questions quickly, while the approximation remains tied to the numerical structure that made the original solver trustworthy.</p>
+
+        <h2>The Boundary Of The Claim</h2>
+        <p>This is not a claim that neural networks have made numerical solvers obsolete. The speaker is explicit that the method is one direction, not the final answer. Very high-accuracy single solves still belong to classical methods. Finite volume extensions are not automatic because fluxes and conservation need careful handling. Foundation-model dreams for many equations and geometries are still future work.</p>
+
+        <p>The grounded claim is narrower: if the PDE family will be queried many times, and if you can choose a numerical basis that matches the geometry, boundary conditions, and layer structure, then a neural network can learn the coefficient map while the weak form supplies the training signal. That is a much more concrete claim than saying "AI solves PDEs."</p>
+
+        <div class="coeff-boundary-map" aria-label="The method has clear limits and best-use cases">
+          <div>not a replacement for every solver</div>
+          <div>not automatically conservative like finite volume</div>
+          <div>not free of conditioning trouble</div>
+          <div>useful when many related PDE solves are needed</div>
+        </div>
+
+        <h2>What You Should Remember</h2>
+        <p>The big lesson is that machine learning does not have to erase numerical analysis. It can sit inside it. Let the old method provide basis functions, weak forms, quadrature, boundary behavior, geometry handling, and error language. Let the neural network learn the part that changes from case to case: the coefficients.</p>
+
+        <p>For the whole DDPS course, this chapter connects to a repeated theme. The best scientific machine learning methods do not ask the network to guess everything. They give the network a disciplined job. Here the job is not "be a PDE solver." The job is "given this input function or boundary condition, choose the coefficients for a solver-shaped approximation."</p>
+
+        <section class="lesson-review" aria-label="End of chapter understanding check for coefficient-based operator networks">
+          <h2>How To Test Whether You Understood This Chapter</h2>
+          <div class="lesson-review-grid">
+            <div><strong>Explain the coefficient trick</strong><span>The field is rebuilt from known basis functions. The network predicts how much of each basis function to use for the current input.</span></div>
+            <div><strong>Explain why weak forms matter</strong><span>The model can train from the equation residual in weak form, using numerical-method tools such as test functions, quadrature, and known derivatives.</span></div>
+            <div><strong>Explain the geometry advantage</strong><span>Finite element bases live on meshes that follow holes, curved boundaries, and connected regions, so the design shape remains visible to the learned map.</span></div>
+            <div><strong>Connect it to topology and design</strong><span>For repeated heat, flow, elasticity, or acoustic solves over changing shapes, the network should predict solver coefficients while the mesh and basis preserve boundaries, topology, and layer features.</span></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

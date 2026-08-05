@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chapter 135 - Make Fast Scientific Models Say How Much To Trust Them</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="sidebar">
+        <h1>DDPS Study</h1>
+        <a href="index.html">Start</a>
+        <a href="review-path.html">Review Path</a>
+        <a href="plain-words.html">Plain Words</a>
+        <a href="method-map.html">Method Map</a>
+        <a href="self-check.html">Self Check</a>
+        <a href="capstone.html">Capstone</a>
+        <a href="theme-index.html">Theme Index</a>
+        <a href="domain-map.html">Domain Map</a>
+        <a href="paper-reader.html">Paper Reader</a>
+        <a href="common-mistakes.html">Common Mistakes</a>
+        <a href="study-plan.html">Study Plan</a>
+        <a href="math-map.html">Math Map</a>
+        <a href="prerequisite-map.html">Prerequisite Map</a>
+        <a href="cheat-sheet.html">Cheat Sheet</a>
+        <a href="chapter-98.html">Chapter 98</a>
+        <a href="chapter-99.html">Chapter 99</a>
+        <a href="chapter-100.html">Chapter 100</a>
+        <a href="chapter-101.html">Chapter 101</a>
+        <a href="chapter-102.html">Chapter 102</a>
+        <a href="chapter-103.html">Chapter 103</a>
+        <a href="chapter-104.html">Chapter 104</a>
+        <a href="chapter-105.html">Chapter 105</a>
+        <a href="chapter-106.html">Chapter 106</a>
+        <a href="chapter-107.html">Chapter 107</a>
+        <a href="chapter-108.html">Chapter 108</a>
+        <a href="chapter-109.html">Chapter 109</a>
+        <a href="chapter-110.html">Chapter 110</a>
+        <a href="chapter-111.html">Chapter 111</a>
+        <a href="chapter-112.html">Chapter 112</a>
+        <a href="chapter-113.html">Chapter 113</a>
+        <a href="chapter-114.html">Chapter 114</a>
+        <a href="chapter-115.html">Chapter 115</a>
+        <a href="chapter-116.html">Chapter 116</a>
+        <a href="chapter-117.html">Chapter 117</a>
+        <a href="chapter-118.html">Chapter 118</a>
+        <a href="chapter-119.html">Chapter 119</a>
+        <a href="chapter-120.html">Chapter 120</a>
+        <a href="chapter-121.html">Chapter 121</a>
+        <a href="chapter-122.html">Chapter 122</a>
+        <a href="chapter-123.html">Chapter 123</a>
+        <a href="chapter-124.html">Chapter 124</a>
+        <a href="chapter-125.html">Chapter 125</a>
+        <a href="chapter-126.html">Chapter 126</a>
+        <a href="chapter-127.html">Chapter 127</a>
+        <a href="chapter-128.html">Chapter 128</a>
+        <a href="chapter-129.html">Chapter 129</a>
+        <a href="chapter-130.html">Chapter 130</a>
+        <a href="chapter-131.html">Chapter 131</a>
+        <a href="chapter-132.html">Chapter 132</a>
+        <a href="chapter-133.html">Chapter 133</a>
+        <a href="chapter-134.html">Chapter 134</a>
+        <a href="chapter-135.html">Chapter 135</a>
+        <a href="chapter-136.html">Chapter 136</a>
+        <a href="chapter-137.html">Chapter 137</a>
+        <a href="from-zero.html">From Zero</a>
+        <a href="pinn-from-zero.html">PINNs From Zero</a>
+        <a href="rom-from-zero.html">ROMs From Zero</a>
+        <a href="manifold-from-zero.html">Manifolds From Zero</a>
+        <a href="synthesis.html">Synthesis</a>
+        <a href="big-picture.html">Big Picture</a>
+        <a href="examples.html">Examples</a>
+        <a href="bridge.html">AISE Bridge</a>
+        <a href="audit.html">Transcript Audit</a>
+      </nav>
+      <main class="content">
+        <p class="eyebrow">Narrative chapter</p>
+        <h1>Make Fast Scientific Models Say How Much To Trust Them</h1>
+
+        <p>This chapter uses video 139, Michael Shields's DDPS talk on the nexus of machine learning, physics-based modeling, and uncertainty quantification. The talk is about a problem that appears after scientific machine learning starts to work. Once a surrogate model predicts fast, how do we know how much to trust the prediction?</p>
+
+        <p>The first-principles problem is simple. A classical simulation already has uncertainty: uncertain inputs, uncertain parameters, numerical error, model-form error, and measurement error. When we replace or augment that simulation with a machine-learning surrogate, we add new uncertainties: architecture choice, training data, discretization choices, loss choices, optimization choices, and millions of learned weights. A fast answer without uncertainty can be fast in the wrong direction.</p>
+
+        <section class="lesson-claim-chain" aria-label="Plain first-principles reading guide for uncertainty in scientific machine learning">
+          <h2>Read This Chapter As One Claim</h2>
+          <p>Start from an ordinary decision. You want to choose a shape, a material, a control setting, or a safety margin, but the full physics simulation is slow. A learned surrogate gives an answer quickly. The hidden question is whether the answer is solid enough to act on. This chapter says speed alone is not trust. A scientific model must also show where its answer may be weak, because the expensive mistake often happens exactly where the shortcut is least sure.</p>
+          <div class="lesson-claim-grid">
+            <div><strong>Everyday problem</strong><span>You need a fast answer, but you also need to know whether that answer is safe to use.</span></div>
+            <div><strong>Shared promise</strong><span>A surrogate can save time if it predicts the quantity and gives a believable measure of doubt.</span></div>
+            <div><strong>Hidden danger</strong><span>The model can look confident because it learned patterns, while the new case is outside what the data really supports.</span></div>
+            <div><strong>First rejection test</strong><span>If the chapter cannot say what creates uncertainty and how that uncertainty changes a decision, it has not explained UQ.</span></div>
+          </div>
+        </section>
+
+        <div class="uq-core-map" aria-label="Scientific machine learning needs uncertainty quantification because surrogates add new uncertainty sources">
+          <div>surrogate predicts quickly</div>
+          <div>training introduces new uncertainty</div>
+          <div>foundation models are too large to inspect directly</div>
+          <div>trust requires quantified uncertainty</div>
+        </div>
+
+        <h2>The Everyday Version</h2>
+        <p>Imagine a shortcut road that saves an hour. It is useful only if you know when it is flooded, under construction, or unreliable at night. A surrogate model is the shortcut road. It can save enormous compute, but it must also say when the shortcut is risky.</p>
+
+        <p>This is why the talk emphasizes uncertainty quantification, or UQ, for scientific machine learning. The goal is not to make the model nervous for no reason. The goal is to attach the right amount of doubt to the prediction, so a scientist or engineer can decide whether to trust it, refine it, run the expensive solver, or gather more data.</p>
+
+        <h2>Why Foundation Models Make UQ Urgent</h2>
+        <p>Scientific foundation models are large models trained to work across broad physics tasks. They are meant to generalize across regimes, equations, boundary conditions, geometries, and downstream tasks. That promise makes UQ more important, not less. The broader the model's intended use, the more ways it can be uncertain.</p>
+
+        <p>The talk points to verification, validation, and uncertainty quantification as missing infrastructure for foundation models. Traditional modeling has VVUQ practices. Foundation models do not yet have mature analogs. Trust will require uncertainty estimates that are interpretable, meaningful, and tied to the physical task.</p>
+
+        <div class="foundation-uq-map" aria-label="Foundation models need VVUQ because they are broad, large, and often black-box-like">
+          <div>foundation model claims broad use</div>
+          <div>broad use creates many failure routes</div>
+          <div>traditional VVUQ tools do not directly transfer</div>
+          <div>interpretable uncertainty supports trust</div>
+        </div>
+
+        <h2>Where Uncertainty Enters</h2>
+        <p>The talk breaks a foundation model into components. There is tokenization, which in scientific machine learning often means discretization in space and time. There is the learning objective, such as a regression loss or a physics-informed loss. There is the model architecture: neural operator, transformer, graph model, encoder-decoder, or something else. There is training: pretraining, fine-tuning, data curation, learning schedules, and heterogeneous simulation or experimental data.</p>
+
+        <p>Every one of these choices injects uncertainty. The grid can be wrong for the phenomenon. The loss can prioritize the wrong quantity. The architecture can be poorly matched. The parameters can be underdetermined. The training data can be biased. The key engineering move is to break the giant model into these sources rather than treating uncertainty as one vague output bar.</p>
+
+        <div class="uq-sources-map" aria-label="Uncertainty enters through discretization, objective, architecture, parameters, and training">
+          <div>discretization or tokenization</div>
+          <div>loss and learning objective</div>
+          <div>architecture and parameterization</div>
+          <div>training data and learned weights</div>
+        </div>
+
+        <h2>Bayesian Neural Networks</h2>
+        <p>A Bayesian neural network treats weights as uncertain rather than fixed. Instead of one best set of parameters, it tries to represent a posterior distribution over parameters given the data. That posterior can then be pushed through the network to produce predictive uncertainty.</p>
+
+        <p>This lets the model split uncertainty into two broad kinds. Aleatory uncertainty is irreducible noise or variability in the system. Epistemic uncertainty is lack of knowledge from limited data or uncertain parameters. This split matters because the response is different. More data can reduce epistemic uncertainty. More data cannot remove true randomness or variability.</p>
+
+        <div class="bnn-split-map" aria-label="Bayesian neural networks separate aleatory and epistemic uncertainty">
+          <div>weights become distributions</div>
+          <div>posterior reflects data and prior</div>
+          <div>aleatory uncertainty is system variability</div>
+          <div>epistemic uncertainty is missing knowledge</div>
+        </div>
+
+        <h2>The Cost Ladder</h2>
+        <p>The problem is scale. Hamiltonian Monte Carlo can sample from a posterior with high fidelity, but it is expensive. It is a gold-standard type method for smaller Bayesian neural networks, not something you can naively apply to billions of parameters. Variational inference is cheaper because it assumes a simpler posterior form and optimizes that approximation. Monte Carlo dropout is cheaper still, but it makes even stronger assumptions.</p>
+
+        <p>So the choice is a ladder. At the top, expensive methods give better posterior fidelity. At the bottom, cheap methods scale better but may give less reliable uncertainty. The talk does not pretend this tradeoff disappears. It tries to find combinations that keep useful uncertainty without destroying the surrogate's speed advantage.</p>
+
+        <div class="uq-cost-ladder-map" aria-label="UQ methods trade posterior fidelity against computational cost">
+          <div>HMC: strong posterior sampling, high cost</div>
+          <div>variational inference: cheaper, assumed posterior</div>
+          <div>dropout: cheaper, stronger assumptions</div>
+          <div>surrogate UQ must not erase speed savings</div>
+        </div>
+
+        <h2>Learning Hamiltonian Monte Carlo</h2>
+        <p>The talk briefly discusses accelerating Hamiltonian Monte Carlo with Hamiltonian neural networks. HMC evolves a Hamiltonian system to propose posterior samples. A neural network can learn parts of that Hamiltonian evolution, using automatic differentiation to compute needed gradients.</p>
+
+        <p>This works nicely for low-dimensional problems and has been pushed to hundreds of dimensions, but that is still tiny compared with foundation models. The point is not that this solves large foundation-model UQ. The point is that high-quality Bayesian sampling is possible in principle, but scaling it requires new structure.</p>
+
+        <div class="hmc-learning-map" aria-label="Hamiltonian neural networks can accelerate HMC dynamics but scaling remains hard">
+          <div>HMC samples by evolving Hamiltonian dynamics</div>
+          <div>neural network can learn the evolution</div>
+          <div>works best at lower dimension</div>
+          <div>foundation scale needs further reduction</div>
+        </div>
+
+        <h2>Testing Cheaper Bayesian Approximations</h2>
+        <p>The microstructure stress example compares HMC, Bayes by Backprop, and Monte Carlo dropout on a Bayesian U-Net-style problem. The input is a microstructure, and the output is the mean and variance of a stress field under uniaxial tension. The model size is modest by foundation-model standards, but large enough to see differences.</p>
+
+        <p>The result is that Bayes by Backprop tracks HMC uncertainty much better than Monte Carlo dropout in this case. That does not make variational inference perfect. It means the cheap approximation can be useful if checked against a stronger method on problems where that stronger method is still feasible.</p>
+
+        <div class="microstructure-uq-map" aria-label="Microstructure stress tests compare HMC, variational inference, and dropout uncertainty">
+          <div>input is a material microstructure</div>
+          <div>output is stress mean and variance</div>
+          <div>HMC provides a stronger comparison</div>
+          <div>Bayes by Backprop tracks HMC better than dropout</div>
+        </div>
+
+        <h2>Initialization And Ensembles</h2>
+        <p>Variational inference can depend strongly on initialization. The talk shows a simple function where different initializations lead to different uncertainty behavior. To address that, the group uses pseudo-Bayesian model averaging: train several variational models, assign weights based on predictive quality, and combine them.</p>
+
+        <p>This is a model-form uncertainty idea. Instead of trusting one trained approximation, let several plausible approximations contribute. The price is ensemble cost. The gain is a more diverse and often better-calibrated uncertainty picture.</p>
+
+        <div class="ensemble-uq-map" aria-label="Pseudo-Bayesian model averaging combines multiple VI models to reduce initialization dependence">
+          <div>VI can depend on initialization</div>
+          <div>train several Bayesian approximations</div>
+          <div>weight models by predictive quality</div>
+          <div>ensemble gives broader uncertainty picture</div>
+        </div>
+
+        <h2>The VI-HMC Sensitivity Idea</h2>
+        <p>The central scaling idea is VI-HMC. The hypothesis is that not every parameter in a huge model matters equally for uncertainty. Train first with variational inference. Use gradients and a variance contribution estimate to rank parameters by sensitivity. Freeze the low-sensitivity parameters. Then apply HMC only to the subset that most affects predictive uncertainty.</p>
+
+        <p>This is not exact full HMC. It is a compromise. But it can move uncertainty estimates closer to HMC quality while reducing the sampling dimension by orders of magnitude. In the hypersonic DeepONet example, a much smaller subset of parameters accounts for most of the uncertainty. In the Bayesian Fourier neural operator building example, the talk reports reducing millions of parameters to thousands of influential ones for UQ purposes.</p>
+
+        <div class="vihmc-map" aria-label="VI-HMC screens parameters by sensitivity and applies HMC only to influential parameters">
+          <div>start with variational inference</div>
+          <div>rank parameters by uncertainty sensitivity</div>
+          <div>freeze low-impact parameters</div>
+          <div>sample influential subset with HMC</div>
+        </div>
+
+        <h2>Examples: Hypersonics And Structures</h2>
+        <p>The hypersonic case predicts pressure spectra at sensors on a nose cone from incoming-flow energy-spectrum parameters. The model is a Bayesian DeepONet. Sensitivity ranking identifies a much smaller parameter subset that captures most of the output uncertainty, allowing HMC on that reduced subset.</p>
+
+        <p>The structural dynamics case uses a Bayesian Fourier neural operator for a six-story shear building under stochastic ground acceleration with nonlinear floor behavior. The full model has millions of parameters. The sensitivity screen reduces the UQ-active subset to thousands of parameters. This is still hard, but it is a different problem than sampling all weights blindly.</p>
+
+        <div class="hypersonic-structure-map" aria-label="VI-HMC is tested on hypersonic pressure spectra and Bayesian FNO structural dynamics">
+          <div>hypersonic DeepONet predicts wall pressure spectra</div>
+          <div>sensitivity picks uncertainty-active parameters</div>
+          <div>Bayesian FNO models nonlinear building response</div>
+          <div>millions of weights reduce to thousands for UQ</div>
+        </div>
+
+        <h2>Dimension Reduction Still Matters</h2>
+        <p>The talk connects this to a long line of dimension-reduction work. High-dimensional inputs and outputs can be mapped to lower-dimensional latent spaces, a surrogate can be built there, and the result can be lifted back. This includes manifold polynomial chaos expansions, principal geodesic analysis, and neural operators bookended by autoencoders.</p>
+
+        <p>The reason is practical. If you can compress the physical state before learning or before doing UQ, you reduce the burden on the model. Dimension reduction and Bayesian sampling are not separate worlds. They can be combined so the uncertainty problem lives in a smaller, more meaningful space.</p>
+
+        <div class="latent-uq-map" aria-label="Dimension reduction can make surrogate UQ easier by moving to latent spaces">
+          <div>high-dimensional field is compressed</div>
+          <div>surrogate works in latent space</div>
+          <div>uncertainty is quantified on compressed variables</div>
+          <div>decoder returns physical predictions</div>
+        </div>
+
+        <h2>Discretization Is Also Uncertain</h2>
+        <p>Scientific data do not arrive like clean text tokens. Inputs and outputs may be on different meshes, different resolutions, and different fidelity levels. If an operator learner requires a fixed input grid, it can confuse discretization with physics. That creates uncertainty in the "tokenization" step.</p>
+
+        <p>The resolution-independent neural operator, or RINO, addresses this by projecting arbitrary input samples onto a shared representation before applying the operator. A physics-informed version uses dictionary learning and physics constraints. The larger point is that foundation models will need ways to combine computational data, experimental data, resolutions, and fidelities without pretending they are all the same.</p>
+
+        <div class="rino-map" aria-label="Resolution-independent neural operators address uncertainty from arbitrary input discretizations">
+          <div>scientific inputs may use different meshes</div>
+          <div>fixed-grid operators can be too rigid</div>
+          <div>projection creates a shared embedding</div>
+          <div>multifidelity foundation data become more usable</div>
+        </div>
+
+        <h2>The Q And A Boundaries</h2>
+        <p>The Q and A clarifies the limits. Parameter reduction is not guaranteed. It depends on architecture, overparameterization, data richness, and physical problem structure. Some problems may have a small uncertainty-active subset. Others may not. HMC itself carries assumptions and practical challenges, including smooth posteriors, gradients, initialization, and high cost.</p>
+
+        <p>There is also a practical surrogate-model question: if UQ is too expensive, it defeats the reason for building the surrogate. The speaker's answer is honest. The field is not fully there for very large models. The goal is to make UQ an add-on that remains computationally tractable, not a second problem more expensive than the original simulation.</p>
+
+        <div class="uq-boundary-map" aria-label="The talk is clear that scalable UQ remains open and parameter reduction is not guaranteed">
+          <div>sensitivity reduction depends on the problem</div>
+          <div>HMC assumptions can fail or become expensive</div>
+          <div>ensembles add cost</div>
+          <div>UQ must stay cheaper than losing the surrogate benefit</div>
+        </div>
+
+        <h2>The Design And Topology Connection</h2>
+        <p>This chapter matters for design and topology because design choices should not be made from a fast but uncalibrated surrogate. A topology optimizer may remove a load path, change a flow channel, alter a material microstructure, or modify a building response. If the surrogate is uncertain in exactly that region, the optimizer can confidently choose a bad design.</p>
+
+        <p>UQ changes the design loop. Instead of asking only "what design has the best predicted score?" the loop can ask "what design has a strong score and acceptable uncertainty?" It can also decide where to run the expensive solver next, where to collect data, or where a lower-fidelity prediction is too risky.</p>
+
+        <div class="uq-design-map" aria-label="Design loops need uncertainty-aware surrogates to avoid overtrusting risky predictions">
+          <div>topology changes can leave training support</div>
+          <div>surrogate may be uncertain near new designs</div>
+          <div>optimizer needs score plus uncertainty</div>
+          <div>expensive solves can target risky regions</div>
+        </div>
+
+        <h2>How This Connects To Earlier Chapters</h2>
+        <p>This chapter connects directly to Chapters 131 and 132. Those chapters discuss scientific foundation models and the need for generalization. This chapter adds the missing trust layer: if a model generalizes, it should say how uncertain that generalization is. It connects to Chapter 134 because assimilation and digital twins also need uncertainty-aware state estimates. It connects to operator-learning chapters because DeepONets, FNOs, and neural operators are the surrogate models receiving UQ treatment here.</p>
+
+        <p>The new lesson is that uncertainty is not one number bolted onto the end. It comes from the structure of the whole model-building pipeline.</p>
+
+        <h2>The Boundary Of The Claim</h2>
+        <p>The claim is not that scalable UQ for foundation models is solved. It is not. Bayesian sampling over billions of parameters remains out of reach. Variational methods and dropout make assumptions. Ensembles add cost. Discretization and training-objective uncertainties are still open research problems.</p>
+
+        <p>The honest claim is that there is a path. Break the model into components. Use Bayesian tools where possible. Compare cheap approximations to stronger samplers on tractable problems. Focus expensive sampling on uncertainty-sensitive parameters. Use dimension reduction and resolution-independent embeddings to control the size of the problem.</p>
+
+        <div class="uq-limit-map" aria-label="Scalable UQ is not solved but can progress by decomposing sources and reducing dimensions">
+          <div>foundation-scale Bayesian sampling is not solved</div>
+          <div>cheap UQ methods make assumptions</div>
+          <div>discretization and objective uncertainty remain open</div>
+          <div>component-wise reduction is the path forward</div>
+        </div>
+
+        <h2>What You Should Remember</h2>
+        <p>The heart of the lecture is that scientific machine learning must earn trust, not only speed. A surrogate model should not only produce a field, a spectrum, or a design score. It should also expose the uncertainty created by its data, architecture, parameters, discretization, objective, and training.</p>
+
+        <p>If you remember one sentence, remember this: a fast scientific model becomes useful for decisions only when it can also say where its own answer is fragile.</p>
+
+        <section class="lesson-review" aria-label="End of chapter understanding check for uncertainty in scientific machine learning">
+          <h2>How To Test Whether You Understood This Chapter</h2>
+          <div class="lesson-review-grid">
+            <div><strong>Explain the need from zero</strong><span>A shortcut model is not enough. You must know when the shortcut is likely right, when it is guessing, and when the expensive solver or more data is needed.</span></div>
+            <div><strong>Name the places doubt enters</strong><span>Doubt can come from the mesh, the data, the chosen loss, the architecture, the learned weights, the solver, and the physical assumptions behind the problem.</span></div>
+            <div><strong>Connect it to topology</strong><span>A topology optimizer can choose a bad shape if it follows a confident-looking surrogate in a region where the surrogate has little support.</span></div>
+            <div><strong>State the honest claim</strong><span>The chapter does not solve uncertainty for giant foundation models. It shows how to make the problem smaller, check cheap methods against stronger ones, and keep doubt attached to the decision.</span></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chapter 133 - Choose How Much Physics The Data Must Carry</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="sidebar">
+        <h1>DDPS Study</h1>
+        <a href="index.html">Start</a>
+        <a href="review-path.html">Review Path</a>
+        <a href="plain-words.html">Plain Words</a>
+        <a href="method-map.html">Method Map</a>
+        <a href="self-check.html">Self Check</a>
+        <a href="capstone.html">Capstone</a>
+        <a href="theme-index.html">Theme Index</a>
+        <a href="domain-map.html">Domain Map</a>
+        <a href="paper-reader.html">Paper Reader</a>
+        <a href="common-mistakes.html">Common Mistakes</a>
+        <a href="study-plan.html">Study Plan</a>
+        <a href="math-map.html">Math Map</a>
+        <a href="prerequisite-map.html">Prerequisite Map</a>
+        <a href="cheat-sheet.html">Cheat Sheet</a>
+        <a href="chapter-98.html">Chapter 98</a>
+        <a href="chapter-99.html">Chapter 99</a>
+        <a href="chapter-100.html">Chapter 100</a>
+        <a href="chapter-101.html">Chapter 101</a>
+        <a href="chapter-102.html">Chapter 102</a>
+        <a href="chapter-103.html">Chapter 103</a>
+        <a href="chapter-104.html">Chapter 104</a>
+        <a href="chapter-105.html">Chapter 105</a>
+        <a href="chapter-106.html">Chapter 106</a>
+        <a href="chapter-107.html">Chapter 107</a>
+        <a href="chapter-108.html">Chapter 108</a>
+        <a href="chapter-109.html">Chapter 109</a>
+        <a href="chapter-110.html">Chapter 110</a>
+        <a href="chapter-111.html">Chapter 111</a>
+        <a href="chapter-112.html">Chapter 112</a>
+        <a href="chapter-113.html">Chapter 113</a>
+        <a href="chapter-114.html">Chapter 114</a>
+        <a href="chapter-115.html">Chapter 115</a>
+        <a href="chapter-116.html">Chapter 116</a>
+        <a href="chapter-117.html">Chapter 117</a>
+        <a href="chapter-118.html">Chapter 118</a>
+        <a href="chapter-119.html">Chapter 119</a>
+        <a href="chapter-120.html">Chapter 120</a>
+        <a href="chapter-121.html">Chapter 121</a>
+        <a href="chapter-122.html">Chapter 122</a>
+        <a href="chapter-123.html">Chapter 123</a>
+        <a href="chapter-124.html">Chapter 124</a>
+        <a href="chapter-125.html">Chapter 125</a>
+        <a href="chapter-126.html">Chapter 126</a>
+        <a href="chapter-127.html">Chapter 127</a>
+        <a href="chapter-128.html">Chapter 128</a>
+        <a href="chapter-129.html">Chapter 129</a>
+        <a href="chapter-130.html">Chapter 130</a>
+        <a href="chapter-131.html">Chapter 131</a>
+        <a href="chapter-132.html">Chapter 132</a>
+        <a href="chapter-133.html">Chapter 133</a>
+        <a href="chapter-134.html">Chapter 134</a>
+        <a href="chapter-135.html">Chapter 135</a>
+        <a href="chapter-136.html">Chapter 136</a>
+        <a href="chapter-137.html">Chapter 137</a>
+        <a href="from-zero.html">From Zero</a>
+        <a href="pinn-from-zero.html">PINNs From Zero</a>
+        <a href="rom-from-zero.html">ROMs From Zero</a>
+        <a href="manifold-from-zero.html">Manifolds From Zero</a>
+        <a href="synthesis.html">Synthesis</a>
+        <a href="big-picture.html">Big Picture</a>
+        <a href="examples.html">Examples</a>
+        <a href="bridge.html">AISE Bridge</a>
+        <a href="audit.html">Transcript Audit</a>
+      </nav>
+      <main class="content">
+        <p class="eyebrow">Narrative chapter</p>
+        <h1>Choose How Much Physics The Data Must Carry</h1>
+
+        <p>This chapter uses video 137, Alex Gorodetsky's DDPS talk on scientific machine learning from physics-informed to data-driven. The talk is an organized tour of the field. It does not say one method wins everywhere. It asks where you are on the spectrum: all physics and little data, all data and little physics, or the middle zone where some physics is known and some must be inferred.</p>
+
+        <p>The first-principles question is: what is missing? If the equation, domain, boundary conditions, and parameters are known, use the physics directly. If the physics is incomplete but data exist, use the data to fill the missing piece. If the physics is unknown or too expensive and enough data exist, a data-driven operator may learn the mapping. Each choice moves responsibility between equations and data.</p>
+
+        <section class="lesson-claim-chain" aria-label="Plain first-principles reading guide for choosing scientific machine learning methods">
+          <h2>Read This Chapter As One Claim</h2>
+          <p>The chapter is about assigning responsibility. If the equation is known, the method should not make the data rediscover it. If a coefficient, boundary, hidden field, or obstacle is missing, data can help infer that missing piece. If very little physics is encoded, the training examples must carry much more of the truth. That is the whole spectrum: soft physics encourages the law, hard physics builds it in, inverse methods use partial data to fill gaps, and neural operators rely on broad examples to learn the map.</p>
+          <div class="lesson-claim-grid">
+            <div><strong>Everyday problem</strong><span>A scientist must choose among PINNs, hard-constrained networks, Gaussian processes, inverse methods, and neural operators without pretending one tool wins everywhere.</span></div>
+            <div><strong>Shared promise</strong><span>Match the method to what is known, what is missing, how much data exists, and whether uncertainty, speed, or exact structure matters most.</span></div>
+            <div><strong>Hidden danger</strong><span>Soft physics can ignore hard loss pieces, hard physics can encode the wrong structure, and data-driven operators can fail outside their training distribution.</span></div>
+            <div><strong>First rejection test</strong><span>Change loss weights, hidden parameters, observation locations, grid resolution, topology, and deployment distribution, then check physics and uncertainty.</span></div>
+          </div>
+        </section>
+
+        <div class="sciml-spectrum-map" aria-label="Scientific machine learning ranges from all physics to all data">
+          <div>all physics: solve the specified model</div>
+          <div>some physics: infer missing pieces from data</div>
+          <div>all data: learn the operator from examples</div>
+          <div>ask what the data must carry</div>
+        </div>
+
+        <h2>The Everyday Version</h2>
+        <p>Imagine cooking with a recipe. If the recipe is complete, follow it. If the recipe is missing the oven temperature, you can infer it from a few trial bakes. If there is no recipe, you need many examples of finished dishes and their ingredients before you can learn the rule. The less recipe you have, the more evidence you need.</p>
+
+        <p>That is the talk's central warning. Data can replace missing physics only if the data contain enough information. In simple cases, this can work well. In complex cases, no-free-lunch thinking says the needed data can become arbitrarily large. So scientific machine learning is not "throw away physics." It is a decision about how much physics to encode and how much to learn.</p>
+
+        <h2>Soft Physics: PINNs</h2>
+        <p>A physics-informed neural network, or PINN, is a soft physics method. The neural network takes coordinates such as space and time and outputs the solution value. Automatic differentiation computes derivatives of that output. The training loss penalizes violation of the PDE, initial condition, boundary condition, and any available data.</p>
+
+        <p>Soft means the physics is encouraged by the loss, not built in as an exact guarantee. If training succeeds, the solution approximately satisfies the PDE and conditions. If training fails, the network can satisfy easy pieces of the loss and ignore the hard piece. This distinction matters more than the slogan "physics-informed."</p>
+
+        <div class="soft-pinn-map" aria-label="PINNs enforce physics softly through loss terms">
+          <div>network maps coordinates to solution</div>
+          <div>automatic differentiation gives PDE residual</div>
+          <div>loss combines data and physics terms</div>
+          <div>physics is encouraged, not guaranteed</div>
+        </div>
+
+        <h2>The PINN Success And Failure</h2>
+        <p>The Burgers example works well. With enough collocation points and a suitable network, the PINN captures the sharp transition in the viscous Burgers solution. This is the attractive side of PINNs: no mesh in the usual sense, derivatives from automatic differentiation, and a direct coordinate-to-solution model.</p>
+
+        <p>The Allen-Cahn example shows the failure mode. The PDE residual becomes small because a trivial solution can satisfy the PDE. The boundary loss becomes small. But the initial condition is not satisfied. The network found an answer that makes parts of the loss happy while missing the actual problem. The issue is imbalance among loss components.</p>
+
+        <div class="pinn-failure-map" aria-label="PINNs can fail when one loss term dominates and another is ignored">
+          <div>Burgers benchmark can train well</div>
+          <div>Allen-Cahn is stiff and harder</div>
+          <div>PDE residual can be small for wrong solution</div>
+          <div>initial condition can be ignored</div>
+        </div>
+
+        <h2>Self-Adaptive PINNs</h2>
+        <p>The self-adaptive PINN answer is to learn pointwise weights during training. Instead of placing one fixed weight on the whole initial-condition loss or residual loss, the method lets weights grow where the network is struggling. In the Allen-Cahn case, weights grow near early time and near sharp structures where the solution is difficult.</p>
+
+        <p>This is useful because the network discovers which regions are critical. The initial-condition weights grow faster when the initial condition is the part being missed. The method does not remove the soft nature of PINNs, but it improves the loss balance so the training process does not settle for the wrong easy answer.</p>
+
+        <div class="adaptive-pinn-map" aria-label="Self-adaptive PINNs learn pointwise weights to focus training on difficult regions">
+          <div>fixed loss weights can mislead training</div>
+          <div>weights are learned at points</div>
+          <div>difficult regions receive more attention</div>
+          <div>Allen-Cahn solution becomes learnable</div>
+        </div>
+
+        <h2>Inverse Problems Are The Middle Zone</h2>
+        <p>The talk emphasizes inverse problems as underexplored. In this zone, you know some physics but not all of it. You may know the PDE form but not a coefficient. You may know an inflow but not the obstacle boundary. You may have sparse sensor data but hidden velocity and pressure fields.</p>
+
+        <p>The Burgers viscosity example is the simple version. The true viscosity is unknown. Treat it as a trainable parameter alongside neural-network weights. With noisy solution data and the PDE loss, the runs converge to the true viscosity. This is not pure data fitting and not pure simulation. It is data plus partial physics.</p>
+
+        <div class="inverse-middle-map" aria-label="Inverse problems use data and partial physics to infer missing parameters or fields">
+          <div>some physics is known</div>
+          <div>some parameter or field is missing</div>
+          <div>data supplies evidence</div>
+          <div>training estimates solution and missing physics</div>
+        </div>
+
+        <h2>Gaussian Processes Add Calibrated Doubt</h2>
+        <p>Gaussian processes can also be physics-informed. For linear PDEs, differentiating a Gaussian-process prior through the differential operator gives another Gaussian process for the residual. You can condition on boundary data, initial data, and zero residual values. The posterior mean gives a solution estimate, and the posterior standard deviation gives uncertainty.</p>
+
+        <p>The talk shows why that uncertainty is useful. In an advection example, the standard deviation lines up strongly with the actual error. In a wave equation discretization example, coarse discretization produces a bad posterior mean, and the posterior standard deviation grows where the solution is unreliable. Neural networks do not naturally provide this kind of calibrated uncertainty.</p>
+
+        <div class="gp-uncertainty-map" aria-label="Physics-informed Gaussian processes provide posterior means and uncertainty estimates">
+          <div>GP approximates the solution</div>
+          <div>differentiated GP represents the PDE residual</div>
+          <div>posterior mean predicts the field</div>
+          <div>posterior standard deviation flags error</div>
+        </div>
+
+        <h2>Hidden Field Inference</h2>
+        <p>The hidden-flow example is more striking. The system is Navier-Stokes plus a passive scalar. The only data are scattered noisy measurements of scalar concentration and the inlet velocity. There is no direct velocity data, no pressure data, no boundary condition information on the cylinder, and even the cylinder location is not known directly.</p>
+
+        <p>Using the equations and the scalar observations, the neural network reconstructs velocity and pressure fields for flow around a cylinder. This is why the speaker highlights inverse problems. Traditional numerical simulation needs the domain and boundary data specified. Here the data and equations together reveal hidden fields that are not directly observed.</p>
+
+        <div class="hidden-flow-map" aria-label="Hidden field inference reconstructs velocity and pressure from scalar data plus equations">
+          <div>only tracer concentration is measured</div>
+          <div>velocity and pressure are hidden</div>
+          <div>boundary details are incomplete</div>
+          <div>equations and data recover the flow</div>
+        </div>
+
+        <h2>Hard Physics: Characteristics In The Network</h2>
+        <p>Hard physics means the physical constraint is built into the architecture. The talk's example is a characteristic-informed neural network for hyperbolic transport. The first layer transforms to characteristic coordinates. The rest of the network approximates a function in that characteristic space. Because of this construction, the output is guaranteed to satisfy the PDE form.</p>
+
+        <p>This removes the PDE residual from the loss. Training becomes ordinary data fitting on initial or boundary information. It also avoids the loss-imbalance issue that hurt PINNs. The output may still be wrong if the learned data fit is poor, but it is not wrong by violating the PDE structure that was built into the model.</p>
+
+        <div class="hard-characteristic-map" aria-label="Characteristic-informed neural networks build transport physics directly into the architecture">
+          <div>transport physics has characteristic curves</div>
+          <div>network transforms to characteristic space</div>
+          <div>PDE residual loss is unnecessary</div>
+          <div>outputs stay on the physical solution family</div>
+        </div>
+
+        <h2>Data-Driven Operators</h2>
+        <p>On the data-driven end, the talk turns to neural operators. A parametric PDE defines a solution manifold: each parameter or input field has a corresponding solution field. The solution operator maps the input to the solution. A neural operator learns that map from many examples, then predicts new solutions quickly without weight updates.</p>
+
+        <p>This is powerful when the training distribution represents the deployment distribution. It is also dangerous when it does not. If the test conditions differ from the training data, the model faces distribution shift. Unlike a known PDE solver, a purely data-driven operator has no built-in guarantee outside the data it has seen.</p>
+
+        <div class="data-operator-map" aria-label="Data-driven neural operators learn solution maps from input fields to output fields">
+          <div>parameter field enters the operator</div>
+          <div>training pairs encode the physics</div>
+          <div>new predictions are fast</div>
+          <div>distribution shift remains a risk</div>
+        </div>
+
+        <h2>Resolution Should Not Be The Thing Learned</h2>
+        <p>A real operator should not only work on the exact grid used in training. If a model trained on a 64 by 64 grid fails badly on a 96 by 96 grid, it may have learned a discrete representation rather than the underlying operator. The talk points to this debate directly: are neural operators really neural operators?</p>
+
+        <p>The DeepONet plus Deep Sets idea addresses this by allowing a variable number of input samples and building permutation invariance into the encoder. The order in which sample points are listed should not matter. That inductive bias helps the model use less data and behave more like it is learning a function-to-function map rather than a fixed array-to-array map.</p>
+
+        <div class="resolution-invariance-map" aria-label="Neural operators should generalize across sample resolutions rather than memorize one grid">
+          <div>fixed-grid networks can memorize resolution</div>
+          <div>operator learning should tolerate new grids</div>
+          <div>Deep Sets handles variable samples</div>
+          <div>permutation invariance is built in</div>
+        </div>
+
+        <h2>Plasma Turbulence With INCON</h2>
+        <p>The last research example is INCON, a neural operator for time-evolution problems. It modifies a U-Net-like model so time and parameters enter along with the two-dimensional fields. The application is the Hasegawa-Wakatani plasma turbulence model, which evolves electrostatic potential, electron density, and vorticity.</p>
+
+        <p>The trained operator is rolled out autoregressively: predict the next time, feed that prediction back in, and continue. The fields agree well for a while, then diverge because the system is chaotic. That is expected. For plasma turbulence, the important question is often statistical behavior rather than exact pointwise agreement forever.</p>
+
+        <div class="incon-plasma-map" aria-label="INCON learns fast time evolution for Hasegawa-Wakatani plasma turbulence">
+          <div>train on Hasegawa-Wakatani snapshots</div>
+          <div>input includes fields, time, and parameters</div>
+          <div>autoregressive rollout predicts evolution</div>
+          <div>statistics matter more than exact long trajectories</div>
+        </div>
+
+        <h2>Statistics And Inverse Use</h2>
+        <p>The INCON results compare turbulent particle flux, primary sink, mean, standard deviation, and spectral behavior. Even when pointwise fields diverge in time, frequency content and summary statistics can stay close to the numerical code. This connects directly to the earlier chaos chapters: for chaotic dynamics, statistics may be the practical target.</p>
+
+        <p>The same trained operator is also used for inverse parameter estimation. The network weights are frozen. Gradient descent changes only the input parameters to match a small number of observed time pairs. Some parameters are easy to identify with very few pairs; others need more data. This is another example of the middle zone: train a reusable forward operator, then use it as a differentiable engine for inverse problems.</p>
+
+        <div class="plasma-inverse-map" aria-label="The trained INCON operator supports statistics and inverse parameter estimation">
+          <div>pointwise rollouts diverge in chaos</div>
+          <div>statistics can still match</div>
+          <div>freeze the trained operator</div>
+          <div>optimize input parameters from sparse pairs</div>
+        </div>
+
+        <h2>The Design And Topology Connection</h2>
+        <p>This chapter matters for design and topology because every design workflow must decide where trust comes from. If the geometry, PDE, and boundary conditions are known, a hard physics or traditional solver route may be best. If an obstacle shape or boundary condition is hidden, inverse SciML can infer it from sparse observations. If many candidate geometries must be evaluated, an operator surrogate can accelerate the design loop.</p>
+
+        <p>Topology adds risk because changing connectivity, holes, or obstacles can shift the distribution. A data-driven operator trained on one family of shapes may fail on another. A physics-informed or hard-constrained method may survive more changes, but only if the encoded physics is correct. The practical lesson is to match the method to what changes in the design problem.</p>
+
+        <div class="sciml-design-map" aria-label="Design problems need the right mix of physics and data depending on what changes">
+          <div>known design physics can be encoded</div>
+          <div>hidden geometry can be inferred from data</div>
+          <div>many-query design can use operators</div>
+          <div>topology changes test generalization</div>
+        </div>
+
+        <h2>How This Connects To Earlier Chapters</h2>
+        <p>This chapter ties together many previous chapters. It connects to the PINN chapters through soft residual losses and their failure modes. It connects to Chapter 128 through inverse parameter estimation and control-adjacent questions. It connects to Chapters 131 and 132 through operator learning, foundation-model generalization, and distribution shift. It connects to the plasma chapters through Hasegawa-Wakatani turbulence and the need to judge statistics, not only one trajectory.</p>
+
+        <p>The new lesson is the axis of choice. Scientific machine learning is not one bucket. It is a spectrum from physics-encoded to data-driven, with inverse problems in the middle. Each point on the spectrum has a different failure mode.</p>
+
+        <h2>The Boundary Of The Claim</h2>
+        <p>The claim is not that PINNs solve every PDE. They can fail through loss imbalance. The claim is not that Gaussian processes scale effortlessly. They have cubic costs without approximations and struggle with nonlinear PDE inference. The claim is not that neural operators are safe out of distribution. They inherit the training distribution. The claim is not that chaotic rollouts should match pointwise forever. Statistics may be the meaningful object.</p>
+
+        <p>The honest claim is that scientific machine learning gives a set of tools for allocating responsibility between equations and data. Soft methods are flexible but can train badly. Hard methods protect structure but require usable physics. Data-driven operators are fast but rely on representative data. Inverse methods are especially promising because real scientific problems often have partial physics and partial observations.</p>
+
+        <div class="sciml-limit-map" aria-label="Each SciML method has a distinct failure mode and trust boundary">
+          <div>PINNs can satisfy the wrong loss pieces</div>
+          <div>GPs give uncertainty but face scaling limits</div>
+          <div>operators can fail under distribution shift</div>
+          <div>chaotic systems need statistical validation</div>
+        </div>
+
+        <h2>What You Should Remember</h2>
+        <p>The heart of the lecture is the question "is the physics in the data?" If you remove physics from the algorithm, the data must carry it. If you encode physics softly, optimization may ignore the hard part. If you encode physics hard, you reduce unphysical outputs but need the right structure. If you combine data and partial physics, you can solve inverse problems that classical simulation cannot set up directly.</p>
+
+        <p>If you remember one sentence, remember this: choose the SciML method by what you know, what you do not know, and how much evidence the data must provide.</p>
+
+        <section class="lesson-review" aria-label="End of chapter understanding check for choosing scientific machine learning methods">
+          <h2>How To Test Whether You Understood This Chapter</h2>
+          <div class="lesson-review-grid">
+            <div><strong>Explain soft physics</strong><span>A PINN puts the PDE into the loss. The law is encouraged, but training can still satisfy easy loss terms while missing the hard condition.</span></div>
+            <div><strong>Explain hard physics</strong><span>A hard-constrained model builds the physical structure into the architecture, which can remove a residual loss but requires knowing the right structure first.</span></div>
+            <div><strong>Explain the middle zone</strong><span>Inverse SciML is useful when some physics is known but a parameter, boundary, field, or geometry is hidden and sparse data can identify it.</span></div>
+            <div><strong>Connect it to topology and design</strong><span>Changing holes, obstacles, connectivity, and geometry can shift the distribution, so design workflows must choose how much physics to encode before trusting fast operators.</span></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

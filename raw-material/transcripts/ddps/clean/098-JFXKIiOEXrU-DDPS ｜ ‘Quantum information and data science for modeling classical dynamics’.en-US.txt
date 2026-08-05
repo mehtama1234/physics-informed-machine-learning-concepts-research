@@ -1,0 +1,1628 @@
+All right. Welcome to the DDPS seminar&nbsp;
+everyone. Before we introduce our&nbsp;&nbsp;
+invited speaker, let's go over some&nbsp;
+rules and logistics. First of all,&nbsp;&nbsp;
+please mute yourself during the talk. But if you&nbsp;
+have question you can unmute and ask questions,&nbsp;&nbsp;
+or use chatroom to post your questions so that&nbsp;
+we can address them in q&a session. Second,&nbsp;&nbsp;
+today's GDPR seminar is open to external audience&nbsp;
+so no close by discussion is allowed. Finally,&nbsp;&nbsp;
+the talk today will be recorded and uploaded in&nbsp;
+our YouTube channel. That's about it. Now, let me
+briefly introduce our speaker today,&nbsp;
+it is an honor to host the Dimitris
+who is a jack Byrne or the professor&nbsp;
+in mathematics at Dartmouth College.&nbsp;&nbsp;
+He received a bachelor's and master's degree in&nbsp;
+natural sciences from the University of Cambridge&nbsp;&nbsp;
+in 2001, and PhD degree in physics from the&nbsp;
+University of Chicago in 2009. Following a&nbsp;&nbsp;
+postdoctoral appointment at the Courant Institute&nbsp;
+of mathematical science in New York University&nbsp;&nbsp;
+from 2009 to 2012, he was an Assistant Professor&nbsp;
+and Associate Professor of of mathematics at&nbsp;&nbsp;
+current until 2021, when he joined the Department&nbsp;
+of Mathematics at dark mouth. His current research&nbsp;&nbsp;
+focus is at the interface between operator&nbsp;
+theoretic techniques for dynamical systems&nbsp;&nbsp;
+and machine learning. And his recent work includes&nbsp;
+the development of techniques for coherent pattern&nbsp;&nbsp;
+pattern extractions, statistical forecasting&nbsp;
+and Data Assimilation based on the data driven&nbsp;&nbsp;
+approximation. So Koopman operators of dynamical&nbsp;
+systems, he has worked on the applications of&nbsp;&nbsp;
+these tools to atmosphere, ocean science,&nbsp;
+fluid dynamics and molecular dynamics today
+that Demetrius is going to talk&nbsp;
+about the quantum information&nbsp;&nbsp;
+and data science for modeling classical dynamics.
+Please expect a wonderful talk and the stage&nbsp;
+is yours now. Demetrius Thank you, Yong.
+Yong, Soo, Ilan for inviting me thank everyone for&nbsp;
+coming in person or remotely. So we'll be talking&nbsp;&nbsp;
+about techniques for quantum information science&nbsp;
+and Koopman operator theory for for modeling,&nbsp;&nbsp;
+classical dynamical systems. This is&nbsp;
+important work done in collaboration&nbsp;&nbsp;
+with several people that I will acknowledge&nbsp;
+as we go through through the talk. So, so,
+this will allow Okay, so, to begin, I usually&nbsp;
+like to show the snippet from classical paper&nbsp;&nbsp;
+of Fineman, which in some ways ushered in the era&nbsp;
+of quantum computing, where the idea that he puts&nbsp;&nbsp;
+forward is that if nature is fundamentally quantum&nbsp;
+mechanical, we should be using quantum systems&nbsp;&nbsp;
+to simulate to simulate nature, in other words,&nbsp;
+quantum systems should be used to simulate other
+quantum systems
+forming some notion of universal&nbsp;
+quantum computation. So,&nbsp;&nbsp;
+another problem I would like to talk about&nbsp;
+today is kind of in the converse direction,&nbsp;&nbsp;
+namely, we would like to use quantum&nbsp;
+systems to simulate classical systems.
+And the idea being that we want to harness&nbsp;
+the power that quantum systems cover that&nbsp;&nbsp;
+are not present in terms of information&nbsp;
+processing, that are not that do not have&nbsp;&nbsp;
+classical analogues to obtain some type of&nbsp;
+computational advantage. So, this is a problem&nbsp;&nbsp;
+that has also received a lot of attention&nbsp;
+in in recent years. This is just a partial
+list of of references, where
+people have looked at different kinds of classical&nbsp;
+systems and designed quantum algorithms or&nbsp;&nbsp;
+thought about ways of incorporating quantum&nbsp;
+mechanical descriptions to simulate them. So,&nbsp;&nbsp;
+one of the challenges here is that there&nbsp;
+is a little bit of a disparity between&nbsp;&nbsp;
+the fact that you know, classical dynamical&nbsp;
+systems are usually formulated in terms of&nbsp;&nbsp;
+nonlinear systems of differential equations,&nbsp;
+either ordinary differential equations or or&nbsp;&nbsp;
+partial differential equations. Whereas quantum&nbsp;
+systems, if you exclude at least measurement,&nbsp;&nbsp;
+they evolve with unitary linear&nbsp;
+linear operation. So there is no
+immediate challenge about how to
+it encodes a nonlinear dynamics in&nbsp;
+terms of unitary or linear evolution.
+And there are also other complexities involved&nbsp;
+having to do with how you prepare the state of&nbsp;&nbsp;
+the quantum computer to encode, given initial&nbsp;
+conditions of the classical system. And also,&nbsp;&nbsp;
+at the end of the computation, how&nbsp;
+to make how to appropriately measure&nbsp;&nbsp;
+the quantum state to extract the, you&nbsp;
+know, the information that you want to&nbsp;&nbsp;
+predict the quantity of interest to&nbsp;
+the four seconds in the simulation.
+So, these are all challenging and
+interesting questions. And I will be&nbsp;
+talking about work we've been doing
+with collaborators in you know, hoping&nbsp;
+to address at least part of them.
+Okay, so, I should say also, that I'm happy to&nbsp;
+be interrupted at any time during the talk with&nbsp;&nbsp;
+questions, even if I don't get through the entire&nbsp;
+material. So, we will be using our methodology&nbsp;&nbsp;
+relies heavily on the operator theoretic&nbsp;
+approaches to dynamic analysis systems, which
+have been developed in work of core Neumann&nbsp;
+Koopman, and others dating back to the 19 1930s.&nbsp;&nbsp;
+And in this in this framework, one focuses&nbsp;
+on the induced action have put generally&nbsp;&nbsp;
+nonlinear dynamics on spaces of observables.&nbsp;
+So, meaning functions of the state these are&nbsp;&nbsp;
+quantities that one can measure like a&nbsp;
+temperature or velocity and fluid flow.
+And the idea here is that these spaces you&nbsp;
+know, spaces have functions if the codomain So,&nbsp;&nbsp;
+the output space is a linear space,&nbsp;
+like a vector space, oftentimes,&nbsp;&nbsp;
+this will be the real or, or complex numbers,&nbsp;
+these spaces are actually linear, the meaning&nbsp;&nbsp;
+we can add together functions, we can scale&nbsp;
+or multiply functions, even if the underlying&nbsp;&nbsp;
+state space of the classical system is does&nbsp;
+not have linear structure. And, remarkably,
+if we have a generally nonlinear flow, I'm&nbsp;
+denoting with here by 50 on classical state space,&nbsp;&nbsp;
+and by that I mean that there is a this&nbsp;
+family of mappings parameterize by time,&nbsp;&nbsp;
+such that they take in initial conditions&nbsp;
+on the state space X and output the state&nbsp;&nbsp;
+that the system has reached after dynamical&nbsp;
+evolution for a time t. And this is gentleman
+Yes. Excuse me. I'm sorry, I'm Henry,&nbsp;
+I could so before you go further,&nbsp;&nbsp;
+can you maybe like give a few like example of like&nbsp;
+an a physical system what is x? What is funky?
+Thanks for the question. So, maybe to cover as a&nbsp;
+mental model a concrete example, suppose that x is
+you know, three dimensional space or some&nbsp;
+Euclidean space Rn and we have on x we have&nbsp;&nbsp;
+specified a system of an ordinary differential&nbsp;
+equations, think of for instance, the Lorenz 63
+system that has the chaotic butterfly&nbsp;
+attractor or think of the simple harmonic&nbsp;&nbsp;
+oscillator if you know X was our to where&nbsp;
+you have, you know, position and momentum
+represented in that space. So you write down a&nbsp;
+system of equations, you know, dx by dt equals
+V of x, where V is some vector field, and you&nbsp;
+solve the initial value problem that comes out&nbsp;&nbsp;
+of that. And the solution defines this,&nbsp;
+this dynamical, this dynamical flow fee,&nbsp;&nbsp;
+this is the map that basically is the solution&nbsp;
+map for a system of differential equations.
+And, you know, these can also be generalized to&nbsp;
+systems of partial differential equations where&nbsp;&nbsp;
+now x instead of being a finite dimensional space&nbsp;
+like Rn, it's actually itself a function space if&nbsp;&nbsp;
+you if you're dealing with fluid mechanical&nbsp;
+models, so x would be a space of functions on&nbsp;&nbsp;
+some domain where you know, the fluid flow takes&nbsp;
+place. Does that help clarify? Yeah, thanks.&nbsp;&nbsp;
+Thanks. Yep. And again, please interrupt me if&nbsp;
+anything is not clear. So, so now, given that we&nbsp;&nbsp;
+have such a flow, we can define linear operators&nbsp;
+associated with that flow that they act by
+composition. So, a natural search operator,&nbsp;
+which noun on the Koopman operator takes&nbsp;&nbsp;
+observable. So functions in this space are&nbsp;
+suitably chosen and composes them from the&nbsp;&nbsp;
+right with with a dynamical flow. So this&nbsp;
+effectively defines a transformation that&nbsp;&nbsp;
+takes functions and produces new functions, you&nbsp;
+can think of the function f composed with fi t&nbsp;&nbsp;
+as some type of time evolved version of&nbsp;
+of f, where instead of evaluating f at&nbsp;&nbsp;
+any given classical state we're evaluating&nbsp;
+it at. Since we're composing with this map,&nbsp;&nbsp;
+we're evaluating at the state that the system&nbsp;
+has reached after evolution by time t. And you&nbsp;&nbsp;
+can check that this transformation is actually&nbsp;
+linear, that the way we define this map from&nbsp;&nbsp;
+functions to functions is actually a linear&nbsp;
+map is now known as the Koopman operator.
+Related operator that is also quite useful is the&nbsp;&nbsp;
+transfer operator also known&nbsp;
+as parent Frobenius operator.
+And this is actually like an ad joint,&nbsp;&nbsp;
+you can think of it as an ad joint&nbsp;
+of the Koopman operator, which
+is defined on the dual on a dual&nbsp;
+space to F. I don't want to go into&nbsp;&nbsp;
+the technical details here, but&nbsp;
+we're thinking that for instance,
+if f was a space of convenience functions on&nbsp;
+x, then the dual space would be some space of&nbsp;&nbsp;
+of measures like Like for instance&nbsp;
+probability probability measures,&nbsp;&nbsp;
+and the baronne Frobenius operator&nbsp;
+describes the action of a dynamical&nbsp;&nbsp;
+system on spaces of of measures. And this is&nbsp;
+useful in studying probabilistic aspects of
+classical dynamics namely, how probability&nbsp;
+distributions evolve under general nonlinear&nbsp;&nbsp;
+dynamics, because applications in forecasting&nbsp;
+uncertainty quantification and so on,&nbsp;&nbsp;
+but the main message here is that these this&nbsp;
+perspective allows one basically to study
+general nonlinear dynamics by leveraging&nbsp;
+tools from the theory of linear operators.
+This is this is something that has received&nbsp;&nbsp;
+this approach has received a&nbsp;
+fair amount of attention in
+in the in recent in recent years, because these&nbsp;
+linear operator theoretic techniques are also&nbsp;&nbsp;
+well suited for data driven implementation,&nbsp;
+it turns out that data driven approximation,&nbsp;&nbsp;
+where we use we use observations of&nbsp;
+the system collected along dynamical&nbsp;&nbsp;
+trajectories to build approximations of&nbsp;
+the Koopman or transfer operator and use&nbsp;&nbsp;
+them for different different purposes. The primary&nbsp;
+applications being spectral decomposition of data,&nbsp;&nbsp;
+it turns out that these operators when&nbsp;
+you know formulated in an appropriately&nbsp;&nbsp;
+on appropriately chosen spaces, they have&nbsp;
+useful spectral property. So, the their&nbsp;&nbsp;
+functions the Eigen functions characterize, can&nbsp;
+characterize periodic or approximately periodic
+observables under under the flow
+and this can be used for the pattern&nbsp;
+extraction or feature extraction from&nbsp;&nbsp;
+dynamically generated data. And the other&nbsp;
+application is prediction or modeling and&nbsp;&nbsp;
+uncertainty quantification. Now, for&nbsp;
+for the purposes of this talk here,
+what we'll be focusing rather on the connections&nbsp;
+between this approach this general framework of&nbsp;&nbsp;
+Koopman Goodman and transfer operators with&nbsp;
+quantum theory. So, mathematically, it turns&nbsp;&nbsp;
+out there are some deep deep correspondences and&nbsp;
+relationships between between the two fields,&nbsp;&nbsp;
+which I hope I will I will highlight and and also&nbsp;
+kind of like motivate this this framework as a as&nbsp;&nbsp;
+a way to build a bridge to effectively&nbsp;
+and called Classical dynamics in terms&nbsp;&nbsp;
+of quantum quantum systems. So, this is like&nbsp;
+a natural language in some sense to do that.
+Okay. So, this may be here, maybe for this&nbsp;
+audience, this is not strictly necessary,&nbsp;&nbsp;
+but I have like a one slide summary of the&nbsp;
+basic axioms of quantum quantum mechanics,&nbsp;&nbsp;
+which we'll be using later on. And in&nbsp;
+many ways you can think of a quantum
+quantum
+set of quantum mechanical&nbsp;
+actions as being analogous to
+classical statistics where you replace objects&nbsp;
+like probability densities, which are functions&nbsp;&nbsp;
+and observables, which are again functions by&nbsp;
+operators. It's some type of, you can think of&nbsp;&nbsp;
+it operator theoretical noncommutative version&nbsp;
+of classical, classical probability. And the
+one of the fundamental notions that we have&nbsp;
+is that the density operators are basically a&nbsp;&nbsp;
+quantum state, we're going to describe it by&nbsp;
+an operator that acts on on a Hilbert space.&nbsp;&nbsp;
+And that choice of killers, Hilbert space will&nbsp;
+depend on the system at hand, for something like&nbsp;&nbsp;
+the hydrogen atom, it would be like a space&nbsp;
+of functions over a three dimensional space.
+For a spin system could be like a finite&nbsp;
+dimensional Hilbert space, this will depend on&nbsp;&nbsp;
+the system that we have at hand. But but a density&nbsp;
+operator is an operator that has that is positive,
+meaning it's self adjoint. And its spectrum&nbsp;
+lies in the positive real line. It's,
+it has a it does have TRACE&nbsp;
+Class, so it has finite trace,&nbsp;&nbsp;
+and it's normalized in the sense that it's&nbsp;
+traced is equal to one, you can think of it as&nbsp;&nbsp;
+somehow being analogous to a probability density&nbsp;
+function that one has in classical statistics,&nbsp;&nbsp;
+in the sense that the probability&nbsp;
+density function is a positive function.
+It is integrable. And it's integral&nbsp;
+is equal to one. So thinking here of&nbsp;&nbsp;
+trace has been somewhat analogous to&nbsp;
+integration makes that correspondence.
+Now observables in quantum&nbsp;
+mechanics are again operators,&nbsp;&nbsp;
+in fact, they're self adjoint operators&nbsp;
+acting on the Hilbert space. Here,&nbsp;&nbsp;
+for simplicity, I'm going to think&nbsp;
+in terms of bounded observables,&nbsp;&nbsp;
+that doesn't necessarily have to be the case.&nbsp;
+But we don't have to worry about that. Now.
+And,
+and the self join us here, you can think&nbsp;
+of it as being analogous to having real&nbsp;&nbsp;
+valued functions, classical observables. So&nbsp;
+self adjoint operators have real spectra,&nbsp;&nbsp;
+which is analogous to having real
+being real valued functions. Now,&nbsp;
+the quantum theory gives us a
+recipe or look for a set of rules for computing&nbsp;
+expectations of measurements of observables, given&nbsp;&nbsp;
+that the system is in a certain quantum state, and&nbsp;
+evaluating their probability outcomes, and again,&nbsp;&nbsp;
+this generalized familiar notions from classical&nbsp;
+statistics. So if we have a system that is in&nbsp;&nbsp;
+quantum state roll, it has an associated density&nbsp;
+operator row, and we have a bounded classical&nbsp;&nbsp;
+bounded quantum observable, we can compute this&nbsp;
+trace. And that gives us a number which is we&nbsp;&nbsp;
+interpret as the expected value of measurements&nbsp;
+of a when the system is in quantum state zero.
+And again, thinking of a trace as being our&nbsp;
+biggest integration role as being analogous&nbsp;&nbsp;
+to probability density, and a as being&nbsp;
+analogous to classical you know, observable,&nbsp;&nbsp;
+the this formula here should look somewhat&nbsp;
+familiar from somewhat analogous to expectation&nbsp;&nbsp;
+of classical in classical statistics. Now, quantum&nbsp;
+theory also gives us a recipe for computing the&nbsp;&nbsp;
+probability of outcomes of measurements. So&nbsp;
+if I have a we have a set omega that that
+is like some set of interests, let's say&nbsp;
+an interval, and we want to compute the&nbsp;&nbsp;
+probability that a measurement of a&nbsp;
+will rely on that integral interval,&nbsp;&nbsp;
+we can compute that again, by as a quantum&nbsp;
+expectation of a new quantum observable,
+which is basically the spectral measure&nbsp;
+associated with a, I don't want to go&nbsp;&nbsp;
+now in the in more details here, but think of&nbsp;
+this as being somewhat analogous to when you&nbsp;&nbsp;
+want to compute the probability of an event&nbsp;
+in classical statistics, you can write the&nbsp;&nbsp;
+probability of an event as an expectation value&nbsp;
+of a characteristic function that you know,&nbsp;&nbsp;
+basically indexes represents that event.&nbsp;
+Here the spectral measure is some quantum&nbsp;&nbsp;
+version of a characteristic function. It's a it's&nbsp;
+a projection operator, that we can use to compute&nbsp;&nbsp;
+probabilities of measurement. Now, the evolution&nbsp;
+of a quantum state takes place under unitary
+dynamics between when when we are not measuring&nbsp;&nbsp;
+the system so we assume that&nbsp;
+there is a unitary operator
+you
+De that acts on densities maps pro quantum density&nbsp;
+operators, the quantum density operators by means&nbsp;&nbsp;
+of this conjugation identity. In quantum physics,&nbsp;
+this is known as the Schrodinger picture of&nbsp;&nbsp;
+quantum quantum evolution. And it's linear. That's&nbsp;
+the meaning these operators here are linear.
+And, and the last piece that I want to bring up&nbsp;
+here is that just as in classical statistics,&nbsp;&nbsp;
+we can condition probability densities.
+By
+when we have observed events, we using Bayes&nbsp;
+rule, there is an analogous conditioning.
+Procedure for conditioning quantum states by so&nbsp;
+called Quantum events. So what are quantum events,&nbsp;&nbsp;
+so quantum events are again, operators, everything&nbsp;
+is an operator here, which have the property of&nbsp;&nbsp;
+being positive and lying between the zero&nbsp;
+operator and the identity operator, these&nbsp;&nbsp;
+are also known as quantum effects. And, again,&nbsp;
+you can think of this in my sort of classical&nbsp;&nbsp;
+analogy with the fact that when you have an event&nbsp;
+that you're conditioning, a probability density,&nbsp;&nbsp;
+that event you can represent by a characteristic&nbsp;
+function. And a characteristic function is a&nbsp;&nbsp;
+function that takes values between the&nbsp;
+zero function and the function that is
+equal to one
+everywhere and this, this generalizes that.
+Now this formula here, you will see that you have&nbsp;
+the square root that appears on both sides of the&nbsp;&nbsp;
+density operator, which looks somewhat different&nbsp;
+from the classical version of Bayes Bayes rule,&nbsp;&nbsp;
+when you write it down. Well, the reason is&nbsp;
+that we're dealing with this non commutative&nbsp;&nbsp;
+spaces of operators. If we were able to&nbsp;
+compute multiplication of the square root&nbsp;&nbsp;
+of eight with row, we could write this as rho&nbsp;
+times E, which would then look closer to what
+a conditioning in the classical world would&nbsp;
+look like. But because we're not in general&nbsp;&nbsp;
+allowed to do this, this is the formula&nbsp;
+that we are, we're going to be using. Okay,&nbsp;&nbsp;
+so we have now this set of axioms, maybe pause&nbsp;
+quickly to ask if there are any questions.
+So what do
+I do have a question? I'm sorry? So like,
+can you? I'm a little unfamiliar, like coming&nbsp;
+from a physics background? I'm familiar with,&nbsp;&nbsp;
+like, point 124. Can you say&nbsp;
+a little more about the fifth&nbsp;&nbsp;
+point state conditioning by measurement?&nbsp;
+Like, what is it? What are you measuring?
+It's a so.
+So
+here, I'm thinking of,
+for,
+for every measurement, there is a chord&nbsp;
+with one kind of sign by measurement here,&nbsp;&nbsp;
+I mean, that these quantum events are effects.
+So if you want to think of it's&nbsp;
+purely as a without, you know,&nbsp;&nbsp;
+focusing so much on the choice of words&nbsp;
+here, and then I can try to clarify that.
+Think of that whenever you have an&nbsp;
+operator E that has this property,&nbsp;&nbsp;
+it has this, it's called a quantum a quantum
+effect, then then there is this, this, this&nbsp;
+formula that is basically giving you a quantum&nbsp;&nbsp;
+version of of Bayes rule. Now, when when you're&nbsp;
+actually making a measurement, and if we want to&nbsp;&nbsp;
+think at least of the measurement, as&nbsp;
+a as I type of fire, have a yes or no
+answer, yes or no question. It&nbsp;
+turns out that you can write down a,
+an effect you can write down and E for&nbsp;
+depending on a depends on the weather,&nbsp;&nbsp;
+you got the answer, yes, or the answer? No.&nbsp;
+And you can condition the state by this,&nbsp;&nbsp;
+by this effect. This is basically analogous&nbsp;
+to what one might call the wave function,&nbsp;&nbsp;
+quotes collapse. I don't know if I want to&nbsp;
+really use that. That word, but this is basically
+somewhat analogous. analogous to that, I mean,&nbsp;
+for us, we're going to think of it more in in a
+statistical sense, or, or we're going to use it in&nbsp;&nbsp;
+a mathematical way, a sense&nbsp;
+to update quantum states by
+outcomes of, of observations of our system.&nbsp;
+Hopefully this will become a little bit clearer.
+error later on, but certainly can you say like,&nbsp;
+this is what happens after you make a measurement?
+In? Yes, you can, you can say about Yeah.
+But but also and also, but&nbsp;
+also you can use that formula,&nbsp;&nbsp;
+not just in the context of a physical quantum&nbsp;
+measurement, like in terms of like a hardware
+based measurement, but you can also&nbsp;
+think of it as an inference formula,&nbsp;&nbsp;
+similarly to how you would treat,&nbsp;
+you know, Bayesian Bayes rule for&nbsp;&nbsp;
+inference. So, why don't terms his&nbsp;
+kind of projection, yeah, subsidies?
+Is this this map here? Yeah, it&nbsp;
+projections will have property,&nbsp;&nbsp;
+there will be quantum effects, but not&nbsp;
+every quantum effect isn't necessarily&nbsp;&nbsp;
+a projection. But yeah, that's a good point,&nbsp;
+like projections are going to be part of this.
+Okay.
+Alright, so now, I want to go over like,
+like a big picture picture overview of how we&nbsp;
+use these these axioms to represent a classical&nbsp;&nbsp;
+dynamical system by a quantum quantum system.&nbsp;
+So as we mentioned earlier, we're starting&nbsp;&nbsp;
+from from a classical dynamical flow on a state&nbsp;
+space. And we want to embed this classical flow,&nbsp;&nbsp;
+eventually to a quantum system. And we're&nbsp;
+going to do this by passing through a few&nbsp;&nbsp;
+intermediate levels. The first one of which will&nbsp;
+be to embed a classical evolution of classical&nbsp;&nbsp;
+states into evolution of classical probability&nbsp;
+distributions, the way to do that here, so here,&nbsp;&nbsp;
+P of X denotes a space of probability measures&nbsp;
+over x. So with, you know, reasonable assumptions,&nbsp;&nbsp;
+this, this is like a nice space in a&nbsp;
+mathematical mathematical sense. And the,&nbsp;&nbsp;
+the map that allows us to do that is basically&nbsp;
+it's, it's very naturally takes points in X,&nbsp;&nbsp;
+and maps them to their corresponding Dirac&nbsp;
+delta measures at that point. So essentially,&nbsp;&nbsp;
+what we're doing here, we're creating a copy of&nbsp;
+our system into into this space of probability&nbsp;&nbsp;
+measures that we can always do. I mean, there&nbsp;
+are more, of course, probability measures in&nbsp;&nbsp;
+here that just the direct measures, but we get an&nbsp;
+injective mapping, like a one to one mapping into,
+into the space p of x. And on this base p of x,&nbsp;
+you can use this pattern for being an operator&nbsp;&nbsp;
+that I introduced earlier on, which&nbsp;
+is this. It's a composition map by
+the inverse flog, it turns out
+to evolve probability measures over time.&nbsp;
+And the important thing about this type of&nbsp;&nbsp;
+embedding is that it's dynamically consistent&nbsp;
+in the sense that this diagram here commutes,&nbsp;&nbsp;
+by that I mean that if you start from&nbsp;
+a given classical initial condition,&nbsp;&nbsp;
+you embed it into a probability measure,
+sending it its corresponding Dirac&nbsp;
+evolving it under the transfer operator,&nbsp;&nbsp;
+you get to the same point as first&nbsp;
+evolving your classical condition&nbsp;&nbsp;
+and then embedding it with the same formula. So&nbsp;
+it's dynamical consistent in that manner. Now,&nbsp;&nbsp;
+what we want to do next is&nbsp;
+starting from this, this, this
+level of description, so to speak, we&nbsp;
+want to now create another embedding,&nbsp;&nbsp;
+which takes classical probability measures&nbsp;
+into quantum states. So here h is a Hilbert&nbsp;&nbsp;
+space that we will have to choose we'll&nbsp;
+have to think about how to define it.&nbsp;&nbsp;
+And Q of H denotes the space of quantum&nbsp;
+states on that Hilbert space. So for us,&nbsp;&nbsp;
+this will be the set of no TRACE Class&nbsp;
+positive operators have units of unit trades.
+And we want to define a mapping&nbsp;
+that will be an embedding, that
+we're going to hear gamma that takes probability&nbsp;
+classical probability measures and creates you&nbsp;&nbsp;
+know from them quantum quantum states. And we&nbsp;
+also want to prescribe an evolution map that&nbsp;&nbsp;
+acts on this on this quantum states. This will&nbsp;
+be some kind of like lifted version of the parent&nbsp;&nbsp;
+for Binion's operator that makes this diagram&nbsp;
+commute. So in effect, this will give us this&nbsp;&nbsp;
+will give us a copy of our system into an quantum&nbsp;
+mechanical, quantum mechanical system. Now this
+Islam is going to be typically&nbsp;
+infinite dimensional.
+In order to have, of course, practical algorithms,&nbsp;
+we want to project into finite dimensions. And,&nbsp;&nbsp;
+and in particular, we want to, if the goal is&nbsp;
+to create quantum computational algorithms,&nbsp;&nbsp;
+they want to project our system into a quantum&nbsp;
+system that is defined on a Hilbert space,&nbsp;&nbsp;
+which is associated with a certain number of&nbsp;
+qubits. So it has b sub n here I'm denoting as&nbsp;&nbsp;
+a tensor product, Hilbert space associated with&nbsp;
+N, N qubits. The goal is we want to define a
+project choose our projection map in a&nbsp;
+suitable way, such that we can have a&nbsp;&nbsp;
+evolution acting at the level of&nbsp;
+qubits. That is, in some sense,
+on the one hand efficient, that allows,&nbsp;&nbsp;
+which means that we can implement it&nbsp;
+with, you know, modest number of compute
+lot quantum logic gates. And also, it's consistent&nbsp;
+in the sense that this diagram here should commute&nbsp;&nbsp;
+or at least commute asymptotically as the number&nbsp;
+of qubits increases. And that is, that is kind&nbsp;&nbsp;
+of the end goal. Now, the key points that I&nbsp;
+want No, probably will not get to the very&nbsp;&nbsp;
+end of everything that they wanted to say. But&nbsp;
+so let me say, what are the key points here?
+There are two points that I want&nbsp;
+to highlight. The first is that,&nbsp;&nbsp;
+even if we implement these methods&nbsp;
+classically, like after all, you know,&nbsp;&nbsp;
+these are basically one could, in principle,&nbsp;
+simulate the system, classically, at the level&nbsp;&nbsp;
+of operators is basically dealing with linear&nbsp;
+algebra when you're working in finite dimensions.
+What I'd like to do too, one of the&nbsp;
+messages I'd like to get across is that&nbsp;&nbsp;
+given if implemented classically working&nbsp;
+with this quantum formalism to Castleton,&nbsp;&nbsp;
+desirable or useful numerical, numerical&nbsp;
+properties, and certain aspects of
+structure preservation that are very natural,&nbsp;
+almost automatic, and when you're working with&nbsp;&nbsp;
+operators are like matrices in finite&nbsp;
+dimensions, as opposed to functions,&nbsp;&nbsp;
+I will focus here on positivity, preservation.&nbsp;
+And the other the other aspect is that for some&nbsp;&nbsp;
+classes of systems, I mean, which is by no means&nbsp;
+an exhaustive class, I will specify that later on,&nbsp;&nbsp;
+we do have a way to design circuits that&nbsp;
+implement this evolution in a manner in a&nbsp;&nbsp;
+manner that is efficient, or it has some type of&nbsp;
+advantage. And I will, I will try to be specific&nbsp;&nbsp;
+about what what is that advantage later on.&nbsp;
+But these are the main, the main two points.
+So I'm going to highlight give like&nbsp;
+some examples from our work first,&nbsp;&nbsp;
+we're dealing more with this, this
+part where we design algorithms, which are quantum&nbsp;
+inspired, but they're implemented classically.
+And,
+and then on the second part, talk about talk about&nbsp;
+implementations on quantum circuits. So this is&nbsp;&nbsp;
+this first part isn't work in collaboration&nbsp;
+with David Freeman, and Brian meads, who are&nbsp;&nbsp;
+PhD students from Dartmouth join us Lewinsky,&nbsp;
+who is also from dark with an ARBUS almost from&nbsp;&nbsp;
+University of Wisconsin, Milwaukee, and I&nbsp;
+will be talking about ideas from from using&nbsp;&nbsp;
+quantum information science or quantum theory&nbsp;
+to perform data, data simulations of classical&nbsp;&nbsp;
+dynamical systems. So what is the goal here?&nbsp;
+In Data Data simulation? Well, the goal is that&nbsp;&nbsp;
+you have the objective rather, is that we have a&nbsp;
+dynamical system that we observe only partially
+in a classical dynamical system,&nbsp;
+and we have classical observations,&nbsp;&nbsp;
+and we want to infer the state of that system&nbsp;
+under sequential measurements. So the idea is&nbsp;&nbsp;
+that we could start from highly uncertain&nbsp;
+knowledge of the state. And even though&nbsp;&nbsp;
+we're observing the system partially, over&nbsp;
+time, we can refine our knowledge and get&nbsp;&nbsp;
+a good estimate of the underlying state.&nbsp;
+So this is an integral piece of many sort&nbsp;&nbsp;
+of like numerical modeling systems like&nbsp;
+weather prediction or object tracking,&nbsp;&nbsp;
+and it has many applications in practice. So&nbsp;
+so the the approach that we're going to use is
+So, basically, along the lines of&nbsp;
+what I've been describing already,&nbsp;&nbsp;
+what I'm going to be here a little bit more&nbsp;
+specific and how we actually define our Hilbert&nbsp;&nbsp;
+spaces and our spaces of classical observables,&nbsp;
+which I hadn't talked about previously. First,&nbsp;&nbsp;
+you know, if we're going to embed into a quantum&nbsp;
+sim, we have to choose a Hilbert space. So in the&nbsp;&nbsp;
+context of data simulation, a natural choice of&nbsp;
+a Hilbert space is if you have a dynamical system&nbsp;&nbsp;
+that is measure preserving. So this is going to&nbsp;
+be an assumption, we're going to assume that there&nbsp;&nbsp;
+is a invariant probability distribution of the&nbsp;
+system. Think of it that there is some kind of&nbsp;&nbsp;
+statistical equilibrium, the system itself, like,&nbsp;
+the probabilities, that we're going to be looking&nbsp;&nbsp;
+at that do not have to be in, in equilibrium,&nbsp;
+but we're thinking that there is some underlying&nbsp;&nbsp;
+equilibrium distribution. And the probability&nbsp;
+measures that we're looking at there, they&nbsp;&nbsp;
+have densities with respect to that equilibrium&nbsp;
+distribution. So this is the typical setup one&nbsp;&nbsp;
+has in, in, in classical Data Assimilation. And&nbsp;
+now as our space of observables, we're going to
+look at bounded functions with respect&nbsp;
+to that to that probability metric. Now,&nbsp;&nbsp;
+we can think of this space, this the space&nbsp;
+of observables, as it's actually an algebra&nbsp;&nbsp;
+of observables. What do I mean by that, it has&nbsp;
+the property of not just being a vector space,&nbsp;&nbsp;
+like a linear space where you have addition and&nbsp;
+scalar multiplication, but it's also it has an&nbsp;&nbsp;
+extra operation, namely, you can multiply together&nbsp;
+to two functions in the space. And they stay in,&nbsp;&nbsp;
+in that space. And the operation is continuous&nbsp;
+in a suitable sense, with respect to the norm of&nbsp;&nbsp;
+the space. So we have an an algebra, and it is a&nbsp;
+commutative algebra, because it doesn't matter in&nbsp;&nbsp;
+which order you multiply, you know functions.&nbsp;
+Later on, we're going to embed this in a non&nbsp;&nbsp;
+commutative algebra of operators. So in fact, this&nbsp;
+is what we're going to do now. This is how how,
+how we embed our our classical probability&nbsp;
+densities into into quantum state. So it's&nbsp;&nbsp;
+the it's basically a formula that takes a&nbsp;
+probability measure that has a density with&nbsp;&nbsp;
+respect to with respect to the environment,&nbsp;
+measure mu and call that density, I'm calling&nbsp;&nbsp;
+it new. This is a function which is integrable,&nbsp;
+because it's a probability density is positive,&nbsp;&nbsp;
+so it can take its square root, and&nbsp;
+it's quieter, there's going to be&nbsp;&nbsp;
+square integrable. So it will live in our&nbsp;
+Hilbert space. And if we define that, that
+operator, which is a projection operator&nbsp;
+that projects along the square root of the&nbsp;&nbsp;
+probability density that defines for us a quantum
+a quantum state, this is a density&nbsp;
+operator. So this procedure is known as the&nbsp;&nbsp;
+Koopman. Von Neumann, embedding, Ilan and others&nbsp;
+have done a lot of work on this on this topic,&nbsp;&nbsp;
+or even more general versions of this where you&nbsp;
+allow also the density here to cover complex,&nbsp;&nbsp;
+a complex phase. This is this&nbsp;
+here, we're looking at real valued
+densities.
+And so we have this embedding. And&nbsp;
+the nice thing about it is that it&nbsp;&nbsp;
+makes this diagram commute where the&nbsp;
+commutation here the evolution of&nbsp;&nbsp;
+quantum state takes by means of the of the&nbsp;
+Koopman operator acting on on probability&nbsp;&nbsp;
+on density operators by this conjugation&nbsp;
+formula we had talked about earlier. Now.
+So we've we've talked about how to embed&nbsp;
+a classical state. Now, we can also embed&nbsp;&nbsp;
+classical observables. After all, we want to have&nbsp;
+both representation of states and observables as&nbsp;&nbsp;
+a quantum system. And the way we can do that&nbsp;
+is basically by mapping functions to bounded&nbsp;&nbsp;
+operators on our Hilbert space. So this will be&nbsp;
+quantum observables, which are multiplication&nbsp;&nbsp;
+operators that multiply by those functions. So&nbsp;
+here pi is a map takes a function to an operator,&nbsp;&nbsp;
+so pi of F is an operator. And pi of f is defined&nbsp;
+as the operator that multiplies by F. So in&nbsp;&nbsp;
+quantum mechanics that are in quantum physics,&nbsp;
+you know, multiplication operators, there are&nbsp;&nbsp;
+many examples of them one, one of them being let's&nbsp;
+say, the position operator in a one dimensional
+one dimensional system. Here&nbsp;
+we're defining them for general&nbsp;&nbsp;
+observables in the space L infinity. It is&nbsp;
+important that we looking at bounded above
+deliverables because to make this operator&nbsp;
+bounded this multiplication operator and&nbsp;&nbsp;
+the consistency relation that we&nbsp;
+get at the end. So this is why this
+diagram commute. And this is why effectively&nbsp;
+we're creating a copy of our system in into a&nbsp;&nbsp;
+quantum system is that we can compute,&nbsp;
+we can use the transfer operator to&nbsp;&nbsp;
+evolve classical probability densities, and&nbsp;
+compute expectations. Classical expectations,&nbsp;&nbsp;
+without a time evolve with respect to the time of&nbsp;
+all density, or we can embed quantum mechanically&nbsp;&nbsp;
+use the quantum mechanical version of the transfer&nbsp;
+operator and computer quantum expectation of the&nbsp;&nbsp;
+corresponding multiplication operator pi of&nbsp;
+f. So basically, it's this formula over here,&nbsp;&nbsp;
+and we get the same result as the classical&nbsp;
+expectation. In other words, we have created a
+copy for all intents and purposes of our system&nbsp;
+into this infinite dimensional quantum quantum&nbsp;&nbsp;
+system. Now, we want this, of course, at the end&nbsp;
+of the day, we want to do numerical computation.&nbsp;&nbsp;
+So the next step will be actually to, as I&nbsp;
+mentioned earlier, as well, will be to project&nbsp;&nbsp;
+the system onto finite dimensions. Now, here, I'm&nbsp;
+not focusing on doing quantum computing. So it's&nbsp;&nbsp;
+not important that the, the Hilbert space, the&nbsp;
+finite dimensional Hilbert space is has the tensor&nbsp;&nbsp;
+product structure associated with with qubits,&nbsp;
+here, we're imagining a more general situation,&nbsp;&nbsp;
+we'll have some finite dimensional Hilbert&nbsp;
+space, which is a subspace of h of our infinite&nbsp;&nbsp;
+dimensional Hilbert space. And we orthogonal II&nbsp;
+project everything onto that onto that subspace.
+Now we can we can project states assuming&nbsp;
+that this denominator here, doesn't,&nbsp;&nbsp;
+doesn't vanish. So for every state for&nbsp;
+which this denominator doesn't vanish,&nbsp;&nbsp;
+we can project down a state from the&nbsp;
+infinite dimensional setting to a finite&nbsp;&nbsp;
+dimensional state. And we can also create&nbsp;
+an evolution of of states by means of this.
+This formula here, which we're basically using a&nbsp;
+projected projected quantum is projected Koopman&nbsp;&nbsp;
+operator for for that for that part. Now, in&nbsp;
+general, if we do that, this diagram here does&nbsp;&nbsp;
+not commute. That's why I put here this dotted&nbsp;
+arrows unless you know in some special cases,&nbsp;&nbsp;
+for instance, if if HTML was a finite union&nbsp;
+of Koopman eigen spaces, then you know,&nbsp;&nbsp;
+for particular choices of H sub L, this&nbsp;
+diagram will commute exactly, but we don't&nbsp;&nbsp;
+want to restrict ourselves in that situation.&nbsp;
+However, if we have L as being some parameter&nbsp;&nbsp;
+that controls the dimension of our approximation,&nbsp;
+and as l increases, these spaces increased ours H&nbsp;&nbsp;
+these diagram here will commute in asymptotic&nbsp;
+asymptotic sense. So this, this is the level&nbsp;&nbsp;
+that we operate numerically, we have basically,&nbsp;
+our quantum states our density matrices, now,&nbsp;&nbsp;
+there are finite rank, finite rank operators and&nbsp;
+numerical linear algebra with matrix algebra.
+And this is now one of these highlights that&nbsp;
+I was I wanted to make earlier is that this,&nbsp;&nbsp;
+this numerical setup allows us to easily&nbsp;
+preserve some structures of the problem that
+would in ways that would not be possible by
+if we were working in spaces of functions.&nbsp;
+And what do I mean by that? Well,&nbsp;&nbsp;
+if you take a classical probability density like&nbsp;
+a function, which is a function which is positive,&nbsp;&nbsp;
+if you do an orthogonal projection of a positive&nbsp;
+function, let's say you were representing in a&nbsp;&nbsp;
+numerical scheme, a classical density as a in&nbsp;
+a basis like in a Fourier basis or some type of
+discretization basis that one chooses, if you're&nbsp;
+using an orthogonal projection to arrive at your&nbsp;&nbsp;
+approximation, that approximation need not&nbsp;
+be positive. And you know, there are things&nbsp;&nbsp;
+behaviors like the Gibbs phenomenon, for instance,&nbsp;
+when you take a top cut function and you project&nbsp;&nbsp;
+it into finitely, many Fourrier functions&nbsp;
+which do not do not preserve positivity,&nbsp;&nbsp;
+at least not through orthogonal projections,&nbsp;
+you have to do something more or less trivial&nbsp;&nbsp;
+in order to preserve positivity. On&nbsp;
+the other hand, preserving positivity&nbsp;&nbsp;
+of operators is is much, comparatively much&nbsp;
+easier. If you take an operator and you call
+aggregated from the left and right by a positive&nbsp;
+operator when you conjugate it by projections,&nbsp;&nbsp;
+the result is, is a positive operator.&nbsp;
+So the the, the the message here is that
+by by passing first by embedding first our&nbsp;
+system into this infinite dimensional quantum&nbsp;&nbsp;
+system and using that as our starting point to&nbsp;
+build numerical approximations puts us in a,&nbsp;&nbsp;
+in a space where we have the ability to&nbsp;
+preserve certain aspects of the original&nbsp;&nbsp;
+system like positivity of states, but also&nbsp;
+it turns out positivity of observables in&nbsp;&nbsp;
+ways that are either not possible in spaces&nbsp;
+of functions using equivalent operations like&nbsp;&nbsp;
+orthogonal analogous operations, like&nbsp;
+orthogonal projections. So, I would,&nbsp;&nbsp;
+I would advocate that this is a reason to at&nbsp;
+least think about these type of methodologies,&nbsp;&nbsp;
+even if the if they're not implemented in quantum&nbsp;
+computers, even if they're used in classical&nbsp;&nbsp;
+Numerix. Okay, so, in the in data simulation,&nbsp;
+as I mentioned earlier, we imagine that we have&nbsp;&nbsp;
+a classical system that is evolving over time,&nbsp;
+we are, we don't have knowledge of its state,&nbsp;&nbsp;
+but we observe it state every, you know, certain&nbsp;
+number of times that if we're doing some kind of
+this discrete in time
+approximation.
+And we're going to represent our knowledge&nbsp;
+of our of that system by by a quantum&nbsp;&nbsp;
+state. So in data simulation, classical&nbsp;
+data simulation, this knowledge would&nbsp;&nbsp;
+be represented by a probability density.&nbsp;
+Here, we're going to use a density matrix,&nbsp;&nbsp;
+like, like we had before. And the&nbsp;
+idea is that we alternate between
+forecasts and measurement. This is the&nbsp;
+typical cycle one has in data assimilation,&nbsp;&nbsp;
+between observations, we use the transfer&nbsp;
+operator acting on density matrices to evolve&nbsp;&nbsp;
+to evolve our density to a new density.&nbsp;
+And then when the when we measure make a&nbsp;&nbsp;
+measurement of the system, and by measurement&nbsp;
+here, I mean, purely in the classical sense,&nbsp;&nbsp;
+we have a sensor like a or like a network&nbsp;
+of sensors that are giving us observations,&nbsp;&nbsp;
+we're measuring a function of the state of our&nbsp;
+classical system, there is we use the quantum&nbsp;&nbsp;
+version of of Bayes rule that I showed earlier,&nbsp;
+to update the state. And for that, we have to use&nbsp;&nbsp;
+basically a map like I was talking about earlier,&nbsp;
+we have to assign to every observation and a&nbsp;&nbsp;
+corresponding quantum effect. So like a quantum&nbsp;
+event, if you want to think of it like that way,&nbsp;&nbsp;
+we do that in practice using kernel methods,&nbsp;
+like feature maps, from reproducing kernel&nbsp;&nbsp;
+Hilbert spaces, with a difference that being in&nbsp;
+the quantum in the quantum world, we have to use&nbsp;&nbsp;
+a matrix valid or operator valid feature maps, I'm&nbsp;
+happy to talk about some of this offline later on.
+So and, you know, in the scheme,&nbsp;
+we it's basically numerically we&nbsp;&nbsp;
+can implement it using data that we&nbsp;
+collect along dynamical trajectories&nbsp;&nbsp;
+in a training phase. So it's basically&nbsp;
+like a data driven data simulation scheme.
+So I guess I talked through that. So in&nbsp;
+the interest of time, I will not spend&nbsp;&nbsp;
+too much time here. But just to just I want&nbsp;
+to emphasize that we can compute predictions&nbsp;&nbsp;
+or forecasts of classical observables&nbsp;
+using quantum expectations, but we can&nbsp;&nbsp;
+also put it in place we're basically carrying&nbsp;
+representing entire forecast distributions,&nbsp;&nbsp;
+because we, with our quantum state, and&nbsp;
+the spectral resolution of our observables,&nbsp;&nbsp;
+we can compute probabilities for measurements&nbsp;
+to take values in different sets of interest,&nbsp;&nbsp;
+let's say you want to predict the temperature&nbsp;
+at a given location, you know, two days from&nbsp;&nbsp;
+today will will lie in a certain interval,&nbsp;
+this can be encoded in this in this manner.
+Okay, I'm going to show one example, where we did&nbsp;
+that in the context of climate, climate dynamics.&nbsp;&nbsp;
+So this is using data that is training that was&nbsp;
+generated from a climate model. So currently,&nbsp;&nbsp;
+we're working also on on doing this from&nbsp;
+actual observational data, but the idea
+Is that we're making observations of the impact&nbsp;
+of Indo Pacific sea surface temperature fields.&nbsp;&nbsp;
+So we're observing the temperature of the surface&nbsp;
+temperature of the ocean, in in a domain that is&nbsp;&nbsp;
+roughly like shown here. And from that we&nbsp;
+want to make a prediction about the El Nino&nbsp;&nbsp;
+phenomenon. So the linear Southern Oscillation is&nbsp;
+an oscillatory process that manifests itself with&nbsp;&nbsp;
+anomalous anomalously warm or anomalously&nbsp;
+cold waters in the tropical Pacific Ocean,&nbsp;&nbsp;
+to the west of South South America.&nbsp;
+So linear events are anomalously warm,&nbsp;&nbsp;
+and the corresponding landlines are anomalously&nbsp;
+cold, this is an oscillation that takes place&nbsp;&nbsp;
+with a characteristic timescale of three to seven&nbsp;
+years, approximately, currently, we are in an El&nbsp;&nbsp;
+Nino here. And the way climate scientists&nbsp;
+index or monitor this, this phenomenon is&nbsp;&nbsp;
+by means of conventional at least by means of so&nbsp;
+called Nino indices, so that these are basically
+area average sea surface temperature fields over&nbsp;
+given domains in the tropical Pacific Ocean,&nbsp;&nbsp;
+we're going to use this Nino 3.4 index, which&nbsp;
+is the average SST in this box over here,&nbsp;&nbsp;
+which is probably the most one of the more&nbsp;
+common indices for, for answer. So we took this
+data, and we, you know, we&nbsp;
+ran it through the pipeline,&nbsp;&nbsp;
+but I just mentioned, and this is basically just
+an output of what this method produces. So these&nbsp;
+are basically running forecasts of the El Nino,&nbsp;&nbsp;
+Nino 3.4 index in a think 50 years, or&nbsp;
+sorry, 20 years of an arbitrary interval
+of a test data set that we have isolated from,&nbsp;
+from this model. And in the in the red line,&nbsp;&nbsp;
+we're showing the true evolution of the meaning&nbsp;
+of 3.4 index, the black line is showing the&nbsp;&nbsp;
+evolution that the quantum that we get from the&nbsp;
+quantum expectation from this from this numerical&nbsp;&nbsp;
+numerical scheme. Here in the horizontal axis, we&nbsp;
+have the forecast verification time. So it's like&nbsp;&nbsp;
+the day for which we are making the forecast. And&nbsp;
+as we go down the panel, where we are increasing&nbsp;&nbsp;
+the lead time is how many days in advance, we are&nbsp;
+predicting and the behavior here that and that you&nbsp;&nbsp;
+can see. Well, I should also say that the colors&nbsp;
+here correspond to the probability or logarithms&nbsp;&nbsp;
+of the probability density that, again, is encoded&nbsp;
+in our quantum state computer through the spectral&nbsp;&nbsp;
+measure of our observable that we're using to&nbsp;
+also characterize uncertainty of forecasting.&nbsp;&nbsp;
+And you can see as we go down the parallels, as&nbsp;
+one might expect, forecast uncertainty increases,&nbsp;&nbsp;
+as well as you know, the error for the&nbsp;
+forecast, but it's doing a pretty decent job,
+at least for these type of model, modeled data.
+Okay, so I think I'm almost&nbsp;
+running out of time. So I will
+skip, you know, basically a lot&nbsp;
+of what I had in mind, I will say,&nbsp;&nbsp;
+maybe just a few words about the actual quantum
+quantum implementation if I&nbsp;
+can take three two. Yeah, yeah.
+Yeah. So so. So in this part, and I'm just&nbsp;
+going to give a quick summary of this. We&nbsp;&nbsp;
+are now interested in in besides, you know, this&nbsp;
+numerical, you know, classical numerical procedure&nbsp;&nbsp;
+that I, you know, outlined, for data simulation,&nbsp;
+that we're interested in actually implementing&nbsp;&nbsp;
+this, you know, the versions of these algorithms&nbsp;
+onto quantum quantum computers. So, this is work&nbsp;&nbsp;
+done with people listed listed here. And, and&nbsp;
+the, the focus here is that rather than having&nbsp;&nbsp;
+our finite dimensional approximation, space be&nbsp;
+a general in a finite dimensional Hilbert space,&nbsp;&nbsp;
+we want to explicitly focus in the case where&nbsp;
+the Hilbert space that we're projecting has the&nbsp;&nbsp;
+structure of an n fold tensor product of two&nbsp;
+dimensional Hilbert spaces associated with an&nbsp;&nbsp;
+N qubits of a quantum computer. So this base&nbsp;
+here will have dimension two to the power n.
+And there is a there is basically a canonical&nbsp;
+basis that one can choose for for one can use for
+For this tensor product Hilbert space that&nbsp;
+you can represent by binary strings indexed&nbsp;&nbsp;
+by binary strings of length, length n, and&nbsp;
+the basis vectors are tensor products of&nbsp;&nbsp;
+these basic vectors that are, we label them&nbsp;
+this Dirac ket notation equals zero, and one.
+So we have this, this setup here. And, you&nbsp;
+know, this space here has dimension two to&nbsp;&nbsp;
+the power n. So, an exponential large dimension&nbsp;
+we want to create here, the goal is to create&nbsp;&nbsp;
+an evolution project, create find a projection&nbsp;
+map such that maps are transferred operator into&nbsp;&nbsp;
+a finite dimensional finite rank operator&nbsp;
+that can be implemented efficiently using
+ideally, using a polynomial&nbsp;
+number of quantum gates
+in this exponentially large dimensional&nbsp;
+Hilbert space. So, this is something that&nbsp;&nbsp;
+we're actively working on so far, you know,&nbsp;
+and we've had a lot of discussions with Elon&nbsp;&nbsp;
+and others on that as well. So, so far, we&nbsp;
+have looked at this particular case of SOC&nbsp;&nbsp;
+on systems that have purepoint spectrum. So these&nbsp;
+are canonically, we can represent them as ergodic,&nbsp;&nbsp;
+rotations on on Toray. So this formula that&nbsp;
+I'm showing here for the dynamical evolution,&nbsp;&nbsp;
+this will be our canonical working example. But&nbsp;
+in fact, this this is representative of a wider&nbsp;&nbsp;
+class of systems. So we can bring other systems&nbsp;
+that have this beautiful and spectrum property&nbsp;&nbsp;
+into this canonical form, have an ergodic towards&nbsp;
+rotation by continuous continuous transformations&nbsp;&nbsp;
+that are compatible with a dynamic these&nbsp;
+are known as topological conjugates. So&nbsp;&nbsp;
+this will be our canonical example that&nbsp;
+we're going to, we're going to study
+I'm going to skip here through a&nbsp;
+few things. But the idea is that we&nbsp;&nbsp;
+want to choose a Hilbert space that is&nbsp;
+adapted to this, to this kind of this,&nbsp;&nbsp;
+this type of systems. And, and we're not going&nbsp;
+to be using Enel to space in this application,&nbsp;&nbsp;
+we're going to use a different&nbsp;
+class of Hilbert space known as
+a reproducing kernel, Hilbert space, which is&nbsp;
+defined by means of a kernel that we have on our&nbsp;&nbsp;
+on our torus. And the key property that this space&nbsp;
+has, in addition to being a reproducing kernel,&nbsp;&nbsp;
+Hilbert space, that it's also again, a, an&nbsp;
+algebra with respect to point wise multiplication&nbsp;&nbsp;
+of functions. This is a non trivial property to&nbsp;
+have for reproducing kernel, Hilbert space. But&nbsp;&nbsp;
+for this specific choice of kernel that we're&nbsp;
+using, we have it. And the reason is that we&nbsp;&nbsp;
+want to have these properties because we want to&nbsp;
+represent classical observables of functions in&nbsp;&nbsp;
+that Hilbert space by bounded multiplication,&nbsp;
+multiplication operators, and these type of
+these class of spaces have been studied&nbsp;
+extensively in harmonic analysis. In
+fact, thinker and collaborators&nbsp;
+and among you know, there's a large&nbsp;&nbsp;
+literature and we've made some&nbsp;
+contributions in that as well.
+I'm going to, you know, skip a bunch of stuff. The&nbsp;
+The point being that with this particular choice&nbsp;&nbsp;
+of spaces, we're going reproducing kernel, Hilbert&nbsp;
+algebras, were able to return retain a lot of&nbsp;&nbsp;
+structures that is, you can find in in different&nbsp;
+spaces, but here, we're putting them all in one
+place setup. And this is useful for, for designing&nbsp;
+our quantum algorithms. Okay, so the main point&nbsp;&nbsp;
+is that, you know, once we go through this&nbsp;
+machinery, is that if we take a system that&nbsp;&nbsp;
+has purepoint spectrum, and we look at it, we can&nbsp;
+find basically a projection map that takes our
+Koopman operator or more precisely, the generator&nbsp;
+of the Koopman group to a Hamiltonian. So we're&nbsp;&nbsp;
+defining we're using a Hamiltonian to define a&nbsp;
+quantum system that is very nicely vectorizable&nbsp;&nbsp;
+in in terms of as a sum of computing operators,&nbsp;
+which are very simple in the sense that each&nbsp;&nbsp;
+operator each of these operators that appears in&nbsp;
+the sum is a tensor product of identity operators&nbsp;&nbsp;
+with only one policy operator that acts on&nbsp;
+an individual qubits. So effectively what&nbsp;&nbsp;
+we're doing we're representing this ergodic&nbsp;
+system that has purepoint spectrum has a a
+bunch of phaser rotations that are&nbsp;
+acting on individual qubits. This is very
+special. Because it won't work for any dynamical&nbsp;
+system, I want to stress that it's actually non&nbsp;&nbsp;
+trivial to generalize it. But But for these&nbsp;
+kinds of systems, we do have an efficient
+representation of our quantum coming on, but&nbsp;
+allows us to exponentiated and get a very nice,
+very simple, almost trivially&nbsp;
+simple quantum circuit.
+This is how the pipeline work. As I mentioned&nbsp;
+earlier, you know, in addition to the the&nbsp;&nbsp;
+evolution, which we do efficiently by our&nbsp;
+secret that I've just highlighted are the&nbsp;&nbsp;
+highlighted there are these problems of how do&nbsp;
+you encode the initial condition? And how do you&nbsp;&nbsp;
+make a measurement at the end, where gives you&nbsp;
+which gives you a consistent information about&nbsp;&nbsp;
+the observable that you want to predict,&nbsp;
+there are ways to address it. And I'm not&nbsp;&nbsp;
+talking about this today, namely, the state&nbsp;
+preparation can be done efficiently using
+Hadamard gates. And at the end of the of&nbsp;
+the Koopman. Evolution, it turns out by&nbsp;&nbsp;
+applying a quantum Fourier transform, which&nbsp;
+is also an efficient in the sense of being
+because a quadratic cost is required circuits of&nbsp;
+quadratic depth in the number of qubits. After&nbsp;&nbsp;
+doing this quantum Fourier transform, it turns&nbsp;
+out that measurement in the quantum computer can&nbsp;&nbsp;
+be decoded into a measurement of the classical&nbsp;
+observable that one is interested in predicting.
+And this scheme has this positivity preservation&nbsp;
+property that we talked about earlier,&nbsp;&nbsp;
+it is asymptotically consistent as the number&nbsp;
+of qubits increases, and it has an advantage&nbsp;&nbsp;
+in this very specific sense, I don't want to, you&nbsp;
+know, over definitely not want to over claim here,&nbsp;&nbsp;
+in the sense that it can simulate spaces of&nbsp;
+observable which are exponentially large,&nbsp;&nbsp;
+using circuits that have quadratic depth.&nbsp;
+So the running time of the algorithm is&nbsp;&nbsp;
+quadratic in the number of qubits.&nbsp;
+And that allows you to simulate the&nbsp;&nbsp;
+evolution of observables in an exponentially&nbsp;
+large dimensional Hilbert space. So I'm just&nbsp;&nbsp;
+showing here one or two examples, where&nbsp;
+we have applied that into into simple
+you know,
+systems like harmonic oscillators,&nbsp;
+or quasi periodic systems that live&nbsp;&nbsp;
+on a torus. So to have a more&nbsp;
+interesting, this is evolution,&nbsp;&nbsp;
+this is comparing the the true evolution&nbsp;
+with the ensemble mean that one obtains from
+a collection of quantum&nbsp;
+measurements done at the end,&nbsp;&nbsp;
+or sorry, from an ensemble of quantum&nbsp;
+identical, we prefer quantum systems
+that this is done in a simulated&nbsp;
+quantum circuit experiment. So you&nbsp;&nbsp;
+can see that with certain number&nbsp;
+of qubits we can get, we can get&nbsp;&nbsp;
+a reasonable reconstruction&nbsp;
+of the true evolution. And
+that's gonna be the last point, we&nbsp;
+also had some actual experiments&nbsp;&nbsp;
+done on a IBM Quantum computer&nbsp;
+using three qubits. So this is,&nbsp;&nbsp;
+admittedly, for a very simple system,&nbsp;
+just the harmonic harmonic oscillator.
+We're beyond that, we found that basically,&nbsp;
+the noise in the quantum computer
+prevented us from getting
+any meaningful, any meaningful result. But I&nbsp;
+think this is encouraging because at least we&nbsp;&nbsp;
+get a consistent, you know, this is like an&nbsp;
+ideal quantum circuit versus the actual one
+bit for this system, simple&nbsp;
+system, we can get a consistent
+reasonably consistent correspondent. Okay,&nbsp;&nbsp;
+so with that, I will stop and I'll just&nbsp;
+leave this here and I am sorry for taking&nbsp;&nbsp;
+a little bit longer. Okay. Well, thank&nbsp;
+you so much. There is a wonderful talk.
+And let's have a q&a session. Although&nbsp;
+we had a question in the middle during&nbsp;&nbsp;
+the talk, is there anyone who wants to ask&nbsp;
+questions, please unmute yourself and ask
+and for those of you who are in person in&nbsp;
+that room, and physically, please, please&nbsp;&nbsp;
+ask questions as well if you have got one. Well, I&nbsp;
+can start with one when you when you in your show&nbsp;&nbsp;
+the chart like showing the classical the dynamics&nbsp;
+and there is a mapping from classical to quantum&nbsp;&nbsp;
+and quantum to competition quantum computation&nbsp;
+all that there is a mat you have to define right.
+And is that mat has to be linear
+Alright.
+So with respect to the input space, no,&nbsp;
+actually it's Yeah, I mean, that's one&nbsp;&nbsp;
+of the few places where the mappings&nbsp;
+are not linear. Like, if we look at,
+sorry, just go back real quick.
+If you look at this map here, this this Koopman&nbsp;
+von Neumann embedding, this is actually a&nbsp;&nbsp;
+nonlinear map, because it involves, basically, you&nbsp;
+know, we're doing operations like square roots.
+And so this is actually these mappings are&nbsp;
+one of the few places where this scheme is,&nbsp;&nbsp;
+is nonlinear, the other places the measurement&nbsp;
+when we do the quantum state updates.
+But yeah, in general, these mappings&nbsp;
+here are are not not not linear.
+Yeah, it's just fascinating to me. I mean,&nbsp;
+me being not familiar with this the subject,&nbsp;&nbsp;
+how, how people identify those nonlinear map.
+There must be some, some rules.
+Oh, well, I
+don't know if I can say something&nbsp;
+too intelligent. Maybe Elon will&nbsp;&nbsp;
+have some comments on that. But&nbsp;
+like, if I were to get a cover
+shot is like,
+there are maybe some,
+at least some guidelines like you want.&nbsp;
+Like, for instance, you might say, Okay,&nbsp;&nbsp;
+we want to have our classical probability&nbsp;
+density, if we're going to look for a so called&nbsp;&nbsp;
+vector state vector state, it means that it's a&nbsp;
+density operator that you can characterize by a&nbsp;&nbsp;
+specific wave function. So it's like a single&nbsp;
+function that characterizes like our rank one&nbsp;&nbsp;
+projection operator. So we have to basically&nbsp;
+identify like a function that is a unit vector,&nbsp;&nbsp;
+since this is a projection operator&nbsp;
+from the data that we were given,&nbsp;&nbsp;
+namely, valid probability density. And,&nbsp;
+well, since a probability density is a
+positive function that integrates&nbsp;
+the one, if I want to turn it into&nbsp;&nbsp;
+a unit vector on a Hilbert space, which&nbsp;
+is contained square integrable functions,&nbsp;&nbsp;
+well, maybe the square root&nbsp;
+is not a bad, no, a bad idea.
+And here's the formula.
+There's a more principled way of thinking&nbsp;
+about this. Yeah, yeah. I mean, but I mean,&nbsp;&nbsp;
+there's also non linearity in&nbsp;
+the sense of the choice of like,
+how you pay like, what coordinates a you&nbsp;
+choose on space. So like, right, like how,&nbsp;&nbsp;
+you know, like, because H and x are very&nbsp;
+different objects and gamma like gives you&nbsp;&nbsp;
+an enormous amount of freedom and how you make&nbsp;
+that justification, but like, you know, and
+maybe you want if the dynamics&nbsp;
+has been based on symmetries,&nbsp;&nbsp;
+so, you want to like encode that with&nbsp;
+a proper choice of coordinates on x,&nbsp;&nbsp;
+then the symmetries need to have&nbsp;
+a special representation on ah,
+you know, having to do with how that gamma lab&nbsp;
+is acting. But in general, I mean, in general,
+I think, you know, construction of these maps&nbsp;
+is kind of like a sort of cutting edge research.
+Dimension is, you know, colleagues&nbsp;
+have done amazing work, you know,&nbsp;&nbsp;
+in terms of pushing the envelope here, got it&nbsp;
+got it? Well, from, from the perspective of,&nbsp;&nbsp;
+you know, videos to the hotel guy, and I'm one of&nbsp;
+them, and this operator mapping that we do all the&nbsp;&nbsp;
+times in the context of you know, we generally&nbsp;
+the reason we are doing that operator mapping,&nbsp;&nbsp;
+because the oldest know the dynamics is in really&nbsp;
+really high dimensional space and you want to&nbsp;&nbsp;
+reduce that to low dimensional space and that&nbsp;
+mapping like typically we call it compression,
+there are linear map and nonlinear map and&nbsp;
+we do that all the time to bring those high&nbsp;&nbsp;
+dimensional space to the low dimensional space.&nbsp;
+And as you guys mentioned, you know, if there is&nbsp;&nbsp;
+some physical property we would like to preserve&nbsp;
+it follow that rule, those physical property
+to guide us to come up with those mapping&nbsp;
+like from high dimensional to low dimensional
+Yeah, so there is a some connection
+between vom and I mean, one&nbsp;
+definitely, you know, a clear example
+with DMT DMT is the
+one Kumon operator. And it does the Delete&nbsp;
+linear compression, like the SVT type of mapping&nbsp;&nbsp;
+high dimensional to low dimensional. One thing I&nbsp;
+should note is that this is this eclipse this map,&nbsp;&nbsp;
+this is kind of like the opposite of a&nbsp;
+compression is like an extreme sort of&nbsp;&nbsp;
+the level of inflation. Yeah, it's because&nbsp;
+it's a lift, because you start from a space,&nbsp;&nbsp;
+which is in something much smaller than, than&nbsp;
+the space, we're creating a copy of probability&nbsp;&nbsp;
+measures into quantum states. Yeah, I mean, what&nbsp;
+compression happens when we go from here, and then&nbsp;&nbsp;
+we go to these like level of density matrices.&nbsp;
+And that you can, that is a compression, like,
+there's a, there's a concept called the&nbsp;
+lift and something and where there's a,&nbsp;&nbsp;
+you know, the original governing equation is very&nbsp;
+complex, nonlinear. But you do the augmentations,&nbsp;&nbsp;
+basically lifting what you just said,&nbsp;
+and in order to transform that complex&nbsp;&nbsp;
+nonlinear problems to the quadratic problems,&nbsp;
+and then once you convert that to quadratic,&nbsp;&nbsp;
+it's easy to deal, you know, the reduced father&nbsp;
+to low dimensional space. So there's a walk by
+that German people, and also&nbsp;
+Karen Wilcox in UT Austin.
+Are you familiar with that? Yeah.&nbsp;
+Lift and learn? Yeah, exactly.
+Yeah, it's, it's in kind of a similar?&nbsp;
+Yeah, I think that's a common strategy&nbsp;&nbsp;
+like that you going to bigger spaces, gives&nbsp;
+you maybe more flexibility than to, to design,
+you know, approximation schemes that have some&nbsp;
+properties that you couldn't easily get otherwise.
+And you guys, that's what you're doing. Right?&nbsp;
+And basically, at least in this in this example,&nbsp;&nbsp;
+yeah. Because here, there's nothing&nbsp;
+specific to quantum computing, I mean,&nbsp;&nbsp;
+this, you could just, you know,&nbsp;
+think of it purely as a numerical
+data driven scheme for data simulation, it&nbsp;
+gives you this type of benefits. And again,&nbsp;&nbsp;
+I'm not arguing that there are no other ways,&nbsp;&nbsp;
+of course, there are different ways&nbsp;
+of enforcing positivity, you know,
+in in, you know, approximations.
+But, but, you know, the thing that&nbsp;
+was trying to argue is that certain&nbsp;&nbsp;
+operations that are non trivial in&nbsp;
+function world, like, for instance,&nbsp;&nbsp;
+you know, how do you make sure that you&nbsp;
+preserve positivity of positive functions,&nbsp;&nbsp;
+they become somehow, almost automatic, I would&nbsp;
+say, in the operator world, because it's easy&nbsp;&nbsp;
+to preserve positivity in this, in this case,&nbsp;
+it's easy to preserve positivity of operators,
+under projections.
+Interesting, interesting. But there are other&nbsp;
+similar, I mean, I didn't talk about this at&nbsp;&nbsp;
+all today, but like, for instance, if you, if&nbsp;
+you're interested in representing generators,&nbsp;&nbsp;
+which are first order differential operators&nbsp;
+of deterministic dynamics like that,&nbsp;&nbsp;
+the one of the fundamental like, algebraic&nbsp;
+properties is that they satisfy Leibniz rule,&nbsp;&nbsp;
+like, if I take the derivative&nbsp;
+of the product of two functions,&nbsp;&nbsp;
+we know how to do that, you know, with a put&nbsp;
+there is a product rule for differentiation.
+And there is no non trivial
+operator that satisfies that&nbsp;
+rule on finite dimensional
+spaces, commutative spaces, so if I take a
+function space, and I discretize, it somehow
+I cannot satisfy the liveness rule.
+But on the other hand, it's very easy to satisfy&nbsp;
+the Leibniz rule with matrices. If you take,&nbsp;&nbsp;
+for instance, if I have a matrix A, and I&nbsp;
+think the commutator between that matrix&nbsp;&nbsp;
+and any product of other matrices, have a&nbsp;
+look at the commutator of A and B times C,&nbsp;&nbsp;
+then it follows that, you know, the&nbsp;
+satisfies basically a liposomal. So it's
+a you know, there are certain operations&nbsp;
+that certain structures that are easier to,&nbsp;&nbsp;
+to represent in finite dimensional using&nbsp;
+spaces of operators than functions.
+Cool, cool. Very interesting. Well,&nbsp;&nbsp;
+is there any other questions? Maybe. Can&nbsp;
+I make just a couple of times? I mean,
+I think that there's two
+Maybe difference or two interesting&nbsp;
+differences between what's happening&nbsp;&nbsp;
+here and any other sort of dilation&nbsp;
+technique, which is that, you know,&nbsp;&nbsp;
+in addition to like coming up&nbsp;
+with this interesting mapping,
+you're also working with the quantum&nbsp;
+probability theory. And you've like,&nbsp;&nbsp;
+augmented your understanding of&nbsp;
+what the rules of probability do.
+There's potentially value in that. And, you&nbsp;
+know, so the second comment is, specifically,&nbsp;&nbsp;
+if you were modeling the evolution of an&nbsp;
+actual quantum system, you would need to use&nbsp;&nbsp;
+those types of probability rules like the, what&nbsp;
+you spoke about as like the quantum Bayes rule,&nbsp;&nbsp;
+that's, that's essential for actually doing&nbsp;
+data driven modeling of quantum systems.
+And
+there's, like an enormous effort, you know,&nbsp;
+in trying to do that, across the country,&nbsp;&nbsp;
+you know, almost every university, but I&nbsp;
+mean, right now, we have Stephanie Clifford,&nbsp;&nbsp;
+sitting in the room right? There. She's&nbsp;
+working on ideas like that for modeling,&nbsp;&nbsp;
+you know, actual quantum hardware that people&nbsp;
+are building at the lab. And so it's you're&nbsp;&nbsp;
+augmenting your ability to do these data driven&nbsp;
+systems, you're not just in the representation of&nbsp;&nbsp;
+in your notion of probability, which means&nbsp;
+the difference being you can form what are&nbsp;&nbsp;
+called the superposition states, where you&nbsp;
+can be in a combination of zero and one.
+Like, Demetrius didn't talk much about&nbsp;
+what, how qubits differ from classical bits,&nbsp;&nbsp;
+but you know, they can have a probability&nbsp;
+anywhere between zero and one. In fact,&nbsp;&nbsp;
+they're, like, represented&nbsp;
+a two dimensional manifold,&nbsp;&nbsp;
+that's the surface of the sphere. So like,&nbsp;
+you would never be able to work with that
+object naturally, if you've applied, you&nbsp;
+know, the standard rules of probability
+that almost all of these frameworks are&nbsp;
+built on any kind of Bayesian analysis.
+And here, you're actually augmenting your ability&nbsp;
+to deal with these quantum systems naturally.
+So there's some physical systems for which this&nbsp;&nbsp;
+will most certainly be a much&nbsp;
+more natural representation.
+I mean, that shouldn't be like it reported,&nbsp;
+but I know it's very abstract. But But like,&nbsp;&nbsp;
+they're, like, almost all fundamental&nbsp;
+systems have a quantum mechanics. And so&nbsp;&nbsp;
+that means there should be some evolution&nbsp;
+in the way we think about probability.
+Yeah.
+I think that's a very good point. And
+maybe related to that. We haven't&nbsp;
+started this at all, but like,&nbsp;&nbsp;
+what might be interesting to think&nbsp;
+about is that once you go to this,
+you know, finite dimensional, again,&nbsp;
+representation, but then you're using&nbsp;&nbsp;
+quantum versions of probability&nbsp;
+and up, you know, Bayesian update.
+Is there anything to be said about having more&nbsp;
+capacity to encode information or make more? Yeah,&nbsp;&nbsp;
+a better representation of your&nbsp;
+underlying, you know, unknown,&nbsp;&nbsp;
+classical state with for the same number&nbsp;
+of for the same dimension? Basically,
+you know, just basically, just&nbsp;
+because you're accessing all these,
+you're accessing potentially more&nbsp;
+states, that quantum, you know,&nbsp;&nbsp;
+in your statistical representation of the unknown,
+you know, hidden state of your dynamical&nbsp;
+system, but maybe there are some benefits. So,&nbsp;&nbsp;
+I don't know, like, Well, I mean, you showed&nbsp;
+one at the very end, like, where are you,&nbsp;&nbsp;
+you know, basically, you could interpret&nbsp;
+the theorem that he talked about the end of&nbsp;&nbsp;
+saying there was an exponentially efficient&nbsp;
+representation for any integrable dynamical&nbsp;&nbsp;
+system. And what you're able to do then&nbsp;
+is to dynamically evolve an exponentially&nbsp;&nbsp;
+large number of states, essentially,&nbsp;
+for the cost of, you know, you know,
+a single or you know, logarithmically&nbsp;
+smaller amount of information. Because&nbsp;&nbsp;
+you basically code this in the set of qubits.
+So, it's, I mean, it's, you don't&nbsp;
+get something for nothing, but,&nbsp;&nbsp;
+but you do get an A certain type of quantum&nbsp;
+advantage that is potentially very valuable.
+I mean, doing this for for chaotic&nbsp;
+dynamics, which is more generic, it's not
+is easy.
+But like, you know,
+again, that sort of cutting edge like&nbsp;
+how would you how would you do that?
+Anyway, I hope. So it's like some&nbsp;
+of these operations are actually&nbsp;&nbsp;
+if you had a quantum computer, you&nbsp;
+can do them much more efficient.
+If that makes them
+like exponentially more efficient,
+depending on what kinds of&nbsp;
+questions we're trying to ask
+it step by step there
+am Oh, good. Well, I mean, I mean, I don't know.
+I'm guessing you're very inspired by Dimitris&nbsp;
+talk, maybe you can combine, you know, the
+neural new neural ODEE idea you're&nbsp;
+applying, maybe you can apply that&nbsp;&nbsp;
+after some mapping, and then to the&nbsp;
+neuro operator, and your neuro od TV.
+That's sort of the combination.
+What do you think Stephanie?
+At this point is a little over my head.
+This is really the first time I see a&nbsp;
+talk like this. I think I'll just so maybe
+me maybe additional meeting with&nbsp;
+Stephanie would help. Sounds good. Oh,&nbsp;&nbsp;
+all right. Well, I'm in there was one.
+For example, in the first one is Ukraine&nbsp;
+for scaling for its n square in the bottom&nbsp;&nbsp;
+implementation. That's it, but you have extra&nbsp;
+time evolution? Doesn't this square includes time.
+So good point. So this circuit,
+it's for one, the moment, at least the&nbsp;
+way we have set it up, it's for one,&nbsp;&nbsp;
+this is giving you the evolution&nbsp;
+at the end of this for one fixed,&nbsp;&nbsp;
+fixed time. So that one time step four,&nbsp;
+it can kind of be as, as long as you&nbsp;&nbsp;
+want it to be integrable. So you can fast&nbsp;
+forward it. So you can, okay, so sub linear
+scaling. Exactly. Is that because, you know,&nbsp;
+yeah, usually, this is an interesting question,&nbsp;&nbsp;
+like, what's the complex complexity of&nbsp;
+the evolution operation here? And it's a&nbsp;&nbsp;
+very interesting question, from the point&nbsp;
+of view of quantum algorithms, you know,&nbsp;&nbsp;
+can you attain linear scaling and the&nbsp;
+time steps are, some algorithms have&nbsp;&nbsp;
+to do automatic number of time steps like&nbsp;
+quadratic work with number of time steps,&nbsp;&nbsp;
+which is weird compared to, you know, classical&nbsp;
+systems. But here, because it's integrable,&nbsp;&nbsp;
+you can essentially, you know, fast forward the&nbsp;
+videotape all the way to the final timestamp,&nbsp;&nbsp;
+and immediately print the result, at least fast&nbsp;
+forwarding is specific for quantum specific for&nbsp;&nbsp;
+integrable systems for you. Let's cover&nbsp;
+this purepoint spectrum problems. Yeah,&nbsp;&nbsp;
+actually a distance where it includes&nbsp;
+measurements. So if you perform free estimations.
+Yeah. And the reason that we do that is, because
+one of the issues with quantum computing is&nbsp;
+that you're not you can't measure any quantum&nbsp;&nbsp;
+observable at the end, you have to measure, you're&nbsp;
+stuck with measuring a specific one associated&nbsp;&nbsp;
+with a quantum computational basis. So the&nbsp;
+qubits, so you want to rotate the state such that,
+in that, in that, when you do make&nbsp;
+that measurement, it actually gives you
+a correspondence with the underlying&nbsp;
+classical thing that you're trying&nbsp;&nbsp;
+to predict. And it turns out the quantum&nbsp;
+Fourier transform for, for the, for the&nbsp;&nbsp;
+class of these multiplication operators that&nbsp;
+we use to represent our classical observables,&nbsp;&nbsp;
+approximately diagonalize them.&nbsp;
+So that means that you can,
+by doing the quantum Fourier transform,&nbsp;
+you rotate your state in a way that
+a quantum measurement can be encoded,&nbsp;
+or decoded rather into an eigenvalue&nbsp;&nbsp;
+or a measurement of the multiplication&nbsp;
+operator that we care about. You kind&nbsp;&nbsp;
+of measure index in a spectrum and&nbsp;
+after vertical Yeah. Yeah. And the&nbsp;&nbsp;
+last question is about this forecast,&nbsp;
+Data Assimilation or measurement cycle.
+Maybe you can go to the slide
+Yeah.
+So basically, understand you need to&nbsp;
+perform this forecast and until now
+This is for some G, some J, some, yeah, J is the&nbsp;
+number of sorry, I was going too fast here the&nbsp;&nbsp;
+number of time steps between observations. After&nbsp;
+if you perform equal back to analyze another time&nbsp;&nbsp;
+step, you will need to repeat everything&nbsp;
+from. Okay, so that's, that's another good&nbsp;&nbsp;
+points are here. This is you can think of it as an&nbsp;
+inference procedure. Similarly to, like Bayesian,&nbsp;&nbsp;
+like sequential Bayesian inference in classical&nbsp;
+statistics here, we're not doing any physical&nbsp;&nbsp;
+quantum quantum magic. Yeah, that's a great&nbsp;
+point that, you know, one of the challenges,&nbsp;&nbsp;
+I think, with implementing an algorithm like this,&nbsp;
+which is sequential in nature, is like, and you&nbsp;&nbsp;
+are actually doing real quantum measurements,&nbsp;
+that because those will destroy your state.
+Afterwards, it just was, I was curious,&nbsp;
+maybe you kind of do your measurements,&nbsp;&nbsp;
+you collapse the state after that you&nbsp;
+collapse state, regional state, but
+now you just collapse, measure and repeat.
+Yeah, we will. Right now we're&nbsp;
+not doing any physical, physical
+measurement. So in other words, we don't&nbsp;
+have to explicitly like, pre pre prepare,&nbsp;&nbsp;
+you know, the standard, we can simply apply&nbsp;
+this rule to obtain a new density operator.
+Okay,
+I think extending it to the full time&nbsp;
+case would be really interesting.
+Yeah, and maybe there are something&nbsp;
+to be said here. There could be some&nbsp;&nbsp;
+role for quantum sensors, like in the sense of
+Yeah, like
+to be able to couple the, the quantum&nbsp;
+state with the whatever we get from,&nbsp;&nbsp;
+from the underlying system, whatever&nbsp;
+we obsess on the underlying system,&nbsp;&nbsp;
+without destroying it. I don't know if that's
+I mean, yeah, it depends on&nbsp;
+on the level of description.
+You could certainly destroy it, or you don't&nbsp;
+necessarily destroy it, you just project it, yeah.
+But, but, but then maybe the other issue&nbsp;
+is like, when we do actually want to make&nbsp;&nbsp;
+a forecast like meaning to get a number&nbsp;
+out of it right, then then we do have to
+destroy it in some sense,&nbsp;
+like project it along and
+establish
+action state
+done attend,
+if you object to something, you&nbsp;
+cannot continue in your time.
+I mean, it will have a&nbsp;
+different different evolutions
+may have even the same Hamiltonian&nbsp;
+just a different starting from
+you know.
+I mean, yeah, I think people I would love to&nbsp;&nbsp;
+see people working this out,&nbsp;
+but I can be it's pretty bad
+for dealing with the final information directly.
+I mean, I mean, but
+at the same moment, before measurement, you&nbsp;
+have some positional states that together&nbsp;&nbsp;
+describe time evolution, but if you&nbsp;
+collapse it, you will have just one
+time step and basically&nbsp;
+use quantum problems with a
+vital response. Well, I mean, maybe you&nbsp;
+just project it in Ancilla. Now here
+you.
+Okay, I think that that's the final comment&nbsp;
+from the peanut gallery over here. It's
+not was not monitoring the&nbsp;
+chat or anything like they&nbsp;&nbsp;
+couldn't see the hotdogs? No. There&nbsp;
+is no question from the chat. Yeah.
+Unless there's other questions from the audience.
+You can jump in.
+I see Lee here. And also,
+Ben here.
+You guys are welcome to jump in. Otherwise,&nbsp;
+from the perspective of you know,&nbsp;&nbsp;
+formal GDPR seminar, maybe we can just&nbsp;
+end it and stop the record button and
+just continue the discussions. Well, let's in that
+Spirit let's thank our speaker&nbsp;
+two materials have a wonderful&nbsp;&nbsp;
+talk and nice nice q&a sessions&nbsp;
+thank you so much you're probably

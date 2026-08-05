@@ -3381,6 +3381,178 @@ MEATY_GOAL_REQUIREMENTS = [
 ]
 
 
+VIDEO_STUDY_NOTES_2025 = {
+    "T89vWHjqis8": {
+        "plain_title": "What the course is trying to do",
+        "watch_for": "The course is about using AI for science and engineering without losing the scientific question. Listen for the shift from ordinary prediction to claims about fields, equations, molecules, materials, and designs.",
+        "main_points": [
+            "AI is treated as a tool for scientific and engineering work, not as a magic answer box.",
+            "The course keeps returning to differential equations because many scientific systems are rules for quantities that change over space and time.",
+            "A learned model is useful only when the scientific quantity, the evidence, and the rejection test are named.",
+        ],
+        "first_principle": "Start with the thing a scientist needs to know, then ask what evidence can carry that answer.",
+        "learner_takeaway": "Do not start by memorizing method names. Start by asking what quantity is unknown and what would prove the answer is not ready.",
+        "dont_worry": "Do not try to master every named method from this first lecture. Use it as a map of the course.",
+    },
+    "wBNYF7tpvaw": {
+        "plain_title": "Deep learning as learned prediction",
+        "watch_for": "This lecture sets up neural networks as adjustable prediction machines. Listen for inputs, outputs, loss, training, and why old examples are not enough for trust.",
+        "main_points": [
+            "A neural network takes an input and produces an output through layers of adjustable numbers.",
+            "Training means changing those numbers so the output gets closer to known answers.",
+            "The scientific risk is that a model can fit familiar examples and still fail on a changed case.",
+        ],
+        "first_principle": "A model earns attention only if it predicts a named quantity and is tested away from the examples it learned from.",
+        "learner_takeaway": "Understand input, output, loss, and test case before worrying about the list of architectures.",
+        "dont_worry": "Do not get stuck on every architecture name. The first job is to understand training as error correction.",
+    },
+    "xoaMZJcd28M": {
+        "plain_title": "PINNs as equation-checked neural networks",
+        "watch_for": "This lecture introduces physics-informed neural networks. Listen for the idea that the network is checked not only against data points, but also against the differential equation and boundary conditions.",
+        "main_points": [
+            "A PINN represents the unknown solution with a neural network.",
+            "The loss includes data mismatch plus equation mismatch plus boundary or starting-condition mismatch.",
+            "The method matters when data are sparse but a physical rule is known.",
+        ],
+        "first_principle": "If you know a physics rule, the learned answer should be penalized when it breaks that rule.",
+        "learner_takeaway": "A PINN is not just a neural network for physics data. It is a neural network whose output is checked against a known equation.",
+        "dont_worry": "Do not try to solve the full math yet. First understand why equation residuals enter the loss.",
+    },
+    "BYKaaXPVlDc": {
+        "plain_title": "Why PINNs can work and where they struggle",
+        "watch_for": "This lecture asks what can be said about PINNs beyond examples. Listen for approximation, optimization, stability, and why a small training loss may not settle the scientific question.",
+        "main_points": [
+            "A PINN has to represent the solution, find useful weights, and keep the equation error under control.",
+            "The theory separates what the network could represent from what training actually finds.",
+            "Trust still depends on checking changed regions, boundaries, sharp features, and held-out cases.",
+        ],
+        "first_principle": "A method is not trusted because it has a physics loss; it is trusted only when that loss controls the quantity the scientist needs.",
+        "learner_takeaway": "Separate three questions: can the network represent the answer, can training find it, and does the result survive the right test?",
+        "dont_worry": "Do not memorize proof details first. Learn what each proof burden is trying to protect.",
+    },
+    "4c_efyhCaQs": {
+        "plain_title": "Why operator learning is a new step",
+        "watch_for": "This lecture moves from solving one problem to learning a map between whole functions. Listen for solution operator, input field, output field, and family of PDE solves.",
+        "main_points": [
+            "A usual solver gives one answer for one input.",
+            "Operator learning tries to learn the rule that maps a new input function to a new output function.",
+            "The learned map is useful only when the family of inputs and outputs is named.",
+        ],
+        "first_principle": "If the user needs many related solves, learn the map between problems and solutions, not only one solution.",
+        "learner_takeaway": "Operator learning is about field-to-field maps. Keep asking what the input function is and what the output function is.",
+        "dont_worry": "Do not start with Fourier layers or graphs. First understand what a solution operator is.",
+    },
+    "lXH0jlbm7z8": {
+        "plain_title": "Fourier neural operators",
+        "watch_for": "This lecture explains FNO. Listen for field input, Fourier transform, low-frequency structure, learned update, and returning to physical space.",
+        "main_points": [
+            "FNO learns an operator by moving field information through Fourier space.",
+            "The Fourier view helps carry large-scale field patterns without treating each point alone.",
+            "The method must still be tested when resolution, coefficients, forcing, or boundary conditions change.",
+        ],
+        "first_principle": "A field has structure across space, so the model needs a way to carry information across the field.",
+        "learner_takeaway": "Read FNO as a way to move information across a field, not as a formula to memorize.",
+        "dont_worry": "Do not worry about every implementation detail yet. Focus on why the field is not just a row of independent numbers.",
+    },
+    "WP02-hpKB-4": {
+        "plain_title": "ReNO and testing related cases",
+        "watch_for": "This lecture develops another operator-learning route and stresses testing on related but not identical cases. Listen for what changes between train and test.",
+        "main_points": [
+            "The goal is still to learn maps between fields.",
+            "The lecture emphasizes whether a learned operator transfers to related cases.",
+            "The key test is not memorizing one distribution, but surviving a shifted one.",
+        ],
+        "first_principle": "Learning matters only if the model can handle a related case it did not simply practice.",
+        "learner_takeaway": "When you hear a new operator method, immediately ask what changed case it is tested on.",
+        "dont_worry": "Do not compare operator architectures too early. Compare the evidence they must survive.",
+    },
+    "5Y0sS-xqOAI": {
+        "plain_title": "Transformers for operator learning",
+        "watch_for": "This lecture connects attention and transformers to operator learning. Listen for how distant parts of a field can matter for a local answer.",
+        "main_points": [
+            "The lecture keeps the same operator-learning goal: learn a solution operator for PDEs.",
+            "Attention is used to route information between parts of the input.",
+            "The scientific question is whether the routed information improves the field prediction on changed cases.",
+        ],
+        "first_principle": "A point in a field may depend on faraway information, so the model needs a way to choose what else to look at.",
+        "learner_takeaway": "Attention is not an explanation by itself. Ask which field parts need to talk to each other.",
+        "dont_worry": "Do not start with transformer vocabulary. Start with why faraway field information matters.",
+    },
+    "ekMYSQfxpcU": {
+        "plain_title": "Graph-based operator learning",
+        "watch_for": "This lecture turns toward graphs. Listen for nodes, edges, irregular geometry, and why meshes or connected objects do not fit neatly into plain grids.",
+        "main_points": [
+            "Graphs represent objects through points and connections.",
+            "Graph models are useful when geometry or mesh connectivity carries the answer.",
+            "For scientific use, the graph must preserve the relation that matters to the predicted quantity.",
+        ],
+        "first_principle": "When connections matter, the model must see the connections instead of flattening the object.",
+        "learner_takeaway": "A graph is a way to say what touches what or what influences what.",
+        "dont_worry": "Do not worry about every graph-network layer. Learn why nodes and edges are needed.",
+    },
+    "9ETsTc5dhM8": {
+        "plain_title": "GAOT and graph attention for fields",
+        "watch_for": "This lecture combines graph structure and attention for operator learning. Listen for geometry, weather-like fields, and selecting useful neighbors or distant relations.",
+        "main_points": [
+            "Graph structure helps represent non-grid scientific domains.",
+            "Attention helps decide which connected or distant pieces carry useful information.",
+            "The method must still be judged by the field quantity and the shifted case.",
+        ],
+        "first_principle": "For a field on an irregular shape, both connection and information routing can matter.",
+        "learner_takeaway": "Ask two questions: what graph is being used, and what information is attention allowed to move?",
+        "dont_worry": "Do not treat attention weights as proof. They are a route to inspect, not a final claim.",
+    },
+    "6qT7k3WMUoo": {
+        "plain_title": "Generative models for PDE fields",
+        "watch_for": "This lecture moves from one predicted field to generating possible fields. Listen for why one answer may not be enough and how generated samples are checked.",
+        "main_points": [
+            "Some scientific tasks need possible outcomes, not only one best guess.",
+            "Generative models learn to produce field-like samples.",
+            "The samples matter only if they obey the scientific quantities and changed-case tests that the task needs.",
+        ],
+        "first_principle": "When the future has more than one plausible state, the model may need to produce candidates rather than one answer.",
+        "learner_takeaway": "For generative PDE work, ask what makes a generated field physically acceptable.",
+        "dont_worry": "Do not focus first on the generative model name. Focus on what a valid generated field must preserve.",
+    },
+    "ZhAxfuewf6s": {
+        "plain_title": "Foundation models for PDEs",
+        "watch_for": "This lecture introduces foundation models in the PDE setting. Listen for pretraining, many PDE tasks, reuse, and the danger of claiming too much from broad training.",
+        "main_points": [
+            "A foundation model is trained broadly and then adapted or tested on specific tasks.",
+            "For PDEs, the hope is reuse across equations, grids, parameters, or settings.",
+            "The hard question is which new PDE case is actually inside the learned range.",
+        ],
+        "first_principle": "Broad training is useful only when the new scientific task shares the structure the model actually learned.",
+        "learner_takeaway": "Ask what was varied during training and what is genuinely new at test time.",
+        "dont_worry": "Do not accept scale as proof. Look for the held-out PDE family and the failure case.",
+    },
+    "NDryntQDRw8": {
+        "plain_title": "AI in chemistry and biology, part one",
+        "watch_for": "This lecture shifts to molecules and biology. Listen for graphs, atoms, bonds, sequences, structures, and properties.",
+        "main_points": [
+            "Chemical and biological objects often have structure that is not a simple table.",
+            "Graphs can represent atoms, bonds, residues, or interactions.",
+            "The useful prediction depends on preserving the structure tied to the measured property.",
+        ],
+        "first_principle": "If the property depends on structure, the model must carry the structure.",
+        "learner_takeaway": "Before learning model names, ask what object is being represented and what property is being predicted.",
+        "dont_worry": "Do not try to learn all chemistry and biology at once. Track object, structure, property, and test.",
+    },
+    "eU3ALpuseYk": {
+        "plain_title": "AI in chemistry and biology, part two",
+        "watch_for": "This lecture continues chemical and biological AI, including generative ideas. Listen for building or recovering structures and checking whether generated objects are valid.",
+        "main_points": [
+            "Generative models can propose molecules or structures.",
+            "The model may learn to remove noise or recover a structured object.",
+            "A generated object is useful only if it is valid for the chemistry or biology task.",
+        ],
+        "first_principle": "Generating a candidate is not the same as proving it is useful; the field rules still decide.",
+        "learner_takeaway": "Ask what makes the generated molecule, structure, or biological object acceptable.",
+        "dont_worry": "Do not focus on the sampling machinery first. Focus on the validity checks.",
+    },
+}
+
+
 REVIEW_ENTRYPOINTS = [
     {
         "group": "Start The Review",
@@ -5279,6 +5451,7 @@ def html_page(title: str, body: str, root_prefix: str = "") -> str:
   <a href="{root_prefix}plain-capstone.html">Capstone</a>
   <a href="{root_prefix}example-route-guide.html">Routes</a>
   <a href="{root_prefix}no-jargon-concept-guide.html">No Jargon</a>
+  <a href="{root_prefix}video-study-guide.html">Video Guide</a>
   <a href="{root_prefix}learning-path.html">Path</a>
   <a href="{root_prefix}glossary.html">Glossary</a>
   <a href="{root_prefix}domains.html">Domains</a>
@@ -6246,6 +6419,7 @@ def write_site(data: dict[str, object]) -> None:
 {card("Plain Capstone", "Final learner prompts for proving each topic from everyday need to bounded field claim.", "plain-capstone.html")}
 {card("Example Route Guide", "Concrete worked examples mapped from scientific job to topic route and first failure signal.", "example-route-guide.html")}
 {card("No-Jargon Concept Guide", "Every concept label translated into the everyday job, evidence, hidden answer, move, and rejection check.", "no-jargon-concept-guide.html")}
+{card("Video Study Guide", "The 2025 lectures explained one by one before the topic templates.", "video-study-guide.html")}
 {card("Learning Path", f"{summary['learning_path_step_count']} steps from first question to field-level understanding.", "learning-path.html")}
 {card("Glossary", f"{summary['glossary_term_count']} field terms translated into everyday language.", "glossary.html")}
 {card("Domains", f"{summary['domain_guide_count']} domain guides that ground concepts in real scientific work.", "domains.html")}
@@ -6301,6 +6475,7 @@ def write_site(data: dict[str, object]) -> None:
         html_page("Physics-Informed ML Transcripts", f"<h1>Transcript Index</h1><div class=\"grid\">{''.join(transcript_cards)}</div>"),
         encoding="utf-8",
     )
+    write_video_study_guide_page(SITE / "video-study-guide.html", records)
 
     concept_cards = []
     for concept in concept_atlas:
@@ -6505,10 +6680,12 @@ def write_site(data: dict[str, object]) -> None:
 
 def write_video_page(path: Path, record: TranscriptRecord) -> None:
     excerpt = record.evidence_excerpt or "No transcript excerpt was available; this page is based on metadata until captions can be added."
+    study_note = video_study_note_html(record, root_prefix="../")
     body = f"""
 <h1>{html.escape(record.title)}</h1>
 <p class="meta">{html.escape(record.playlist_title)} · transcript {html.escape(record.transcript_status)} · {record.word_count} words</p>
 <p><a href="{html.escape(record.url)}">Source video</a></p>
+{study_note}
 <h2>Core Problem</h2>
 <p>This lecture belongs to a course family about using AI for scientific and engineering claims. The page should be read by asking what scientific quantity is being predicted, what evidence is available, and what changed case would show the model is not ready.</p>
 <h2>Key Concepts</h2>
@@ -6525,6 +6702,54 @@ def write_video_page(path: Path, record: TranscriptRecord) -> None:
 </ul>
 """
     path.write_text(html_page(record.title, body, root_prefix="../"), encoding="utf-8")
+
+
+def video_study_note_html(record: TranscriptRecord, root_prefix: str = "") -> str:
+    note = VIDEO_STUDY_NOTES_2025.get(record.video_id)
+    if not note:
+        return ""
+    points = "".join(f"<li>{html.escape(str(item))}</li>" for item in note["main_points"])
+    return f"""
+<h2>Video Study Note</h2>
+<p><strong>Plain title:</strong> {html.escape(str(note['plain_title']))}</p>
+<p><strong>Watch for:</strong> {html.escape(str(note['watch_for']))}</p>
+<h3>Main Points Discussed</h3>
+<ul>{points}</ul>
+<p><strong>First-principles point:</strong> {html.escape(str(note['first_principle']))}</p>
+<p><strong>Learner takeaway:</strong> {html.escape(str(note['learner_takeaway']))}</p>
+<p><strong>Do not worry about this yet:</strong> {html.escape(str(note['dont_worry']))}</p>
+<p><a href="{root_prefix}video-study-guide.html">Open the 2025 video-by-video study guide</a></p>
+"""
+
+
+def write_video_study_guide_page(path: Path, records: list[TranscriptRecord]) -> None:
+    rows = []
+    for record in sorted((row for row in records if row.video_id in VIDEO_STUDY_NOTES_2025), key=lambda row: row.index):
+        note = VIDEO_STUDY_NOTES_2025[record.video_id]
+        href = f"videos/{record.playlist_slug}-{record.index:03d}-{slugify(record.title)}.html"
+        points = "".join(f"<li>{html.escape(str(item))}</li>" for item in note["main_points"])
+        rows.append(
+            f"""
+<section>
+  <h2>{record.index}. <a href="{html.escape(href)}">{html.escape(record.title)}</a></h2>
+  <p><strong>Plain title:</strong> {html.escape(str(note['plain_title']))}</p>
+  <p><strong>What this video is doing:</strong> {html.escape(str(note['watch_for']))}</p>
+  <h3>Main Points Discussed</h3>
+  <ul>{points}</ul>
+  <p><strong>First-principles point:</strong> {html.escape(str(note['first_principle']))}</p>
+  <p><strong>What you should leave with:</strong> {html.escape(str(note['learner_takeaway']))}</p>
+  <p><strong>Do not worry about this yet:</strong> {html.escape(str(note['dont_worry']))}</p>
+  <p><strong>Transcript excerpt to inspect:</strong> {html.escape(record.evidence_excerpt or 'No excerpt available.')}</p>
+</section>
+"""
+        )
+    body = f"""
+<h1>2025 Video-By-Video Study Guide</h1>
+<p>This page is the replacement for trying to learn from topic templates first. Use it lecture by lecture. Each note says what the video is doing, the main points to listen for, and what to ignore until later.</p>
+<p>Start with Lecture 1 and move in order. Do not open the topic pages until these video notes make sense.</p>
+{''.join(rows)}
+"""
+    path.write_text(html_page("2025 Video-By-Video Study Guide", body), encoding="utf-8")
 
 
 def topic_derivation(topic: dict[str, object]) -> dict[str, object]:
@@ -11923,6 +12148,7 @@ def validate(data: dict[str, object] | None = None) -> None:
         SITE / "plain-capstone.html",
         SITE / "example-route-guide.html",
         SITE / "no-jargon-concept-guide.html",
+        SITE / "video-study-guide.html",
         SITE / "learning-path.html",
         SITE / "glossary.html",
         SITE / "domains.html",
@@ -11949,6 +12175,22 @@ def validate(data: dict[str, object] | None = None) -> None:
     ):
         if not path.exists():
             raise SystemExit(f"missing site page: {path}")
+    video_study_text = (SITE / "video-study-guide.html").read_text(encoding="utf-8")
+    for term in (
+        "2025 Video-By-Video Study Guide",
+        "What this video is doing",
+        "Main Points Discussed",
+        "First-principles point",
+        "Do not worry about this yet",
+        "Lecture 1 Course Introduction",
+        "Lecture 14",
+    ):
+        if term not in video_study_text:
+            raise SystemExit(f"video study guide missing: {term}")
+    video_one_text = (SITE / "videos/eth-aise-2025-001-eth-zrich-aise-2025-lecture-1-course-introduction.html").read_text(encoding="utf-8")
+    for term in ("Video Study Note", "Plain title", "What the course is trying to do", "Main Points Discussed", "Open the 2025 video-by-video study guide"):
+        if term not in video_one_text:
+            raise SystemExit(f"video page study note missing: {term}")
     shape_transfer_text = (SITE / "shape-transfer-practice.html").read_text(encoding="utf-8")
     for term in (
         "Shape Transfer Practice",

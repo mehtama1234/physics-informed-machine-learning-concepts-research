@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DDPS Capstone Story</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="sidebar">
+        <h1>DDPS Study</h1>
+        <a href="index.html">Start</a>
+        <a href="review-path.html">Review Path</a>
+        <a href="plain-words.html">Plain Words</a>
+        <a href="method-map.html">Method Map</a>
+        <a href="self-check.html">Self Check</a>
+        <a href="capstone.html">Capstone</a>
+        <a href="theme-index.html">Theme Index</a>
+        <a href="domain-map.html">Domain Map</a>
+        <a href="paper-reader.html">Paper Reader</a>
+        <a href="common-mistakes.html">Common Mistakes</a>
+        <a href="study-plan.html">Study Plan</a>
+        <a href="math-map.html">Math Map</a>
+        <a href="prerequisite-map.html">Prerequisite Map</a>
+        <a href="cheat-sheet.html">Cheat Sheet</a>
+        <a href="from-zero.html">From Zero</a>
+        <a href="big-picture.html">Big Picture</a>
+        <a href="synthesis.html">Synthesis</a>
+        <a href="examples.html">Examples</a>
+        <a href="audit.html">Transcript Audit</a>
+      </nav>
+      <main class="content">
+        <p class="eyebrow">Retell the whole course</p>
+        <h1>The End-To-End Story</h1>
+
+        <p>This is the capstone version of the DDPS handwritten course. It is the story you should be able to tell after using the review path, glossary, method map, self-checks, and chapter notes.</p>
+
+        <p>The story starts with a practical limit. Physical systems matter because they decide real outcomes: whether a wing stalls, a heart pump works, a material cracks, a plasma simulation stays stable, a CO2 plume stays underground, a fault becomes risky, or a designed geometry performs as intended. The trusted way to reason about these systems is to use equations, measurements, and numerical solvers. But the trusted way is often slow, incomplete, or too expensive to repeat.</p>
+
+        <div class="capstone-core-map" aria-label="The DDPS course moves from physical burden to trustworthy learned help">
+          <div>physics gives rules</div>
+          <div>solvers and sensors are limited</div>
+          <div>learning offers shortcuts</div>
+          <div>tests decide trust</div>
+        </div>
+
+        <h2>1. The First Problem Is Cost</h2>
+        <p>A full simulation can be expensive because it tracks many variables across space and time. That cost becomes severe when the question is repeated. Design needs many candidate shapes. Control needs quick decisions while the system changes. Uncertainty needs many possible futures. Inverse problems need repeated guesses until the hidden cause fits the observation.</p>
+
+        <p>This is why reduced models and surrogates appear so often. They are attempts to make repeated scientific reasoning possible. But small and fast is not enough. A cheap model that loses the physical reason for the behavior is only a faster way to be wrong.</p>
+
+        <div class="capstone-flow-map" aria-label="Repeated scientific tasks turn one expensive solve into a bottleneck">
+          <div>one full solve may be acceptable</div>
+          <div>many solves become impossible</div>
+          <div>small model makes loops possible</div>
+          <div>small model must preserve behavior</div>
+        </div>
+
+        <h2>2. The Second Problem Is Sparse Evidence</h2>
+        <p>Often the data is thin. A sensor sees only one location. A well samples only a tiny part of the subsurface. A medical scan is noisy. A flow experiment measures only some quantities. A historical simulation archive covers only some parameter settings. We do not get truth. We get fragments.</p>
+
+        <p>This is where physics-informed learning, state estimation, data assimilation, and Bayesian updating become useful. They all ask how to combine partial evidence with prior knowledge. The answer should not pretend that sparse evidence reveals everything. It should say what became more believable and what remains uncertain.</p>
+
+        <h2>3. The Third Problem Is Motion And Shape</h2>
+        <p>Many failures come from treating a physical field like a flat image. A wave can move. A shock can form. A flame can shift. A turbulent flow can cross a boundary between calm and chaotic futures. A fracture network can connect or disconnect pathways underground. A structure can buckle into two possible shapes.</p>
+
+        <p>This is why the course keeps returning to coordinates, manifolds, operators, topology, and geometry. These words can sound abstract, but the everyday point is simple: the layout of possible states matters. A model must preserve the moving feature, connected path, regime boundary, or low-dimensional surface that controls the outcome.</p>
+
+        <div class="capstone-geometry-map" aria-label="Physical learning must preserve motion, boundaries, and connectivity">
+          <div>moving feature</div>
+          <div>connected pathway</div>
+          <div>boundary between futures</div>
+          <div>model must keep the structure</div>
+        </div>
+
+        <h2>4. The Fourth Problem Is Action</h2>
+        <p>Prediction is rarely the final goal. We usually want to do something: choose a design, control a system, place a sensor, decide whether a forecast is safe, or choose the next experiment. Once a learned model is placed inside an optimizer or controller, it is no longer being used passively. It is being pushed.</p>
+
+        <p>That is why ordinary test error is weak evidence. A controller may exploit a blind spot. A design optimizer may find a shape outside the training regime. A monitoring plan may look good only because the assumed prior is wrong. Any model used for action needs stress tests that match the action.</p>
+
+        <h2>5. The Fifth Problem Is Trust</h2>
+        <p>The later chapters make the trust problem explicit. Foundation models promise breadth, so they need breadth in testing. Uncertainty methods attach doubt to predictions, but they must include the right sources of doubt. Generative models create many plausible futures, but plausible samples can be physically broken. Data assimilation updates beliefs, but biased priors can keep the posterior wrong.</p>
+
+        <p>The mature version of this field is not "replace physics with AI." It is also not "never use learning." The mature version is: use learning where it carries a real burden, keep physics where physics is the reason for trust, and make the failure test visible.</p>
+
+        <div class="capstone-trust-map" aria-label="Trust requires burden, evidence, validation, and rejection tests">
+          <div>what burden does learning carry?</div>
+          <div>what evidence supports it?</div>
+          <div>what physics must remain true?</div>
+          <div>what would make us reject it?</div>
+        </div>
+
+        <h2>The Whole Course In One Paragraph</h2>
+        <p>Scientific machine learning for physical systems exists because trusted simulation and direct observation are often too slow, too expensive, too incomplete, or too high-dimensional for the decisions people need to make. The field builds faster, smaller, learned, or probabilistic models, but each one must be judged by the physical burden it carries: equation rules, motion, geometry, conservation, uncertainty, hidden state, operator behavior, sensor evidence, design constraints, or regime boundaries.</p>
+
+        <h2>The Final Checklist</h2>
+        <div class="capstone-check-grid">
+          <div><strong>Physical pain</strong><span>What is too slow, hidden, unstable, uncertain, or expensive?</span></div>
+          <div><strong>Evidence</strong><span>What equations, simulations, measurements, priors, or observations exist?</span></div>
+          <div><strong>Shortcut</strong><span>What does learning replace, compress, infer, generate, or control?</span></div>
+          <div><strong>Rule</strong><span>What physical structure must not be broken?</span></div>
+          <div><strong>Decision</strong><span>What design, forecast, control, or scientific conclusion depends on the model?</span></div>
+          <div><strong>Rejection</strong><span>What changed case would expose a false shortcut?</span></div>
+        </div>
+
+        <h2>What To Read After This</h2>
+        <p>If this capstone feels too abstract, go back to <a href="examples.html">Examples</a> and <a href="self-check.html">Self Check</a>. If it makes sense and you want the full map, use <a href="review-path.html">Review Path</a> and <a href="theme-index.html">Theme Index</a>. If a term blocks you, use <a href="plain-words.html">Plain Words</a>. If you have a problem and need to choose a method family, use <a href="method-map.html">Method Map</a>. If you are reading a new paper, use <a href="paper-reader.html">Paper Reader</a>.</p>
+      </main>
+    </div>
+  </body>
+</html>

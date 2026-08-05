@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DDPS Common Mistakes</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="sidebar">
+        <h1>DDPS Study</h1>
+        <a href="index.html">Start</a>
+        <a href="review-path.html">Review Path</a>
+        <a href="plain-words.html">Plain Words</a>
+        <a href="method-map.html">Method Map</a>
+        <a href="self-check.html">Self Check</a>
+        <a href="capstone.html">Capstone</a>
+        <a href="theme-index.html">Theme Index</a>
+        <a href="domain-map.html">Domain Map</a>
+        <a href="paper-reader.html">Paper Reader</a>
+        <a href="common-mistakes.html">Common Mistakes</a>
+        <a href="study-plan.html">Study Plan</a>
+        <a href="math-map.html">Math Map</a>
+        <a href="prerequisite-map.html">Prerequisite Map</a>
+        <a href="cheat-sheet.html">Cheat Sheet</a>
+        <a href="audit.html">Transcript Audit</a>
+      </nav>
+      <main class="content">
+        <p class="eyebrow">Avoid these traps</p>
+        <h1>Common Mistakes When Learning This Area</h1>
+
+        <p>This page names the traps that make scientific machine learning feel impossible to understand. Most confusion comes from starting in the wrong place. Start with the physical burden, not the method name.</p>
+
+        <div class="mistake-core-map" aria-label="Common learning mistakes in scientific machine learning">
+          <div>jargon first</div>
+          <div>template answer</div>
+          <div>accuracy alone</div>
+          <div>no rejection test</div>
+        </div>
+
+        <section class="mistake-block">
+          <h2>1. Starting With The Method Name</h2>
+          <p><strong>The mistake:</strong> trying to understand PINNs, neural operators, SSMs, diffusion models, or foundation models before knowing what pain created them.</p>
+          <p><strong>Better move:</strong> ask what is too slow, hidden, unstable, uncertain, high-dimensional, or hard to observe.</p>
+          <p><strong>Use:</strong> <a href="method-map.html">Method Map</a> and <a href="plain-words.html">Plain Words</a>.</p>
+        </section>
+
+        <section class="mistake-block">
+          <h2>2. Trusting A Template Paragraph</h2>
+          <p><strong>The mistake:</strong> writing the same explanation for every chapter: "the method combines data and physics to improve prediction."</p>
+          <p><strong>Better move:</strong> write the concrete chain for that lecture. What object is predicted? What data exists? What physics is used? What breaks first?</p>
+          <p><strong>Use:</strong> <a href="paper-reader.html">Paper Reader</a> and <a href="self-check.html">Self Check</a>.</p>
+        </section>
+
+        <section class="mistake-block">
+          <h2>3. Believing Accuracy Alone</h2>
+          <p><strong>The mistake:</strong> accepting a model because its test error is low on a familiar dataset.</p>
+          <p><strong>Better move:</strong> ask whether it preserves the physical rule that matters: conservation, stability, connectivity, symmetry, uncertainty, long-time rollout, or regime boundary.</p>
+          <p><strong>Use:</strong> <a href="capstone.html">Capstone</a>.</p>
+        </section>
+
+        <section class="mistake-block">
+          <h2>4. Forgetting The Changed Case</h2>
+          <p><strong>The mistake:</strong> saying a method generalizes because it works on nearby examples.</p>
+          <p><strong>Better move:</strong> change the thing the claim depends on: geometry, grid, boundary, Reynolds number, material, sensor layout, noise, forcing, time horizon, or regime.</p>
+          <p><strong>Use:</strong> <a href="paper-reader.html">Paper Reader</a>.</p>
+        </section>
+
+        <section class="mistake-block">
+          <h2>5. Ignoring The Domain Burden</h2>
+          <p><strong>The mistake:</strong> treating fluids, materials, biology, plasma, and subsurface flow as if the same model burden applies everywhere.</p>
+          <p><strong>Better move:</strong> name what the domain needs protected. Fluids may need stability and transition boundaries. Materials may need force and symmetry. Subsurface flow may need fracture connectivity and uncertainty.</p>
+          <p><strong>Use:</strong> <a href="domain-map.html">Domain Map</a>.</p>
+        </section>
+
+        <section class="mistake-block">
+          <h2>6. Confusing A Pretty Sample With A Physical Sample</h2>
+          <p><strong>The mistake:</strong> trusting a generated field, fracture image, molecule, or flow because it looks plausible.</p>
+          <p><strong>Better move:</strong> check whether the sample can be used by the physics: connected fractures, valid forces, stable rollout, correct constraints, and decision-relevant uncertainty.</p>
+          <p><strong>Use:</strong> <a href="chapter-137.html">Chapter 137</a> and <a href="paper-reader.html">Paper Reader</a>.</p>
+        </section>
+
+        <section class="mistake-block">
+          <h2>7. Treating The Prior As Truth</h2>
+          <p><strong>The mistake:</strong> believing data assimilation or Bayesian updating will fix a bad prior automatically.</p>
+          <p><strong>Better move:</strong> ask whether the true system could live outside the prior assumptions. If yes, the update may stay confidently biased.</p>
+          <p><strong>Use:</strong> <a href="chapter-134.html">Chapter 134</a> and <a href="chapter-137.html">Chapter 137</a>.</p>
+        </section>
+
+        <section class="mistake-block">
+          <h2>8. No Rejection Sentence</h2>
+          <p><strong>The mistake:</strong> ending with "this method is promising" without saying when you would reject it.</p>
+          <p><strong>Better move:</strong> always write: "I would reject this if blank." If you cannot fill the blank, you do not know the method's boundary yet.</p>
+          <p><strong>Use:</strong> <a href="self-check.html">Self Check</a> and <a href="capstone.html">Capstone</a>.</p>
+        </section>
+
+        <h2>The Repair Habit</h2>
+        <p>When a page feels confusing, do not reread the jargon first. Write four plain sentences: the physical pain, the evidence, the burden carried by learning, and the first rejection test. Then return to the chapter.</p>
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chapter 104 - Let Reasoning Guide What Learning Tries Next</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="sidebar">
+        <h1>DDPS Study</h1>
+        <a href="index.html">Start</a>
+        <a href="review-path.html">Review Path</a>
+        <a href="plain-words.html">Plain Words</a>
+        <a href="method-map.html">Method Map</a>
+        <a href="self-check.html">Self Check</a>
+        <a href="capstone.html">Capstone</a>
+        <a href="theme-index.html">Theme Index</a>
+        <a href="domain-map.html">Domain Map</a>
+        <a href="paper-reader.html">Paper Reader</a>
+        <a href="common-mistakes.html">Common Mistakes</a>
+        <a href="study-plan.html">Study Plan</a>
+        <a href="math-map.html">Math Map</a>
+        <a href="prerequisite-map.html">Prerequisite Map</a>
+        <a href="cheat-sheet.html">Cheat Sheet</a>
+        <a href="chapter-98.html">Chapter 98</a>
+        <a href="chapter-99.html">Chapter 99</a>
+        <a href="chapter-100.html">Chapter 100</a>
+        <a href="chapter-101.html">Chapter 101</a>
+        <a href="chapter-102.html">Chapter 102</a>
+        <a href="chapter-103.html">Chapter 103</a>
+        <a href="chapter-104.html">Chapter 104</a>
+        <a href="chapter-105.html">Chapter 105</a>
+        <a href="chapter-106.html">Chapter 106</a>
+        <a href="chapter-107.html">Chapter 107</a>
+        <a href="chapter-108.html">Chapter 108</a>
+        <a href="chapter-109.html">Chapter 109</a>
+        <a href="chapter-110.html">Chapter 110</a>
+        <a href="chapter-111.html">Chapter 111</a>
+        <a href="chapter-112.html">Chapter 112</a>
+        <a href="chapter-113.html">Chapter 113</a>
+        <a href="chapter-114.html">Chapter 114</a>
+        <a href="chapter-115.html">Chapter 115</a>
+        <a href="chapter-116.html">Chapter 116</a>
+        <a href="chapter-117.html">Chapter 117</a>
+        <a href="chapter-118.html">Chapter 118</a>
+        <a href="chapter-119.html">Chapter 119</a>
+        <a href="chapter-120.html">Chapter 120</a>
+        <a href="chapter-121.html">Chapter 121</a>
+        <a href="chapter-122.html">Chapter 122</a>
+        <a href="chapter-123.html">Chapter 123</a>
+        <a href="chapter-124.html">Chapter 124</a>
+        <a href="chapter-125.html">Chapter 125</a>
+        <a href="chapter-126.html">Chapter 126</a>
+        <a href="chapter-127.html">Chapter 127</a>
+        <a href="chapter-128.html">Chapter 128</a>
+        <a href="chapter-129.html">Chapter 129</a>
+        <a href="chapter-130.html">Chapter 130</a>
+        <a href="chapter-131.html">Chapter 131</a>
+        <a href="chapter-132.html">Chapter 132</a>
+        <a href="chapter-133.html">Chapter 133</a>
+        <a href="chapter-134.html">Chapter 134</a>
+        <a href="chapter-135.html">Chapter 135</a>
+        <a href="chapter-136.html">Chapter 136</a>
+        <a href="chapter-137.html">Chapter 137</a>
+        <a href="from-zero.html">From Zero</a>
+        <a href="pinn-from-zero.html">PINNs From Zero</a>
+        <a href="rom-from-zero.html">ROMs From Zero</a>
+        <a href="manifold-from-zero.html">Manifolds From Zero</a>
+        <a href="synthesis.html">Synthesis</a>
+        <a href="big-picture.html">Big Picture</a>
+        <a href="examples.html">Examples</a>
+        <a href="bridge.html">AISE Bridge</a>
+        <a href="audit.html">Transcript Audit</a>
+      </nav>
+      <main class="content">
+        <p class="eyebrow">Narrative chapter</p>
+        <h1>Let Reasoning Guide What Learning Tries Next</h1>
+
+        <p>This chapter uses video 107, Yexiang Xue's DDPS talk on vertical reasoning enhanced learning, generation, and scientific discovery. The talk is about joining two old AI traditions. One tradition learns from data. The other reasons with rules, constraints, logic, and counting. The lecture argues that many hard problems need both.</p>
+
+        <p>The first-principles idea is simple. Learning is good at seeing patterns in rich data. Reasoning is good at checking whether a proposed answer obeys rules. If we only learn, we may get beautiful outputs that ignore requirements. If we only reason, we may not know how to handle messy images, scientific observations, or uncertain data. The useful system lets learning propose and reasoning guide, filter, count, or correct.</p>
+
+        <section class="lesson-claim-chain" aria-label="Plain first-principles reading guide for reasoning-guided learning">
+          <h2>Read This Chapter As One Claim</h2>
+          <p>Start with the simplest division of labor. Learning is the part that looks at messy data and says, "this pattern seems likely." Reasoning is the part that says, "does that answer obey the rules?" A kitchen generator may make a pretty appliance, but reasoning checks whether it is actually left of the oven and below the sink. A symbolic discovery system may fit a table, but reasoning can choose smaller controlled cases so the law is found one piece at a time. A probabilistic solver may face too many possible worlds, but counting logic can turn the probability question into SAT-style checks. The chapter's claim is that hard discovery should not be a blind search over everything at once. Let learning propose useful pieces, and let reasoning decide what is valid, what experiment should come next, and what constraint cannot be broken.</p>
+          <div class="lesson-claim-grid">
+            <div><strong>Everyday problem</strong><span>A learned answer can look plausible while violating spatial rules, scientific constraints, or probability requirements.</span></div>
+            <div><strong>Shared promise</strong><span>Reasoning can guide learning by filtering invalid proposals, choosing controlled subproblems, and counting feasible worlds.</span></div>
+            <div><strong>Hidden danger</strong><span>Pure reasoning may be rigid, pure learning may be invalid, and controlled experiments may be unavailable in some observational fields.</span></div>
+            <div><strong>First rejection test</strong><span>Ask what rule, controlled variable, SAT/counting check, or hard design constraint proves the learned proposal is valid.</span></div>
+          </div>
+        </section>
+
+        <div class="vertical-core-map" aria-label="Learning proposes patterns while reasoning checks and guides them">
+          <div>messy data</div>
+          <div>learned proposal</div>
+          <div>reasoning check</div>
+          <div>valid useful answer</div>
+        </div>
+
+        <h2>Learning And Reasoning Solve Different Parts</h2>
+        <p>The talk describes machine learning as a bottom-up approach. It learns predictive models from data. That can work very well, but it can be hard to give formal guarantees, and learned models may violate constraints in new situations.</p>
+
+        <p>Automatic reasoning is a top-down approach. It starts from a problem description, rules, mathematical programs, satisfiability constraints, or convex programs. That can give stronger guarantees, but it can be rigid and hard to adapt to raw data distributions. The lecture's thesis is that AI needs the two systems integrated, not isolated.</p>
+
+        <div class="two-pillar-map" aria-label="Machine learning is bottom-up while automatic reasoning is top-down">
+          <div>bottom-up learning</div>
+          <div>top-down reasoning</div>
+          <div>each has limits</div>
+          <div>combine them</div>
+        </div>
+
+        <h2>The Kitchen Example Shows Why Pure Generation Fails</h2>
+        <p>The first example is kitchen remodeling. The input is an existing kitchen image and instructions such as adding a blue microwave to the right of the oven and a green toaster left of the oven and below the sink.</p>
+
+        <p>This task has two different jobs. First, perception must find the sink, oven, cabinets, counter, and existing objects in the image. Machine learning is good at that. Second, the system must place new objects so the spatial instructions are satisfied. The toaster should not float in the air. The microwave should not ignore the oven. This is reasoning over relations and constraints.</p>
+
+        <div class="kitchen-task-map" aria-label="Kitchen generation needs perception and spatial reasoning">
+          <div>find existing objects</div>
+          <div>read user constraints</div>
+          <div>choose valid boxes</div>
+          <div>generate edited kitchen</div>
+        </div>
+
+        <h2>Reasoning Filters The Neural Choices</h2>
+        <p>The presented pipeline has three steps. A perception module locates existing objects. A spatial reasoning module chooses bounding boxes for new objects. A visual generator fills those boxes with the requested appliances.</p>
+
+        <p>The important middle step is neuro-symbolic. A recursive neural network proposes coordinates step by step. A symbolic reasoning engine checks whether those coordinate choices violate the user specification. If a proposal violates the rules, the reasoning engine tells the neural network to choose the other direction. This lets the final image satisfy instructions while still looking natural.</p>
+
+        <div class="spatial-reason-map" aria-label="Symbolic reasoning filters bounding-box choices before image generation">
+          <div>neural coordinate choice</div>
+          <div>symbolic rule check</div>
+          <div>reject violation</div>
+          <div>valid object placement</div>
+        </div>
+
+        <h2>Scientific Discovery Should Not Search Blindly</h2>
+        <p>The second part moves to scientific discovery. Many symbolic regression methods search horizontally. They start with a guessed equation and mutate it through many candidates until something fits. That can work, but the space of possible equations becomes huge when many variables interact.</p>
+
+        <p>The lecture proposes a vertical path. Instead of searching the whole equation at once, hold most variables constant, let one or two variables vary, discover a small relationship, then add another variable and expand the expression. This is closer to how many scientists run controlled experiments.</p>
+
+        <div class="vertical-discovery-map" aria-label="Vertical discovery grows equations from small controlled-variable relationships">
+          <div>hold variables fixed</div>
+          <div>learn small relation</div>
+          <div>add one variable</div>
+          <div>grow full law</div>
+        </div>
+
+        <h2>The Toy Table Explains The Trick</h2>
+        <p>The talk gives a table with inputs X1, X2, X3 and output y. If all rows are shown at once, the hidden equation is harder to see. But if we look only at rows where X2 is held fixed, the relationship becomes simpler.</p>
+
+        <p>When X2 is 1, the table can reveal y as X1 plus X3. When X2 is minus 1, it can reveal y as minus X1 plus X3. From those two controlled views, the full equation becomes clear: X1 times X2 plus X3. The small views are stepping stones to the whole law.</p>
+
+        <div class="toy-equation-map" aria-label="Controlled rows reveal the full equation X1 times X2 plus X3">
+          <div>fix X2</div>
+          <div>discover X1 term</div>
+          <div>compare constants</div>
+          <div>recover full equation</div>
+        </div>
+
+        <h2>Genetic Programming Searches Each Step</h2>
+        <p>The implementation uses genetic programming in the symbolic regression step. Genetic programming keeps a population of candidate equations, mutates them, combines pieces of them, and keeps formulas that fit better.</p>
+
+        <p>Vertical discovery makes that search easier because each stage has fewer variables. In the next stage, the algorithm does not throw away the earlier equation. It freezes the useful structure and expands only the parts that now need to depend on the newly introduced variable.</p>
+
+        <div class="genetic-step-map" aria-label="Genetic programming mutates equations, but vertical discovery narrows each search">
+          <div>candidate formulas</div>
+          <div>mutate and combine</div>
+          <div>freeze useful part</div>
+          <div>expand one piece</div>
+        </div>
+
+        <h2>Bacon Is The Historical Neighbor</h2>
+        <p>The talk connects this idea to Pat Langley's Bacon systems from the 1970s. Bacon discovered empirical laws by finding regularities at one level, summarizing them into new variables, and then finding regularities among those new variables.</p>
+
+        <p>The ideal gas law example explains the relationship. First discover how pressure and volume relate when other variables are held fixed. Summarize that relation. Then discover how the summary changes with temperature. Then discover how that next summary changes with the number of gas molecules. The final law appears by substituting the summaries back.</p>
+
+        <div class="bacon-map" aria-label="Bacon-style discovery summarizes lower-level regularities into higher-level variables">
+          <div>pressure-volume relation</div>
+          <div>summary variable</div>
+          <div>add temperature and amount</div>
+          <div>ideal gas law</div>
+        </div>
+
+        <h2>The Difference Is Data Efficiency</h2>
+        <p>The speaker says the vertical symbolic regression approach is related to Bacon but can require less than a complete factorial experimental design. Bacon-style discovery may need many combinations of variable settings. The newer approach treats the problem as prediction and expands intermediate equation forms directly.</p>
+
+        <p>In everyday words, it tries to avoid testing every combination when earlier structure already tells us where the next search should focus. That is the benefit of reasoning about the intermediate forms instead of treating the dataset as one flat table.</p>
+
+        <div class="data-efficiency-map" aria-label="Intermediate equation structure can reduce the need for full factorial experiments">
+          <div>not every combination</div>
+          <div>use found structure</div>
+          <div>focus next variable</div>
+          <div>faster discovery</div>
+        </div>
+
+        <h2>The Snowflake Example Uses Vertical Learning For PDEs</h2>
+        <p>The lecture then moves beyond algebraic equations to PDE discovery. The example is dendritic solidification, a model related to snowflake-like growth. The full model has many parameters and spatial-temporal dynamics.</p>
+
+        <p>The vertical learning experiment splits parameters into groups. First, train on data where one group of parameters does not affect the spatial-temporal dynamics, so the model can learn the other group. Then train on data where both groups matter. Learning all parameters at once produced the wrong number of snowflake branches in the shown example, while vertical learning recovered the ground-truth behavior.</p>
+
+        <div class="snowflake-map" aria-label="Vertical learning splits dendritic solidification parameters into easier stages">
+          <div>freeze one parameter group</div>
+          <div>learn first dynamics</div>
+          <div>release all parameters</div>
+          <div>recover snowflake pattern</div>
+        </div>
+
+        <h2>The Deep Point Is Experiment Choice</h2>
+        <p>Traditional symbolic regression is often treated as a pure learning task: data in, equation out. The speaker argues that reasoning should help decide which intermediate hypotheses and which experiments can serve as stepping stones.</p>
+
+        <p>That is an important change. The system is not only fitting a fixed dataset. It is asking what simpler dataset or controlled setting would make the next piece of the law easier to discover. This is where the method starts to look more like a scientist planning experiments.</p>
+
+        <div class="experiment-choice-map" aria-label="Reasoning chooses useful intermediate experiments instead of only fitting a fixed dataset">
+          <div>current hypothesis</div>
+          <div>choose stepping-stone data</div>
+          <div>test simpler relation</div>
+          <div>expand hypothesis</div>
+        </div>
+
+        <h2>The Third Part Adds Probabilistic Reasoning</h2>
+        <p>The final technical part is about satisfiability modulo counting. The motivation comes from problems where logical constraints and probabilistic inference are tangled together. Examples include Markov random fields, stochastic optimization, and leader-follower games under uncertainty.</p>
+
+        <p>The problem is that probabilistic inference can involve summing over exponentially many scenarios. Logical satisfiability solvers are powerful, but they do not directly handle those probability sums. The talk introduces a language where some Boolean truth values are determined by model counting or probabilistic inference.</p>
+
+        <div class="smc-map" aria-label="Satisfiability modulo counting combines logical formulas with probabilistic model counting">
+          <div>logical constraints</div>
+          <div>probability sums</div>
+          <div>model counting</div>
+          <div>decision with guarantees</div>
+        </div>
+
+        <h2>The Hotel Example Makes Counting Concrete</h2>
+        <p>The example is choosing a hotel so the expected travel time to an AI venue and to one of two cafes is no more than thirty minutes. This sounds simple, but the word expected matters. To check it, the system must reason over possible travel-time scenarios and probabilities.</p>
+
+        <p>So the decision is partly symbolic and partly statistical. Symbolic reasoning handles the "and" and "or" structure of the requirement. Statistical reasoning estimates the expected travel times. Satisfiability modulo counting is a way to make those two parts speak to each other.</p>
+
+        <div class="hotel-map" aria-label="The hotel choice combines logical requirements with expected travel time">
+          <div>hotel choice</div>
+          <div>AI venue</div>
+          <div>cafe options</div>
+          <div>expected time limit</div>
+        </div>
+
+        <h2>XOR Constraints Turn Counting Into SAT Checks</h2>
+        <p>The key trick is randomized XOR constraints. Imagine a formula has many satisfying solutions. Adding one random XOR constraint tends to cut the number of satisfying solutions roughly in half. Add several such constraints, and the number of remaining solutions shrinks predictably in expectation.</p>
+
+        <p>This lets the method replace a hard counting question with satisfiability checks. If solutions remain after enough random filters, the original count was probably large enough. If no solution remains, the original count was probably too small. This gives probabilistic approximation guarantees while using modern SAT solvers.</p>
+
+        <div class="xor-count-map" aria-label="Random XOR constraints filter roughly half the models at each step">
+          <div>many satisfying models</div>
+          <div>random XOR filter</div>
+          <div>roughly half remain</div>
+          <div>SAT check estimates count</div>
+        </div>
+
+        <h2>The Q And A Names The Boundaries</h2>
+        <p>In Q&A, scaling comes up. The speaker says reasoning methods may not currently run end-to-end on GPUs like pure neural systems, but that is not a reason to stop exploring them. The hope is to build reasoning components that can eventually fit better into scalable computational frameworks.</p>
+
+        <p>Another question asks about non-experimental fields such as ecology, astronomy, sociology, and economics. Controlled experiments may be impossible there. The speaker points toward statistical and counterfactual reasoning, and notes that different scales in the data may still provide structure for vertical discovery. Noise also comes up: measurement noise makes discovery harder, but experiments show vertical discovery can still outperform flatter approaches in noisy settings.</p>
+
+        <div class="qa-reasoning-map" aria-label="The Q&A discusses scaling, observational science, counterfactuals, and noise">
+          <div>GPU scaling challenge</div>
+          <div>observational domains</div>
+          <div>noise makes harder</div>
+          <div>reasoning still helps</div>
+        </div>
+
+        <h2>How This Connects To Design And Topology</h2>
+        <p>Design and topology problems often mix perception, generation, constraints, and scientific laws. A model may propose a geometry, but the geometry must obey manufacturing limits, boundary conditions, material rules, symmetries, load paths, or placement constraints. Pure generation can create attractive but invalid designs.</p>
+
+        <p>Vertical reasoning is useful when the full design law is too hard to learn at once. Hold some variables fixed. Learn how one geometry feature affects stress, flow, heat, cost, or manufacturability. Then add another feature. Build from simple controlled subproblems toward the full design rule.</p>
+
+        <p>For topology, this is especially relevant because many design variables interact. A flat search over all possible layouts can be enormous. A vertical approach would ask for smaller stepping stones: what happens if only porosity changes, then if channel width changes, then if boundary placement changes, then if all interact? Reasoning chooses the order and rejects designs that violate hard constraints.</p>
+
+        <div class="vertical-design-bridge" aria-label="Topology can use vertical reasoning to build design laws from controlled subproblems">
+          <div>many design variables</div>
+          <div>controlled subproblem</div>
+          <div>reason over constraints</div>
+          <div>valid discovered design law</div>
+        </div>
+
+        <h2>The Chapter In One Chain</h2>
+        <p>First, learning and reasoning are two different AI strengths. Second, learning handles messy data but can violate constraints. Third, reasoning checks rules but can be rigid when raw data are complex. Fourth, the kitchen example shows why image generation needs perception plus spatial constraints. Fifth, a neural system can propose object locations while a symbolic engine rejects rule-breaking choices. Sixth, scientific discovery should not always search the whole equation space at once. Seventh, vertical symbolic regression holds variables fixed, discovers a small relationship, then adds variables one at a time. Eighth, the toy equation shows how controlled rows reveal a full law. Ninth, genetic programming can search each reduced step more easily than the full problem. Tenth, Bacon-style systems are a historical neighbor because they summarize lower-level regularities into higher-level variables. Eleventh, the newer vertical approach can be more data efficient than complete factorial exploration. Twelfth, the snowflake PDE example shows that staged parameter learning can recover dynamics missed by learning all parameters at once. Thirteenth, the broader point is that reasoning should help choose intermediate experiments and hypotheses. Fourteenth, satisfiability modulo counting combines logical constraints with probabilistic inference. Fifteenth, randomized XOR constraints let hard counting questions be approximated through SAT checks with guarantees. Sixteenth, design and topology can use vertical reasoning to grow reliable design laws from smaller constrained subproblems instead of searching every variable at once.</p>
+
+        <div class="note">
+          <p>The chapter's core idea: learning should not wander blindly through a huge space. Reasoning can choose smaller steps, check hard rules, and turn discovery into a guided climb from simple truths to bigger laws.</p>
+        </div>
+
+        <section class="lesson-review" aria-label="End of chapter understanding check for reasoning-guided learning">
+          <h2>How To Test Whether You Understood This Chapter</h2>
+          <div class="lesson-review-grid">
+            <div><strong>Separate the two jobs</strong><span>Explain what learning proposes and what reasoning checks in the kitchen object-placement example.</span></div>
+            <div><strong>Use vertical discovery</strong><span>Describe how holding variables fixed can reveal a smaller relation before the full equation is learned.</span></div>
+            <div><strong>Explain counting plainly</strong><span>Say why random XOR constraints can turn a hard model-counting problem into repeated SAT checks.</span></div>
+            <div><strong>Connect to topology</strong><span>Before accepting a generated shape, name the hard manufacturing, symmetry, boundary, or material rule that reasoning must enforce.</span></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

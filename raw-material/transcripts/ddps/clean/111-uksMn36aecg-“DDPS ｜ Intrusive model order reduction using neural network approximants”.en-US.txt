@@ -1,0 +1,1699 @@
+Alright. Alright, welcome to the
+DDPS seminar everyone people we
+introduce our invited speaker,
+let's go over some rules and
+logistics are first of all,
+please mute yourself during the
+talk. But if you have questions,
+you can unmute and ask
+questions, or use chatroom to
+post your questions so that we
+can address them in q&a session
+at the end. Second, today's DDPS
+seminar is open to external
+audiences. Therefore, no
+classified discussion is
+allowed. So please watch out.
+Finally, the talk today will be
+recorded and uploaded in our
+YouTube channel. That's about
+it. Now let me briefly introduce
+our speaker today. It is an
+honor to Dr. Francesco Romer,
+who is a postdoctoral researcher
+in the numerical mathematics and
+Scientific Computing Group
+computing group at the vices
+stress Institute for Applied
+analysis and Stoke has
+stochastics in Berlin, Germany.
+He received his PhD in 2023 in
+mathematical analysis, modeling
+and applications from the
+International School of Advanced
+Studies in three Asda Italy, is
+this is supervised by Professor
+John loogie, Rosa and Professor
+Giovanni's Istanbul, focused on
+the nonlinear parameter space
+and motor order reductions
+enhanced by scientific machine.
+Today, Francisco will talk about
+intrusive modal or the reduction
+of parametric PDE s, using
+neural networks approximants of
+the solution manifold and
+adaptive hyper reductions. I'm
+sure we are going to hear a
+wonderful talk from San
+Francisco. Oh, let me ask a
+question to Francisco just to
+get to know him better. There
+you go. Okay, I happen to know
+that you are passionate about
+dancing. Yeah. What kind of
+dancing Do you like to do and if
+you can describe what it is and
+how it how it how it works?
+Briefly? That would be awesome.
+Okay.
+Well, it started years ago even
+before COVID to dance, Lindy
+Hop, also here in Europe. And
+yeah, it's a it's a very lovely
+environment and a way to
+differentiate yourself from
+coding and math. Let's say it's
+more focused work job. Yeah, I
+guess everybody knows it,
+please. What's what Lindy Hop is
+my yah yah, yah, I suggest you
+to look into it into YouTube as
+an aura.
+Yeah, I will. Definitely yes,
+yes, you increased my curiosity
+about that. Great and the stage
+is yours. Thank you, thank
+you for the introduction. And
+so, I will present the work I've
+done during my PhD studies at
+Sisa in collaboration with John
+instability and geology razza
+the work is about an extension
+of the production of the
+nonlinear manifold method and
+before introducing it, I will
+present some motivations behind
+the new methodology. So,
+introduce the linear manifold
+methods starting from the
+finance element passing through
+the reduce basis method. So, if
+you have in mind the most simple
+PDE like the Poisson problem,
+you can write the weak
+formulation in this way. And you
+can discretize it in space and
+choose your discretization
+method of choice for example,
+the thing doesn't matter. In
+this case, your answer space
+will be a space of continuous
+functions that are restricted
+locally to the elements of the
+triangulation are polynomial of
+degree k. But you could also
+choose spectral global basis
+orthonormal functions on the
+world domain if a domain is nice
+and but what about if you have
+additional parameters on your
+PDB for which you have to find
+solutions, and these parameters
+may affect the geometry of the
+competition domain or under as
+deficient parameters in your
+weak formulation or in your
+sorcerer? Well, in this case,
+you could exploit some solutions
+you have computed before
+beforehand even called Training
+stage to tailor specific asset
+space for this problem to infer
+new solutions corresponding to
+parameters you have not seen
+yet. And this is very as many
+relationship with the using
+these spectra this method on the
+world domain instead in this
+case, we will use a smaller
+dimensionality reduced basis. So
+still linear basis, but tailored
+for your problem. So this is
+more or less the nomenklatura
+model reduction. So, you want to
+find to find solution u h, for
+this week formulation, and you
+introduce a parameter space K to
+which your parameter mu belongs
+to the solution map L from the
+that gives that map's each
+parameter to solution, the
+solution manifold which is the
+image of the parameter space to
+the solution map. And in a
+training stage, usually
+collectors call the snapshot
+matrix. So, for different
+parametric instances from one to
+N train their respective
+solutions. Once you've done
+this, you consider the same
+formulation but instead as
+answer space, you want to find
+your solution as a linear
+combination of a few number of
+modes, let's say our with our
+very small with respect to the
+full dimensionality of your
+state space. And this linear
+combination is made with a
+vector on the global basically
+in relation also in with a lot
+of analogies with the spectral
+basis method honorable domain,
+but in this case, the elements
+of your basis will come from a
+singular value decomposition of
+yours natural matrix. And of
+course, the idea behind model
+reduction is that you amortize
+the cost of compute in addition,
+an additional and training
+snapshot in order to to infer
+efficiently new solution at the
+prediction or online stage. So,
+of course, this sometimes is not
+sufficient to approximate
+accurately as solution because
+you model reduction usually you
+sacrifice accuracy in terms in
+favor of competition as molar
+computational cost, but in some
+cases, this is not enough and
+you need approximate which are
+not linear in a sense. So, I
+will present today how you can
+use as answer space nonlinear
+mappings. So in a linear answer
+space for your solution, and how
+you can solve for a solution in
+an efficient way. In this case,
+for example, you can consider as
+answer space the image through
+an nonlinear map fee instead of
+a linear map from an open set in
+the space of dimensionality our
+width are still very smaller
+with respect to the full
+dimensionality of our state
+space. And of course, the
+problems of using a linear
+reduce basis is very well known
+individual and can be explained
+simply with looking at the
+reduction of escargot transport
+problem. So, in this case, the
+condition is zero and you have a
+boundary condition equal to one.
+So, basically the solution if
+you consider a standard
+deviation is one followed by
+zeros, so, it is continuous and
+at the next time instant will be
+one one followed by 0111
+followed by zero, if you
+assemble the snapshot matrix,
+where the columns correspond to
+your solutions at different time
+instances, in this case, time is
+the only parameter and then you
+evaluate the Eigen modes with
+the SVD you can then plot the
+residual energy of your system.
+And you can see that even with
+different levels of visitation
+from more or less 100 to 2000,
+you can see that you need more
+than the 80% of your mods to
+retain more than 95% of your of
+the energy of the system. This
+in comparison to for example,
+the incompressible navier stokes
+equations. So, typical benchmark
+for pasty cylinder and
+implemented in the integral
+field volume inside the open
+form and you will see that you
+within less than 5% of the of
+your Eigen function of the Eigen
+modes to retain more than 95% of
+the energy of the whole system.
+So, even if it's a more complex
+problem to solve the it's more
+easy in this in to to reduce
+with reduce basis matter
+innocence and a lot of practical
+applications of this problem.
+And to be more quantitative,
+it's the concept of Kolmogorov
+and weight is introduced. So,
+you consider parameter space K
+sub sub sub set of parameter
+space calligraphic P and you can
+find the Komagata and wait for
+as for a fixed Dimension ID and
+of your linear approximation
+space as the best approximation
+error uniform with respect to
+the solution manifold and the
+camera with has been evaluated
+for its asymptotic has been
+evaluated in many studies. And
+you can see that even for the
+incompressible and the stokes
+equations using considering as
+parameter, the search term
+itself as a function, you have
+almost you have exponential
+decay minus n 111 divided by
+three times some constants. And
+also the famous case for Lena
+corsi problems of exponential
+decay, but also more difficult
+to prove for solution mapping
+which are automorphic you can
+find approximations acidotic
+estimates like this. So, for for
+perimeter which is a function of
+regularity as you have this kind
+of estimates. And of course, for
+the interaction problem I
+presented before also wave
+equation you would have instead
+a lower bound of n to the minus
+one of these strictly depends
+also on the initial conditions.
+So, it's important to notice
+that not every infection
+immunity problem as this kind of
+come about our local Morgana,
+ATK in fact, a lot depends on
+the regularity of the initial
+conditions and also the variety
+of the parameter to solution
+map. And more generally, also
+it's it may happen that in
+practical applications, even if
+you have a synthetic local
+Magara with a que you may still
+reach a sufficient accuracy with
+a sufficient a sufficiently
+small number of modes. So, it
+does not mean that if you have a
+very slogan predicate and you
+cannot approximate your problem
+at all it depends case by case.
+Yeah, and also as you said not
+this problem, this problem of
+local McDonald's with the K
+affects not only addiction
+immunity problems, but a lot of
+applications. Like for example,
+problems with the
+parameterization that change the
+computational domain or more
+complex models with complex
+dynamics and smaller scales in
+your dynamics, etc. So, auto
+erasure, these are some
+references some methodologies,
+which researchers have tried to
+solve this problem. So, some of
+them are congruent as local
+methodologies like the
+medicalization or interpolation
+on space parameters. Some others
+take inspirations from machine
+learning earlier dimension
+reduction techniques, I cannot
+base methods. Some others from
+imaging sciences, like old
+techniques like restriction
+apply, for example, in 2014, for
+registering geometries. And more
+recently, also of encoders, so,
+in the last several years of
+living carpark, and today I'm
+going to talk about an extension
+of data methodology with AI
+production. So, auto encoders
+have been bred also in the model
+reduction community and sort of
+modeling community. Also, thanks
+to the advent of ResNet and cn
+NS from the 2010 to 2015 16. And
+also with the with the
+development of open source
+software like Python TensorFlow
+available for everybody. And
+especially, these are some of
+the first works I managed to
+fund on
+auto encoder micro CNNs used as
+purely data driven methods in
+competition for dynamics. So, a
+lot of techniques also nowadays,
+are structured like this in so,
+they are pulling the trigger
+neurons, and they have the task
+of surrogate model is divided in
+two steps, let's say even you
+sometimes they perform at the
+same time. So, the first step is
+to approximate the solution
+manifold. And so, the basically
+architecture you have is an
+autoencoder. So, with a an
+encoder map, see from the full
+state dimension to a reduce
+latent dimension R and the
+decoder and the decoder map from
+the latent dimension R to the
+full state D. And then you have
+another natural that whose job
+is to infer and to learn the
+lesson dynamics of your system.
+So, if you if you plug in
+different parameters, for
+example, also time and you
+produce solute the solution but
+inside this molar latent space,
+of course, individually, there
+are many examples in which the
+architecture changes. So for
+example, you can use for the
+solution manifold learning
+problem convolutional encoder,
+variational auto encoders,
+against their sigle, decoders
+LSDM auto encoder to enhance by
+using auto there are many tools
+available right now. And also
+for the later 90s. You can use a
+Gaussian process regression
+before now network LSDM, causal
+convolution networks and RLDS.
+There are many other artists.
+But these are only boring data
+driven methods. This means that
+there isn't a training stage and
+a predictive phase. But in the
+predictive phase, you only plug
+in your inputs, your parameters,
+for example, time and other
+parameters of your parameter TBD
+and get the solution. Instead,
+what we want you to do is to
+preserve in a sense, the
+physics. So instead of abusing
+this paradigm, we wanted to find
+a solution or Title line stage
+in a sense solving keeping
+keeping in mind the numerical
+scheme using the Florida model.
+So, for example, minimizing
+first principles and this is
+something that you cannot do
+with standard data driven roms
+that discard completely the
+physic in the physics in the
+predictive phase. So, the
+original work introduced by the
+carbo is can be presented like
+this. So, you first discretize
+your permittivity in space and
+you obtain an OD. So, in this
+case, you represent your state
+variables. So, you saw the
+physical field can be stacked
+together for example, for an
+incompressible navier stokes
+equations, you would have a plus
+the pressure and you would then
+obtain and these enter the
+system where f is your vector
+field and can be also a
+nonlinear depending on your
+body. And of course, the initial
+condition and you can discretize
+it in time. And it is where you
+have received Well, that depends
+on the parameter of course, but
+also on the time instant you're
+solving for the full solution
+and also the previous time
+instance instances belonging
+belonging to the interval it and
+this creation of the initial
+condition. For example, for the
+implicit order method, the
+formulation of the residual like
+this one. So, this is the boxes
+compare the least square Petrov
+Galerkin method, it's an
+application of are these spaces
+with no linear manifold SPG. And
+you can see the difference is
+often the choice of answer
+space. So on the least square
+but we're lucky method, you
+start from letting reduce
+coordinates it's 00 that you've
+obtained after a linear
+projection of your initial
+condition is zero. And this you
+this PR matrix is just the
+matrix whose columns are the
+Eigen modes of your SVD for
+example, of your as an option
+matrix. So, what you do next is,
+if you have time parameter you
+can see there you have to find
+the solution at the next time
+step. So, in this lesson, what
+problems can we imagine the
+receiver and in this case,
+instead of the state UD Hu
+plugin, their construction from
+the latent variables be outside.
+Of course, if your PD has an A
+find the composition with
+respect to the parameters, you
+can save the use matrices or
+flying, the proceeds will be
+efficient. But if you're still
+for example, is not linear, then
+you would need to apply I
+production techniques to make it
+to make these solving this
+problem independent from the
+number of degrees of freedom.
+So, on the right side instead,
+you see that using encoder and
+decoder, so, the linear maps is
+easy as just plugging in them
+inside it the position of the
+state would be considered
+before. And so, now, to find the
+initial reduced variable, you
+would use the encoder and encode
+the initial conditions and then
+you will devote the ramekin the
+latent space always with a small
+dimensionality R, but in this
+case, the state will be
+reconstructed from the latent
+space to the full state space
+through the decoder fee. So,
+this is the formulation if you
+want to think about it,
+graphically, you have on this on
+the left side a plane which is
+our vector space spanned by the
+Eigen modes of SPD that
+approximates this kind of
+AnnaLena manifold, while you can
+see that dynamics is evolved in
+the latent space, and only the
+and reconstructed on the
+solution manifold. Why on the
+right you want to try to
+approximate your solution
+manifold with the unknown linear
+approximate map. So in the
+annual survey Nandina
+representation of your solution
+manifold, of course, now, if
+your residual is in the
+beginning linear, you introduced
+nonlinear math, so you will need
+to solve a nonlinear least
+square problem. If you see there
+isn't a linear you're able to be
+in a linear but you add in
+additionally non linearity
+coming from the decoder. And
+there are many mythologies that
+can be used to simulation
+algorithms can be used to solve
+the linear scale problem around
+them Quasi Newton methods and
+also other variants like
+pounders implemented in Patsy
+that we that is what we use for
+the benchmark a person today,
+but also the lead member Monica
+are going to address this for
+other benchmarks in other
+references from the inside the
+eigen library. And of course,
+the problem is that as in the
+original implementation of Lean
+Karlberg, you still have a
+different dependency on the full
+dimensionality of your state
+space. And so, even with this
+formulation, it may happen that
+your use of the model is even
+more inefficient than your full
+order model. So we need to apply
+some sort of AI production and
+of course the full
+dimensionality. I mean, there
+Silla has full dimensionality
+but also the state space. And
+one of the simplest approaches
+is to use our collocation
+method. So, you define a metric
+matrix which restricts the
+receiver only on some colocation
+nodes. And of course, if you
+consider standard methods like
+the G fam or volumes, then if
+you want to evaluate the receipt
+well locally on single nodes,
+even just a stencil around them
+for because the differential
+operators over this condition or
+this condition are defined only
+locally, of course, these maps
+are passed inside the civil
+definition. And you what you
+just need to do is restrict the
+reconstructed state space on the
+on the sub mesh B as our h and
+in the end, so you can restrict
+the receiver G to the only and
+then coefficient nodes and the
+output of the decoder only on
+this mesh. Of course, there are
+many other implementation or
+production, there is a there is
+a dime there is a C SW there is
+not there is also an OPT, which
+improve the bind selection
+algorithm. And, yeah, but of
+course, I will show maybe some
+examples of the submissions if
+you the first time you've seen
+it. So in red, you see the
+collocation nodes, so only the
+nodes in which the results
+evaluated. And in blue, in light
+blue in the nodes, the cells
+that are you make make make part
+of the mesh. So on this two
+grids are the grades come from
+two benchmarks that I've used in
+another experiment and produce
+it later maybe. And but you can
+see that this is a nonlinear
+conservation law problem with
+the with the parameters also
+time so you can see moving from
+from the left bottom corner to
+the right top corner. And this
+is the shallow water equation,
+should it be the solution should
+have a radial symmetry. But you
+can see that there's a mesh size
+depends on the numerical scheme
+you're using. So for example,
+you could have only one layer
+around each single node of your
+residual or more layers around
+them. And of course, the problem
+is that now you use a decoder,
+with Jeremy be a very big map.
+And so you need to find also
+ways to or define shallow or
+thin architectures that are at
+the same time, shallow and so
+efficient to evaluate many times
+and accurate or you can, you
+have to find other techniques to
+solve this problem. So, these
+are the references I could find
+above about extensions of the
+linear manifold method. And all
+of them use APA reduction in a
+way. So the first reference was,
+of course by Kim Jung said
+earlier that they use the
+shallow masculine colors we
+tried in, we attempted to use
+convolutional decoder and then
+approximate the decoder with
+with a smaller one in a second
+side we teach to their training.
+So it's a part of the machine
+learning to train, it's more
+than it was from bigger models,
+let's say. So that it could we
+could have an efficient small
+network, we're using our
+nonlinear propagation to solve
+the nearest square problem. But
+there are also other approaches
+in Indonesia that consider for
+example decoders, we've seen
+some sub meshes, or by
+production, or that split the
+unary and approximate in a
+linear part and the linear part,
+but Otieno is a composition with
+a nonlinear part made of an
+arrow network, or an approach
+that I'm going to present today.
+And also, of course, approaches
+consider party partitioning
+approaches. So the main
+composition in each the
+composition of a domain you
+consider in your watercolor and
+performing this way of
+production. And so the approach
+I'm going to talk about today is
+the following. It relies a lot
+on the technique vary with by
+the machine learning which is
+which consider using SVD as pre
+processing steps to extract
+meaningful features from your
+database. For example, if you
+have in mind efficient processes
+and stable diffusion, so sorted
+efficiently model and stable
+diffusion so what you do is
+purpose in step you extract and
+reduce dimensionality of your
+image let's say usually with
+other architectures, bicycles or
+in this case we use SVD or more
+generally, I call the filtering
+transform map and with the same
+in underlying parallel
+randomized SVD, which is very
+efficient for very big problems
+on meshes of more than 1 million
+degrees of freedom, but you
+could also consider a fast
+Fourier transform or other
+transformer of your choice. And
+so, the architecture is instead
+in this case done is as the
+structure so you first have Leon
+layer that consider, let's say a
+matrix with columns, the Eigen
+modes of your transform map. For
+example, the Eigen modes of
+randomized SVD that projects
+your state space from D to A
+dimensionality P, the
+dimensionality of the frequency
+space, let's call it and then
+from you want to reconcile this
+frequency space with a small
+auto encoder made of four neural
+networks are one these units.
+And so these are the color maps
+these frequency space B to
+reduce the dimensionality are,
+and they're reconstructed back
+with fee tilde and decoder from
+R to p, where p is much smaller
+than the Sobeys. That would be
+the number of your ad space is
+most for example, and, and but
+in with respect to where the
+spaces applications display can
+be much higher. So usually for
+these spaces can be less than
+50. Most, let's say, in our
+applications, b is equal to 300.
+Because it shifts accuracy in a
+very efficient way with
+undermines video in this way,
+regarding the reconstruction
+error, and finally, ever linear
+projection from B to the full
+state space d dimensionality. Of
+course, if you consider you as a
+value h, you consider many
+fields stuck together, and you
+can we applied a monolithic SVD.
+And of course, have to
+renormalize the fields because
+you may have pressure and
+velocity or other fields. And so
+you need to apply a weight that
+say make it the state space
+independent from the unit of
+measure and out there. On the on
+the physical quantity you're
+considering, let's say, in this
+way, you obtain a more accurate
+extraction error, because you
+only randomize video. So now you
+have, let's repeat a very small
+and fast and fast to evaluate
+decoder from RTP because it's
+just from the latent space to
+the frequency space. So, the
+space that you obtained
+projecting the your snapshot,
+and then you have a linear
+projection F minus one filter
+from this frequency space p to
+the four dimensional and why
+this choice architecture is very
+useful for our applications,
+because then you can apply AI
+production very efficiently
+because yeah, very fast network
+evaluate. And then you can if
+you want to apply a production,
+and you have selected as a mesh,
+and what you need to do is just
+restrict the rows which are
+brand representatives of the of
+your of your of your system, you
+can just erase them if you if
+they do not belong to your sub
+mesh. And what you find that
+it's just this nonlinear
+approximate composed by a
+nonlinear part, which is the
+same as the quarter part of your
+encoder, and then a much smaller
+linear map from the frequency
+space b to the restriction of
+your modes to the sub mesh,
+you're considering we do a rapid
+reduction technique in our case,
+the other collocation so in this
+way, you you have found an
+accurate in some cases when
+otherwise, this VD achieves a
+good reconstruction error using
+also a lot of modes like three
+other modes. Also thin because
+you have just you restrict them
+in a manner which they which is
+the biggest part of your
+network, only to have your map
+or have your full view of your
+altogether on your map only to
+the sub mesh. And we wanted to
+take a step further and we
+wanted to also try an adaptive
+strategy since when you consider
+a production sometimes, if you
+have a fixed mesh, but then the
+major components of the of your
+receipt will moves during the
+evolution of economics. So you
+may want to follow these
+features of the dynamics with
+your magic points. And so, we
+want to one way to do this,
+because it also that we have an
+later map that uses in our
+network is the following. So,
+you first define a map from set
+which are your latent variables
+to the simple state space. So
+that is map to reconstruct the
+state space with the fee, which
+I want her to remark is made by
+a CT fee tilde, which is an
+earlier part and then a linear
+part and then this is plugged in
+into the residual evaluation and
+that it has the full
+dimensionality of your state
+space. So then you want to
+compute sensitivities. So it's
+simple chain rule, you see that
+there is a component that is the
+derivative of the receive
+respect to the state a component
+is linear with respect to the
+reconstruction with linear
+reconstruction you're implying
+and then a component which is
+which Cobian of the output of
+your restricted recorder of your
+soil is more than a linear
+decoder, respect to the latent
+variables. So in the end,
+evaluate these these
+sensitivities. For the choice of
+magic points would be too much
+expensive. And so, we decided
+instead to use this kind of
+indicator. So, you we cut off of
+this part and we consider only
+this part here, which instead
+considers only the
+reconstruction filter and the
+previous late end Layton
+coordinates to evaluate the
+Jacobian of field. So, in this
+way, you have a mapper which is
+more efficient to evaluate, but
+as a dimensionality from the
+latent space are to a matrix D,
+which is the dimension to the
+state space times are of course,
+if you do want to of course,
+this depends on the full number
+of degrees of freedom, but if
+you want to reduce for the
+dimensionality you could
+consider to restrict this
+evaluation only to say enable
+with some enable of your actual
+sub mesh to make it more the
+procedure more efficient and
+fully independent inspect to the
+number of degrees of freedom,
+but for simplicity, we consider
+the full state space. And so,
+now, you can minimize you can of
+course, you have to computer
+since your state space has many
+physic can have physical fields.
+So, like for example, a number
+of see physical things like
+pressure and velocity, you have
+to take the edge sooner with
+respect to that, then you take
+the airMAX with respect so, you
+choose the most influential
+influential latent variable. And
+then if you decide which are the
+cells of your mesh, we are
+considering field volume method,
+sales of the mesh, which would
+correspond to the to the magic
+points in which this quantity
+this indicator as its maximum
+value. Okay, so this for
+example, you would have these
+kind of some measures that
+evolved within Amex in the case
+of compressible flow past and
+like iPhone, and you can see in
+black, the metric points and the
+gray the some mesh around them.
+And you can see that more or
+less follows some important
+features of the dynamics from
+types of 02 times two seconds.
+We also wanted to point out
+other important characteristics
+of the choice of our
+approximate, which is the
+possibility to use a local
+formulation. Because now for
+example, if you have time as
+parameter as shown later, you
+could, for example, split the
+time interval into and decide to
+use one reduce one layer basis
+for one sub one sub interval or
+the time interval and one sub
+bases for the other time
+interval. Why this procedure is
+still efficient, because then
+you offline, you could, you
+could have two auto encoders,
+so, one four sub time interval,
+and then online, you would just
+offline you can just multiply
+the linear basis and online you
+will just perform this cheap
+change of basis between
+P one and P two, let's say lady
+mentioned it we are frequency
+space. Of course, this is very
+simple and maybe naive way to
+perform. Say the projection from
+one local linear approximation
+to one other local linear
+approximation, individual two
+there are many work that that
+make this procedure more
+rigorous and take into account
+other interface conditions. But
+it's a very simple way. And we
+wanted to point it out because
+it could be used with our
+approach if you really want to
+do to use a local linear
+approximation of your parameter
+space. So the first test case
+I'm going to consider is
+compressible flow, air flow. And
+the parameter to consider here
+are time and the electron
+number. So we took the molar
+mass of our gas such that the
+speed of sound is equal to one.
+And in this way, we can choose
+the MCL number as parameter and
+set it as the choice of our
+inlet velocity from two to five
+in the training range, and from
+one per day to 2.5 point two in
+our test range. So just to give
+you a grasp of the solution
+manifold, we are considering for
+the initial cluster the initial
+time steps 0.2 seconds. So the
+first and third snapshot with
+number 5.2, and 1.8. These are
+all in the extrapolation regime.
+So these are the let's say the
+external solutions. So it's very
+big the solution meaningful we
+want to approximate and this is
+implemented this thing with a
+fini volume method in open form
+with the sonic form solver. So
+if you can see that if you see
+if you look into the sonic form
+solver and compare it to our
+implementation of the manual
+method. If see there are some
+differences, in fact, the sonic
+form solver first of all the
+fields were considering are the
+velocity, the density field
+internal energy and the pressure
+field. The sonnet form software
+consider predictor corrector and
+medical scheme also you consider
+a non non orthogonal corrector
+because you're when you have
+also as in this case not meshes,
+but instead in the unreal
+mindful method, for each
+evaluation of the receiver, we
+don't need to to use this reverb
+corrector scheme. But instead in
+inside the AnnaLena I was quite
+optimization at each evaluation
+of their syllable, so I teach
+and timestamp but also ie if
+step of the optimization we need
+to we can evaluate just the
+receiver in this way. So without
+ever using the Full Scheme,
+let's say and also of course,
+remember that we only evaluate
+the receiver on the sub mesh.
+Okay, so these are some
+predictive solutions to for a
+qualitative comparison. And this
+is what
+Okay, take some times
+Okay, as you can see, okay, this
+is the full evolution of the sub
+mesh. So in this case, we have
+considered for this test case 20
+training parameters as Mach
+number, and five test
+parameters. And the test case
+I'm showing you a, these are the
+snapshots I'm showing you
+correspond to the Mach number
+2.124. As I mentioned, the
+beginning I consider as the
+dimensionality of your linear
+projection, so p is equal to
+300. So we use a three under our
+RSP bots, something that maybe
+you wouldn't do with the reduced
+business model. And we consider
+a linear dimensionality of r
+equal to four, these numbers are
+chosen only to satisfy to
+achieve a good accuracy with the
+world reconstruction for the
+world extraction error. So in
+this case, we have used 1200,
+adaptive prediction collocation
+nodes. And they are updated, not
+every time step but only every
+20 time steps. Of course, the
+choice of when to update them
+can be maybe worked out better
+with either maybe a posteriori
+techniques. And remember that
+we're comparison, we're
+comparing the competition costs
+with the open source open from
+solver and in this case, if you
+consider a mean time step, we
+achieve not much of a speed of
+less than two, but you see that
+74 milliseconds for evaluation
+for a single time step at the
+end of the mid foot method is
+quite the standard of also if
+you consider other works in the
+literature, the things that now
+we compare with the flow the
+model made implementing performs
+very high performance solver for
+a very simple problem with just
+33,000 sounds, but with our
+methodology, we also try to
+increase the timestamp. So, that
+would include in problems for
+this if our condition for the
+other form level is that we
+could use a time step also,
+which is four times higher. And
+this case we do achieve a speed
+up of five for evaluating the
+full dynamics in this simple
+test case. And I show some
+results on the to relative error
+for the local linear manifold
+application. So, as I told you,
+we consider true time intervals
+from zero to 1.2 and from 0.6 to
+2.5. And we can see the two
+different LSVT modes for these
+two time intervals and also
+other encoders. And we compare
+what are the errors with the use
+of these two sub intervals or
+with the use of one single
+subdomain. So in red one single
+subdomain and in blue shoe time
+intervals of course, in with the
+yellow line out the we consider
+it five trajectories are plotted
+altogether. And the there they
+are divided by this gray columns
+and in red in shaded red, there
+are the except there is the
+extrapolation regime, which the
+solution is very bad. Errors and
+instead when in during inside a
+training regime, inside your
+training range, you'll see a
+yellow vertical line that is
+when you perform the change of
+bases from one sub interval to
+the other and the change is
+performed at time 0.6 to five if
+I remember correctly, and you
+can see that in our case, you
+cannot you cannot you cannot get
+better approximations with also
+with choice of local linear
+manifolds. But maybe it's still
+good to point out that you could
+do it in practice. So the second
+test case is instead The aerosol
+the ML body. So, we consider the
+incompressible navier stokes
+equations with the turbulence
+model. So, these are morass when
+equation turbulence model and
+the state we consider in this
+case are the velocity, the
+pressure and also the Addicks
+cottage. So, the turbulence
+model is cut off in the end,
+when you consider the nonlinear
+manifold method. So, the domain
+is like this and you consider
+200,000 cells, and this test
+case has been first considered
+for in model reduction, well,
+nothing Maharaj community but my
+collaborators have been worked
+on on this test case previously,
+but they consider a stationary
+stationary test case. So they
+solve the equations with a
+simple algorithm. Instead, we
+try to predict the transient
+dynamics with a piece of
+algorithm in open form based on
+solver. So, the parameter in
+this case, our time time from
+zero to one seconds, and this
+land angle of the body, we
+consider two parametric
+instances to parametric ranges,
+the first parameter range is
+from 15 degree to a bit more
+than 18 degrees. And the other
+parameter range is higher from
+15 to 35. And we'll see what
+could go wrong with this
+methodology. So, these are the
+mechanician. Again, the
+presentation. Okay, so, these
+are again the evolution this is
+again the evolution of the sub
+mesh. And in this case, we
+consider only five train
+parameters and for those
+parameters, and I show you the
+this is the predicted solution
+for as lantai co equal to this
+value. And, of course, in this
+case, Arabic they're
+considerably you want to believe
+velocity, pressure and you also
+believe the causative and also
+in this case, we consider P
+equal to then So, the number of
+your hours or SBD modes are 300
+and the dimensionality of four,
+again, these numbers are kept
+fixed also in this case, by just
+because we could achieve good
+accuracy with respect to the
+extraction error. So, maybe they
+are not optimal value, you will
+choose maybe from some
+parametric studies to find an L
+slower maybe on a higher if you
+want to achieve a better
+accuracy, for example. So, in
+this case, the magic points are
+evaluated every 50 time steps.
+And in this case, you consider
+the mean time step, you would
+achieve a bit of speed up at
+least if this is still a very
+coarse mesh, you know perform.
+So, you would achieve at least a
+speed of five because the only
+the mean time step. But also in
+this case, we consider an iron
+timestamp with respect to the
+farm because we could do it the
+reduced level. And in this case,
+you can see the full dynamic is
+that you're doing a speed up of
+26. And of course the maybe you
+don't see all this a match
+because a big part of the namics
+so big the higher the highest
+values of the receiver and
+evaluated below the helmet body.
+So the stills around the stills
+there there are the it's
+similarly flow plus the cylinder
+flow let's say and so that you
+can see the residual soil and
+also the some mesh follow this
+fissures below the body. And
+this is also for the pressure
+for some more quantitative
+estimates. You can see that the
+pressure and velocity are quite
+good estimated for this test
+case. And instead of the
+viscosity are much worse
+approximations also because it's
+more difficult to linearly
+approximated in this case. But
+of course, I want to remind you
+that this is eminently SBD. So,
+in a way the pressure velocity
+and viscosity are coupled in a
+single eigen mode. And of
+course, this is still the
+parametric domain range from 15
+degrees to a bit more than 18
+degrees of this land angle.
+Instead if you want consider as
+parameter range from 15 to 35
+there will be some problems and
+this happens not only for this
+implementation of the mindful
+method, but also generally for
+applications that consider also
+purely data driven methods.
+Consider SVT as per person
+stuff, and then and only they're
+out encoder and then they may be
+the learn that dynamics with
+another network. This is because
+for example, if you see the
+there are 13 parameters, so the
+first plot the top there is the
+so the Shisa corresponds to
+different parametric instances
+of the land and globally in my
+body. So we have divided this
+interval in 50 parts and Each
+each parameter, you can see 13
+training snapshots, and the
+colors represent the choice of
+SVD modes used to evaluate the
+reconstruction error. So, this
+is the train to relative error
+and this is the test error, and
+you can see that increase the
+number of modes, there is
+parametric sub intervals for
+which you cannot achieve a good
+accuracy even increase in the
+number of months. And this is
+very typical for a lot of
+applications for which you need,
+maybe you think more data or
+maybe the linear approximate is
+not good. Something you could
+try is to use instead lock an
+interval local approximation.
+So, you may want to let's say
+from a sort of clustering of
+your parameter parameter space
+and decide okay if I divide my
+parameter space into four parts,
+and then apply SVD in each of
+the two part hoping that the
+reconstruction would be better
+in that case also
+considering that you have also
+many solutions in that
+particular sub domain and for
+some sub parametric for some sub
+intervals of the parametric
+space, you will gain better
+approximations, but still not
+good enough in the in some
+ranges of your in some intervals
+of your parametric domain. And
+maybe in this cases, other
+approaches will be more
+preferable with respect to the
+linear approximate maybe you
+will may want to try to use much
+bigger neural network
+architectures such as CNN, see,
+if your grades of graph neural
+networks are more or other
+architectures and in this case,
+so you cannot use them ontology
+I presented because you cannot
+use our rscds proposal system.
+But you can try to use another
+approach we have developed
+before. And this uses pictures
+to the training. So you first
+train very big, etc. For
+example, in this case, for the
+for AnnaLena conservational
+problem, you train a
+convolutional auto encoder from
+a grid to a grid. And then after
+training it you can train a
+smaller decoder that will use in
+your layer mind format. And this
+decoder is made by just two
+hidden layers. And they it's
+very simple feed forward and
+backward, that is evaluated from
+the left hand coordinates to
+just the sub mesh to the states
+of your training database, but
+only restricted to the sub mesh.
+So you have done a very smaller
+NyQuil to use for your nonlinear
+mathematics. And so I briefly
+summarize the conclusion and
+possible pros and cons of the
+mythology. So what you have with
+respect to data driven
+procedures is an interpretable
+procedure. So it's more
+explicable as a result, because
+at each time step, you are
+minimizing first principle so so
+you're minimizing physical
+quantities. And it's more
+interpretable respect to
+blackbox approaches in which you
+plug in parameters and you get
+the solutions. But at the same
+time, you can also as in data
+driven methods that use for
+example autoencoders you can
+introduce additional inductive
+biases. So you can add some
+covariance properties, you know
+network, or you could add also
+positivity of physical
+quantities. For example, if you
+have a density in your state
+space, you can keep this
+constraint for example, with a
+value activation function, or
+simples, other constraints like
+a weekly symplectic autoencoder.
+One additional guarantee
+theoretical guarantees that you
+can always methodology with
+respect to with respect to data
+driven methodologies is to
+possibility to introduce also
+structure preservation. So, with
+this formulation, let's say, you
+could also try to implement
+additional constraint, because
+every time you just you don't
+only evaluate an artwork, but
+you also minimize within a
+Soviet Union, it's quite
+problem. So you may want to try
+adding energy conserving
+property or entropy stable
+property for the land
+conservation laws. Of course,
+there are some cons and one of
+them is the possible slow train
+time. Maybe if the RSV D
+approximation error is good,
+they may then this is not the
+case, because the training takes
+less than one hour also with one
+single GPU. But if you consider
+for example, CNN for a very
+simple problem, like the one I
+shouldn't be for for the
+nonlinear conservation law in a
+great cake you can take if you
+consider a motion to call it
+even more than five hours and
+time to achieve a good accuracy.
+So possible solutions are
+represented by transfer learning
+or others by petition
+approaches. Of course, in other
+contexts, that you may require a
+large database of snapshots to
+achieve a higher accuracy. It's
+very difficult to achieve a very
+good accuracy with Often
+quarters when you have very
+difficult PD model, when your
+solution presents a lot of small
+scale features that you want to
+approximate and so, this is a
+very, very difficult problem to
+obtain more accurate and for our
+implementation is more like
+lectures because you need them
+to solve for this nonlinear
+rescore problem. And of course,
+there is the problem of
+production at some time is not
+very robust. So you we may need
+one to work on the robustness of
+the nonlinear least squares
+methodology itself and including
+the our production is performed.
+And maybe approaches include
+regularization, for example. So,
+these are the references, or
+rocks and they used as open
+source software indicating the
+value model reduction library
+developed form four open form,
+and Beiter Betsi. And, of
+course, open forum. So, thank
+you for your attention. And
+these are the references I
+already shown you before.
+Thank you. Thank you so much for
+the wonderful talk, Francisco.
+Very nice. Let's have a q&a
+sessions. And if you have
+questions, please unmute
+yourself and ask questions to
+Francesco. While you guys are
+thinking about it, let me ask,
+let me start to ask some
+questions. So let's Okay, so you
+talked about the teacher student
+approach, in slide 26. But
+before that the majority of
+times you spend on, you know,
+the specific kinds of the hyper
+reductions where it has a
+combination of the linear map.
+I'm assuming the linear map is
+from SVD. Yes, exactly. Okay,
+so. So the, the main idea is you
+apply the SVD, and reduce the
+dimension a bit and then apply
+the deep convolution or
+convolution or some sort of the
+neural net architecture to
+further reduce it. Yes,
+yes, exactly. The, the approach
+I presented today is not on
+teacher student training, but on
+this kind of nonlinear
+approximate, where the end,
+yeah, you have a linear path
+with a linear one, the CNN
+layers in our case, and then a
+linear map from the frequency
+space to the, in this case, the
+sub mesh, and it's it can be it
+can be done efficiently, because
+you can restrict the your RSVP
+modes on the on the dots you
+need for the sub mesh.
+Right. Right. So, my question
+regarding to that is, as you,
+you know, elaborate the
+motivation for the nonlinear
+manifold reduced order model,
+quote, you know, problem with
+the Kolmogorov with decaying
+slowly. Like, for example,
+consider the pure convections.
+Right, one of the purposes
+moving from left to the right,
+yes, if you as we all know, for
+that kind of problem, because
+the the solution snapshots,
+linearly independent, most of
+the, it's, you gotta, you need a
+lot of activity most, right? And
+this approach, since you're
+combining, you know, linear SVD,
+linear map with neural nonlinear
+mapping, isn't it kind of
+limited to how much the SVD can
+compress your original data? And
+if the dog does, so the data is
+coming from pure addictions, for
+example, then you you create
+much like tools, almost like the
+full space where we'll space
+snapshots, number of snapshots.
+So, yeah, so yeah. Can you
+comment on? Yes, that's
+true. It's true. But maybe
+oftentimes, you don't need to I
+mean, we actually use a very
+high number of modes, I mean,
+yeah, very high, but i i And
+usually, you have this
+Kolmogorov decay problem
+asymptotically. So, for some
+applications, you may still use
+a limited number of LSPD moments
+and achieve a satisfactory
+accuracy. Also, because let's
+say the the introduction case of
+is like an extreme case with
+respect to some applications,
+but some other examples of my
+problems, real problems, where
+this approach works also only
+data driven problem. So, well,
+only data driven approach is
+tested, can be found for on the
+works of Stephanie fresca and
+Manzoni. For the while the
+extensively tested their pod the
+L rom technique, and then
+they've shown that also for some
+electoral philosophy, theology
+test cases So, you may still,
+with less than three under
+modes, approximate dynamics,
+which is abduction dominated. So
+really depends on the accuracy
+you want to achieve. And of
+course, when when you get
+problems like the one I've shown
+at the end, so in this case, so
+when you have also here, I would
+say that you have this problem.
+So when you cannot approximate
+Well, the social manifold, which
+has mods, then you would really
+need to use a nonlinear
+dimension reduction technique.
+So yes, this this approach I
+presented works in intermediate
+regime, let's say, where you can
+use when you need to use more
+mods than what the number of
+mods you would use for a
+standard these bases methods,
+but still, not too many. And so
+for you not to require nonlinear
+dimension reduction techniques.
+Great. My second question is
+about the adaptive hyper
+reductions. And there you are
+changing a list of magic points
+every, like 20 or 50 iterations.
+Yes. And once you change the
+magic points only the Hyper V
+dot center on the linear map is
+you have to update it online.
+Yes, yes. But you don't change
+anything on the nonlinear map?
+Yes, yes. Okay, cool. Even
+there, like updating the linear
+map hyper reduction,
+informations, that takes a, you
+know, some computational time, I
+guess that's why average, the
+client stack cost is high.
+Yeah, but in this case, we use
+only reduce over collocation. So
+restricting the mods to just a
+sub mesh to a different sub mesh
+is very efficient. Now, I guess
+the cost really depends on the
+number of iterations of your
+optimization scheme with which
+optimization method to use to
+solve the nonlinear least square
+problem. Okay, of course, this
+is I don't know if in your
+experience, but yeah, it's
+difficult to get under this
+valley. Also, in our
+implementation, maybe it's not
+as efficient as the code, which
+implemented the numerical
+solvers open form, since we we
+blend it with, say, Python with
+a reasonable variation in C++
+inside open form. And maybe more
+efficient presentation could be
+performed, because how, but
+sorry,
+the efficient implementation
+could help.
+Yeah, maybe so. Yeah. Maybe
+implementing? Everything's
+supposed to pass or? Yeah, I
+cannot think of maybe in
+response. I mean, this isn't may
+not be much different with
+respect to your single iteration
+of your shallow master of
+encoders. So maybe, maybe, maybe
+it's really the comparison with
+the open forum solvers in this
+very coarse problems that
+sometimes it's not. Sometimes
+you're not comparing apples to
+Apple, I guess. Yeah. Open Forum
+is a C++ and your and your
+implementation is on one item.
+Yep.
+We evaluate the residual
+efficiently in C++, but the say
+the NACA is on Python. So also
+the optimization with the Betsi,
+but Pettifor pi. Okay. Simple to
+test different techniques. Yes.
+Okay. In that sense, there is a
+some room for improvement. Okay,
+I have a one more questions, if
+you if you have time. Yeah,
+sure. I really kind of wanted to
+see the more about the teacher
+student approached. Okay, let me
+correct like the slides 26
+Because I thought that was
+really a kind of killer. Okay.
+Killer up in nonlinear manifold,
+learning, nonlinear manifold
+digital model, in general,
+because you do not have to rely
+on the that linear map. And
+it's, it's, and you can fully
+take advantage of the expressive
+ability of the, you know, the
+neural network with a nonlinear
+map. Yeah, what kind of speed up
+do you get if you apply this
+teacher student training?
+I remember that in those cases.
+I still I remember where they
+actually the grids are the ones
+I've shown for a production
+here. So we tested it on a Lena
+conservation ran on the shallow
+water equations. And the grid
+was I guess, 60 by 60. So it's
+very small problems. So in open
+form, and And also in this case,
+I guess we could not achieve a
+speed up. I mean, we matched the
+mean time step, 14 reactivation,
+and we managed to achieve a
+speed up of true for the shallow
+water equations with the
+implementation of the teacher
+student training network. And
+that case also we computed also
+data Cobian in a very efficient
+manner because we have a two
+layer network so we could
+evaluate it efficiently.
+Okay. And your folder model was
+still open form.
+Yeah, it was still open form.
+Yeah.
+Okay. Well, thank you. Is there
+any other questions? It's past
+the lab and so. Well, thank you
+so much, Francisco. It was
+wonderful. And I learned a lot.
+So that is great. Yeah, if if
+anyone has a any question for an
+assessable, please reach out to
+him directly. I'm sure he's
+going to be happy to get any
+questions from your base, bone
+protector. Francesco. Thank
+you. Bye, have a good day.
+This is cool.

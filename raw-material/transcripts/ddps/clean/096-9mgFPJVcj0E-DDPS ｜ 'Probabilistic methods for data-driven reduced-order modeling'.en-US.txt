@@ -1,0 +1,1183 @@
+And then start by. Welcome to the DDPS seminar
+everyone. Before we introduce our invited
+speaker, let's go over some rules and logistics.
+First, please mute yourself during the talk.
+But if you have questions, you can unmute
+and ask your questions. We'll use chatroom
+to post your questions so that we can address
+them in the q&a session at the end. Second,
+today's DDPS seminar is open to external audiences.
+Therefore, no classified discussion is allowed.
+Finally, the talk today will be recorded and
+uploaded in our YouTube channel. That's about
+it. Now let me introduce our speaker today.
+It is an honor to host Dr. mango grove who
+is an assistant professor in applied mathematics
+at the University of Twente the Netherlands.
+Prior to this appointment, he held postdoctoral
+positions at EPFL Institute of mathematics
+and the Odin Institute for computational engineering
+and sciences at UT Austin. He received his
+bachelor's in engineering and PhD degrees
+in civil engineering, both with top honors
+from Tsinghua University in 2013, and 2017.
+His research interests spanned several areas
+areas areas, in computational engineering
+sciences, of course, exciting areas, including
+boulder with sand, we UQ, multi fidelity data
+fusion and probabilistic methods for scientific
+machine learning. Currently, he receives a
+financial support from Dutch National Instruments,
+sec to plan data on the Focus Area mathematics
+of computational science today, man who will
+present an exciting topic, which is probabilistic
+methods for data driven, reduced order modelling.
+I'm sure we will hear an exciting talk today
+but before I pass the baton to man, oh, let
+me ask a couple of questions to him just to
+get to know him better and make this seminar
+somewhat informal. Okay, first question here
+people. In your bio, you have listed several
+research interests like model reduction, UQ,
+multi fidelity, data, fusion and probabilistic
+methods for scientific machine learning, etc.
+Yeah, I know they are all related. But if
+you have to choose one, that is the most exciting
+to you right now. What what is it? And why?
+If I have to choose that I don't prefer but
+if I had to choose, I would choose UQ. I think
+especially in the current year of scientific
+machine learning UQ is a cross section right
+across scientific computing, computational
+statistics, machine learning, physics based
+simulation and DDPS. Right, that I think the
+crossroad is UQ. And the most excited about
+it. I'm also teaching UQ to the masters students,
+and they are also quite interested in UQ topics.
+Yeah,
+awesome. Awesome. I guess you're going to
+say I'm UK conference next
+year. Yeah, indeed, is a very nice city. Yeah.
+I will see you there. Then. Second question,
+here we go. I always like being a professor
+at the University of Twente the Netherlands,
+if I give you a minute to advertise your university
+here to audiences, how owes you brag about
+your school?
+Yeah, this is a very international university
+is in inside the Netherlands is in the middle
+of Europe. But all of our teaching, no matter
+a bachelor level, or master level, everything
+is in English. So we have a variety of students
+from all the countries you can think of. And
+the diversity and inclusion is perfect here.
+So I welcome a lot of students from from us,
+and from China, from other countries, to our
+university to have bachelor or master's studies,
+or PhDs. And this is definitely one of the
+best environments you can get in Europe for
+International Studies and Research. Awesome.
+Sounds
+wonderful. All right. The stage is yours.
+Thank you. Thank you. Thank you for the invitation,
+nice questions and introduction. And I value
+this very good opportunity to share some of
+our risk research results on probabilistic
+methods for data driven reuse on modeling,
+some established resort results and some more
+recent results. I often like to start my motivation
+by talking a little bit about digital twin
+and technologies in our digital twin is currently
+a very trendy topic in the computational engineering
+community. And when we talk about digital
+twin, we're actually referring to digital
+replicas that persistently represents a unique
+physical asset throughout its lifecycle, powered
+by Big Data and enabled by a dynamical synchronization
+between the physical and the digital twins.
+And in my personal opinion, the success of
+digital training with highly rely on the synergistic
+integration of basics based modeling and machine
+learning together with real world observational
+data and this is actually perfectly aligned
+with as the spirit of scientific machine learning
+and the order to realize the dynamical real
+time synchronization between the physical
+and digital twins, it is crucial to realize
+to enable a multiplayer way real time simulations.
+As I guess most of you already know in scientific
+computing, multivariate real time simulations
+are often described by a nonlinear time dependence,
+possibly also parametric partial differential
+equations. If we use full order solvers with
+detailed code to solve this multi query real
+time problems, it may result to prohibitive
+or computational cost. And this is why and
+aware I reduce all the modeling comes into
+the stage right. So generally speaking, model
+reduction or reduce all the modeling attempts
+to intelligently reduce the system complexity
+by representing high dimensional physical
+systems in low dimensional latent spaces,
+just in case some of the audience may not
+be perfectly familiar with model reduction.
+Just a few words about the general spirit
+of reduced order modeling, I'm summarizing
+the typical framework for model reduction
+into three R's reduce represent and recover.
+So, typically, in the first step, we reduce
+a high dimensional solution manifold into
+a low dimensional latent space and inside
+such a latent space, we represent our physical
+system in a low dimensionality forming forming
+our reduced order system and solve along with
+it. Once we have solved the reduced the stays
+and in the last step, we can recover or decoded
+back to the full order size, right this is
+a three step methodology reduce represent
+and recover. In my personal opinion, the most
+tricky part is often the second step the representation
+of the system insights a low dimensionality
+our latent space, a classical treatment for
+as his representation is through coloring
+or Petrov Galerkin projection, we just a project
+the full order systems into into the reduced
+latent space right. And this classical and
+conventional treatment through projection
+or record projection based model reduction
+is often intrusive, meaning that we have to
+get the access to the inside of the food order
+code to extract the matrixes or vectors or
+whatever elements we may need to formulate
+our reducer the system and the product numerical
+projection will also be problem dependent
+and this intrusive nature will most possibly
+result in a limited industrial relevance,
+which is not something we want and this has
+been my and also many other colleagues motivation
+to develop data driven reduce all the models
+yeah nine intrusive manner, the holy grail
+in this area is to find is to learn physically
+consistent representations of reduced order
+dynamics primarily from data instead of numerical
+projections to formulate or reduce other systems.
+So here I'm quoting arbitrage nine, as far
+as the laws of mathematics refer to reality
+is they are not certain and and as far as
+they are certain they do not refer to reality.
+So basically, this has emphasized is it has
+pointed out the importance of uncertainty
+quantification in scientific discovery and
+physical simulations. And of course, when
+we do data driven model reduction or non intrusive
+manner, when we do the learning process, it
+is inevitable to encounter noise in the data
+as well as a variety of uncertainties throughout
+the modeling process, and this has been my
+motivation to use probabilistic machine learning
+to facilitate Our data driven reduce all the
+models with a net natural uncertainty quantification,
+and the in the upcoming perhaps 40 ish minutes,
+I'm going to briefly review some of our research
+efforts in the last five, six years until
+very recent. There are three classes of methods
+I would like to discuss, depending on how
+much physics we are incorporating into the
+models, we have the first method being blackbox
+method, basically using Gaussian process surrogate
+models to build reduce all the models. And
+the second method is a gray box method, we
+try to represent reduce all the dynamical
+systems with a probabilistic learning technique
+called the deep kernel learning. And the last
+but not least, we are going to discuss a third
+method, a glass box method using Bayesian
+inference to estimate reduced order operators.
+Okay, so my journey along this path started
+roughly five, six years ago in Switzerland,
+and we started with Gaussian process surrogate
+modeling, and this method is no longer new.
+And maybe it's not that exactly exciting anymore,
+but it did set basis for a lot of follow up
+considerations in the other method I'm going
+to introduce, so, here I would still like
+to briefly discuss this method a little bit
+and also introduce our critical numerical
+tool with Gaussian process emulation, which
+will be also used in the other two methods
+in different ways. Okay. So, we started with
+a very, very simple and straightforward idea,
+the reduce or the modeling often seeks to
+find a low rank approximation of the reduced
+order solutions. So the reduced order solutions
+will be spacetime parameter dependent and
+it is actually represented as a linear combination
+of a small number of reduced basis vectors
+over space with time parameter combination
+coefficients, right and to be ordered together
+reduce basis vectors, we can use unsupervised
+learning, basically, dimensionality reduction.
+And the most popular method, as you know,
+is linear PCA or we call it proper orthogonal
+decomposition in the model reduction community,
+we just get the full order snapshot solution
+data and the Compress through linear PCA and
+get our reduced basis vectors. And then the
+question is about how to approximate the time
+parameter dependent combination coefficients.
+And here we are using a very simple tool we
+are using regression to to approximate the
+map from the time parameter inputs onto the
+projection coefficients onto the onto the
+reduced basis and use this regression model
+as a surrogate for our expansion coefficients
+of the pod and bases right. So one step of
+unsupervised learning and another step of
+supervised learning and after the training
+in the offline stage, the online stage is
+simulation free, we just need to evaluate
+the regression output class simple linear
+combination of the reduced basis right. And
+you order to further improvement the offline
+training stage we also try the multi fidelity
+data fusion to reduce the number of high fidelity
+evaluations to improve the efficiency of the
+offline stage. And also we tried domain liquidation
+for accelerations in large scale problems.
+As I already mentioned, the regression tool
+we used was called from process emulation
+or Gaussian process regression. Just in case
+you are not very familiar with this tool.
+Generally speaking, in Gaussian process regression,
+we assume the prior on the regression function
+to be a Gaussian process with a given kernel
+function perhaps also corrupted by additive
+white noise conditioned on the training data
+of the input output pairs we can resort to
+a conditional Gaussian and have the posterior
+distribution also as a Gaussian process with
+the new mean function like this and the new
+covariance function. And in this case, for
+our regression function, you have predictive
+sense we not only have a mean estimate, but
+also have the posterior variance providing
+us with certain some kind of uncertainty quantification
+as a confidence level. And you're there to
+determine hyper parameters inside a The Gaussian
+process emulation and we can use empirical
+Bayes method such as maximizing the marginal
+likelihood. And on the other hand Gaussian
+process regression is a kernel method, the
+posterior mean estimation is actually equivalent
+to the result of a kernel ridge regression.
+This means we can also examine the results
+of Gaussian process regression from the perspective
+of reproducing kernel hyperspace. Yeah, yeah
+analysis sentence. A side note about this
+actually, deep learning or neural networks
+also have a connections with Gaussian processes.
+under certain assumptions, Bayesian neural
+networks can be viewed as Gaussian processes
+with specifically defined kernels. And as
+I just mentioned, the government process regression
+it has close connections to kernel ridge regression
+and kernel ridge regression is actually a
+function approximation inside reproducing
+kernel Hilbert spaces a class of certain reproducing
+kernel Hilbert spaces will form parents space
+and the parents space is actually a proper
+function space where we can investigate the
+approximation properties of neural networks.
+So, in this sense, we have a loop connecting
+the probabilistic viewpoints and analysis
+viewpoints of neural networks and the governance
+processes. Right and I believe out of this
+loop, there can be a lot of interesting results
+and observations to be explored and discovered.
+Okay, back to our model reduction game, we
+have applied our Gaussian process based reduce
+all the models reduced or the surrogate models
+see a variety of applications including those
+in computational mechanics like nonlinear
+structural analysis, nonlinear solid mechanics,
+as well as fluid dynamics and the fluid structure
+interaction. And the more recently we have
+been using our reducer the surrogate models
+in forward and reverse UQ basically, with
+our simulation, three online evaluations through
+the Gaussian process surrogates we can generate
+however many however, many samples we need
+in UQ estimates, if we can have a good control
+of our data driven reduce all the models the
+bias in the uncertainty estimate would not
+be so large either okay. So, this is our first
+part using Gaussian processes for surrogate
+modeling in the reduced order sense. So, this
+is a valid option for many applications, because
+the target modeling task is very easy to implement,
+and it can work for many scenarios, but I
+have to admit that surrogate modeling has
+its limitations is actually has limitations
+in predictive performance, because the Gaussian
+process surrogates are only trying to approximate
+trying to approximate or reduce other solutions
+instead of trying to discover or trying to
+represent the dynamics underlying the data.
+And on the other hand, a surrogate modeling
+can handle very well the interpolation of
+the reduced demand of the solution manifold
+over the parametric variation, but if we want
+to predict for the future states it will have
+a lot of limitations.
+From another viewpoints. In reality, we do
+we also do not always have full solution vectors
+as our data right we may have other forms
+of observations such as images, photos, video
+and so on and other types of indirect data
+as our data base and how do we how can we
+lower reduce order low dimensional dynamics
+out of these kinds of data is also a question
+we need to think about. Combining this source
+introduces my second method for today it is
+reduce order the Renko representation out
+of image data with deep kernel learning. And
+in this work, our research question was a
+little bit different. We try to learn low
+dimensional latent dynamics from high dimensional
+measurements given by image data, and these
+images are often corrupted by significant
+noise. Since the noise is a lot of noise has
+been introduced with a specially need new
+cue You're right. So, we are going to use
+probabilistic machine learning tools for the
+data driven discovery and as done in the quantification,
+and here you can see an example, we have a
+pendulum swinging back and forth, and we take
+photos of central motion, and the way we can
+try to learn the dynamical representation
+in a low dimensional manner out of this image
+data and this image data also corrupted by
+noise, the probabilistic machine learning
+tool we are going to use to address this is
+called Deep kernel learning. In fact, the
+kernel learning is a special type of manifold
+Gaussian process in the sense that the manifold
+embedded into the Gulf and process kernel
+is simply a neural network and with the with
+the structure setting, the Gaussian process
+can take high dimensional data for example,
+images as inputs, and in this sense, we can
+partially overcome the curse of dimensionality
+existing in Gaussian process emulation. And
+in this case, we also have our neural network
+parameters trained as Gaussian process hyper
+parameters. And I would also like to note
+that the training was such a deep learning
+model is much simpler and cheaper than classical
+Bayesian neural networks, okay, how should
+we use deep learning to discover low dimensional
+dynamical models, so, still we are going to
+follow the idea of the three R's right remember
+reduce, represent and and recover and we have
+the high dimensional noisy image data as our
+inputs, right we put them into our encoder
+to reduce the dimensionality and nonlinearly
+and then we have the low dimensional latent
+space layer and the latent states right and
+then we try to do representation and in this
+work, we are simply we are simply using a
+multi layer neural network to approximate
+the map between the current reduced state
+and the current external action to the next
+reduce the state basically, this neural network
+is trying to approximate a forward Euler scheme
+right and after this, we use a decoder to
+recover back to the images, I would like to
+emphasize that we have the outer encoder and
+the multi layer neural network for the dynamic
+model both as deep kernel learning models
+basically, were embedding a convolutional
+neural network here and a multi layer neural
+network here into Gaussian processes to enable
+uncertainty quantification. In this case,
+both the uncertainties in the encoding and
+the uncertainties in the dynamical approximation
+would be covered by the deep kernel learning
+models and we together with all these three
+modules in this big model, we train them together
+and try to test how we can handle extracting
+dynamical systems out of high dimensional
+image data. Okay, we did several tests, several
+tests, we added noise directly onto the image
+data and we also try to try to add noise to
+the external control or external actions or
+even we add noise to the underlying dynamics
+to make this system stochastic. And in all
+these cases, our our model gave us very clear
+and the compact representations of the low
+dimensional dynamics and also I would like
+to emphasize that we have very clear de noising
+effect in the risk Reconstructor images okay.
+So, this is I call this the gray box model,
+because it is not black box and we are we
+are having this deep kernel learning model
+in the representation step to approximate
+a fold older scheme. So, it is trying to approximate
+certain dynamical structure underlying our
+images right. So, this is a gray box, but
+still we would like to think whether we can
+incorporate more physics into the training
+process to get more physically consistent
+reduction out of out of the data. This will
+introduce our third method that we are going
+to discuss today is using Bayesian inference
+to read or to estimate the reduced order operators.
+Okay. So, we can start with an example suppose
+you are trying to solve whiskers burgers equation,
+you can use your favorite spatial discretization
+for whiskers burgers equation for example,
+you can use finite difference finite difference
+over space or finite volume finite elements,
+whichever works for spatial discretization.
+And after the after this step we will end
+up with a dynamical system in the full order
+sense, which is quadratic, right because the
+whiskers burgers equation is a quadratic.
+We also know that if we have a linear reduced
+basis, once we have projected the full order
+system onto the linear reduce the space, we
+will also we will end up with a reduced order
+system being in the same formulation of a
+quadratic structure only much reduced the
+size. So, the quadratic, the polynomial structure
+of the governing equation will still preserved
+will only have a reduced dimensionality. If
+we recall how we do this in nine intrusive
+model reduction, actually, we have to get
+the access to the code to the full order code
+to get the matrix is a H, B and the vector
+C and then formulate a reduce all the systems
+through numerical projection and get the reduced
+order operators he had, he had we had hundreds
+and c hat, right. And this is not something
+we want to do because that's intrusive, we
+may not have the access in insights for other
+code. That means, we do not exactly know about
+the four odd operators ah B and C. But still,
+we know that the reducer the systems through
+linear projection would would follow a quadratic
+formulation. So, we need a way to an alternative
+way to figure out to estimate our reduced
+order parameters, I had H hat behind and c
+hat. Actually, the way we are resorting to
+is called data driven reduced order operator
+inference. And the idea is like following.
+So, first of all, we gather our full order
+data for the full for the full size vectors,
+full size snapshots queue together the data
+of q, then we use pod to compress our reduce
+spaces, we then we read we we project our
+Q data onto the V basis to get our reduced
+the data for Q hat right. And then we plug
+our q hat data into our reduced the order
+system formulation. And then we try to minimize
+the residual sum of squares for the for the
+further reduce or the system by minimizing
+such as squared the residual we are going
+to have an estimate of the reducer the operators
+a had H hat be had and c hat that best match
+our q hat data reduce the data in the minimum
+residual sense of course, and in the end of
+the day, at the end of the day, we will have
+a least squares problem and of course, you
+can add your
+your favorite regularization as necessary
+to improve as as necessary to improve the
+estimate of our reduced order reduce order
+operators okay. So, this is a data driven
+learning process. And of course, we may introduce
+a variety of uncertainties inside this throughout
+this process for example, we may have noise
+in the data of the for the queue, and after
+the reduction, the noise will be reduced a
+little bit as well, but still they make exists
+noise in the reduced the state data as well
+in Q hat. On the other hand, as you can see
+here, we need to approximate time derivatives
+to get time derivative data in this loss function.
+That means we have to perform for example,
+finite differences to evaluate this to approximate
+this time derivatives out of our data data.
+And this is going to be introduced approximation
+error which is another source of uncertainty
+our data driven learning process. Also we
+use the regularization and this is another
+source of uncertainty. And last but not least,
+we may have model Miss specification for example,
+if your underlying system for your data is
+actually a third order system with a minor
+third order term, but now we are assuming
+that the system is quadratic and the ignoring
+sort of the term we have a model Miss specification
+here, right. So, these are these are many
+sources of the uncertainties that may be introduced
+into this operator inference framework. This
+is why we want to do uncertainty quantification,
+we want to upgrade our deterministic or point
+estimate into a Bayesian inference, so, that
+we not only have a point estimate of our reduced
+or the upper operators, but also a posterior
+distribution to describe the quantified uncertainties.
+Okay. So, we started with a very simple setup,
+first of all, we define the residual of our
+reduced order system as Gaussian type noise.
+In addition to that, we also define our prior
+on the reducer the operators as Gaussian joint
+Gaussian distribution with predefined mean
+vector and hyper parameters and variance.
+The naturally we resort to the Bayes rule
+and have the posterior distribution for our
+reduce other operators with a new mean vector
+and a covariance matrix. So, if we look closer
+at the posterior mean vector, we will see
+that this is actually equivalent to a deterministic
+least squares estimate with with Tikhonov
+Regularization or the estimators read regression
+as this is a common sense in Bayesian version
+of well known result. And in fact, in practice,
+we often need such a teaspoon of regularizer
+in our operating inference, because first
+of all, it may resolve the issues will you
+condition the grant matrix D transpose D here,
+if this d transpose d is your condition, we
+do need such a regularizer to improve the
+condition number because we have to invert
+this matrix right. And in some other cases,
+we may also need a tuple of regularizer to
+help stabilize the reduce all the time integration
+afterwards. But, even though But, even even
+we have such useful people of regularization,
+we are still introducing extra uncertainties
+into the operator inference process, right
+we want to do quantify, do the quantification
+of uncertainties for the use of taken off
+regularizes. Actually, if we can recall, as
+a token of regularizer is corresponding to
+the prior of our Bayesian inference, that
+means, is the definition of the penalty coefficient
+for the regularizer is equivalent to choosing
+a good prior for reduce all the operators.
+So, that means, the quantifying the model
+Yeah, certainties introduced by the pupil
+of regularization is naturally covered by
+such a Bayesian framework. Right. And in this
+case, since we have a connection between the
+regularization true thing, and the prior to
+saying we can also use the perspective from
+both statistical learning and the physics
+based simulation to help us do the hyper parameter
+learning. So, after we have the inference
+for our reduced order operators, we can sample
+we can sample over this posterior distribution
+of these parameters, and have a lot of samples
+individually and for each and every time we
+can evaluate the reducer the dynamics not
+only trying to reconstruct the history, but
+also predict for the future states and we
+have an ensemble of reducer other solutions,
+then we can have the statistics of such probabilistic
+reduce all the solution. We have tested this
+method in several numerical examples. I'm
+going to show you one here, this is the to
+the single injector combustion process, right?
+It's rather complex physics into the we have
+fuel and oxidizer coming into coming into
+the tube from the left hand side and the chemical
+reaction will take place inside the tube,
+right and we were trying to use our basic
+operator inference to have a low dimensional
+dynamical representation of this system. As
+you can see, from both the first six pod moles,
+and also for the x velocity at four critical
+locations, in terms of accuracy, we have the
+predictive mean quite close to the underlying
+reference, not only for the reconstruction
+Have the history data covered by the training,
+but also for the future states future states
+for quite long time. And in terms of uncertainty
+quantification, we can see that both the errors
+in the mean prediction and the uncertainty
+band increasing similar way. So, this means
+that the confidence level is giving us meaningful
+indication about how uncertainties are propagated
+from the estimates of the reduce or the operators
+to the time integration over time. Okay. Maybe
+you have already realized when we did the
+Bayesian inference, we
+explicitly involve the time derivative data
+and it is often the case that we do not have
+direct access to time the Rhodes's that means,
+we often need to use numerical differentiation
+for example, finite differences to approximate
+time derivatives from the reduced the state
+data and this can work if the data are perfect,
+but what if we have noisy or scarce data right
+in those cases, they find an element approximations
+of the time derivatives would be very bad
+and this will further compromise the quality
+of our operator inference. You may say that
+okay, I know neuro OD is right. In neural
+ODEE treatment, we are directly incorporating
+time integration into the loss function with
+directly we directly compare the integrated
+states to the state data, basically, we are
+translating a differentiation into integration.
+And then we use either a joint state or automatic
+differentiation depending on which type of
+time integration either appropriate either
+discrete or continuous use, but this artist
+means extra efforts in the training stage.
+So more recently, together with some of our
+collaborators, we have been trying to figure
+out a simple way to address this issue. So
+basically, what we want to improve the the
+predictiveness when data are noisy and or
+scares, basically when finite difference can
+not really approximate to the time derivatives.
+And here we are thinking about a more generic
+setup for dynamical systems. Here I'm writing
+a dynamical system right and each and every
+line of the equation is is parameterised on
+the left hand side. So in this case, the learning
+of the dynamical system from the data is basically
+posed as a Bayesian inference problem to estimate
+theta i for each and every equation, each
+and every patient in that dynamical system.
+Okay, so, we want to figure out a way to conveniently
+do this Bayesian inference without using finite
+difference or other numerical approximations
+of the time derivatives. So, this is our goal.
+And of course, if you consider this app I
+on the right hand side as a quadratic structure,
+and this theta is our reducer, the operators
+and each x i is a reduce the stage in the
+reduce the system. So basically, this system
+is going to be representing our reduced order
+system in the in the last couple of slides,
+but here we are considering a more generic
+setup. So here we are going to, again, use
+Gaussian process to help us the assumption
+is that each and every state variable over
+time is a Gaussian process. And it's well
+known in the Gaussian process community that
+linear operations on Gaussian processes will
+not really change the government property.
+So linear operations or government process
+will remain Gaussian. That means the joint
+distribution between the state which is governed
+process and its time derivative will follow
+a vector valued Gaussian process, we just
+need to act the time derivatives add the proper
+locations in the kernels. Okay? And then we
+can use this to help us define a new likelihood.
+Okay, so let's recall what the likelihood
+is. So likelihood is the probability of certain
+evidence like observations, data measurements
+or other types of measurements given the parameters
+we want to estimate right. So this is the
+lag Through the function of our parameters.
+So let's consider what kind of evidence we
+can have in this scenario. So first of all,
+we have the time series data in the data driven
+sense, right? This is for Gaussian process
+regression, we have the data, so we can do
+emulation. And actually, we have another sort
+of evidence in this setup, it is actually
+the formulation of our differential equations.
+So we can use the differential equation constraints
+given in this form as additional evidence
+to be incorporated into our likelihood. As
+we just discussed, the joint distribution
+of the date and time derivative will follow,
+again, a Gaussian process, and we can use
+this Gaussian process, this new joint Gaussian
+process to define our joint likelihood, we
+just need to replace the right hand side of
+the dynamical system to we just need to use
+the right hand side of our dynamical system
+to replace the time derivative. And in this
+case, we are trying to match the left hand
+side and the right hand side of the dynamical
+system together. And in this sense, we are
+incorporating differential equations, constraints
+into the definition of our likelihood. Okay,
+so this is how we define our likelihood in
+a new way. And of course, in the end of end
+of the day, we are going to have a Bayesian
+inference. Again, we have the prior as a joint
+normal distribution, and the newly likelihood
+as in the last slide, and then we have the
+posterior once we have the posterior distribution
+for the parameters theta i, we can have a
+Bayesian predictions by sampling over such
+a posterior theta i, right. So actually, we
+can look more carefully at how our posterior
+distributions for for our parameters actually
+rearrange a little bit. The formulation of
+our post posterior distribution for theta
+i As you can see here, the maximum opposed
+to ra ma P estimate of our theta i is actually
+equivalent to our estimator through generalized
+least squares regularized by our Tikhonov
+regularizer again, and in the generalized
+least squares formulation here, the target
+term d hat here is actually the mean estimate
+of our time derivatives through our Gaussian
+process emulation, and the weight matrix in
+our generalized least squares is actually
+the covariance matrix for the estimated time
+derivatives, so GP. So in this sense, it means
+we are implicitly still trying to approximate
+time derivatives, but this approximation of
+the time derivatives is through the smooth
+thing by a Gaussian process, emulation, and
+more importantly, the uncertainties introduced
+the introduced devices, a smooth learning
+process is automatically covered automatically
+included in such a Bayesian inference framework.
+So, in the end of the day, we have an estimate,
+if you have we have our estimates that covered
+all the uncertainties involved in this in
+this learning process. That means if you have
+scars or noisy data, but you have a very good
+Gulf from process, you can be relaxed, and
+the Gaussian process will help you to analyze
+the data and give you a very good implicit
+estimation of the time derivative and using
+Fletcher time derivative estimation, you can
+have a good estimate of your reduced order
+operators or the parameters in the dynamical
+system. We have tested as this method in a
+few examples. This is still ongoing work,
+but I would like to share with you some of
+our preliminary results. So first example
+here is a locker Volterra system. We are going
+to estimate the alpha, beta, delta and gamma
+for as for a parameters in this system, using
+our newly defined likelihoods through Gaussian
+processes. As you can see here, when we when
+we have no noise in the system, if we use
+either a lot of data or much reduced amount
+of data,
+the results are all very good, very decent.
+And then we've tried to make it more challenging.
+We increase the noise level to 10%. As you
+can see if we use all Other data we have results
+are still good 10% of the data used quite
+nice and 5% of the data, there could be some
+error, but the trend is still good, then we
+try to make it even more challenging, we increase
+the level noise level to 20% with all of the
+data still good results 10% of the data, reasonable
+5% of the data to error becomes larger and
+larger. But in the back to the end, we can
+see that our method is quite robust with respect
+to noise level and under sparse data, right,
+you can make it more and more challenging,
+and the method can still handle quite challenging
+cases. And how about we consider reduce all
+the modeling, and here I'm showing you a very
+simple case is a heat equation linear equation
+right and reduce all the model structure is
+is linear, right? Right. And we want to do
+the estimate of our reduced reduced order
+parameters a had B hat and c hat here, right.
+And as you can see, we can when we have quite
+some noise in the in the full order stage,
+once we use our newly defined Gaussian process
+base likelihood, we can have a very decent
+estimate of the reducer the system, once we
+recover back to the full order size, even
+at low point wise, local points, we can still
+extract reasonable dynamical behavior out
+of the noisy data, right, and not only to
+in the, in the reconstruction of the history,
+but also for the predictions for the future
+states. And what if we reduce the number of
+data still, as you can see, the results are
+very good. So seems like Gaussian process
+are very good at denoising. And this can help
+us define go around, go around the derivative,
+derivative difficulty, the relative difficulty
+in the in the in the time series when the
+data and noise or or scars and this can give
+us very good results. In terms of in terms
+of predictions. So still, these are some very
+recent results. And I would like to hear some
+of your ideas or opinions or suggestions.
+And I guess this is about what I want to share
+with you today. A few words as a summary of
+some take home information. So today, we have
+been discussing several different types of
+model reduction techniques, you know, probabilistic
+sense using probabilistic machine learning
+methods, as the first one was about black
+box method using Gaussian process surrogate
+modeling. And the second one was that gray
+box using deep learning to represent a low
+dimensional dynamical systems out of noisy
+images. And the third insert method was Bayesian
+operator inference, basically, using Bayesian
+inference to estimate reduce all the operators
+with known physical structures. And in the
+end, we discussed the how to use Gaussian
+processes to incorporate differential equation
+constraints into the likelihood definition
+so that we can improve the predictive needs,
+especially when the data are noisy or parts.
+Okay, thank you very much. And I look forward
+to your comments are greeted them suggestions
+and discussions.
+Thank you. Good. Thank you. Thank you so much
+for the wonderful talk memo. I enjoyed it
+a lot. Let's have a q&a sessions. All right.
+Kevin, has a question in chat room. Yeah,
+I will. We will, you know, keep a chance.
+After this is asking in slides 1516 1516.
+Okay, and what is the Yeah.
+He's asking what is the last function to train
+neural network and GT hyper parameters? Thank
+you very much. Thank you very much. It
+is a very good question, because the last
+function was too long. So I didn't put it
+here. We train this three models all together.
+So we have to combine the last functions for
+this the three parts all together. So I can
+I can tell you what they are. And of course,
+you can refer to the paper to see more details.
+So first of all, we need to make sure that
+the encoding decoding is making sense, right.
+So we need the MS e two to match the reconstruction
+of the encoding decoding. This is one second
+one. We have to make sure this up oxygenation
+of the for the older is making sense. So,
+we have MSE for this multi layer perception
+as well, this is the second one, the third
+one will start to train the Gulf and processes
+right? How to Train government process hyper
+parameter basically, you can use maximum marginal
+likelihood or the minimum of negative log
+marginal likelihood, right, we have done we
+have to incorporate the negative log marginal
+likelihood of all this Gaussian processes
+into the loss function. And the in the end,
+we have to use variational inference to estimate
+the probability. Right. So, the we also need
+to use elbow to to replace the KL divergence.
+So, all these terms will be combined together
+for the training of this big model. And also
+feel free to refer to the, to the paper for
+more details, but this was roughly the spirit.
+Yeah.
+Okay. So one has a second question. If you
+can go to slide 19. Yeah. This Bayesian inference
+is based on a prescribed reduced model, with
+uncertainty model parameters. That was your
+Bayesian inference, quantify the model Miss
+specification, for example, missing high order
+or exponential times, etc.
+Thank you. This
+is definitely a very good question. And we
+have been thinking about this question as
+well. So of course, in our very first work,
+we simply use the independent white noise,
+right. And it was not really covering the
+model Miss specification. And of course, you
+can upgrade a little bit. And you can use
+a Gaussian process to replace a white noise
+for this error term. So basically, that's
+going that's basically trying to approximate
+your model Miss specification or your closure
+as a Gaussian process target, you can do that.
+But that's still limited. We are still trying
+to figure out better ways to do to do it.
+But based on structural framework, the best
+thing you can do is to try to use the Gaussian
+process to approximate this absolute AI as
+a surrogate model for the closure.
+All right, yeah. Thank you. I think next one
+was rip up your hand people. So if you can
+unmute yourself and ask questions. That'll
+be awesome. Please, can you hear me? Yeah.
+Yeah.
+Thank you so much. Amazing. prospection. So
+you touched upon extracting the basis, using
+God the Gaussian processes or not? Yeah. So
+say, for example, I have a snapshot matrix
+has a million by million data points, where
+you can't do D transpose D, I think you're
+doing D transpose D to reduce the dimension
+of the matrix to extract the pre processing,
+or pod Moodstruck. So I just need your opinion
+on the safer example, you have a million by
+million data points in your snapshot matrix
+where you can't do the transpose see, what
+is the viable pre processing tool to go for
+like a team or PCA? If you're using some some
+conventional ones, it's gonna take a long
+time to get those bases or integrations point
+out. So what's your take on this when you
+have 1,000,005 million data points or something
+like?
+Okay, thank you for your question. And let
+me repeat your question and see I'm understanding
+correctly okay. So, you have a lot of data
+points. So that means this D D matrix will
+be narrow, but very long, right? So, D transpose
+D is the computational cost is very large.
+And how do you deal with this? Okay, thank
+you. We haven't we haven't met such a difficulty
+yet. But I have some ideas how to deal with
+this. So for example, you don't need all of
+them to to estimate your reduce auto or the
+operators right you can take one snapshot
+among several right I read like 100 steps,
+you can take one if that can still give you
+a good estimate, why not write or you can
+use some other techniques. For example, you
+can use a bootstrapping or ensemble to have
+so each time you only have a subset of the
+samples and have an estimate and you do this
+several times to form an ensemble and have
+a more probabilistic estimate of your reduced
+operators. This is this is another strategy
+I can think of and actually in In sim D, they
+have already they have already began to use
+bootstrapping an ensemble to deal with this.
+Another strategy is actually our our new method
+here, right? You can simply reduce the number
+of data and the lead Gaussian process to help
+you interpolate and extrapolate to interpolate
+to interpolate in this case. Yeah.
+Thank you. Thank you so much for sharing.
+Oh, look into those texts.
+Listening to that reply, I was simply curious,
+why can't you just use the HPC? Like, distributed
+those data and then do the D transpose D?
+Yeah, that could also be an option. Yeah.
+Okay. All right. Next question from John,
+have you tried or compared against other system
+identification methods like, oh, kid, Moe
+SPI? I don't even know how to pronounce it.
+Most most, I
+can tell you Sorry, I used to not call him
+into. So observer Carmen face filter identification,
+and multivariate output a whole state space?
+Well, are you aware of that manual?
+Authority? Maybe I have limited knowledge
+to address this. But I have a comment I can,
+I can, I can provide that basically, our method
+here, for example, for this Gaussian process,
+likelihood definition method, this can be
+embedded into a lot of methods, right? This
+is just a new way to define a likelihood.
+If you are you, wherever you need likelihood,
+you may think whether this likelihood can
+be used in your favorite method, right? For
+example, we can use this likelihood in operating
+inference like I did before, or you can use
+the similarity define the likelihood in Cindy,
+right? It's also it's also option. So I would
+say that our Gaussian process based likelihood
+definition is more like a plugin, right? You
+can use this to plug that you can plug this
+into your inference framework if it is okay
+to use. Yeah, this is a comment I can I can
+provide. And of course, feel free to write
+me an email about your specific considerations.
+And I'm happy to discuss.
+Okay, yeah. For example, will you go at Mark
+tech next week? I'll be there. Yeah, let's
+see. Where?
+March 10 2020 20 in Paris.
+I'm sorry. I'm not I'm not I'm not going I
+guess.
+Okay. Yeah, no worries. Thanks for joining
+me. Yeah, yeah, we
+wrote email before, right. So I know emails,
+let's communicate. That's why
+we need emails in the past. Thank you so much
+for your great presentation.
+Thank you.
+Thank you. Awesome. Awesome. Can I ask question?
+Sure. All right. So you met. One time in your
+presentation, you mentioned that deep corner
+learning training cost is less than patient
+neural network. I can see that because the
+Bayesian neural network is really, really
+expensive to train. But I see that deep cone
+of learning still has the component of neural
+network and it is combined with the GP later
+on. So the training of the DKL, the deep corner
+learning, it should be as as expensive as
+just training the normal neural network. Yeah.
+Yeah, I think so. I think so. It's the Indeed,
+indeed, we, for example, we use a maximum
+marginal likelihood to train this manifold
+GP. So basically, that's comparable to the
+training of a deterministic neural network,
+but but we different loss function. So this
+is cheaper than the training of a Bayesian
+neural network. Okay, let's it's a conditional
+cause it is saved in this sense. I
+see. Yeah. But, you know, the deterministic
+neural network training of that is not an
+easy task as you increase the data size, cause
+you have to solve that normally. That's true.
+That's true. So you still have an issue of
+scaling. In that sense, I would admit,
+yes, yes. Yeah. Because of the neural network
+existing existing in this model. Yeah.
+Right. Right. But, I mean, you know, other
+compression techniques. I mean, a lot of times,
+you know, you presented three or four different
+methods, I think two or three weeks As you
+know, based on the pod Media Composer because
+we like it, we really like it, because the
+training of that is, you know, very, a lot
+less complex than training the neural network,
+but it has disadvantages like it cannot accurately
+represent the attraction dynamics, for example,
+what the komak comment is, yeah, it became
+decaying slow. Yeah. Yeah. Yes. But in essence,
+in essence, deep corner learning would be
+beneficial, because you're using the neural
+network to compress. Yeah, and comments on
+that,
+I have very mixed feeling. My work I do use
+the auto encoder or similar tools for nonlinear
+manifold learning, because they are useful
+and popular, of course. But, for example,
+if you use that in convolutional auto encoder
+here, you don't have as good as as good error
+control as in pod, right? Many things are
+unknown. And if you want to do more physically
+meaningful projection onto the nonlinear latent
+space, of course, you can do you can do least
+squares, Petrov, Galerkin. That's one way.
+So I guess you also notice that very well.
+Yeah, that's one way. But it's not how it's
+convenient, either. Especially when your neural
+network, the encoder is very, very complex,
+the projection to be very tricky. And if we
+do blackbox learning, or, or we call a black
+box, or green box learning, we are missing
+some physics. So I have mixed feelings about
+it. So if we have linear PCA, we can do the
+linear projection here a very decent way.
+Of course, it's not the best way. But basically,
+we have to come up with a compromise either
+here or that or that maybe you want the one
+in the audience, commerce, commerce as with
+with a very good idea, and maybe that can
+be relevant revolution. Yeah, revolutionary?
+Yeah. I don't have a clear answer for that
+yet.
+I don't think anyone has a clear answer. I
+think I asked you a difficult question. I
+love the, you know, your method of dealing
+with noisy data, basically, using the sky
+vision process to smooth those data and then
+get the lowest accuracy. I saw in experiments,
+you you try it up to 10% noise level? Yeah.
+Have you tried to increase the noise level?
+Like maybe 100% noise level?
+Yeah, I showed. We also tried a little bit
+more 30%. But that's not going to work. Gonna
+work very well. So here is this is how we
+roughly do is bind the level of noise, basically.
+So so we enrich the solution data to get a
+rough order of magnitude of the solution data.
+And we So 10% means that 10% of that, right?
+These are standard deviation for the white
+now as we add onto the under the data. So
+in that sense, if we increase to 100% data,
+I'm not really making sense that all right,
+yeah. So this is 20 30% would already be quite,
+quite large. And the reality even though we
+have data in the real word, sensing system,
+that it wouldn't be so, so large, right? It
+introduced some error, but the the level is,
+is up to some limit.
+Okay, so 20% If you think it's a reasonable
+number
+30% will be reasonable.
+Okay, sounds good. We actually have a recent
+work is about to be published is we're introducing
+another way of dealing with those noisy data
+as well using Gaussian process, but also,
+but we are using too big Cindy like integral
+integral integral form of the you know, sparse
+identification of
+Yeah. Basically, you have your PDS and you
+have a weight you have a test functions and
+do partial integration by part, so that the
+noise will come from this counterpart to the
+other one. Yeah,
+exactly, but we use the weeks in the in the
+latent space. So so we do the compression
+first like either pod or auto encoder, and
+then apply the weeks in the in the latent
+space with this space. There when we apply
+the noise level like up to 50% even like higher.
+We got remarkable accuracy, very surprising
+accuracy. So I will definitely Let's share
+it with you.
+Thank you, that will be very, very, very helpful.
+But I do actually have a question for that.
+So if you use the week, Cindy's very critical,
+how to choose the test of functions, right?
+Right, right,
+we use a piecewise. The compactly supported
+the basis functions. And it is sensitive to
+how we change the radius, like the width of
+that compactness. So you have to tune for
+that, depending on the applications. Yeah,
+that's my impression, too, is very good to
+have this confirmed.
+Thank you. Thank you. Yeah.
+Maybe last question from me. So you show the
+2d single injector complete combustion process?
+Yeah. If you can go to that slide. I don't
+know the slide number. Yeah. Yeah, what what
+is Y here? y one, y two y three y four y,
+which? So in the definition of Q of z vector
+is a fractions of the, the fractions of the
+so it's a two phase flow.
+Awesome. Awesome. Yeah. It's a fraction of
+the of the components. Yeah.
+Like the volume fraction.
+That's great. And you apply that to you use
+the pod? Yeah, we did the pod. Yes. Yeah,
+this is complicated. Yes, this is indeed a
+case where pod may not be the best, the best
+choice, but we use a lot of building models
+in the end to guarantees approximation is
+still decent.
+I mean, you're doing extrapolation to like
+in
+extrapolation to we use the 60 ish pod models,
+if I remember correctly, I have to refer to
+the paper to to refresh my memory, but we
+use the indeed use a lot of pod mouths. Okay,
+awesome.
+I loved it. So I think we need to talk about
+this. Yeah. All right. Any other questions
+from audience? If not, let's thank our speaker,
+Mango for the wonderful talk. And, you know,
+all the nice researcher he presented. Thank
+you so much. Thank
+you. Thank you for the invitation, the other
+nice discussions and Communications. Thank
+you. Awesome.
+Let me push the start button.

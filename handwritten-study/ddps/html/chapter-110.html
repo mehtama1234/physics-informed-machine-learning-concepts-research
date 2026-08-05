@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chapter 110 - Use Cheap Data To Calm The Expensive Fit</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="sidebar">
+        <h1>DDPS Study</h1>
+        <a href="index.html">Start</a>
+        <a href="review-path.html">Review Path</a>
+        <a href="plain-words.html">Plain Words</a>
+        <a href="method-map.html">Method Map</a>
+        <a href="self-check.html">Self Check</a>
+        <a href="capstone.html">Capstone</a>
+        <a href="theme-index.html">Theme Index</a>
+        <a href="domain-map.html">Domain Map</a>
+        <a href="paper-reader.html">Paper Reader</a>
+        <a href="common-mistakes.html">Common Mistakes</a>
+        <a href="study-plan.html">Study Plan</a>
+        <a href="math-map.html">Math Map</a>
+        <a href="prerequisite-map.html">Prerequisite Map</a>
+        <a href="cheat-sheet.html">Cheat Sheet</a>
+        <a href="chapter-98.html">Chapter 98</a>
+        <a href="chapter-99.html">Chapter 99</a>
+        <a href="chapter-100.html">Chapter 100</a>
+        <a href="chapter-101.html">Chapter 101</a>
+        <a href="chapter-102.html">Chapter 102</a>
+        <a href="chapter-103.html">Chapter 103</a>
+        <a href="chapter-104.html">Chapter 104</a>
+        <a href="chapter-105.html">Chapter 105</a>
+        <a href="chapter-106.html">Chapter 106</a>
+        <a href="chapter-107.html">Chapter 107</a>
+        <a href="chapter-108.html">Chapter 108</a>
+        <a href="chapter-109.html">Chapter 109</a>
+        <a href="chapter-110.html">Chapter 110</a>
+        <a href="chapter-111.html">Chapter 111</a>
+        <a href="chapter-112.html">Chapter 112</a>
+        <a href="chapter-113.html">Chapter 113</a>
+        <a href="chapter-114.html">Chapter 114</a>
+        <a href="chapter-115.html">Chapter 115</a>
+        <a href="chapter-116.html">Chapter 116</a>
+        <a href="chapter-117.html">Chapter 117</a>
+        <a href="chapter-118.html">Chapter 118</a>
+        <a href="chapter-119.html">Chapter 119</a>
+        <a href="chapter-120.html">Chapter 120</a>
+        <a href="chapter-121.html">Chapter 121</a>
+        <a href="chapter-122.html">Chapter 122</a>
+        <a href="chapter-123.html">Chapter 123</a>
+        <a href="chapter-124.html">Chapter 124</a>
+        <a href="chapter-125.html">Chapter 125</a>
+        <a href="chapter-126.html">Chapter 126</a>
+        <a href="chapter-127.html">Chapter 127</a>
+        <a href="chapter-128.html">Chapter 128</a>
+        <a href="chapter-129.html">Chapter 129</a>
+        <a href="chapter-130.html">Chapter 130</a>
+        <a href="chapter-131.html">Chapter 131</a>
+        <a href="chapter-132.html">Chapter 132</a>
+        <a href="chapter-133.html">Chapter 133</a>
+        <a href="chapter-134.html">Chapter 134</a>
+        <a href="chapter-135.html">Chapter 135</a>
+        <a href="chapter-136.html">Chapter 136</a>
+        <a href="chapter-137.html">Chapter 137</a>
+        <a href="from-zero.html">From Zero</a>
+        <a href="pinn-from-zero.html">PINNs From Zero</a>
+        <a href="rom-from-zero.html">ROMs From Zero</a>
+        <a href="manifold-from-zero.html">Manifolds From Zero</a>
+        <a href="synthesis.html">Synthesis</a>
+        <a href="big-picture.html">Big Picture</a>
+        <a href="examples.html">Examples</a>
+        <a href="bridge.html">AISE Bridge</a>
+        <a href="audit.html">Transcript Audit</a>
+      </nav>
+      <main class="content">
+        <p class="eyebrow">Narrative chapter</p>
+        <h1>Use Cheap Data To Calm The Expensive Fit</h1>
+
+        <p>This chapter uses video 113, Elizabeth Qian's DDPS talk on multi-fidelity linear regression for scientific machine learning from scarce data. The talk starts from a practical engineering problem: decisions need many model queries, but the trusted high-fidelity model is expensive. If we train a surrogate from only a few expensive runs, the fitted model can jump around depending on which few runs we happened to afford.</p>
+
+        <p>The lecture's main idea is not just "add cheap data." Cheap data can help or hurt depending on how it is used. The specific method uses low-fidelity data as a control variate. That means the cheap model is used to reduce the variance of the expensive-data estimate while preserving the high-fidelity target in expectation. In plain words: use the cheap model to steady the fit, without letting the cheap model replace the truth you actually care about.</p>
+
+        <section class="lesson-claim-chain" aria-label="Plain first-principles reading guide for multi-fidelity regression from scarce data">
+          <h2>Read This Chapter As One Claim</h2>
+          <p>Suppose the trusted simulation is expensive, so you can only afford a small pile of true answers. A fitted surrogate from that small pile may depend too much on luck: one training set gives one curve, another training set gives a different curve. Now suppose you also have a cheap model that is not fully trusted but usually rises and falls with the expensive model. This chapter explains how to use that cheap model as a steadying hand. It helps reduce the wobble in the fitted expensive-model relationship, but the final target stays the expensive model.</p>
+          <div class="lesson-claim-grid">
+            <div><strong>Everyday problem</strong><span>You need a surrogate for many design queries, but you have too few expensive high-fidelity runs to fit it calmly.</span></div>
+            <div><strong>Shared promise</strong><span>Use many cheap correlated evaluations to reduce the random wobble in the few expensive evaluations.</span></div>
+            <div><strong>Hidden danger</strong><span>If the cheap model is biased, weakly related, or missing a key failure mode, it can make the fit look confident for the wrong reason.</span></div>
+            <div><strong>First rejection test</strong><span>Test the final surrogate on new high-fidelity designs, especially near hot spots, stress concentrations, separated flow, and topology changes.</span></div>
+          </div>
+        </section>
+
+        <div class="scarce-core-map" aria-label="Low fidelity data reduces variance in a scarce high fidelity regression fit">
+          <div>high-fidelity data is scarce</div>
+          <div>cheap model is correlated</div>
+          <div>control variate correction</div>
+          <div>steadier high-fidelity fit</div>
+        </div>
+
+        <h2>The Decision Problem Needs Many Queries</h2>
+        <p>Engineering decisions often require repeated model evaluations. Optimization asks for model values at many design steps. Uncertainty quantification asks for many samples. Control asks for fast predictions again and again as the system changes.</p>
+
+        <p>A full physics simulation may be trusted because its assumptions are explicit and its numerical error has been studied. But it can be too slow for this many-query setting. A surrogate is needed, yet a surrogate trained from too little high-fidelity data is hard to trust.</p>
+
+        <div class="many-query-map" aria-label="Optimization, uncertainty quantification, and control need many model evaluations">
+          <div>optimization</div>
+          <div>uncertainty samples</div>
+          <div>real-time control</div>
+          <div>needs cheap surrogate</div>
+        </div>
+
+        <h2>Machine Learning Trust Often Comes From Big Data</h2>
+        <p>The speaker draws a useful contrast. Traditional simulation earns trust through physics, transparent modeling assumptions, and numerical analysis. Machine learning often earns trust from large data: the training set is so broad that test behavior is expected to resemble training behavior.</p>
+
+        <p>Scientific machine learning often lacks that luxury. Each high-fidelity output may require an expensive simulation or experiment. If there are only ten or twenty high-fidelity samples, training error may not represent future error. The surrogate may look good on the samples and still be unstable away from them.</p>
+
+        <div class="trust-source-map" aria-label="Physics simulations and machine learning get trust from different sources">
+          <div>physics simulation</div>
+          <div>clear assumptions and analysis</div>
+          <div>machine learning</div>
+          <div>usually wants big data</div>
+        </div>
+
+        <h2>Linear Regression Still Has A Real Small-Data Problem</h2>
+        <p>The talk restricts to linear regression. That does not mean the input-output relation has to be a straight line in the raw inputs. The features can include constants, polynomial terms, Fourier terms, or physics-inspired terms. The model is linear in the coefficients multiplying those features.</p>
+
+        <p>Even in this simpler setting, scarce high-fidelity data causes trouble. The fitted coefficients depend on sample averages that estimate relationships between features and outputs. With small data, those estimates have high variance. High-variance coefficients lead to high-variance predictions.</p>
+
+        <div class="linear-small-data-map" aria-label="Small high fidelity data creates high variance in linear regression coefficients">
+          <div>choose features</div>
+          <div>fit coefficients</div>
+          <div>few expensive outputs</div>
+          <div>fit varies too much</div>
+        </div>
+
+        <h2>Control Variates Start With Mean Estimation</h2>
+        <p>The lecture explains control variates through a simpler problem: estimating a mean by Monte Carlo sampling. If we estimate a mean with only a few expensive samples, the sample mean can have high variance.</p>
+
+        <p>Now suppose we also have a cheaper random variable that is correlated with the expensive output, and suppose we can estimate its mean very accurately using many cheap samples. We can correct the expensive sample mean using the difference between the cheap model's accurate mean and its cheap-model mean on the expensive sample locations. If the cheap model moves with the expensive model, this correction reduces variance.</p>
+
+        <div class="control-variate-map" aria-label="A correlated cheap model can reduce the variance of a Monte Carlo estimate">
+          <div>few expensive samples</div>
+          <div>many cheap samples</div>
+          <div>cheap model tracks expensive model</div>
+          <div>variance goes down</div>
+        </div>
+
+        <h2>Correlation And Cost Decide Whether Cheap Data Helps</h2>
+        <p>A low-fidelity model is useful when it is correlated with the high-fidelity model and much cheaper to evaluate. If it is only weakly correlated, it must be extremely cheap to be worth using. If it is highly correlated, it can provide strong variance reduction even with a more modest cost gap.</p>
+
+        <p>The Q&A makes this point clearly. There is not a single universal minimum correlation. Usefulness depends on the cost ratio too. A weak cheap model can still help if it costs almost nothing compared with the expensive model, but the method needs enough relationship between the models to reduce variance rather than add noise.</p>
+
+        <div class="correlation-cost-map" aria-label="Cheap data helps when correlation is high enough relative to cost">
+          <div>high correlation helps</div>
+          <div>large cost gap helps</div>
+          <div>weak cheap model must be very cheap</div>
+          <div>benefit is conditional</div>
+        </div>
+
+        <h2>The Regression Trick Targets The Feature-Output Estimate</h2>
+        <p>In linear regression, the optimal coefficients can be written using two expected quantities. One depends only on the features. The other depends on features multiplied by the high-fidelity output. The expensive part is the second one because it needs high-fidelity outputs.</p>
+
+        <p>The method assumes the feature-only quantity can be known well because inputs are cheap to sample. Then it applies a multi-fidelity control-variate estimator to the feature-output quantity. That is the quantity whose variance is driving the coefficient uncertainty.</p>
+
+        <div class="feature-output-map" aria-label="The method uses control variates on the feature-output covariance estimate">
+          <div>features are cheap</div>
+          <div>high-fidelity outputs are costly</div>
+          <div>estimate feature-output relation</div>
+          <div>reduce coefficient variance</div>
+        </div>
+
+        <h2>Unbiasedness Is The Guardrail</h2>
+        <p>The speaker emphasizes unbiasedness because it is the protection against low-fidelity corruption. The multi-fidelity correction is built so that, in expectation, the cheap terms cancel properly. The learned coefficients remain unbiased for the high-fidelity regression coefficients.</p>
+
+        <p>This is the key difference from many ad hoc multi-fidelity learning methods. If a network is trained on cheap data and then adjusted with expensive data, it may work, but there may be no clean guarantee that cheap-data bias has not entered the final target. Here the control-variate structure gives a more explicit guarantee in the linear setting.</p>
+
+        <div class="unbiased-guard-map" aria-label="The control variate correction reduces variance without biasing the high fidelity target">
+          <div>cheap model contributes</div>
+          <div>correction cancels in expectation</div>
+          <div>high-fidelity target remains</div>
+          <div>no cheap-data bias</div>
+        </div>
+
+        <h2>Lower Variance Means More Robust Predictions</h2>
+        <p>The analysis then follows a chain. If the feature-output estimate has lower variance, the coefficient estimate has lower variance. If the coefficient estimate has lower variance, predictions vary less from one small training set to another. That means the model is more robust.</p>
+
+        <p>This is different from saying the model class is perfect. A quartic regression model may still have approximation error if the true function is not quartic. The method does not remove model-form error. It reduces the sampling error caused by having too few high-fidelity outputs.</p>
+
+        <div class="variance-chain-map" aria-label="Lower variance in feature-output estimates reduces coefficient and prediction variance">
+          <div>lower covariance variance</div>
+          <div>steadier coefficients</div>
+          <div>steadier predictions</div>
+          <div>lower expected square error</div>
+        </div>
+
+        <h2>The Gain Matrix Is The Regression Version Of Alpha</h2>
+        <p>For scalar mean estimation, the control-variate correction has a scalar weight, often called alpha. For regression, the corrected object is a vector, so the best correction is a matrix. The lecture derives an optimal matrix that minimizes the trace of the covariance.</p>
+
+        <p>But estimating that full matrix can itself be hard with few pilot samples. So the paper also considers practical alternatives: a scalar times the identity matrix, or a heuristic alpha borrowed from mean estimation. In the numerical results, the full optimal matrix can fail badly when its required statistics are poorly estimated, while the scalar choice is often the more practical recommendation.</p>
+
+        <div class="gain-choice-map" aria-label="The theoretically optimal gain matrix can be hard to estimate from few pilot samples">
+          <div>matrix gain is optimal in theory</div>
+          <div>needs covariance estimates</div>
+          <div>few pilots can make it unstable</div>
+          <div>scalar gain is practical</div>
+        </div>
+
+        <h2>The One-Dimensional Example Shows The Shape Of The Benefit</h2>
+        <p>The first numerical example uses one input variable. The high-fidelity function is exponential. The low-fidelity function is a shifted related exponential, very cheap and strongly correlated. The fitted model is quartic, with an intercept and polynomial features.</p>
+
+        <p>Many training repetitions show the difference visually. High-fidelity-only fits spread widely when the budget is limited. Multi-fidelity fits cluster much closer to the best quartic fit. The point of the plot is not that quartic polynomials are special. The point is that cheap correlated samples can make a scarce-data fit less sensitive to the particular expensive samples drawn.</p>
+
+        <div class="quartic-example-map" aria-label="The one-dimensional quartic example shows multi-fidelity fits varying less across training sets">
+          <div>expensive exponential samples</div>
+          <div>cheap correlated samples</div>
+          <div>quartic regression</div>
+          <div>narrower fitted curves</div>
+        </div>
+
+        <h2>The PDE Example Makes It Engineering-Relevant</h2>
+        <p>The second example is a two-dimensional convection-diffusion-reaction model with one-step chemistry. The inputs include reaction parameters, inflow temperature, wall temperature, and fuel-oxidizer ratio. The output is the maximum steady-state temperature in the chamber.</p>
+
+        <p>The high-fidelity data comes from a finite-difference PDE solve. The low-fidelity data comes from a POD-DEIM reduced model. The low-fidelity model is much cheaper and about 95 percent correlated with the high-fidelity output in the reported setup. The fitted surrogate is again a quartic model, now in five input parameters.</p>
+
+        <div class="pde-example-map" aria-label="The PDE example predicts maximum chamber temperature using high fidelity solves and POD-DEIM low fidelity data">
+          <div>five physical inputs</div>
+          <div>high-fidelity PDE solve</div>
+          <div>cheap POD-DEIM model</div>
+          <div>predict max temperature</div>
+        </div>
+
+        <h2>The Biggest Gain Is When Expensive Data Is Scarcest</h2>
+        <p>The PDE results show lower prediction variance and lower generalization error for the multi-fidelity method, especially at low budgets. That is exactly where the method is meant to help. When expensive data is abundant, ordinary high-fidelity regression has less variance to remove. When expensive data is scarce, each sample matters more, and the cheap correlated model can stabilize the fit.</p>
+
+        <p>The speaker also notes that training cost for the low-fidelity model was not included in the reported low-fidelity query cost. The setup treats the high- and low-fidelity models as available oracles. In a full engineering accounting, building the low-fidelity source should also be counted.</p>
+
+        <div class="scarce-benefit-map" aria-label="Multi-fidelity regression helps most when high fidelity budgets are small">
+          <div>low high-fidelity budget</div>
+          <div>ordinary fit varies widely</div>
+          <div>cheap data reduces spread</div>
+          <div>largest benefit in scarce regime</div>
+        </div>
+
+        <h2>The Open Questions Matter</h2>
+        <p>The talk is clear about what is not solved. The method currently assumes the high- and low-fidelity models share the same input domain. It is presented for scalar outputs. Extensions to vector outputs and nonlinear regression are open directions. Model selection is also open: one would like rules for deciding which low-fidelity models are worth using.</p>
+
+        <p>The Q&A also asks about multiple low-fidelity models. The answer is yes: the control-variate structure can add more correction terms for additional cheap models. More general multi-fidelity estimators can combine model groups in richer ways, but they also need statistics that may be hard to estimate accurately.</p>
+
+        <div class="open-questions-map" aria-label="Open questions include different inputs, vector outputs, nonlinear regression, and model selection">
+          <div>same input domain for now</div>
+          <div>scalar output for now</div>
+          <div>nonlinear regression open</div>
+          <div>model selection needed</div>
+        </div>
+
+        <h2>How This Connects To Physics, Design, And Topology</h2>
+        <p>Design and topology optimization are full of scarce-data problems. A high-fidelity simulation of one shape, material layout, combustion chamber, fluid device, or structural design can be expensive. But cheap models are often available: coarser meshes, reduced-order models, simplified physics, surrogate solvers, or older engineering formulas.</p>
+
+        <p>The lesson is not to blindly mix all data. The low-fidelity model should be used as a variance-reduction helper when it is correlated enough and cheap enough. The high-fidelity target remains the target. That is crucial in topology, because a cheap model may miss a stress concentration, flow separation, thermal hot spot, or manufacturability effect. The method's unbiasedness guardrail is valuable because it prevents the cheap model from becoming the truth by accident.</p>
+
+        <p>For a topology workflow, the practical use would be this: spend a limited budget on trusted high-fidelity designs, spend many cheap evaluations on a correlated low-fidelity model, fit a simple interpretable surrogate with reduced variance, and then validate the best design regions with new high-fidelity solves. The cheap model steadies the search; it does not get the final vote.</p>
+
+        <div class="multifidelity-design-bridge" aria-label="Topology design can use cheap correlated models to stabilize scarce high fidelity surrogate fits">
+          <div>few trusted design solves</div>
+          <div>many cheap correlated solves</div>
+          <div>lower-variance surrogate</div>
+          <div>validate final regions</div>
+        </div>
+
+        <h2>The Chapter In One Chain</h2>
+        <p>First, engineering decisions need many model queries. Second, high-fidelity simulations are often too expensive to supply enough training data. Third, machine-learning trust from big data is weak when expensive data is scarce. Fourth, linear regression still suffers because coefficient estimates vary with the small training set. Fifth, control variates reduce Monte Carlo variance using a correlated auxiliary variable. Sixth, multi-fidelity control variates use cheap low-fidelity models as that auxiliary source. Seventh, the low-fidelity model helps only when correlation and cost ratio make the trade worthwhile. Eighth, the regression method applies the control-variate correction to the feature-output estimate. Ninth, unbiasedness keeps the high-fidelity target from being corrupted by cheap data. Tenth, lower variance in that estimate gives lower variance in coefficients and predictions. Eleventh, the best correction is a matrix in theory, but scalar choices can be more robust when pilot statistics are scarce. Twelfth, the one-dimensional exponential example shows narrower fitted quartic curves. Thirteenth, the convection-diffusion-reaction example predicts maximum temperature using high-fidelity PDE solves and cheap POD-DEIM data. Fourteenth, the biggest gains appear when the high-fidelity budget is small. Fifteenth, open questions remain for different input domains, vector outputs, nonlinear regression, multiple models, and model selection. Sixteenth, the bigger design lesson is to let cheap correlated data steady the expensive fit without letting the cheap model replace the truth.</p>
+
+        <div class="note">
+          <p>The chapter's core idea: scarce expensive data makes a surrogate jumpy. A cheap correlated model can calm that jumpiness if it is used as a control variate, not as an unchecked substitute for the high-fidelity target.</p>
+        </div>
+
+        <section class="lesson-review" aria-label="End of chapter understanding check for multi-fidelity regression from scarce data">
+          <h2>How To Test Whether You Understood This Chapter</h2>
+          <div class="lesson-review-grid">
+            <div><strong>Explain the small-data failure</strong><span>With only a few expensive samples, the fitted coefficients can move a lot depending on which samples were chosen. The issue is not only bias; it is also high variance.</span></div>
+            <div><strong>Explain the cheap model's job</strong><span>The cheap model is useful when it moves with the expensive model and costs much less. It supplies extra information about variation, while the expensive model remains the target.</span></div>
+            <div><strong>Explain the guardrail</strong><span>The control-variate correction is built so cheap-model effects cancel properly on average. That is why the method tries to reduce wobble without changing the high-fidelity truth being estimated.</span></div>
+            <div><strong>Connect it to topology and design</strong><span>Use cheap coarse or reduced models to guide broad search, but recheck promising layouts with high-fidelity solves where cheap models may miss local stress, thermal hot spots, flow separation, or manufacturing constraints.</span></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

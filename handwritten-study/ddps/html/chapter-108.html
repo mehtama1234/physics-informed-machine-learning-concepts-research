@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chapter 108 - Let The Neural Space Still Obey The Equation</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="sidebar">
+        <h1>DDPS Study</h1>
+        <a href="index.html">Start</a>
+        <a href="review-path.html">Review Path</a>
+        <a href="plain-words.html">Plain Words</a>
+        <a href="method-map.html">Method Map</a>
+        <a href="self-check.html">Self Check</a>
+        <a href="capstone.html">Capstone</a>
+        <a href="theme-index.html">Theme Index</a>
+        <a href="domain-map.html">Domain Map</a>
+        <a href="paper-reader.html">Paper Reader</a>
+        <a href="common-mistakes.html">Common Mistakes</a>
+        <a href="study-plan.html">Study Plan</a>
+        <a href="math-map.html">Math Map</a>
+        <a href="prerequisite-map.html">Prerequisite Map</a>
+        <a href="cheat-sheet.html">Cheat Sheet</a>
+        <a href="chapter-98.html">Chapter 98</a>
+        <a href="chapter-99.html">Chapter 99</a>
+        <a href="chapter-100.html">Chapter 100</a>
+        <a href="chapter-101.html">Chapter 101</a>
+        <a href="chapter-102.html">Chapter 102</a>
+        <a href="chapter-103.html">Chapter 103</a>
+        <a href="chapter-104.html">Chapter 104</a>
+        <a href="chapter-105.html">Chapter 105</a>
+        <a href="chapter-106.html">Chapter 106</a>
+        <a href="chapter-107.html">Chapter 107</a>
+        <a href="chapter-108.html">Chapter 108</a>
+        <a href="chapter-109.html">Chapter 109</a>
+        <a href="chapter-110.html">Chapter 110</a>
+        <a href="chapter-111.html">Chapter 111</a>
+        <a href="chapter-112.html">Chapter 112</a>
+        <a href="chapter-113.html">Chapter 113</a>
+        <a href="chapter-114.html">Chapter 114</a>
+        <a href="chapter-115.html">Chapter 115</a>
+        <a href="chapter-116.html">Chapter 116</a>
+        <a href="chapter-117.html">Chapter 117</a>
+        <a href="chapter-118.html">Chapter 118</a>
+        <a href="chapter-119.html">Chapter 119</a>
+        <a href="chapter-120.html">Chapter 120</a>
+        <a href="chapter-121.html">Chapter 121</a>
+        <a href="chapter-122.html">Chapter 122</a>
+        <a href="chapter-123.html">Chapter 123</a>
+        <a href="chapter-124.html">Chapter 124</a>
+        <a href="chapter-125.html">Chapter 125</a>
+        <a href="chapter-126.html">Chapter 126</a>
+        <a href="chapter-127.html">Chapter 127</a>
+        <a href="chapter-128.html">Chapter 128</a>
+        <a href="chapter-129.html">Chapter 129</a>
+        <a href="chapter-130.html">Chapter 130</a>
+        <a href="chapter-131.html">Chapter 131</a>
+        <a href="chapter-132.html">Chapter 132</a>
+        <a href="chapter-133.html">Chapter 133</a>
+        <a href="chapter-134.html">Chapter 134</a>
+        <a href="chapter-135.html">Chapter 135</a>
+        <a href="chapter-136.html">Chapter 136</a>
+        <a href="chapter-137.html">Chapter 137</a>
+        <a href="from-zero.html">From Zero</a>
+        <a href="pinn-from-zero.html">PINNs From Zero</a>
+        <a href="rom-from-zero.html">ROMs From Zero</a>
+        <a href="manifold-from-zero.html">Manifolds From Zero</a>
+        <a href="synthesis.html">Synthesis</a>
+        <a href="big-picture.html">Big Picture</a>
+        <a href="examples.html">Examples</a>
+        <a href="bridge.html">AISE Bridge</a>
+        <a href="audit.html">Transcript Audit</a>
+      </nav>
+      <main class="content">
+        <p class="eyebrow">Narrative chapter</p>
+        <h1>Let The Neural Space Still Obey The Equation</h1>
+
+        <p>This chapter uses video 111, Francesco Romor's DDPS talk on intrusive model order reduction using neural network approximants. The topic sounds technical, but the first-principles problem is direct: a full PDE solver is expensive, a small reduced model is faster, and a plain neural network predictor can be too detached from the equation. The talk asks whether we can use a neural network to describe the small solution space while still solving the physical residual at prediction time.</p>
+
+        <p>That last phrase is the important one: at prediction time. Many neural reduced models learn from snapshots and later return an answer directly. This talk wants a stricter workflow. The learned decoder proposes what kind of fields are allowed, but the actual reduced coordinates are chosen by minimizing the PDE residual. In plain language, the neural network gives the shape of the search space; the equation still judges the answer.</p>
+
+        <section class="lesson-claim-chain" aria-label="Plain first-principles reading guide for intrusive neural reduced models">
+          <h2>Read This Chapter As One Claim</h2>
+          <p>Imagine you have a very slow simulator for air, heat, stress, water, or any other physical field. You want to try many designs, but each full solve costs too much. The tempting shortcut is to train a neural network to guess the answer. The danger is that the network may return a smooth-looking field that no longer obeys the equation. This chapter is about a stricter compromise: let the neural network describe a small family of possible answers, then still run a physics check to choose the answer inside that family. The network narrows the search; the equation gives permission.</p>
+          <div class="lesson-claim-grid">
+            <div><strong>Everyday problem</strong><span>You need many new simulation answers, but a full solve is too slow and a blind network answer is too hard to trust.</span></div>
+            <div><strong>Shared promise</strong><span>Learn a small curved space of likely solutions, then solve inside that space instead of solving over the whole mesh.</span></div>
+            <div><strong>Hidden danger</strong><span>If the small space misses shocks, moving fronts, wakes, contact zones, or new topology behavior, the reduced solve can be confidently wrong.</span></div>
+            <div><strong>First rejection test</strong><span>Change the Mach number, angle, shape, material layout, or boundary condition and check whether the residual and the full solver still agree.</span></div>
+          </div>
+        </section>
+
+        <div class="intrusive-core-map" aria-label="A neural reduced space is used while the PDE residual still judges the prediction">
+          <div>full PDE solve is costly</div>
+          <div>neural space is small</div>
+          <div>residual is still checked</div>
+          <div>physics judges prediction</div>
+        </div>
+
+        <h2>The Starting Point Is A Parameterized PDE</h2>
+        <p>A PDE may depend on parameters: a Mach number, an angle, a material coefficient, a boundary condition, time, or even geometry. If we solve the full model for many parameter values, we get a collection of snapshots. Those snapshots show the kinds of solutions this problem tends to produce.</p>
+
+        <p>Reduced-order modeling uses those snapshots to build a smaller space. Instead of solving for every cell or node in the full mesh, we solve for a few coordinates. Those few coordinates then reconstruct an approximate full field. The hope is that the expensive offline snapshot work pays for many cheaper online predictions later.</p>
+
+        <div class="param-pde-map" aria-label="Parameterized PDE snapshots are used to build a smaller prediction space">
+          <div>change parameter</div>
+          <div>collect full snapshots</div>
+          <div>build small space</div>
+          <div>predict new cases faster</div>
+        </div>
+
+        <h2>Linear Bases Work Only When The Data Lines Up</h2>
+        <p>The classic reduced-basis idea uses a linear space. A snapshot matrix is compressed by SVD, and the most important modes become basis vectors. A new solution is written as a weighted sum of those modes.</p>
+
+        <p>This works beautifully when the solution variations line up well. The talk contrasts this with a simple transport problem. A block or front moves across the domain. Each shifted position looks different to a fixed linear basis. To represent all those shifts, the linear basis may need many modes. The reduced model stops being very reduced.</p>
+
+        <div class="linear-basis-limit-map" aria-label="Moving transport fronts can require many linear modes">
+          <div>SVD modes summarize snapshots</div>
+          <div>moving front shifts position</div>
+          <div>many modes needed</div>
+          <div>small linear ROM fails</div>
+        </div>
+
+        <h2>The Solution Set May Be Curved</h2>
+        <p>A linear basis is like a flat sheet through the snapshot cloud. But the true set of solutions may bend. A moving wave, changing geometry, shock, or multiscale flow can trace a curved surface through the full state space. If the surface is curved, a flat approximation may need many directions to cover it.</p>
+
+        <p>A nonlinear manifold method replaces the flat sheet with a curved learned map. An autoencoder is a natural tool for this. The encoder compresses a full field into latent coordinates. The decoder maps latent coordinates back to a full field. In this talk, the decoder becomes the nonlinear reduced space.</p>
+
+        <div class="curved-manifold-map" aria-label="A nonlinear decoder can represent a curved solution manifold">
+          <div>solution cloud is curved</div>
+          <div>flat basis struggles</div>
+          <div>latent coordinates</div>
+          <div>decoder gives full field</div>
+        </div>
+
+        <h2>Pure Data-Driven ROMs Skip The Equation Too Early</h2>
+        <p>A common neural ROM has two learned parts. First, an autoencoder learns the solution manifold. Second, another model learns how parameters or time move through the latent space. At prediction time, the user inputs parameters and receives a field.</p>
+
+        <p>That can be fast, but it can also become a black box. The PDE residual is no longer actively minimized during prediction. The network may interpolate well in familiar cases and drift in harder cases. This lecture's intrusive method keeps the numerical scheme in the loop instead of treating the training data as the only judge.</p>
+
+        <div class="blackbox-rom-map" aria-label="Pure data-driven ROMs may return fields without solving the PDE residual online">
+          <div>input parameter</div>
+          <div>latent dynamics network</div>
+          <div>decoded field</div>
+          <div>residual may be ignored</div>
+        </div>
+
+        <h2>Intrusive Means The Solver Still Enters</h2>
+        <p>Here "intrusive" does not mean aggressive. It means the reduced method uses the internal residual of the numerical solver. The method takes the time-discretized PDE residual and asks: which latent coordinates make that residual small?</p>
+
+        <p>So the unknown is not the whole field. The unknown is the small latent vector. The decoder turns that latent vector into a full field. The solver residual evaluates whether that reconstructed field satisfies the equation. The reduced solve searches in latent space until the residual is small enough.</p>
+
+        <div class="intrusive-solve-map" aria-label="The intrusive method solves for latent coordinates by minimizing the PDE residual">
+          <div>choose latent guess</div>
+          <div>decoder reconstructs field</div>
+          <div>evaluate PDE residual</div>
+          <div>adjust latent coordinates</div>
+        </div>
+
+        <h2>The Nonlinear Decoder Makes The Solve Harder</h2>
+        <p>If the reduced space is linear and the residual is friendly, the reduced solve may be simple. Once a nonlinear decoder is inserted, even a linear residual can become nonlinear in the latent variables. That means the online step becomes a nonlinear least-squares problem.</p>
+
+        <p>The talk mentions methods such as Gauss-Newton and related solvers. The plain idea is iterative correction. Start with a latent guess, decode it, compute the residual, use derivatives to decide how to change the latent vector, and repeat. This is more expensive than a single network evaluation, but it keeps the equation involved.</p>
+
+        <div class="nonlinear-solve-map" aria-label="A nonlinear decoder turns prediction into an iterative residual minimization problem">
+          <div>nonlinear decoder</div>
+          <div>residual depends on latent vector</div>
+          <div>least-squares iterations</div>
+          <div>more trust, more cost</div>
+        </div>
+
+        <h2>Hyper-Reduction Makes The Residual Affordable</h2>
+        <p>A danger remains. If each reduced iteration evaluates the residual on every cell of the full mesh, the method may be slower than the original solver. Hyper-reduction fixes this by evaluating only selected parts of the residual.</p>
+
+        <p>The simplest version in the talk is collocation. Pick selected nodes or cells, sometimes called magic points. Evaluate the residual only there, together with the local stencil needed by the discretization. This makes the online residual check cheaper while still forcing the latent solution to satisfy targeted physical tests.</p>
+
+        <div class="hyper-reduction-map" aria-label="Collocation hyper-reduction evaluates the residual only on selected cells or nodes">
+          <div>full residual is expensive</div>
+          <div>choose magic points</div>
+          <div>evaluate local stencils</div>
+          <div>cheaper physics check</div>
+        </div>
+
+        <h2>The Architecture Uses SVD As A Filter</h2>
+        <p>The speaker's main architecture does not decode directly from a tiny latent vector to the full mesh. It first uses randomized SVD as a filtering transform. The full field is projected to a medium-sized frequency-like space, such as around 300 SVD modes in the shown experiments. A small autoencoder then compresses that medium space to a much smaller latent space and reconstructs it back.</p>
+
+        <p>This matters for speed. The nonlinear neural part is small because it works in the reduced SVD space, not directly on every mesh degree of freedom. After hyper-reduction, the final linear map can be restricted to only the submesh needed for the selected residual points. The heavy full-field reconstruction is avoided during the reduced residual solve.</p>
+
+        <div class="svd-filter-map" aria-label="Randomized SVD creates a medium space so the nonlinear decoder can stay small">
+          <div>full mesh field</div>
+          <div>randomized SVD filter</div>
+          <div>small neural decoder</div>
+          <div>restricted submesh output</div>
+        </div>
+
+        <h2>Adaptive Magic Points Follow The Action</h2>
+        <p>A fixed set of residual points can miss moving features. If a shock, wake, front, or high-residual region moves, the important checks move with it. The talk proposes an adaptive choice of collocation points based on sensitivities from the latent reconstruction.</p>
+
+        <p>In simple words, the method asks which cells are most influenced by the current latent variables. Those cells become useful places to check the residual. The magic points are updated every fixed number of time steps in the experiments, such as every 20 or 50 steps. This helps the reduced solve spend effort where the current dynamics are active.</p>
+
+        <div class="adaptive-points-map" aria-label="Adaptive collocation points move toward features that matter in the current dynamics">
+          <div>feature moves</div>
+          <div>old points may miss it</div>
+          <div>latent sensitivity finds active cells</div>
+          <div>points follow dynamics</div>
+        </div>
+
+        <h2>Compressible Flow Shows The Workflow</h2>
+        <p>The first test case is compressible airflow with time and Mach number as parameters. The implementation uses an OpenFOAM-based finite-volume setting. The method trains from snapshots, uses about 300 SVD modes, a latent dimension of four, and adaptive collocation points.</p>
+
+        <p>The important lesson is not the exact speed number. The important lesson is the workflow: the reduced model predicts a transient flow by solving a reduced residual problem on selected cells, not by simply asking a black-box network to output a field. With a larger time step than the full solver, the reported full-dynamics speedup becomes stronger.</p>
+
+        <div class="mach-flow-map" aria-label="Compressible flow uses Mach number and time with adaptive collocation in a reduced residual solve">
+          <div>Mach number changes</div>
+          <div>transient flow snapshots</div>
+          <div>adaptive collocation</div>
+          <div>reduced residual prediction</div>
+        </div>
+
+        <h2>The Ahmed Body Shows Both Promise And Failure</h2>
+        <p>The second test case is flow around an Ahmed body, a standard vehicle-like shape. The state includes velocity, pressure, and turbulent viscosity. For a narrow range of slant angles, the method gives useful reduced predictions and noticeable speedup.</p>
+
+        <p>For a wider range of slant angles, the method struggles. Increasing the number of SVD modes does not fix every parameter region. Local SVD over subintervals can help in some places, but not enough everywhere. This is one of the most valuable parts of the talk because it says plainly where the method's assumptions run out.</p>
+
+        <div class="ahmed-body-map" aria-label="The Ahmed body case works in a narrow angle range but struggles over a wider range">
+          <div>vehicle-like body</div>
+          <div>narrow angle range works</div>
+          <div>wide angle range strains SVD</div>
+          <div>method limit exposed</div>
+        </div>
+
+        <h2>The Q&A Draws The Boundary</h2>
+        <p>The Q&A asks the central limitation. If the method begins with SVD, is it limited by how well SVD can compress the data? The speaker's answer is yes, but with nuance. The approach works in an intermediate regime. It can use more SVD modes than a classic reduced basis would normally want, while still being much smaller than the full state.</p>
+
+        <p>But if the problem is pure transport or another case where the linear modes must be almost as numerous as the snapshots, this SVD-filter architecture may not be the right tool. Then one may need stronger nonlinear dimensionality reduction, such as larger convolutional or graph neural architectures, possibly with teacher-student training to create a smaller decoder for the intrusive solve.</p>
+
+        <div class="qa-boundary-map" aria-label="The SVD-filter approach works in an intermediate regime and fails when SVD cannot compress enough">
+          <div>SVD compresses somewhat</div>
+          <div>neural map improves shape</div>
+          <div>pure transport may defeat SVD</div>
+          <div>use stronger nonlinear models</div>
+        </div>
+
+        <h2>Why This Is More Explainable Than A Direct Predictor</h2>
+        <p>The speaker emphasizes interpretability. A direct predictor can map parameters to fields, but the prediction is accepted mostly because the network says so. In this intrusive method, each time step still minimizes quantities coming from the governing equation. That gives the prediction a physical audit trail.</p>
+
+        <p>The method can also build in physical constraints. The talk mentions examples such as positivity of density, structure preservation, symplectic forms, energy conservation, or entropy stability. The broad point is that a learned manifold does not have to be lawless. It can be used as a compact space inside a solver that still respects physical structure.</p>
+
+        <div class="explainable-rom-map" aria-label="Intrusive neural ROMs keep a physical audit trail through residual minimization and constraints">
+          <div>network proposes space</div>
+          <div>equation residual audits answer</div>
+          <div>constraints can be added</div>
+          <div>less black-box prediction</div>
+        </div>
+
+        <h2>How This Connects To Physics, Design, And Topology</h2>
+        <p>Design and topology problems repeatedly ask for new PDE solves as shapes, parameters, or materials change. A pure full-order solve may be too slow. A pure black-box surrogate may be too easy to distrust. This lecture gives a middle path: reduce the state with a learned nonlinear space, but keep the residual solve that ties the prediction to the governing equation.</p>
+
+        <p>For topology optimization, this distinction is important. Shape changes can move fronts, wakes, stresses, contact regions, or high-gradient zones. A linear basis may fail if those features translate or reorganize. Adaptive collocation is relevant because the important residual checks should follow the active feature, not remain frozen in an irrelevant part of the mesh.</p>
+
+        <p>The warning is just as important as the promise. If the design space is too broad, or the SVD filter cannot represent the solution family, the reduced model may fail even with a neural decoder. A serious design workflow would need local parameter regions, stronger nonlinear encoders, richer snapshots, and validation against full solves at the edges of the design space.</p>
+
+        <div class="intrusive-design-bridge" aria-label="Topology design can use intrusive neural ROMs when residual checks follow active physics and limits are tested">
+          <div>many design queries</div>
+          <div>learned nonlinear solution space</div>
+          <div>adaptive residual checks</div>
+          <div>validated fast design loop</div>
+        </div>
+
+        <h2>The Chapter In One Chain</h2>
+        <p>First, parameterized PDEs produce many related solutions. Second, full-order snapshots can be used to build a smaller prediction space. Third, a linear SVD basis works when solution changes line up well. Fourth, moving fronts and transport can make linear compression inefficient. Fifth, an autoencoder can represent a curved solution manifold. Sixth, pure data-driven ROMs can skip the governing equation during prediction. Seventh, intrusive neural ROM keeps the time-discrete residual in the online solve. Eighth, the decoder reconstructs a field from latent coordinates, and the residual judges it. Ninth, the nonlinear decoder turns prediction into an iterative least-squares problem. Tenth, hyper-reduction keeps that residual solve affordable by checking selected cells. Eleventh, randomized SVD acts as a medium-size filter so the nonlinear network can stay small. Twelfth, adaptive magic points move residual checks toward active dynamics. Thirteenth, compressible flow with Mach number shows the workflow. Fourteenth, the Ahmed-body case shows both speedup and failure over too broad a parameter range. Fifteenth, the Q&A clarifies that the method works in an intermediate regime where SVD still compresses enough. Sixteenth, the bigger lesson is that neural networks can help define a small curved search space while the equation still decides which answer is acceptable.</p>
+
+        <div class="note">
+          <p>The chapter's core idea: do not choose between a slow full solver and an unaccountable neural predictor too quickly. A neural manifold can make the search small while the PDE residual keeps the answer tied to physics.</p>
+        </div>
+
+        <section class="lesson-review" aria-label="End of chapter understanding check for intrusive neural reduced models">
+          <h2>How To Test Whether You Understood This Chapter</h2>
+          <div class="lesson-review-grid">
+            <div><strong>Say the trade in one breath</strong><span>A full solver is trusted but slow. A direct network is fast but may ignore the law. This method tries to be fast by searching in a small neural space while still using the PDE residual as the judge.</span></div>
+            <div><strong>Explain the decoder simply</strong><span>The decoder is not magic. It is a machine that turns a few numbers into a full field. The reduced solver keeps changing those few numbers until the rebuilt field better satisfies the equation.</span></div>
+            <div><strong>Explain why selected points matter</strong><span>Checking the residual everywhere may destroy the speedup, so the method checks carefully chosen cells. Those cells must sit where the current physics is active, not where the old training set happened to be calm.</span></div>
+            <div><strong>Connect it to topology and design</strong><span>In design loops, shapes and material layouts change the important physical zones. The method is useful only if its small space and its residual points follow those changes and are tested against full solves at the edges.</span></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

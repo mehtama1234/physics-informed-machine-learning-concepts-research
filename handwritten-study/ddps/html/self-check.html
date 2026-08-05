@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DDPS Self Check</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="sidebar">
+        <h1>DDPS Study</h1>
+        <a href="index.html">Start</a>
+        <a href="review-path.html">Review Path</a>
+        <a href="plain-words.html">Plain Words</a>
+        <a href="method-map.html">Method Map</a>
+        <a href="self-check.html">Self Check</a>
+        <a href="capstone.html">Capstone</a>
+        <a href="theme-index.html">Theme Index</a>
+        <a href="domain-map.html">Domain Map</a>
+        <a href="paper-reader.html">Paper Reader</a>
+        <a href="common-mistakes.html">Common Mistakes</a>
+        <a href="study-plan.html">Study Plan</a>
+        <a href="math-map.html">Math Map</a>
+        <a href="prerequisite-map.html">Prerequisite Map</a>
+        <a href="cheat-sheet.html">Cheat Sheet</a>
+        <a href="from-zero.html">From Zero</a>
+        <a href="big-picture.html">Big Picture</a>
+        <a href="synthesis.html">Synthesis</a>
+        <a href="examples.html">Examples</a>
+        <a href="audit.html">Transcript Audit</a>
+      </nav>
+      <main class="content">
+        <p class="eyebrow">Can you explain it back?</p>
+        <h1>Self Check For Understanding</h1>
+
+        <p>This page tests whether the ideas are becoming usable. Do not answer with method names first. Answer with the problem, the evidence, the physical rule, and the failure test.</p>
+
+        <div class="self-check-map" aria-label="Self check chain for understanding a scientific machine learning method">
+          <div>state the physical pain</div>
+          <div>name the evidence</div>
+          <div>name the method burden</div>
+          <div>name the rejection test</div>
+        </div>
+
+        <h2>How To Use This Page</h2>
+        <p>Read the prompt. Say your answer out loud in ordinary words. Then compare with the expected answer. If your answer starts with a buzzword and cannot explain why the tool exists, go back to <a href="plain-words.html">Plain Words</a> or <a href="method-map.html">Method Map</a>.</p>
+
+        <section class="self-check-item">
+          <h2>1. Sparse Data With A Known Equation</h2>
+          <p><strong>Prompt:</strong> You have ten temperature measurements inside a part, and you know the heat equation should hold. What family should you study, and what is the first failure test?</p>
+          <p><strong>Expected answer:</strong> Study physics-informed learning. The method helps because the equation gives extra training evidence where measurements are missing. The first failure test is whether the learned temperature field satisfies the equation and boundary conditions away from the ten measured points.</p>
+          <p><strong>Read:</strong> <a href="pinn-from-zero.html">PINNs From Zero</a>, <a href="chapter-01.html">Chapter 1</a>, <a href="chapter-102.html">Chapter 102</a>.</p>
+        </section>
+
+        <section class="self-check-item">
+          <h2>2. Too Many Repeated Simulations</h2>
+          <p><strong>Prompt:</strong> You need to test ten thousand design settings, but the full solver takes an hour per run. What is the real problem, and what should the small model prove?</p>
+          <p><strong>Expected answer:</strong> The real problem is repeated cost, not lack of a solver. A reduced model or surrogate may help, but it must prove it preserves the physical behavior that changes across the design settings. Low average error on old cases is not enough.</p>
+          <p><strong>Read:</strong> <a href="rom-from-zero.html">ROMs From Zero</a>, <a href="chapter-09.html">Chapter 9</a>, <a href="chapter-91.html">Chapter 91</a>.</p>
+        </section>
+
+        <section class="self-check-item">
+          <h2>3. Moving Wave Looks Complicated</h2>
+          <p><strong>Prompt:</strong> A pressure pulse keeps the same shape but moves across the domain. A fixed basis needs many modes. What did the compression miss?</p>
+          <p><strong>Expected answer:</strong> It missed motion. The field is not complicated because the shape changes wildly; it is complicated because the same feature appears in different places. The representation should track or align the moving feature before compressing it.</p>
+          <p><strong>Read:</strong> <a href="chapter-18.html">Chapter 18</a>, <a href="chapter-47.html">Chapter 47</a>, <a href="chapter-136.html">Chapter 136</a>.</p>
+        </section>
+
+        <section class="self-check-item">
+          <h2>4. Whole Field To Whole Field</h2>
+          <p><strong>Prompt:</strong> Your input is an entire initial condition, and your output is an entire future flow field. Why might a normal input-output network be the wrong mental model?</p>
+          <p><strong>Expected answer:</strong> The task is not one number to one number. It is a rule from functions to functions. Operator learning is the right family to study, but it must be tested on changed grids, changed boundaries, changed geometries, and changed regimes.</p>
+          <p><strong>Read:</strong> <a href="chapter-98.html">Chapter 98</a>, <a href="chapter-125.html">Chapter 125</a>, <a href="chapter-131.html">Chapter 131</a>.</p>
+        </section>
+
+        <section class="self-check-item">
+          <h2>5. Hidden State From Few Sensors</h2>
+          <p><strong>Prompt:</strong> You can place only a few sensors in a large system. What makes a sensor useful?</p>
+          <p><strong>Expected answer:</strong> A sensor is useful if it observes the part of the state that controls the future or the decision. Good placement is not just spreading sensors evenly. It is choosing measurements that reveal the reachable and visible modes, moving features, or hidden variables.</p>
+          <p><strong>Read:</strong> <a href="chapter-13.html">Chapter 13</a>, <a href="chapter-80.html">Chapter 80</a>, <a href="chapter-123.html">Chapter 123</a>.</p>
+        </section>
+
+        <section class="self-check-item">
+          <h2>6. Control Through A Learned Model</h2>
+          <p><strong>Prompt:</strong> A learned model predicts a system well on normal data. Why can it still be unsafe inside a controller or optimizer?</p>
+          <p><strong>Expected answer:</strong> A controller searches for actions, and that search can push the model into unusual cases. If the model is wrong there, the controller may exploit the wrong prediction. Safety constraints, physical checks, uncertainty, and rollout tests are needed.</p>
+          <p><strong>Read:</strong> <a href="chapter-58.html">Chapter 58</a>, <a href="chapter-61.html">Chapter 61</a>, <a href="chapter-128.html">Chapter 128</a>.</p>
+        </section>
+
+        <section class="self-check-item">
+          <h2>7. Geometry Changes The Outcome</h2>
+          <p><strong>Prompt:</strong> Two designs have similar average material properties, but one connects a path for heat, flow, stress, or current and the other does not. What did the average miss?</p>
+          <p><strong>Expected answer:</strong> The average missed connectivity. Geometry and topology can control the outcome because connected paths, holes, boundaries, and interfaces decide how physical quantities move. A design model must preserve those structures.</p>
+          <p><strong>Read:</strong> <a href="chapter-69.html">Chapter 69</a>, <a href="chapter-129.html">Chapter 129</a>, <a href="chapter-137.html">Chapter 137</a>.</p>
+        </section>
+
+        <section class="self-check-item">
+          <h2>8. Hidden Underground System</h2>
+          <p><strong>Prompt:</strong> You have a few well measurements and many possible underground fracture networks. Why is one best-looking map not enough?</p>
+          <p><strong>Expected answer:</strong> The observations do not identify the full underground system. You need a distribution of possible worlds, updated by data, because decisions depend on remaining uncertainty. A generative model can help sample possible worlds, but samples must be physically valid and checked against observations.</p>
+          <p><strong>Read:</strong> <a href="chapter-137.html">Chapter 137</a>, <a href="chapter-134.html">Chapter 134</a>, <a href="chapter-135.html">Chapter 135</a>.</p>
+        </section>
+
+        <section class="self-check-item">
+          <h2>9. Broad Foundation-Model Claim</h2>
+          <p><strong>Prompt:</strong> A paper says its model is a scientific foundation model. What should you ask before believing the claim?</p>
+          <p><strong>Expected answer:</strong> Ask what tasks it transfers across, what physical changes were tested, what data it was trained on, what uncertainty it reports, and where it fails. A broad name is not evidence of broad generalization.</p>
+          <p><strong>Read:</strong> <a href="chapter-132.html">Chapter 132</a>, <a href="chapter-135.html">Chapter 135</a>.</p>
+        </section>
+
+        <section class="self-check-item">
+          <h2>10. Your Final Explanation</h2>
+          <p><strong>Prompt:</strong> Explain the whole topical area in two sentences without using method names.</p>
+          <p><strong>Expected answer:</strong> We want to make physical prediction, design, control, and inference faster or possible when full simulation and full observation are too expensive. The hard part is using data and learning without losing the physical rules, hidden structure, uncertainty, and failure checks that make the answer useful.</p>
+          <p><strong>Read:</strong> <a href="capstone.html">Capstone</a>, <a href="review-path.html">Review Path</a>, <a href="method-map.html">Method Map</a>, <a href="big-picture.html">Big Picture</a>.</p>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

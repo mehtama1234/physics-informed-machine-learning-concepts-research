@@ -1,0 +1,1364 @@
+Okay,
+welcome to the DDPS seminar. Everyone. Before&nbsp;
+I introduce today's speaker, let me go over&nbsp;&nbsp;
+some rules and logistics. First of all, please&nbsp;
+mute yourself here in the talk, but if you have&nbsp;&nbsp;
+questions, you can unmute and ask questions or&nbsp;
+use chat room to post your questions so that you&nbsp;&nbsp;
+can address them at the end second. Today's DDK&nbsp;
+seminar is open to external audiences. No plus&nbsp;&nbsp;
+five discussion is allowed, so please watch&nbsp;
+out. Finally, the talk today will be recorded&nbsp;&nbsp;
+and uploaded in our YouTube channel. That's about&nbsp;
+it. Let me briefly introduce our speaker today.
+It's a great honor to host Professor Max welling,&nbsp;&nbsp;
+who is a full professor and Research Chair in&nbsp;
+machine learning at the University of Amsterdam,&nbsp;&nbsp;
+and a working distinguished visiting professor at&nbsp;
+Caltech. He is co founder and a co founder of the&nbsp;&nbsp;
+startup CUSP AI in materials design. He's a fellow&nbsp;
+at the Canadian Institute for Advanced Research&nbsp;&nbsp;
+and the European lab for learning and intelligence&nbsp;
+systems, where he served on the founding board
+his previous appointment&nbsp;
+includes partner and VP at&nbsp;&nbsp;
+Microsoft Research and VP at Qualcomm&nbsp;
+technology, professor at UCR fine.
+He finished his PhD in theoretical High&nbsp;
+Energy Physics on the supervision of Nobel&nbsp;&nbsp;
+Prize winner Professor Gerald right, and he then&nbsp;
+switched fields to focus on machine learning,&nbsp;&nbsp;
+first as a postdoc at Caltech on the supervision&nbsp;
+of Professor Kirito Corona and then a postdoc on&nbsp;&nbsp;
+the supervision of another Nobel Prize winner,&nbsp;
+Professor Jeffrey Hinton at UCL and the UC 20
+today, Max will talk about his AI&nbsp;
+shifting the paradigm of scientific&nbsp;&nbsp;
+discovery. I'm sure we are going&nbsp;
+to hear a wonderful talk today.
+Now let me ask a
+informal questions and then move on to fun part.&nbsp;
+So today's informal question is, Max, I know that&nbsp;&nbsp;
+as I introduce today, you've been studying the&nbsp;
+physics first, right? And then somehow move on to&nbsp;&nbsp;
+the machine learning. And you must be fascinated&nbsp;
+by some aspect of the machine learning. That's why&nbsp;&nbsp;
+you transition from physics. If you can tell&nbsp;
+us briefly about how that transition happens.
+Yeah. Thank you very much for the introduction.
+I'm happy to be here. We have people&nbsp;
+online which are not muted, so I'm sure.
+And
+so indeed, so I did my PhD in two dimensional&nbsp;
+quantum gravity, and I didn't quite see that's&nbsp;&nbsp;
+going to make the impact in the world. And&nbsp;
+so I wanted to do something where I would
+warn impact. And so machine learning was,&nbsp;
+at that point, a budding field with maybe
+people training models with a few 10s to hundreds&nbsp;
+of parameters, not trillions, as we do now.
+And so I started working on that, but, and that's&nbsp;
+also the reason, ultimately, why I started,&nbsp;&nbsp;
+you know, startups like cost of AI, which is&nbsp;
+to make an actual, real impact, and not just&nbsp;&nbsp;
+a theoretical impact, with papers. I'll talk&nbsp;
+about that a little bit today, but ironically,&nbsp;&nbsp;
+I've gone full circle going back to physics,&nbsp;
+material science, but also I'm very interested&nbsp;&nbsp;
+in quantum mechanics. I think the fundamentals&nbsp;
+of quantum mechanics and quantum computing. So&nbsp;&nbsp;
+I won't talk about that, but today I'll talk&nbsp;
+about machinery for molecules and materials.
+Yeah, so I'll start my talk by
+talking about two revolutions which have happened
+over the course of sort of humanity, sort of not&nbsp;
+the first one, but very impactful one was the&nbsp;&nbsp;
+Industrial Revolution, where human labor was&nbsp;
+being replaced by machine labor. And it was,&nbsp;&nbsp;
+of course, it resulted in what we have today, but&nbsp;
+including all the pollution that this generated,&nbsp;&nbsp;
+because we, of course, we needed to drill&nbsp;
+for oil and gas and other fossil fuels&nbsp;&nbsp;
+in order to power the revolution.&nbsp;
+And it's that which is currently,
+oh, sorry,
+sorry.
+I'm sorry we have a little technical&nbsp;
+difficulty. There we go back.
+So we need to power that revolution with&nbsp;
+fossil fuels, which ultimately also caused the.
+A large amount of carbon dioxide in the in the&nbsp;
+atmosphere at this point. And so now today,&nbsp;&nbsp;
+we are looking at an information revolution&nbsp;
+which is replacing mental human labor by&nbsp;&nbsp;
+machine mental labor, if you wish, which is,&nbsp;
+of course, the AI revolution. And the hope is&nbsp;&nbsp;
+that maybe the AI revolution could help also&nbsp;
+clean up the mess from the from the previous&nbsp;&nbsp;
+revolution. So here's a little graph, which is&nbsp;
+the carbon dioxide levels in the atmosphere. This&nbsp;&nbsp;
+is 7064 which is the invention of the steam&nbsp;
+engine, and the levels of carbon dioxide and&nbsp;&nbsp;
+global temperature. In fact, what shown here are&nbsp;
+rising right after that. This is my birth year,&nbsp;&nbsp;
+so in some sense, our generation, I'd say&nbsp;
+my generation, has been benefiting from the&nbsp;&nbsp;
+fact that we can dig up fossil fuels&nbsp;
+and use them. And it's also up to us,&nbsp;&nbsp;
+I feel, to hand over the world to the&nbsp;
+next generation in a more clean state,&nbsp;&nbsp;
+which is we need to start removing carbon dioxide&nbsp;
+from the atmosphere, which is a technology that&nbsp;&nbsp;
+currently doesn't really exist at the scale&nbsp;
+that we needed. So here are some here's a graph
+which shows some scenarios which are necessary to&nbsp;
+stay within 1.5 to two degrees. It seems you're&nbsp;&nbsp;
+already at 1.5 by the way, but let's&nbsp;
+say two or 1.5 degrees global warming,&nbsp;&nbsp;
+which means that we have to decrease the amount&nbsp;
+of emissions in the atmosphere, and by 2050 we&nbsp;&nbsp;
+need to be completely carbon neutral under all of&nbsp;
+these scenarios. Now, I would say these scenarios&nbsp;&nbsp;
+should go down in carbon dioxide under I would&nbsp;
+say currently, the way the world is moving,&nbsp;&nbsp;
+I don't see this coming down at all. So it will&nbsp;
+hopefully be a more sharp peak at some point.&nbsp;&nbsp;
+But we will have to be carbon neutral at 2015&nbsp;
+but after that, and this is basically replacing&nbsp;&nbsp;
+sort of fossil fuel with sustainable energy&nbsp;
+sources. But after that, there is a century,
+or at least half a century, but&nbsp;
+more like a century of having to&nbsp;&nbsp;
+remove carbon dioxide from the atmosphere at&nbsp;
+half the rate that we're putting it in. Now,&nbsp;&nbsp;
+that technology at that scale does absolutely not&nbsp;
+exist, but all of these scenarios count on that,&nbsp;&nbsp;
+and so that needs to be developed, in my view, in&nbsp;
+order to not go into crazy global warming. And so
+the hope is that technology and AI can help&nbsp;
+us achieve that. And so I think we are at the&nbsp;&nbsp;
+cusp of somewhat of a revolution in AI using an&nbsp;
+AI in the sciences. And of course, in this lab,
+people realize that if I look at all these photos&nbsp;
+here, which are all about how AI will help change&nbsp;&nbsp;
+scientific simulation and stuff like that. So&nbsp;
+you're all into this, I'm sure. So I sort of&nbsp;&nbsp;
+identified two steps for this to happen, or these&nbsp;
+are basically happening right now. The first step&nbsp;&nbsp;
+is to replace pieces and bits and pieces and bits&nbsp;
+and pieces of experiment to computer simulation.&nbsp;&nbsp;
+So experiments are expensive and slow, and the&nbsp;
+more you can do in a computer, the faster you&nbsp;&nbsp;
+can go through design cycles and all that. So&nbsp;
+of course, the compute is growing exponentially,
+and that's good. And so we are going from&nbsp;
+basically just trial error in experiment,&nbsp;&nbsp;
+to do lots of experiments and storing the data,&nbsp;
+analyzing it, maybe with statistics and machine&nbsp;&nbsp;
+learning techniques, to a stage where we&nbsp;
+do all the simulations of the molecules,
+literally, the actual simulation of&nbsp;
+the molecule in silico. That's the&nbsp;&nbsp;
+first step. And then the second step is&nbsp;
+going from simulation to emulation. So
+here's an example in fluid dynamics.&nbsp;
+So you're a car designer, you test&nbsp;&nbsp;
+your car in a wind tunnel by already&nbsp;
+made the first transition. So you're&nbsp;&nbsp;
+not testing it in a real wind tunnel, but&nbsp;
+you're doing it in a digital wind tunnel.
+And then we design your next car, instead&nbsp;
+of just redoing that process and just going&nbsp;&nbsp;
+through the same expensive simulation, you&nbsp;
+could have stored the data from the first one,&nbsp;&nbsp;
+then train the neural network to&nbsp;
+either accelerate this particular&nbsp;&nbsp;
+simulation or actually directly predict&nbsp;
+the relevant properties. In other words,&nbsp;&nbsp;
+machine learning is providing a shortcut&nbsp;
+for these kinds of simulations. Of course,&nbsp;&nbsp;
+one big challenge is to do it in a reliable&nbsp;
+way, so that you will actually also,&nbsp;&nbsp;
+if you go slightly out of the domain that you&nbsp;
+will be able you will have reliable predictions.
+And so, you know, this kind of&nbsp;
+revolution is happening across
+all the scales of scientific research,&nbsp;
+all the way in particle physics,&nbsp;&nbsp;
+where you talk about pico meters and femtoseconds,&nbsp;&nbsp;
+all the way up to astrophysics, where you&nbsp;
+talk about light years and picometers.
+Now in this talk, I'll be&nbsp;
+touching on two of these,&nbsp;&nbsp;
+but I acknowledge this is just a small&nbsp;
+slice of where you know, where you can.
+Do. The first one is simulating&nbsp;
+molecules, and the second one is
+something about simulating fluids. First,
+a little bit about molecules. Why am I very&nbsp;
+interested in molecules? Well, they are basically&nbsp;&nbsp;
+the root of everything. If you can control,&nbsp;
+simulate and control molecules, you can solve&nbsp;&nbsp;
+a lot of society's biggest problems. Of course,&nbsp;
+drug discovery is one. Photo cells is another.&nbsp;&nbsp;
+Better lubricants. 20% of all our energy&nbsp;
+losses seem to be due to friction. So that&nbsp;&nbsp;
+lubricants can help. There better&nbsp;
+catalysts, which are, of course,&nbsp;&nbsp;
+underneath all chemical reactions. And then, you&nbsp;
+know, here's a here's a process like nitrogen&nbsp;&nbsp;
+fixation for fertilizers and carbon capture,&nbsp;
+which you just mentioned, which is important.
+Okay, so now, what are the challenges in&nbsp;
+molecular assimilation? I'll first talk a&nbsp;&nbsp;
+little bit about molecular simulation. So what&nbsp;
+are the challenges in molecular simulation?
+So a molecule at a very&nbsp;
+rough, sketchy sort of level,&nbsp;&nbsp;
+is a bunch of atoms or ions connected by&nbsp;
+bonds, plus a electron cloud around it.
+I do have a clue, but
+I cannot
+now, what are the three challenges&nbsp;
+for molecular simulation?
+So the first one is basically, in order to&nbsp;
+evolve the molecule forward in time, it's&nbsp;&nbsp;
+just in principle, using Newtonian dynamics, which&nbsp;
+is the change in position, is given by velocity,&nbsp;&nbsp;
+and the change in velocity is given by force.&nbsp;
+The problem, the first problem appears because&nbsp;&nbsp;
+the force is largely quantum mechanical, due&nbsp;
+to the electrons, right? So this gives you
+very hard computation to do, as you don't&nbsp;
+approximate it. The second one is, this is&nbsp;&nbsp;
+a highly chaotic system. It's a highly nonlinear&nbsp;
+set of equations, ODEs, if you wish, that needs&nbsp;&nbsp;
+to be evolved. And very quickly, of course,&nbsp;
+this becomes chaotic. And the third one is,&nbsp;&nbsp;
+if you want to design materials, the search space&nbsp;
+is humongous, 10 to the 60 at least, but possibly&nbsp;&nbsp;
+larger. And so how do you effectively search&nbsp;
+through the space of molecules and materials.
+Now here's a few examples of things I've worked&nbsp;
+at, but also where the where the field, sort of&nbsp;&nbsp;
+has started to make contributions. And so on&nbsp;
+this side, we have the time dependent Schrodinger&nbsp;&nbsp;
+equation, where the green wall is the sort of&nbsp;
+electron cloud. This is beautiful visualization&nbsp;&nbsp;
+by quantum magazine. And here's a time&nbsp;
+dependent Schrodinger equation. And then we have
+ideas to take the functional for a DFT,&nbsp;
+which is a functional of the density,&nbsp;&nbsp;
+electron density, and you have to write&nbsp;
+down something for that. And now people&nbsp;&nbsp;
+have started to train machine learning models&nbsp;
+for this DFT functional and the other one
+is quantum variational Monte Carlo, which is&nbsp;
+another technique for solving this equation.&nbsp;&nbsp;
+And people have also started to use&nbsp;
+neural networks in quantum very in&nbsp;&nbsp;
+quantum variation Monte Carlo, and the&nbsp;
+examples of that are Fermi net and polynet
+at one level up, we do actually do long&nbsp;
+dynamics. This is water being simulated,&nbsp;&nbsp;
+and you use the Langevin equation&nbsp;
+for that, which is again,
+neutron dynamics. Change in position is velocity.&nbsp;
+Change in velocity is given by a friction term,&nbsp;&nbsp;
+a friction term and a force term, and then&nbsp;
+random noise. And it's this term which is hard&nbsp;&nbsp;
+that people have started to build neural networks&nbsp;
+to replace their quantum mechanical calculation,&nbsp;&nbsp;
+or you typically do it with a DFT calculation,&nbsp;
+and that's called the machinery and force field.&nbsp;&nbsp;
+And I'll say a little bit more next. So this is&nbsp;
+something I hope also have some time to talk to&nbsp;&nbsp;
+you about. This is DFT, but for thermodynamics,&nbsp;
+so it's a DFT calculated method, which is almost&nbsp;&nbsp;
+perfect analogy of the DFT for quantum mechanics.&nbsp;
+But then for thermodynamics, again, you have to&nbsp;&nbsp;
+write down a functional. You don't know what the&nbsp;
+functional is, and because people have written&nbsp;&nbsp;
+down rather simple things, these methods didn't&nbsp;
+work very well, but now you stick in the neural&nbsp;&nbsp;
+network, and now it starts to work really well.&nbsp;
+And we'll show you some results. And then there's,&nbsp;&nbsp;
+of course, the Navier Stokes equation for&nbsp;
+predicting the weather. This is a simple version&nbsp;&nbsp;
+of it. There's huge amounts of data available&nbsp;
+for this, which therefore super successful place&nbsp;&nbsp;
+for applying machine learning. And we've&nbsp;
+trained when the Microsoft, we've trained
+a large model Aurora to predict&nbsp;
+the future stage of the weather&nbsp;&nbsp;
+by solving it all as a neural network,&nbsp;
+not even worrying about the physics. And
+then there's beautiful applications.&nbsp;
+So there's models that can get.
+Generate drug like molecules in the&nbsp;
+pockets of acidic protein to develop&nbsp;&nbsp;
+new drugs. There is the design of new catalysts to
+accelerate chemical reactions. And quite recently,&nbsp;
+the paper was published in Nature for the
+diffusion models for generating materials.&nbsp;
+This is the paper matter Gen from
+Microsoft that would just generate materials,&nbsp;
+and you can prompt them with certain properties,&nbsp;&nbsp;
+and that will generate the materials for you. So&nbsp;
+there's a these are all new, new techniques where&nbsp;&nbsp;
+machine learning is sort of, I would say, changing&nbsp;
+or disrupting this field of atomic simulations in&nbsp;&nbsp;
+search. And so he has sort of rewritten a little&nbsp;
+bit sort of a hierarchy of all the things that&nbsp;&nbsp;
+people do in the chemistry and physics community,&nbsp;
+all the way from Ebenezer electronic structure&nbsp;&nbsp;
+methods to molecular simulations, and of course&nbsp;
+bringing them to particle based simulations. And&nbsp;&nbsp;
+of course bringing particle simulations all the&nbsp;
+way to classical density functional theory and&nbsp;&nbsp;
+continual methods, which is solving PDEs. And for&nbsp;
+each one of these, there is now a machine learning&nbsp;&nbsp;
+method that helps improve it, right? Quantum&nbsp;
+Monte Carlo, the quantum DFT force field methods,&nbsp;&nbsp;
+and then force fields for all of these. And&nbsp;
+classical DFT, where I'll talk about a bit&nbsp;&nbsp;
+in these PD circuit models, which are these&nbsp;
+methods for weather prediction. And so we are,&nbsp;&nbsp;
+we are seeing a sort of a real change in this&nbsp;
+field, where we accelerate the simulation
+by by using machine learning methods.&nbsp;
+And so now I'll do a quick digression,&nbsp;&nbsp;
+because I need some concepts to tell you&nbsp;
+a little bit more about some of these&nbsp;&nbsp;
+techniques. So the first one is symmetries and&nbsp;
+how to build them into neural networks. Now,&nbsp;&nbsp;
+symmetries play an incredibly important role, as&nbsp;
+you all know, in physics, you can basically derive
+Special Relativity from, from, from a few simple&nbsp;
+symmetry arguments, like the Lorentz invariance,&nbsp;&nbsp;
+and you can derive Maxwell's equations&nbsp;
+by unifying electricity and magnetism.&nbsp;&nbsp;
+By basically changing frames. You can&nbsp;
+turn magnetism into electricity and back,&nbsp;&nbsp;
+but just moving observers and thinking&nbsp;
+about what observers see. Very powerful&nbsp;&nbsp;
+tool in physics. You know, even even general&nbsp;
+relativity can be derived from this equivalence
+principle that gravity is sort&nbsp;
+of the same as it's exactly the&nbsp;&nbsp;
+same as acceleration. And even the Standard&nbsp;
+Model of particles is governed, of course,&nbsp;&nbsp;
+by symmetry groups. The different particles are
+different.
+You say you can you can rotate, or you can turn&nbsp;
+one particle state into another particle state by&nbsp;&nbsp;
+a symmetry which and that sort of gives you&nbsp;
+the organization of fundamental particles.
+So now in neural networks, though, it wasn't&nbsp;
+very obvious how to use these symmetries,&nbsp;&nbsp;
+right? So you could train a&nbsp;
+neural network which would say,&nbsp;&nbsp;
+predict, for me, let's say, the&nbsp;
+energy and the forces on atoms
+from you give it the current state of the atom,&nbsp;&nbsp;
+and you want to predict the forces&nbsp;
+so you can move it sort of along it.
+Now it's clear that if you would rotate a molecule&nbsp;
+in space, or you would move a molecule in space,&nbsp;&nbsp;
+it would give you the same energy, and it would&nbsp;
+rotate all the forces. So that's not if you know&nbsp;&nbsp;
+the first solution, you just know the second one&nbsp;
+for a rotated frame. The neural network, however,&nbsp;&nbsp;
+doesn't know about that, so it would consider&nbsp;
+a molecule input and a rotated molecule input&nbsp;&nbsp;
+as a completely different, new problem, and needs&nbsp;
+to learn how to produce forces for that. And the&nbsp;&nbsp;
+output, if you didn't train it long enough, with&nbsp;
+building up data, would actually not be a perfect&nbsp;&nbsp;
+rotation. And so with typo Cohen and Maurice&nbsp;
+Wyler later, and a whole bunch of other students&nbsp;&nbsp;
+and postdocs, we studied how to take the symmetry&nbsp;
+principle and put it into a neural net. And the&nbsp;&nbsp;
+underlying, core mathematical idea is this idea of&nbsp;
+equivariance, which says, Here's the equation, but&nbsp;&nbsp;
+here's the picture, that you take an input image&nbsp;
+and you translate it, and then you convolve it,&nbsp;&nbsp;
+or just filter it to get you the first layer of&nbsp;
+a neural net that should be the same as Phil's&nbsp;&nbsp;
+first filtering and then translating, if you put&nbsp;
+constraints so this, this closing of this diagram,&nbsp;&nbsp;
+is commuting of this diagram and put constraints&nbsp;
+on what this filters, filter maps can be. If you
+restrict your neural network to have this kind of&nbsp;
+property, then you're guaranteed that whatever you&nbsp;&nbsp;
+do at the end has the has the symmetry property&nbsp;
+of the of the group that you're interested in,&nbsp;&nbsp;
+and so if you're interested in that, this&nbsp;
+is an excellent book written by Maurice,&nbsp;&nbsp;
+and, you know, and other co authors,&nbsp;
+but mostly by Maurice, I would say.
+And he has beautifully not just&nbsp;
+written the book in sort of.
+Hierarchical section, where the first chapter is&nbsp;
+very high level, and then it goes into two deeper&nbsp;&nbsp;
+and deeper levels, but it's also very richly and&nbsp;
+beautifully illustrated. So this is the perfect&nbsp;&nbsp;
+introduction into this field if you're&nbsp;
+interested in learning more about this.
+And so we also worked on graph neural&nbsp;
+networks, because obviously a an image&nbsp;&nbsp;
+is a regular you could represent as&nbsp;
+a regular grid, but a molecule isn't&nbsp;&nbsp;
+nicely represented as a regular grid. It's more&nbsp;
+like a graph where the atoms are the nodes and&nbsp;&nbsp;
+then the interactions are at the edges of the&nbsp;
+graph. The only problem is, is that it's not&nbsp;&nbsp;
+so clear how to do a convolution on a graph.&nbsp;
+This has to do with the fact that in a graph,&nbsp;&nbsp;
+if I just move a particular node, drag it to some&nbsp;
+other place and change the order, the convolution&nbsp;&nbsp;
+shouldn't change, but the representation,&nbsp;
+if you don't take the right representation,&nbsp;&nbsp;
+it will change. And also, it should be able&nbsp;
+to handle an arbitrary number of neighbors,&nbsp;&nbsp;
+not just a fixed number like in a regular group.&nbsp;
+And so we, with Thomas KIPP, actually, first,&nbsp;&nbsp;
+we developed this idea of a graph neural&nbsp;
+network that is able to send these messages&nbsp;&nbsp;
+in these graphs, so to do a convolution on a&nbsp;
+graph. And later, with the Victor and Emile,
+we also turn this into sort of a&nbsp;
+more equivariant version of that.&nbsp;&nbsp;
+So now here you have a graph. You do&nbsp;
+your message passing on the graph,
+then, or message passing, or convolution, if&nbsp;
+you issue, then you rotate the molecule. And&nbsp;&nbsp;
+so now this thing is, if you, if you do&nbsp;
+message passing and rotate the molecules,&nbsp;&nbsp;
+you would give you the same as&nbsp;
+rotating the molecule and then&nbsp;&nbsp;
+doing the math spaci And so now you have&nbsp;
+an equivariant model for graph convolutions
+that is fully equivariant and therefore&nbsp;
+appropriate for modeling molecules. Here's&nbsp;&nbsp;
+a bunch of equations. So just to show this&nbsp;
+actually doesn't have to be complicated.&nbsp;&nbsp;
+So one of these equations to make to&nbsp;
+get this to be equit doesn't have to&nbsp;&nbsp;
+be complicated. So here's two papers that&nbsp;
+we wrote among others about how to take&nbsp;&nbsp;
+that idea and turn this into a force field,&nbsp;
+right? So this is the SE three test form,&nbsp;&nbsp;
+which is a model that was actually used&nbsp;
+by David Baker in his work on proteins
+or zip fold. And something similar was&nbsp;
+in the first versions of alpha fold,&nbsp;&nbsp;
+and then another one steerable, equivariant&nbsp;
+message passing for force fields.
+And so these methods are completely&nbsp;
+equivariant. And basically that means&nbsp;&nbsp;
+that if you, if you rotate in the&nbsp;
+frame, or they rotate the molecule,&nbsp;&nbsp;
+nothing changes. And so what you see here&nbsp;
+is over time passing messages. And these are
+sort of our harmonic representations,&nbsp;&nbsp;
+visualized as you sort of sending&nbsp;
+these messages over the over the graph.
+And now the nice thing is that&nbsp;
+these machinery force fields,&nbsp;&nbsp;
+they sit between ab initio, DFT calculations&nbsp;
+to do the forces which are very expensive,&nbsp;&nbsp;
+so you can only do very small molecules, and&nbsp;
+classical force fields which are inaccurate,&nbsp;&nbsp;
+but you can do large molecules. And so this&nbsp;
+machine learning force was sort of starting to&nbsp;&nbsp;
+span this field. So they can do large molecules,&nbsp;
+but also at the level of DFT accuracy, and there's&nbsp;&nbsp;
+quite a few efforts around, also in big tech&nbsp;
+companies, to build these basically foundation&nbsp;&nbsp;
+models for these force fields, which should&nbsp;
+work across a large swath of chemical space. And
+of course, maybe the main example&nbsp;
+of why this field is blooming
+is the fact that the Nobel Prize was&nbsp;
+awarded two chemistry biologists,&nbsp;&nbsp;
+computational chemistry biologists, who have
+both solved the problem, or sort of
+make a huge amount of progress On the&nbsp;
+problem of going from sequence to three&nbsp;&nbsp;
+dimensional structure, which is alpha&nbsp;
+four, of course, or take the structure&nbsp;&nbsp;
+and design the sequence that would have that&nbsp;
+structure, which would be designed probably.
+And so I think this year's&nbsp;
+Nobel Prize is a sign that&nbsp;&nbsp;
+this is an important field that will&nbsp;
+deliver a lot of interesting results.
+OK, so that's for molecular science,&nbsp;&nbsp;
+and I will discuss a few more things&nbsp;
+later. In a little bit more detail.
+There's this other field which is also&nbsp;
+being disrupted or going very strong,&nbsp;&nbsp;
+with machine learning, which is P E, solve,&nbsp;
+solving. And it started, you know, this paper&nbsp;&nbsp;
+by Stephen Hauer and a bunch of other co authors&nbsp;
+by basically taking a usual solver and starting&nbsp;&nbsp;
+to look at places where you can replace certain&nbsp;
+bits and pieces of it, stencils, for instance,&nbsp;&nbsp;
+with machine learning stencils, you could just&nbsp;
+learn your own stencils to solve this equation.&nbsp;&nbsp;
+But otherwise, you'll keep the solver the same.&nbsp;
+You just keep the same solver which is new.
+Improve some of the pieces of it, and slowly&nbsp;
+that evolved into things which were starting&nbsp;&nbsp;
+to remove more and more of the physics, and in&nbsp;
+particular in fields where there's lots of data,&nbsp;&nbsp;
+you can afford to remove the physics. And so&nbsp;
+there's these deep operator networks, and then&nbsp;&nbsp;
+there's four operators. These are all examples&nbsp;
+of basically removing the physics and just&nbsp;&nbsp;
+training a model that maps into some latent space,&nbsp;
+evolves the system in latent space as a recurrent&nbsp;&nbsp;
+neural network and then predates back the next&nbsp;
+state. Now there's also attempts, of course,
+to try to bring back some of the physics.&nbsp;
+And this is this pin structure physics,&nbsp;&nbsp;
+important neural networks, where the&nbsp;
+actual equations of motion and the
+possibly Boundary conditions can all be enforced&nbsp;
+as regularizers on these on these solvers.
+So again, so it's a very fast holding field.&nbsp;
+Here's some of our own contributions in&nbsp;&nbsp;
+this field. This is a G and M model&nbsp;
+where you can have a regular grid.
+You first encode for every node in the&nbsp;
+grid, you encode a feature vector or token,&nbsp;&nbsp;
+you put them on the on the on the grid,&nbsp;
+then you send messages across the grid,&nbsp;&nbsp;
+which makes all the nodes to communicate&nbsp;
+with each other, and then you do a final&nbsp;&nbsp;
+smoothing using a CNN to predict the next&nbsp;
+state of the original model. And this we&nbsp;&nbsp;
+could train quite successfully&nbsp;
+on irregular grids. Now it's
+fun to think about symmetries here,&nbsp;
+too, as we did for neural networks,&nbsp;&nbsp;
+it's a bit harder to actually include them as&nbsp;
+full equivariant solvers. But one thing that&nbsp;&nbsp;
+we could do is we could study for a particular&nbsp;
+PD, we could study the symmetries. In fact, it's&nbsp;&nbsp;
+fully solved problems. You can just delete point&nbsp;
+symmetries. You can actually just run a piece of&nbsp;&nbsp;
+software. You get all the symmetries out for PDE,&nbsp;
+which I didn't know, but was kind of beautiful.
+So, you know, all these kind of generators for&nbsp;
+each one of the symmetries you can represent&nbsp;&nbsp;
+a group of the product of these&nbsp;
+generators sort of strung together,&nbsp;&nbsp;
+and then basically what we did is we take, we&nbsp;
+took original data, and we started to enhance&nbsp;&nbsp;
+the data set by applying all of these symmetries.&nbsp;
+So you get for free, basically data enhancement,&nbsp;&nbsp;
+and then you can solve this. You can train solvers&nbsp;
+with much less actual data than you could before.
+Now, I guess there's some big successes here,&nbsp;&nbsp;
+already going down to 2016 or something.&nbsp;
+This was one of the first papers by NVIDIA&nbsp;&nbsp;
+group where what's called forecast net is a&nbsp;
+model that already globally solved or sort of
+predicted the next state of the weather,&nbsp;
+like 10 days ahead or something like this,&nbsp;&nbsp;
+with these neural free operators. And then&nbsp;
+point more weather came slightly after that.&nbsp;&nbsp;
+These are all solutions which are completely&nbsp;
+based on machine learning. There's no physics&nbsp;&nbsp;
+in the actual equations. And then there's&nbsp;
+graph cast net, which is a model based on
+message passing on a hierarchical multi&nbsp;
+scale graph, but this is a DeepMind.
+So the contribution we made in the scale was&nbsp;
+called Aurora. So the change, what did we do in&nbsp;&nbsp;
+Aurora that was different than before? So it was&nbsp;
+made so that the encoder could take absolutely any&nbsp;&nbsp;
+kind of data. So it could take data from the US&nbsp;
+at very high resolution, but local. It could take&nbsp;&nbsp;
+global but much more porous data. It could take&nbsp;
+all sorts of other data in it would embed all of&nbsp;&nbsp;
+that into a latent structure and then basically&nbsp;
+a transformer based encoder, and then evolve&nbsp;&nbsp;
+that and decode. So the data set is about over&nbsp;
+a million hours of data. It was trained in about
+38 or something, a 100 GPUs for a few&nbsp;
+weeks. So not too terrible. In that sense,
+it achieved 5000 times speed up relative to the&nbsp;
+normal solver. So that's the big gain you'll&nbsp;&nbsp;
+get. You can solve things 5000 to sometimes&nbsp;
+10,000 times faster than the original solar
+Alright, and then some so. So what this&nbsp;
+particular model could do that other models&nbsp;&nbsp;
+couldn't do was besides predicting the usual&nbsp;
+hydrodynamic variables like wind speeds and&nbsp;&nbsp;
+temperature. It could also predict things like&nbsp;
+air pollution, concentrating greenhouse gasses,&nbsp;&nbsp;
+etc. So by just actually keeping the encoders&nbsp;
+the same and just fine tuning the models based&nbsp;&nbsp;
+on new data slightly, and so, it could produce&nbsp;
+air pollution with very high quality and if.
+What's also interesting is that sort of the&nbsp;
+standard way is, sort of the simulators for&nbsp;&nbsp;
+future, for sort of weather prediction is ifs, H,&nbsp;
+R, A, S, which you see here, and lower is better&nbsp;&nbsp;
+on these curves for this is surface temperature&nbsp;
+and this wind speed, these machine gun walls&nbsp;&nbsp;
+actually do better than numerical solvers. You&nbsp;
+can use wonder, well, how is that possible?&nbsp;&nbsp;
+Since they are largely trained on maybe data,&nbsp;
+also from the simulators. But in this case,&nbsp;&nbsp;
+of course, there's also real weather data that's&nbsp;
+being included into these models. And this real&nbsp;&nbsp;
+weather data can actually make it better than&nbsp;
+the numerical solvers can, and much faster.
+I think that would count as a true change&nbsp;
+in the field. I've seen meteorologists&nbsp;&nbsp;
+from highly skeptical change to all right?&nbsp;
+We really need to do something with this,&nbsp;&nbsp;
+because this is actually changing
+our field. And then I'll talk a little bit about
+some other applications of where AI&nbsp;
+has been helping, sort of the sciences,&nbsp;&nbsp;
+and also in the other direction, right? So it's&nbsp;
+symmetries to improve neural networks. And here,&nbsp;&nbsp;
+physics, like non equilibrium thermodynamics,&nbsp;
+is also helping build better generative models.&nbsp;&nbsp;
+And so the I would say, the arrow, the causal&nbsp;
+arrow, goes in both directions. And so in 2013
+Dirk came, and I developed this&nbsp;
+variation auto encoder model.
+And that's a model where you take the distribution&nbsp;
+of data and you map it into some latent space,&nbsp;&nbsp;
+and then that's the encoder, which is sort of,&nbsp;
+this is your semantic representation, if you&nbsp;&nbsp;
+wish. And then there's a decoder which samples&nbsp;
+from hopefully something very close to that&nbsp;&nbsp;
+particular sort of embedded manifold, and then&nbsp;
+inverts the encoder into basically sampling back&nbsp;&nbsp;
+from a distribution, which is then approximation&nbsp;
+to the original data manifold. But it did so in&nbsp;&nbsp;
+one stochastic step. So it was a complicated&nbsp;
+neural network, but then noise was only added&nbsp;&nbsp;
+at the end, and so that evolved into these kind of&nbsp;
+diffusion like models where people don't train the&nbsp;&nbsp;
+encoder, so we train the encoder. The encoder is&nbsp;
+fixed. It's just some fixed process, like wernsten&nbsp;&nbsp;
+runbeck process, but you have many stochastic&nbsp;
+layers, which gives you embeddings which are&nbsp;&nbsp;
+not structured at all. They're just completely&nbsp;
+mixed, but they which can very powerfully train&nbsp;&nbsp;
+to invert them. And so you can see here an&nbsp;
+example, like a two dimensional example of a&nbsp;&nbsp;
+data manifold. It gets kind of diffused into sort&nbsp;
+of a blurry blob. And so if you look at every day,
+it's like a process where you sort of increase&nbsp;
+entropy, and then this is a physical process,&nbsp;&nbsp;
+if you want, and then you're trying to invert&nbsp;
+that. So you're trying to go from heat from this&nbsp;&nbsp;
+wall and generate back the manifold. Basically,&nbsp;
+by generating training velocity fields for&nbsp;&nbsp;
+every point of space, you train a velocity&nbsp;
+field, which is now neural net. And he says,&nbsp;&nbsp;
+if you're here in this space full of this&nbsp;
+velocity field, and then it just put things&nbsp;&nbsp;
+back onto this manifold. And by doing this&nbsp;
+slowly, step for step, you can really train&nbsp;&nbsp;
+very far from all of the good compared to there.&nbsp;
+And these authors already acknowledge that that&nbsp;&nbsp;
+is actually an application of ideas of non&nbsp;
+equilibrium thermodynamics, and that's a field&nbsp;&nbsp;
+that is really developing and writing a book about&nbsp;
+that also, she'll share a little bit more later,&nbsp;&nbsp;
+because these connections between machine&nbsp;
+learning and thermodynamics are very,&nbsp;&nbsp;
+very deep, actually, in my view. So I would say&nbsp;
+that the next step in this development was to&nbsp;&nbsp;
+map the problem from a discrete problem to a&nbsp;
+continuous problem, SDE governed by Brownian&nbsp;&nbsp;
+motion. People know how to invert that.&nbsp;
+As a long result, you pick up this extra
+term, which is a non, you know, it's a very&nbsp;
+non physical process, obviously, because you&nbsp;&nbsp;
+go against the second law of thermodynamics.&nbsp;
+But mathematically, know how to invert it.&nbsp;&nbsp;
+You pick up this term. But it's kind of funny,&nbsp;
+because it depends on the actual density itself,&nbsp;&nbsp;
+and you don't know it, but the machine learning&nbsp;
+model will train this. So you train the model to
+approximate the score function, and then you can&nbsp;
+run the process and reverse to generate images.
+So here's a few equations then. So
+there's a very interesting, deep&nbsp;
+relationship between machine&nbsp;&nbsp;
+learning and and thermodynamics. So I&nbsp;
+guess most of us are physicists here,&nbsp;&nbsp;
+or mathematicians or chemists or something&nbsp;
+like this. So you're probably very used to&nbsp;&nbsp;
+these types of equations, right?&nbsp;
+This is saying, after equilibrium,
+you have a Hamiltonian that describes your system,&nbsp;
+and you have a temperature that's connected to the&nbsp;&nbsp;
+heat bus, then the distribution of your latent&nbsp;
+variables is actually a Boltzmann distribution,&nbsp;&nbsp;
+where X might be microscopic variables you&nbsp;
+observe like maybe the volume in which everything.
+Six, or something like that. And that are&nbsp;
+the microscopic degrees of freedom of the&nbsp;&nbsp;
+atoms. That's equilibrium distribution, that's&nbsp;
+bolt distribution. And so you can write down&nbsp;&nbsp;
+a free energy which is minus t, like the low&nbsp;
+partition function, which you can lower upper,&nbsp;&nbsp;
+bound by a variation of free energy with a&nbsp;
+variation of distribution Q, and that's given&nbsp;&nbsp;
+by the expectation of the Hamiltonian under that q&nbsp;
+minus temperature times the entropy of that Q. Now&nbsp;&nbsp;
+if you relax the system, you kick it out of&nbsp;
+equilibrium, then Q changes, h doesn't change,&nbsp;&nbsp;
+and you relax it back to equilibrium, then&nbsp;
+you minimize this variational free energy,&nbsp;&nbsp;
+and when Q becomes the Boltzmann distribution,&nbsp;
+you're back to the free energy, the minimum,&nbsp;&nbsp;
+the energy described by the law partition&nbsp;
+function. So work is related, in this view,&nbsp;&nbsp;
+by changing this free energy, by changing&nbsp;
+the Hamiltonian. If you start changing&nbsp;&nbsp;
+the Hamiltonian around by applying forces,&nbsp;
+then you're performing work on the system.&nbsp;&nbsp;
+And the second ball of thermodynamics follows&nbsp;
+from the fact that if you relax this system,
+then you will find that always the entropy&nbsp;
+of the system and the entropy of the boss,&nbsp;&nbsp;
+which is given by basically the heat you're&nbsp;
+generating in relaxing relaxing the system back&nbsp;&nbsp;
+to equilibrium, the sum of those two will always&nbsp;
+be positive, On average, not for any any path,&nbsp;&nbsp;
+but on average, with very high likelihood&nbsp;
+that's going to be positive. And that&nbsp;&nbsp;
+is the second law of thermodynamics. Basically,&nbsp;
+we go to the machine learning side. We typically&nbsp;&nbsp;
+write in posterior distribution. We use Bayes&nbsp;
+rule. So we say, we have some observation x,&nbsp;&nbsp;
+you have latent variable z, which could be the&nbsp;
+latent variable of some embedding. And we know&nbsp;&nbsp;
+by Bayes rule that's given by the Joint divided&nbsp;
+by the marginal px. And then you can write down&nbsp;&nbsp;
+the free energy, which was done by Jeff Hinton&nbsp;
+and referendum a while ago. You can write down&nbsp;&nbsp;
+the free energy as minus log of p, which is the&nbsp;
+probability of X of the data. And you can upper&nbsp;&nbsp;
+bound that by the variational free energy,&nbsp;
+again, with some variation distribution Q,&nbsp;&nbsp;
+and it's given by the expected value over q&nbsp;
+is minus log p the joint minus the entropy.&nbsp;&nbsp;
+And if you compare it with this, you can just&nbsp;
+read out that h is minus log p of the joint,&nbsp;&nbsp;
+and the temperature has to be set to zero,&nbsp;
+because there's no real leaf bus in this case.
+And here we have a famous algorithm, which is&nbsp;
+called the maximum expectation maximization&nbsp;&nbsp;
+algorithm from statistics, which says,&nbsp;
+if I if I want to learn a system,&nbsp;&nbsp;
+I need to do two things. I need to change&nbsp;
+the model, p by changing the parameters,&nbsp;&nbsp;
+right? That's the M step, and that's performing&nbsp;
+work, because now you're changing the Hamiltonian.
+And the other step is relaxing the&nbsp;
+system by changing Q back to equilibrium,&nbsp;&nbsp;
+which is what is we call&nbsp;
+inference in these models.
+And that's equal to the basically execution of the&nbsp;
+second law of thermodynamics. So these two things&nbsp;&nbsp;
+match perfectly with each other and the same the&nbsp;
+claim is that the mathematics underlying machine&nbsp;&nbsp;
+learning, probabilistic machine learning and&nbsp;
+graphical models, is exactly the same language&nbsp;&nbsp;
+of non equilibrium thermodynamics, and that means&nbsp;
+there's a lot of very interesting results we can&nbsp;&nbsp;
+import from no income thermodynamics, Like&nbsp;
+fluctuation theorems and all these kinds of
+things. Okay, so the sort of mapping&nbsp;
+of what's been happening recently&nbsp;&nbsp;
+in the machine learning field, and my&nbsp;
+claim is basically all around free energy.
+There is variational inference and machine&nbsp;
+learning, MCMC sampling. Those are inference&nbsp;&nbsp;
+algorithms. There is reinforcement learning and&nbsp;
+optimal control algorithms. There is Schrodinger&nbsp;&nbsp;
+bridges in optimal transport. There's&nbsp;
+more mathematical sort of concepts, but&nbsp;&nbsp;
+they're being used a lot in the machine learning&nbsp;
+community, basically. And then there's generative&nbsp;&nbsp;
+models like diffusion models and normalizing&nbsp;
+flows. And all of these can be understood by&nbsp;&nbsp;
+writing down a free energy of this kind, plus&nbsp;
+assuming that we have Markov chains over the&nbsp;&nbsp;
+latent variable. So we have a we have a generative&nbsp;
+process that runs backward in time, if you wish,&nbsp;&nbsp;
+it runs against the second law of thermodynamics.&nbsp;
+It's like the unscrambling of an omelet,&nbsp;&nbsp;
+right? You start with a picking it from a prior&nbsp;
+and then moving back to produce things which are&nbsp;&nbsp;
+very low entropy. And this is the forward process,&nbsp;
+which you start from a data point, and you slowly&nbsp;&nbsp;
+deconstruct it by adding noise. If you take these&nbsp;
+assumptions and all of these things are become you&nbsp;&nbsp;
+can understand this as basically non equilibrium&nbsp;
+thermodynamics. I'll talk a few about a few of&nbsp;&nbsp;
+these. So clearly the diffusion model, in one&nbsp;
+direction, goes from an actual structured object&nbsp;&nbsp;
+and destroys it into a blob of noise, right? So&nbsp;
+that is entropy production. Basically, that's a
+physical process, diffusion.&nbsp;
+Unfortunately, this the physical direction.
+We all disintegrate at some point, but what&nbsp;
+we want is going in the opposite direction&nbsp;&nbsp;
+by putting in energy and trying to&nbsp;
+construct structure out of noise.&nbsp;&nbsp;
+And that's what these generative models&nbsp;
+do. They go in the opposite direction of
+the second ball. And surprisingly, of course,&nbsp;
+by that kind of thing, you can actually generate&nbsp;&nbsp;
+images like this, and they're becoming scarily&nbsp;
+good these days, which is extremely powerful tool
+and but we have also used that to generate&nbsp;
+molecules. You can use exactly the same idea&nbsp;&nbsp;
+and say, I want a molecule with these properties.&nbsp;
+Now train a model that can do that from data,&nbsp;&nbsp;
+also be simulated data, and then&nbsp;
+you can generate so this is a real,&nbsp;&nbsp;
+real process that we've trained. You can&nbsp;
+generate these molecules with these properties,&nbsp;&nbsp;
+and the matter Gen is now one a version&nbsp;
+of that that actually generates materials.
+So that idea was also used by Allison,&nbsp;
+especially by these two students here at EPFL,
+to generate drug life molecules in the&nbsp;
+pocket of a protein, right? So you say&nbsp;&nbsp;
+this is the pocket of a protein has this&nbsp;
+shape. In fact, I have a few components,&nbsp;&nbsp;
+maybe anchors, which I want to, in particular,&nbsp;
+face places complete the molecule so that it&nbsp;&nbsp;
+will actually fit in the pocket and has the&nbsp;
+properties that I want. And so for this is&nbsp;&nbsp;
+a very early version of that. This model, this&nbsp;
+idea, has also evolved already, quite a lot. Now
+we look a little bit of optimal&nbsp;
+control and showing the bridges. So
+this project, well, Project Sisyphus.&nbsp;
+This is this poor guy that had to&nbsp;&nbsp;
+roll a walk up a mountain, and&nbsp;
+then exactly when he was here,&nbsp;&nbsp;
+he would always roll back and he&nbsp;
+would start again the old greekology.
+So that's kind of the fate of a molecule when&nbsp;
+it's trying to sample and go from one metastable&nbsp;&nbsp;
+state to another metastable state. If you try to&nbsp;
+do this by molecular dynamics in your computer,&nbsp;&nbsp;
+it will take insanely long, like the age of the&nbsp;
+universe, 10 times over something to get there.&nbsp;&nbsp;
+And so you need to help it a bit. So you need to&nbsp;
+add an extra force to these atoms so that you can&nbsp;&nbsp;
+just move it over the over the energy barrier and&nbsp;
+get it into the other side. And you can then track&nbsp;&nbsp;
+it. Of course, it's a very unlikely event, but&nbsp;
+you can track it, you can study it, and then you&nbsp;&nbsp;
+can compensate. For the fact afterwards that you&nbsp;
+have added all these forces. And so that's called
+false integral sampling.
+And so the idea is you have an initial stage&nbsp;
+for your atoms given by depositions, and now&nbsp;&nbsp;
+you follow normal lines of end dynamics, but you&nbsp;
+add an extra control term. The extra control term&nbsp;&nbsp;
+is nudging the atoms in such a way that you&nbsp;
+go over, you to go change the conformation,&nbsp;&nbsp;
+or even have a chemical reaction happening at that&nbsp;
+space. Either you move it over the energy barrier,&nbsp;&nbsp;
+and that's a reinforcement problem, because&nbsp;
+you just give the reward for making that&nbsp;&nbsp;
+happen in such a way that you do it at the&nbsp;
+least possible total energy expenditure.&nbsp;&nbsp;
+And so this is a paper that we produce, and&nbsp;
+we're still working on similar ideas here,&nbsp;&nbsp;
+where this is the free energy landscape,&nbsp;
+this is the conformation of the molecule,&nbsp;&nbsp;
+and you're driving it, you know, so that&nbsp;
+it will get to the other local minima. And&nbsp;&nbsp;
+so here it has to be pushed over the over the&nbsp;
+energy barrier, and then it gets into the other&nbsp;&nbsp;
+local minimum. So again, it goes up and then down.&nbsp;
+And now you can study these paths and figure out,&nbsp;&nbsp;
+you know, how chemical reactions happen&nbsp;
+and what their rates are, for instance.
+So, and then here's an application on free&nbsp;
+energy. This is a recent paper that just got&nbsp;&nbsp;
+accepted in PRL. So this is this application&nbsp;
+where you do density functional theory,&nbsp;&nbsp;
+but not quantum, but classical. So it's actually&nbsp;
+a version that doesn't it's less complicated,&nbsp;&nbsp;
+but the mathematics falls extremely follows&nbsp;
+extremely similar lines. They write down&nbsp;&nbsp;
+the grand canonical potential, which is the&nbsp;
+sort of free energy, but with a particle dot,
+you write down the free energy for the system&nbsp;
+which only models internal interactions,&nbsp;&nbsp;
+not the interactions with the external potentials.&nbsp;
+And then there's a separate term which in which&nbsp;&nbsp;
+models the interactions with some external&nbsp;
+potential. Could be a molecule that's fixed,&nbsp;&nbsp;
+like adsorption. You want to get a&nbsp;
+fixed external potential. You want&nbsp;&nbsp;
+to get lots of molecules which kind of&nbsp;
+adsorb and a chemical potential. And
+of course, you have to write down&nbsp;
+this thing was very complicated&nbsp;&nbsp;
+because it depends on the properties&nbsp;
+of your liquid or your or your gas.&nbsp;&nbsp;
+And so what we will do now is learn this&nbsp;
+functional, like some of these approaches,&nbsp;&nbsp;
+in the quantum of your version as well.&nbsp;
+We'll learn that functional from MD data
+emulation, right? So you&nbsp;
+generate lots of data, like here.
+It, and you train the functional neural network,
+but within the same framework of distinction&nbsp;
+functional theory. And then, once you have that,&nbsp;&nbsp;
+you can now basically run an algorithm to&nbsp;
+minimize this for a new external potential,&nbsp;&nbsp;
+initialize it some row. You&nbsp;
+minimize this functional and&nbsp;&nbsp;
+get your equilibrium stage. You can even&nbsp;
+use it to do dynamics, and it turns out,
+and so here's the method&nbsp;
+that we developed in a little
+bit more detail. And the big advantage here is&nbsp;&nbsp;
+that we can train the entire model with&nbsp;
+setting all external potentials to zero.
+Why is that nice? Because you basically&nbsp;
+you can reduce your data set from walls.&nbsp;&nbsp;
+So the only thing you need is basically this&nbsp;
+radial distribution function, which says,&nbsp;&nbsp;
+you know, if you're at the center, you know, my&nbsp;
+molecules have a certain size and interaction,&nbsp;&nbsp;
+which means that the next molecule needs to&nbsp;
+have a little distance from me, which is where&nbsp;&nbsp;
+this dip happens. Nothing can be very close.&nbsp;
+And then, you know, since it's back, next one is&nbsp;&nbsp;
+getting a high probability being at that distance,&nbsp;
+etc. This little, you know, line basically gives&nbsp;&nbsp;
+us all the information we need in order to compute&nbsp;
+the two point correlation functions for this free&nbsp;&nbsp;
+energy. And now what we do mg simulations, we&nbsp;
+get our densities of every grid point with the&nbsp;&nbsp;
+number of particles. Let's say we map it through&nbsp;
+a neural network. We do two times out of diff,&nbsp;&nbsp;
+which gives us the so we predict the free&nbsp;
+energy. Then take two times out of diff to get&nbsp;&nbsp;
+the two point correlation function. We can compute&nbsp;
+the 2.4 correlation function in theory as well,&nbsp;&nbsp;
+using this Kirsten Zirin theorem. And then we&nbsp;
+compare the two, and we minimize the difference,&nbsp;&nbsp;
+no external potentials, right? We're just looking&nbsp;
+at things which are flat, like the bulk. And
+we train this, and then once it's trained,&nbsp;
+we can now run this equation. It's called the&nbsp;&nbsp;
+Picard iteration, which is the same as the self&nbsp;
+consistency loop in quantum DFT, which is you&nbsp;&nbsp;
+start with some initial density row. You need the&nbsp;
+first derivative of the free energy mister section&nbsp;&nbsp;
+row, and then you run this to minimize, basically&nbsp;
+omega the granola potential. So you now take a new&nbsp;&nbsp;
+situation, but with an external potential,&nbsp;
+you stick it in, repeat the free energy to&nbsp;&nbsp;
+one times. Order to get these derivatives,&nbsp;
+stick them in this equation and iteration,
+OK. And so
+here's one dimensional&nbsp;
+examples where this is the true
+sort of density. And here the blue line is where&nbsp;
+you see it equilibrates Under this process. To&nbsp;&nbsp;
+find this equilibrium density, we can now do this&nbsp;
+in three dimensions as well. Of course, using all&nbsp;&nbsp;
+the symmetries of the system, we can do this now&nbsp;
+in three dimensions very, very nicely as well.&nbsp;&nbsp;
+And so this got published to PRL very recently, if&nbsp;
+you're interested in reading more about this. But&nbsp;&nbsp;
+I find this interesting. What I find interesting&nbsp;
+about this example is that this was not a very&nbsp;&nbsp;
+popular method at all. Nobody used it. Why not?&nbsp;
+Because people couldn't write down to write&nbsp;&nbsp;
+functionals for free energy. So they wrote down&nbsp;
+things which were based on cluster expansions over&nbsp;&nbsp;
+there. But they didn't really work well neural&nbsp;
+when you use a neural net to train that thing can&nbsp;&nbsp;
+be much more expressive, and now suddenly these&nbsp;
+methods really started to work well. He's another&nbsp;&nbsp;
+example of your machine learning committee.&nbsp;
+Take something that didn't work very well and&nbsp;&nbsp;
+turn it into something that can actually work&nbsp;
+very well by combining the strengths of both,&nbsp;&nbsp;
+I would say. Here's some more results. Is also&nbsp;
+very interesting. Of course, you can predict free&nbsp;&nbsp;
+energies directly in one shot. You don't have&nbsp;
+to do both of complicated calculations. I'll&nbsp;&nbsp;
+just skip this for a moment, because we're&nbsp;
+running a little bit out of time, I think.
+And so maybe to start sort of ending a little bit,
+I view we are sort of at cusp of a golden age for&nbsp;
+material science. A lot of people focus on chat,&nbsp;&nbsp;
+GPT and AGI and all these things. But&nbsp;
+I think the more interesting part,&nbsp;&nbsp;
+I'm sure all of you agreed with me here. I&nbsp;
+think the more interesting part is actually&nbsp;&nbsp;
+applying these ideas to disrupt the field&nbsp;
+of materials and scientific computing.
+And,
+of course, somewhat dramatically, we've named the&nbsp;
+ages in which humanity sort of evolves technology&nbsp;&nbsp;
+to the actual materials that they use, from&nbsp;
+stone, bronze, iron, plastic, possibly now too,&nbsp;&nbsp;
+I would think we're going to enter a phase where&nbsp;
+we do material over that. You just tell me what&nbsp;&nbsp;
+material you want. There's a search engine&nbsp;
+like you would now search for information,&nbsp;&nbsp;
+you can search for materials with those&nbsp;
+properties, even making sure things are&nbsp;&nbsp;
+being synthesizable, et cetera, and it will&nbsp;
+give you the answer, so that might dramatically&nbsp;&nbsp;
+accelerate the cycle of innovation. And it's of&nbsp;
+course, you know the fact that we have these.
+Fields which are all about molecular science.&nbsp;&nbsp;
+These are all the mature fields&nbsp;
+where there's a lot of wisdom.
+These are much more young fields,&nbsp;&nbsp;
+like computational science. Just heard you&nbsp;
+got the biggest supercomputer here on site&nbsp;&nbsp;
+that's computational science. Machine&nbsp;
+learning is adding to that now, fast
+and changing the field. And of course,&nbsp;
+hopefully in the future, quantum computing&nbsp;&nbsp;
+can also be actually, the first sensible&nbsp;
+application of quantum computing is, I think,&nbsp;&nbsp;
+too similar quantum mechanics. And then there's&nbsp;
+all these applications, which are, I think,&nbsp;&nbsp;
+real societal problems that need to be solved&nbsp;
+relatively fast around health. You know, maybe
+resistant bacteria, antibiotics against&nbsp;
+resistant bacteria or pandemics or whatever.
+Sustainability you know, getting carbon&nbsp;
+out of the atmosphere. Energy sector,&nbsp;&nbsp;
+batteries is a great example. There hydrogen
+lifting, so hyper hydrogen production using
+water splitting, et cetera.
+And so this is what we are building at cost.&nbsp;&nbsp;
+But this startup that was talked&nbsp;
+about is basically a system that
+sort of is built on generative AI.&nbsp;
+It's generates a foundation model for&nbsp;&nbsp;
+generating molecules. It searches in the&nbsp;
+space of the space of possible molecules,&nbsp;&nbsp;
+and it builds lots of property predictors&nbsp;
+to predict, very quickly, the properties or&nbsp;&nbsp;
+simulate the systems that are being predicted.&nbsp;
+All of that generates data that go back into a&nbsp;&nbsp;
+database in which we then improve our models,&nbsp;
+and we accelerate this cycle further. First,&nbsp;&nbsp;
+there's a search engine around this thing,&nbsp;
+which we try to identify materials which are,
+which people want to use for certain applications.
+And so the last slide is, in my view, there is&nbsp;
+a deep connection building between AI and the&nbsp;&nbsp;
+natural sciences, and free energy is the&nbsp;
+core concept that we need to understand.
+And we can see lots of cross
+fertilization. Machine learning is helping&nbsp;
+the sciences do simulations faster and better.&nbsp;&nbsp;
+But these concepts from science, including&nbsp;
+symmetries and free energies, but also things&nbsp;&nbsp;
+like fluctuation theorems, all these things that&nbsp;
+are coming out of non equilibrium thermodynamics,&nbsp;&nbsp;
+they also start to bring new concepts to build&nbsp;
+better machinery on drugs. And so you could argue&nbsp;&nbsp;
+machinery is a new hammer for the scientists&nbsp;
+that will develop fast and be quite powerful.&nbsp;&nbsp;
+And then maybe the most important part is that&nbsp;
+there is lots of really important applications&nbsp;&nbsp;
+that can be sold through this in both health&nbsp;
+and sustainability, such as developing new&nbsp;&nbsp;
+drugs and new materials, and I'll end there&nbsp;
+to you some space for questions, fascinating,
+very informal,
+excited by the results You have done.
+Very thankful. Let's have a&nbsp;
+training sessions. I do think
+there were hands raised up, but before we&nbsp;
+go into the online, is there any questions
+from the audience in person? Yes. So what&nbsp;
+you're saying is, let's say I want a material&nbsp;&nbsp;
+that captures carbon dioxide out sky and turns&nbsp;
+it into a solid material. Are you saying that,&nbsp;&nbsp;
+if those are my parameters, you could create that&nbsp;
+material and put in as a parameter to make it the&nbsp;&nbsp;
+cheapest possible, way possible? Yes. Well, okay,&nbsp;
+how would you train a model? Right? So you have&nbsp;&nbsp;
+to break the problem off a little bit. So let's&nbsp;
+say so the way we're looking for a certain set&nbsp;&nbsp;
+of materials called metal organic frameworks. So&nbsp;
+that's this class of materials. So you can train a&nbsp;&nbsp;
+foundation model for metal organic frameworks,&nbsp;
+so that you can simulate them very fast.
+So then
+you can and then you need to find the&nbsp;
+material, the metal, organic framework,&nbsp;&nbsp;
+that absorbs, let's say, carbon dioxide in&nbsp;
+natural atmosphere, so where there might&nbsp;&nbsp;
+also be a lot of water and other nitrogen in&nbsp;
+there, but preferentially takes The side carbon&nbsp;&nbsp;
+dioxide and binds it. And then also you need&nbsp;
+to, you need to model how it can be released&nbsp;&nbsp;
+without using too much energy. If you have&nbsp;
+a simulation pipeline for these processes,&nbsp;&nbsp;
+right? So you can, if I give you a material, you&nbsp;
+can quickly, using machine learning components,&nbsp;&nbsp;
+evaluate how good that material is for that entire&nbsp;
+process, which is, you could be complicated,&nbsp;&nbsp;
+right? Because it could be either simulating,&nbsp;
+you know, the adsorption process with the&nbsp;&nbsp;
+machine learning force field, or maybe predicting,&nbsp;
+like heated adsorption or other kind of properties&nbsp;&nbsp;
+or porosity, or whatever, for all of that&nbsp;
+material directly with property predictors.
+So with machinery modes, you can accelerate&nbsp;
+it. Once you have this ability to very quickly&nbsp;&nbsp;
+evaluate a material, you can then start&nbsp;
+building generative models that generate&nbsp;&nbsp;
+lots of candidates, and then start to evaluate&nbsp;
+them quickly. And of course, what you really&nbsp;&nbsp;
+want is that when you generate these materials,&nbsp;
+you want not just random ones. You want the ones&nbsp;&nbsp;
+that are guided by your objective function,&nbsp;
+which is, I want materials with these specific&nbsp;&nbsp;
+properties. You can do this by either conditioning&nbsp;
+the model on that information, like a prompting,&nbsp;&nbsp;
+if you wish, or guiding the generation in&nbsp;
+the direction where you think the interesting&nbsp;&nbsp;
+materials are. As the generative model gets better&nbsp;
+and better, it produces more and more sensible&nbsp;&nbsp;
+search results or molecules, which you still&nbsp;
+have to evaluate. But you sped that process up,&nbsp;&nbsp;
+too by machine learning methods, and then the&nbsp;
+cycle of going around accelerates faster and&nbsp;&nbsp;
+faster. So that's the whole process that's being&nbsp;
+built. And that's, of course, it's all about,&nbsp;&nbsp;
+how do you do one step in that cycle and one going&nbsp;
+around, one step very, very fast. Because once you&nbsp;&nbsp;
+have these candidates, you want to come up with&nbsp;
+a list of candidates and go to the lab and say,&nbsp;&nbsp;
+Now please synthesize these. Right? So you have to&nbsp;
+think about, are they actually even synthesizable?&nbsp;&nbsp;
+How expensive are they de synthesized? Are they&nbsp;
+active materials in the real world, which you also&nbsp;&nbsp;
+have to simulate? Can you actually put them&nbsp;
+in actual machine? Will they remain stable,&nbsp;&nbsp;
+or will they disintegrate after a few cycles? All&nbsp;
+of these things will have to be simulated, but
+then you can optimize against it in silico in&nbsp;
+your computer. And by the time you get to the lab,&nbsp;&nbsp;
+you say, Now, please synthesize this for me.&nbsp;
+You want a very high probability of success,&nbsp;&nbsp;
+right? So otherwise, you have to go to the lab&nbsp;
+way too many times in the cycle slows down a&nbsp;&nbsp;
+lot. So that's that's kind of the process that&nbsp;
+we're pursuing. And I think it's a continuous&nbsp;&nbsp;
+process. It's not like you flip a coin, you flip&nbsp;
+a switch and then everything is perfect. It's&nbsp;&nbsp;
+something that continuously improves itself&nbsp;
+over time as more data becomes available,&nbsp;&nbsp;
+more experiments have been done, but it is&nbsp;
+something that can really accelerate the field.
+So I was kind of interested halfway through&nbsp;
+you talked about how we dropped the physics&nbsp;&nbsp;
+from the model and we just train&nbsp;
+this solely on data. It seems like,&nbsp;&nbsp;
+you know, you're throwing out a lot of the
+fundamentals that you kind of know, I&nbsp;
+guess, in some sense is there. How would you
+I guess it seems like you're missing some of&nbsp;
+the physics, and maybe you don't understand&nbsp;&nbsp;
+it. So how could you use that to basically&nbsp;
+have a model that performs better than your&nbsp;&nbsp;
+base understanding to increase it rather&nbsp;
+than just drive performance? Yeah, so
+that's a great question, and that only&nbsp;
+works when you have a lot of data. So&nbsp;&nbsp;
+in the case where you don't have a lot&nbsp;
+of data, you want to put in a lot of&nbsp;&nbsp;
+physics back into the model. But what happens&nbsp;
+for these weather prediction models? There's&nbsp;&nbsp;
+a lot of actual data out there that's not just&nbsp;
+generated by models, right? So this actual data
+from the atmosphere, if you wish.
+So if you train your models both on predictions&nbsp;
+and from actual data, which is basically&nbsp;&nbsp;
+what people do. So they basically take these&nbsp;
+observations, which are, of course, very sparse,&nbsp;&nbsp;
+and then you kind of interpolate all that data&nbsp;
+using their simulators to create an initial state,&nbsp;&nbsp;
+let's say, for your model, and then they predict&nbsp;
+the future. That's the new state, and then again&nbsp;&nbsp;
+actual data, and then you correct it again using&nbsp;
+the actual data. There's a combination of the&nbsp;&nbsp;
+simulation, which you think is interpolation&nbsp;
+machine, and the actual data. Now you can see,&nbsp;&nbsp;
+if you train your machinery models on that&nbsp;
+combination, you can be better than the simulator,&nbsp;&nbsp;
+because the simulator doesn't use the data,&nbsp;
+the actual observations. The simulator&nbsp;&nbsp;
+typically is the laws of physics, right? And&nbsp;
+the initial state is the actual state of the
+let's say the obtains is obtained by using actual&nbsp;
+data, but then the actual predictions are used by&nbsp;&nbsp;
+just using navier stokes equation. These models,&nbsp;
+even in the way that they evolve the state,&nbsp;&nbsp;
+use the actual data and observations, and so&nbsp;
+they can actually be better in that sense.&nbsp;&nbsp;
+Now there is a danger to all of this as&nbsp;
+well, which is, if you don't use physics,&nbsp;&nbsp;
+laws of physics, you might get when you get&nbsp;
+into new territory, like you've never seen
+a very, very hot place before, or maybe the&nbsp;
+COVID levels are so high now that you haven't&nbsp;&nbsp;
+ever seen it before you do climate modeling, you&nbsp;
+could run out of the regime where you've trained&nbsp;&nbsp;
+your models. And so reliability and certainty&nbsp;
+prediction are really key in this as well,&nbsp;&nbsp;
+essentially bounding it with your physics and then&nbsp;
+fine tuning with the actual data that you have.
+Yeah, I think it can become both&nbsp;
+ways. I think it's typically good.&nbsp;&nbsp;
+The example is that people have now, so
+when you try to put in, say, symmetries,
+it seems completely sensible to put symmetries in,&nbsp;
+and this is what we've been doing for a long time,&nbsp;&nbsp;
+but people are starting to throw out symmetries&nbsp;
+when the data sets are very large. And the&nbsp;&nbsp;
+reason is, putting in all these constraints&nbsp;
+makes these models also harder to learn. And
+so they can actually, when you have a lot&nbsp;
+of data, the models that throw out all the&nbsp;&nbsp;
+physics are actually starting to perform better&nbsp;
+now, right? And so this is something to do with&nbsp;&nbsp;
+learning dynamics. I think, you know, I think it&nbsp;
+depends on will swing back and people say, well,&nbsp;&nbsp;
+we can also put the physics back into in other&nbsp;
+ways and learn well. And so I think in the end,&nbsp;&nbsp;
+it's always a good idea to put in things like&nbsp;
+energy conservation, which you really want to&nbsp;&nbsp;
+hold in these models. And so there's certain&nbsp;
+things which we have to learn how to put back&nbsp;&nbsp;
+into these models. But right now is really&nbsp;
+it's a battle between easy ways to train very,&nbsp;&nbsp;
+very large models and level of the data&nbsp;
+versus being trying to be smart with all&nbsp;&nbsp;
+sorts of physics information. And it's,&nbsp;
+you know, it's a function of how much,&nbsp;&nbsp;
+how smart you are with training these models&nbsp;
+and how much data you have to pick up.
+Kevin, when
+you made the connection between this&nbsp;
+machine learning and non equilibrium&nbsp;&nbsp;
+thermodynamics. Yeah, I think it was&nbsp;
+very interesting to me. Do you think this
+our knowledge or physics concept from&nbsp;
+thermodynamics can help us understanding the
+theoretical background of the&nbsp;
+machine learning, for example,&nbsp;&nbsp;
+the convergence property of the neural networks,
+something, yeah, so that's tricky,&nbsp;
+though. So I think the field in&nbsp;&nbsp;
+physics which is related to the&nbsp;
+learning part is called control,&nbsp;&nbsp;
+right? So in fact, people do try to control&nbsp;
+physical systems, to do certain things for them.
+So that's part related to the learning part.
+But once you start messing with the&nbsp;
+system, it's not just physics anymore,&nbsp;&nbsp;
+right? It's like, you know, the learning part is&nbsp;
+less physical in the sense because you're trying&nbsp;&nbsp;
+to get something from a high entropy state&nbsp;
+to a low entropy state. And so that's less&nbsp;&nbsp;
+like around what is the theory of physics&nbsp;
+that can help here? The other direction,&nbsp;&nbsp;
+of course, is exactly physics, but&nbsp;
+that's actually in these diffusion models
+just wouldn't be Kirsten process, and&nbsp;
+it's built very well understood. However,&nbsp;&nbsp;
+one direction which we are&nbsp;
+going is to think about,
+could you, for instance, in the forward process,
+an oldenbeck process, it takes infinitely&nbsp;
+long to get to a Gaussian distribution,&nbsp;&nbsp;
+where we really want this into a finite number&nbsp;
+of steps, it needs to happen in a finite number&nbsp;&nbsp;
+of steps because that's the computational&nbsp;
+resources you have. And so now there is
+very interesting work, which is called
+optimal transport, where you can show how to&nbsp;
+bring one distribution to another distribution&nbsp;&nbsp;
+in a finite amount of time, but you have&nbsp;
+to apply forces again. So it's more like&nbsp;&nbsp;
+a control system. And then the hope could be,&nbsp;
+you could show, by the way, that that process&nbsp;&nbsp;
+dissipates the minimum amount of work, just&nbsp;
+the most efficient way, physically to, say,&nbsp;&nbsp;
+change the distribution into another distribution.&nbsp;
+Our school also called counter diabetic driving.
+So, so now you could hope that this&nbsp;
+theory, which tells you something about
+dissipation, work, dissipation and heat&nbsp;
+generation and whatever is related to,&nbsp;&nbsp;
+let's say, variance properties of estimators. And&nbsp;
+that's actually true. So it's actually true that,&nbsp;&nbsp;
+if you take So, where does heat generation&nbsp;
+come from? In thermodynamics, it comes from&nbsp;&nbsp;
+fluctuations. If you have the least number of&nbsp;
+fluctuations, in fact, what will happen is they&nbsp;&nbsp;
+generate the least amount of heat. So these&nbsp;
+fluctuations you can show will cause variance&nbsp;&nbsp;
+in certain estimators. Let's say you have free&nbsp;
+energy differences between two states. So there,&nbsp;&nbsp;
+there's a direct relationship between estimation,&nbsp;
+statistical estimation, and some physics process.&nbsp;&nbsp;
+And now you can start to learn. You can say, Okay,&nbsp;
+what did people do in physics to control systems,&nbsp;&nbsp;
+to have minimum heat generation? Could&nbsp;
+we use those and the theory around&nbsp;&nbsp;
+those to help us design better statistical&nbsp;
+estimators and better learning algorithms?
+Thank you.
+I'm sure there are more questions, and also&nbsp;
+there are indeed questions from online,&nbsp;&nbsp;
+but we do have a next schedule&nbsp;
+to cover, so unfortunately,&nbsp;&nbsp;
+we have to end it by now. But let me propose&nbsp;
+something Max is going to stay here on.
+Side the whole afternoon
+in this room, actually. So if you have want&nbsp;
+to have a more detailed discussion with Max,&nbsp;&nbsp;
+I welcome you to come by, starting from 1pm
+throughout the whole afternoon. So please&nbsp;
+come here and for the participants online.
+If you would like to engage the&nbsp;
+afternoon sessions, please let me know,
+so that I can, you know, send the WebEx the&nbsp;
+invitation, so that we can, you can come and&nbsp;&nbsp;
+then engage in the discussions as well. So&nbsp;
+shall we do that? Yes, okay, well, for the
+last closing remark, let's thank&nbsp;
+our speaker today. Applause.

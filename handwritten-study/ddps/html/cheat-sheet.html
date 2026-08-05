@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DDPS Cheat Sheet</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="sidebar">
+        <h1>DDPS Study</h1>
+        <a href="index.html">Start</a>
+        <a href="review-path.html">Review Path</a>
+        <a href="plain-words.html">Plain Words</a>
+        <a href="method-map.html">Method Map</a>
+        <a href="self-check.html">Self Check</a>
+        <a href="capstone.html">Capstone</a>
+        <a href="theme-index.html">Theme Index</a>
+        <a href="domain-map.html">Domain Map</a>
+        <a href="paper-reader.html">Paper Reader</a>
+        <a href="common-mistakes.html">Common Mistakes</a>
+        <a href="study-plan.html">Study Plan</a>
+        <a href="math-map.html">Math Map</a>
+        <a href="prerequisite-map.html">Prerequisite Map</a>
+        <a href="cheat-sheet.html">Cheat Sheet</a>
+        <a href="audit.html">Transcript Audit</a>
+      </nav>
+      <main class="content">
+        <p class="eyebrow">Keep open beside chapters</p>
+        <h1>DDPS Cheat Sheet</h1>
+
+        <p>This is the compact version of the course support pages. Use it while reading a chapter. If a sentence feels abstract, map it to one of these rows.</p>
+
+        <div class="cheat-core-map" aria-label="Compact reading chain for the DDPS course">
+          <div>pain</div>
+          <div>evidence</div>
+          <div>method burden</div>
+          <div>rejection test</div>
+        </div>
+
+        <h2>The Four Questions</h2>
+        <div class="cheat-grid">
+          <div><strong>What hurts?</strong><span>Too slow, too hidden, too uncertain, too high-dimensional, too unstable, or too expensive to repeat.</span></div>
+          <div><strong>What evidence exists?</strong><span>Equation, simulation, sensor, image, trajectory, prior, geometry, material data, or expert rule.</span></div>
+          <div><strong>What does learning carry?</strong><span>Loss, residual, basis, operator, manifold, latent space, posterior, controller, or generator.</span></div>
+          <div><strong>What breaks it?</strong><span>Changed geometry, grid, boundary, regime, noise, time horizon, prior, sensor layout, or physical constraint.</span></div>
+        </div>
+
+        <h2>Method In One Line</h2>
+        <div class="cheat-table-wrap">
+          <table class="cheat-table">
+            <thead>
+              <tr>
+                <th>Method Family</th>
+                <th>Plain Job</th>
+                <th>Do Not Trust Until</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>PINN</td><td>Make a neural field obey data and equations.</td><td>Every important loss term matters during training.</td></tr>
+              <tr><td>ROM</td><td>Replace a huge solver with a small stand-in.</td><td>The small model preserves the behavior that controls the decision.</td></tr>
+              <tr><td>Manifold</td><td>Find the smaller curved state space where motion lives.</td><td>The manifold is observed, attracting, and tested outside the fitting case.</td></tr>
+              <tr><td>Operator</td><td>Learn a map from whole fields to whole fields.</td><td>It survives changed grids, geometries, boundaries, and regimes.</td></tr>
+              <tr><td>Data assimilation</td><td>Update a model when observations arrive.</td><td>The data can identify the hidden state and the prior is not misleading.</td></tr>
+              <tr><td>UQ</td><td>Attach the right doubt to a prediction.</td><td>The uncertainty sources match the decision risk.</td></tr>
+              <tr><td>Generative model</td><td>Create many plausible worlds or futures.</td><td>The samples are physically valid and decision-relevant.</td></tr>
+              <tr><td>Foundation model</td><td>Reuse learned structure across many tasks.</td><td>Transfer is tested across real physical changes.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>Words To Translate Immediately</h2>
+        <div class="cheat-grid">
+          <div><strong>Loss</strong><span>How badly the model is doing.</span></div>
+          <div><strong>Residual</strong><span>What is left over after checking an equation.</span></div>
+          <div><strong>Gradient</strong><span>Which way to change something.</span></div>
+          <div><strong>Basis</strong><span>Building-block shapes for compression.</span></div>
+          <div><strong>Posterior</strong><span>Updated beliefs after data.</span></div>
+          <div><strong>Latent space</strong><span>Hidden compressed language.</span></div>
+          <div><strong>Invariant</strong><span>Something that must stay true.</span></div>
+          <div><strong>Topology</strong><span>What is connected to what.</span></div>
+        </div>
+
+        <h2>Final Sentence</h2>
+        <p>For any chapter or paper, write: "Because blank is hard, this method uses blank to carry blank; I trust it only if blank, and I reject it if blank."</p>
+      </main>
+    </div>
+  </body>
+</html>

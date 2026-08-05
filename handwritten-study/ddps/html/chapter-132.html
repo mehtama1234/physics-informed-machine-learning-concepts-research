@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chapter 132 - Do Not Call It Foundational Until It Generalizes</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="sidebar">
+        <h1>DDPS Study</h1>
+        <a href="index.html">Start</a>
+        <a href="review-path.html">Review Path</a>
+        <a href="plain-words.html">Plain Words</a>
+        <a href="method-map.html">Method Map</a>
+        <a href="self-check.html">Self Check</a>
+        <a href="capstone.html">Capstone</a>
+        <a href="theme-index.html">Theme Index</a>
+        <a href="domain-map.html">Domain Map</a>
+        <a href="paper-reader.html">Paper Reader</a>
+        <a href="common-mistakes.html">Common Mistakes</a>
+        <a href="study-plan.html">Study Plan</a>
+        <a href="math-map.html">Math Map</a>
+        <a href="prerequisite-map.html">Prerequisite Map</a>
+        <a href="cheat-sheet.html">Cheat Sheet</a>
+        <a href="chapter-98.html">Chapter 98</a>
+        <a href="chapter-99.html">Chapter 99</a>
+        <a href="chapter-100.html">Chapter 100</a>
+        <a href="chapter-101.html">Chapter 101</a>
+        <a href="chapter-102.html">Chapter 102</a>
+        <a href="chapter-103.html">Chapter 103</a>
+        <a href="chapter-104.html">Chapter 104</a>
+        <a href="chapter-105.html">Chapter 105</a>
+        <a href="chapter-106.html">Chapter 106</a>
+        <a href="chapter-107.html">Chapter 107</a>
+        <a href="chapter-108.html">Chapter 108</a>
+        <a href="chapter-109.html">Chapter 109</a>
+        <a href="chapter-110.html">Chapter 110</a>
+        <a href="chapter-111.html">Chapter 111</a>
+        <a href="chapter-112.html">Chapter 112</a>
+        <a href="chapter-113.html">Chapter 113</a>
+        <a href="chapter-114.html">Chapter 114</a>
+        <a href="chapter-115.html">Chapter 115</a>
+        <a href="chapter-116.html">Chapter 116</a>
+        <a href="chapter-117.html">Chapter 117</a>
+        <a href="chapter-118.html">Chapter 118</a>
+        <a href="chapter-119.html">Chapter 119</a>
+        <a href="chapter-120.html">Chapter 120</a>
+        <a href="chapter-121.html">Chapter 121</a>
+        <a href="chapter-122.html">Chapter 122</a>
+        <a href="chapter-123.html">Chapter 123</a>
+        <a href="chapter-124.html">Chapter 124</a>
+        <a href="chapter-125.html">Chapter 125</a>
+        <a href="chapter-126.html">Chapter 126</a>
+        <a href="chapter-127.html">Chapter 127</a>
+        <a href="chapter-128.html">Chapter 128</a>
+        <a href="chapter-129.html">Chapter 129</a>
+        <a href="chapter-130.html">Chapter 130</a>
+        <a href="chapter-131.html">Chapter 131</a>
+        <a href="chapter-132.html">Chapter 132</a>
+        <a href="chapter-133.html">Chapter 133</a>
+        <a href="chapter-134.html">Chapter 134</a>
+        <a href="chapter-135.html">Chapter 135</a>
+        <a href="chapter-136.html">Chapter 136</a>
+        <a href="chapter-137.html">Chapter 137</a>
+        <a href="from-zero.html">From Zero</a>
+        <a href="pinn-from-zero.html">PINNs From Zero</a>
+        <a href="rom-from-zero.html">ROMs From Zero</a>
+        <a href="manifold-from-zero.html">Manifolds From Zero</a>
+        <a href="synthesis.html">Synthesis</a>
+        <a href="big-picture.html">Big Picture</a>
+        <a href="examples.html">Examples</a>
+        <a href="bridge.html">AISE Bridge</a>
+        <a href="audit.html">Transcript Audit</a>
+      </nav>
+      <main class="content">
+        <p class="eyebrow">Narrative chapter</p>
+        <h1>Do Not Call It Foundational Until It Generalizes</h1>
+
+        <p>This chapter uses video 136, Youngsoo Choi's DDPS talk on defining foundation models for computational science. The talk is not mainly about showing one more fast surrogate. It is about vocabulary discipline. Many scientific machine learning papers call their model a foundation model. The speaker asks what that should actually mean.</p>
+
+        <p>The first-principles problem is this: in ordinary AI, a foundation model earns the name because it is trained broadly and can be adapted to many tasks. In computational science, many models are trained on one dataset, one geometry, one equation family, or one mesh regime. They may predict fast, but if changing the boundary condition, geometry, initial condition, or task forces retraining from scratch, the word foundational is doing too much work.</p>
+
+        <section class="lesson-claim-chain" aria-label="Plain first-principles reading guide for computational science foundation models">
+          <h2>Read This Chapter As One Claim</h2>
+          <p>The chapter is asking for honesty in naming. A fast surrogate for one equation is useful, but it is not automatically a foundation model. In computational science, the label should mean that the model can serve as a reusable base across meaningful scientific changes: new domains, boundary conditions, tasks, geometries, source terms, scales, and physical regimes. DDFM is proposed as one route because it learns local scientific building blocks and assembles them through a physics solve, closer to how finite elements earn reuse.</p>
+          <div class="lesson-claim-grid">
+            <div><strong>Everyday problem</strong><span>Scientific ML models are often called foundational even when they only work on one dataset, one mesh, or one equation family.</span></div>
+            <div><strong>Shared promise</strong><span>Define foundation models by broad training, reuse, adaptation without rebuilding, scientific consistency, and generalization across tasks and domains.</span></div>
+            <div><strong>Hidden danger</strong><span>A model can be large, fast, or impressive while still failing new geometries, physics regimes, boundary conditions, inverse tasks, or error-control requirements.</span></div>
+            <div><strong>First rejection test</strong><span>Change the domain, mesh, PDE type, load, source, boundary condition, and task, then ask whether the model adapts without starting over.</span></div>
+          </div>
+        </section>
+
+        <div class="foundation-name-core-map" aria-label="A computational science foundation model must generalize beyond one training setup">
+          <div>fast prediction alone is not enough</div>
+          <div>one setup does not make a foundation</div>
+          <div>new tasks should not require starting over</div>
+          <div>generalization earns the name</div>
+        </div>
+
+        <h2>The Everyday Version</h2>
+        <p>Imagine someone calls a wrench a universal repair kit. If the wrench only fits one bolt in one machine, the label is misleading. It may still be useful, but it is not universal. A real repair kit works across many situations because it has reusable structure.</p>
+
+        <p>This is the lecture's attitude toward foundation models. A model trained on one fluid dataset and reused only after days of retraining may be a good surrogate. It may be valuable. But calling it foundational hides the real limitation. The name should be reserved for models that serve as reusable bases across scientific problems.</p>
+
+        <h2>The Definition</h2>
+        <p>The proposed definition has five central pieces. A computational-science foundation model should be data-driven. It should be trained on a broad distribution of scientific application types or physical systems. It should generalize across scientific problems, computational domains, tasks, and physical conditions. It should avoid retraining from scratch or structural modification when adapting. It should serve as a reusable basis.</p>
+
+        <p>The definition is stricter than "large model trained on scientific data." It asks what the model can do when the situation changes. Can it handle new boundary conditions? New parameters? Forward and inverse tasks? Different equations? Different geometries? Uncertainty quantification? Larger scales? If the answer is mostly no, the model may not deserve the foundation label.</p>
+
+        <div class="foundation-definition-map" aria-label="The proposed definition has five core requirements">
+          <div>data-driven model</div>
+          <div>broad scientific training distribution</div>
+          <div>wide generalization across tasks and domains</div>
+          <div>reusable basis without starting over</div>
+        </div>
+
+        <h2>Desirable Scientific Traits</h2>
+        <p>The talk then adds four desirable traits from computational science. The model should be scientifically consistent, meaning it should respect physical laws such as conservation, symmetry, or invariance where those laws matter. It should have mathematical rigor where possible: stability, convergence, well-posedness, or error analysis. It should extrapolate robustly beyond the exact training region. It should improve as better and broader data are added.</p>
+
+        <p>These traits come from the history of numerical methods. Finite elements and finite volumes are not called foundational because they are fashionable. They are foundational because they provide reusable, analyzable procedures across many problems. A computational-science foundation model should aspire to the same level of responsibility, not just the AI meaning of scale.</p>
+
+        <div class="scientific-traits-map" aria-label="Scientific foundation models should add consistency, rigor, extrapolation, and data scalability">
+          <div>respect physical laws</div>
+          <div>support analysis where possible</div>
+          <div>extrapolate beyond the training region</div>
+          <div>improve with better data</div>
+        </div>
+
+        <h2>Why This Is Harder Than Language</h2>
+        <p>Computational science data are not like text tokens. A single simulation sample can contain millions, billions, or more values. A high-dimensional turbulence simulation in a tokamak setting may be gigabytes or terabytes for one data point. That makes storage, batching, transfer learning, and fine-tuning expensive before the model even starts to reason.</p>
+
+        <p>The data are also heterogeneous. One problem may be scalar, another vector-valued, another tensor-valued. Some are two-dimensional, some three-dimensional, some five-dimensional. Meshes and geometries change. Boundary conditions change. Long-time dynamics and multiscale structure make stability difficult. Scientific users also need trust and interpretability, because a visually plausible answer is not enough.</p>
+
+        <div class="science-data-hard-map" aria-label="Computational science foundation models face huge data, heterogeneity, meshes, physics constraints, and trust requirements">
+          <div>one sample can be enormous</div>
+          <div>physics data types are heterogeneous</div>
+          <div>mesh and geometry matter</div>
+          <div>trust requires more than visual plausibility</div>
+        </div>
+
+        <h2>The DDFM Proposal</h2>
+        <p>The talk proposes data-driven finite element methods, or DDFM, as one possible framework that could move toward the definition. The idea borrows the structure of finite elements. A traditional finite element method breaks a domain into elements, uses polynomial basis functions inside each element, assembles the global system, and solves the governing equations.</p>
+
+        <p>DDFM keeps the element-and-assembly logic but replaces the generic polynomial basis with a data-driven basis. The data-driven basis is trained locally, on small domains, components, or elements. Then many such learned elements are assembled into a larger domain, and the governing equations are still solved. In simple words: learn better local building blocks, but keep the global physics solve.</p>
+
+        <div class="ddfm-core-map" aria-label="DDFM replaces local polynomial finite-element bases with local data-driven bases">
+          <div>finite elements use generic polynomial bases</div>
+          <div>DDFM trains local data-driven bases</div>
+          <div>learned elements assemble into a global domain</div>
+          <div>governing equations still enforce physics</div>
+        </div>
+
+        <h2>Why Local Training Helps</h2>
+        <p>The local element idea attacks the huge-data problem. Instead of generating training data over one gigantic global geometry, generate diverse data on small reusable units: a strut, a joint, a porous-media cell, a reference element, or a small subdomain. Small local data are cheaper to generate, store, and train on. They are also reusable when the same kind of local structure appears in a larger domain.</p>
+
+        <p>This is the analogy to language tokens. A language model does not memorize every possible book as one huge object. It works with smaller pieces and learns how they combine. DDFM tries to do something similar for computation: break a domain into local pieces, learn useful local representations, and assemble them into a global physical calculation.</p>
+
+        <div class="local-token-map" aria-label="DDFM treats learned local elements like reusable scientific tokens">
+          <div>global simulations are huge</div>
+          <div>local element data are manageable</div>
+          <div>learned bases become reusable pieces</div>
+          <div>assembly builds the full physical problem</div>
+        </div>
+
+        <h2>How The Basis Can Be Learned</h2>
+        <p>The framework does not prescribe one learning method. A data-driven basis could come from compression, such as singular value decomposition, tensor decomposition, or autoencoders. It could come from sparse or symbolic regression, where local data identify a functional form or even a local governing equation. It could use implicit neural representations or neural operators to build mesh-free input-output maps. It could also mix learned bases with classical polynomial bases.</p>
+
+        <p>This flexibility is why the talk calls DDFM a framework rather than a single algorithm. The stable part is the idea: local learned representation plus global assembly plus governing physics. The specific basis technology can change as better AI tools appear.</p>
+
+        <div class="basis-learning-map" aria-label="DDFM bases can come from compression, symbolic regression, neural representations, or hybrids">
+          <div>compression builds compact local modes</div>
+          <div>symbolic regression can identify local laws</div>
+          <div>neural operators can provide mesh-free maps</div>
+          <div>hybrids can enrich classical bases</div>
+        </div>
+
+        <h2>Example: Lattice Structures</h2>
+        <p>The first demonstration uses lattice-type structures made from repeated components, such as struts and joints. Train data-driven bases on those components. Assemble them into a larger lattice. Then solve for displacement or stress under loads and boundary conditions.</p>
+
+        <p>The reported comparison is sharp. A monolithic finite element solve may involve millions of degrees of freedom. The DDFM representation reduces this to a few thousand degrees of freedom, giving large speedups with less than one percent relative error in the shown examples. Because the forward solve is fast, the same framework can also support inverse design: reduce weight while still carrying the load.</p>
+
+        <div class="lattice-ddfm-map" aria-label="DDFM reuses strut and joint elements for fast lattice simulation and design">
+          <div>train on repeated lattice components</div>
+          <div>assemble a larger structure</div>
+          <div>solve far fewer degrees of freedom</div>
+          <div>use speed for inverse design</div>
+        </div>
+
+        <h2>Example: Porous Media And Burgers Flow</h2>
+        <p>The porous-media Navier-Stokes example shows nonlinear physics and different obstacle shapes. Each obstacle-cell type gets its own data-driven element. The global porous domain is assembled from those elements, and the method solves the flow with a reported speedup and low error compared with the traditional finite element method.</p>
+
+        <p>The time-dependent Burgers example shows that DDFM is not limited to static problems. A data-driven basis trained on a smaller domain is assembled into a larger spatial domain and used for time evolution. The talk also tests different source functions, including source behavior not identical to the training sources, and reports accurate results.</p>
+
+        <div class="nonlinear-ddfm-map" aria-label="DDFM demonstrations include nonlinear porous-media flow and time-dependent Burgers problems">
+          <div>porous media uses obstacle-specific elements</div>
+          <div>nonlinear Navier-Stokes can be assembled</div>
+          <div>Burgers tests time-dependent behavior</div>
+          <div>different source functions probe generalization</div>
+        </div>
+
+        <h2>Cross-PDE Demonstration</h2>
+        <p>The talk also presents a more ambitious test: combine data from two different PDE types, such as a parabolic Poisson-like problem and a hyperbolic Burgers problem, into one data-driven basis. Then use that basis to solve either problem. The claim is not that all PDEs are solved by one basis now. The claim is that the framework can start to demonstrate cross-domain generalization.</p>
+
+        <p>This is important because the definition requires breadth. A model that only works on one equation with one source type does not become foundational by being fast. The cross-PDE test is preliminary evidence that local learned bases can carry reusable structure across different equation behavior.</p>
+
+        <div class="cross-pde-map" aria-label="DDFM tests one learned basis across different PDE types">
+          <div>train with multiple PDE data sources</div>
+          <div>build one local data-driven basis</div>
+          <div>solve parabolic-style tasks</div>
+          <div>solve hyperbolic-style tasks</div>
+        </div>
+
+        <h2>The Foundation Claim Is Not Finished</h2>
+        <p>The speaker is careful. DDFM is not presented as a completed foundation model. It is presented as a route toward one. The framework shows local training, global assembly, spatial extrapolation, forward and inverse tasks, nonlinear tests, time-dependent tests, and some cross-PDE behavior. But a lot remains open before it satisfies the full definition at scale.</p>
+
+        <p>The open work includes scalable solvers and preconditioners for the new block-dense system structure, mathematical analysis, error indicators, adaptive refinement, non-conforming assembly, user-friendly software, and broader demonstrations across domains. This caution is part of the lesson. A foundation-model claim should come with a checklist and evidence, not only a name.</p>
+
+        <div class="unfinished-foundation-map" aria-label="DDFM is a route toward foundation models but still needs scalability, theory, adaptivity, and software work">
+          <div>preconditioners are still needed</div>
+          <div>new mathematical analysis is needed</div>
+          <div>adaptive refinement must be developed</div>
+          <div>usable software matters for reuse</div>
+        </div>
+
+        <h2>The Q And A Boundaries</h2>
+        <p>The Q and A clarifies the limits. A question about gas versus liquid flow brings out the domain issue: a model can be foundational within a clearly stated domain, but the domain must be named. A question about substructuring points to the old challenge: if a macro element must be as general as the full finite element method, it can become just as complex. Error estimation and adaptivity are therefore central, not optional.</p>
+
+        <p>Other questions ask whether DDFM is tied to finite elements. The answer is no. The name follows finite-element procedure, but finite difference, finite volume, spectral, or other discretizations could be used inside the framework. A question about large language models gets a similar boundary: computational science can borrow ideas from language models, but scientific data and physics constraints are different enough that off-the-shelf language models are not the answer.</p>
+
+        <div class="ddfm-qna-map" aria-label="The Q and A clarifies domain limits, substructuring challenges, method flexibility, and LLM boundaries">
+          <div>foundation scope must be stated</div>
+          <div>error estimation controls macro-element risk</div>
+          <div>DDFM is not limited to FEM discretization</div>
+          <div>LLM ideas transfer, not LLMs directly</div>
+        </div>
+
+        <h2>The Design And Topology Connection</h2>
+        <p>This chapter is directly tied to design and topology. Lattice optimization is a topology problem: which members stay, which disappear, and how load paths survive. Porous media is also topology: obstacle shapes and connected channels control flow. DDFM tries to reuse local learned pieces across many assembled geometries, which is exactly what design loops need.</p>
+
+        <p>The larger design point is that a reusable computational-science foundation model should let a domain scientist change the geometry, boundary conditions, loads, source terms, or task without rebuilding the whole machine-learning pipeline. If the model can only handle the original topology, it is a local surrogate. If it can assemble reusable learned elements into new topologies while still enforcing physics, it starts moving toward foundational behavior.</p>
+
+        <div class="ddfm-design-map" aria-label="DDFM supports topology and design by reusing learned local elements in new assembled geometries">
+          <div>lattice design changes load paths</div>
+          <div>porous design changes channels and obstacles</div>
+          <div>learned elements can be reused in new topologies</div>
+          <div>physics solve keeps the design accountable</div>
+        </div>
+
+        <h2>How This Connects To Earlier Chapters</h2>
+        <p>This chapter is the natural follow-up to Chapter 131. That chapter showed why PDE foundation models are attractive for sample efficiency. This chapter asks what standard they must meet before earning the name. It also connects to Chapter 129 because both keep a trusted physics structure while learning representations. It connects to reduced-order-model chapters because DDFM is a local compression and assembly strategy. It connects to symbolic-regression chapters because one possible DDFM basis could come from discovered local laws.</p>
+
+        <p>The new lesson is a naming discipline. The course has many fast surrogates. Not all of them are foundation models. A foundation model should be broad, reusable, scientifically consistent, and adaptable without rebuilding from scratch.</p>
+
+        <h2>The Boundary Of The Claim</h2>
+        <p>The claim is not that DDFM has already solved computational-science foundation models. It has preliminary demonstrations and a plausible structure. But the full standard is much larger: broad physics, geometry changes, mesh changes, forward and inverse tasks, uncertainty, scale-up, theory, software, adaptivity, and reliable error control.</p>
+
+        <p>The honest claim is this: if computational science wants to use the phrase foundation model rigorously, it must require broad generalization and reuse. DDFM is proposed as one route because it learns local data-driven bases, assembles them like a numerical method, and still solves physics globally.</p>
+
+        <div class="foundation-limit-map" aria-label="The foundation model standard requires broad evidence beyond preliminary demonstrations">
+          <div>preliminary success is not final proof</div>
+          <div>broad generalization must be demonstrated</div>
+          <div>physics and theory remain part of the standard</div>
+          <div>reuse without rebuilding is the goal</div>
+        </div>
+
+        <h2>What You Should Remember</h2>
+        <p>The heart of the lecture is that "foundation model" should be an earned label. A fast model is not enough. A large model is not enough. A model trained on scientific data is not enough. The model must generalize across meaningful scientific changes and serve as a reusable basis.</p>
+
+        <p>If you remember one sentence, remember this: in computational science, foundational means reusable across physics-aware tasks, not merely impressive on one dataset.</p>
+
+        <section class="lesson-review" aria-label="End of chapter understanding check for computational science foundation models">
+          <h2>How To Test Whether You Understood This Chapter</h2>
+          <div class="lesson-review-grid">
+            <div><strong>Explain the name test</strong><span>A model earns the foundation label only if it can be reused across meaningful scientific changes, not just predict one familiar dataset quickly.</span></div>
+            <div><strong>Explain DDFM simply</strong><span>DDFM learns local data-driven bases, assembles them like elements in a numerical method, and still solves the global physics problem.</span></div>
+            <div><strong>Explain why local pieces help</strong><span>Local components are cheaper to train on and can be reused in larger assembled domains, much like reusable scientific tokens.</span></div>
+            <div><strong>Connect it to topology and design</strong><span>Lattices, porous media, channels, obstacles, and load paths change topology; a foundational tool should reuse local learned elements in new assembled geometries while preserving physics.</span></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

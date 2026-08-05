@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chapter 103 - Make The Plan Prove The Schedule Can Execute It</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="sidebar">
+        <h1>DDPS Study</h1>
+        <a href="index.html">Start</a>
+        <a href="review-path.html">Review Path</a>
+        <a href="plain-words.html">Plain Words</a>
+        <a href="method-map.html">Method Map</a>
+        <a href="self-check.html">Self Check</a>
+        <a href="capstone.html">Capstone</a>
+        <a href="theme-index.html">Theme Index</a>
+        <a href="domain-map.html">Domain Map</a>
+        <a href="paper-reader.html">Paper Reader</a>
+        <a href="common-mistakes.html">Common Mistakes</a>
+        <a href="study-plan.html">Study Plan</a>
+        <a href="math-map.html">Math Map</a>
+        <a href="prerequisite-map.html">Prerequisite Map</a>
+        <a href="cheat-sheet.html">Cheat Sheet</a>
+        <a href="chapter-98.html">Chapter 98</a>
+        <a href="chapter-99.html">Chapter 99</a>
+        <a href="chapter-100.html">Chapter 100</a>
+        <a href="chapter-101.html">Chapter 101</a>
+        <a href="chapter-102.html">Chapter 102</a>
+        <a href="chapter-103.html">Chapter 103</a>
+        <a href="chapter-104.html">Chapter 104</a>
+        <a href="chapter-105.html">Chapter 105</a>
+        <a href="chapter-106.html">Chapter 106</a>
+        <a href="chapter-107.html">Chapter 107</a>
+        <a href="chapter-108.html">Chapter 108</a>
+        <a href="chapter-109.html">Chapter 109</a>
+        <a href="chapter-110.html">Chapter 110</a>
+        <a href="chapter-111.html">Chapter 111</a>
+        <a href="chapter-112.html">Chapter 112</a>
+        <a href="chapter-113.html">Chapter 113</a>
+        <a href="chapter-114.html">Chapter 114</a>
+        <a href="chapter-115.html">Chapter 115</a>
+        <a href="chapter-116.html">Chapter 116</a>
+        <a href="chapter-117.html">Chapter 117</a>
+        <a href="chapter-118.html">Chapter 118</a>
+        <a href="chapter-119.html">Chapter 119</a>
+        <a href="chapter-120.html">Chapter 120</a>
+        <a href="chapter-121.html">Chapter 121</a>
+        <a href="chapter-122.html">Chapter 122</a>
+        <a href="chapter-123.html">Chapter 123</a>
+        <a href="chapter-124.html">Chapter 124</a>
+        <a href="chapter-125.html">Chapter 125</a>
+        <a href="chapter-126.html">Chapter 126</a>
+        <a href="chapter-127.html">Chapter 127</a>
+        <a href="chapter-128.html">Chapter 128</a>
+        <a href="chapter-129.html">Chapter 129</a>
+        <a href="chapter-130.html">Chapter 130</a>
+        <a href="chapter-131.html">Chapter 131</a>
+        <a href="chapter-132.html">Chapter 132</a>
+        <a href="chapter-133.html">Chapter 133</a>
+        <a href="chapter-134.html">Chapter 134</a>
+        <a href="chapter-135.html">Chapter 135</a>
+        <a href="chapter-136.html">Chapter 136</a>
+        <a href="chapter-137.html">Chapter 137</a>
+        <a href="from-zero.html">From Zero</a>
+        <a href="pinn-from-zero.html">PINNs From Zero</a>
+        <a href="rom-from-zero.html">ROMs From Zero</a>
+        <a href="manifold-from-zero.html">Manifolds From Zero</a>
+        <a href="synthesis.html">Synthesis</a>
+        <a href="big-picture.html">Big Picture</a>
+        <a href="examples.html">Examples</a>
+        <a href="bridge.html">AISE Bridge</a>
+        <a href="audit.html">Transcript Audit</a>
+      </nav>
+      <main class="content">
+        <p class="eyebrow">Narrative chapter</p>
+        <h1>Make The Plan Prove The Schedule Can Execute It</h1>
+
+        <p>This chapter uses video 106, Pinar Caglayan Kucukbakar's DDPS talk on a data-driven process systems engineering approach for supply chain management and enterprise-wide optimization. The talk is not about learning a PDE solution. It is about making decisions in a factory, supply chain, or enterprise system when the real constraints are nested across time scales.</p>
+
+        <p>The first-principles problem is this: a high-level plan can look good on paper and still be impossible on the plant floor. Planning may say "make this much product each day." Scheduling then has to assign tasks to equipment, respect capacity, handle storage, obey timing, and actually produce the target. If planning ignores scheduling, the plan can overpromise. This lecture builds a method where the plan is only accepted if the schedule underneath it can really execute it.</p>
+
+        <section class="lesson-claim-chain" aria-label="Plain first-principles reading guide for planning with executable schedules">
+          <h2>Read This Chapter As One Claim</h2>
+          <p>Start with the factory-floor version of truth. A plan is easy to write: make this much product, meet this demand, minimize this cost. Execution is harder. The schedule must decide which unit runs which task, when material moves, where inventory sits, whether storage is full, and whether every demand can be met on time. This chapter says the upper plan should not be allowed to declare success by itself. The lower schedule must prove the plan can happen. Domino does that by sampling possible plans, solving the detailed scheduling problem underneath each one, and using those results to guide a derivative-free search. The method is expensive because every sample includes a real execution check, but that cost is exactly what prevents fake plans that look cheap only because they ignored plant reality.</p>
+          <div class="lesson-claim-grid">
+            <div><strong>Everyday problem</strong><span>A high-level production or design plan can look cheap while asking equipment, inventory, or supply to do the impossible.</span></div>
+            <div><strong>Shared promise</strong><span>Bilevel planning and Domino force each upper decision to pass a lower scheduling or execution proof.</span></div>
+            <div><strong>Hidden danger</strong><span>The lower problem may be mixed-integer, nonlinear, scenario-dependent, and expensive enough that sampling becomes the bottleneck.</span></div>
+            <div><strong>First rejection test</strong><span>Do not accept the plan until the lower schedule is globally solved and demand, inventory, timing, and uncertainty scenarios are feasible.</span></div>
+          </div>
+        </section>
+
+        <div class="enterprise-core-map" aria-label="A plan is valid only if the lower schedule can execute it">
+          <div>market demand</div>
+          <div>production plan</div>
+          <div>plant schedule</div>
+          <div>feasible enterprise decision</div>
+        </div>
+
+        <h2>Process Systems Engineering Starts With Choices</h2>
+        <p>A chemical process turns raw material into final products through processing units. There may be many possible routes, many reactor sizes, many operating temperatures, many pressures, and many safety limits. Every one of those choices changes profit, yield, cost, emissions, and risk.</p>
+
+        <p>Because it is unsafe and expensive to physically try every alternative, engineers write mathematical models. These models include balances for mass, energy, and momentum, plus process limits and decision variables. Once a goal is attached, such as minimize cost or maximize yield, the model becomes an optimization problem.</p>
+
+        <div class="process-choice-map" aria-label="Process systems engineering turns process choices into constrained optimization">
+          <div>raw material route</div>
+          <div>unit conditions</div>
+          <div>safety and balance limits</div>
+          <div>best feasible process</div>
+        </div>
+
+        <h2>Classic Optimization Wants Derivatives</h2>
+        <p>The talk gives a short optimization lesson. Many deterministic optimization methods need derivative information. In everyday words, they need to know which direction improves the objective and which constraints become tight.</p>
+
+        <p>That becomes difficult when the system is represented by a complex simulator, a large set of differential equations, a multi-scale model, or data instead of closed-form equations. If the derivative is unavailable, unreliable, or too expensive, the optimization method needs another way to search.</p>
+
+        <div class="derivative-problem-map" aria-label="Complex simulators and data-driven models make derivative information hard to obtain">
+          <div>need gradient direction</div>
+          <div>complex simulator</div>
+          <div>data or hidden equations</div>
+          <div>derivative-free search</div>
+        </div>
+
+        <h2>Supply Chains Have Several Clocks</h2>
+        <p>Supply chain management has decisions at different time scales. Long-term structure decides where facilities are and how the network is arranged. Medium-term planning decides production targets and inventory. Short-term scheduling decides which tasks happen on which units at which times.</p>
+
+        <p>A sequential approach is tempting: choose the network, choose production goals, then create the schedule. The problem is that these layers share variables. A production target chosen at the planning layer can be impossible at the scheduling layer.</p>
+
+        <div class="supply-clock-map" aria-label="Supply chain decisions happen at structure, planning, and scheduling time scales">
+          <div>network structure</div>
+          <div>production planning</div>
+          <div>short-term scheduling</div>
+          <div>shared decisions</div>
+        </div>
+
+        <h2>The Planning Mistake Is Overpromising</h2>
+        <p>The lecture's simple planning example has product demand over a week. The planning layer may choose daily production amounts to meet demand. But if it makes that choice without checking the scheduling layer, it can ask the plant to produce more than its equipment can actually handle in a day.</p>
+
+        <p>The result is unmet demand. The plan was mathematically attractive at its own level, but it was not executable. This is the central everyday lesson: a plan is not real until the schedule can carry it.</p>
+
+        <div class="overpromise-map" aria-label="Planning can overpromise when it ignores scheduling capacity">
+          <div>daily demand</div>
+          <div>ambitious target</div>
+          <div>capacity violation</div>
+          <div>unmet product</div>
+        </div>
+
+        <h2>Bilevel Optimization Keeps The Layers Honest</h2>
+        <p>Bilevel optimization represents this hierarchy directly. The upper level chooses planning decisions and tries to minimize planning cost. The lower level solves the scheduling problem underneath those planning decisions. The two levels share production targets and other linking variables.</p>
+
+        <p>The key rule is strict: the upper plan is feasible only if the lower scheduling problem is solved to global optimality. That is how the formulation prevents a fake plan. It embeds the schedule as a condition the plan must pass.</p>
+
+        <div class="bilevel-map" aria-label="Bilevel optimization embeds the scheduling problem under the planning problem">
+          <div>upper planning choice</div>
+          <div>lower schedule solve</div>
+          <div>global lower optimum</div>
+          <div>valid plan</div>
+        </div>
+
+        <h2>The Price Is Hardness</h2>
+        <p>The lecture is clear that bilevel problems are hard. Even a linear program constrained by another linear program can become strongly NP-hard. When the lower level has discrete decisions, such as task assignments and unit choices, common simplifications no longer apply cleanly.</p>
+
+        <p>Scheduling also creates multi-follower structure. If the plan covers seven days, the method may need to solve a scheduling problem for each day and link those results through inventory. That is not one leader and one follower. It is one planning layer with many scheduling problems underneath.</p>
+
+        <div class="hardness-map" aria-label="Bilevel planning and scheduling becomes hard because lower schedules are discrete and repeated">
+          <div>nested problem</div>
+          <div>integer schedules</div>
+          <div>many days</div>
+          <div>global search needed</div>
+        </div>
+
+        <h2>Domino Samples The Upper Decisions</h2>
+        <p>The proposed Domino framework uses a data-driven strategy. First, sample the upper-level decisions, such as production targets. For each sampled planning choice, fix that choice in the lower scheduling problem. Then solve the lower problem deterministically to global optimality using an appropriate solver.</p>
+
+        <p>After the lower solve, Domino can evaluate the planning cost and constraint violations. Those input-output pairs become data for a derivative-free optimizer. The optimizer chooses more samples, checks convergence, and finally checks feasibility and lower-level global optimality.</p>
+
+        <div class="domino-loop-map" aria-label="Domino samples upper choices, solves lower schedules globally, and feeds data to derivative-free optimization">
+          <div>sample plan</div>
+          <div>fix in schedule</div>
+          <div>solve schedule globally</div>
+          <div>learn feasible cost surface</div>
+        </div>
+
+        <h2>Nomad And Argonaut Search Differently</h2>
+        <p>The talk uses two styles of derivative-free optimization. Nomad is more sample-based. It explores by evaluating points and moving through the space without requiring gradients. Argonaut is more model-based. It builds surrogate models for objectives and constraints, then optimizes those surrogates to propose new samples.</p>
+
+        <p>The tradeoff is familiar. A model-based method can be more sample efficient, but its surrogate can mislead it on harder problems. A sample-based method may need many more evaluations, but it can be more robust in some difficult mixed-integer nonlinear cases.</p>
+
+        <div class="optimizer-choice-map" aria-label="Nomad samples directly while Argonaut builds surrogate models">
+          <div>Nomad samples</div>
+          <div>Argonaut builds surrogates</div>
+          <div>sample cost matters</div>
+          <div>choose by problem</div>
+        </div>
+
+        <h2>The First Scheduling Case Checks Demand And Inventory</h2>
+        <p>The first integrated planning and scheduling example uses a state-task network with feeds, processing units, tasks, and two products over seven planning days. The planning layer tracks production cost and inventory cost. Inventory depends on what is produced, what carries over, and what demand arrives.</p>
+
+        <p>The lower scheduling layer handles allocation, storage, task duration, sequence, time horizon, and material balances. The important linking constraint says that by the final event point, scheduled production must meet or exceed the production target chosen by planning.</p>
+
+        <div class="planning-scheduling-map" aria-label="Planning tracks inventory and cost while scheduling proves production targets can be met">
+          <div>production target</div>
+          <div>inventory balance</div>
+          <div>task schedule</div>
+          <div>demand satisfied</div>
+        </div>
+
+        <h2>Cyclic Planning Prevents A Fake Week Boundary</h2>
+        <p>The lecture includes cyclic planning. A week does not truly end the process. Inventory left at the end of this week may become the starting inventory for next week. If the model ignores that loop, it can produce plans that look good only because the time window was cut artificially.</p>
+
+        <p>Cyclic planning forces the week to connect back to the next week. That makes the inventory decision more realistic. A plan that empties the plant at the end may not be acceptable if next week's first demand needs starting inventory.</p>
+
+        <div class="cyclic-map" aria-label="Cyclic planning links final inventory back to the next planning cycle">
+          <div>seven-day plan</div>
+          <div>ending inventory</div>
+          <div>next week starts</div>
+          <div>no fake boundary</div>
+        </div>
+
+        <h2>Uncertain Demand Requires Scenarios</h2>
+        <p>The deterministic examples use one known demand curve. The stochastic part asks what happens when demand is uncertain. The talk creates many possible demand samples, then groups demand into low, medium, and high regions over parts of the week.</p>
+
+        <p>Because infinite scenarios cannot be tested, the study samples nine representative scenarios. The same production targets must work across those scenarios. If the worst case is high demand through much of the week, the chosen plan may carry extra inventory in lower-demand scenarios. That is the cost of protecting feasibility under uncertainty.</p>
+
+        <div class="scenario-demand-map" aria-label="Demand uncertainty is handled through low, medium, and high scenarios">
+          <div>uncertain demand</div>
+          <div>scenario samples</div>
+          <div>one target policy</div>
+          <div>feasible across cases</div>
+        </div>
+
+        <h2>Sampling Time Becomes The Bottleneck</h2>
+        <p>Domino's cost depends heavily on how expensive it is to evaluate one sample. One sample means choosing an upper-level plan and solving the lower-level schedule. As the number of scheduling event points grows, the lower problem has more variables and constraints.</p>
+
+        <p>The lecture reports that sample time can rise from tens of seconds to over one hundred seconds per sample in harder cases. That matters because sample-based optimizers such as Nomad may need many samples. Parallel execution helps, but the lower-level solve remains a central bottleneck.</p>
+
+        <div class="sample-cost-map" aria-label="Each data sample requires solving lower schedules, so scheduling complexity controls runtime">
+          <div>one upper sample</div>
+          <div>many lower constraints</div>
+          <div>seconds per sample grow</div>
+          <div>parallelism helps</div>
+        </div>
+
+        <h2>Crude Oil Scheduling Adds Real Nonlinearity</h2>
+        <p>The crude oil example makes the scheduling problem harder. Vessels bring crude oil to storage tanks. Storage tanks feed charging tanks. Blending occurs because crude compositions differ. Charging tanks feed the distillation unit.</p>
+
+        <p>The nonlinear part is not artificial decoration. Component balances from blending create nonlinear relationships. That turns the lower scheduling problem into a mixed-integer nonlinear problem. Domino still uses the same idea: sample the plan, solve the lower problem globally, and keep only plans whose schedules can meet demand.</p>
+
+        <div class="crude-oil-map" aria-label="Crude oil operations add nonlinear blending balances to scheduling">
+          <div>vessels bring crude</div>
+          <div>storage and charging tanks</div>
+          <div>blend compositions</div>
+          <div>meet distillation demand</div>
+        </div>
+
+        <h2>The Q And A Gives The Practical Boundary</h2>
+        <p>In Q&A, the speaker says the number of samples depends on problem scale. Smaller cases may use hundreds or a few thousand samples. More complex cases may need many thousands if the computation can afford it. That is why speeding up sample collection is a continuing research direction.</p>
+
+        <p>The discussion also connects this to expensive physical simulation. If one sample requires a week-long high-fidelity simulation, the optimizer must become more sample efficient or use a trusted surrogate. The speaker suggests model-based derivative-free optimization, Kriging or radial basis surrogates, and physics-informed or hybrid machine-learning surrogates as possible ways to reduce the pain.</p>
+
+        <div class="qa-sampling-map" aria-label="The Q&A highlights sample count, industry use, and expensive simulation surrogates">
+          <div>hundreds to thousands</div>
+          <div>sample collection is costly</div>
+          <div>industry problems larger</div>
+          <div>surrogates may help</div>
+        </div>
+
+        <h2>How This Connects To Design And Topology</h2>
+        <p>Design and topology optimization often has the same nested structure. A top-level design chooses geometry or material layout. A lower-level physics solver checks stress, flow, heat, reaction, manufacturing limits, or scheduling feasibility. If the top-level optimizer ignores the lower-level reality, it can choose a design that is mathematically attractive but physically impossible.</p>
+
+        <p>This lecture adds an important non-PDE lesson to the course. Sometimes the central object is not a field, manifold, or neural operator. Sometimes the central object is a decision hierarchy. The first-principles question becomes: who is allowed to say a design is feasible? The answer should be: the lower-level solver that represents the real execution constraints.</p>
+
+        <p>For topology, this matters when design choices must pass manufacturing schedules, supply availability, inventory constraints, uncertainty scenarios, or downstream operations. A part shape may be optimal in mechanics but impossible to produce at the required rate. A thermal layout may be excellent but require a material supply chain that cannot meet demand. Domino's lesson is to couple the top design choice to the lower execution proof.</p>
+
+        <div class="enterprise-design-bridge" aria-label="Topology decisions need lower-level execution checks before being accepted">
+          <div>top design choice</div>
+          <div>lower execution model</div>
+          <div>feasibility proof</div>
+          <div>decision worth using</div>
+        </div>
+
+        <h2>The Chapter In One Chain</h2>
+        <p>First, process systems engineering turns production choices into constrained decisions. Second, classic optimization often needs derivatives, but complex simulators, data-driven models, and multi-scale systems may not provide them cleanly. Third, supply chains have long-term structure, medium-term planning, and short-term scheduling decisions. Fourth, sequential planning can overpromise because it chooses production targets before checking plant capacity. Fifth, bilevel optimization embeds scheduling underneath planning so a plan is feasible only if the lower schedule can execute it. Sixth, bilevel mixed-integer problems are hard because nested optimality creates nonconvexity and scheduling uses discrete choices. Seventh, Domino samples upper-level decisions and solves the lower-level scheduling problem deterministically to global optimality. Eighth, the resulting objective and constraint values become data for derivative-free optimization. Ninth, Nomad searches by samples while Argonaut builds surrogate models. Tenth, integrated planning and scheduling examples show demand satisfaction when schedules are globally optimal. Eleventh, cyclic planning avoids pretending the week ends cleanly. Twelfth, uncertain demand is handled by sampled scenarios and stochastic planning cost. Thirteenth, harder multi-product cases increase lower-level complexity and sample time. Fourteenth, crude oil scheduling introduces nonlinear blending and mixed-integer nonlinear lower problems. Fifteenth, Q&A emphasizes that sample count depends on scale and expensive simulations need sample-efficient or surrogate approaches. Sixteenth, design and topology should borrow this lesson: a top-level design is not valid until the lower-level physics, manufacturing, scheduling, or supply constraints prove it can be executed.</p>
+
+        <div class="note">
+          <p>The chapter's core idea: do not trust a beautiful high-level plan until the lower-level execution problem has proved it can actually happen.</p>
+        </div>
+
+        <section class="lesson-review" aria-label="End of chapter understanding check for executable planning">
+          <h2>How To Test Whether You Understood This Chapter</h2>
+          <div class="lesson-review-grid">
+            <div><strong>Explain overpromising</strong><span>Say how a production plan can meet demand on paper but fail when tasks, units, timing, storage, and inventory are scheduled.</span></div>
+            <div><strong>Use the bilevel rule</strong><span>Explain why the upper plan is feasible only when the lower scheduling problem has been solved to global optimality.</span></div>
+            <div><strong>Name the sample cost</strong><span>Describe why one Domino sample is expensive: it includes solving a detailed lower execution problem, not just evaluating a formula.</span></div>
+            <div><strong>Connect to topology</strong><span>Before accepting a shape or material layout, state what manufacturing, supply, scheduling, or downstream operation must prove it can execute.</span></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chapter 137 - Guess The Underground Without Pretending You Saw It</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="sidebar">
+        <h1>DDPS Study</h1>
+        <a href="index.html">Start</a>
+        <a href="review-path.html">Review Path</a>
+        <a href="plain-words.html">Plain Words</a>
+        <a href="method-map.html">Method Map</a>
+        <a href="self-check.html">Self Check</a>
+        <a href="capstone.html">Capstone</a>
+        <a href="theme-index.html">Theme Index</a>
+        <a href="domain-map.html">Domain Map</a>
+        <a href="paper-reader.html">Paper Reader</a>
+        <a href="common-mistakes.html">Common Mistakes</a>
+        <a href="study-plan.html">Study Plan</a>
+        <a href="math-map.html">Math Map</a>
+        <a href="prerequisite-map.html">Prerequisite Map</a>
+        <a href="cheat-sheet.html">Cheat Sheet</a>
+        <a href="chapter-98.html">Chapter 98</a>
+        <a href="chapter-99.html">Chapter 99</a>
+        <a href="chapter-100.html">Chapter 100</a>
+        <a href="chapter-101.html">Chapter 101</a>
+        <a href="chapter-102.html">Chapter 102</a>
+        <a href="chapter-103.html">Chapter 103</a>
+        <a href="chapter-104.html">Chapter 104</a>
+        <a href="chapter-105.html">Chapter 105</a>
+        <a href="chapter-106.html">Chapter 106</a>
+        <a href="chapter-107.html">Chapter 107</a>
+        <a href="chapter-108.html">Chapter 108</a>
+        <a href="chapter-109.html">Chapter 109</a>
+        <a href="chapter-110.html">Chapter 110</a>
+        <a href="chapter-111.html">Chapter 111</a>
+        <a href="chapter-112.html">Chapter 112</a>
+        <a href="chapter-113.html">Chapter 113</a>
+        <a href="chapter-114.html">Chapter 114</a>
+        <a href="chapter-115.html">Chapter 115</a>
+        <a href="chapter-116.html">Chapter 116</a>
+        <a href="chapter-117.html">Chapter 117</a>
+        <a href="chapter-118.html">Chapter 118</a>
+        <a href="chapter-119.html">Chapter 119</a>
+        <a href="chapter-120.html">Chapter 120</a>
+        <a href="chapter-121.html">Chapter 121</a>
+        <a href="chapter-122.html">Chapter 122</a>
+        <a href="chapter-123.html">Chapter 123</a>
+        <a href="chapter-124.html">Chapter 124</a>
+        <a href="chapter-125.html">Chapter 125</a>
+        <a href="chapter-126.html">Chapter 126</a>
+        <a href="chapter-127.html">Chapter 127</a>
+        <a href="chapter-128.html">Chapter 128</a>
+        <a href="chapter-129.html">Chapter 129</a>
+        <a href="chapter-130.html">Chapter 130</a>
+        <a href="chapter-131.html">Chapter 131</a>
+        <a href="chapter-132.html">Chapter 132</a>
+        <a href="chapter-133.html">Chapter 133</a>
+        <a href="chapter-134.html">Chapter 134</a>
+        <a href="chapter-135.html">Chapter 135</a>
+        <a href="chapter-136.html">Chapter 136</a>
+        <a href="chapter-137.html">Chapter 137</a>
+        <a href="from-zero.html">From Zero</a>
+        <a href="pinn-from-zero.html">PINNs From Zero</a>
+        <a href="rom-from-zero.html">ROMs From Zero</a>
+        <a href="manifold-from-zero.html">Manifolds From Zero</a>
+        <a href="synthesis.html">Synthesis</a>
+        <a href="big-picture.html">Big Picture</a>
+        <a href="examples.html">Examples</a>
+        <a href="bridge.html">AISE Bridge</a>
+        <a href="audit.html">Transcript Audit</a>
+      </nav>
+      <main class="content">
+        <p class="eyebrow">Narrative chapter</p>
+        <h1>Guess The Underground Without Pretending You Saw It</h1>
+
+        <p>This chapter uses video 141, Yunan's DDPS talk on generative models for data assimilation in subsurface flow. The lecture is about a hard practical situation: people must make decisions about deep underground systems, but they only observe tiny pieces of those systems directly.</p>
+
+        <p>The first-principles problem is not machine learning. It is blindness. The rock, water, heat, faults, fractures, pressure, and injected CO2 are mostly hidden thousands of meters below the surface. Wells are expensive. Direct measurements exist only near a few drilled locations. Geophysical surveys and remote sensing can help, but they are indirect, sparse, noisy, and costly.</p>
+
+        <p>Still, decisions cannot wait for perfect knowledge. We need geothermal energy. We need groundwater. We may need to store carbon underground. We need to understand hazards such as induced seismicity. The job is to take a few measurements, many possible underground worlds, and a simulator, then update what we believe about the unseen system.</p>
+
+        <section class="lesson-claim-chain" aria-label="Plain first-principles reading guide for generative data assimilation in subsurface flow">
+          <h2>Read This Chapter As One Claim</h2>
+          <p>Start from the fact that the underground is mostly hidden. You cannot open the earth and inspect every fracture, layer, pressure path, or fault. But you still have to decide where to inject water, where CO2 may move, where to place monitors, and what risks are acceptable. This chapter says the honest answer is not one pretty underground map. The honest answer is a changing set of possible underground worlds, narrowed by measurements, checked by physics, and used to choose the next action.</p>
+          <div class="lesson-claim-grid">
+            <div><strong>Everyday problem</strong><span>You must act in a place you can barely observe, so one guessed map is too fragile.</span></div>
+            <div><strong>Shared promise</strong><span>Generative models can create and update many possible hidden worlds fast enough for repeated decisions.</span></div>
+            <div><strong>Hidden danger</strong><span>A generated fracture, plume, or pressure field can look plausible while breaking the flow paths that make the decision safe or unsafe.</span></div>
+            <div><strong>First rejection test</strong><span>If new measurements do not change which worlds remain believable, the method is decoration, not data assimilation.</span></div>
+          </div>
+        </section>
+
+        <div class="subsurface-core-map" aria-label="Subsurface decisions require updating hidden geology from sparse observations">
+          <div>underground rock is mostly unseen</div>
+          <div>many geological guesses remain possible</div>
+          <div>flow simulation predicts pressure, heat, or CO2</div>
+          <div>data assimilation narrows the guesses</div>
+        </div>
+
+        <h2>The Everyday Version</h2>
+        <p>Imagine trying to understand a house by looking through three tiny holes in the wall. You can feel air movement near one hole and hear water near another. You can guess where pipes, studs, insulation, and rooms are, but you cannot see the whole layout. If you need to drill safely, you should not choose one pretty drawing and believe it. You should keep many possible layouts, reject the ones that disagree with the clues, and decide where another hole would teach you the most.</p>
+
+        <p>That is the subsurface problem. The "house" is the reservoir. The tiny holes are wells and monitors. The hidden layout is permeability, porosity, fractures, faults, and rock layers. The future event might be where CO2 moves, how hot produced water will be, or whether pressure changes make a fault more likely to slip.</p>
+
+        <h2>Why The Geology Matters</h2>
+        <p>A flow simulator needs geological inputs. It needs to know where rock is easy or hard for fluid to pass through. It needs fracture paths, layer properties, and sometimes thermal, chemical, and mechanical behavior. The lecture shows that different geological realizations can send CO2 or heat along very different paths. Size, shape, orientation, and timing all change when the hidden geology changes.</p>
+
+        <p>That means uncertainty in geology becomes uncertainty in decisions. If a fracture network is wrong, a geothermal prediction can overestimate heat recovery. If a permeability field is wrong, a CO2 plume can migrate differently than expected. If fault properties are wrong, pressure-related risk can be misunderstood. The hidden map is not background detail. It controls the future.</p>
+
+        <div class="subsurface-geology-map" aria-label="Different hidden geology creates different flow futures">
+          <div>fractures and layers control pathways</div>
+          <div>pathways control pressure and temperature</div>
+          <div>pressure and temperature control decisions</div>
+          <div>wrong geology gives wrong risk</div>
+        </div>
+
+        <h2>Bayes In Plain Words</h2>
+        <p>The talk uses a Bayesian frame. In simple terms, start with many possible underground worlds. That collection is the prior. Then run simulations or use a learned generator to see what each world would imply. Compare those implications with observations. Worlds that match the data become more believable. Worlds that clash with the data become less believable. The updated collection is the posterior.</p>
+
+        <p>This is data assimilation, also called history matching in this domain. It does not magically show the true reservoir. It reduces uncertainty by using the data we have. The result is a better distribution of possible models and future predictions, not one guaranteed answer.</p>
+
+        <div class="subsurface-bayes-map" aria-label="Bayesian data assimilation turns prior guesses into posterior predictions">
+          <div>prior: many possible worlds</div>
+          <div>likelihood: which worlds match data</div>
+          <div>posterior: updated possible worlds</div>
+          <div>forecast: future range after updating</div>
+        </div>
+
+        <h2>Where Generative Models Enter</h2>
+        <p>A generative model learns how to produce new samples that look like a target distribution. In image examples, it can generate cats, dogs, leaves, or videos. In this lecture, the target is scientific: generate plausible fracture networks, pressure fields, saturation fields, temperature fields, stress fields, and future quantities.</p>
+
+        <p>The reason this matters is cost. Classical uncertainty quantification may require thousands of simulator runs. For large three-dimensional multiphase subsurface systems, each run can take minutes or hours. If monitoring layouts or error assumptions change, the expensive process may have to be repeated. A trained generator can make posterior sampling much faster, especially when the task is moved into a smaller latent space.</p>
+
+        <p>But the generator is not a substitute for thinking. It must generate physically useful samples, not just visually plausible pictures. It must preserve fractures, connected pathways, plume shapes, pressure changes, stress relationships, and correlations between hidden properties and measured data.</p>
+
+        <div class="subsurface-generator-map" aria-label="Generative models help by producing plausible prior or posterior samples quickly">
+          <div>learn distribution from training examples</div>
+          <div>sample new plausible states</div>
+          <div>condition samples on observations</div>
+          <div>speed up uncertainty updates</div>
+        </div>
+
+        <h2>First Use: Generate Fracture Networks</h2>
+        <p>The first project is enhanced geothermal. Cold water is injected into hot deep rock, travels through fractures, heats up, and is produced as hot water. The fracture network controls the flow and thermal behavior. If fractures connect the wrong way, the heat-extraction forecast changes.</p>
+
+        <p>The model uses latent diffusion. First, a variational autoencoder maps a fracture image into a latent space. That matters because a fracture network may require thousands or millions of direct geometric parameters if described fracture by fracture. The latent space is a smaller set of numbers designed to represent the important patterns. The model is trained to reconstruct fracture networks while keeping the latent variables approximately Gaussian enough to sample and update.</p>
+
+        <p>Then diffusion is used in that latent space. The forward process gradually adds noise. The reverse process learns how to remove noise and generate a plausible fracture realization. After that, data assimilation updates the latent variables so generated fractures better match monitoring data. The workflow combines latent diffusion for geology, embedded discrete fracture models for simulation, and ensemble smoother with multiple data assimilation, or ESMDA, for calibration.</p>
+
+        <div class="subsurface-fracture-map" aria-label="Latent diffusion generates fracture networks and calibration updates latent variables">
+          <div>fracture image enters autoencoder</div>
+          <div>latent diffusion samples fracture patterns</div>
+          <div>flow simulator compares with monitor data</div>
+          <div>ESMDA updates latent variables</div>
+        </div>
+
+        <h2>What The Fracture Example Teaches</h2>
+        <p>The lecture tests generated fractures against training samples, fracture statistics, and flow statistics. The thin fractures are hard to generate, but the model captures visible fracture lines, connectivity, length, angle, and midpoint statistics reasonably well. Flow statistics for temperature and tracer also match the training simulations closely enough to make the prior useful.</p>
+
+        <p>The assimilation result is honest. With only one monitor, the posterior does not recover much of the true fracture geometry. With five monitors, uncertainty reduces more clearly, especially near the producer. This is an important learning point: a powerful generator cannot invent information that the observations do not contain. More or better placed monitors can be more valuable than a fancier neural network.</p>
+
+        <div class="subsurface-monitor-map" aria-label="More monitors can reduce uncertainty when one monitor cannot identify fracture geometry">
+          <div>one monitor gives weak geometry clues</div>
+          <div>five monitors add more constraints</div>
+          <div>posterior narrows near producer</div>
+          <div>sensor planning becomes part of the method</div>
+        </div>
+
+        <h2>Second Use: Skip Geology Calibration And Forecast Directly</h2>
+        <p>The second project is data space inversion, or DSI. The idea is blunt: sometimes calibrating the geological model is so hard that we instead predict the future data directly from past observations. The hidden model is still important, but the workflow avoids explicitly tuning every uncertain geological parameter.</p>
+
+        <p>In DSI, the data vector contains two parts. One part is monitoring history: pressure, saturation, strain, or similar measured quantities. The other part is the future quantity we want to predict. The goal is to learn a prior distribution over this whole space-time data object, then condition it on the observations we actually have.</p>
+
+        <p>The lecture describes a generative architecture with an encoder, a three-dimensional convolutional LSTM, a decoder, and an adversarial discriminator. In plain words, the encoder compresses space-time fields into latent variables, the decoder reconstructs them, and the discriminator pushes the latent space toward a Gaussian form that is easier to sample. After training, the decoder acts as a fast generator.</p>
+
+        <div class="subsurface-dsi-map" aria-label="Data space inversion forecasts future states directly from observation history">
+          <div>history and future live in one data vector</div>
+          <div>encoder compresses space-time fields</div>
+          <div>decoder generates future fields quickly</div>
+          <div>observations condition the latent variables</div>
+        </div>
+
+        <h2>CO2 Storage Forecasting</h2>
+        <p>One DSI example is geological carbon storage. CO2 is injected deep underground. Engineers need to know where the plume goes, how pressure rises, and whether pressure changes create risk. The example includes horizontal injectors, monitors, multiple geological scenarios, and spatial heterogeneity.</p>
+
+        <p>Traditional history matching is difficult here because there are global scenario parameters and detailed spatial variations. DSI ignores the named geological parameters and works directly on the data needed for prediction. In the result, prior samples do not look much like the true CO2 plume. After conditioning on observations, posterior samples show a clearer plume orientation and size. Quantities such as average saturation by layer and average pressure also show uncertainty reduction.</p>
+
+        <p>The speed difference is the practical reason this matters. The lecture says a simulation-based data assimilation task can take days when each simulation takes minutes and many simulations are needed. The trained generative DSI workflow can complete inference in minutes on a GPU. It also makes monitoring-location changes easier because a new monitor setup can be represented by changing an extraction matrix rather than rerunning the whole simulator campaign.</p>
+
+        <div class="subsurface-co2-map" aria-label="Generative DSI updates CO2 plume predictions from monitoring data">
+          <div>prior plumes spread across many possibilities</div>
+          <div>monitor data fixes plume clues</div>
+          <div>posterior plume shape narrows</div>
+          <div>fast inference enables design loops</div>
+        </div>
+
+        <h2>Fault Slip And Coupled Physics</h2>
+        <p>The second DSI example adds geomechanics. The system has faults, injectors, pressure, strain, effective normal stress, shear stress, and slip tendency. Slip tendency is the ratio that indicates how close a fault is to slipping under the current stress state.</p>
+
+        <p>The generator learns prior distributions over pressure, strain, effective normal stress, and shear stress. Observations from monitors near faults and injectors condition those distributions. The posterior then gives a narrower estimate of slip tendency. This is important because the decision is not only "where did CO2 go?" It is also "did injection push the fault closer to motion?"</p>
+
+        <div class="subsurface-slip-map" aria-label="Fault-slip risk depends on pressure, strain, shear stress, and normal stress">
+          <div>CO2 injection changes pressure</div>
+          <div>pressure changes stress and strain</div>
+          <div>stress ratio gives slip tendency</div>
+          <div>posterior narrows risk estimate</div>
+        </div>
+
+        <h2>Third Use: Jointly Infer Geology And Future States</h2>
+        <p>The third project tries to combine the two earlier ideas. Instead of only generating geology, or only forecasting data, build one joint latent space for geological parameters and dynamic state variables. Multiple encoders and decoders map the pieces into and out of latent variables. Extra layers learn nonlinear correlations between the hidden model and the future data.</p>
+
+        <p>Then a score-based diffusion model is trained in latent space. The forward process adds noise through a stochastic differential equation. The reverse process removes noise using a learned score function. Without conditioning, this generates prior samples. With observations, the Bayesian likelihood is added into the score so sampling is guided toward the posterior.</p>
+
+        <p>The key first-principles move is that observations become a force on the generation process. The generator is no longer merely producing plausible underground worlds. It is being steered toward worlds whose visible consequences match the measured data.</p>
+
+        <div class="subsurface-joint-map" aria-label="Score-based diffusion can jointly condition geology and future states on observations">
+          <div>encode geology and dynamic data</div>
+          <div>learn joint latent distribution</div>
+          <div>add observation likelihood to score</div>
+          <div>sample posterior worlds and futures</div>
+        </div>
+
+        <h2>What More Data Changes</h2>
+        <p>The joint-inference CO2 example compares four monitors with a richer saturation map, such as from time-lapse seismic information. Four monitors reduce uncertainty locally and improve the future plume prediction. A wider spatial map constrains the posterior much more strongly. It gives a future saturation field that looks closer to the true plume and also improves the inferred permeability pattern.</p>
+
+        <p>This is one of the most important lessons in the chapter. Better learning is not always about a bigger model. Sometimes the decisive improvement is better information. A map-like observation tells the model about broad spatial structure. A few point monitors mostly tell the model about local behavior near those points.</p>
+
+        <div class="subsurface-data-map" aria-label="Point monitors and map-like observations constrain different parts of the posterior">
+          <div>point wells constrain local history</div>
+          <div>seismic maps constrain spatial shape</div>
+          <div>posterior plume becomes sharper</div>
+          <div>permeability inference improves</div>
+        </div>
+
+        <h2>Why This Matters For Topology And Design</h2>
+        <p>Topology enters through connectivity. In subsurface flow, two fracture networks can contain the same amount of fracture length but behave differently if one connects injector to producer and the other does not. A CO2 plume can be safe or risky depending on whether hidden high-permeability paths connect it to a fault, a caprock weakness, or a monitoring region. The shape and connection of pathways matter, not only average rock properties.</p>
+
+        <p>For design, the question is where to act next. Where should a monitor be placed? Where should water be injected? Which operating pressure is acceptable? Which well layout reduces uncertainty most? A generative data-assimilation model can support these choices because it can update many possible futures quickly. The lecture explicitly points toward monitoring plan optimization using information gain: choose sensor locations that are expected to reduce uncertainty the most.</p>
+
+        <div class="subsurface-topology-map" aria-label="Connectivity and monitoring design shape subsurface decisions">
+          <div>connected pathways control flow</div>
+          <div>flow paths control heat, plume, and fault risk</div>
+          <div>sensors reveal only part of the network</div>
+          <div>information gain guides monitor placement</div>
+        </div>
+
+        <h2>The Closed Loop Picture</h2>
+        <p>The final big-picture frame is closed-loop management. Monitor the system. Update the model. Make a decision. Operate the field. Collect new data. Update again. This is the right mental model for carbon storage, geothermal systems, groundwater, and other underground resources because the system is never fully known at the beginning.</p>
+
+        <p>AI helps only if it makes this loop faster and more informative. A digital twin for subsurface flow is not a dashboard with a nice name. It is a living uncertainty model that changes when new observations arrive and supports decisions under incomplete knowledge.</p>
+
+        <div class="subsurface-loop-map" aria-label="Closed-loop subsurface management updates decisions as new data arrives">
+          <div>monitor sparse underground signals</div>
+          <div>assimilate data into posterior</div>
+          <div>choose operation or next sensor</div>
+          <div>repeat as the field evolves</div>
+        </div>
+
+        <h2>What Can Break The Method</h2>
+        <p>The Q and A is useful because it names limits. First, generated fractures can be broken, blurred, or nonphysical. That matters because a fracture image is not just an image. It becomes simulator input. If a fracture should have one orientation but the generated image bends or disconnects it, the later flow simulation can be wrong. The speaker mentions possible fixes: add simulation-input information, add geometry-informed losses, use more samples, and postprocess generated fractures.</p>
+
+        <p>Second, the posterior can stay biased toward the prior. If the true system is outside the prior assumptions, data assimilation cannot fully recover it by simple updating. That becomes a model-error problem. The prior may need to be redesigned, not merely updated.</p>
+
+        <p>Third, the score-based diffusion examples are mostly data-driven in the current presentation. The likelihood uses observations, but PDE residuals or physics losses are not yet built into the posterior generation. The speaker says physics constraints could be added as guidance in the score function. Until then, physics consistency is something to check, not something to assume.</p>
+
+        <div class="subsurface-limit-map" aria-label="Generative subsurface data assimilation fails if samples are nonphysical, priors are biased, or physics is unchecked">
+          <div>fracture samples can be broken</div>
+          <div>truth can fall outside the prior</div>
+          <div>physics loss is not yet built in</div>
+          <div>posterior must be validated</div>
+        </div>
+
+        <h2>The First-Principles Takeaway</h2>
+        <p>The talk is not saying "use diffusion because diffusion is popular." It is saying this: subsurface decisions are made with too little direct sight. We must carry many possible underground worlds, use observations to reject or downweight the wrong ones, and forecast the range of futures that remain.</p>
+
+        <p>Generative models help when they make that uncertainty loop fast enough to use. They can generate plausible geology, generate future space-time data, or jointly generate hidden parameters and dynamic states. The important question is always the same: after the few measurements arrive, which underground worlds are still believable, and what decisions are safe under that remaining uncertainty?</p>
+
+        <section class="lesson-review" aria-label="End of chapter understanding check for generative data assimilation in subsurface flow">
+          <h2>How To Test Whether You Understood This Chapter</h2>
+          <div class="lesson-review-grid">
+            <div><strong>Explain the need from zero</strong><span>The subsurface is mostly unseen, so the problem is to keep many possible worlds and let sparse observations rule some of them out.</span></div>
+            <div><strong>Say what the generator is for</strong><span>It makes plausible geology or future fields quickly, so posterior updating can happen inside a practical decision loop.</span></div>
+            <div><strong>Connect it to topology</strong><span>Connectivity decides the outcome: fractures, permeable paths, plume routes, faults, and monitor locations change what can reach what.</span></div>
+            <div><strong>State the honest claim</strong><span>The method helps only when generated worlds are physically usable, the prior is not badly wrong, observations genuinely constrain the posterior, and the final decision accounts for remaining uncertainty.</span></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

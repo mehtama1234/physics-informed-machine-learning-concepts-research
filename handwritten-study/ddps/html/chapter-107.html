@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Chapter 107 - Keep The Fast Preview Loyal To The Final Physics</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="layout">
+      <nav class="sidebar">
+        <h1>DDPS Study</h1>
+        <a href="index.html">Start</a>
+        <a href="review-path.html">Review Path</a>
+        <a href="plain-words.html">Plain Words</a>
+        <a href="method-map.html">Method Map</a>
+        <a href="self-check.html">Self Check</a>
+        <a href="capstone.html">Capstone</a>
+        <a href="theme-index.html">Theme Index</a>
+        <a href="domain-map.html">Domain Map</a>
+        <a href="paper-reader.html">Paper Reader</a>
+        <a href="common-mistakes.html">Common Mistakes</a>
+        <a href="study-plan.html">Study Plan</a>
+        <a href="math-map.html">Math Map</a>
+        <a href="prerequisite-map.html">Prerequisite Map</a>
+        <a href="cheat-sheet.html">Cheat Sheet</a>
+        <a href="chapter-98.html">Chapter 98</a>
+        <a href="chapter-99.html">Chapter 99</a>
+        <a href="chapter-100.html">Chapter 100</a>
+        <a href="chapter-101.html">Chapter 101</a>
+        <a href="chapter-102.html">Chapter 102</a>
+        <a href="chapter-103.html">Chapter 103</a>
+        <a href="chapter-104.html">Chapter 104</a>
+        <a href="chapter-105.html">Chapter 105</a>
+        <a href="chapter-106.html">Chapter 106</a>
+        <a href="chapter-107.html">Chapter 107</a>
+        <a href="chapter-108.html">Chapter 108</a>
+        <a href="chapter-109.html">Chapter 109</a>
+        <a href="chapter-110.html">Chapter 110</a>
+        <a href="chapter-111.html">Chapter 111</a>
+        <a href="chapter-112.html">Chapter 112</a>
+        <a href="chapter-113.html">Chapter 113</a>
+        <a href="chapter-114.html">Chapter 114</a>
+        <a href="chapter-115.html">Chapter 115</a>
+        <a href="chapter-116.html">Chapter 116</a>
+        <a href="chapter-117.html">Chapter 117</a>
+        <a href="chapter-118.html">Chapter 118</a>
+        <a href="chapter-119.html">Chapter 119</a>
+        <a href="chapter-120.html">Chapter 120</a>
+        <a href="chapter-121.html">Chapter 121</a>
+        <a href="chapter-122.html">Chapter 122</a>
+        <a href="chapter-123.html">Chapter 123</a>
+        <a href="chapter-124.html">Chapter 124</a>
+        <a href="chapter-125.html">Chapter 125</a>
+        <a href="chapter-126.html">Chapter 126</a>
+        <a href="chapter-127.html">Chapter 127</a>
+        <a href="chapter-128.html">Chapter 128</a>
+        <a href="chapter-129.html">Chapter 129</a>
+        <a href="chapter-130.html">Chapter 130</a>
+        <a href="chapter-131.html">Chapter 131</a>
+        <a href="chapter-132.html">Chapter 132</a>
+        <a href="chapter-133.html">Chapter 133</a>
+        <a href="chapter-134.html">Chapter 134</a>
+        <a href="chapter-135.html">Chapter 135</a>
+        <a href="chapter-136.html">Chapter 136</a>
+        <a href="chapter-137.html">Chapter 137</a>
+        <a href="from-zero.html">From Zero</a>
+        <a href="pinn-from-zero.html">PINNs From Zero</a>
+        <a href="rom-from-zero.html">ROMs From Zero</a>
+        <a href="manifold-from-zero.html">Manifolds From Zero</a>
+        <a href="synthesis.html">Synthesis</a>
+        <a href="big-picture.html">Big Picture</a>
+        <a href="examples.html">Examples</a>
+        <a href="bridge.html">AISE Bridge</a>
+        <a href="audit.html">Transcript Audit</a>
+      </nav>
+      <main class="content">
+        <p class="eyebrow">Narrative chapter</p>
+        <h1>Keep The Fast Preview Loyal To The Final Physics</h1>
+
+        <p>This chapter uses video 110, Doug James's DDPS talk on reduced-order modeling for computer graphics and sound. The talk has two main parts: progressive simulation for cloth and shells, then coupled bubble sounds for water. They look like different topics, but the same first-principles problem runs through both: how do we get fast controllable physical behavior without throwing away the detail that makes the result believable?</p>
+
+        <p>The speaker is not trying to replace physics with a vague shortcut. He is trying to make physical simulation usable when a human is in the loop. An animator, designer, or sound artist cannot wait minutes per frame after every small change. But if the fast preview lies, the user wastes time. The goal is a reduced model that is quick enough to steer and faithful enough that the later detailed result does not betray the earlier decision.</p>
+
+        <section class="lesson-claim-chain" aria-label="Plain first-principles reading guide for progressive physical simulation">
+          <h2>Read This Chapter As One Claim</h2>
+          <p>Start with the user waiting in front of a simulator. A coarse cloth, shell, or sound model is useful because it responds quickly. A fine model is useful because it has wrinkles, contact, curved rest shape, timing detail, and believable sound. The problem is betrayal: if the coarse preview says one thing and the refined simulation later does another, the user made a decision from a false preview. This chapter says a reduced model should be loyal to the final physics that matters. The coarse cloth should already feel fine-scale stiffness and contact. The refined motion should keep the broad timing the user chose. The bubble sound should keep the coupling that creates the low roar, not just many isolated high-pitched bubbles. Fast is only useful when it preserves the physical effect that controls what the user sees, hears, or decides.</p>
+          <div class="lesson-claim-grid">
+            <div><strong>Everyday problem</strong><span>A fast preview lets a person steer the design, but it is useless if refinement changes the broad behavior.</span></div>
+            <div><strong>Shared promise</strong><span>Progressive simulation enriches coarse models with fine-scale energy, contact rules, timing consistency, and coupled sound physics.</span></div>
+            <div><strong>Hidden danger</strong><span>A reduced model can cheat through contact, lose shell rest shape, miss timing, or ignore bubble coupling that creates the audible result.</span></div>
+            <div><strong>First rejection test</strong><span>Refine the model and check whether the chosen pose, motion timing, contact, and perceptually important sound survive.</span></div>
+          </div>
+        </section>
+
+        <div class="progressive-core-map" aria-label="A fast preview must stay loyal to the final detailed physical simulation">
+          <div>human wants control</div>
+          <div>coarse preview is fast</div>
+          <div>fine simulation has detail</div>
+          <div>preview must stay loyal</div>
+        </div>
+
+        <h2>The Everyday Problem Is Waiting Blindly</h2>
+        <p>Imagine placing a blanket over a character in an animated film. At a low resolution the cloth falls nicely under the chin and forms wrinkles you like. Then you increase the resolution for the final shot. Now the cloth catches on the nose, wrinkles differently, or falls somewhere else. The expensive result is more detailed, but it is not the result you chose.</p>
+
+        <p>That is the practical pain in the talk. Low resolution is useful because it is fast. High resolution is useful because it has the right detail. But if the two resolutions do not agree in the broad behavior, the designer cannot trust the fast one. A fast preview that changes its mind later is not a preview. It is a guess.</p>
+
+        <div class="blanket-betrayal-map" aria-label="A low-resolution cloth preview can change into a different high-resolution result">
+          <div>coarse blanket looks right</div>
+          <div>raise resolution</div>
+          <div>cloth catches elsewhere</div>
+          <div>shot decision fails</div>
+        </div>
+
+        <h2>Graphics Wants Control, Not Only Convergence</h2>
+        <p>In ordinary numerical analysis, refinement means moving toward a limit solution. Make the mesh finer, shrink the error, and approach the physically correct answer. That is essential for predictive science. But the speaker separates this from the graphics problem.</p>
+
+        <p>For art-directable physics, the user may first choose a coarse behavior because it communicates the right visual idea. The fine simulation should add plausible wrinkles, folds, and contact detail while keeping the broad pose. It is not simply trying to become the unconstrained fine simulation, because that fine simulation may be a different artistic choice.</p>
+
+        <div class="control-vs-limit-map" aria-label="Graphics progressive simulation balances physical detail with the user's chosen coarse behavior">
+          <div>predictive science</div>
+          <div>approach limit answer</div>
+          <div>graphics design</div>
+          <div>preserve chosen behavior</div>
+        </div>
+
+        <h2>The Coarse Model Must Know Fine Physics</h2>
+        <p>A naive coarse cloth mesh is cheap, but it has bad habits. It can lock, crease along mesh lines, jitter, intersect itself, or create artifacts that are not natural cloth behavior. If that bad coarse state is used as the starting point for the finer solve, the fine cloth inherits the mistake.</p>
+
+        <p>The method makes the coarse model smarter. The coarse system is still low-dimensional, but its elastic energy is informed by the fine mesh. In plain words, the coarse preview feels some of the fine model's stiffness and bending behavior. That is why it behaves more like the final cloth even before the final cloth is fully simulated.</p>
+
+        <div class="smart-coarse-map" aria-label="The coarse model uses fine-scale elastic energy so it behaves more like the detailed model">
+          <div>cheap coarse mesh</div>
+          <div>fine-scale elastic energy</div>
+          <div>better coarse behavior</div>
+          <div>consistent refinement</div>
+        </div>
+
+        <h2>Contact Cannot Be Hand-Waved</h2>
+        <p>Cloth and shells are hard because they touch things. A blanket touches a face. Layers of cloth touch each other. A folded shell can be packed tightly. If refinement introduces intersections, the simulation is already broken.</p>
+
+        <p>The talk uses robust contact handling, barrier terms, friction, strain limiting, Newton solves, and continuous collision detection. The plain meaning is this: the simulator keeps objects from passing through each other while still letting the cloth relax naturally. The reduced model is not allowed to win by cheating on contact.</p>
+
+        <div class="contact-rule-map" aria-label="Progressive simulation must preserve contact without letting geometry interpenetrate">
+          <div>cloth touches body</div>
+          <div>layers touch layers</div>
+          <div>refinement adds vertices</div>
+          <div>no intersections allowed</div>
+        </div>
+
+        <h2>Progressive Cloth Adds Detail Without Moving The Story</h2>
+        <p>The workflow is simple to understand. Start coarse. Let the user pose, drag, rotate, scale, or change material choices quickly. When the user pauses, refine the mesh. The result becomes more detailed, but the large shape stays consistent with the chosen coarse version.</p>
+
+        <p>This is why the method matters for production. The artist does not have to wait for the final-resolution solve just to learn whether a blanket will land in the right place. The coarse model is fast enough for exploration, and the finer model is loyal enough that waiting later is not wasted.</p>
+
+        <div class="progressive-cloth-map" aria-label="Progressive cloth simulation lets users work coarse and refine after the broad pose is chosen">
+          <div>work at coarse scale</div>
+          <div>choose pose and material</div>
+          <div>refine when ready</div>
+          <div>same broad cloth story</div>
+        </div>
+
+        <h2>Shells Add Rest Shape</h2>
+        <p>Cloth can often start as a flat rest shape. Shells are harder because the object may already have shape before it bends. A shell character, balloon, or folded object has built-in angles and geometry. Refining it is not just subdividing a flat triangle.</p>
+
+        <p>The shell work builds a hierarchy from an arbitrary high-resolution mesh. When a degree of freedom is added back, the method must know where it belongs in the triangle plane and how far it should pop out of that plane. That is why the talk discusses intrinsic coordinates, local frames, and extrinsic displacement. In everyday words, the method has to re-inflate missing geometric detail safely.</p>
+
+        <div class="shell-rest-map" aria-label="Shells need progressive refinement that restores out-of-plane detail and rest shape">
+          <div>shell has built-in shape</div>
+          <div>coarse hierarchy</div>
+          <div>restore out-of-plane detail</div>
+          <div>safe inflated shell</div>
+        </div>
+
+        <h2>Dynamics Must Stay Consistent In Time</h2>
+        <p>The talk then moves from static posing to motion. A character thrown through hoops is tuned at a coarse resolution. At that scale the timing works. At a higher resolution the same character misses the hoop. The physics is more detailed, but the animation has changed.</p>
+
+        <p>Progressive dynamics balances two needs. The refined motion should obey time dynamics well enough to look physical. It should also stay close enough to the coarse motion that the user's earlier timing choice remains valid. The speaker is clear that this is biased toward the coarse design. That bias is not a bug here; it is the control mechanism.</p>
+
+        <div class="progressive-dynamics-map" aria-label="Progressive dynamics keeps refined motion close to the coarse motion while adding detail">
+          <div>coarse motion is chosen</div>
+          <div>fine motion has more detail</div>
+          <div>balance time and scale errors</div>
+          <div>animation stays directed</div>
+        </div>
+
+        <h2>Consistency Means The Right Kind Of Agreement</h2>
+        <p>The Q&A makes an important distinction. In a predictive engineering solve, we compare reduced results to a full-order model and ask for error against the physical truth. In progressive graphics simulation, the consistency target is different. We ask whether the refined result preserves the coarse result the user selected.</p>
+
+        <p>That does not mean physics is ignored. The coarse model is improved with fine-scale energy. Contact remains robust. Dynamics remains coherent. But the method is honest about its purpose: it is not always trying to produce the unconstrained full-resolution path. It is trying to produce a high-detail version of the user's chosen path.</p>
+
+        <div class="consistency-meaning-map" aria-label="Progressive consistency means refined detail agrees with the selected coarse behavior">
+          <div>engineering asks for truth error</div>
+          <div>graphics asks for loyal refinement</div>
+          <div>physics still constrains result</div>
+          <div>chosen motion survives</div>
+        </div>
+
+        <h2>Sound Is Also A Physical Primitive</h2>
+        <p>The second part of the talk turns to sound. The speaker's larger claim is that if graphics can simulate visible motion, it should also simulate sound as a first-class physical output. Water should not only look like water. It should sound like water.</p>
+
+        <p>The example is bubbles. When a bubble forms, it vibrates and pushes pressure waves into the air. A single small bubble has a high pitch. Earlier graphics sound methods often treated bubbles as independent little oscillators, which made water sound too thin, too high, and too sharp.</p>
+
+        <div class="sound-primitive-map" aria-label="Physical animation should produce sound, not only visible motion">
+          <div>visible water motion</div>
+          <div>bubbles vibrate</div>
+          <div>air pressure changes</div>
+          <div>sound is part of physics</div>
+        </div>
+
+        <h2>Bubble Coupling Makes The Low Roar</h2>
+        <p>The missing piece is coupling. A bubble does not vibrate alone when it sits in a cloud of nearby bubbles. One bubble's pressure change affects the others. This gives the bubble cloud shared modes of vibration. Those shared modes can be much lower in frequency than any single bubble's isolated pitch.</p>
+
+        <p>This explains why an ocean wave can roar even though the bubbles are small. If every small bubble were played as an isolated high-pitch oscillator, the sound would be harsh. When the bubbles are coupled, the cloud gains lower-frequency content. That low-frequency body is what the talk's newer method adds.</p>
+
+        <div class="bubble-coupling-map" aria-label="Coupled bubbles produce lower-frequency shared modes than isolated bubbles">
+          <div>single bubble pings high</div>
+          <div>neighbor bubbles interact</div>
+          <div>shared cloud mode</div>
+          <div>lower water roar</div>
+        </div>
+
+        <h2>The Bubble Math Is A Reduced Model Too</h2>
+        <p>The reduced model is a set of coupled oscillators. Each bubble has a volume fluctuation. The coupling appears through a mass matrix. Off-diagonal entries say that one bubble's motion can affect another bubble's motion. This is compact compared with fully resolving all two-phase fluid details at acoustic rates.</p>
+
+        <p>The hard part is speed. Bubbles appear, disappear, merge, split, and move. The coupling matrix changes. The sound time step is tiny. The talk describes Cholesky factorization, interpolation, regularization, and low-rank update tricks to keep the calculation practical. The point is not the names; the point is that the reduced sound model must update fast while keeping the coupled physics that creates the low tones.</p>
+
+        <div class="bubble-rom-map" aria-label="Bubble sound is modeled as coupled oscillators with a changing mass matrix">
+          <div>bubbles are oscillators</div>
+          <div>mass matrix couples them</div>
+          <div>bubbles appear and vanish</div>
+          <div>fast updates needed</div>
+        </div>
+
+        <h2>We Hear Air Pressure, Not Eigenvalues</h2>
+        <p>After computing bubble motion, the model still has to radiate sound into air. The speaker points out a simple truth: we do not listen to eigenvalues. We hear pressure fluctuations in air.</p>
+
+        <p>The implementation uses a GPU wave solver and a sample-and-hold strategy. Instead of constantly rebuilding a difficult moving-boundary acoustic solve, the method freezes geometry for short intervals, computes sound clips for those intervals, and sums the pieces. This makes sound rendering more practical and avoids artifacts from abrupt popping or geometry changes.</p>
+
+        <div class="air-pressure-map" aria-label="Bubble vibration must be converted into air pressure waves for audible sound">
+          <div>bubble modes</div>
+          <div>surface acceleration</div>
+          <div>GPU wave solve</div>
+          <div>audible pressure signal</div>
+        </div>
+
+        <h2>How This Connects To Physics, Design, And Topology</h2>
+        <p>This lecture matters beyond graphics. Many engineering workflows face the same control problem. A topology optimizer, aerodynamic designer, or structural designer often wants to explore a cheap coarse model first and then refine. If refinement changes the broad answer, the early search becomes misleading.</p>
+
+        <p>The progressive simulation lesson is that a coarse model should not be merely smaller. It should be trained, enriched, or constructed so it already feels important fine-scale physics. For topology, that could mean a coarse design model that respects contact, buckling, shell stiffness, stress concentration, or flow separation enough that refinement adds detail rather than changing the decision.</p>
+
+        <p>The sound lesson is similar. A reduced model must keep the interaction that creates the perceptually important output. For bubbles, that interaction is coupling. For scientific design, the equivalent may be coupled fields: structure with fluid, heat with material change, plasma particles with moments, or local topology changes with global load paths. The reduced model should keep the coupling that changes the answer people actually care about.</p>
+
+        <div class="progressive-design-bridge" aria-label="Design models need cheap previews that keep the coupling responsible for important final behavior">
+          <div>coarse design search</div>
+          <div>fine-scale physics retained</div>
+          <div>important coupling preserved</div>
+          <div>refinement supports decisions</div>
+        </div>
+
+        <h2>The Chapter In One Chain</h2>
+        <p>First, graphics and sound need physical simulation that a person can steer. Second, full-resolution simulation is often too slow for live design. Third, low-resolution simulation is fast but can change behavior when refined. Fourth, that makes the preview untrustworthy. Fifth, progressive simulation asks the coarse model to stay consistent with later refined results. Sixth, the coarse cloth model becomes smarter by using fine-scale elastic energy. Seventh, robust contact handling prevents the reduced workflow from cheating through intersections. Eighth, progressive cloth lets users choose broad pose and material before waiting for fine wrinkles. Ninth, shells are harder because their rest shape already contains curved out-of-plane detail. Tenth, progressive shell refinement must restore that detail safely. Eleventh, progressive dynamics adds the time problem: a refined motion must stay loyal to the coarse motion the animator chose. Twelfth, the Q&A clarifies that this is different from ordinary convergence to a full-order truth; it is controlled high-detail refinement of a chosen behavior. Thirteenth, sound is also a physical output, not an afterthought. Fourteenth, isolated bubble sounds are too high because they ignore neighboring bubbles. Fifteenth, coupled bubble clouds create lower shared modes and a more believable water roar. Sixteenth, the larger lesson for physics and topology is that reduced models should preserve the coupling and fine-scale effects that control the decision, not only make the computation smaller.</p>
+
+        <div class="note">
+          <p>The chapter's core idea: a useful reduced model is not just fast. It must keep the part of the full physics that controls what the user sees, hears, or decides.</p>
+        </div>
+
+        <section class="lesson-review" aria-label="End of chapter understanding check for progressive physical simulation">
+          <h2>How To Test Whether You Understood This Chapter</h2>
+          <div class="lesson-review-grid">
+            <div><strong>Explain preview loyalty</strong><span>Say why a coarse cloth preview that changes its broad result after refinement is not a useful preview.</span></div>
+            <div><strong>Name the kept physics</strong><span>For cloth and shells, identify the fine-scale energy, contact, rest shape, or timing detail that must survive refinement.</span></div>
+            <div><strong>Use the bubble case</strong><span>Explain why isolated bubbles sound too high and why coupling gives water its lower roar.</span></div>
+            <div><strong>Connect to topology</strong><span>Before trusting a coarse design model, state what contact, buckling, separation, coupling, or load-path effect refinement must preserve.</span></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
