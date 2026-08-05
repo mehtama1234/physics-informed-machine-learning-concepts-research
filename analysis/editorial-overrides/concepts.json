@@ -1,0 +1,114 @@
+{
+  "deep-learning": {
+    "failure": "trained model passes on familiar data but crashes on new material, boundary condition, or scale it never saw before",
+    "problem": "scientists have many measured examples but no formula that predicts the next case",
+    "keeps": "many adjustable weights that turn inputs into predictions through connected layers",
+    "everyday_anchor": "Imagine learning to recognize birds from thousands of photos. Deep learning finds hidden patterns—the exact shades, angles, sizes—that make each bird type recognizable. But it only knows what those photos showed. Show it a bird species from across the world that looks slightly different, and it might fail completely.",
+    "why": "networks can fit patterns in data when hand-written rules fail, but the fit only works on examples similar to the training set",
+    "leaves_out": "why each prediction happened or which physical reason was responsible"
+  },
+  "physics-informed-neural-networks": {
+    "failure": "the penalty term hides small errors near boundaries, in thin layers, or where the real solution changes suddenly",
+    "problem": "sparse measurements from experiments, but the answer must obey known physical laws like gravity or heat flow",
+    "keeps": "neural network guess plus a check that penalizes breaking the known equation that governs the system",
+    "everyday_anchor": "Imagine tracing the path of a dropped ball from blurry photos—you'd see only a few points. A PINN is like saying: fit a curve through those dots, but make sure it obeys gravity at every step. The equation acts as a hidden guide that fills in the gaps.",
+    "why": "the equation penalty steers the fit toward answers that obey physics, filling gaps where measurements are missing without pretending data alone tells the whole story",
+    "leaves_out": "it cannot fix a wrong equation, bad boundary conditions, or spots where the real answer has sharp jumps"
+  },
+  "partial-differential-equations": {
+    "failure": "when data or learning skips the actual PDE constraints, it can ignore boundary conditions or conservation laws that the PDE was always enforcing",
+    "problem": "a quantity changes over space and time, so one number is not enough to describe what's happening",
+    "keeps": "a field (a map of values across space), how those values shift with time and space, and boundary conditions to start the calculation",
+    "everyday_anchor": "A weather map shows temperature, wind, and pressure at every location—and it changes hour by hour. A PDE is the rulebook that says how those values spread and push on each other. If you only watch the map without the rules, you might predict rain in the wrong place because you missed how pressure systems actually move.",
+    "why": "scientists use PDEs to write down laws of nature before machine learning enters, and they force you to be explicit about what you assume and what you skip",
+    "leaves_out": "unmodeled forces, unresolved small-scale detail, uncertain parameters, and numerical error from discretization"
+  },
+  "operator-learning": {
+    "failure": "the learned map produces plausible-looking fields that actually violate the physics or break when you shift the geometry",
+    "problem": "engineers need to predict all the fields (temperature, pressure, flow) across a space and time for many input cases, not just one",
+    "keeps": "a learned function that maps any input condition (forcing, initial state, boundary) directly to a complete solution field",
+    "everyday_anchor": "Imagine a chef learning to taste a single recipe's temperature at one point and then guessing the full heat throughout the oven. Operator learning does that across space—it learns to predict a complete field (temperature everywhere) from input conditions, becoming a shortcut for expensive simulations. But like the guessing chef, it only works reliably when the oven is the same shape and size as the ones it learned from.",
+    "why": "it trades solving expensive equations many times for one fast learned map, but only when new cases stay inside the training family",
+    "leaves_out": "whether the learned map holds for new resolutions, geometries, or physics that look different from the training data"
+  },
+  "scientific-machine-learning": {
+    "failure": "if no clear equation or boundary condition exists, the network learns the data shape but not the underlying rule",
+    "problem": "predictions must obey the physical laws that define the problem, not just fit the data",
+    "keeps": "a neural network that learns by evaluating itself at test points and minimizing how far off it gets",
+    "everyday_anchor": "Imagine teaching a student to solve a maze by showing them photos of solved mazes, but also teaching them the rule \"always keep your right hand on the wall.\" The rule helps them solve new mazes they never saw before. Scientific ML is the same: the neural network learns from data, but the physics equation guides it to find the true pattern, not just memorize.",
+    "why": "the neural network feels both the data AND the physics equations, so it learns the true rule and works on new cases the data never saw before",
+    "leaves_out": "any laws or checks the scientist does not write down as equations"
+  },
+  "surrogate-modeling": {
+    "failure": "gives plausible-looking answers for inputs it never saw during training, with no warning that they are wrong",
+    "problem": "running a full simulation is too expensive to do for every design choice or question",
+    "keeps": "the input-output patterns the original simulator shows, learned from a sample of runs",
+    "everyday_anchor": "A wind-tunnel test is expensive, so engineers build a faster stand-in model trained on a few real tests. They can now ask the model cheap questions—but only about wind speeds and shapes they already tested. Ask it about a speed or angle it has never seen, and it may invent an answer with total confidence.",
+    "why": "it speeds up repeated decisions in design or control when the cost of the real simulator would stop progress, but can hide missing physics if pushed past its training regime",
+    "leaves_out": "physical detail and edge cases outside the scenarios it was trained on"
+  },
+  "uncertainty-and-generalization": {
+    "failure": "training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime",
+    "problem": "a prediction from a model is only useful if you know under which conditions you should actually trust it",
+    "keeps": "error bounds, tests on shifted conditions, and explicit limits on training-data range",
+    "everyday_anchor": "A map is useful only if you know where it ends. Model uncertainty marks the edge of the map instead of pretending every road is known. When you leave the mapped territory, you must tell the decision-maker: I was trained here, not there.",
+    "why": "when scientific decisions cost lives or money, a model must be honest about its own edges and not guess past them—and most neural networks fail silently instead",
+    "leaves_out": "confidence in scenarios or physical regimes the model has never encountered before"
+  },
+  "optimization-for-learning": {
+    "failure": "the score goes down while the model learns wrong physics, if the score missed the real constraint",
+    "problem": "models need a way to measure progress so they know which settings are better or worse",
+    "keeps": "a written score that measures how far the model's output is from the goal",
+    "everyday_anchor": "Think of a student revising an essay based on a teacher's rubric. The student improves whatever the rubric scores, but if the rubric forgets to check for logical flow, the essay can score high and still confuse readers. Optimization works the same way: the model improves only what the loss function measures.",
+    "why": "adjusting weights downhill on the score works, but only for goals the score actually names; miss a goal and the model learns it wrong",
+    "leaves_out": "anything the score didn't include in its list of things to improve"
+  },
+  "generative-modeling": {
+    "failure": "a generated fluid flow looks smooth and realistic but conserves no mass; a design candidate is manufacturable in appearance but physically infeasible",
+    "problem": "some tasks need many plausible examples, not a single best prediction, to explore what's possible",
+    "keeps": "a learned rule that samples new outputs matching the patterns seen in training data",
+    "everyday_anchor": "A recipe can make countless cookies, all resembling the originals in flavor and texture. But if you skip the salt, they taste wrong even though they look perfect. Generative models are like that: they learn to make plausible-looking samples, but they don't automatically bake in whether those samples actually work for your real problem.",
+    "why": "it can explore a range of candidate fields or shapes when listing all possibilities is impossible; the catch is samples can look real yet violate the problem's rules",
+    "leaves_out": "no check that generated samples obey physical laws, conservation rules, or task constraints"
+  },
+  "graphs-and-geometric-learning": {
+    "failure": "if the graph misses a real bond or connection, or if parts of the shape rearrange and the model sees a stranger structure",
+    "problem": "molecules, proteins, and meshes have a shape and connections that rows of numbers throw away",
+    "keeps": "dots and lines that show which parts touch, plus symmetries—flips and rotations that don't change the answer",
+    "everyday_anchor": "Imagine describing a city not as a list of addresses, but as a map of neighborhoods and roads—which blocks touch, which ones are far. A graph neural network learns that way: by looking at each atom's neighbors in a molecule, or each part of a protein's backbone touching nearby parts. The shape and order matter more than the raw count.",
+    "why": "treating a protein like a graph lets the model learn from neighborhood patterns instead of memorizing isolated points",
+    "leaves_out": "distant effects that skip over neighbors, or interactions that only show up when the whole shape bends"
+  },
+  "neural-differential-equations": {
+    "failure": "a small error in the learned rate, repeated over hundreds of time steps, pushes predictions into wildly wrong territory",
+    "problem": "scientists watch a system change over time but don't know the rule driving that change",
+    "keeps": "the continuous time-stepping structure paired with a learned prediction for the rate of change at each moment",
+    "everyday_anchor": "Think of a GPS that guesses your speed. If it guesses right, step-by-step predictions land on the correct highway. But a small speed error, repeated mile after mile, eventually puts you in the wrong city. Neural differential equations have the same issue: tiny errors in the learned rate add up fast.",
+    "why": "the time-stepping structure anchors learning in continuous evolution, keeping the idea that change is smooth, but mistakes in the learned rate compound over many steps and long predictions drift away",
+    "leaves_out": "guarantees the learned rate obeys boundary conditions or holds true far from the training data"
+  },
+  "symbolic-regression": {
+    "failure": "a neat formula fits your lab's data perfectly but uses the wrong variables or breaks when conditions shift",
+    "problem": "a scientist may need a readable equation, not a numerical model that predicts but cannot be understood",
+    "keeps": "candidate formulas that can be written down, tested, compared, and shared with other scientists",
+    "everyday_anchor": "Imagine you measured how fast plants grow and guessed the formula is 'height equals sunlight times water.' You scribble it down and test it on new plants in shadow—it fails. Symbolic regression does this: searches for formulas that fit your data, then lets you inspect them to see if they're actually sensible or just lucky on the numbers you collected.",
+    "why": "a short equation lets you test new cases, argue about whether it makes sense, and reuse it in different settings—much harder with a large fitted model you cannot read",
+    "leaves_out": "unmeasured variables, physics the data never triggered, and formula terms no search explored"
+  },
+  "foundation-models-for-pdes": {
+    "failure": "the model trains on common cases and misses rare physical regimes, different boundary shapes, or unseen initial conditions",
+    "problem": "scientists train separate models for each PDE, each grid size, each parameter—expensive duplication",
+    "keeps": "learned patterns that appear across many related equations and initial conditions",
+    "everyday_anchor": "A weather forecaster trains once on years of temperature and wind patterns, then tries to predict a hurricane—a scenario outside the training set. The model learned weather's general shape but never saw that extreme case. Similarly, a foundation model for PDEs learns common flow or heat patterns, but a rare shock, a new material, or an edge condition can fool it.",
+    "why": "one shared model reduces training cost if it captures features that matter across tasks, but only if those features actually transfer",
+    "leaves_out": "guarantee that training on old cases covers genuinely new boundary conditions or regimes"
+  },
+  "attention-for-scientific-fields": {
+    "failure": "when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted",
+    "problem": "a local spot in a field may depend on faraway information, but scanning everywhere costs too much",
+    "keeps": "the paths between distant parts that matter for the prediction",
+    "everyday_anchor": "Imagine a weather forecaster looking at a satellite image to predict rain at one city. She doesn't study every pixel equally—her eyes zoom to distant pressure systems and ocean temperatures that actually drive local weather. Attention works the same way: it weights which parts of the input field matter for each prediction, focusing computation on distant influences that truly connect.",
+    "why": "it lets the model move information across the field only where needed, trading speed for which distant interactions it can reach",
+    "leaves_out": "connections the attention pattern ignores or cannot see"
+  }
+}

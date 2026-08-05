@@ -2,13 +2,13 @@
   {
     "slug": "deep-learning",
     "title": "Deep Learning",
-    "common_problem": "scientists often have examples of behavior but no short rule that predicts the next case",
+    "common_problem": "scientists have many measured examples but no formula that predicts the next case",
     "domain": "scientific prediction from large measured or simulated data sets",
-    "why_it_matters": "it can learn useful patterns when hand-written rules are incomplete, but the result still needs tests outside the examples used for fitting",
-    "keeps": "many adjustable weights that turn inputs into predictions",
-    "leaves_out": "a direct explanation of which physical reason caused each prediction",
-    "failure_boundary": "the model can fit familiar examples while failing on a new material, geometry, scale, or boundary condition",
-    "everyday_anchor": "A lab notebook may contain many examples of inputs and outcomes. Deep learning is the adjustable recipe that tries to match those examples, then must be checked on a new page of the notebook.",
+    "why_it_matters": "networks can fit patterns in data when hand-written rules fail, but the fit only works on examples similar to the training set",
+    "keeps": "many adjustable weights that turn inputs into predictions through connected layers",
+    "leaves_out": "why each prediction happened or which physical reason was responsible",
+    "failure_boundary": "trained model passes on familiar data but crashes on new material, boundary condition, or scale it never saw before",
+    "everyday_anchor": "Imagine learning to recognize birds from thousands of photos. Deep learning finds hidden patterns\u2014the exact shades, angles, sizes\u2014that make each bird type recognizable. But it only knows what those photos showed. Show it a bird species from across the world that looks slightly different, and it might fail completely.",
     "evidence": [
       {
         "title": "ETH Z\u00fcrich AISE: Spectral Neural Operators and Deep Operator Networks",
@@ -73,13 +73,13 @@
   {
     "slug": "physics-informed-neural-networks",
     "title": "Physics-Informed Neural Networks",
-    "common_problem": "measurements may be sparse, but the answer must still respect a known physical equation",
+    "common_problem": "sparse measurements from experiments, but the answer must obey known physical laws like gravity or heat flow",
     "domain": "differential equations in science and engineering",
-    "why_it_matters": "it lets known physics push the fit toward physically possible behavior instead of treating data points as the only evidence",
-    "keeps": "a neural network prediction plus a penalty for violating the known equation",
-    "leaves_out": "guaranteed accuracy when the equation, boundary data, or training points are poor",
-    "failure_boundary": "the equation penalty can look small while the solution is wrong in hard regions, sharp layers, or unseen boundary cases",
-    "everyday_anchor": "A student drawing a bridge cannot ignore gravity. A PINN is similar: the fitted curve is pushed to obey the equation, not only the measured dots.",
+    "why_it_matters": "the equation penalty steers the fit toward answers that obey physics, filling gaps where measurements are missing without pretending data alone tells the whole story",
+    "keeps": "neural network guess plus a check that penalizes breaking the known equation that governs the system",
+    "leaves_out": "it cannot fix a wrong equation, bad boundary conditions, or spots where the real answer has sharp jumps",
+    "failure_boundary": "the penalty term hides small errors near boundaries, in thin layers, or where the real solution changes suddenly",
+    "everyday_anchor": "Imagine tracing the path of a dropped ball from blurry photos\u2014you'd see only a few points. A PINN is like saying: fit a curve through those dots, but make sure it obeys gravity at every step. The equation acts as a hidden guide that fills in the gaps.",
     "evidence": [
       {
         "title": "ETH Z\u00fcrich AISE 2025: Lecture 3 Physics-Informed Neural Networks \u2013 Introduction",
@@ -144,13 +144,13 @@
   {
     "slug": "partial-differential-equations",
     "title": "Partial Differential Equations",
-    "common_problem": "a quantity changes over space and time, so one number is not enough to describe the situation",
+    "common_problem": "a quantity changes over space and time, so one number is not enough to describe what's happening",
     "domain": "fluids, heat, waves, mechanics, chemistry, climate, and other changing fields",
-    "why_it_matters": "PDEs are the language many scientific models use before machine learning enters the story",
-    "keeps": "a field, its rates of change, and the boundary or starting information needed to evolve it",
-    "leaves_out": "unmodeled forces, unresolved scales, uncertain parameters, and numerical error",
-    "failure_boundary": "a learned shortcut can ignore boundary conditions or conservation behavior that the PDE was carrying",
-    "everyday_anchor": "A weather map changes from place to place and hour to hour. A PDE is a way to say how nearby values push each other forward.",
+    "why_it_matters": "scientists use PDEs to write down laws of nature before machine learning enters, and they force you to be explicit about what you assume and what you skip",
+    "keeps": "a field (a map of values across space), how those values shift with time and space, and boundary conditions to start the calculation",
+    "leaves_out": "unmodeled forces, unresolved small-scale detail, uncertain parameters, and numerical error from discretization",
+    "failure_boundary": "when data or learning skips the actual PDE constraints, it can ignore boundary conditions or conservation laws that the PDE was always enforcing",
+    "everyday_anchor": "A weather map shows temperature, wind, and pressure at every location\u2014and it changes hour by hour. A PDE is the rulebook that says how those values spread and push on each other. If you only watch the map without the rules, you might predict rain in the wrong place because you missed how pressure systems actually move.",
     "evidence": [
       {
         "title": "ETH Z\u00fcrich AISE: Neural Differential Equations",
@@ -215,13 +215,13 @@
   {
     "slug": "operator-learning",
     "title": "Operator Learning",
-    "common_problem": "one simulation answer is not enough when engineers need the whole map from inputs to solution fields",
+    "common_problem": "engineers need to predict all the fields (temperature, pressure, flow) across a space and time for many input cases, not just one",
     "domain": "fast prediction for families of scientific simulations",
-    "why_it_matters": "it can replace many expensive solves with a fast approximation when the requested cases stay inside the tested family",
-    "keeps": "a learned map from a forcing, coefficient, shape, or starting field to a solution field",
-    "leaves_out": "proof that the map works for resolutions, geometries, or physics outside the training family",
-    "failure_boundary": "the learned map can give plausible-looking fields that violate the equation or fail on a shifted input family",
-    "everyday_anchor": "Instead of solving one puzzle, the learner tries to learn the machine that turns many puzzle inputs into many full answers.",
+    "why_it_matters": "it trades solving expensive equations many times for one fast learned map, but only when new cases stay inside the training family",
+    "keeps": "a learned function that maps any input condition (forcing, initial state, boundary) directly to a complete solution field",
+    "leaves_out": "whether the learned map holds for new resolutions, geometries, or physics that look different from the training data",
+    "failure_boundary": "the learned map produces plausible-looking fields that actually violate the physics or break when you shift the geometry",
+    "everyday_anchor": "Imagine a chef learning to taste a single recipe's temperature at one point and then guessing the full heat throughout the oven. Operator learning does that across space\u2014it learns to predict a complete field (temperature everywhere) from input conditions, becoming a shortcut for expensive simulations. But like the guessing chef, it only works reliably when the oven is the same shape and size as the ones it learned from.",
     "evidence": [
       {
         "title": "ETH Z\u00fcrich AISE 2025: Lecture 6 Operator Learning - FNO",
@@ -286,13 +286,13 @@
   {
     "slug": "scientific-machine-learning",
     "title": "Scientific Machine Learning",
-    "common_problem": "scientific work needs predictions that respect measurements, equations, uncertainty, and domain limits at the same time",
+    "common_problem": "predictions must obey the physical laws that define the problem, not just fit the data",
     "domain": "using data-driven models inside scientific workflows",
-    "why_it_matters": "it connects flexible prediction to the checks scientists already need: units, conservation, boundaries, uncertainty, and failure cases",
-    "keeps": "data evidence, scientific structure, and validation against changed cases",
-    "leaves_out": "the idea that a high score alone proves scientific understanding",
-    "failure_boundary": "the method becomes a generic fitting tool if the physical quantity, scientific claim, and validation case are not named",
-    "everyday_anchor": "A scientist needs more than a number; they need a number with a reason, a check, and a warning label for when it should fail.",
+    "why_it_matters": "the neural network feels both the data AND the physics equations, so it learns the true rule and works on new cases the data never saw before",
+    "keeps": "a neural network that learns by evaluating itself at test points and minimizing how far off it gets",
+    "leaves_out": "any laws or checks the scientist does not write down as equations",
+    "failure_boundary": "if no clear equation or boundary condition exists, the network learns the data shape but not the underlying rule",
+    "everyday_anchor": "Imagine teaching a student to solve a maze by showing them photos of solved mazes, but also teaching them the rule \"always keep your right hand on the wall.\" The rule helps them solve new mazes they never saw before. Scientific ML is the same: the neural network learns from data, but the physics equation guides it to find the true pattern, not just memorize.",
     "evidence": [
       {
         "title": "ETH Z\u00fcrich AISE: Introduction to Deep Learning Part 1",
@@ -357,13 +357,13 @@
   {
     "slug": "surrogate-modeling",
     "title": "Surrogate Modeling",
-    "common_problem": "a trusted simulator may be too slow to run for every design, control, or uncertainty question",
+    "common_problem": "running a full simulation is too expensive to do for every design choice or question",
     "domain": "expensive simulation and design loops",
-    "why_it_matters": "it makes repeated scientific decisions possible when full simulation cost would stop the workflow",
-    "keeps": "the input-output behavior needed for a specified family of queries",
-    "leaves_out": "full simulation detail outside the tested query family",
-    "failure_boundary": "speed can hide missing physics when the surrogate is used beyond the regime where it was checked",
-    "everyday_anchor": "A wind-tunnel test is expensive. A surrogate is a cheaper stand-in that can be used only after showing which wind-tunnel questions it still answers.",
+    "why_it_matters": "it speeds up repeated decisions in design or control when the cost of the real simulator would stop progress, but can hide missing physics if pushed past its training regime",
+    "keeps": "the input-output patterns the original simulator shows, learned from a sample of runs",
+    "leaves_out": "physical detail and edge cases outside the scenarios it was trained on",
+    "failure_boundary": "gives plausible-looking answers for inputs it never saw during training, with no warning that they are wrong",
+    "everyday_anchor": "A wind-tunnel test is expensive, so engineers build a faster stand-in model trained on a few real tests. They can now ask the model cheap questions\u2014but only about wind speeds and shapes they already tested. Ask it about a speed or angle it has never seen, and it may invent an answer with total confidence.",
     "evidence": [
       {
         "title": "ETH Z\u00fcrich AISE 2025: Lecture 11 Generative Models for PDEs - GenCFD",
@@ -428,13 +428,13 @@
   {
     "slug": "uncertainty-and-generalization",
     "title": "Uncertainty And Generalization",
-    "common_problem": "a prediction is not enough unless the user knows when it should be believed",
+    "common_problem": "a prediction from a model is only useful if you know under which conditions you should actually trust it",
     "domain": "model use under new conditions",
-    "why_it_matters": "scientific models are used to make decisions, so the cost of being confidently wrong can be high",
-    "keeps": "error checks, changed-case tests, and limits on where the model was trained",
-    "leaves_out": "confidence in cases that were never tested",
-    "failure_boundary": "training error can look good while the model fails under a new geometry, parameter range, sensor, or physical regime",
-    "everyday_anchor": "A map is useful only if you know where it ends. Model uncertainty marks the edge of the map instead of pretending every road is known.",
+    "why_it_matters": "when scientific decisions cost lives or money, a model must be honest about its own edges and not guess past them\u2014and most neural networks fail silently instead",
+    "keeps": "error bounds, tests on shifted conditions, and explicit limits on training-data range",
+    "leaves_out": "confidence in scenarios or physical regimes the model has never encountered before",
+    "failure_boundary": "training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime",
+    "everyday_anchor": "A map is useful only if you know where it ends. Model uncertainty marks the edge of the map instead of pretending every road is known. When you leave the mapped territory, you must tell the decision-maker: I was trained here, not there.",
     "evidence": [
       {
         "title": "ETH Z\u00fcrich AISE 2025: Lecture 7 Operator Learning - ReNO",
@@ -499,13 +499,13 @@
   {
     "slug": "optimization-for-learning",
     "title": "Optimization For Learning",
-    "common_problem": "learning needs a way to decide which model settings are better or worse",
+    "common_problem": "models need a way to measure progress so they know which settings are better or worse",
     "domain": "turning model fitting into a repeatable computation",
-    "why_it_matters": "the model only learns what the training score asks it to improve",
-    "keeps": "a written score that compares model output against data, physics penalties, or design goals",
-    "leaves_out": "everything the score forgot to penalize",
-    "failure_boundary": "a model can optimize the written score while missing the scientific behavior the score failed to name",
-    "everyday_anchor": "Training is like grading many drafts with one rubric. The model improves the rubric score, so the rubric must match the scientific goal.",
+    "why_it_matters": "adjusting weights downhill on the score works, but only for goals the score actually names; miss a goal and the model learns it wrong",
+    "keeps": "a written score that measures how far the model's output is from the goal",
+    "leaves_out": "anything the score didn't include in its list of things to improve",
+    "failure_boundary": "the score goes down while the model learns wrong physics, if the score missed the real constraint",
+    "everyday_anchor": "Think of a student revising an essay based on a teacher's rubric. The student improves whatever the rubric scores, but if the rubric forgets to check for logical flow, the essay can score high and still confuse readers. Optimization works the same way: the model improves only what the loss function measures.",
     "evidence": [
       {
         "title": "ETH Z\u00fcrich AISE: Introduction to Operator Learning Part 2",
@@ -570,13 +570,13 @@
   {
     "slug": "generative-modeling",
     "title": "Generative Modeling",
-    "common_problem": "some tasks need many possible examples, not one predicted answer",
+    "common_problem": "some tasks need many plausible examples, not a single best prediction, to explore what's possible",
     "domain": "creating plausible scientific samples, fields, or candidate designs",
-    "why_it_matters": "it can explore candidate fields, shapes, or scenarios when direct enumeration is impossible",
-    "keeps": "a learned rule for sampling outputs that resemble the training family",
-    "leaves_out": "a guarantee that each sample is physically valid or useful for a decision",
-    "failure_boundary": "generated samples can look realistic while breaking constraints, conservation, or rare-event behavior",
-    "everyday_anchor": "A generator can make many candidate sketches. The scientific question is which sketches obey the rules, not only which ones look familiar.",
+    "why_it_matters": "it can explore a range of candidate fields or shapes when listing all possibilities is impossible; the catch is samples can look real yet violate the problem's rules",
+    "keeps": "a learned rule that samples new outputs matching the patterns seen in training data",
+    "leaves_out": "no check that generated samples obey physical laws, conservation rules, or task constraints",
+    "failure_boundary": "a generated fluid flow looks smooth and realistic but conserves no mass; a design candidate is manufacturable in appearance but physically infeasible",
+    "everyday_anchor": "A recipe can make countless cookies, all resembling the originals in flavor and texture. But if you skip the salt, they taste wrong even though they look perfect. Generative models are like that: they learn to make plausible-looking samples, but they don't automatically bake in whether those samples actually work for your real problem.",
     "evidence": [
       {
         "title": "ETH Z\u00fcrich AISE 2025: Lecture 11 Generative Models for PDEs - GenCFD",
@@ -641,13 +641,13 @@
   {
     "slug": "graphs-and-geometric-learning",
     "title": "Graphs And Geometric Learning",
-    "common_problem": "many scientific objects are not simple rows of numbers; their connections matter",
+    "common_problem": "molecules, proteins, and meshes have a shape and connections that rows of numbers throw away",
     "domain": "systems made of interacting parts, meshes, molecules, or spatial relations",
-    "why_it_matters": "it lets the model respect the structure of the object instead of flattening away important relations",
-    "keeps": "nodes, edges, spatial relations, and symmetry rules that should not change the answer",
-    "leaves_out": "interactions or long-range effects not represented in the graph",
-    "failure_boundary": "the graph can encode the wrong neighborhood, hide missing interactions, or fail when the mesh changes",
-    "everyday_anchor": "A molecule, mesh, or network is more than a list. The connections decide what can influence what.",
+    "why_it_matters": "treating a protein like a graph lets the model learn from neighborhood patterns instead of memorizing isolated points",
+    "keeps": "dots and lines that show which parts touch, plus symmetries\u2014flips and rotations that don't change the answer",
+    "leaves_out": "distant effects that skip over neighbors, or interactions that only show up when the whole shape bends",
+    "failure_boundary": "if the graph misses a real bond or connection, or if parts of the shape rearrange and the model sees a stranger structure",
+    "everyday_anchor": "Imagine describing a city not as a list of addresses, but as a map of neighborhoods and roads\u2014which blocks touch, which ones are far. A graph neural network learns that way: by looking at each atom's neighbors in a molecule, or each part of a protein's backbone touching nearby parts. The shape and order matter more than the raw count.",
     "evidence": [
       {
         "title": "ETH Z\u00fcrich AISE 2025: Lecture 10 Operator Learning - GAOT",
@@ -712,13 +712,13 @@
   {
     "slug": "neural-differential-equations",
     "title": "Neural Differential Equations",
-    "common_problem": "scientists may know that a system changes continuously but not know the exact rule for that change",
+    "common_problem": "scientists watch a system change over time but don't know the rule driving that change",
     "domain": "changing systems where time evolution is part of the model",
-    "why_it_matters": "it lets learning focus on the missing change rule while the time update still carries the idea of continuous evolution",
-    "keeps": "a learned rate rule inside a time-stepping calculation",
-    "leaves_out": "a guarantee that the learned rate respects hidden physics or long-time behavior",
-    "failure_boundary": "small learned-rate errors can accumulate until long-time predictions drift away from the real system",
-    "everyday_anchor": "Start with the observed object, name what must be predicted, then test the claim on a changed case.",
+    "why_it_matters": "the time-stepping structure anchors learning in continuous evolution, keeping the idea that change is smooth, but mistakes in the learned rate compound over many steps and long predictions drift away",
+    "keeps": "the continuous time-stepping structure paired with a learned prediction for the rate of change at each moment",
+    "leaves_out": "guarantees the learned rate obeys boundary conditions or holds true far from the training data",
+    "failure_boundary": "a small error in the learned rate, repeated over hundreds of time steps, pushes predictions into wildly wrong territory",
+    "everyday_anchor": "Think of a GPS that guesses your speed. If it guesses right, step-by-step predictions land on the correct highway. But a small speed error, repeated mile after mile, eventually puts you in the wrong city. Neural differential equations have the same issue: tiny errors in the learned rate add up fast.",
     "evidence": [
       {
         "title": "ETH Z\u00fcrich AISE: Neural Differential Equations",
@@ -783,13 +783,13 @@
   {
     "slug": "symbolic-regression",
     "title": "Symbolic Regression And Model Discovery",
-    "common_problem": "a scientist may need a readable equation, not only a model that predicts well",
+    "common_problem": "a scientist may need a readable equation, not a numerical model that predicts but cannot be understood",
     "domain": "turning data into equations people can inspect",
-    "why_it_matters": "a short equation can be tested, criticized, and reused more easily than a large fitted model",
-    "keeps": "candidate formulas that can be written, checked, and compared",
-    "leaves_out": "terms that were not searched, variables that were not measured, and physics not excited by the data",
-    "failure_boundary": "a neat formula can fit the training data while using the wrong variables or failing on a changed experiment",
-    "everyday_anchor": "Start with the observed object, name what must be predicted, then test the claim on a changed case.",
+    "why_it_matters": "a short equation lets you test new cases, argue about whether it makes sense, and reuse it in different settings\u2014much harder with a large fitted model you cannot read",
+    "keeps": "candidate formulas that can be written down, tested, compared, and shared with other scientists",
+    "leaves_out": "unmeasured variables, physics the data never triggered, and formula terms no search explored",
+    "failure_boundary": "a neat formula fits your lab's data perfectly but uses the wrong variables or breaks when conditions shift",
+    "everyday_anchor": "Imagine you measured how fast plants grow and guessed the formula is 'height equals sunlight times water.' You scribble it down and test it on new plants in shadow\u2014it fails. Symbolic regression does this: searches for formulas that fit your data, then lets you inspect them to see if they're actually sensible or just lucky on the numbers you collected.",
     "evidence": [
       {
         "title": "ETH Z\u00fcrich AISE: Symbolic Regression and Model Discovery",
@@ -854,13 +854,13 @@
   {
     "slug": "foundation-models-for-pdes",
     "title": "Foundation Models For PDEs",
-    "common_problem": "one trained model may be asked to handle many related equations, grids, parameters, or physical settings",
+    "common_problem": "scientists train separate models for each PDE, each grid size, each parameter\u2014expensive duplication",
     "domain": "broad families of PDE problems and scientific fields",
-    "why_it_matters": "a broad model could reduce repeated training cost if it keeps the physical features that matter across tasks",
-    "keeps": "shared structure across many scientific problem instances",
-    "leaves_out": "certainty that shared training structure covers the new scientific case",
-    "failure_boundary": "the model can look broad while missing rare regimes, new boundary conditions, or quantities not represented in training",
-    "everyday_anchor": "Start with the observed object, name what must be predicted, then test the claim on a changed case.",
+    "why_it_matters": "one shared model reduces training cost if it captures features that matter across tasks, but only if those features actually transfer",
+    "keeps": "learned patterns that appear across many related equations and initial conditions",
+    "leaves_out": "guarantee that training on old cases covers genuinely new boundary conditions or regimes",
+    "failure_boundary": "the model trains on common cases and misses rare physical regimes, different boundary shapes, or unseen initial conditions",
+    "everyday_anchor": "A weather forecaster trains once on years of temperature and wind patterns, then tries to predict a hurricane\u2014a scenario outside the training set. The model learned weather's general shape but never saw that extreme case. Similarly, a foundation model for PDEs learns common flow or heat patterns, but a rare shock, a new material, or an edge condition can fool it.",
     "evidence": [
       {
         "title": "ETH Z\u00fcrich AISE 2025: Lecture 12 Foundation Models for PDEs - Poseidon",
@@ -925,13 +925,13 @@
   {
     "slug": "attention-for-scientific-fields",
     "title": "Attention For Scientific Fields",
-    "common_problem": "a local patch of a field may depend on faraway information, but looking everywhere can be expensive",
+    "common_problem": "a local spot in a field may depend on faraway information, but scanning everywhere costs too much",
     "domain": "large scientific fields where distant parts may interact",
-    "why_it_matters": "it gives the model a way to move information across a field without treating every location as isolated",
-    "keeps": "selected interactions between parts of the input field",
-    "leaves_out": "interactions the attention pattern never compares",
-    "failure_boundary": "windowing or scaling choices can miss long-range effects that matter for the scientific quantity being predicted",
-    "everyday_anchor": "Start with the observed object, name what must be predicted, then test the claim on a changed case.",
+    "why_it_matters": "it lets the model move information across the field only where needed, trading speed for which distant interactions it can reach",
+    "keeps": "the paths between distant parts that matter for the prediction",
+    "leaves_out": "connections the attention pattern ignores or cannot see",
+    "failure_boundary": "when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted",
+    "everyday_anchor": "Imagine a weather forecaster looking at a satellite image to predict rain at one city. She doesn't study every pixel equally\u2014her eyes zoom to distant pressure systems and ocean temperatures that actually drive local weather. Attention works the same way: it weights which parts of the input field matter for each prediction, focusing computation on distant influences that truly connect.",
     "evidence": [
       {
         "title": "ETH Z\u00fcrich AISE: Windowed Attention and Scaling Laws",

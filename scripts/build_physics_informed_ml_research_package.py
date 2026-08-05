@@ -4386,8 +4386,23 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
                 }
             )
 
+    # Editorial overrides: hand/AI-authored plain-language rewrites win over the terse
+    # generated fields. Keyed by concept slug. Applied to the atlas rows so every
+    # structure derived from them (topic treatments, ladders, guides) inherits the text.
+    _overrides_path = ANALYSIS / "editorial-overrides" / "concepts.json"
+    _concept_overrides = (
+        json.loads(_overrides_path.read_text(encoding="utf-8")) if _overrides_path.exists() else {}
+    )
+    for _row in concept_atlas:
+        _ov = _concept_overrides.get(str(_row["slug"]))
+        if _ov:
+            for _key in ("problem", "keeps", "leaves_out", "why", "failure"):
+                if _ov.get(_key):
+                    _row[_key] = _ov[_key]
+
     topic_treatments = []
     for concept in concept_atlas:
+        _ov = _concept_overrides.get(str(concept["slug"]), {})
         topic_treatments.append(
             {
                 "slug": concept["slug"],
@@ -4398,7 +4413,7 @@ def build_analysis(records: list[TranscriptRecord]) -> dict[str, object]:
                 "keeps": concept["keeps"],
                 "leaves_out": concept["leaves_out"],
                 "failure_boundary": concept["failure"],
-                "everyday_anchor": everyday_anchor(str(concept["slug"])),
+                "everyday_anchor": _ov.get("everyday_anchor") or everyday_anchor(str(concept["slug"])),
                 "evidence": concept["evidence"],
                 "source_anchor_evidence": source_anchor_evidence_for_slug(str(concept["slug"]), records),
             }

@@ -62,20 +62,20 @@
 - See `site/shape-transfer-practice.html` for learner drills that move each topology or shape idea across engineering, materials or biology, and climate or field uses.
 
 ## Question To Topic Guide
-- Everyday question: I have many examples, but I do not have a short rule. Where do I start? Open this topic: Deep Learning. First stop reason: scientists often have examples of behavior but no short rule that predicts the next case. First check: the model can fit familiar examples while failing on a new material, geometry, scale, or boundary condition. Mathematical move: adjust many weights until the model maps familiar inputs to the right outputs.
-- Everyday question: I have a few measurements and a known equation. How do I make them work together? Open this topic: Physics-Informed Neural Networks. First stop reason: measurements may be sparse, but the answer must still respect a known physical equation. First check: the equation penalty can look small while the solution is wrong in hard regions, sharp layers, or unseen boundary cases. Mathematical move: fit a neural network while also measuring how badly its output violates the known equation.
-- Everyday question: My quantity changes across space and time. What language describes that change? Open this topic: Partial Differential Equations. First stop reason: a quantity changes over space and time, so one number is not enough to describe the situation. First check: a learned shortcut can ignore boundary conditions or conservation behavior that the PDE was carrying. Mathematical move: write a local change rule that uses rates across space and time.
-- Everyday question: I need the whole answer field for new inputs, not only one solved case. What carries that map? Open this topic: Operator Learning. First stop reason: one simulation answer is not enough when engineers need the whole map from inputs to solution fields. First check: the learned map can give plausible-looking fields that violate the equation or fail on a shifted input family. Mathematical move: learn the map from problem input to solution, not only one solution at a time.
-- Everyday question: I need data, equations, units, and checks to live in one scientific claim. What is the broad home for that? Open this topic: Scientific Machine Learning. First stop reason: scientific work needs predictions that respect measurements, equations, uncertainty, and domain limits at the same time. First check: the method becomes a generic fitting tool if the physical quantity, scientific claim, and validation case are not named. Mathematical move: combine learned prediction with scientific checks that name what the claim is allowed to mean.
-- Everyday question: My trusted solver is too slow to run for every design or control question. What is the first shortcut to study? Open this topic: Surrogate Modeling. First stop reason: a trusted simulator may be too slow to run for every design, control, or uncertainty question. First check: speed can hide missing physics when the surrogate is used beyond the regime where it was checked. Mathematical move: train a cheaper stand-in for the expensive input-output behavior.
-- Everyday question: I have a prediction, but I need to know when to believe it. What topic handles that? Open this topic: Uncertainty And Generalization. First stop reason: a prediction is not enough unless the user knows when it should be believed. First check: training error can look good while the model fails under a new geometry, parameter range, sensor, or physical regime. Mathematical move: separate fit on familiar examples from evidence on changed examples.
-- Everyday question: The model is changing its settings. How do I know what it is being asked to improve? Open this topic: Optimization For Learning. First stop reason: learning needs a way to decide which model settings are better or worse. First check: a model can optimize the written score while missing the scientific behavior the score failed to name. Mathematical move: change model settings to lower the written score.
-- Everyday question: I need several possible fields, molecules, shapes, or scenarios, not one answer. Where do I start? Open this topic: Generative Modeling. First stop reason: some tasks need many possible examples, not one predicted answer. First check: generated samples can look realistic while breaking constraints, conservation, or rare-event behavior. Mathematical move: learn how to sample new candidates that resemble the training family.
-- Everyday question: My object has parts, neighbors, bonds, mesh points, or shape. Which topic keeps those relations visible? Open this topic: Graphs And Geometric Learning. First stop reason: many scientific objects are not simple rows of numbers; their connections matter. First check: the graph can encode the wrong neighborhood, hide missing interactions, or fail when the mesh changes. Mathematical move: let information move along the object connections instead of flattening the object into a plain row.
-- Everyday question: A system changes over time, but the rate rule is partly unknown. What topic should I open? Open this topic: Neural Differential Equations. First stop reason: scientists may know that a system changes continuously but not know the exact rule for that change. First check: small learned-rate errors can accumulate until long-time predictions drift away from the real system. Mathematical move: learn the missing rate rule and place it inside a time-evolution calculation.
-- Everyday question: I want a readable equation from measured variables. What topic is about that search? Open this topic: Symbolic Regression And Model Discovery. First stop reason: a scientist may need a readable equation, not only a model that predicts well. First check: a neat formula can fit the training data while using the wrong variables or failing on a changed experiment. Mathematical move: search for a readable equation that fits the data and survives a changed case.
-- Everyday question: I want one field model to help across related PDE tasks. What should I read first? Open this topic: Foundation Models For PDEs. First stop reason: one trained model may be asked to handle many related equations, grids, parameters, or physical settings. First check: the model can look broad while missing rare regimes, new boundary conditions, or quantities not represented in training. Mathematical move: train one broad model to reuse structure across many related field-prediction tasks.
-- Everyday question: Faraway parts of a field may affect the local answer. What topic explains that information route? Open this topic: Attention For Scientific Fields. First stop reason: a local patch of a field may depend on faraway information, but looking everywhere can be expensive. First check: windowing or scaling choices can miss long-range effects that matter for the scientific quantity being predicted. Mathematical move: let the model choose which parts of the field exchange information.
+- Everyday question: I have many examples, but I do not have a short rule. Where do I start? Open this topic: Deep Learning. First stop reason: scientists have many measured examples but no formula that predicts the next case. First check: trained model passes on familiar data but crashes on new material, boundary condition, or scale it never saw before. Mathematical move: adjust many weights until the model maps familiar inputs to the right outputs.
+- Everyday question: I have a few measurements and a known equation. How do I make them work together? Open this topic: Physics-Informed Neural Networks. First stop reason: sparse measurements from experiments, but the answer must obey known physical laws like gravity or heat flow. First check: the penalty term hides small errors near boundaries, in thin layers, or where the real solution changes suddenly. Mathematical move: fit a neural network while also measuring how badly its output violates the known equation.
+- Everyday question: My quantity changes across space and time. What language describes that change? Open this topic: Partial Differential Equations. First stop reason: a quantity changes over space and time, so one number is not enough to describe what's happening. First check: when data or learning skips the actual PDE constraints, it can ignore boundary conditions or conservation laws that the PDE was always enforcing. Mathematical move: write a local change rule that uses rates across space and time.
+- Everyday question: I need the whole answer field for new inputs, not only one solved case. What carries that map? Open this topic: Operator Learning. First stop reason: engineers need to predict all the fields (temperature, pressure, flow) across a space and time for many input cases, not just one. First check: the learned map produces plausible-looking fields that actually violate the physics or break when you shift the geometry. Mathematical move: learn the map from problem input to solution, not only one solution at a time.
+- Everyday question: I need data, equations, units, and checks to live in one scientific claim. What is the broad home for that? Open this topic: Scientific Machine Learning. First stop reason: predictions must obey the physical laws that define the problem, not just fit the data. First check: if no clear equation or boundary condition exists, the network learns the data shape but not the underlying rule. Mathematical move: combine learned prediction with scientific checks that name what the claim is allowed to mean.
+- Everyday question: My trusted solver is too slow to run for every design or control question. What is the first shortcut to study? Open this topic: Surrogate Modeling. First stop reason: running a full simulation is too expensive to do for every design choice or question. First check: gives plausible-looking answers for inputs it never saw during training, with no warning that they are wrong. Mathematical move: train a cheaper stand-in for the expensive input-output behavior.
+- Everyday question: I have a prediction, but I need to know when to believe it. What topic handles that? Open this topic: Uncertainty And Generalization. First stop reason: a prediction from a model is only useful if you know under which conditions you should actually trust it. First check: training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime. Mathematical move: separate fit on familiar examples from evidence on changed examples.
+- Everyday question: The model is changing its settings. How do I know what it is being asked to improve? Open this topic: Optimization For Learning. First stop reason: models need a way to measure progress so they know which settings are better or worse. First check: the score goes down while the model learns wrong physics, if the score missed the real constraint. Mathematical move: change model settings to lower the written score.
+- Everyday question: I need several possible fields, molecules, shapes, or scenarios, not one answer. Where do I start? Open this topic: Generative Modeling. First stop reason: some tasks need many plausible examples, not a single best prediction, to explore what's possible. First check: a generated fluid flow looks smooth and realistic but conserves no mass; a design candidate is manufacturable in appearance but physically infeasible. Mathematical move: learn how to sample new candidates that resemble the training family.
+- Everyday question: My object has parts, neighbors, bonds, mesh points, or shape. Which topic keeps those relations visible? Open this topic: Graphs And Geometric Learning. First stop reason: molecules, proteins, and meshes have a shape and connections that rows of numbers throw away. First check: if the graph misses a real bond or connection, or if parts of the shape rearrange and the model sees a stranger structure. Mathematical move: let information move along the object connections instead of flattening the object into a plain row.
+- Everyday question: A system changes over time, but the rate rule is partly unknown. What topic should I open? Open this topic: Neural Differential Equations. First stop reason: scientists watch a system change over time but don't know the rule driving that change. First check: a small error in the learned rate, repeated over hundreds of time steps, pushes predictions into wildly wrong territory. Mathematical move: learn the missing rate rule and place it inside a time-evolution calculation.
+- Everyday question: I want a readable equation from measured variables. What topic is about that search? Open this topic: Symbolic Regression And Model Discovery. First stop reason: a scientist may need a readable equation, not a numerical model that predicts but cannot be understood. First check: a neat formula fits your lab's data perfectly but uses the wrong variables or breaks when conditions shift. Mathematical move: search for a readable equation that fits the data and survives a changed case.
+- Everyday question: I want one field model to help across related PDE tasks. What should I read first? Open this topic: Foundation Models For PDEs. First stop reason: scientists train separate models for each PDE, each grid size, each parameter—expensive duplication. First check: the model trains on common cases and misses rare physical regimes, different boundary shapes, or unseen initial conditions. Mathematical move: train one broad model to reuse structure across many related field-prediction tasks.
+- Everyday question: Faraway parts of a field may affect the local answer. What topic explains that information route? Open this topic: Attention For Scientific Fields. First stop reason: a local spot in a field may depend on faraway information, but scanning everywhere costs too much. First check: when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted. Mathematical move: let the model choose which parts of the field exchange information.
 
 ## Field Application Guide In Plain Words
 ### Engineering design
@@ -125,20 +125,20 @@
 - Attention For Scientific Fields: use: Route information across fields where one region can affect another. Why: The field answer may need faraway signals without looking everywhere equally. Check: Change storms, fronts, boundaries, and long-range interactions and inspect the field.
 
 ## Importance Matrix
-- Deep Learning: everyday problem: scientists often have examples of behavior but no short rule that predicts the next case Why it matters: it can learn useful patterns when hand-written rules are incomplete, but the result still needs tests outside the examples used for fitting Topology or shape link: Deep learning matters here only if changed shapes still get the right answer for the named task. First shape check: Hold out a new shape family, camera view, mesh order, or scale and measure the target error. Other fields: Engineering design: Sort old test runs so a designer can screen the next part before a costly build. Check: Test a new material, sensor, or part size before using the prediction for a build decision. Materials, chemistry, and biology: Read images, spectra, molecules, or cell measurements when hand rules are incomplete. Check: Hold out a lab, instrument, molecule family, or cell type and compare the measured property. Climate, fluids, and fields: Learn repeated field patterns from stored simulations or measurements. Check: Change the region, forcing, boundary, or rare event and inspect where the field fails first. First test: hold out a changed material, geometry, parameter range, or sensor condition
-- Physics-Informed Neural Networks: everyday problem: measurements may be sparse, but the answer must still respect a known physical equation Why it matters: it lets known physics push the fit toward physically possible behavior instead of treating data points as the only evidence Topology or shape link: A PINN matters here when sparse points are not enough but an equation can still guide the missing field. First shape check: Move sensors, change the boundary, or bend the domain and compare the hidden field with trusted values. Other fields: Engineering design: Estimate heat, stress, flow, or pressure when tests are sparse but the physical law is known. Check: Inspect sharp regions, edge cases, and held-out sensors near the places where failure would matter. Materials, chemistry, and biology: Fill in missing concentration, strain, or reaction fields while keeping known balance rules visible. Check: Change material settings, boundary values, or reaction conditions and compare with measurements. Climate, fluids, and fields: Recover a full field from sparse measurements without ignoring the governing equation. Check: Change source terms, boundaries, or sensor placement and compare against a solver or held-out data. First test: move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements
-- Partial Differential Equations: everyday problem: a quantity changes over space and time, so one number is not enough to describe the situation Why it matters: PDEs are the language many scientific models use before machine learning enters the story Topology or shape link: PDEs matter here because shape and boundary decide how local changes spread. First shape check: Change the boundary, cut a hole, refine the mesh, or bend the region and check conservation. Other fields: Engineering design: Write the rule for heat, stress, flow, pressure, or waves before choosing a learning method. Check: Change load, source, geometry, or scale and inspect the quantity used for the decision. Materials, chemistry, and biology: Track diffusion, reaction, strain, growth, or transport through a material or tissue. Check: Change a coefficient, source, boundary, or sample shape and compare with measurements. Climate, fluids, and fields: Describe wind, heat, concentration, pressure, and water over space and time. Check: Check mass, energy, boundary behavior, stability, and measured error under a changed case. First test: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error
-- Operator Learning: everyday problem: one simulation answer is not enough when engineers need the whole map from inputs to solution fields Why it matters: it can replace many expensive solves with a fast approximation when the requested cases stay inside the tested family Topology or shape link: Operator learning matters when the question is about a family of field problems, not one solve. First shape check: Hold out a new geometry class, mesh resolution, boundary type, or coefficient range. Other fields: Engineering design: Give fast field estimates for repeated wing, device, part, or load queries. Check: Compare lift, drag, stress, heat, or pressure against trusted solves near the design edge. Materials, chemistry, and biology: Map a material setting, molecular field, or tissue condition to a response field. Check: Hold out a new material range, molecule type, or biological condition and inspect the response. Climate, fluids, and fields: Map forcing, boundary, or initial fields to future solution fields. Check: Change forcing, scale, resolution, or rare regimes and compare with trusted simulations. First test: change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed
-- Scientific Machine Learning: everyday problem: scientific work needs predictions that respect measurements, equations, uncertainty, and domain limits at the same time Why it matters: it connects flexible prediction to the checks scientists already need: units, conservation, boundaries, uncertainty, and failure cases Topology or shape link: Scientific machine learning matters when the target is a real quantity, not only a fitted score. First shape check: Change shape, mesh, boundary, or sensor layout and inspect the scientific quantity. Other fields: Engineering design: Use data and scientific checks together when a design decision has a cost. Check: Test near the build limit, load limit, safety limit, or operating limit. Materials, chemistry, and biology: Tie learned predictions to units, mechanisms, measurements, and domain limits. Check: Hold out a new lab setting, material range, molecule family, or measured condition. Climate, fluids, and fields: Use learned models only with clear field checks, physical checks, and use ranges. Check: Change region, season, boundary, forcing, or resolution and measure the decision quantity. First test: state the scientific quantity first, then test it under a changed case that matters in that domain
-- Surrogate Modeling: everyday problem: a trusted simulator may be too slow to run for every design, control, or uncertainty question Why it matters: it makes repeated scientific decisions possible when full simulation cost would stop the workflow Topology or shape link: A surrogate matters here when shape changes are common and full solves are too slow. First shape check: Change holes, edges, mesh detail, or shape class and compare with the full solver. Other fields: Engineering design: Screen many candidate parts, wings, devices, or loads before running the costly solve. Check: Test near peaks, boundaries, rare regimes, and cases where the decision changes. Materials, chemistry, and biology: Use a cheaper stand-in for repeated material, molecule, or tissue simulations. Check: Compare with trusted simulations or measurements on new settings near the use boundary. Climate, fluids, and fields: Answer repeated field queries faster than running a full model each time. Check: Hold out storms, flow regimes, boundary cases, or regional shifts and compare key fields. First test: compare against the full solver on new cases near the edge of the intended use
-- Uncertainty And Generalization: everyday problem: a prediction is not enough unless the user knows when it should be believed Why it matters: scientific models are used to make decisions, so the cost of being confidently wrong can be high Topology or shape link: Uncertainty matters here because a prediction can look good on familiar shapes and fail on a new one. First shape check: Hold out a new shape family, missing connection, or mesh resolution and measure the error. Other fields: Engineering design: Attach a use range and warning boundary to a prediction before a design choice. Check: Move load, material, size, or boundary beyond training and measure the first failure. Materials, chemistry, and biology: Say when a measured property prediction should weaken under a new lab or sample condition. Check: Hold out a new instrument, molecule family, tissue type, or material batch. Climate, fluids, and fields: Separate ordinary test success from success under changed climate, flow, or boundary conditions. Check: Test a shifted region, rare event, changed forcing, or new sensor pattern. First test: move one important condition outside the training range and measure the first failure
-- Optimization For Learning: everyday problem: learning needs a way to decide which model settings are better or worse Why it matters: the model only learns what the training score asks it to improve Topology or shape link: Optimization matters here because the model will chase the score even when the score misses the real shape question. First shape check: Inspect whether the trained answer breaks after relabeling, mesh change, or boundary change. Other fields: Engineering design: Train toward the quantity that drives the design, not only average error. Check: Check rare loads, edge cases, constraints, and the final design quantity after training. Materials, chemistry, and biology: Set the training score so it respects measured properties, units, and known checks. Check: Inspect what the score ignored, then test the ignored behavior on new samples. Climate, fluids, and fields: Balance field error, physical checks, and decision costs during training. Check: Test boundaries, rare events, conserved quantities, and high-cost regions. First test: inspect what the score ignores, then check whether the ignored behavior fails after training
-- Generative Modeling: everyday problem: some tasks need many possible examples, not one predicted answer Why it matters: it can explore candidate fields, shapes, or scenarios when direct enumeration is impossible Topology or shape link: Generative modeling matters here only if the samples are valid objects rather than plausible pictures. First shape check: Test connected parts, forbidden holes, mesh validity, and downstream use. Other fields: Engineering design: Propose candidate parts, layouts, fields, or operating cases for later testing. Check: Run constraints, full solves, stress tests, and use-case checks on generated candidates. Materials, chemistry, and biology: Suggest molecules, structures, images, or samples that should still obey known rules. Check: Reject samples that break chemistry rules, material limits, or biological measurements. Climate, fluids, and fields: Sample possible fields for stress tests, rare cases, or downstream solvers. Check: Measure conservation, rare-event rates, boundary behavior, and downstream task performance. First test: measure constraints, rare cases, conservation, and downstream task performance on generated samples
-- Graphs And Geometric Learning: everyday problem: many scientific objects are not simple rows of numbers; their connections matter Why it matters: it lets the model respect the structure of the object instead of flattening away important relations Topology or shape link: Graphs and geometric learning matters here because the connection pattern is part of the evidence. First shape check: Relabel nodes, rotate the object, refine the mesh, or add a missing edge and inspect the target. Other fields: Engineering design: Model meshes, parts, sensor networks, or connected components without flattening away contact. Check: Change mesh resolution, contact regions, or boundary connections and compare the design quantity. Materials, chemistry, and biology: Represent atoms, bonds, cells, proteins, grains, or interaction networks as connected objects. Check: Hold out new structures, rotations, missing interactions, or graph sizes. Climate, fluids, and fields: Carry information over irregular grids, sensor networks, coastlines, or mesh fields. Check: Change grid order, mesh detail, boundary regions, or long-range links. First test: change the mesh, rotate or move the object, or add missing interactions and inspect what breaks
-- Neural Differential Equations: everyday problem: scientists may know that a system changes continuously but not know the exact rule for that change Why it matters: it lets learning focus on the missing change rule while the time update still carries the idea of continuous evolution Topology or shape link: Neural differential equations matter here when the missing part is the rule of change. First shape check: Change the starting state, shape, or connection pattern and run longer than the training window. Other fields: Engineering design: Predict changing heat, motion, wear, control, or flow when the exact rate rule is unknown. Check: Test long-time drift, stability, conservation, and changed starting conditions. Materials, chemistry, and biology: Learn reaction, growth, motion, or change rules from measured time traces. Check: Hold out time ranges, doses, reaction settings, or starting conditions. Climate, fluids, and fields: Learn missing pieces of a time-update rule for fields. Check: Run past the training window and inspect drift, conservation, and boundary behavior. First test: run longer than the training window and check whether small rate errors accumulate into drift
-- Symbolic Regression And Model Discovery: everyday problem: a scientist may need a readable equation, not only a model that predicts well Why it matters: a short equation can be tested, criticized, and reused more easily than a large fitted model Topology or shape link: Symbolic regression matters here only if the readable formula keeps the real cause visible. First shape check: Remove a shape measure, change the mesh, or add a missing variable and test the formula. Other fields: Engineering design: Find a readable equation that links design variables to the decision quantity. Check: Run a changed design case and reject formulas that only fit old designs. Materials, chemistry, and biology: Search for compact laws from measured variables, ingredients, and properties. Check: Add noise, hold out a condition, or test a missing variable. Climate, fluids, and fields: Look for a readable relation inside measured or simulated field behavior. Check: Test a new region, forcing, scale, or event and compare the predicted quantity. First test: remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts
-- Foundation Models For PDEs: everyday problem: one trained model may be asked to handle many related equations, grids, parameters, or physical settings Why it matters: a broad model could reduce repeated training cost if it keeps the physical features that matter across tasks Topology or shape link: Foundation PDE models matter here only if shared structure carries to the new shape family. First shape check: Hold out whole geometry families, boundary types, scales, or rare regimes. Other fields: Engineering design: Start from a broad PDE model for a new device or part, then verify the design quantity. Check: Compare with trusted solves on new designs near the intended use boundary. Materials, chemistry, and biology: Transfer learned field behavior across related materials, tissues, or reaction settings. Check: Hold out a task family, material range, tissue setting, or coefficient regime. Climate, fluids, and fields: Use one broad field model across related equation settings. Check: Compare against trusted solvers for new equation families, grids, and boundaries. First test: hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver
-- Attention For Scientific Fields: everyday problem: a local patch of a field may depend on faraway information, but looking everywhere can be expensive Why it matters: it gives the model a way to move information across a field without treating every location as isolated Topology or shape link: Attention matters here when faraway structure changes the local answer. First shape check: Change window size, long-range links, boundary regions, or point order. Other fields: Engineering design: Route information across a part, surface, or field where distant regions interact. Check: Stress long-range cases and compare the design quantity near hard regions. Materials, chemistry, and biology: Let distant atoms, cells, residues, or regions influence a local prediction. Check: Remove long-range context, change structure, or hold out larger objects. Climate, fluids, and fields: Route information across fields where one region can affect another. Check: Change storms, fronts, boundaries, and long-range interactions and inspect the field. First test: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures
+- Deep Learning: everyday problem: scientists have many measured examples but no formula that predicts the next case Why it matters: networks can fit patterns in data when hand-written rules fail, but the fit only works on examples similar to the training set Topology or shape link: Deep learning matters here only if changed shapes still get the right answer for the named task. First shape check: Hold out a new shape family, camera view, mesh order, or scale and measure the target error. Other fields: Engineering design: Sort old test runs so a designer can screen the next part before a costly build. Check: Test a new material, sensor, or part size before using the prediction for a build decision. Materials, chemistry, and biology: Read images, spectra, molecules, or cell measurements when hand rules are incomplete. Check: Hold out a lab, instrument, molecule family, or cell type and compare the measured property. Climate, fluids, and fields: Learn repeated field patterns from stored simulations or measurements. Check: Change the region, forcing, boundary, or rare event and inspect where the field fails first. First test: hold out a changed material, geometry, parameter range, or sensor condition
+- Physics-Informed Neural Networks: everyday problem: sparse measurements from experiments, but the answer must obey known physical laws like gravity or heat flow Why it matters: the equation penalty steers the fit toward answers that obey physics, filling gaps where measurements are missing without pretending data alone tells the whole story Topology or shape link: A PINN matters here when sparse points are not enough but an equation can still guide the missing field. First shape check: Move sensors, change the boundary, or bend the domain and compare the hidden field with trusted values. Other fields: Engineering design: Estimate heat, stress, flow, or pressure when tests are sparse but the physical law is known. Check: Inspect sharp regions, edge cases, and held-out sensors near the places where failure would matter. Materials, chemistry, and biology: Fill in missing concentration, strain, or reaction fields while keeping known balance rules visible. Check: Change material settings, boundary values, or reaction conditions and compare with measurements. Climate, fluids, and fields: Recover a full field from sparse measurements without ignoring the governing equation. Check: Change source terms, boundaries, or sensor placement and compare against a solver or held-out data. First test: move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements
+- Partial Differential Equations: everyday problem: a quantity changes over space and time, so one number is not enough to describe what's happening Why it matters: scientists use PDEs to write down laws of nature before machine learning enters, and they force you to be explicit about what you assume and what you skip Topology or shape link: PDEs matter here because shape and boundary decide how local changes spread. First shape check: Change the boundary, cut a hole, refine the mesh, or bend the region and check conservation. Other fields: Engineering design: Write the rule for heat, stress, flow, pressure, or waves before choosing a learning method. Check: Change load, source, geometry, or scale and inspect the quantity used for the decision. Materials, chemistry, and biology: Track diffusion, reaction, strain, growth, or transport through a material or tissue. Check: Change a coefficient, source, boundary, or sample shape and compare with measurements. Climate, fluids, and fields: Describe wind, heat, concentration, pressure, and water over space and time. Check: Check mass, energy, boundary behavior, stability, and measured error under a changed case. First test: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error
+- Operator Learning: everyday problem: engineers need to predict all the fields (temperature, pressure, flow) across a space and time for many input cases, not just one Why it matters: it trades solving expensive equations many times for one fast learned map, but only when new cases stay inside the training family Topology or shape link: Operator learning matters when the question is about a family of field problems, not one solve. First shape check: Hold out a new geometry class, mesh resolution, boundary type, or coefficient range. Other fields: Engineering design: Give fast field estimates for repeated wing, device, part, or load queries. Check: Compare lift, drag, stress, heat, or pressure against trusted solves near the design edge. Materials, chemistry, and biology: Map a material setting, molecular field, or tissue condition to a response field. Check: Hold out a new material range, molecule type, or biological condition and inspect the response. Climate, fluids, and fields: Map forcing, boundary, or initial fields to future solution fields. Check: Change forcing, scale, resolution, or rare regimes and compare with trusted simulations. First test: change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed
+- Scientific Machine Learning: everyday problem: predictions must obey the physical laws that define the problem, not just fit the data Why it matters: the neural network feels both the data AND the physics equations, so it learns the true rule and works on new cases the data never saw before Topology or shape link: Scientific machine learning matters when the target is a real quantity, not only a fitted score. First shape check: Change shape, mesh, boundary, or sensor layout and inspect the scientific quantity. Other fields: Engineering design: Use data and scientific checks together when a design decision has a cost. Check: Test near the build limit, load limit, safety limit, or operating limit. Materials, chemistry, and biology: Tie learned predictions to units, mechanisms, measurements, and domain limits. Check: Hold out a new lab setting, material range, molecule family, or measured condition. Climate, fluids, and fields: Use learned models only with clear field checks, physical checks, and use ranges. Check: Change region, season, boundary, forcing, or resolution and measure the decision quantity. First test: state the scientific quantity first, then test it under a changed case that matters in that domain
+- Surrogate Modeling: everyday problem: running a full simulation is too expensive to do for every design choice or question Why it matters: it speeds up repeated decisions in design or control when the cost of the real simulator would stop progress, but can hide missing physics if pushed past its training regime Topology or shape link: A surrogate matters here when shape changes are common and full solves are too slow. First shape check: Change holes, edges, mesh detail, or shape class and compare with the full solver. Other fields: Engineering design: Screen many candidate parts, wings, devices, or loads before running the costly solve. Check: Test near peaks, boundaries, rare regimes, and cases where the decision changes. Materials, chemistry, and biology: Use a cheaper stand-in for repeated material, molecule, or tissue simulations. Check: Compare with trusted simulations or measurements on new settings near the use boundary. Climate, fluids, and fields: Answer repeated field queries faster than running a full model each time. Check: Hold out storms, flow regimes, boundary cases, or regional shifts and compare key fields. First test: compare against the full solver on new cases near the edge of the intended use
+- Uncertainty And Generalization: everyday problem: a prediction from a model is only useful if you know under which conditions you should actually trust it Why it matters: when scientific decisions cost lives or money, a model must be honest about its own edges and not guess past them—and most neural networks fail silently instead Topology or shape link: Uncertainty matters here because a prediction can look good on familiar shapes and fail on a new one. First shape check: Hold out a new shape family, missing connection, or mesh resolution and measure the error. Other fields: Engineering design: Attach a use range and warning boundary to a prediction before a design choice. Check: Move load, material, size, or boundary beyond training and measure the first failure. Materials, chemistry, and biology: Say when a measured property prediction should weaken under a new lab or sample condition. Check: Hold out a new instrument, molecule family, tissue type, or material batch. Climate, fluids, and fields: Separate ordinary test success from success under changed climate, flow, or boundary conditions. Check: Test a shifted region, rare event, changed forcing, or new sensor pattern. First test: move one important condition outside the training range and measure the first failure
+- Optimization For Learning: everyday problem: models need a way to measure progress so they know which settings are better or worse Why it matters: adjusting weights downhill on the score works, but only for goals the score actually names; miss a goal and the model learns it wrong Topology or shape link: Optimization matters here because the model will chase the score even when the score misses the real shape question. First shape check: Inspect whether the trained answer breaks after relabeling, mesh change, or boundary change. Other fields: Engineering design: Train toward the quantity that drives the design, not only average error. Check: Check rare loads, edge cases, constraints, and the final design quantity after training. Materials, chemistry, and biology: Set the training score so it respects measured properties, units, and known checks. Check: Inspect what the score ignored, then test the ignored behavior on new samples. Climate, fluids, and fields: Balance field error, physical checks, and decision costs during training. Check: Test boundaries, rare events, conserved quantities, and high-cost regions. First test: inspect what the score ignores, then check whether the ignored behavior fails after training
+- Generative Modeling: everyday problem: some tasks need many plausible examples, not a single best prediction, to explore what's possible Why it matters: it can explore a range of candidate fields or shapes when listing all possibilities is impossible; the catch is samples can look real yet violate the problem's rules Topology or shape link: Generative modeling matters here only if the samples are valid objects rather than plausible pictures. First shape check: Test connected parts, forbidden holes, mesh validity, and downstream use. Other fields: Engineering design: Propose candidate parts, layouts, fields, or operating cases for later testing. Check: Run constraints, full solves, stress tests, and use-case checks on generated candidates. Materials, chemistry, and biology: Suggest molecules, structures, images, or samples that should still obey known rules. Check: Reject samples that break chemistry rules, material limits, or biological measurements. Climate, fluids, and fields: Sample possible fields for stress tests, rare cases, or downstream solvers. Check: Measure conservation, rare-event rates, boundary behavior, and downstream task performance. First test: measure constraints, rare cases, conservation, and downstream task performance on generated samples
+- Graphs And Geometric Learning: everyday problem: molecules, proteins, and meshes have a shape and connections that rows of numbers throw away Why it matters: treating a protein like a graph lets the model learn from neighborhood patterns instead of memorizing isolated points Topology or shape link: Graphs and geometric learning matters here because the connection pattern is part of the evidence. First shape check: Relabel nodes, rotate the object, refine the mesh, or add a missing edge and inspect the target. Other fields: Engineering design: Model meshes, parts, sensor networks, or connected components without flattening away contact. Check: Change mesh resolution, contact regions, or boundary connections and compare the design quantity. Materials, chemistry, and biology: Represent atoms, bonds, cells, proteins, grains, or interaction networks as connected objects. Check: Hold out new structures, rotations, missing interactions, or graph sizes. Climate, fluids, and fields: Carry information over irregular grids, sensor networks, coastlines, or mesh fields. Check: Change grid order, mesh detail, boundary regions, or long-range links. First test: change the mesh, rotate or move the object, or add missing interactions and inspect what breaks
+- Neural Differential Equations: everyday problem: scientists watch a system change over time but don't know the rule driving that change Why it matters: the time-stepping structure anchors learning in continuous evolution, keeping the idea that change is smooth, but mistakes in the learned rate compound over many steps and long predictions drift away Topology or shape link: Neural differential equations matter here when the missing part is the rule of change. First shape check: Change the starting state, shape, or connection pattern and run longer than the training window. Other fields: Engineering design: Predict changing heat, motion, wear, control, or flow when the exact rate rule is unknown. Check: Test long-time drift, stability, conservation, and changed starting conditions. Materials, chemistry, and biology: Learn reaction, growth, motion, or change rules from measured time traces. Check: Hold out time ranges, doses, reaction settings, or starting conditions. Climate, fluids, and fields: Learn missing pieces of a time-update rule for fields. Check: Run past the training window and inspect drift, conservation, and boundary behavior. First test: run longer than the training window and check whether small rate errors accumulate into drift
+- Symbolic Regression And Model Discovery: everyday problem: a scientist may need a readable equation, not a numerical model that predicts but cannot be understood Why it matters: a short equation lets you test new cases, argue about whether it makes sense, and reuse it in different settings—much harder with a large fitted model you cannot read Topology or shape link: Symbolic regression matters here only if the readable formula keeps the real cause visible. First shape check: Remove a shape measure, change the mesh, or add a missing variable and test the formula. Other fields: Engineering design: Find a readable equation that links design variables to the decision quantity. Check: Run a changed design case and reject formulas that only fit old designs. Materials, chemistry, and biology: Search for compact laws from measured variables, ingredients, and properties. Check: Add noise, hold out a condition, or test a missing variable. Climate, fluids, and fields: Look for a readable relation inside measured or simulated field behavior. Check: Test a new region, forcing, scale, or event and compare the predicted quantity. First test: remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts
+- Foundation Models For PDEs: everyday problem: scientists train separate models for each PDE, each grid size, each parameter—expensive duplication Why it matters: one shared model reduces training cost if it captures features that matter across tasks, but only if those features actually transfer Topology or shape link: Foundation PDE models matter here only if shared structure carries to the new shape family. First shape check: Hold out whole geometry families, boundary types, scales, or rare regimes. Other fields: Engineering design: Start from a broad PDE model for a new device or part, then verify the design quantity. Check: Compare with trusted solves on new designs near the intended use boundary. Materials, chemistry, and biology: Transfer learned field behavior across related materials, tissues, or reaction settings. Check: Hold out a task family, material range, tissue setting, or coefficient regime. Climate, fluids, and fields: Use one broad field model across related equation settings. Check: Compare against trusted solvers for new equation families, grids, and boundaries. First test: hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver
+- Attention For Scientific Fields: everyday problem: a local spot in a field may depend on faraway information, but scanning everywhere costs too much Why it matters: it lets the model move information across the field only where needed, trading speed for which distant interactions it can reach Topology or shape link: Attention matters here when faraway structure changes the local answer. First shape check: Change window size, long-range links, boundary regions, or point order. Other fields: Engineering design: Route information across a part, surface, or field where distant regions interact. Check: Stress long-range cases and compare the design quantity near hard regions. Materials, chemistry, and biology: Let distant atoms, cells, residues, or regions influence a local prediction. Check: Remove long-range context, change structure, or hold out larger objects. Climate, fluids, and fields: Route information across fields where one region can affect another. Check: Change storms, fronts, boundaries, and long-range interactions and inspect the field. First test: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures
 
 ## End-To-End Course Walkthrough
 - One scientific job: move from sparse measurements, old simulations, a shaped domain, and a real decision to a bounded scientific claim.
@@ -159,105 +159,105 @@
 - Climate Risk Under Shifted Conditions: job: How should a model report risk when the future case differs from familiar examples? Observed: historical fields, simulation ensembles, forcing conditions, regional measurements, and known physical constraints Hidden: how wrong the prediction may be under a changed climate, rare event, or new regional pattern Route: uncertainty and generalization -> surrogate modeling -> partial differential equations. First failure: the model reports confident risk while rare events, changed forcing, or the target region were not tested
 
 ## No-Jargon Concept Guide
-- Deep Learning: job: scientists often have examples of behavior but no short rule that predicts the next case Evidence: many input-output examples from experiments, simulations, or measurements Hidden answer: the exact rule that connects the input to the output Move: adjust many weights until the model maps familiar inputs to the right outputs Reject first by: hold out a changed material, geometry, parameter range, or sensor condition
-- Physics-Informed Neural Networks: job: measurements may be sparse, but the answer must still respect a known physical equation Evidence: some measured values, boundary values, starting values, and a known differential equation Hidden answer: the full field value at every point in space and time Move: fit a neural network while also measuring how badly its output violates the known equation Reject first by: move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements
-- Partial Differential Equations: job: a quantity changes over space and time, so one number is not enough to describe the situation Evidence: a field such as temperature, pressure, concentration, velocity, or displacement Hidden answer: how every point in the field affects nearby points over time Move: write a local change rule that uses rates across space and time Reject first by: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error
-- Operator Learning: job: one simulation answer is not enough when engineers need the whole map from inputs to solution fields Evidence: many example inputs and their full solution fields Hidden answer: the rule that maps a new input field to its new solution field Move: learn the map from problem input to solution, not only one solution at a time Reject first by: change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed
-- Scientific Machine Learning: job: scientific work needs predictions that respect measurements, equations, uncertainty, and domain limits at the same time Evidence: data, equations, units, simulation outputs, and domain limits Hidden answer: which parts of the scientific system are missing, noisy, or too costly to compute directly Move: combine learned prediction with scientific checks that name what the claim is allowed to mean Reject first by: state the scientific quantity first, then test it under a changed case that matters in that domain
-- Surrogate Modeling: job: a trusted simulator may be too slow to run for every design, control, or uncertainty question Evidence: expensive solver inputs and outputs for a limited set of cases Hidden answer: the solver answer for every new query someone wants to ask Move: train a cheaper stand-in for the expensive input-output behavior Reject first by: compare against the full solver on new cases near the edge of the intended use
-- Uncertainty And Generalization: job: a prediction is not enough unless the user knows when it should be believed Evidence: training cases, validation cases, prediction errors, and known shifts between cases Hidden answer: how wrong the model may be on a case unlike the ones it learned from Move: separate fit on familiar examples from evidence on changed examples Reject first by: move one important condition outside the training range and measure the first failure
-- Optimization For Learning: job: learning needs a way to decide which model settings are better or worse Evidence: a written score that says which model behavior is better or worse Hidden answer: whether that score matches the scientific behavior the user actually cares about Move: change model settings to lower the written score Reject first by: inspect what the score ignores, then check whether the ignored behavior fails after training
-- Generative Modeling: job: some tasks need many possible examples, not one predicted answer Evidence: examples of fields, molecules, flows, shapes, or other scientific objects Hidden answer: the spread of possible valid objects beyond the examples Move: learn how to sample new candidates that resemble the training family Reject first by: measure constraints, rare cases, conservation, and downstream task performance on generated samples
-- Graphs And Geometric Learning: job: many scientific objects are not simple rows of numbers; their connections matter Evidence: objects with parts and connections, such as meshes, molecules, or interacting components Hidden answer: which neighboring and long-range interactions control the scientific quantity Move: let information move along the object connections instead of flattening the object into a plain row Reject first by: change the mesh, rotate or move the object, or add missing interactions and inspect what breaks
-- Neural Differential Equations: job: scientists may know that a system changes continuously but not know the exact rule for that change Evidence: measurements of a system changing over time Hidden answer: the rate rule that moves the present value into the future Move: learn the missing rate rule and place it inside a time-evolution calculation Reject first by: run longer than the training window and check whether small rate errors accumulate into drift
-- Symbolic Regression And Model Discovery: job: a scientist may need a readable equation, not only a model that predicts well Evidence: measured variables and candidate mathematical ingredients Hidden answer: which short formula, if any, actually explains the measured change Move: search for a readable equation that fits the data and survives a changed case Reject first by: remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts
-- Foundation Models For PDEs: job: one trained model may be asked to handle many related equations, grids, parameters, or physical settings Evidence: many PDE problem instances across equations, grids, parameters, or physical settings Hidden answer: which shared structure carries from one scientific task to another Move: train one broad model to reuse structure across many related field-prediction tasks Reject first by: hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver
-- Attention For Scientific Fields: job: a local patch of a field may depend on faraway information, but looking everywhere can be expensive Evidence: large fields where one location may depend on other locations Hidden answer: which distant parts matter for the local prediction Move: let the model choose which parts of the field exchange information Reject first by: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures
+- Deep Learning: job: scientists have many measured examples but no formula that predicts the next case Evidence: many input-output examples from experiments, simulations, or measurements Hidden answer: the exact rule that connects the input to the output Move: adjust many weights until the model maps familiar inputs to the right outputs Reject first by: hold out a changed material, geometry, parameter range, or sensor condition
+- Physics-Informed Neural Networks: job: sparse measurements from experiments, but the answer must obey known physical laws like gravity or heat flow Evidence: some measured values, boundary values, starting values, and a known differential equation Hidden answer: the full field value at every point in space and time Move: fit a neural network while also measuring how badly its output violates the known equation Reject first by: move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements
+- Partial Differential Equations: job: a quantity changes over space and time, so one number is not enough to describe what's happening Evidence: a field such as temperature, pressure, concentration, velocity, or displacement Hidden answer: how every point in the field affects nearby points over time Move: write a local change rule that uses rates across space and time Reject first by: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error
+- Operator Learning: job: engineers need to predict all the fields (temperature, pressure, flow) across a space and time for many input cases, not just one Evidence: many example inputs and their full solution fields Hidden answer: the rule that maps a new input field to its new solution field Move: learn the map from problem input to solution, not only one solution at a time Reject first by: change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed
+- Scientific Machine Learning: job: predictions must obey the physical laws that define the problem, not just fit the data Evidence: data, equations, units, simulation outputs, and domain limits Hidden answer: which parts of the scientific system are missing, noisy, or too costly to compute directly Move: combine learned prediction with scientific checks that name what the claim is allowed to mean Reject first by: state the scientific quantity first, then test it under a changed case that matters in that domain
+- Surrogate Modeling: job: running a full simulation is too expensive to do for every design choice or question Evidence: expensive solver inputs and outputs for a limited set of cases Hidden answer: the solver answer for every new query someone wants to ask Move: train a cheaper stand-in for the expensive input-output behavior Reject first by: compare against the full solver on new cases near the edge of the intended use
+- Uncertainty And Generalization: job: a prediction from a model is only useful if you know under which conditions you should actually trust it Evidence: training cases, validation cases, prediction errors, and known shifts between cases Hidden answer: how wrong the model may be on a case unlike the ones it learned from Move: separate fit on familiar examples from evidence on changed examples Reject first by: move one important condition outside the training range and measure the first failure
+- Optimization For Learning: job: models need a way to measure progress so they know which settings are better or worse Evidence: a written score that says which model behavior is better or worse Hidden answer: whether that score matches the scientific behavior the user actually cares about Move: change model settings to lower the written score Reject first by: inspect what the score ignores, then check whether the ignored behavior fails after training
+- Generative Modeling: job: some tasks need many plausible examples, not a single best prediction, to explore what's possible Evidence: examples of fields, molecules, flows, shapes, or other scientific objects Hidden answer: the spread of possible valid objects beyond the examples Move: learn how to sample new candidates that resemble the training family Reject first by: measure constraints, rare cases, conservation, and downstream task performance on generated samples
+- Graphs And Geometric Learning: job: molecules, proteins, and meshes have a shape and connections that rows of numbers throw away Evidence: objects with parts and connections, such as meshes, molecules, or interacting components Hidden answer: which neighboring and long-range interactions control the scientific quantity Move: let information move along the object connections instead of flattening the object into a plain row Reject first by: change the mesh, rotate or move the object, or add missing interactions and inspect what breaks
+- Neural Differential Equations: job: scientists watch a system change over time but don't know the rule driving that change Evidence: measurements of a system changing over time Hidden answer: the rate rule that moves the present value into the future Move: learn the missing rate rule and place it inside a time-evolution calculation Reject first by: run longer than the training window and check whether small rate errors accumulate into drift
+- Symbolic Regression And Model Discovery: job: a scientist may need a readable equation, not a numerical model that predicts but cannot be understood Evidence: measured variables and candidate mathematical ingredients Hidden answer: which short formula, if any, actually explains the measured change Move: search for a readable equation that fits the data and survives a changed case Reject first by: remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts
+- Foundation Models For PDEs: job: scientists train separate models for each PDE, each grid size, each parameter—expensive duplication Evidence: many PDE problem instances across equations, grids, parameters, or physical settings Hidden answer: which shared structure carries from one scientific task to another Move: train one broad model to reuse structure across many related field-prediction tasks Reject first by: hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver
+- Attention For Scientific Fields: job: a local spot in a field may depend on faraway information, but scanning everywhere costs too much Evidence: large fields where one location may depend on other locations Hidden answer: which distant parts matter for the local prediction Move: let the model choose which parts of the field exchange information Reject first by: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures
 
 ## Concepts
 ### Deep Learning
-- Problem: scientists often have examples of behavior but no short rule that predicts the next case
+- Problem: scientists have many measured examples but no formula that predicts the next case
 - Domain: scientific prediction from large measured or simulated data sets
-- Why: it can learn useful patterns when hand-written rules are incomplete, but the result still needs tests outside the examples used for fitting
-- Failure: the model can fit familiar examples while failing on a new material, geometry, scale, or boundary condition
+- Why: networks can fit patterns in data when hand-written rules fail, but the fit only works on examples similar to the training set
+- Failure: trained model passes on familiar data but crashes on new material, boundary condition, or scale it never saw before
 
 ### Physics-Informed Neural Networks
-- Problem: measurements may be sparse, but the answer must still respect a known physical equation
+- Problem: sparse measurements from experiments, but the answer must obey known physical laws like gravity or heat flow
 - Domain: differential equations in science and engineering
-- Why: it lets known physics push the fit toward physically possible behavior instead of treating data points as the only evidence
-- Failure: the equation penalty can look small while the solution is wrong in hard regions, sharp layers, or unseen boundary cases
+- Why: the equation penalty steers the fit toward answers that obey physics, filling gaps where measurements are missing without pretending data alone tells the whole story
+- Failure: the penalty term hides small errors near boundaries, in thin layers, or where the real solution changes suddenly
 
 ### Partial Differential Equations
-- Problem: a quantity changes over space and time, so one number is not enough to describe the situation
+- Problem: a quantity changes over space and time, so one number is not enough to describe what's happening
 - Domain: fluids, heat, waves, mechanics, chemistry, climate, and other changing fields
-- Why: PDEs are the language many scientific models use before machine learning enters the story
-- Failure: a learned shortcut can ignore boundary conditions or conservation behavior that the PDE was carrying
+- Why: scientists use PDEs to write down laws of nature before machine learning enters, and they force you to be explicit about what you assume and what you skip
+- Failure: when data or learning skips the actual PDE constraints, it can ignore boundary conditions or conservation laws that the PDE was always enforcing
 
 ### Operator Learning
-- Problem: one simulation answer is not enough when engineers need the whole map from inputs to solution fields
+- Problem: engineers need to predict all the fields (temperature, pressure, flow) across a space and time for many input cases, not just one
 - Domain: fast prediction for families of scientific simulations
-- Why: it can replace many expensive solves with a fast approximation when the requested cases stay inside the tested family
-- Failure: the learned map can give plausible-looking fields that violate the equation or fail on a shifted input family
+- Why: it trades solving expensive equations many times for one fast learned map, but only when new cases stay inside the training family
+- Failure: the learned map produces plausible-looking fields that actually violate the physics or break when you shift the geometry
 
 ### Scientific Machine Learning
-- Problem: scientific work needs predictions that respect measurements, equations, uncertainty, and domain limits at the same time
+- Problem: predictions must obey the physical laws that define the problem, not just fit the data
 - Domain: using data-driven models inside scientific workflows
-- Why: it connects flexible prediction to the checks scientists already need: units, conservation, boundaries, uncertainty, and failure cases
-- Failure: the method becomes a generic fitting tool if the physical quantity, scientific claim, and validation case are not named
+- Why: the neural network feels both the data AND the physics equations, so it learns the true rule and works on new cases the data never saw before
+- Failure: if no clear equation or boundary condition exists, the network learns the data shape but not the underlying rule
 
 ### Surrogate Modeling
-- Problem: a trusted simulator may be too slow to run for every design, control, or uncertainty question
+- Problem: running a full simulation is too expensive to do for every design choice or question
 - Domain: expensive simulation and design loops
-- Why: it makes repeated scientific decisions possible when full simulation cost would stop the workflow
-- Failure: speed can hide missing physics when the surrogate is used beyond the regime where it was checked
+- Why: it speeds up repeated decisions in design or control when the cost of the real simulator would stop progress, but can hide missing physics if pushed past its training regime
+- Failure: gives plausible-looking answers for inputs it never saw during training, with no warning that they are wrong
 
 ### Uncertainty And Generalization
-- Problem: a prediction is not enough unless the user knows when it should be believed
+- Problem: a prediction from a model is only useful if you know under which conditions you should actually trust it
 - Domain: model use under new conditions
-- Why: scientific models are used to make decisions, so the cost of being confidently wrong can be high
-- Failure: training error can look good while the model fails under a new geometry, parameter range, sensor, or physical regime
+- Why: when scientific decisions cost lives or money, a model must be honest about its own edges and not guess past them—and most neural networks fail silently instead
+- Failure: training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime
 
 ### Optimization For Learning
-- Problem: learning needs a way to decide which model settings are better or worse
+- Problem: models need a way to measure progress so they know which settings are better or worse
 - Domain: turning model fitting into a repeatable computation
-- Why: the model only learns what the training score asks it to improve
-- Failure: a model can optimize the written score while missing the scientific behavior the score failed to name
+- Why: adjusting weights downhill on the score works, but only for goals the score actually names; miss a goal and the model learns it wrong
+- Failure: the score goes down while the model learns wrong physics, if the score missed the real constraint
 
 ### Generative Modeling
-- Problem: some tasks need many possible examples, not one predicted answer
+- Problem: some tasks need many plausible examples, not a single best prediction, to explore what's possible
 - Domain: creating plausible scientific samples, fields, or candidate designs
-- Why: it can explore candidate fields, shapes, or scenarios when direct enumeration is impossible
-- Failure: generated samples can look realistic while breaking constraints, conservation, or rare-event behavior
+- Why: it can explore a range of candidate fields or shapes when listing all possibilities is impossible; the catch is samples can look real yet violate the problem's rules
+- Failure: a generated fluid flow looks smooth and realistic but conserves no mass; a design candidate is manufacturable in appearance but physically infeasible
 
 ### Graphs And Geometric Learning
-- Problem: many scientific objects are not simple rows of numbers; their connections matter
+- Problem: molecules, proteins, and meshes have a shape and connections that rows of numbers throw away
 - Domain: systems made of interacting parts, meshes, molecules, or spatial relations
-- Why: it lets the model respect the structure of the object instead of flattening away important relations
-- Failure: the graph can encode the wrong neighborhood, hide missing interactions, or fail when the mesh changes
+- Why: treating a protein like a graph lets the model learn from neighborhood patterns instead of memorizing isolated points
+- Failure: if the graph misses a real bond or connection, or if parts of the shape rearrange and the model sees a stranger structure
 
 ### Neural Differential Equations
-- Problem: scientists may know that a system changes continuously but not know the exact rule for that change
+- Problem: scientists watch a system change over time but don't know the rule driving that change
 - Domain: changing systems where time evolution is part of the model
-- Why: it lets learning focus on the missing change rule while the time update still carries the idea of continuous evolution
-- Failure: small learned-rate errors can accumulate until long-time predictions drift away from the real system
+- Why: the time-stepping structure anchors learning in continuous evolution, keeping the idea that change is smooth, but mistakes in the learned rate compound over many steps and long predictions drift away
+- Failure: a small error in the learned rate, repeated over hundreds of time steps, pushes predictions into wildly wrong territory
 
 ### Symbolic Regression And Model Discovery
-- Problem: a scientist may need a readable equation, not only a model that predicts well
+- Problem: a scientist may need a readable equation, not a numerical model that predicts but cannot be understood
 - Domain: turning data into equations people can inspect
-- Why: a short equation can be tested, criticized, and reused more easily than a large fitted model
-- Failure: a neat formula can fit the training data while using the wrong variables or failing on a changed experiment
+- Why: a short equation lets you test new cases, argue about whether it makes sense, and reuse it in different settings—much harder with a large fitted model you cannot read
+- Failure: a neat formula fits your lab's data perfectly but uses the wrong variables or breaks when conditions shift
 
 ### Foundation Models For PDEs
-- Problem: one trained model may be asked to handle many related equations, grids, parameters, or physical settings
+- Problem: scientists train separate models for each PDE, each grid size, each parameter—expensive duplication
 - Domain: broad families of PDE problems and scientific fields
-- Why: a broad model could reduce repeated training cost if it keeps the physical features that matter across tasks
-- Failure: the model can look broad while missing rare regimes, new boundary conditions, or quantities not represented in training
+- Why: one shared model reduces training cost if it captures features that matter across tasks, but only if those features actually transfer
+- Failure: the model trains on common cases and misses rare physical regimes, different boundary shapes, or unseen initial conditions
 
 ### Attention For Scientific Fields
-- Problem: a local patch of a field may depend on faraway information, but looking everywhere can be expensive
+- Problem: a local spot in a field may depend on faraway information, but scanning everywhere costs too much
 - Domain: large scientific fields where distant parts may interact
-- Why: it gives the model a way to move information across a field without treating every location as isolated
-- Failure: windowing or scaling choices can miss long-range effects that matter for the scientific quantity being predicted
+- Why: it lets the model move information across the field only where needed, trading speed for which distant interactions it can reach
+- Failure: when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted
 
 
 ## Paper Family Routes
@@ -756,7 +756,7 @@
 
 ## Core Derivations
 ### Physics-Informed Neural Networks
-- Problem: measurements may be sparse, but the answer must still respect a known physical equation
+- Problem: sparse measurements from experiments, but the answer must obey known physical laws like gravity or heat flow
 - Observed: some measured values, boundary values, starting values, and a known differential equation
 - Hidden: the full field value at every point in space and time
 - Plain formula: total error = data error + equation error + boundary error
@@ -773,7 +773,7 @@
 - Final line: The loss is a written contract: match the measurements, obey the equation, and respect the edge information. The contract is only useful if each part matches the real scientific job.
 
 ### Partial Differential Equations
-- Problem: a quantity changes over space and time, so one number is not enough to describe the situation
+- Problem: a quantity changes over space and time, so one number is not enough to describe what's happening
 - Observed: a field such as temperature, pressure, concentration, velocity, or displacement
 - Hidden: how every point in the field affects nearby points over time
 - Plain formula: change over time = movement through space + sources + boundary effects
@@ -790,7 +790,7 @@
 - Final line: A PDE is a compact way to say how a field, its local changes, its sources, and its boundaries must agree.
 
 ### Operator Learning
-- Problem: one simulation answer is not enough when engineers need the whole map from inputs to solution fields
+- Problem: engineers need to predict all the fields (temperature, pressure, flow) across a space and time for many input cases, not just one
 - Observed: many example inputs and their full solution fields
 - Hidden: the rule that maps a new input field to its new solution field
 - Plain formula: input field -> learned field-to-field map -> output field
@@ -807,7 +807,7 @@
 - Final line: The derivation is a shift in the object being learned: from one answer to a reusable map between fields.
 
 ### Surrogate Modeling
-- Problem: a trusted simulator may be too slow to run for every design, control, or uncertainty question
+- Problem: running a full simulation is too expensive to do for every design choice or question
 - Observed: expensive solver inputs and outputs for a limited set of cases
 - Hidden: the solver answer for every new query someone wants to ask
 - Plain formula: new query -> fast stand-in -> approximate answer with a stated use range
@@ -824,7 +824,7 @@
 - Final line: A surrogate derivation is about earning a cheaper answer while keeping the trusted source in view, rather than only fitting a curve.
 
 ### Uncertainty And Generalization
-- Problem: a prediction is not enough unless the user knows when it should be believed
+- Problem: a prediction from a model is only useful if you know under which conditions you should actually trust it
 - Observed: training cases, validation cases, prediction errors, and known shifts between cases
 - Hidden: how wrong the model may be on a case unlike the ones it learned from
 - Plain formula: prediction + tested use range + failure evidence
@@ -841,7 +841,7 @@
 - Final line: The mathematical shape joins answer and boundary: report the prediction together with the evidence that says where belief should weaken.
 
 ### Neural Differential Equations
-- Problem: scientists may know that a system changes continuously but not know the exact rule for that change
+- Problem: scientists watch a system change over time but don't know the rule driving that change
 - Observed: measurements of a system changing over time
 - Hidden: the rate rule that moves the present value into the future
 - Plain formula: current state -> learned change rate -> next state
@@ -858,7 +858,7 @@
 - Final line: A neural differential equation learns a missing rate, then exposes that rate to the discipline of time evolution.
 
 ### Symbolic Regression And Model Discovery
-- Problem: a scientist may need a readable equation, not only a model that predicts well
+- Problem: a scientist may need a readable equation, not a numerical model that predicts but cannot be understood
 - Observed: measured variables and candidate mathematical ingredients
 - Hidden: which short formula, if any, actually explains the measured change
 - Plain formula: candidate ingredients -> searched formulas -> tested small law
@@ -875,7 +875,7 @@
 - Final line: The derivation is a search with a burden: the result must be short enough to inspect and strong enough to survive a new experiment.
 
 ### Foundation Models For PDEs
-- Problem: one trained model may be asked to handle many related equations, grids, parameters, or physical settings
+- Problem: scientists train separate models for each PDE, each grid size, each parameter—expensive duplication
 - Observed: many PDE problem instances across equations, grids, parameters, or physical settings
 - Hidden: which shared structure carries from one scientific task to another
 - Plain formula: many PDE tasks -> shared learned structure -> new task prediction
@@ -892,7 +892,7 @@
 - Final line: The derivation makes the transfer burden visible: old PDE tasks must carry something real into the new task, and the new task must be different enough to test that claim.
 
 ### Deep Learning
-- Problem: scientists often have examples of behavior but no short rule that predicts the next case
+- Problem: scientists have many measured examples but no formula that predicts the next case
 - Observed: many input-output examples from experiments, simulations, or measurements
 - Hidden: the exact rule that connects the input to the output
 - Plain formula: input example -> adjustable rule -> predicted answer -> error check
@@ -909,7 +909,7 @@
 - Final line: Deep learning trades a hand-written rule for an adjustable rule, so the proof burden moves to examples, tests, and the boundary of use.
 
 ### Scientific Machine Learning
-- Problem: scientific work needs predictions that respect measurements, equations, uncertainty, and domain limits at the same time
+- Problem: predictions must obey the physical laws that define the problem, not just fit the data
 - Observed: data, equations, units, simulation outputs, and domain limits
 - Hidden: which parts of the scientific system are missing, noisy, or too costly to compute directly
 - Plain formula: measurements + known rule + learned missing part -> checked scientific answer
@@ -926,7 +926,7 @@
 - Final line: Scientific machine learning is the discipline of saying which evidence is carried, which rule is kept, and which changed case can reject the claim.
 
 ### Optimization For Learning
-- Problem: learning needs a way to decide which model settings are better or worse
+- Problem: models need a way to measure progress so they know which settings are better or worse
 - Observed: a written score that says which model behavior is better or worse
 - Hidden: whether that score matches the scientific behavior the user actually cares about
 - Plain formula: current model -> error score -> change model -> check again
@@ -943,7 +943,7 @@
 - Final line: Optimization is not proof; it is a way to obey a written score, so the score must match the scientific burden.
 
 ### Generative Modeling
-- Problem: some tasks need many possible examples, not one predicted answer
+- Problem: some tasks need many plausible examples, not a single best prediction, to explore what's possible
 - Observed: examples of fields, molecules, flows, shapes, or other scientific objects
 - Hidden: the spread of possible valid objects beyond the examples
 - Plain formula: known conditions + variation -> candidate example -> realism and rule checks
@@ -960,7 +960,7 @@
 - Final line: Generative modeling is useful when many candidates matter, but each candidate still has to answer to the domain rule.
 
 ### Graphs And Geometric Learning
-- Problem: many scientific objects are not simple rows of numbers; their connections matter
+- Problem: molecules, proteins, and meshes have a shape and connections that rows of numbers throw away
 - Observed: objects with parts and connections, such as meshes, molecules, or interacting components
 - Hidden: which neighboring and long-range interactions control the scientific quantity
 - Plain formula: connected shape + local values -> relation-aware updates -> field or object answer
@@ -977,7 +977,7 @@
 - Final line: Graph and geometric learning starts from the fact that the scientific object is connected, rather than only listed.
 
 ### Attention For Scientific Fields
-- Problem: a local patch of a field may depend on faraway information, but looking everywhere can be expensive
+- Problem: a local spot in a field may depend on faraway information, but scanning everywhere costs too much
 - Observed: large fields where one location may depend on other locations
 - Hidden: which distant parts matter for the local prediction
 - Plain formula: current field part + relevant other parts -> weighted information -> updated field part
@@ -2210,140 +2210,140 @@
 ## Hand Polish Audit
 ### P2 Attention For Scientific Fields
 - Status: ready for hand polish
-- Supported claim: This page can claim that Attention For Scientific Fields is a route for this problem: a local patch of a field may depend on faraway information, but looking everywhere can be expensive
+- Supported claim: This page can claim that Attention For Scientific Fields is a route for this problem: a local spot in a field may depend on faraway information, but scanning everywhere costs too much
 - Overclaim to avoid: Do not claim that Attention For Scientific Fields works across large scientific fields where distant parts may interact without a changed-case test tied to the target quantity.
 - Stronger evidence needed: Use held-out measurements, trusted solves, changed boundaries, changed geometry, or changed regimes to test: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures
-- First rejection test: windowing or scaling choices can miss long-range effects that matter for the scientific quantity being predicted
+- First rejection test: when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted
 - Done when: A reviewer can retell the page as problem, evidence, hidden quantity, mathematical move, source limit, and changed-case rejection without adding outside jargon.
 - Topic: topics/attention-for-scientific-fields.html
 - Evidence packet: evidence-packets/attention-for-scientific-fields.html
 
 ### P2 Deep Learning
 - Status: ready for hand polish
-- Supported claim: This page can claim that Deep Learning is a route for this problem: scientists often have examples of behavior but no short rule that predicts the next case
+- Supported claim: This page can claim that Deep Learning is a route for this problem: scientists have many measured examples but no formula that predicts the next case
 - Overclaim to avoid: Do not claim that Deep Learning works across scientific prediction from large measured or simulated data sets without a changed-case test tied to the target quantity.
 - Stronger evidence needed: Use held-out measurements, trusted solves, changed boundaries, changed geometry, or changed regimes to test: hold out a changed material, geometry, parameter range, or sensor condition
-- First rejection test: the model can fit familiar examples while failing on a new material, geometry, scale, or boundary condition
+- First rejection test: trained model passes on familiar data but crashes on new material, boundary condition, or scale it never saw before
 - Done when: A reviewer can retell the page as problem, evidence, hidden quantity, mathematical move, source limit, and changed-case rejection without adding outside jargon.
 - Topic: topics/deep-learning.html
 - Evidence packet: evidence-packets/deep-learning.html
 
 ### P2 Foundation Models For PDEs
 - Status: ready for hand polish
-- Supported claim: This page can claim that Foundation Models For PDEs is a route for this problem: one trained model may be asked to handle many related equations, grids, parameters, or physical settings
+- Supported claim: This page can claim that Foundation Models For PDEs is a route for this problem: scientists train separate models for each PDE, each grid size, each parameter—expensive duplication
 - Overclaim to avoid: Do not claim that Foundation Models For PDEs works across broad families of PDE problems and scientific fields without a changed-case test tied to the target quantity.
 - Stronger evidence needed: Use held-out measurements, trusted solves, changed boundaries, changed geometry, or changed regimes to test: hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver
-- First rejection test: the model can look broad while missing rare regimes, new boundary conditions, or quantities not represented in training
+- First rejection test: the model trains on common cases and misses rare physical regimes, different boundary shapes, or unseen initial conditions
 - Done when: A reviewer can retell the page as problem, evidence, hidden quantity, mathematical move, source limit, and changed-case rejection without adding outside jargon.
 - Topic: topics/foundation-models-for-pdes.html
 - Evidence packet: evidence-packets/foundation-models-for-pdes.html
 
 ### P2 Generative Modeling
 - Status: ready for hand polish
-- Supported claim: This page can claim that Generative Modeling is a route for this problem: some tasks need many possible examples, not one predicted answer
+- Supported claim: This page can claim that Generative Modeling is a route for this problem: some tasks need many plausible examples, not a single best prediction, to explore what's possible
 - Overclaim to avoid: Do not claim that Generative Modeling works across creating plausible scientific samples, fields, or candidate designs without a changed-case test tied to the target quantity.
 - Stronger evidence needed: Use held-out measurements, trusted solves, changed boundaries, changed geometry, or changed regimes to test: measure constraints, rare cases, conservation, and downstream task performance on generated samples
-- First rejection test: generated samples can look realistic while breaking constraints, conservation, or rare-event behavior
+- First rejection test: a generated fluid flow looks smooth and realistic but conserves no mass; a design candidate is manufacturable in appearance but physically infeasible
 - Done when: A reviewer can retell the page as problem, evidence, hidden quantity, mathematical move, source limit, and changed-case rejection without adding outside jargon.
 - Topic: topics/generative-modeling.html
 - Evidence packet: evidence-packets/generative-modeling.html
 
 ### P2 Graphs And Geometric Learning
 - Status: ready for hand polish
-- Supported claim: This page can claim that Graphs And Geometric Learning is a route for this problem: many scientific objects are not simple rows of numbers; their connections matter
+- Supported claim: This page can claim that Graphs And Geometric Learning is a route for this problem: molecules, proteins, and meshes have a shape and connections that rows of numbers throw away
 - Overclaim to avoid: Do not claim that Graphs And Geometric Learning works across systems made of interacting parts, meshes, molecules, or spatial relations without a changed-case test tied to the target quantity.
 - Stronger evidence needed: Use held-out measurements, trusted solves, changed boundaries, changed geometry, or changed regimes to test: change the mesh, rotate or move the object, or add missing interactions and inspect what breaks
-- First rejection test: the graph can encode the wrong neighborhood, hide missing interactions, or fail when the mesh changes
+- First rejection test: if the graph misses a real bond or connection, or if parts of the shape rearrange and the model sees a stranger structure
 - Done when: A reviewer can retell the page as problem, evidence, hidden quantity, mathematical move, source limit, and changed-case rejection without adding outside jargon.
 - Topic: topics/graphs-and-geometric-learning.html
 - Evidence packet: evidence-packets/graphs-and-geometric-learning.html
 
 ### P2 Neural Differential Equations
 - Status: ready for hand polish
-- Supported claim: This page can claim that Neural Differential Equations is a route for this problem: scientists may know that a system changes continuously but not know the exact rule for that change
+- Supported claim: This page can claim that Neural Differential Equations is a route for this problem: scientists watch a system change over time but don't know the rule driving that change
 - Overclaim to avoid: Do not claim that Neural Differential Equations works across changing systems where time evolution is part of the model without a changed-case test tied to the target quantity.
 - Stronger evidence needed: Use held-out measurements, trusted solves, changed boundaries, changed geometry, or changed regimes to test: run longer than the training window and check whether small rate errors accumulate into drift
-- First rejection test: small learned-rate errors can accumulate until long-time predictions drift away from the real system
+- First rejection test: a small error in the learned rate, repeated over hundreds of time steps, pushes predictions into wildly wrong territory
 - Done when: A reviewer can retell the page as problem, evidence, hidden quantity, mathematical move, source limit, and changed-case rejection without adding outside jargon.
 - Topic: topics/neural-differential-equations.html
 - Evidence packet: evidence-packets/neural-differential-equations.html
 
 ### P2 Operator Learning
 - Status: ready for hand polish
-- Supported claim: This page can claim that Operator Learning is a route for this problem: one simulation answer is not enough when engineers need the whole map from inputs to solution fields
+- Supported claim: This page can claim that Operator Learning is a route for this problem: engineers need to predict all the fields (temperature, pressure, flow) across a space and time for many input cases, not just one
 - Overclaim to avoid: Do not claim that Operator Learning works across fast prediction for families of scientific simulations without a changed-case test tied to the target quantity.
 - Stronger evidence needed: Use held-out measurements, trusted solves, changed boundaries, changed geometry, or changed regimes to test: change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed
-- First rejection test: the learned map can give plausible-looking fields that violate the equation or fail on a shifted input family
+- First rejection test: the learned map produces plausible-looking fields that actually violate the physics or break when you shift the geometry
 - Done when: A reviewer can retell the page as problem, evidence, hidden quantity, mathematical move, source limit, and changed-case rejection without adding outside jargon.
 - Topic: topics/operator-learning.html
 - Evidence packet: evidence-packets/operator-learning.html
 
 ### P2 Optimization For Learning
 - Status: ready for hand polish
-- Supported claim: This page can claim that Optimization For Learning is a route for this problem: learning needs a way to decide which model settings are better or worse
+- Supported claim: This page can claim that Optimization For Learning is a route for this problem: models need a way to measure progress so they know which settings are better or worse
 - Overclaim to avoid: Do not claim that Optimization For Learning works across turning model fitting into a repeatable computation without a changed-case test tied to the target quantity.
 - Stronger evidence needed: Use held-out measurements, trusted solves, changed boundaries, changed geometry, or changed regimes to test: inspect what the score ignores, then check whether the ignored behavior fails after training
-- First rejection test: a model can optimize the written score while missing the scientific behavior the score failed to name
+- First rejection test: the score goes down while the model learns wrong physics, if the score missed the real constraint
 - Done when: A reviewer can retell the page as problem, evidence, hidden quantity, mathematical move, source limit, and changed-case rejection without adding outside jargon.
 - Topic: topics/optimization-for-learning.html
 - Evidence packet: evidence-packets/optimization-for-learning.html
 
 ### P2 Partial Differential Equations
 - Status: ready for hand polish
-- Supported claim: This page can claim that Partial Differential Equations is a route for this problem: a quantity changes over space and time, so one number is not enough to describe the situation
+- Supported claim: This page can claim that Partial Differential Equations is a route for this problem: a quantity changes over space and time, so one number is not enough to describe what's happening
 - Overclaim to avoid: Do not claim that Partial Differential Equations works across fluids, heat, waves, mechanics, chemistry, climate, and other changing fields without a changed-case test tied to the target quantity.
 - Stronger evidence needed: Use held-out measurements, trusted solves, changed boundaries, changed geometry, or changed regimes to test: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error
-- First rejection test: a learned shortcut can ignore boundary conditions or conservation behavior that the PDE was carrying
+- First rejection test: when data or learning skips the actual PDE constraints, it can ignore boundary conditions or conservation laws that the PDE was always enforcing
 - Done when: A reviewer can retell the page as problem, evidence, hidden quantity, mathematical move, source limit, and changed-case rejection without adding outside jargon.
 - Topic: topics/partial-differential-equations.html
 - Evidence packet: evidence-packets/partial-differential-equations.html
 
 ### P2 Physics-Informed Neural Networks
 - Status: ready for hand polish
-- Supported claim: This page can claim that Physics-Informed Neural Networks is a route for this problem: measurements may be sparse, but the answer must still respect a known physical equation
+- Supported claim: This page can claim that Physics-Informed Neural Networks is a route for this problem: sparse measurements from experiments, but the answer must obey known physical laws like gravity or heat flow
 - Overclaim to avoid: Do not claim that Physics-Informed Neural Networks works across differential equations in science and engineering without a changed-case test tied to the target quantity.
 - Stronger evidence needed: Use held-out measurements, trusted solves, changed boundaries, changed geometry, or changed regimes to test: move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements
-- First rejection test: the equation penalty can look small while the solution is wrong in hard regions, sharp layers, or unseen boundary cases
+- First rejection test: the penalty term hides small errors near boundaries, in thin layers, or where the real solution changes suddenly
 - Done when: A reviewer can retell the page as problem, evidence, hidden quantity, mathematical move, source limit, and changed-case rejection without adding outside jargon.
 - Topic: topics/physics-informed-neural-networks.html
 - Evidence packet: evidence-packets/physics-informed-neural-networks.html
 
 ### P2 Scientific Machine Learning
 - Status: ready for hand polish
-- Supported claim: This page can claim that Scientific Machine Learning is a route for this problem: scientific work needs predictions that respect measurements, equations, uncertainty, and domain limits at the same time
+- Supported claim: This page can claim that Scientific Machine Learning is a route for this problem: predictions must obey the physical laws that define the problem, not just fit the data
 - Overclaim to avoid: Do not claim that Scientific Machine Learning works across using data-driven models inside scientific workflows without a changed-case test tied to the target quantity.
 - Stronger evidence needed: Use held-out measurements, trusted solves, changed boundaries, changed geometry, or changed regimes to test: state the scientific quantity first, then test it under a changed case that matters in that domain
-- First rejection test: the method becomes a generic fitting tool if the physical quantity, scientific claim, and validation case are not named
+- First rejection test: if no clear equation or boundary condition exists, the network learns the data shape but not the underlying rule
 - Done when: A reviewer can retell the page as problem, evidence, hidden quantity, mathematical move, source limit, and changed-case rejection without adding outside jargon.
 - Topic: topics/scientific-machine-learning.html
 - Evidence packet: evidence-packets/scientific-machine-learning.html
 
 ### P2 Surrogate Modeling
 - Status: ready for hand polish
-- Supported claim: This page can claim that Surrogate Modeling is a route for this problem: a trusted simulator may be too slow to run for every design, control, or uncertainty question
+- Supported claim: This page can claim that Surrogate Modeling is a route for this problem: running a full simulation is too expensive to do for every design choice or question
 - Overclaim to avoid: Do not claim that Surrogate Modeling works across expensive simulation and design loops without a changed-case test tied to the target quantity.
 - Stronger evidence needed: Use held-out measurements, trusted solves, changed boundaries, changed geometry, or changed regimes to test: compare against the full solver on new cases near the edge of the intended use
-- First rejection test: speed can hide missing physics when the surrogate is used beyond the regime where it was checked
+- First rejection test: gives plausible-looking answers for inputs it never saw during training, with no warning that they are wrong
 - Done when: A reviewer can retell the page as problem, evidence, hidden quantity, mathematical move, source limit, and changed-case rejection without adding outside jargon.
 - Topic: topics/surrogate-modeling.html
 - Evidence packet: evidence-packets/surrogate-modeling.html
 
 ### P2 Symbolic Regression And Model Discovery
 - Status: ready for hand polish
-- Supported claim: This page can claim that Symbolic Regression And Model Discovery is a route for this problem: a scientist may need a readable equation, not only a model that predicts well
+- Supported claim: This page can claim that Symbolic Regression And Model Discovery is a route for this problem: a scientist may need a readable equation, not a numerical model that predicts but cannot be understood
 - Overclaim to avoid: Do not claim that Symbolic Regression And Model Discovery works across turning data into equations people can inspect without a changed-case test tied to the target quantity.
 - Stronger evidence needed: Use held-out measurements, trusted solves, changed boundaries, changed geometry, or changed regimes to test: remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts
-- First rejection test: a neat formula can fit the training data while using the wrong variables or failing on a changed experiment
+- First rejection test: a neat formula fits your lab's data perfectly but uses the wrong variables or breaks when conditions shift
 - Done when: A reviewer can retell the page as problem, evidence, hidden quantity, mathematical move, source limit, and changed-case rejection without adding outside jargon.
 - Topic: topics/symbolic-regression.html
 - Evidence packet: evidence-packets/symbolic-regression.html
 
 ### P2 Uncertainty And Generalization
 - Status: ready for hand polish
-- Supported claim: This page can claim that Uncertainty And Generalization is a route for this problem: a prediction is not enough unless the user knows when it should be believed
+- Supported claim: This page can claim that Uncertainty And Generalization is a route for this problem: a prediction from a model is only useful if you know under which conditions you should actually trust it
 - Overclaim to avoid: Do not claim that Uncertainty And Generalization works across model use under new conditions without a changed-case test tied to the target quantity.
 - Stronger evidence needed: Use held-out measurements, trusted solves, changed boundaries, changed geometry, or changed regimes to test: move one important condition outside the training range and measure the first failure
-- First rejection test: training error can look good while the model fails under a new geometry, parameter range, sensor, or physical regime
+- First rejection test: training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime
 - Done when: A reviewer can retell the page as problem, evidence, hidden quantity, mathematical move, source limit, and changed-case rejection without adding outside jargon.
 - Topic: topics/uncertainty-and-generalization.html
 - Evidence packet: evidence-packets/uncertainty-and-generalization.html
@@ -2403,7 +2403,7 @@
 
 ## Concept Ladder
 ### Deep Learning
-- Problem: scientists often have examples of behavior but no short rule that predicts the next case
+- Problem: scientists have many measured examples but no formula that predicts the next case
 - Observed: many input-output examples from experiments, simulations, or measurements
 - Hidden: the exact rule that connects the input to the output
 - Mathematical move: adjust many weights until the model maps familiar inputs to the right outputs
@@ -2411,7 +2411,7 @@
 - Failure test: hold out a changed material, geometry, parameter range, or sensor condition
 
 ### Physics-Informed Neural Networks
-- Problem: measurements may be sparse, but the answer must still respect a known physical equation
+- Problem: sparse measurements from experiments, but the answer must obey known physical laws like gravity or heat flow
 - Observed: some measured values, boundary values, starting values, and a known differential equation
 - Hidden: the full field value at every point in space and time
 - Mathematical move: fit a neural network while also measuring how badly its output violates the known equation
@@ -2419,7 +2419,7 @@
 - Failure test: move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements
 
 ### Partial Differential Equations
-- Problem: a quantity changes over space and time, so one number is not enough to describe the situation
+- Problem: a quantity changes over space and time, so one number is not enough to describe what's happening
 - Observed: a field such as temperature, pressure, concentration, velocity, or displacement
 - Hidden: how every point in the field affects nearby points over time
 - Mathematical move: write a local change rule that uses rates across space and time
@@ -2427,7 +2427,7 @@
 - Failure test: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error
 
 ### Operator Learning
-- Problem: one simulation answer is not enough when engineers need the whole map from inputs to solution fields
+- Problem: engineers need to predict all the fields (temperature, pressure, flow) across a space and time for many input cases, not just one
 - Observed: many example inputs and their full solution fields
 - Hidden: the rule that maps a new input field to its new solution field
 - Mathematical move: learn the map from problem input to solution, not only one solution at a time
@@ -2435,7 +2435,7 @@
 - Failure test: change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed
 
 ### Scientific Machine Learning
-- Problem: scientific work needs predictions that respect measurements, equations, uncertainty, and domain limits at the same time
+- Problem: predictions must obey the physical laws that define the problem, not just fit the data
 - Observed: data, equations, units, simulation outputs, and domain limits
 - Hidden: which parts of the scientific system are missing, noisy, or too costly to compute directly
 - Mathematical move: combine learned prediction with scientific checks that name what the claim is allowed to mean
@@ -2443,7 +2443,7 @@
 - Failure test: state the scientific quantity first, then test it under a changed case that matters in that domain
 
 ### Surrogate Modeling
-- Problem: a trusted simulator may be too slow to run for every design, control, or uncertainty question
+- Problem: running a full simulation is too expensive to do for every design choice or question
 - Observed: expensive solver inputs and outputs for a limited set of cases
 - Hidden: the solver answer for every new query someone wants to ask
 - Mathematical move: train a cheaper stand-in for the expensive input-output behavior
@@ -2451,7 +2451,7 @@
 - Failure test: compare against the full solver on new cases near the edge of the intended use
 
 ### Uncertainty And Generalization
-- Problem: a prediction is not enough unless the user knows when it should be believed
+- Problem: a prediction from a model is only useful if you know under which conditions you should actually trust it
 - Observed: training cases, validation cases, prediction errors, and known shifts between cases
 - Hidden: how wrong the model may be on a case unlike the ones it learned from
 - Mathematical move: separate fit on familiar examples from evidence on changed examples
@@ -2459,7 +2459,7 @@
 - Failure test: move one important condition outside the training range and measure the first failure
 
 ### Optimization For Learning
-- Problem: learning needs a way to decide which model settings are better or worse
+- Problem: models need a way to measure progress so they know which settings are better or worse
 - Observed: a written score that says which model behavior is better or worse
 - Hidden: whether that score matches the scientific behavior the user actually cares about
 - Mathematical move: change model settings to lower the written score
@@ -2467,7 +2467,7 @@
 - Failure test: inspect what the score ignores, then check whether the ignored behavior fails after training
 
 ### Generative Modeling
-- Problem: some tasks need many possible examples, not one predicted answer
+- Problem: some tasks need many plausible examples, not a single best prediction, to explore what's possible
 - Observed: examples of fields, molecules, flows, shapes, or other scientific objects
 - Hidden: the spread of possible valid objects beyond the examples
 - Mathematical move: learn how to sample new candidates that resemble the training family
@@ -2475,7 +2475,7 @@
 - Failure test: measure constraints, rare cases, conservation, and downstream task performance on generated samples
 
 ### Graphs And Geometric Learning
-- Problem: many scientific objects are not simple rows of numbers; their connections matter
+- Problem: molecules, proteins, and meshes have a shape and connections that rows of numbers throw away
 - Observed: objects with parts and connections, such as meshes, molecules, or interacting components
 - Hidden: which neighboring and long-range interactions control the scientific quantity
 - Mathematical move: let information move along the object connections instead of flattening the object into a plain row
@@ -2483,7 +2483,7 @@
 - Failure test: change the mesh, rotate or move the object, or add missing interactions and inspect what breaks
 
 ### Neural Differential Equations
-- Problem: scientists may know that a system changes continuously but not know the exact rule for that change
+- Problem: scientists watch a system change over time but don't know the rule driving that change
 - Observed: measurements of a system changing over time
 - Hidden: the rate rule that moves the present value into the future
 - Mathematical move: learn the missing rate rule and place it inside a time-evolution calculation
@@ -2491,7 +2491,7 @@
 - Failure test: run longer than the training window and check whether small rate errors accumulate into drift
 
 ### Symbolic Regression And Model Discovery
-- Problem: a scientist may need a readable equation, not only a model that predicts well
+- Problem: a scientist may need a readable equation, not a numerical model that predicts but cannot be understood
 - Observed: measured variables and candidate mathematical ingredients
 - Hidden: which short formula, if any, actually explains the measured change
 - Mathematical move: search for a readable equation that fits the data and survives a changed case
@@ -2499,7 +2499,7 @@
 - Failure test: remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts
 
 ### Foundation Models For PDEs
-- Problem: one trained model may be asked to handle many related equations, grids, parameters, or physical settings
+- Problem: scientists train separate models for each PDE, each grid size, each parameter—expensive duplication
 - Observed: many PDE problem instances across equations, grids, parameters, or physical settings
 - Hidden: which shared structure carries from one scientific task to another
 - Mathematical move: train one broad model to reuse structure across many related field-prediction tasks
@@ -2507,7 +2507,7 @@
 - Failure test: hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver
 
 ### Attention For Scientific Fields
-- Problem: a local patch of a field may depend on faraway information, but looking everywhere can be expensive
+- Problem: a local spot in a field may depend on faraway information, but scanning everywhere costs too much
 - Observed: large fields where one location may depend on other locations
 - Hidden: which distant parts matter for the local prediction
 - Mathematical move: let the model choose which parts of the field exchange information
@@ -2517,198 +2517,198 @@
 
 ## Concept Evidence Packets
 ### Deep Learning
-- Problem: scientists often have examples of behavior but no short rule that predicts the next case
+- Problem: scientists have many measured examples but no formula that predicts the next case
 - Domain: scientific prediction from large measured or simulated data sets
 - Evidence anchors: 6
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
 - Stronger proof needed: To trust the method, add evidence from a changed-case test in scientific prediction from large measured or simulated data sets, not only a lecture mention.
-- Transcript can support: The transcript can support that Deep Learning is taught as a way to address this shortage: scientists often have examples of behavior but no short rule that predicts the next case
+- Transcript can support: The transcript can support that Deep Learning is taught as a way to address this shortage: scientists have many measured examples but no formula that predicts the next case
 - Transcript cannot support: The transcript cannot prove that Deep Learning will work on every new case in scientific prediction from large measured or simulated data sets; that has to be tested on the target quantity.
 - Stronger validation needed: Run the idea on a changed case in scientific prediction from large measured or simulated data sets and compare the predicted quantity with trusted measurements, trusted solves, or a known conservation check.
-- First overclaim to reject: Reject any sentence saying Deep Learning is generally reliable before it survives this test: the model can fit familiar examples while failing on a new material, geometry, scale, or boundary condition
+- First overclaim to reject: Reject any sentence saying Deep Learning is generally reliable before it survives this test: trained model passes on familiar data but crashes on new material, boundary condition, or scale it never saw before
 - Reviewer action: Start from the selected source anchors, then ask whether the page's claim is no wider than this hidden need: the exact rule that connects the input to the output
 - Packet: evidence-packets/deep-learning.html
 
 ### Physics-Informed Neural Networks
-- Problem: measurements may be sparse, but the answer must still respect a known physical equation
+- Problem: sparse measurements from experiments, but the answer must obey known physical laws like gravity or heat flow
 - Domain: differential equations in science and engineering
 - Evidence anchors: 6
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
 - Stronger proof needed: To trust the method, add evidence from a changed-case test in differential equations in science and engineering, not only a lecture mention.
-- Transcript can support: The transcript can support that Physics-Informed Neural Networks is taught as a way to address this shortage: measurements may be sparse, but the answer must still respect a known physical equation
+- Transcript can support: The transcript can support that Physics-Informed Neural Networks is taught as a way to address this shortage: sparse measurements from experiments, but the answer must obey known physical laws like gravity or heat flow
 - Transcript cannot support: The transcript cannot prove that Physics-Informed Neural Networks will work on every new case in differential equations in science and engineering; that has to be tested on the target quantity.
 - Stronger validation needed: Run the idea on a changed case in differential equations in science and engineering and compare the predicted quantity with trusted measurements, trusted solves, or a known conservation check.
-- First overclaim to reject: Reject any sentence saying Physics-Informed Neural Networks is generally reliable before it survives this test: the equation penalty can look small while the solution is wrong in hard regions, sharp layers, or unseen boundary cases
+- First overclaim to reject: Reject any sentence saying Physics-Informed Neural Networks is generally reliable before it survives this test: the penalty term hides small errors near boundaries, in thin layers, or where the real solution changes suddenly
 - Reviewer action: Start from the selected source anchors, then ask whether the page's claim is no wider than this hidden need: the full field value at every point in space and time
 - Packet: evidence-packets/physics-informed-neural-networks.html
 
 ### Partial Differential Equations
-- Problem: a quantity changes over space and time, so one number is not enough to describe the situation
+- Problem: a quantity changes over space and time, so one number is not enough to describe what's happening
 - Domain: fluids, heat, waves, mechanics, chemistry, climate, and other changing fields
 - Evidence anchors: 6
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
 - Stronger proof needed: To trust the method, add evidence from a changed-case test in fluids, heat, waves, mechanics, chemistry, climate, and other changing fields, not only a lecture mention.
-- Transcript can support: The transcript can support that Partial Differential Equations is taught as a way to address this shortage: a quantity changes over space and time, so one number is not enough to describe the situation
+- Transcript can support: The transcript can support that Partial Differential Equations is taught as a way to address this shortage: a quantity changes over space and time, so one number is not enough to describe what's happening
 - Transcript cannot support: The transcript cannot prove that Partial Differential Equations will work on every new case in fluids, heat, waves, mechanics, chemistry, climate, and other changing fields; that has to be tested on the target quantity.
 - Stronger validation needed: Run the idea on a changed case in fluids, heat, waves, mechanics, chemistry, climate, and other changing fields and compare the predicted quantity with trusted measurements, trusted solves, or a known conservation check.
-- First overclaim to reject: Reject any sentence saying Partial Differential Equations is generally reliable before it survives this test: a learned shortcut can ignore boundary conditions or conservation behavior that the PDE was carrying
+- First overclaim to reject: Reject any sentence saying Partial Differential Equations is generally reliable before it survives this test: when data or learning skips the actual PDE constraints, it can ignore boundary conditions or conservation laws that the PDE was always enforcing
 - Reviewer action: Start from the selected source anchors, then ask whether the page's claim is no wider than this hidden need: how every point in the field affects nearby points over time
 - Packet: evidence-packets/partial-differential-equations.html
 
 ### Operator Learning
-- Problem: one simulation answer is not enough when engineers need the whole map from inputs to solution fields
+- Problem: engineers need to predict all the fields (temperature, pressure, flow) across a space and time for many input cases, not just one
 - Domain: fast prediction for families of scientific simulations
 - Evidence anchors: 6
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
 - Stronger proof needed: To trust the method, add evidence from a changed-case test in fast prediction for families of scientific simulations, not only a lecture mention.
-- Transcript can support: The transcript can support that Operator Learning is taught as a way to address this shortage: one simulation answer is not enough when engineers need the whole map from inputs to solution fields
+- Transcript can support: The transcript can support that Operator Learning is taught as a way to address this shortage: engineers need to predict all the fields (temperature, pressure, flow) across a space and time for many input cases, not just one
 - Transcript cannot support: The transcript cannot prove that Operator Learning will work on every new case in fast prediction for families of scientific simulations; that has to be tested on the target quantity.
 - Stronger validation needed: Run the idea on a changed case in fast prediction for families of scientific simulations and compare the predicted quantity with trusted measurements, trusted solves, or a known conservation check.
-- First overclaim to reject: Reject any sentence saying Operator Learning is generally reliable before it survives this test: the learned map can give plausible-looking fields that violate the equation or fail on a shifted input family
+- First overclaim to reject: Reject any sentence saying Operator Learning is generally reliable before it survives this test: the learned map produces plausible-looking fields that actually violate the physics or break when you shift the geometry
 - Reviewer action: Start from the selected source anchors, then ask whether the page's claim is no wider than this hidden need: the rule that maps a new input field to its new solution field
 - Packet: evidence-packets/operator-learning.html
 
 ### Scientific Machine Learning
-- Problem: scientific work needs predictions that respect measurements, equations, uncertainty, and domain limits at the same time
+- Problem: predictions must obey the physical laws that define the problem, not just fit the data
 - Domain: using data-driven models inside scientific workflows
 - Evidence anchors: 6
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
 - Stronger proof needed: To trust the method, add evidence from a changed-case test in using data-driven models inside scientific workflows, not only a lecture mention.
-- Transcript can support: The transcript can support that Scientific Machine Learning is taught as a way to address this shortage: scientific work needs predictions that respect measurements, equations, uncertainty, and domain limits at the same time
+- Transcript can support: The transcript can support that Scientific Machine Learning is taught as a way to address this shortage: predictions must obey the physical laws that define the problem, not just fit the data
 - Transcript cannot support: The transcript cannot prove that Scientific Machine Learning will work on every new case in using data-driven models inside scientific workflows; that has to be tested on the target quantity.
 - Stronger validation needed: Run the idea on a changed case in using data-driven models inside scientific workflows and compare the predicted quantity with trusted measurements, trusted solves, or a known conservation check.
-- First overclaim to reject: Reject any sentence saying Scientific Machine Learning is generally reliable before it survives this test: the method becomes a generic fitting tool if the physical quantity, scientific claim, and validation case are not named
+- First overclaim to reject: Reject any sentence saying Scientific Machine Learning is generally reliable before it survives this test: if no clear equation or boundary condition exists, the network learns the data shape but not the underlying rule
 - Reviewer action: Start from the selected source anchors, then ask whether the page's claim is no wider than this hidden need: which parts of the scientific system are missing, noisy, or too costly to compute directly
 - Packet: evidence-packets/scientific-machine-learning.html
 
 ### Surrogate Modeling
-- Problem: a trusted simulator may be too slow to run for every design, control, or uncertainty question
+- Problem: running a full simulation is too expensive to do for every design choice or question
 - Domain: expensive simulation and design loops
 - Evidence anchors: 6
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
 - Stronger proof needed: To trust the method, add evidence from a changed-case test in expensive simulation and design loops, not only a lecture mention.
-- Transcript can support: The transcript can support that Surrogate Modeling is taught as a way to address this shortage: a trusted simulator may be too slow to run for every design, control, or uncertainty question
+- Transcript can support: The transcript can support that Surrogate Modeling is taught as a way to address this shortage: running a full simulation is too expensive to do for every design choice or question
 - Transcript cannot support: The transcript cannot prove that Surrogate Modeling will work on every new case in expensive simulation and design loops; that has to be tested on the target quantity.
 - Stronger validation needed: Run the idea on a changed case in expensive simulation and design loops and compare the predicted quantity with trusted measurements, trusted solves, or a known conservation check.
-- First overclaim to reject: Reject any sentence saying Surrogate Modeling is generally reliable before it survives this test: speed can hide missing physics when the surrogate is used beyond the regime where it was checked
+- First overclaim to reject: Reject any sentence saying Surrogate Modeling is generally reliable before it survives this test: gives plausible-looking answers for inputs it never saw during training, with no warning that they are wrong
 - Reviewer action: Start from the selected source anchors, then ask whether the page's claim is no wider than this hidden need: the solver answer for every new query someone wants to ask
 - Packet: evidence-packets/surrogate-modeling.html
 
 ### Uncertainty And Generalization
-- Problem: a prediction is not enough unless the user knows when it should be believed
+- Problem: a prediction from a model is only useful if you know under which conditions you should actually trust it
 - Domain: model use under new conditions
 - Evidence anchors: 6
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
 - Stronger proof needed: To trust the method, add evidence from a changed-case test in model use under new conditions, not only a lecture mention.
-- Transcript can support: The transcript can support that Uncertainty And Generalization is taught as a way to address this shortage: a prediction is not enough unless the user knows when it should be believed
+- Transcript can support: The transcript can support that Uncertainty And Generalization is taught as a way to address this shortage: a prediction from a model is only useful if you know under which conditions you should actually trust it
 - Transcript cannot support: The transcript cannot prove that Uncertainty And Generalization will work on every new case in model use under new conditions; that has to be tested on the target quantity.
 - Stronger validation needed: Run the idea on a changed case in model use under new conditions and compare the predicted quantity with trusted measurements, trusted solves, or a known conservation check.
-- First overclaim to reject: Reject any sentence saying Uncertainty And Generalization is generally reliable before it survives this test: training error can look good while the model fails under a new geometry, parameter range, sensor, or physical regime
+- First overclaim to reject: Reject any sentence saying Uncertainty And Generalization is generally reliable before it survives this test: training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime
 - Reviewer action: Start from the selected source anchors, then ask whether the page's claim is no wider than this hidden need: how wrong the model may be on a case unlike the ones it learned from
 - Packet: evidence-packets/uncertainty-and-generalization.html
 
 ### Optimization For Learning
-- Problem: learning needs a way to decide which model settings are better or worse
+- Problem: models need a way to measure progress so they know which settings are better or worse
 - Domain: turning model fitting into a repeatable computation
 - Evidence anchors: 6
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
 - Stronger proof needed: To trust the method, add evidence from a changed-case test in turning model fitting into a repeatable computation, not only a lecture mention.
-- Transcript can support: The transcript can support that Optimization For Learning is taught as a way to address this shortage: learning needs a way to decide which model settings are better or worse
+- Transcript can support: The transcript can support that Optimization For Learning is taught as a way to address this shortage: models need a way to measure progress so they know which settings are better or worse
 - Transcript cannot support: The transcript cannot prove that Optimization For Learning will work on every new case in turning model fitting into a repeatable computation; that has to be tested on the target quantity.
 - Stronger validation needed: Run the idea on a changed case in turning model fitting into a repeatable computation and compare the predicted quantity with trusted measurements, trusted solves, or a known conservation check.
-- First overclaim to reject: Reject any sentence saying Optimization For Learning is generally reliable before it survives this test: a model can optimize the written score while missing the scientific behavior the score failed to name
+- First overclaim to reject: Reject any sentence saying Optimization For Learning is generally reliable before it survives this test: the score goes down while the model learns wrong physics, if the score missed the real constraint
 - Reviewer action: Start from the selected source anchors, then ask whether the page's claim is no wider than this hidden need: whether that score matches the scientific behavior the user actually cares about
 - Packet: evidence-packets/optimization-for-learning.html
 
 ### Generative Modeling
-- Problem: some tasks need many possible examples, not one predicted answer
+- Problem: some tasks need many plausible examples, not a single best prediction, to explore what's possible
 - Domain: creating plausible scientific samples, fields, or candidate designs
 - Evidence anchors: 6
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
 - Stronger proof needed: To trust the method, add evidence from a changed-case test in creating plausible scientific samples, fields, or candidate designs, not only a lecture mention.
-- Transcript can support: The transcript can support that Generative Modeling is taught as a way to address this shortage: some tasks need many possible examples, not one predicted answer
+- Transcript can support: The transcript can support that Generative Modeling is taught as a way to address this shortage: some tasks need many plausible examples, not a single best prediction, to explore what's possible
 - Transcript cannot support: The transcript cannot prove that Generative Modeling will work on every new case in creating plausible scientific samples, fields, or candidate designs; that has to be tested on the target quantity.
 - Stronger validation needed: Run the idea on a changed case in creating plausible scientific samples, fields, or candidate designs and compare the predicted quantity with trusted measurements, trusted solves, or a known conservation check.
-- First overclaim to reject: Reject any sentence saying Generative Modeling is generally reliable before it survives this test: generated samples can look realistic while breaking constraints, conservation, or rare-event behavior
+- First overclaim to reject: Reject any sentence saying Generative Modeling is generally reliable before it survives this test: a generated fluid flow looks smooth and realistic but conserves no mass; a design candidate is manufacturable in appearance but physically infeasible
 - Reviewer action: Start from the selected source anchors, then ask whether the page's claim is no wider than this hidden need: the spread of possible valid objects beyond the examples
 - Packet: evidence-packets/generative-modeling.html
 
 ### Graphs And Geometric Learning
-- Problem: many scientific objects are not simple rows of numbers; their connections matter
+- Problem: molecules, proteins, and meshes have a shape and connections that rows of numbers throw away
 - Domain: systems made of interacting parts, meshes, molecules, or spatial relations
 - Evidence anchors: 6
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
 - Stronger proof needed: To trust the method, add evidence from a changed-case test in systems made of interacting parts, meshes, molecules, or spatial relations, not only a lecture mention.
-- Transcript can support: The transcript can support that Graphs And Geometric Learning is taught as a way to address this shortage: many scientific objects are not simple rows of numbers; their connections matter
+- Transcript can support: The transcript can support that Graphs And Geometric Learning is taught as a way to address this shortage: molecules, proteins, and meshes have a shape and connections that rows of numbers throw away
 - Transcript cannot support: The transcript cannot prove that Graphs And Geometric Learning will work on every new case in systems made of interacting parts, meshes, molecules, or spatial relations; that has to be tested on the target quantity.
 - Stronger validation needed: Run the idea on a changed case in systems made of interacting parts, meshes, molecules, or spatial relations and compare the predicted quantity with trusted measurements, trusted solves, or a known conservation check.
-- First overclaim to reject: Reject any sentence saying Graphs And Geometric Learning is generally reliable before it survives this test: the graph can encode the wrong neighborhood, hide missing interactions, or fail when the mesh changes
+- First overclaim to reject: Reject any sentence saying Graphs And Geometric Learning is generally reliable before it survives this test: if the graph misses a real bond or connection, or if parts of the shape rearrange and the model sees a stranger structure
 - Reviewer action: Start from the selected source anchors, then ask whether the page's claim is no wider than this hidden need: which neighboring and long-range interactions control the scientific quantity
 - Packet: evidence-packets/graphs-and-geometric-learning.html
 
 ### Neural Differential Equations
-- Problem: scientists may know that a system changes continuously but not know the exact rule for that change
+- Problem: scientists watch a system change over time but don't know the rule driving that change
 - Domain: changing systems where time evolution is part of the model
 - Evidence anchors: 6
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
 - Stronger proof needed: To trust the method, add evidence from a changed-case test in changing systems where time evolution is part of the model, not only a lecture mention.
-- Transcript can support: The transcript can support that Neural Differential Equations is taught as a way to address this shortage: scientists may know that a system changes continuously but not know the exact rule for that change
+- Transcript can support: The transcript can support that Neural Differential Equations is taught as a way to address this shortage: scientists watch a system change over time but don't know the rule driving that change
 - Transcript cannot support: The transcript cannot prove that Neural Differential Equations will work on every new case in changing systems where time evolution is part of the model; that has to be tested on the target quantity.
 - Stronger validation needed: Run the idea on a changed case in changing systems where time evolution is part of the model and compare the predicted quantity with trusted measurements, trusted solves, or a known conservation check.
-- First overclaim to reject: Reject any sentence saying Neural Differential Equations is generally reliable before it survives this test: small learned-rate errors can accumulate until long-time predictions drift away from the real system
+- First overclaim to reject: Reject any sentence saying Neural Differential Equations is generally reliable before it survives this test: a small error in the learned rate, repeated over hundreds of time steps, pushes predictions into wildly wrong territory
 - Reviewer action: Start from the selected source anchors, then ask whether the page's claim is no wider than this hidden need: the rate rule that moves the present value into the future
 - Packet: evidence-packets/neural-differential-equations.html
 
 ### Symbolic Regression And Model Discovery
-- Problem: a scientist may need a readable equation, not only a model that predicts well
+- Problem: a scientist may need a readable equation, not a numerical model that predicts but cannot be understood
 - Domain: turning data into equations people can inspect
 - Evidence anchors: 6
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
 - Stronger proof needed: To trust the method, add evidence from a changed-case test in turning data into equations people can inspect, not only a lecture mention.
-- Transcript can support: The transcript can support that Symbolic Regression And Model Discovery is taught as a way to address this shortage: a scientist may need a readable equation, not only a model that predicts well
+- Transcript can support: The transcript can support that Symbolic Regression And Model Discovery is taught as a way to address this shortage: a scientist may need a readable equation, not a numerical model that predicts but cannot be understood
 - Transcript cannot support: The transcript cannot prove that Symbolic Regression And Model Discovery will work on every new case in turning data into equations people can inspect; that has to be tested on the target quantity.
 - Stronger validation needed: Run the idea on a changed case in turning data into equations people can inspect and compare the predicted quantity with trusted measurements, trusted solves, or a known conservation check.
-- First overclaim to reject: Reject any sentence saying Symbolic Regression And Model Discovery is generally reliable before it survives this test: a neat formula can fit the training data while using the wrong variables or failing on a changed experiment
+- First overclaim to reject: Reject any sentence saying Symbolic Regression And Model Discovery is generally reliable before it survives this test: a neat formula fits your lab's data perfectly but uses the wrong variables or breaks when conditions shift
 - Reviewer action: Start from the selected source anchors, then ask whether the page's claim is no wider than this hidden need: which short formula, if any, actually explains the measured change
 - Packet: evidence-packets/symbolic-regression.html
 
 ### Foundation Models For PDEs
-- Problem: one trained model may be asked to handle many related equations, grids, parameters, or physical settings
+- Problem: scientists train separate models for each PDE, each grid size, each parameter—expensive duplication
 - Domain: broad families of PDE problems and scientific fields
 - Evidence anchors: 6
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
 - Stronger proof needed: To trust the method, add evidence from a changed-case test in broad families of PDE problems and scientific fields, not only a lecture mention.
-- Transcript can support: The transcript can support that Foundation Models For PDEs is taught as a way to address this shortage: one trained model may be asked to handle many related equations, grids, parameters, or physical settings
+- Transcript can support: The transcript can support that Foundation Models For PDEs is taught as a way to address this shortage: scientists train separate models for each PDE, each grid size, each parameter—expensive duplication
 - Transcript cannot support: The transcript cannot prove that Foundation Models For PDEs will work on every new case in broad families of PDE problems and scientific fields; that has to be tested on the target quantity.
 - Stronger validation needed: Run the idea on a changed case in broad families of PDE problems and scientific fields and compare the predicted quantity with trusted measurements, trusted solves, or a known conservation check.
-- First overclaim to reject: Reject any sentence saying Foundation Models For PDEs is generally reliable before it survives this test: the model can look broad while missing rare regimes, new boundary conditions, or quantities not represented in training
+- First overclaim to reject: Reject any sentence saying Foundation Models For PDEs is generally reliable before it survives this test: the model trains on common cases and misses rare physical regimes, different boundary shapes, or unseen initial conditions
 - Reviewer action: Start from the selected source anchors, then ask whether the page's claim is no wider than this hidden need: which shared structure carries from one scientific task to another
 - Packet: evidence-packets/foundation-models-for-pdes.html
 
 ### Attention For Scientific Fields
-- Problem: a local patch of a field may depend on faraway information, but looking everywhere can be expensive
+- Problem: a local spot in a field may depend on faraway information, but scanning everywhere costs too much
 - Domain: large scientific fields where distant parts may interact
 - Evidence anchors: 6
 - Reviewed source anchors: 2
 - Broad transcript mentions: 4
 - Stronger proof needed: To trust the method, add evidence from a changed-case test in large scientific fields where distant parts may interact, not only a lecture mention.
-- Transcript can support: The transcript can support that Attention For Scientific Fields is taught as a way to address this shortage: a local patch of a field may depend on faraway information, but looking everywhere can be expensive
+- Transcript can support: The transcript can support that Attention For Scientific Fields is taught as a way to address this shortage: a local spot in a field may depend on faraway information, but scanning everywhere costs too much
 - Transcript cannot support: The transcript cannot prove that Attention For Scientific Fields will work on every new case in large scientific fields where distant parts may interact; that has to be tested on the target quantity.
 - Stronger validation needed: Run the idea on a changed case in large scientific fields where distant parts may interact and compare the predicted quantity with trusted measurements, trusted solves, or a known conservation check.
-- First overclaim to reject: Reject any sentence saying Attention For Scientific Fields is generally reliable before it survives this test: windowing or scaling choices can miss long-range effects that matter for the scientific quantity being predicted
+- First overclaim to reject: Reject any sentence saying Attention For Scientific Fields is generally reliable before it survives this test: when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted
 - Reviewer action: Start from the selected source anchors, then ask whether the page's claim is no wider than this hidden need: which distant parts matter for the local prediction
 - Packet: evidence-packets/attention-for-scientific-fields.html
 
@@ -3208,7 +3208,7 @@
 
 ## Meaty Goal Coverage Audit
 ### Deep Learning
-- Common problem: scientists often have examples of behavior but no short rule that predicts the next case
+- Common problem: scientists have many measured examples but no formula that predicts the next case
 - Missing items: none
 - Present required parts: First Principles, Big Picture Claim Chain, Explanation Order, Why Care Before Terms, Workday Decision Rehearsal, Sounds-Right Filter, Draw Before Math, Start-Here Gate, Skeptical Reader Proof, Oral Explanation Script, Before-After Decision, Outside-Classroom Use, Learner Notebook Note, Tiny Invented Case, End-To-End Use Protocol, Before The Math Slow Walk, Teach From Zero, Application Claim Ladder, Field Decision Story, Plain Question To Answer Script, Know And Still Test, Failure Consequence, Slow Problem Shape Bridge, Plain Big Picture Essay, Slow Importance Essay, Long Everyday Importance Essay, Across Fields Long Walk, Daily Work Importance Story, Why Not Simpler Answer, Self-Diagnosis Check, From Scratch Story, No-Jargon Translation, Everyday Vocabulary Bridge, Plain Retell Drill, Field Transfer Check, New Case Transfer Rehearsal, Wrong Path Repair, Confusion To Clarity, Course Bridge, Use Or Refuse Gate, Final Learner Proof, Teach Someone Handoff, Topology Shape Story, One-Page Mental Model, Next-Day Memory Check, Nearby Topic Comparison, Math Shape Rehearsal, Source-To-Claim Boundary, Field Mini Cases, Hand Teaching Note, Case Walkthrough, Course Role, Concept Connections, Belief Evidence, Domain Fit, Shape Follows, Formula Terms, Worked Example, Wrong-Use Example, Breaks Without Idea, Failure Boundary, Source Anchors, Reader Check, Reader Answer Parts, Say It Back Check, Reader Mistake Audit, Misread Repair Drill, Plain-Language Audit, Acceptance Sentence
 - Topic: topics/deep-learning.html
@@ -3216,7 +3216,7 @@
 - Reader check: reader-checks/deep-learning-check.html
 
 ### Physics-Informed Neural Networks
-- Common problem: measurements may be sparse, but the answer must still respect a known physical equation
+- Common problem: sparse measurements from experiments, but the answer must obey known physical laws like gravity or heat flow
 - Missing items: none
 - Present required parts: First Principles, Big Picture Claim Chain, Explanation Order, Why Care Before Terms, Workday Decision Rehearsal, Sounds-Right Filter, Draw Before Math, Start-Here Gate, Skeptical Reader Proof, Oral Explanation Script, Before-After Decision, Outside-Classroom Use, Learner Notebook Note, Tiny Invented Case, End-To-End Use Protocol, Before The Math Slow Walk, Teach From Zero, Application Claim Ladder, Field Decision Story, Plain Question To Answer Script, Know And Still Test, Failure Consequence, Slow Problem Shape Bridge, Plain Big Picture Essay, Slow Importance Essay, Long Everyday Importance Essay, Across Fields Long Walk, Daily Work Importance Story, Why Not Simpler Answer, Self-Diagnosis Check, From Scratch Story, No-Jargon Translation, Everyday Vocabulary Bridge, Plain Retell Drill, Field Transfer Check, New Case Transfer Rehearsal, Wrong Path Repair, Confusion To Clarity, Course Bridge, Use Or Refuse Gate, Final Learner Proof, Teach Someone Handoff, Topology Shape Story, One-Page Mental Model, Next-Day Memory Check, Nearby Topic Comparison, Math Shape Rehearsal, Source-To-Claim Boundary, Field Mini Cases, Hand Teaching Note, Case Walkthrough, Course Role, Concept Connections, Belief Evidence, Domain Fit, Shape Follows, Formula Terms, Worked Example, Wrong-Use Example, Breaks Without Idea, Failure Boundary, Source Anchors, Reader Check, Reader Answer Parts, Say It Back Check, Reader Mistake Audit, Misread Repair Drill, Plain-Language Audit, Acceptance Sentence
 - Topic: topics/physics-informed-neural-networks.html
@@ -3224,7 +3224,7 @@
 - Reader check: reader-checks/pinns-check.html
 
 ### Partial Differential Equations
-- Common problem: a quantity changes over space and time, so one number is not enough to describe the situation
+- Common problem: a quantity changes over space and time, so one number is not enough to describe what's happening
 - Missing items: none
 - Present required parts: First Principles, Big Picture Claim Chain, Explanation Order, Why Care Before Terms, Workday Decision Rehearsal, Sounds-Right Filter, Draw Before Math, Start-Here Gate, Skeptical Reader Proof, Oral Explanation Script, Before-After Decision, Outside-Classroom Use, Learner Notebook Note, Tiny Invented Case, End-To-End Use Protocol, Before The Math Slow Walk, Teach From Zero, Application Claim Ladder, Field Decision Story, Plain Question To Answer Script, Know And Still Test, Failure Consequence, Slow Problem Shape Bridge, Plain Big Picture Essay, Slow Importance Essay, Long Everyday Importance Essay, Across Fields Long Walk, Daily Work Importance Story, Why Not Simpler Answer, Self-Diagnosis Check, From Scratch Story, No-Jargon Translation, Everyday Vocabulary Bridge, Plain Retell Drill, Field Transfer Check, New Case Transfer Rehearsal, Wrong Path Repair, Confusion To Clarity, Course Bridge, Use Or Refuse Gate, Final Learner Proof, Teach Someone Handoff, Topology Shape Story, One-Page Mental Model, Next-Day Memory Check, Nearby Topic Comparison, Math Shape Rehearsal, Source-To-Claim Boundary, Field Mini Cases, Hand Teaching Note, Case Walkthrough, Course Role, Concept Connections, Belief Evidence, Domain Fit, Shape Follows, Formula Terms, Worked Example, Wrong-Use Example, Breaks Without Idea, Failure Boundary, Source Anchors, Reader Check, Reader Answer Parts, Say It Back Check, Reader Mistake Audit, Misread Repair Drill, Plain-Language Audit, Acceptance Sentence
 - Topic: topics/partial-differential-equations.html
@@ -3232,7 +3232,7 @@
 - Reader check: reader-checks/partial-differential-equations-check.html
 
 ### Operator Learning
-- Common problem: one simulation answer is not enough when engineers need the whole map from inputs to solution fields
+- Common problem: engineers need to predict all the fields (temperature, pressure, flow) across a space and time for many input cases, not just one
 - Missing items: none
 - Present required parts: First Principles, Big Picture Claim Chain, Explanation Order, Why Care Before Terms, Workday Decision Rehearsal, Sounds-Right Filter, Draw Before Math, Start-Here Gate, Skeptical Reader Proof, Oral Explanation Script, Before-After Decision, Outside-Classroom Use, Learner Notebook Note, Tiny Invented Case, End-To-End Use Protocol, Before The Math Slow Walk, Teach From Zero, Application Claim Ladder, Field Decision Story, Plain Question To Answer Script, Know And Still Test, Failure Consequence, Slow Problem Shape Bridge, Plain Big Picture Essay, Slow Importance Essay, Long Everyday Importance Essay, Across Fields Long Walk, Daily Work Importance Story, Why Not Simpler Answer, Self-Diagnosis Check, From Scratch Story, No-Jargon Translation, Everyday Vocabulary Bridge, Plain Retell Drill, Field Transfer Check, New Case Transfer Rehearsal, Wrong Path Repair, Confusion To Clarity, Course Bridge, Use Or Refuse Gate, Final Learner Proof, Teach Someone Handoff, Topology Shape Story, One-Page Mental Model, Next-Day Memory Check, Nearby Topic Comparison, Math Shape Rehearsal, Source-To-Claim Boundary, Field Mini Cases, Hand Teaching Note, Case Walkthrough, Course Role, Concept Connections, Belief Evidence, Domain Fit, Shape Follows, Formula Terms, Worked Example, Wrong-Use Example, Breaks Without Idea, Failure Boundary, Source Anchors, Reader Check, Reader Answer Parts, Say It Back Check, Reader Mistake Audit, Misread Repair Drill, Plain-Language Audit, Acceptance Sentence
 - Topic: topics/operator-learning.html
@@ -3240,7 +3240,7 @@
 - Reader check: reader-checks/operator-learning-check.html
 
 ### Scientific Machine Learning
-- Common problem: scientific work needs predictions that respect measurements, equations, uncertainty, and domain limits at the same time
+- Common problem: predictions must obey the physical laws that define the problem, not just fit the data
 - Missing items: none
 - Present required parts: First Principles, Big Picture Claim Chain, Explanation Order, Why Care Before Terms, Workday Decision Rehearsal, Sounds-Right Filter, Draw Before Math, Start-Here Gate, Skeptical Reader Proof, Oral Explanation Script, Before-After Decision, Outside-Classroom Use, Learner Notebook Note, Tiny Invented Case, End-To-End Use Protocol, Before The Math Slow Walk, Teach From Zero, Application Claim Ladder, Field Decision Story, Plain Question To Answer Script, Know And Still Test, Failure Consequence, Slow Problem Shape Bridge, Plain Big Picture Essay, Slow Importance Essay, Long Everyday Importance Essay, Across Fields Long Walk, Daily Work Importance Story, Why Not Simpler Answer, Self-Diagnosis Check, From Scratch Story, No-Jargon Translation, Everyday Vocabulary Bridge, Plain Retell Drill, Field Transfer Check, New Case Transfer Rehearsal, Wrong Path Repair, Confusion To Clarity, Course Bridge, Use Or Refuse Gate, Final Learner Proof, Teach Someone Handoff, Topology Shape Story, One-Page Mental Model, Next-Day Memory Check, Nearby Topic Comparison, Math Shape Rehearsal, Source-To-Claim Boundary, Field Mini Cases, Hand Teaching Note, Case Walkthrough, Course Role, Concept Connections, Belief Evidence, Domain Fit, Shape Follows, Formula Terms, Worked Example, Wrong-Use Example, Breaks Without Idea, Failure Boundary, Source Anchors, Reader Check, Reader Answer Parts, Say It Back Check, Reader Mistake Audit, Misread Repair Drill, Plain-Language Audit, Acceptance Sentence
 - Topic: topics/scientific-machine-learning.html
@@ -3248,7 +3248,7 @@
 - Reader check: reader-checks/scientific-machine-learning-check.html
 
 ### Surrogate Modeling
-- Common problem: a trusted simulator may be too slow to run for every design, control, or uncertainty question
+- Common problem: running a full simulation is too expensive to do for every design choice or question
 - Missing items: none
 - Present required parts: First Principles, Big Picture Claim Chain, Explanation Order, Why Care Before Terms, Workday Decision Rehearsal, Sounds-Right Filter, Draw Before Math, Start-Here Gate, Skeptical Reader Proof, Oral Explanation Script, Before-After Decision, Outside-Classroom Use, Learner Notebook Note, Tiny Invented Case, End-To-End Use Protocol, Before The Math Slow Walk, Teach From Zero, Application Claim Ladder, Field Decision Story, Plain Question To Answer Script, Know And Still Test, Failure Consequence, Slow Problem Shape Bridge, Plain Big Picture Essay, Slow Importance Essay, Long Everyday Importance Essay, Across Fields Long Walk, Daily Work Importance Story, Why Not Simpler Answer, Self-Diagnosis Check, From Scratch Story, No-Jargon Translation, Everyday Vocabulary Bridge, Plain Retell Drill, Field Transfer Check, New Case Transfer Rehearsal, Wrong Path Repair, Confusion To Clarity, Course Bridge, Use Or Refuse Gate, Final Learner Proof, Teach Someone Handoff, Topology Shape Story, One-Page Mental Model, Next-Day Memory Check, Nearby Topic Comparison, Math Shape Rehearsal, Source-To-Claim Boundary, Field Mini Cases, Hand Teaching Note, Case Walkthrough, Course Role, Concept Connections, Belief Evidence, Domain Fit, Shape Follows, Formula Terms, Worked Example, Wrong-Use Example, Breaks Without Idea, Failure Boundary, Source Anchors, Reader Check, Reader Answer Parts, Say It Back Check, Reader Mistake Audit, Misread Repair Drill, Plain-Language Audit, Acceptance Sentence
 - Topic: topics/surrogate-modeling.html
@@ -3256,7 +3256,7 @@
 - Reader check: reader-checks/surrogate-check.html
 
 ### Uncertainty And Generalization
-- Common problem: a prediction is not enough unless the user knows when it should be believed
+- Common problem: a prediction from a model is only useful if you know under which conditions you should actually trust it
 - Missing items: none
 - Present required parts: First Principles, Big Picture Claim Chain, Explanation Order, Why Care Before Terms, Workday Decision Rehearsal, Sounds-Right Filter, Draw Before Math, Start-Here Gate, Skeptical Reader Proof, Oral Explanation Script, Before-After Decision, Outside-Classroom Use, Learner Notebook Note, Tiny Invented Case, End-To-End Use Protocol, Before The Math Slow Walk, Teach From Zero, Application Claim Ladder, Field Decision Story, Plain Question To Answer Script, Know And Still Test, Failure Consequence, Slow Problem Shape Bridge, Plain Big Picture Essay, Slow Importance Essay, Long Everyday Importance Essay, Across Fields Long Walk, Daily Work Importance Story, Why Not Simpler Answer, Self-Diagnosis Check, From Scratch Story, No-Jargon Translation, Everyday Vocabulary Bridge, Plain Retell Drill, Field Transfer Check, New Case Transfer Rehearsal, Wrong Path Repair, Confusion To Clarity, Course Bridge, Use Or Refuse Gate, Final Learner Proof, Teach Someone Handoff, Topology Shape Story, One-Page Mental Model, Next-Day Memory Check, Nearby Topic Comparison, Math Shape Rehearsal, Source-To-Claim Boundary, Field Mini Cases, Hand Teaching Note, Case Walkthrough, Course Role, Concept Connections, Belief Evidence, Domain Fit, Shape Follows, Formula Terms, Worked Example, Wrong-Use Example, Breaks Without Idea, Failure Boundary, Source Anchors, Reader Check, Reader Answer Parts, Say It Back Check, Reader Mistake Audit, Misread Repair Drill, Plain-Language Audit, Acceptance Sentence
 - Topic: topics/uncertainty-and-generalization.html
@@ -3264,7 +3264,7 @@
 - Reader check: reader-checks/uncertainty-check.html
 
 ### Optimization For Learning
-- Common problem: learning needs a way to decide which model settings are better or worse
+- Common problem: models need a way to measure progress so they know which settings are better or worse
 - Missing items: none
 - Present required parts: First Principles, Big Picture Claim Chain, Explanation Order, Why Care Before Terms, Workday Decision Rehearsal, Sounds-Right Filter, Draw Before Math, Start-Here Gate, Skeptical Reader Proof, Oral Explanation Script, Before-After Decision, Outside-Classroom Use, Learner Notebook Note, Tiny Invented Case, End-To-End Use Protocol, Before The Math Slow Walk, Teach From Zero, Application Claim Ladder, Field Decision Story, Plain Question To Answer Script, Know And Still Test, Failure Consequence, Slow Problem Shape Bridge, Plain Big Picture Essay, Slow Importance Essay, Long Everyday Importance Essay, Across Fields Long Walk, Daily Work Importance Story, Why Not Simpler Answer, Self-Diagnosis Check, From Scratch Story, No-Jargon Translation, Everyday Vocabulary Bridge, Plain Retell Drill, Field Transfer Check, New Case Transfer Rehearsal, Wrong Path Repair, Confusion To Clarity, Course Bridge, Use Or Refuse Gate, Final Learner Proof, Teach Someone Handoff, Topology Shape Story, One-Page Mental Model, Next-Day Memory Check, Nearby Topic Comparison, Math Shape Rehearsal, Source-To-Claim Boundary, Field Mini Cases, Hand Teaching Note, Case Walkthrough, Course Role, Concept Connections, Belief Evidence, Domain Fit, Shape Follows, Formula Terms, Worked Example, Wrong-Use Example, Breaks Without Idea, Failure Boundary, Source Anchors, Reader Check, Reader Answer Parts, Say It Back Check, Reader Mistake Audit, Misread Repair Drill, Plain-Language Audit, Acceptance Sentence
 - Topic: topics/optimization-for-learning.html
@@ -3272,7 +3272,7 @@
 - Reader check: reader-checks/optimization-for-learning-check.html
 
 ### Generative Modeling
-- Common problem: some tasks need many possible examples, not one predicted answer
+- Common problem: some tasks need many plausible examples, not a single best prediction, to explore what's possible
 - Missing items: none
 - Present required parts: First Principles, Big Picture Claim Chain, Explanation Order, Why Care Before Terms, Workday Decision Rehearsal, Sounds-Right Filter, Draw Before Math, Start-Here Gate, Skeptical Reader Proof, Oral Explanation Script, Before-After Decision, Outside-Classroom Use, Learner Notebook Note, Tiny Invented Case, End-To-End Use Protocol, Before The Math Slow Walk, Teach From Zero, Application Claim Ladder, Field Decision Story, Plain Question To Answer Script, Know And Still Test, Failure Consequence, Slow Problem Shape Bridge, Plain Big Picture Essay, Slow Importance Essay, Long Everyday Importance Essay, Across Fields Long Walk, Daily Work Importance Story, Why Not Simpler Answer, Self-Diagnosis Check, From Scratch Story, No-Jargon Translation, Everyday Vocabulary Bridge, Plain Retell Drill, Field Transfer Check, New Case Transfer Rehearsal, Wrong Path Repair, Confusion To Clarity, Course Bridge, Use Or Refuse Gate, Final Learner Proof, Teach Someone Handoff, Topology Shape Story, One-Page Mental Model, Next-Day Memory Check, Nearby Topic Comparison, Math Shape Rehearsal, Source-To-Claim Boundary, Field Mini Cases, Hand Teaching Note, Case Walkthrough, Course Role, Concept Connections, Belief Evidence, Domain Fit, Shape Follows, Formula Terms, Worked Example, Wrong-Use Example, Breaks Without Idea, Failure Boundary, Source Anchors, Reader Check, Reader Answer Parts, Say It Back Check, Reader Mistake Audit, Misread Repair Drill, Plain-Language Audit, Acceptance Sentence
 - Topic: topics/generative-modeling.html
@@ -3280,7 +3280,7 @@
 - Reader check: reader-checks/generative-modeling-check.html
 
 ### Graphs And Geometric Learning
-- Common problem: many scientific objects are not simple rows of numbers; their connections matter
+- Common problem: molecules, proteins, and meshes have a shape and connections that rows of numbers throw away
 - Missing items: none
 - Present required parts: First Principles, Big Picture Claim Chain, Explanation Order, Why Care Before Terms, Workday Decision Rehearsal, Sounds-Right Filter, Draw Before Math, Start-Here Gate, Skeptical Reader Proof, Oral Explanation Script, Before-After Decision, Outside-Classroom Use, Learner Notebook Note, Tiny Invented Case, End-To-End Use Protocol, Before The Math Slow Walk, Teach From Zero, Application Claim Ladder, Field Decision Story, Plain Question To Answer Script, Know And Still Test, Failure Consequence, Slow Problem Shape Bridge, Plain Big Picture Essay, Slow Importance Essay, Long Everyday Importance Essay, Across Fields Long Walk, Daily Work Importance Story, Why Not Simpler Answer, Self-Diagnosis Check, From Scratch Story, No-Jargon Translation, Everyday Vocabulary Bridge, Plain Retell Drill, Field Transfer Check, New Case Transfer Rehearsal, Wrong Path Repair, Confusion To Clarity, Course Bridge, Use Or Refuse Gate, Final Learner Proof, Teach Someone Handoff, Topology Shape Story, One-Page Mental Model, Next-Day Memory Check, Nearby Topic Comparison, Math Shape Rehearsal, Source-To-Claim Boundary, Field Mini Cases, Hand Teaching Note, Case Walkthrough, Course Role, Concept Connections, Belief Evidence, Domain Fit, Shape Follows, Formula Terms, Worked Example, Wrong-Use Example, Breaks Without Idea, Failure Boundary, Source Anchors, Reader Check, Reader Answer Parts, Say It Back Check, Reader Mistake Audit, Misread Repair Drill, Plain-Language Audit, Acceptance Sentence
 - Topic: topics/graphs-and-geometric-learning.html
@@ -3288,7 +3288,7 @@
 - Reader check: reader-checks/graphs-and-geometric-learning-check.html
 
 ### Neural Differential Equations
-- Common problem: scientists may know that a system changes continuously but not know the exact rule for that change
+- Common problem: scientists watch a system change over time but don't know the rule driving that change
 - Missing items: none
 - Present required parts: First Principles, Big Picture Claim Chain, Explanation Order, Why Care Before Terms, Workday Decision Rehearsal, Sounds-Right Filter, Draw Before Math, Start-Here Gate, Skeptical Reader Proof, Oral Explanation Script, Before-After Decision, Outside-Classroom Use, Learner Notebook Note, Tiny Invented Case, End-To-End Use Protocol, Before The Math Slow Walk, Teach From Zero, Application Claim Ladder, Field Decision Story, Plain Question To Answer Script, Know And Still Test, Failure Consequence, Slow Problem Shape Bridge, Plain Big Picture Essay, Slow Importance Essay, Long Everyday Importance Essay, Across Fields Long Walk, Daily Work Importance Story, Why Not Simpler Answer, Self-Diagnosis Check, From Scratch Story, No-Jargon Translation, Everyday Vocabulary Bridge, Plain Retell Drill, Field Transfer Check, New Case Transfer Rehearsal, Wrong Path Repair, Confusion To Clarity, Course Bridge, Use Or Refuse Gate, Final Learner Proof, Teach Someone Handoff, Topology Shape Story, One-Page Mental Model, Next-Day Memory Check, Nearby Topic Comparison, Math Shape Rehearsal, Source-To-Claim Boundary, Field Mini Cases, Hand Teaching Note, Case Walkthrough, Course Role, Concept Connections, Belief Evidence, Domain Fit, Shape Follows, Formula Terms, Worked Example, Wrong-Use Example, Breaks Without Idea, Failure Boundary, Source Anchors, Reader Check, Reader Answer Parts, Say It Back Check, Reader Mistake Audit, Misread Repair Drill, Plain-Language Audit, Acceptance Sentence
 - Topic: topics/neural-differential-equations.html
@@ -3296,7 +3296,7 @@
 - Reader check: reader-checks/neural-differential-equations-check.html
 
 ### Symbolic Regression And Model Discovery
-- Common problem: a scientist may need a readable equation, not only a model that predicts well
+- Common problem: a scientist may need a readable equation, not a numerical model that predicts but cannot be understood
 - Missing items: none
 - Present required parts: First Principles, Big Picture Claim Chain, Explanation Order, Why Care Before Terms, Workday Decision Rehearsal, Sounds-Right Filter, Draw Before Math, Start-Here Gate, Skeptical Reader Proof, Oral Explanation Script, Before-After Decision, Outside-Classroom Use, Learner Notebook Note, Tiny Invented Case, End-To-End Use Protocol, Before The Math Slow Walk, Teach From Zero, Application Claim Ladder, Field Decision Story, Plain Question To Answer Script, Know And Still Test, Failure Consequence, Slow Problem Shape Bridge, Plain Big Picture Essay, Slow Importance Essay, Long Everyday Importance Essay, Across Fields Long Walk, Daily Work Importance Story, Why Not Simpler Answer, Self-Diagnosis Check, From Scratch Story, No-Jargon Translation, Everyday Vocabulary Bridge, Plain Retell Drill, Field Transfer Check, New Case Transfer Rehearsal, Wrong Path Repair, Confusion To Clarity, Course Bridge, Use Or Refuse Gate, Final Learner Proof, Teach Someone Handoff, Topology Shape Story, One-Page Mental Model, Next-Day Memory Check, Nearby Topic Comparison, Math Shape Rehearsal, Source-To-Claim Boundary, Field Mini Cases, Hand Teaching Note, Case Walkthrough, Course Role, Concept Connections, Belief Evidence, Domain Fit, Shape Follows, Formula Terms, Worked Example, Wrong-Use Example, Breaks Without Idea, Failure Boundary, Source Anchors, Reader Check, Reader Answer Parts, Say It Back Check, Reader Mistake Audit, Misread Repair Drill, Plain-Language Audit, Acceptance Sentence
 - Topic: topics/symbolic-regression.html
@@ -3304,7 +3304,7 @@
 - Reader check: reader-checks/symbolic-regression-check.html
 
 ### Foundation Models For PDEs
-- Common problem: one trained model may be asked to handle many related equations, grids, parameters, or physical settings
+- Common problem: scientists train separate models for each PDE, each grid size, each parameter—expensive duplication
 - Missing items: none
 - Present required parts: First Principles, Big Picture Claim Chain, Explanation Order, Why Care Before Terms, Workday Decision Rehearsal, Sounds-Right Filter, Draw Before Math, Start-Here Gate, Skeptical Reader Proof, Oral Explanation Script, Before-After Decision, Outside-Classroom Use, Learner Notebook Note, Tiny Invented Case, End-To-End Use Protocol, Before The Math Slow Walk, Teach From Zero, Application Claim Ladder, Field Decision Story, Plain Question To Answer Script, Know And Still Test, Failure Consequence, Slow Problem Shape Bridge, Plain Big Picture Essay, Slow Importance Essay, Long Everyday Importance Essay, Across Fields Long Walk, Daily Work Importance Story, Why Not Simpler Answer, Self-Diagnosis Check, From Scratch Story, No-Jargon Translation, Everyday Vocabulary Bridge, Plain Retell Drill, Field Transfer Check, New Case Transfer Rehearsal, Wrong Path Repair, Confusion To Clarity, Course Bridge, Use Or Refuse Gate, Final Learner Proof, Teach Someone Handoff, Topology Shape Story, One-Page Mental Model, Next-Day Memory Check, Nearby Topic Comparison, Math Shape Rehearsal, Source-To-Claim Boundary, Field Mini Cases, Hand Teaching Note, Case Walkthrough, Course Role, Concept Connections, Belief Evidence, Domain Fit, Shape Follows, Formula Terms, Worked Example, Wrong-Use Example, Breaks Without Idea, Failure Boundary, Source Anchors, Reader Check, Reader Answer Parts, Say It Back Check, Reader Mistake Audit, Misread Repair Drill, Plain-Language Audit, Acceptance Sentence
 - Topic: topics/foundation-models-for-pdes.html
@@ -3312,7 +3312,7 @@
 - Reader check: reader-checks/foundation-pde-check.html
 
 ### Attention For Scientific Fields
-- Common problem: a local patch of a field may depend on faraway information, but looking everywhere can be expensive
+- Common problem: a local spot in a field may depend on faraway information, but scanning everywhere costs too much
 - Missing items: none
 - Present required parts: First Principles, Big Picture Claim Chain, Explanation Order, Why Care Before Terms, Workday Decision Rehearsal, Sounds-Right Filter, Draw Before Math, Start-Here Gate, Skeptical Reader Proof, Oral Explanation Script, Before-After Decision, Outside-Classroom Use, Learner Notebook Note, Tiny Invented Case, End-To-End Use Protocol, Before The Math Slow Walk, Teach From Zero, Application Claim Ladder, Field Decision Story, Plain Question To Answer Script, Know And Still Test, Failure Consequence, Slow Problem Shape Bridge, Plain Big Picture Essay, Slow Importance Essay, Long Everyday Importance Essay, Across Fields Long Walk, Daily Work Importance Story, Why Not Simpler Answer, Self-Diagnosis Check, From Scratch Story, No-Jargon Translation, Everyday Vocabulary Bridge, Plain Retell Drill, Field Transfer Check, New Case Transfer Rehearsal, Wrong Path Repair, Confusion To Clarity, Course Bridge, Use Or Refuse Gate, Final Learner Proof, Teach Someone Handoff, Topology Shape Story, One-Page Mental Model, Next-Day Memory Check, Nearby Topic Comparison, Math Shape Rehearsal, Source-To-Claim Boundary, Field Mini Cases, Hand Teaching Note, Case Walkthrough, Course Role, Concept Connections, Belief Evidence, Domain Fit, Shape Follows, Formula Terms, Worked Example, Wrong-Use Example, Breaks Without Idea, Failure Boundary, Source Anchors, Reader Check, Reader Answer Parts, Say It Back Check, Reader Mistake Audit, Misread Repair Drill, Plain-Language Audit, Acceptance Sentence
 - Topic: topics/attention-for-scientific-fields.html

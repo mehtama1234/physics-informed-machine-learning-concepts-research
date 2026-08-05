@@ -10,11 +10,11 @@
       "gradient descent"
     ],
     "domain": "scientific prediction from large measured or simulated data sets",
-    "problem": "scientists often have examples of behavior but no short rule that predicts the next case",
-    "keeps": "many adjustable weights that turn inputs into predictions",
-    "leaves_out": "a direct explanation of which physical reason caused each prediction",
-    "why": "it can learn useful patterns when hand-written rules are incomplete, but the result still needs tests outside the examples used for fitting",
-    "failure": "the model can fit familiar examples while failing on a new material, geometry, scale, or boundary condition",
+    "problem": "scientists have many measured examples but no formula that predicts the next case",
+    "keeps": "many adjustable weights that turn inputs into predictions through connected layers",
+    "leaves_out": "why each prediction happened or which physical reason was responsible",
+    "why": "networks can fit patterns in data when hand-written rules fail, but the fit only works on examples similar to the training set",
+    "failure": "trained model passes on familiar data but crashes on new material, boundary condition, or scale it never saw before",
     "video_count": 38,
     "evidence": [
       {
@@ -73,11 +73,11 @@
       "collocation"
     ],
     "domain": "differential equations in science and engineering",
-    "problem": "measurements may be sparse, but the answer must still respect a known physical equation",
-    "keeps": "a neural network prediction plus a penalty for violating the known equation",
-    "leaves_out": "guaranteed accuracy when the equation, boundary data, or training points are poor",
-    "why": "it lets known physics push the fit toward physically possible behavior instead of treating data points as the only evidence",
-    "failure": "the equation penalty can look small while the solution is wrong in hard regions, sharp layers, or unseen boundary cases",
+    "problem": "sparse measurements from experiments, but the answer must obey known physical laws like gravity or heat flow",
+    "keeps": "neural network guess plus a check that penalizes breaking the known equation that governs the system",
+    "leaves_out": "it cannot fix a wrong equation, bad boundary conditions, or spots where the real answer has sharp jumps",
+    "why": "the equation penalty steers the fit toward answers that obey physics, filling gaps where measurements are missing without pretending data alone tells the whole story",
+    "failure": "the penalty term hides small errors near boundaries, in thin layers, or where the real solution changes suddenly",
     "video_count": 28,
     "evidence": [
       {
@@ -136,11 +136,11 @@
       "initial condition"
     ],
     "domain": "fluids, heat, waves, mechanics, chemistry, climate, and other changing fields",
-    "problem": "a quantity changes over space and time, so one number is not enough to describe the situation",
-    "keeps": "a field, its rates of change, and the boundary or starting information needed to evolve it",
-    "leaves_out": "unmodeled forces, unresolved scales, uncertain parameters, and numerical error",
-    "why": "PDEs are the language many scientific models use before machine learning enters the story",
-    "failure": "a learned shortcut can ignore boundary conditions or conservation behavior that the PDE was carrying",
+    "problem": "a quantity changes over space and time, so one number is not enough to describe what's happening",
+    "keeps": "a field (a map of values across space), how those values shift with time and space, and boundary conditions to start the calculation",
+    "leaves_out": "unmodeled forces, unresolved small-scale detail, uncertain parameters, and numerical error from discretization",
+    "why": "scientists use PDEs to write down laws of nature before machine learning enters, and they force you to be explicit about what you assume and what you skip",
+    "failure": "when data or learning skips the actual PDE constraints, it can ignore boundary conditions or conservation laws that the PDE was always enforcing",
     "video_count": 34,
     "evidence": [
       {
@@ -199,11 +199,11 @@
       "operator"
     ],
     "domain": "fast prediction for families of scientific simulations",
-    "problem": "one simulation answer is not enough when engineers need the whole map from inputs to solution fields",
-    "keeps": "a learned map from a forcing, coefficient, shape, or starting field to a solution field",
-    "leaves_out": "proof that the map works for resolutions, geometries, or physics outside the training family",
-    "why": "it can replace many expensive solves with a fast approximation when the requested cases stay inside the tested family",
-    "failure": "the learned map can give plausible-looking fields that violate the equation or fail on a shifted input family",
+    "problem": "engineers need to predict all the fields (temperature, pressure, flow) across a space and time for many input cases, not just one",
+    "keeps": "a learned function that maps any input condition (forcing, initial state, boundary) directly to a complete solution field",
+    "leaves_out": "whether the learned map holds for new resolutions, geometries, or physics that look different from the training data",
+    "why": "it trades solving expensive equations many times for one fast learned map, but only when new cases stay inside the training family",
+    "failure": "the learned map produces plausible-looking fields that actually violate the physics or break when you shift the geometry",
     "video_count": 33,
     "evidence": [
       {
@@ -261,11 +261,11 @@
       "ai in the sciences"
     ],
     "domain": "using data-driven models inside scientific workflows",
-    "problem": "scientific work needs predictions that respect measurements, equations, uncertainty, and domain limits at the same time",
-    "keeps": "data evidence, scientific structure, and validation against changed cases",
-    "leaves_out": "the idea that a high score alone proves scientific understanding",
-    "why": "it connects flexible prediction to the checks scientists already need: units, conservation, boundaries, uncertainty, and failure cases",
-    "failure": "the method becomes a generic fitting tool if the physical quantity, scientific claim, and validation case are not named",
+    "problem": "predictions must obey the physical laws that define the problem, not just fit the data",
+    "keeps": "a neural network that learns by evaluating itself at test points and minimizing how far off it gets",
+    "leaves_out": "any laws or checks the scientist does not write down as equations",
+    "why": "the neural network feels both the data AND the physics equations, so it learns the true rule and works on new cases the data never saw before",
+    "failure": "if no clear equation or boundary condition exists, the network learns the data shape but not the underlying rule",
     "video_count": 33,
     "evidence": [
       {
@@ -324,11 +324,11 @@
       "solver"
     ],
     "domain": "expensive simulation and design loops",
-    "problem": "a trusted simulator may be too slow to run for every design, control, or uncertainty question",
-    "keeps": "the input-output behavior needed for a specified family of queries",
-    "leaves_out": "full simulation detail outside the tested query family",
-    "why": "it makes repeated scientific decisions possible when full simulation cost would stop the workflow",
-    "failure": "speed can hide missing physics when the surrogate is used beyond the regime where it was checked",
+    "problem": "running a full simulation is too expensive to do for every design choice or question",
+    "keeps": "the input-output patterns the original simulator shows, learned from a sample of runs",
+    "leaves_out": "physical detail and edge cases outside the scenarios it was trained on",
+    "why": "it speeds up repeated decisions in design or control when the cost of the real simulator would stop progress, but can hide missing physics if pushed past its training regime",
+    "failure": "gives plausible-looking answers for inputs it never saw during training, with no warning that they are wrong",
     "video_count": 35,
     "evidence": [
       {
@@ -388,11 +388,11 @@
       "distribution"
     ],
     "domain": "model use under new conditions",
-    "problem": "a prediction is not enough unless the user knows when it should be believed",
-    "keeps": "error checks, changed-case tests, and limits on where the model was trained",
-    "leaves_out": "confidence in cases that were never tested",
-    "why": "scientific models are used to make decisions, so the cost of being confidently wrong can be high",
-    "failure": "training error can look good while the model fails under a new geometry, parameter range, sensor, or physical regime",
+    "problem": "a prediction from a model is only useful if you know under which conditions you should actually trust it",
+    "keeps": "error bounds, tests on shifted conditions, and explicit limits on training-data range",
+    "leaves_out": "confidence in scenarios or physical regimes the model has never encountered before",
+    "why": "when scientific decisions cost lives or money, a model must be honest about its own edges and not guess past them\u2014and most neural networks fail silently instead",
+    "failure": "training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime",
     "video_count": 39,
     "evidence": [
       {
@@ -451,11 +451,11 @@
       "minimize"
     ],
     "domain": "turning model fitting into a repeatable computation",
-    "problem": "learning needs a way to decide which model settings are better or worse",
-    "keeps": "a written score that compares model output against data, physics penalties, or design goals",
-    "leaves_out": "everything the score forgot to penalize",
-    "why": "the model only learns what the training score asks it to improve",
-    "failure": "a model can optimize the written score while missing the scientific behavior the score failed to name",
+    "problem": "models need a way to measure progress so they know which settings are better or worse",
+    "keeps": "a written score that measures how far the model's output is from the goal",
+    "leaves_out": "anything the score didn't include in its list of things to improve",
+    "why": "adjusting weights downhill on the score works, but only for goals the score actually names; miss a goal and the model learns it wrong",
+    "failure": "the score goes down while the model learns wrong physics, if the score missed the real constraint",
     "video_count": 40,
     "evidence": [
       {
@@ -514,11 +514,11 @@
       "flow model"
     ],
     "domain": "creating plausible scientific samples, fields, or candidate designs",
-    "problem": "some tasks need many possible examples, not one predicted answer",
-    "keeps": "a learned rule for sampling outputs that resemble the training family",
-    "leaves_out": "a guarantee that each sample is physically valid or useful for a decision",
-    "why": "it can explore candidate fields, shapes, or scenarios when direct enumeration is impossible",
-    "failure": "generated samples can look realistic while breaking constraints, conservation, or rare-event behavior",
+    "problem": "some tasks need many plausible examples, not a single best prediction, to explore what's possible",
+    "keeps": "a learned rule that samples new outputs matching the patterns seen in training data",
+    "leaves_out": "no check that generated samples obey physical laws, conservation rules, or task constraints",
+    "why": "it can explore a range of candidate fields or shapes when listing all possibilities is impossible; the catch is samples can look real yet violate the problem's rules",
+    "failure": "a generated fluid flow looks smooth and realistic but conserves no mass; a design candidate is manufacturable in appearance but physically infeasible",
     "video_count": 33,
     "evidence": [
       {
@@ -577,11 +577,11 @@
       "symmetry"
     ],
     "domain": "systems made of interacting parts, meshes, molecules, or spatial relations",
-    "problem": "many scientific objects are not simple rows of numbers; their connections matter",
-    "keeps": "nodes, edges, spatial relations, and symmetry rules that should not change the answer",
-    "leaves_out": "interactions or long-range effects not represented in the graph",
-    "why": "it lets the model respect the structure of the object instead of flattening away important relations",
-    "failure": "the graph can encode the wrong neighborhood, hide missing interactions, or fail when the mesh changes",
+    "problem": "molecules, proteins, and meshes have a shape and connections that rows of numbers throw away",
+    "keeps": "dots and lines that show which parts touch, plus symmetries\u2014flips and rotations that don't change the answer",
+    "leaves_out": "distant effects that skip over neighbors, or interactions that only show up when the whole shape bends",
+    "why": "treating a protein like a graph lets the model learn from neighborhood patterns instead of memorizing isolated points",
+    "failure": "if the graph misses a real bond or connection, or if parts of the shape rearrange and the model sees a stranger structure",
     "video_count": 31,
     "evidence": [
       {
@@ -639,11 +639,11 @@
       "time integration"
     ],
     "domain": "changing systems where time evolution is part of the model",
-    "problem": "scientists may know that a system changes continuously but not know the exact rule for that change",
-    "keeps": "a learned rate rule inside a time-stepping calculation",
-    "leaves_out": "a guarantee that the learned rate respects hidden physics or long-time behavior",
-    "why": "it lets learning focus on the missing change rule while the time update still carries the idea of continuous evolution",
-    "failure": "small learned-rate errors can accumulate until long-time predictions drift away from the real system",
+    "problem": "scientists watch a system change over time but don't know the rule driving that change",
+    "keeps": "the continuous time-stepping structure paired with a learned prediction for the rate of change at each moment",
+    "leaves_out": "guarantees the learned rate obeys boundary conditions or holds true far from the training data",
+    "why": "the time-stepping structure anchors learning in continuous evolution, keeping the idea that change is smooth, but mistakes in the learned rate compound over many steps and long predictions drift away",
+    "failure": "a small error in the learned rate, repeated over hundreds of time steps, pushes predictions into wildly wrong territory",
     "video_count": 40,
     "evidence": [
       {
@@ -701,11 +701,11 @@
       "formula"
     ],
     "domain": "turning data into equations people can inspect",
-    "problem": "a scientist may need a readable equation, not only a model that predicts well",
-    "keeps": "candidate formulas that can be written, checked, and compared",
-    "leaves_out": "terms that were not searched, variables that were not measured, and physics not excited by the data",
-    "why": "a short equation can be tested, criticized, and reused more easily than a large fitted model",
-    "failure": "a neat formula can fit the training data while using the wrong variables or failing on a changed experiment",
+    "problem": "a scientist may need a readable equation, not a numerical model that predicts but cannot be understood",
+    "keeps": "candidate formulas that can be written down, tested, compared, and shared with other scientists",
+    "leaves_out": "unmeasured variables, physics the data never triggered, and formula terms no search explored",
+    "why": "a short equation lets you test new cases, argue about whether it makes sense, and reuse it in different settings\u2014much harder with a large fitted model you cannot read",
+    "failure": "a neat formula fits your lab's data perfectly but uses the wrong variables or breaks when conditions shift",
     "video_count": 33,
     "evidence": [
       {
@@ -763,11 +763,11 @@
       "scaling laws"
     ],
     "domain": "broad families of PDE problems and scientific fields",
-    "problem": "one trained model may be asked to handle many related equations, grids, parameters, or physical settings",
-    "keeps": "shared structure across many scientific problem instances",
-    "leaves_out": "certainty that shared training structure covers the new scientific case",
-    "why": "a broad model could reduce repeated training cost if it keeps the physical features that matter across tasks",
-    "failure": "the model can look broad while missing rare regimes, new boundary conditions, or quantities not represented in training",
+    "problem": "scientists train separate models for each PDE, each grid size, each parameter\u2014expensive duplication",
+    "keeps": "learned patterns that appear across many related equations and initial conditions",
+    "leaves_out": "guarantee that training on old cases covers genuinely new boundary conditions or regimes",
+    "why": "one shared model reduces training cost if it captures features that matter across tasks, but only if those features actually transfer",
+    "failure": "the model trains on common cases and misses rare physical regimes, different boundary shapes, or unseen initial conditions",
     "video_count": 6,
     "evidence": [
       {
@@ -824,11 +824,11 @@
       "windowed attention"
     ],
     "domain": "large scientific fields where distant parts may interact",
-    "problem": "a local patch of a field may depend on faraway information, but looking everywhere can be expensive",
-    "keeps": "selected interactions between parts of the input field",
-    "leaves_out": "interactions the attention pattern never compares",
-    "why": "it gives the model a way to move information across a field without treating every location as isolated",
-    "failure": "windowing or scaling choices can miss long-range effects that matter for the scientific quantity being predicted",
+    "problem": "a local spot in a field may depend on faraway information, but scanning everywhere costs too much",
+    "keeps": "the paths between distant parts that matter for the prediction",
+    "leaves_out": "connections the attention pattern ignores or cannot see",
+    "why": "it lets the model move information across the field only where needed, trading speed for which distant interactions it can reach",
+    "failure": "when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted",
     "video_count": 28,
     "evidence": [
       {
