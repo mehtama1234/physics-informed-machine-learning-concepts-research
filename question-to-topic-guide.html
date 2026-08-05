@@ -67,99 +67,99 @@
 <tr>
   <td>I have many examples, but I do not have a short rule. Where do I start?</td>
   <td><a href="topics/deep-learning.html">Deep Learning</a></td>
-  <td>scientists often have examples of behavior but no short rule that predicts the next case. The first move is to adjust many weights until the model maps familiar inputs to the right outputs.</td>
-  <td>the model can fit familiar examples while failing on a new material, geometry, scale, or boundary condition</td>
+  <td>scientists have many measured examples but no formula that predicts the next case. The first move is to adjust many weights until the model maps familiar inputs to the right outputs.</td>
+  <td>trained model passes on familiar data but crashes on new material, boundary condition, or scale it never saw before</td>
 </tr>
 
 <tr>
   <td>I have a few measurements and a known equation. How do I make them work together?</td>
   <td><a href="topics/physics-informed-neural-networks.html">Physics-Informed Neural Networks</a></td>
-  <td>measurements may be sparse, but the answer must still respect a known physical equation. The first move is to fit a neural network while also measuring how badly its output violates the known equation.</td>
-  <td>the equation penalty can look small while the solution is wrong in hard regions, sharp layers, or unseen boundary cases</td>
+  <td>sparse measurements from experiments, but the answer must obey known physical laws like gravity or heat flow. The first move is to fit a neural network while also measuring how badly its output violates the known equation.</td>
+  <td>the penalty term hides small errors near boundaries, in thin layers, or where the real solution changes suddenly</td>
 </tr>
 
 <tr>
   <td>My quantity changes across space and time. What language describes that change?</td>
   <td><a href="topics/partial-differential-equations.html">Partial Differential Equations</a></td>
-  <td>a quantity changes over space and time, so one number is not enough to describe the situation. The first move is to write a local change rule that uses rates across space and time.</td>
-  <td>a learned shortcut can ignore boundary conditions or conservation behavior that the PDE was carrying</td>
+  <td>a quantity changes over space and time, so one number is not enough to describe what&#x27;s happening. The first move is to write a local change rule that uses rates across space and time.</td>
+  <td>when data or learning skips the actual PDE constraints, it can ignore boundary conditions or conservation laws that the PDE was always enforcing</td>
 </tr>
 
 <tr>
   <td>I need the whole answer field for new inputs, not only one solved case. What carries that map?</td>
   <td><a href="topics/operator-learning.html">Operator Learning</a></td>
-  <td>one simulation answer is not enough when engineers need the whole map from inputs to solution fields. The first move is to learn the map from problem input to solution, not only one solution at a time.</td>
-  <td>the learned map can give plausible-looking fields that violate the equation or fail on a shifted input family</td>
+  <td>engineers need to predict all the fields (temperature, pressure, flow) across a space and time for many input cases, not just one. The first move is to learn the map from problem input to solution, not only one solution at a time.</td>
+  <td>the learned map produces plausible-looking fields that actually violate the physics or break when you shift the geometry</td>
 </tr>
 
 <tr>
   <td>I need data, equations, units, and checks to live in one scientific claim. What is the broad home for that?</td>
   <td><a href="topics/scientific-machine-learning.html">Scientific Machine Learning</a></td>
-  <td>scientific work needs predictions that respect measurements, equations, uncertainty, and domain limits at the same time. The first move is to combine learned prediction with scientific checks that name what the claim is allowed to mean.</td>
-  <td>the method becomes a generic fitting tool if the physical quantity, scientific claim, and validation case are not named</td>
+  <td>predictions must obey the physical laws that define the problem, not just fit the data. The first move is to combine learned prediction with scientific checks that name what the claim is allowed to mean.</td>
+  <td>if no clear equation or boundary condition exists, the network learns the data shape but not the underlying rule</td>
 </tr>
 
 <tr>
   <td>My trusted solver is too slow to run for every design or control question. What is the first shortcut to study?</td>
   <td><a href="topics/surrogate-modeling.html">Surrogate Modeling</a></td>
-  <td>a trusted simulator may be too slow to run for every design, control, or uncertainty question. The first move is to train a cheaper stand-in for the expensive input-output behavior.</td>
-  <td>speed can hide missing physics when the surrogate is used beyond the regime where it was checked</td>
+  <td>running a full simulation is too expensive to do for every design choice or question. The first move is to train a cheaper stand-in for the expensive input-output behavior.</td>
+  <td>gives plausible-looking answers for inputs it never saw during training, with no warning that they are wrong</td>
 </tr>
 
 <tr>
   <td>I have a prediction, but I need to know when to believe it. What topic handles that?</td>
   <td><a href="topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></td>
-  <td>a prediction is not enough unless the user knows when it should be believed. The first move is to separate fit on familiar examples from evidence on changed examples.</td>
-  <td>training error can look good while the model fails under a new geometry, parameter range, sensor, or physical regime</td>
+  <td>a prediction from a model is only useful if you know under which conditions you should actually trust it. The first move is to separate fit on familiar examples from evidence on changed examples.</td>
+  <td>training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime</td>
 </tr>
 
 <tr>
   <td>The model is changing its settings. How do I know what it is being asked to improve?</td>
   <td><a href="topics/optimization-for-learning.html">Optimization For Learning</a></td>
-  <td>learning needs a way to decide which model settings are better or worse. The first move is to change model settings to lower the written score.</td>
-  <td>a model can optimize the written score while missing the scientific behavior the score failed to name</td>
+  <td>models need a way to measure progress so they know which settings are better or worse. The first move is to change model settings to lower the written score.</td>
+  <td>the score goes down while the model learns wrong physics, if the score missed the real constraint</td>
 </tr>
 
 <tr>
   <td>I need several possible fields, molecules, shapes, or scenarios, not one answer. Where do I start?</td>
   <td><a href="topics/generative-modeling.html">Generative Modeling</a></td>
-  <td>some tasks need many possible examples, not one predicted answer. The first move is to learn how to sample new candidates that resemble the training family.</td>
-  <td>generated samples can look realistic while breaking constraints, conservation, or rare-event behavior</td>
+  <td>some tasks need many plausible examples, not a single best prediction, to explore what&#x27;s possible. The first move is to learn how to sample new candidates that resemble the training family.</td>
+  <td>a generated fluid flow looks smooth and realistic but conserves no mass; a design candidate is manufacturable in appearance but physically infeasible</td>
 </tr>
 
 <tr>
   <td>My object has parts, neighbors, bonds, mesh points, or shape. Which topic keeps those relations visible?</td>
   <td><a href="topics/graphs-and-geometric-learning.html">Graphs And Geometric Learning</a></td>
-  <td>many scientific objects are not simple rows of numbers; their connections matter. The first move is to let information move along the object connections instead of flattening the object into a plain row.</td>
-  <td>the graph can encode the wrong neighborhood, hide missing interactions, or fail when the mesh changes</td>
+  <td>molecules, proteins, and meshes have a shape and connections that rows of numbers throw away. The first move is to let information move along the object connections instead of flattening the object into a plain row.</td>
+  <td>if the graph misses a real bond or connection, or if parts of the shape rearrange and the model sees a stranger structure</td>
 </tr>
 
 <tr>
   <td>A system changes over time, but the rate rule is partly unknown. What topic should I open?</td>
   <td><a href="topics/neural-differential-equations.html">Neural Differential Equations</a></td>
-  <td>scientists may know that a system changes continuously but not know the exact rule for that change. The first move is to learn the missing rate rule and place it inside a time-evolution calculation.</td>
-  <td>small learned-rate errors can accumulate until long-time predictions drift away from the real system</td>
+  <td>scientists watch a system change over time but don&#x27;t know the rule driving that change. The first move is to learn the missing rate rule and place it inside a time-evolution calculation.</td>
+  <td>a small error in the learned rate, repeated over hundreds of time steps, pushes predictions into wildly wrong territory</td>
 </tr>
 
 <tr>
   <td>I want a readable equation from measured variables. What topic is about that search?</td>
   <td><a href="topics/symbolic-regression.html">Symbolic Regression And Model Discovery</a></td>
-  <td>a scientist may need a readable equation, not only a model that predicts well. The first move is to search for a readable equation that fits the data and survives a changed case.</td>
-  <td>a neat formula can fit the training data while using the wrong variables or failing on a changed experiment</td>
+  <td>a scientist may need a readable equation, not a numerical model that predicts but cannot be understood. The first move is to search for a readable equation that fits the data and survives a changed case.</td>
+  <td>a neat formula fits your lab&#x27;s data perfectly but uses the wrong variables or breaks when conditions shift</td>
 </tr>
 
 <tr>
   <td>I want one field model to help across related PDE tasks. What should I read first?</td>
   <td><a href="topics/foundation-models-for-pdes.html">Foundation Models For PDEs</a></td>
-  <td>one trained model may be asked to handle many related equations, grids, parameters, or physical settings. The first move is to train one broad model to reuse structure across many related field-prediction tasks.</td>
-  <td>the model can look broad while missing rare regimes, new boundary conditions, or quantities not represented in training</td>
+  <td>scientists train separate models for each PDE, each grid size, each parameter—expensive duplication. The first move is to train one broad model to reuse structure across many related field-prediction tasks.</td>
+  <td>the model trains on common cases and misses rare physical regimes, different boundary shapes, or unseen initial conditions</td>
 </tr>
 
 <tr>
   <td>Faraway parts of a field may affect the local answer. What topic explains that information route?</td>
   <td><a href="topics/attention-for-scientific-fields.html">Attention For Scientific Fields</a></td>
-  <td>a local patch of a field may depend on faraway information, but looking everywhere can be expensive. The first move is to let the model choose which parts of the field exchange information.</td>
-  <td>windowing or scaling choices can miss long-range effects that matter for the scientific quantity being predicted</td>
+  <td>a local spot in a field may depend on faraway information, but scanning everywhere costs too much. The first move is to let the model choose which parts of the field exchange information.</td>
+  <td>when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted</td>
 </tr>
 </tbody>
 </table>

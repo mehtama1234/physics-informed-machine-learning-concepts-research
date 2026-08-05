@@ -68,7 +68,7 @@
 <tr>
   <th>1</th>
   <td><a href="topics/scientific-machine-learning.html">Scientific Machine Learning</a></td>
-  <td>scientific work needs predictions that respect measurements, equations, uncertainty, and domain limits at the same time</td>
+  <td>predictions must obey the physical laws that define the problem, not just fit the data</td>
   <td>combine learned prediction with scientific checks that name what the claim is allowed to mean</td>
   <td>state the scientific quantity first, then test it under a changed case that matters in that domain</td>
 </tr>
@@ -76,7 +76,7 @@
 <tr>
   <th>2</th>
   <td><a href="topics/partial-differential-equations.html">Partial Differential Equations</a></td>
-  <td>a quantity changes over space and time, so one number is not enough to describe the situation</td>
+  <td>a quantity changes over space and time, so one number is not enough to describe what&#x27;s happening</td>
   <td>write a local change rule that uses rates across space and time</td>
   <td>change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error</td>
 </tr>
@@ -84,7 +84,7 @@
 <tr>
   <th>3</th>
   <td><a href="topics/physics-informed-neural-networks.html">Physics-Informed Neural Networks</a></td>
-  <td>measurements may be sparse, but the answer must still respect a known physical equation</td>
+  <td>sparse measurements from experiments, but the answer must obey known physical laws like gravity or heat flow</td>
   <td>fit a neural network while also measuring how badly its output violates the known equation</td>
   <td>move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements</td>
 </tr>
@@ -92,7 +92,7 @@
 <tr>
   <th>4</th>
   <td><a href="topics/operator-learning.html">Operator Learning</a></td>
-  <td>one simulation answer is not enough when engineers need the whole map from inputs to solution fields</td>
+  <td>engineers need to predict all the fields (temperature, pressure, flow) across a space and time for many input cases, not just one</td>
   <td>learn the map from problem input to solution, not only one solution at a time</td>
   <td>change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed</td>
 </tr>
@@ -100,7 +100,7 @@
 <tr>
   <th>5</th>
   <td><a href="topics/surrogate-modeling.html">Surrogate Modeling</a></td>
-  <td>a trusted simulator may be too slow to run for every design, control, or uncertainty question</td>
+  <td>running a full simulation is too expensive to do for every design choice or question</td>
   <td>train a cheaper stand-in for the expensive input-output behavior</td>
   <td>compare against the full solver on new cases near the edge of the intended use</td>
 </tr>
@@ -108,7 +108,7 @@
 <tr>
   <th>6</th>
   <td><a href="topics/graphs-and-geometric-learning.html">Graphs And Geometric Learning</a></td>
-  <td>many scientific objects are not simple rows of numbers; their connections matter</td>
+  <td>molecules, proteins, and meshes have a shape and connections that rows of numbers throw away</td>
   <td>let information move along the object connections instead of flattening the object into a plain row</td>
   <td>change the mesh, rotate or move the object, or add missing interactions and inspect what breaks</td>
 </tr>
@@ -116,7 +116,7 @@
 <tr>
   <th>7</th>
   <td><a href="topics/attention-for-scientific-fields.html">Attention For Scientific Fields</a></td>
-  <td>a local patch of a field may depend on faraway information, but looking everywhere can be expensive</td>
+  <td>a local spot in a field may depend on faraway information, but scanning everywhere costs too much</td>
   <td>let the model choose which parts of the field exchange information</td>
   <td>change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures</td>
 </tr>
@@ -124,7 +124,7 @@
 <tr>
   <th>8</th>
   <td><a href="topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></td>
-  <td>a prediction is not enough unless the user knows when it should be believed</td>
+  <td>a prediction from a model is only useful if you know under which conditions you should actually trust it</td>
   <td>separate fit on familiar examples from evidence on changed examples</td>
   <td>move one important condition outside the training range and measure the first failure</td>
 </tr>
@@ -132,7 +132,7 @@
 <tr>
   <th>9</th>
   <td><a href="topics/optimization-for-learning.html">Optimization For Learning</a></td>
-  <td>learning needs a way to decide which model settings are better or worse</td>
+  <td>models need a way to measure progress so they know which settings are better or worse</td>
   <td>change model settings to lower the written score</td>
   <td>inspect what the score ignores, then check whether the ignored behavior fails after training</td>
 </tr>
@@ -140,7 +140,7 @@
 <tr>
   <th>10</th>
   <td><a href="topics/generative-modeling.html">Generative Modeling</a></td>
-  <td>some tasks need many possible examples, not one predicted answer</td>
+  <td>some tasks need many plausible examples, not a single best prediction, to explore what&#x27;s possible</td>
   <td>learn how to sample new candidates that resemble the training family</td>
   <td>measure constraints, rare cases, conservation, and downstream task performance on generated samples</td>
 </tr>
@@ -148,7 +148,7 @@
 <tr>
   <th>11</th>
   <td><a href="topics/neural-differential-equations.html">Neural Differential Equations</a></td>
-  <td>scientists may know that a system changes continuously but not know the exact rule for that change</td>
+  <td>scientists watch a system change over time but don&#x27;t know the rule driving that change</td>
   <td>learn the missing rate rule and place it inside a time-evolution calculation</td>
   <td>run longer than the training window and check whether small rate errors accumulate into drift</td>
 </tr>
@@ -156,7 +156,7 @@
 <tr>
   <th>12</th>
   <td><a href="topics/symbolic-regression.html">Symbolic Regression And Model Discovery</a></td>
-  <td>a scientist may need a readable equation, not only a model that predicts well</td>
+  <td>a scientist may need a readable equation, not a numerical model that predicts but cannot be understood</td>
   <td>search for a readable equation that fits the data and survives a changed case</td>
   <td>remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts</td>
 </tr>
@@ -164,7 +164,7 @@
 <tr>
   <th>13</th>
   <td><a href="topics/foundation-models-for-pdes.html">Foundation Models For PDEs</a></td>
-  <td>one trained model may be asked to handle many related equations, grids, parameters, or physical settings</td>
+  <td>scientists train separate models for each PDE, each grid size, each parameter—expensive duplication</td>
   <td>train one broad model to reuse structure across many related field-prediction tasks</td>
   <td>hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver</td>
 </tr>
@@ -172,7 +172,7 @@
 <tr>
   <th>14</th>
   <td><a href="topics/deep-learning.html">Deep Learning</a></td>
-  <td>scientists often have examples of behavior but no short rule that predicts the next case</td>
+  <td>scientists have many measured examples but no formula that predicts the next case</td>
   <td>adjust many weights until the model maps familiar inputs to the right outputs</td>
   <td>hold out a changed material, geometry, parameter range, or sensor condition</td>
 </tr>
