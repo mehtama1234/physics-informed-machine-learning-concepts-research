@@ -57,29 +57,29 @@
 
 <h1>Attention For Scientific Fields</h1>
 <h2>Common Problem This Solves</h2>
-<p>a local spot in a field may depend on faraway information, but scanning everywhere costs too much</p>
+<p>predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow</p>
 <h2>Big Picture Plain Summary</h2>
 <p><strong>Domain:</strong> large scientific fields where distant parts may interact</p>
-<p><strong>Why it matters:</strong> it lets the model move information across the field only where needed, trading speed for which distant interactions it can reach</p>
-<p><strong>What it keeps:</strong> the paths between distant parts that matter for the prediction</p>
-<p><strong>What it leaves out:</strong> connections the attention pattern ignores or cannot see</p>
+<p><strong>Why it matters:</strong> lets the computer route information only through the connections it needs, trading speed for reach</p>
+<p><strong>What it keeps:</strong> which distant patches matter for the prediction at each spot</p>
+<p><strong>What it leaves out:</strong> connections between parts that the attention pattern skips over</p>
 <h2>Everyday Anchor</h2>
-<p>Imagine a weather forecaster looking at a satellite image to predict rain at one city. She doesn&#x27;t study every pixel equally—her eyes zoom to distant pressure systems and ocean temperatures that actually drive local weather. Attention works the same way: it weights which parts of the input field matter for each prediction, focusing computation on distant influences that truly connect.</p>
+<p>When a weather forecaster predicts rain over your city, she&#x27;s not staring at every pixel of the satellite image equally. She spots the ocean temperature 500 miles away and the jet stream pattern another 1000 miles away—those actually drive your weather. Attention does this for a learning program: instead of checking every input, it learns to zoom into the distant parts that truly affect each output, making predictions fast without breaking physics.</p>
 
 <h2>Before The Math Slow Walk</h2>
-<p>Read this before any formula. Attention For Scientific Fields starts with an ordinary shortage: a local spot in a field may depend on faraway information, but scanning everywhere costs too much. That shortage matters because someone has to use the answer in large scientific fields where distant parts may interact. The reader should be able to explain the need for the idea without naming the method first.</p>
-<p>The everyday picture is this: Imagine a weather forecaster looking at a satellite image to predict rain at one city. She doesn&#x27;t study every pixel equally—her eyes zoom to distant pressure systems and ocean temperatures that actually drive local weather. Attention works the same way: it weights which parts of the input field matter for each prediction, focusing computation on distant influences that truly connect. The point of the picture is not to make the idea cute. It is to slow the question down. We know something, but not enough. We need a bridge from the known part to the missing part, and we need a way to tell when the bridge stops carrying the truth.</p>
+<p>Read this before any formula. Attention For Scientific Fields starts with an ordinary shortage: predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow. That shortage matters because someone has to use the answer in large scientific fields where distant parts may interact. The reader should be able to explain the need for the idea without naming the method first.</p>
+<p>The everyday picture is this: When a weather forecaster predicts rain over your city, she&#x27;s not staring at every pixel of the satellite image equally. She spots the ocean temperature 500 miles away and the jet stream pattern another 1000 miles away—those actually drive your weather. Attention does this for a learning program: instead of checking every input, it learns to zoom into the distant parts that truly affect each output, making predictions fast without breaking physics. The point of the picture is not to make the idea cute. It is to slow the question down. We know something, but not enough. We need a bridge from the known part to the missing part, and we need a way to tell when the bridge stops carrying the truth.</p>
 <p>For this topic, the known part is large fields where one location may depend on other locations. The missing part is which distant parts matter for the local prediction. If a reader cannot say those two pieces plainly, the later math has no job yet. The method becomes meaningful only after the shortage is visible.</p>
-<p>The first useful move is to let the model choose which parts of the field exchange information. In everyday words, that means the page is choosing what information is allowed to travel from evidence to answer. It keeps the paths between distant parts that matter for the prediction. It leaves out connections the attention pattern ignores or cannot see. The left-out part is where overconfidence usually enters.</p>
+<p>The first useful move is to let the model choose which parts of the field exchange information. In everyday words, that means the page is choosing what information is allowed to travel from evidence to answer. It keeps which distant patches matter for the prediction at each spot. It leaves out connections between parts that the attention pattern skips over. The left-out part is where overconfidence usually enters.</p>
 <p>A concrete setting makes the idea harder to fake. A large fluid field has local regions whose behavior depends on distant regions. The useful answer is an updated field that can carry nonlocal information. That answer should be trusted only until this kind of case breaks it: changing the attention window or boundary case loses important long-range behavior.</p>
 <h3>Say It Without Jargon</h3>
 <table>
   <tbody>
     <tr><th>What We Have</th><td>large fields where one location may depend on other locations</td></tr>
     <tr><th>What We Need</th><td>which distant parts matter for the local prediction</td></tr>
-    <tr><th>Why The Idea Enters</th><td>it lets the model move information across the field only where needed, trading speed for which distant interactions it can reach</td></tr>
+    <tr><th>Why The Idea Enters</th><td>lets the computer route information only through the connections it needs, trading speed for reach</td></tr>
     <tr><th>What To Try First</th><td>change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures</td></tr>
-    <tr><th>Stop Trusting It When</th><td>when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted</td></tr>
+    <tr><th>Stop Trusting It When</th><td>when attention picks the wrong patches to look at, the model misses real physical effects traveling across the field</td></tr>
   </tbody>
 </table>
 
@@ -88,14 +88,14 @@
 <p>Read this row by row before trusting the method name. The concept earns its place only if each link carries the next one.</p>
 <table>
   <tbody>
-    <tr><th>Everyday Problem</th><td>a local spot in a field may depend on faraway information, but scanning everywhere costs too much</td></tr>
+    <tr><th>Everyday Problem</th><td>predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow</td></tr>
     <tr><th>Domain Where It Matters</th><td>large scientific fields where distant parts may interact</td></tr>
-    <tr><th>Decision Or Quantity At Stake</th><td>it lets the model move information across the field only where needed, trading speed for which distant interactions it can reach</td></tr>
+    <tr><th>Decision Or Quantity At Stake</th><td>lets the computer route information only through the connections it needs, trading speed for reach</td></tr>
     <tr><th>Evidence In Hand</th><td>large fields where one location may depend on other locations</td></tr>
     <tr><th>Hidden Thing Needed</th><td>which distant parts matter for the local prediction</td></tr>
     <tr><th>Mathematical Move</th><td>let the model choose which parts of the field exchange information</td></tr>
     <tr><th>What Attention For Scientific Fields Is Allowed To Claim</th><td>attention is a routing rule for information, not proof that the selected route is physically complete</td></tr>
-    <tr><th>First Thing That Can Break The Claim</th><td>when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted</td></tr>
+    <tr><th>First Thing That Can Break The Claim</th><td>when attention picks the wrong patches to look at, the model misses real physical effects traveling across the field</td></tr>
     <tr><th>Changed Case To Try First</th><td>change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures</td></tr>
   </tbody>
 </table>
@@ -105,7 +105,7 @@
 <p>The order is part of the idea. If the page starts with a method name, formula, or claim, the learner can miss why the idea is needed at all.</p>
 <table>
   <tbody>
-    <tr><th>1. Start With The Problem</th><td>a local spot in a field may depend on faraway information, but scanning everywhere costs too much</td></tr>
+    <tr><th>1. Start With The Problem</th><td>predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow</td></tr>
     <tr><th>Why This Must Come First</th><td>The problem gives the method a job. Without it, the name can sound important while doing no clear work.</td></tr>
     <tr><th>2. Then Name The Evidence</th><td>large fields where one location may depend on other locations</td></tr>
     <tr><th>Why Evidence Comes Before The Move</th><td>The move can only carry what is actually seen, measured, written, solved, or checked.</td></tr>
@@ -113,7 +113,7 @@
     <tr><th>Why The Missing Answer Comes Before Math</th><td>The math shape is chosen to reach this missing answer, not because the topic name sounds useful.</td></tr>
     <tr><th>4. Then Make The Plain Move</th><td>let the model choose which parts of the field exchange information</td></tr>
     <tr><th>Why The Move Comes Before The Claim</th><td>The claim is allowed only if the move really carries the evidence toward the missing answer.</td></tr>
-    <tr><th>5. Then Check Shape And Field Use</th><td>the paths between distant parts that matter for the prediction</td></tr>
+    <tr><th>5. Then Check Shape And Field Use</th><td>which distant patches matter for the prediction at each spot</td></tr>
     <tr><th>Why Shape Comes Before Trust</th><td>The answer can look right while losing the relation, boundary, graph, field, or use range that carries the real claim.</td></tr>
     <tr><th>6. End With The Test</th><td>change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures</td></tr>
     <tr><th>Why The Test Comes Last</th><td>The final test decides whether to trust, narrow, or reject the claim.</td></tr>
@@ -124,10 +124,10 @@
 
 
 <h2>Why Care Before Any Technical Term</h2>
-<p>Before naming Attention For Scientific Fields, ask what would go wrong for a person doing real work. The person has this problem: a local spot in a field may depend on faraway information, but scanning everywhere costs too much The cost is not a bad quiz score. The cost is a decision made from evidence that does not yet reach the answer.</p>
+<p>Before naming Attention For Scientific Fields, ask what would go wrong for a person doing real work. The person has this problem: predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow The cost is not a bad quiz score. The cost is a decision made from evidence that does not yet reach the answer.</p>
 <table>
   <tbody>
-    <tr><th>Real Work At Risk</th><td>it lets the model move information across the field only where needed, trading speed for which distant interactions it can reach</td></tr>
+    <tr><th>Real Work At Risk</th><td>lets the computer route information only through the connections it needs, trading speed for reach</td></tr>
     <tr><th>Evidence The Person Has</th><td>large fields where one location may depend on other locations</td></tr>
     <tr><th>Answer The Person Still Needs</th><td>which distant parts matter for the local prediction</td></tr>
     <tr><th>Plain Move That Helps</th><td>let the model choose which parts of the field exchange information</td></tr>
@@ -135,7 +135,7 @@
     <tr><th>Engineering Reason</th><td>Route information across a part, surface, or field where distant regions interact. Check: Stress long-range cases and compare the design quantity near hard regions.</td></tr>
     <tr><th>Materials Biology Or Chemistry Reason</th><td>Let distant atoms, cells, residues, or regions influence a local prediction. Check: Remove long-range context, change structure, or hold out larger objects.</td></tr>
     <tr><th>Climate Fluid Or Field Reason</th><td>Route information across fields where one region can affect another. Check: Change storms, fronts, boundaries, and long-range interactions and inspect the field.</td></tr>
-    <tr><th>First Trust Limit</th><td>when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted</td></tr>
+    <tr><th>First Trust Limit</th><td>when attention picks the wrong patches to look at, the model misses real physical effects traveling across the field</td></tr>
   </tbody>
 </table>
 <h3>Plain Importance Test</h3>
@@ -146,10 +146,10 @@
 <p>Use this as a slow spoken rehearsal. The learner should be able to tell the day as a chain of small choices, not as a definition of Attention For Scientific Fields.</p>
 <table>
   <tbody>
-    <tr><th>Morning Job</th><td>A person starts with this shortage: a local spot in a field may depend on faraway information, but scanning everywhere costs too much</td></tr>
+    <tr><th>Morning Job</th><td>A person starts with this shortage: predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow</td></tr>
     <tr><th>First Thing They Write Down</th><td>field patches, their positions, and examples of full-field behavior</td></tr>
     <tr><th>Question They Cannot Answer Yet</th><td>which distant patches matter for the local update</td></tr>
-    <tr><th>Decision Waiting On The Answer</th><td>it lets the model move information across the field only where needed, trading speed for which distant interactions it can reach</td></tr>
+    <tr><th>Decision Waiting On The Answer</th><td>lets the computer route information only through the connections it needs, trading speed for reach</td></tr>
     <tr><th>Shape They Must Not Flatten</th><td>Let distant parts of a shape or field exchange information when local neighbors are not enough. Check: Change window size, long-range links, boundary regions, or point order.</td></tr>
     <tr><th>Plain Move They Try Before Lunch</th><td>route information between selected field parts before predicting the updated field</td></tr>
     <tr><th>Engineering Version Of The Same Day</th><td>Route information across a part, surface, or field where distant regions interact.</td></tr>
@@ -186,7 +186,7 @@
 <p>Before writing a formula for Attention For Scientific Fields, make a small drawing. The drawing does not need to be pretty. It only needs to show what is known, what is missing, what relation must stay visible, and what changed case could break the claim.</p>
 <table>
   <tbody>
-    <tr><th>Box One: Problem</th><td>Write the everyday shortage: a local spot in a field may depend on faraway information, but scanning everywhere costs too much</td></tr>
+    <tr><th>Box One: Problem</th><td>Write the everyday shortage: predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow</td></tr>
     <tr><th>Box Two: Evidence</th><td>Draw or list what is already seen: large fields where one location may depend on other locations</td></tr>
     <tr><th>Box Three: Missing Answer</th><td>Leave a blank for what is needed: which distant parts matter for the local prediction</td></tr>
     <tr><th>Arrow: Plain Move</th><td>Label the arrow with the move: let the model choose which parts of the field exchange information</td></tr>
@@ -205,14 +205,14 @@
 <p>Use this gate before choosing Attention For Scientific Fields as the first topic to open. The topic is a good first stop only when the learner can name the shortage, evidence, missing answer, shape signal, and first test in ordinary words.</p>
 <table>
   <tbody>
-    <tr><th>Open This Topic When</th><td>The problem sounds like this: a local spot in a field may depend on faraway information, but scanning everywhere costs too much</td></tr>
+    <tr><th>Open This Topic When</th><td>The problem sounds like this: predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow</td></tr>
     <tr><th>Evidence Signal</th><td>large fields where one location may depend on other locations</td></tr>
     <tr><th>Missing-Answer Signal</th><td>which distant parts matter for the local prediction</td></tr>
     <tr><th>Shape Or Topology Signal</th><td>Let distant parts of a shape or field exchange information when local neighbors are not enough.</td></tr>
     <tr><th>Read This First If Needed</th><td>Operator Learning, Graphs And Geometric Learning</td></tr>
     <tr><th>Why This Page Is The Right Stop</th><td>Attention is a way to move selected information across large fields or connected objects.</td></tr>
     <tr><th>Next Page To Open After This</th><td>the field-use, source-limit, or rejection-test page that uses this claim</td></tr>
-    <tr><th>Do Not Start Here When</th><td>connections the attention pattern ignores or cannot see is the part the learner needs most.</td></tr>
+    <tr><th>Do Not Start Here When</th><td>connections between parts that the attention pattern skips over is the part the learner needs most.</td></tr>
     <tr><th>Start-Here Rejection Test</th><td>change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures</td></tr>
   </tbody>
 </table>
@@ -224,7 +224,7 @@
 <p>A skeptical reader does not ask whether Attention For Scientific Fields sounds useful. They ask what evidence would make the claim believable and what test would make the claim smaller.</p>
 <table>
   <tbody>
-    <tr><th>Question A Skeptic Asks</th><td>Why should this move be trusted for this problem: a local spot in a field may depend on faraway information, but scanning everywhere costs too much</td></tr>
+    <tr><th>Question A Skeptic Asks</th><td>Why should this move be trusted for this problem: predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow</td></tr>
     <tr><th>Evidence A Skeptic Needs</th><td>large fields where one location may depend on other locations</td></tr>
     <tr><th>Missing Answer They Watch</th><td>which distant parts matter for the local prediction</td></tr>
     <tr><th>Move They Must See</th><td>let the model choose which parts of the field exchange information</td></tr>
@@ -244,7 +244,7 @@
 <p>Use this as a spoken answer for Attention For Scientific Fields. The learner should be able to say it without looking at a formula or reading the topic name as the reason.</p>
 <table>
   <tbody>
-    <tr><th>Sentence One: Everyday Need</th><td>A person needs this idea because a local spot in a field may depend on faraway information, but scanning everywhere costs too much</td></tr>
+    <tr><th>Sentence One: Everyday Need</th><td>A person needs this idea because predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow</td></tr>
     <tr><th>Sentence Two: Evidence In Hand</th><td>What they can point to is large fields where one location may depend on other locations</td></tr>
     <tr><th>Sentence Three: Missing Answer</th><td>What they still need is which distant parts matter for the local prediction</td></tr>
     <tr><th>Sentence Four: Plain Move</th><td>The plain move is to let the model choose which parts of the field exchange information</td></tr>
@@ -264,13 +264,13 @@
   <tbody>
     <tr><th>Before Learning This</th><td>The learner may see large fields where one location may depend on other locations but not know how to use it for this missing answer: which distant parts matter for the local prediction.</td></tr>
     <tr><th>After Learning This</th><td>The learner should try this move: let the model choose which parts of the field exchange information</td></tr>
-    <tr><th>Decision They Can Now Make</th><td>it lets the model move information across the field only where needed, trading speed for which distant interactions it can reach</td></tr>
+    <tr><th>Decision They Can Now Make</th><td>lets the computer route information only through the connections it needs, trading speed for reach</td></tr>
     <tr><th>Shape Decision That Changes</th><td>Let distant parts of a shape or field exchange information when local neighbors are not enough. Check: Change window size, long-range links, boundary regions, or point order.</td></tr>
     <tr><th>Engineering Decision That Changes</th><td>Route information across a part, surface, or field where distant regions interact. Check: Stress long-range cases and compare the design quantity near hard regions.</td></tr>
     <tr><th>Lab Or Biology Decision That Changes</th><td>Let distant atoms, cells, residues, or regions influence a local prediction. Check: Remove long-range context, change structure, or hold out larger objects.</td></tr>
     <tr><th>Field Decision That Changes</th><td>Route information across fields where one region can affect another. Check: Change storms, fronts, boundaries, and long-range interactions and inspect the field.</td></tr>
     <tr><th>Claim They Can Now Say</th><td>attention is a routing rule for information, not proof that the selected route is physically complete</td></tr>
-    <tr><th>Decision They Must Still Refuse</th><td>when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted</td></tr>
+    <tr><th>Decision They Must Still Refuse</th><td>when attention picks the wrong patches to look at, the model misses real physical effects traveling across the field</td></tr>
     <tr><th>Changed Case That Decides</th><td>change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures</td></tr>
   </tbody>
 </table>
@@ -282,7 +282,7 @@
 <p>This map asks where Attention For Scientific Fields matters after the course page closes. Each use must still start from evidence, name the missing answer, protect shape or field structure, and end with a test.</p>
 <table>
   <tbody>
-    <tr><th>Real-World Shortage</th><td>a local spot in a field may depend on faraway information, but scanning everywhere costs too much</td></tr>
+    <tr><th>Real-World Shortage</th><td>predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow</td></tr>
     <tr><th>Evidence That Travels Outside Class</th><td>large fields where one location may depend on other locations</td></tr>
     <tr><th>Missing Answer Outside Class</th><td>which distant parts matter for the local prediction</td></tr>
     <tr><th>Engineering Use Outside Class</th><td>Route information across a part, surface, or field where distant regions interact. Check: Stress long-range cases and compare the design quantity near hard regions.</td></tr>
@@ -290,7 +290,7 @@
     <tr><th>Climate Fluid Or Field Use Outside Class</th><td>Route information across fields where one region can affect another. Check: Change storms, fronts, boundaries, and long-range interactions and inspect the field.</td></tr>
     <tr><th>Topology Shape Use Outside Class</th><td>Let distant parts of a shape or field exchange information when local neighbors are not enough. Check: Change window size, long-range links, boundary regions, or point order.</td></tr>
     <tr><th>Claim Allowed Outside Class</th><td>attention is a routing rule for information, not proof that the selected route is physically complete</td></tr>
-    <tr><th>Use Must Stop Outside Class When</th><td>when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted</td></tr>
+    <tr><th>Use Must Stop Outside Class When</th><td>when attention picks the wrong patches to look at, the model misses real physical effects traveling across the field</td></tr>
     <tr><th>First Outside-Classroom Test</th><td>change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures</td></tr>
   </tbody>
 </table>
@@ -302,7 +302,7 @@
 <p>After reading Attention For Scientific Fields, the learner should write a short note in their own words. The note should be useful the next day, when the page is closed.</p>
 <table>
   <tbody>
-    <tr><th>Notebook Line: Problem</th><td>a local spot in a field may depend on faraway information, but scanning everywhere costs too much</td></tr>
+    <tr><th>Notebook Line: Problem</th><td>predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow</td></tr>
     <tr><th>Notebook Line: Evidence</th><td>large fields where one location may depend on other locations</td></tr>
     <tr><th>Notebook Line: Missing Answer</th><td>which distant parts matter for the local prediction</td></tr>
     <tr><th>Notebook Line: Move</th><td>let the model choose which parts of the field exchange information</td></tr>
@@ -320,7 +320,7 @@
 <p>The learner should be able to invent a tiny new case for Attention For Scientific Fields without copying the worked example. The case only has to be small enough to reveal the first-principles chain.</p>
 <table>
   <tbody>
-    <tr><th>Invent A Small Setting</th><td>Use a setting where this shortage appears: a local spot in a field may depend on faraway information, but scanning everywhere costs too much</td></tr>
+    <tr><th>Invent A Small Setting</th><td>Use a setting where this shortage appears: predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow</td></tr>
     <tr><th>Name One Thing Seen</th><td>large fields where one location may depend on other locations</td></tr>
     <tr><th>Name One Thing Missing</th><td>which distant parts matter for the local prediction</td></tr>
     <tr><th>Name The Small Move</th><td>let the model choose which parts of the field exchange information</td></tr>
@@ -339,8 +339,8 @@
 <p>Use this as the smallest complete path from a real scientific question to a claim that can be rejected.</p>
 <table>
   <tbody>
-    <tr><th>1. State The Scientific Job</th><td>a local spot in a field may depend on faraway information, but scanning everywhere costs too much</td></tr>
-    <tr><th>2. Name The Decision Quantity</th><td>it lets the model move information across the field only where needed, trading speed for which distant interactions it can reach</td></tr>
+    <tr><th>1. State The Scientific Job</th><td>predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow</td></tr>
+    <tr><th>2. Name The Decision Quantity</th><td>lets the computer route information only through the connections it needs, trading speed for reach</td></tr>
     <tr><th>3. Inventory The Evidence</th><td>large fields where one location may depend on other locations</td></tr>
     <tr><th>4. Choose The Mathematical Carrier</th><td>let the model choose which parts of the field exchange information</td></tr>
     <tr><th>5. Build The Smallest Working Case</th><td>field pieces -&gt; selected information exchange -&gt; updated field pieces</td></tr>
@@ -352,12 +352,12 @@
 
 
 <h2>First-Principles Essay</h2>
-<p>Start before the method name. In large scientific fields where distant parts may interact, the real difficulty is this: a local spot in a field may depend on faraway information, but scanning everywhere costs too much. The concept called Attention For Scientific Fields is useful only if it helps carry the right information from the evidence already available to the answer the scientist still needs. The name of the method is secondary. The first question is what the world is asking us to recover, predict, explain, or check.</p>
+<p>Start before the method name. In large scientific fields where distant parts may interact, the real difficulty is this: predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow. The concept called Attention For Scientific Fields is useful only if it helps carry the right information from the evidence already available to the answer the scientist still needs. The name of the method is secondary. The first question is what the world is asking us to recover, predict, explain, or check.</p>
 <p>The observed side is large fields where one location may depend on other locations. That is the part the page is allowed to use as evidence. The hidden side is which distant parts matter for the local prediction. That is the part a reader should keep their eyes on, because the hidden part is where bad explanations often slip in. A weak writeup says the model learns a pattern. A stronger writeup says exactly which hidden quantity is being asked for and what would count as evidence that the answer is wrong.</p>
-<p>The mathematical move follows from that shortage. Here the move is: let the model choose which parts of the field exchange information. The shape is: field pieces -&gt; selected information exchange -&gt; updated field pieces. Read that shape as a promise about information. It says which facts are kept, which checks are made, and which parts of the real scientific situation are not being carried. In this case, the concept keeps the paths between distant parts that matter for the prediction. It leaves out connections the attention pattern ignores or cannot see. That missing part is not a footnote; it is the boundary of the claim.</p>
-<p>The reason this matters is not the method name. It matters because it lets the model move information across the field only where needed, trading speed for which distant interactions it can reach. If the method works, it gives a scientist a usable answer for a named situation. If it fails, it usually fails in a concrete way: when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted. That is why the page must end with a changed-case test rather than a general statement of confidence.</p>
+<p>The mathematical move follows from that shortage. Here the move is: let the model choose which parts of the field exchange information. The shape is: field pieces -&gt; selected information exchange -&gt; updated field pieces. Read that shape as a promise about information. It says which facts are kept, which checks are made, and which parts of the real scientific situation are not being carried. In this case, the concept keeps which distant patches matter for the prediction at each spot. It leaves out connections between parts that the attention pattern skips over. That missing part is not a footnote; it is the boundary of the claim.</p>
+<p>The reason this matters is not the method name. It matters because lets the computer route information only through the connections it needs, trading speed for reach. If the method works, it gives a scientist a usable answer for a named situation. If it fails, it usually fails in a concrete way: when attention picks the wrong patches to look at, the model misses real physical effects traveling across the field. That is why the page must end with a changed-case test rather than a general statement of confidence.</p>
 <h3>Tiny Concrete Version</h3>
-<p>Imagine a weather forecaster looking at a satellite image to predict rain at one city. She doesn&#x27;t study every pixel equally—her eyes zoom to distant pressure systems and ocean temperatures that actually drive local weather. Attention works the same way: it weights which parts of the input field matter for each prediction, focusing computation on distant influences that truly connect. Strip away the notation and the question becomes: what do we know, what do we not know, what rule or pattern is allowed to connect them, and what changed case would make us stop trusting the answer?</p>
+<p>When a weather forecaster predicts rain over your city, she&#x27;s not staring at every pixel of the satellite image equally. She spots the ocean temperature 500 miles away and the jet stream pattern another 1000 miles away—those actually drive your weather. Attention does this for a learning program: instead of checking every input, it learns to zoom into the distant parts that truly affect each output, making predictions fast without breaking physics. Strip away the notation and the question becomes: what do we know, what do we not know, what rule or pattern is allowed to connect them, and what changed case would make us stop trusting the answer?</p>
 <h3>What A Strong Explanation Must Say</h3>
 <ol>
   <li>Name the real quantity, not only the method.</li>
@@ -369,7 +369,7 @@
 
 
 <h2>Teach It From Zero</h2>
-<p><strong>Start With A Person:</strong> Imagine someone who has no method name in mind yet. They have a real job: a local spot in a field may depend on faraway information, but scanning everywhere costs too much. In the concrete case on this page, the setting is this: A large fluid field has local regions whose behavior depends on distant regions. The person is not trying to sound technical. They are trying to decide what can be known from the evidence they already have.</p>
+<p><strong>Start With A Person:</strong> Imagine someone who has no method name in mind yet. They have a real job: predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow. In the concrete case on this page, the setting is this: A large fluid field has local regions whose behavior depends on distant regions. The person is not trying to sound technical. They are trying to decide what can be known from the evidence they already have.</p>
 <p><strong>What They Can See:</strong> The evidence in hand is large fields where one location may depend on other locations. That evidence may be a measurement, a set of solved cases, a field, a shape, a graph, a molecule, a boundary value, or a time trace. It is useful because it is real. It is not enough because it does not directly give the answer the person needs.</p>
 <p><strong>What They Cannot See Yet:</strong> The hidden answer is which distant parts matter for the local prediction. This is the reason Attention For Scientific Fields enters the course. The topic is not here because its name is impressive. It is here because it gives one careful way to move from visible evidence toward a missing answer.</p>
 <p><strong>The First-Principles Move:</strong> The plain move is to let the model choose which parts of the field exchange information. Read that sentence slowly. It says what information is carried forward. It also says what is not proven. A topic is useful only when the carried information matches the scientific job. If the job changes, the claim must be checked again.</p>
@@ -424,10 +424,10 @@
 
 
 <h2>Everyday Field Decision Story</h2>
-<p>A field decision starts before the topic name. Someone needs to decide because it lets the model move information across the field only where needed, trading speed for which distant interactions it can reach. They can point to large fields where one location may depend on other locations, but still need which distant parts matter for the local prediction. Attention For Scientific Fields helps only if the move is clear: let the model choose which parts of the field exchange information. The decision should stay narrow until this changed case is checked: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures.</p>
+<p>A field decision starts before the topic name. Someone needs to decide because lets the computer route information only through the connections it needs, trading speed for reach. They can point to large fields where one location may depend on other locations, but still need which distant parts matter for the local prediction. Attention For Scientific Fields helps only if the move is clear: let the model choose which parts of the field exchange information. The decision should stay narrow until this changed case is checked: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures.</p>
 <table>
   <tbody>
-    <tr><th>Decision Being Made</th><td>it lets the model move information across the field only where needed, trading speed for which distant interactions it can reach</td></tr>
+    <tr><th>Decision Being Made</th><td>lets the computer route information only through the connections it needs, trading speed for reach</td></tr>
     <tr><th>Evidence On The Table</th><td>large fields where one location may depend on other locations</td></tr>
     <tr><th>Missing Answer For The Decision</th><td>which distant parts matter for the local prediction</td></tr>
     <tr><th>Plain Move That Connects Them</th><td>let the model choose which parts of the field exchange information</td></tr>
@@ -437,7 +437,7 @@
     <tr><th>Climate Or Field Decision Use</th><td>Route information across fields where one region can affect another.</td></tr>
     <tr><th>Concrete Decision Picture</th><td>A large fluid field has local regions whose behavior depends on distant regions.</td></tr>
     <tr><th>Decision Claim Allowed</th><td>attention is a routing rule for information, not proof that the selected route is physically complete</td></tr>
-    <tr><th>Decision Must Stop When</th><td>when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted</td></tr>
+    <tr><th>Decision Must Stop When</th><td>when attention picks the wrong patches to look at, the model misses real physical effects traveling across the field</td></tr>
   </tbody>
 </table>
 <h3>Decision Story Pass Test</h3>
@@ -502,13 +502,13 @@
 
 
 <h2>From Scratch Story In Plain Words</h2>
-<p>Imagine a person has a real job to do and no method name yet. The job begins with this shortage: a local spot in a field may depend on faraway information, but scanning everywhere costs too much. That is the reason Attention For Scientific Fields enters the course. The idea does not start as a label. It starts because someone has evidence in hand, a missing answer, and a decision that cannot wait for a perfect view of the world.</p>
+<p>Imagine a person has a real job to do and no method name yet. The job begins with this shortage: predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow. That is the reason Attention For Scientific Fields enters the course. The idea does not start as a label. It starts because someone has evidence in hand, a missing answer, and a decision that cannot wait for a perfect view of the world.</p>
 <p>The evidence in hand is large fields where one location may depend on other locations. This is the visible side of the problem. It might be measurements, a known rule, a simulation, a boundary, a mesh, a molecule, a graph, a field, or previous examples. The hidden side is which distant parts matter for the local prediction. That hidden side is what the learner should keep asking about. If the page cannot say what is hidden, then the method name is doing too much work.</p>
 <p>The first-principles move is this: let the model choose which parts of the field exchange information. In everyday words, the move has to do a named job. It is a way of carrying information from what can be seen to what still needs to be known. The shape of that move is field pieces -&gt; selected information exchange -&gt; updated field pieces. That shape matters because it tells the reader what the method is allowed to keep, what it is allowed to ignore, and where the claim can become too wide.</p>
 <p>Shape and topology enter when the answer depends on connection, boundary, hole, surface, mesh, molecule form, graph link, or how a field moves across space and time. For Attention For Scientific Fields, the plain shape use is: Let distant parts of a shape or field exchange information when local neighbors are not enough. The first shape check is: Change window size, long-range links, boundary regions, or point order. This is why topology is not a decorative topic. It decides whether the answer keeps the part of the world that carries the claim.</p>
 <p>The same idea also has to make sense away from the shape example. In engineering, the plain use is: Route information across a part, surface, or field where distant regions interact. In materials, chemistry, or biology, the plain use is: Let distant atoms, cells, residues, or regions influence a local prediction. In climate, fluids, or other field problems, the plain use is: Route information across fields where one region can affect another. These uses are not praise for the topic. They are checks that the learner can translate the same first-principles shortage into more than one real setting.</p>
 <p>A concrete case makes the story honest. Here, the setting is A large fluid field has local regions whose behavior depends on distant regions. The observed evidence is field patches, their positions, and examples of full-field behavior. The hidden target is which distant patches matter for the local update. The move is route information between selected field parts before predicting the updated field. The usable answer is an updated field that can carry nonlocal information. The first changed case is changing the attention window or boundary case loses important long-range behavior. If that changed case fails, the right response is not to defend the method name. The right response is to narrow the claim, gather stronger evidence, or choose a better starting point.</p>
-<p>The plain ending is this: Attention For Scientific Fields matters because it lets the model move information across the field only where needed, trading speed for which distant interactions it can reach. It keeps the paths between distant parts that matter for the prediction. It leaves out connections the attention pattern ignores or cannot see. It should stop being trusted, or be narrowed, when when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted. A learner understands the topic only when they can say that whole chain without hiding behind the topic name.</p>
+<p>The plain ending is this: Attention For Scientific Fields matters because lets the computer route information only through the connections it needs, trading speed for reach. It keeps which distant patches matter for the prediction at each spot. It leaves out connections between parts that the attention pattern skips over. It should stop being trusted, or be narrowed, when when attention picks the wrong patches to look at, the model misses real physical effects traveling across the field. A learner understands the topic only when they can say that whole chain without hiding behind the topic name.</p>
 
 
 <h2>No-Jargon Translation For This Topic</h2>
@@ -521,7 +521,7 @@
 <tr>
   <th>Topic Name</th>
   <td>Attention For Scientific Fields</td>
-  <td>A name for the move used when a local spot in a field may depend on faraway information, but scanning everywhere costs too much.</td>
+  <td>A name for the move used when predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow.</td>
   <td>What real shortage made this idea necessary?</td>
 </tr>
 
@@ -555,14 +555,14 @@
 
 <tr>
   <th>Field Use</th>
-  <td>it lets the model move information across the field only where needed, trading speed for which distant interactions it can reach</td>
+  <td>lets the computer route information only through the connections it needs, trading speed for reach</td>
   <td>The real-world reason a person would care about the answer.</td>
   <td>Which decision or quantity changes if the answer is right?</td>
 </tr>
 
 <tr>
   <th>Trust Boundary</th>
-  <td>when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted</td>
+  <td>when attention picks the wrong patches to look at, the model misses real physical effects traveling across the field</td>
   <td>The first place the claim should shrink or stop.</td>
   <td>What changed case would make a careful reader recheck the answer?</td>
 </tr>
@@ -580,7 +580,7 @@
 <tr>
   <th>Object Word</th>
   <td>Attention For Scientific Fields</td>
-  <td>The name of the tool is less important than the shortage it answers: a local spot in a field may depend on faraway information, but scanning everywhere costs too much.</td>
+  <td>The name of the tool is less important than the shortage it answers: predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow.</td>
   <td>What problem made this word necessary?</td>
 </tr>
 
@@ -614,14 +614,14 @@
 
 <tr>
   <th>Decision Word</th>
-  <td>it lets the model move information across the field only where needed, trading speed for which distant interactions it can reach</td>
+  <td>lets the computer route information only through the connections it needs, trading speed for reach</td>
   <td>The reason a person in a field would act differently if the answer is right.</td>
   <td>What choice or quantity changes in the world?</td>
 </tr>
 
 <tr>
   <th>Trust Word</th>
-  <td>when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted</td>
+  <td>when attention picks the wrong patches to look at, the model misses real physical effects traveling across the field</td>
   <td>The place where the claim should stop, shrink, or be checked again.</td>
   <td>What changed case would make me stop?</td>
 </tr>
@@ -637,7 +637,7 @@
   <tbody>
 <tr>
   <th>Start With The Shortage</th>
-  <td>a local spot in a field may depend on faraway information, but scanning everywhere costs too much</td>
+  <td>predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow</td>
 </tr>
 
 <tr>
@@ -672,7 +672,7 @@
 
 <tr>
   <th>Name The Trust Boundary</th>
-  <td>when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted</td>
+  <td>when attention picks the wrong patches to look at, the model misses real physical effects traveling across the field</td>
 </tr>
 
 <tr>
@@ -682,7 +682,7 @@
 </tbody>
 </table>
 <h3>Filled Retell Answer</h3>
-<p>Attention For Scientific Fields begins because a local spot in a field may depend on faraway information, but scanning everywhere costs too much. The evidence I can point to is large fields where one location may depend on other locations. The hidden answer is which distant parts matter for the local prediction. The first-principles move is to let the model choose which parts of the field exchange information. Shape or topology matters because let distant parts of a shape or field exchange information when local neighbors are not enough. In one concrete setting, a large fluid field has local regions whose behavior depends on distant regions. The useful answer is an updated field that can carry nonlocal information. I should narrow the claim when when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted. The first changed case I would try is change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures.</p>
+<p>Attention For Scientific Fields begins because predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow. The evidence I can point to is large fields where one location may depend on other locations. The hidden answer is which distant parts matter for the local prediction. The first-principles move is to let the model choose which parts of the field exchange information. Shape or topology matters because let distant parts of a shape or field exchange information when local neighbors are not enough. In one concrete setting, a large fluid field has local regions whose behavior depends on distant regions. The useful answer is an updated field that can carry nonlocal information. I should narrow the claim when when attention picks the wrong patches to look at, the model misses real physical effects traveling across the field. The first changed case I would try is change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures.</p>
 <h3>Retell Pass Test</h3>
 <p>A retell passes only if it names the shortage, evidence, hidden answer, first-principles move, shape or topology issue, one concrete case, useful answer, trust boundary, and changed case without using the topic name as the reason.</p>
 
@@ -796,7 +796,7 @@
 <table>
   <tbody>
     <tr><th>Use It When</th><td>The case starts from large fields where one location may depend on other locations, needs which distant parts matter for the local prediction, and the allowed move is let the model choose which parts of the field exchange information.</td></tr>
-    <tr><th>Narrow It When</th><td>The topic helps part of the job, but this boundary is close: when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted.</td></tr>
+    <tr><th>Narrow It When</th><td>The topic helps part of the job, but this boundary is close: when attention picks the wrong patches to look at, the model misses real physical effects traveling across the field.</td></tr>
     <tr><th>Refuse It When</th><td>Assume attention found the physically important interactions because it connected distant field parts.</td></tr>
     <tr><th>Evidence Required Before Use</th><td>large fields where one location may depend on other locations</td></tr>
     <tr><th>Hidden Answer Required Before Use</th><td>which distant parts matter for the local prediction</td></tr>
@@ -812,18 +812,18 @@
 <p>This is the smallest proof that the topic has become understandable. The learner should be able to say this without looking at the page.</p>
 <table>
   <tbody>
-    <tr><th>Problem Proof</th><td>a local spot in a field may depend on faraway information, but scanning everywhere costs too much</td></tr>
+    <tr><th>Problem Proof</th><td>predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow</td></tr>
     <tr><th>Evidence Proof</th><td>large fields where one location may depend on other locations</td></tr>
     <tr><th>Hidden-Answer Proof</th><td>which distant parts matter for the local prediction</td></tr>
     <tr><th>Move Proof</th><td>let the model choose which parts of the field exchange information</td></tr>
     <tr><th>Shape Proof</th><td>Let distant parts of a shape or field exchange information when local neighbors are not enough.</td></tr>
     <tr><th>Case Proof</th><td>A large fluid field has local regions whose behavior depends on distant regions.</td></tr>
     <tr><th>Use Proof</th><td>an updated field that can carry nonlocal information</td></tr>
-    <tr><th>Refusal Proof</th><td>when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted</td></tr>
+    <tr><th>Refusal Proof</th><td>when attention picks the wrong patches to look at, the model misses real physical effects traveling across the field</td></tr>
   </tbody>
 </table>
 <h3>Accepted Final Answer</h3>
-<p>Attention For Scientific Fields is needed because a local spot in a field may depend on faraway information, but scanning everywhere costs too much. I can start from large fields where one location may depend on other locations. I still need which distant parts matter for the local prediction. The allowed move is to let the model choose which parts of the field exchange information. The shape issue is let distant parts of a shape or field exchange information when local neighbors are not enough. A concrete case is a large fluid field has local regions whose behavior depends on distant regions. The useful answer is an updated field that can carry nonlocal information. I use it only when the changed-case test is named: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures. I refuse or narrow it when when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted.</p>
+<p>Attention For Scientific Fields is needed because predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow. I can start from large fields where one location may depend on other locations. I still need which distant parts matter for the local prediction. The allowed move is to let the model choose which parts of the field exchange information. The shape issue is let distant parts of a shape or field exchange information when local neighbors are not enough. A concrete case is a large fluid field has local regions whose behavior depends on distant regions. The useful answer is an updated field that can carry nonlocal information. I use it only when the changed-case test is named: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures. I refuse or narrow it when when attention picks the wrong patches to look at, the model misses real physical effects traveling across the field.</p>
 <h3>Final Proof Pass Test</h3>
 <p>The final proof passes only if the learner can say the problem, evidence, hidden answer, move, shape issue, concrete case, useful answer, changed-case test, and refusal boundary in one ordinary-language answer.</p>
 
@@ -832,7 +832,7 @@
 <p>This is the handoff a learner should be able to give to another person without using the topic name as a shortcut.</p>
 <table>
   <tbody>
-    <tr><th>First Sentence</th><td>Attention For Scientific Fields starts from this everyday shortage: a local spot in a field may depend on faraway information, but scanning everywhere costs too much</td></tr>
+    <tr><th>First Sentence</th><td>Attention For Scientific Fields starts from this everyday shortage: predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow</td></tr>
     <tr><th>What They Can Point To</th><td>large fields where one location may depend on other locations</td></tr>
     <tr><th>What They Still Need</th><td>which distant parts matter for the local prediction</td></tr>
     <tr><th>Plain Move To Say Out Loud</th><td>let the model choose which parts of the field exchange information</td></tr>
@@ -840,11 +840,11 @@
     <tr><th>One Field Use</th><td>Route information across a part, surface, or field where distant regions interact. Check: Stress long-range cases and compare the design quantity near hard regions.</td></tr>
     <tr><th>One Concrete Case</th><td>A large fluid field has local regions whose behavior depends on distant regions.</td></tr>
     <tr><th>Careful Ending</th><td>attention is a routing rule for information, not proof that the selected route is physically complete</td></tr>
-    <tr><th>Stop Teaching It As True When</th><td>when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted</td></tr>
+    <tr><th>Stop Teaching It As True When</th><td>when attention picks the wrong patches to look at, the model misses real physical effects traveling across the field</td></tr>
   </tbody>
 </table>
 <h3>Full Handoff In Plain Words</h3>
-<p>Start with the everyday shortage: a local spot in a field may depend on faraway information, but scanning everywhere costs too much. Then say what is seen: large fields where one location may depend on other locations. Say what is still missing: which distant parts matter for the local prediction. Explain the move in one plain line: let the model choose which parts of the field exchange information. Name the shape issue: Let distant parts of a shape or field exchange information when local neighbors are not enough.. Ground it in this case: A large fluid field has local regions whose behavior depends on distant regions.. End carefully: attention is a routing rule for information, not proof that the selected route is physically complete. Stop or narrow the claim when when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted.</p>
+<p>Start with the everyday shortage: predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow. Then say what is seen: large fields where one location may depend on other locations. Say what is still missing: which distant parts matter for the local prediction. Explain the move in one plain line: let the model choose which parts of the field exchange information. Name the shape issue: Let distant parts of a shape or field exchange information when local neighbors are not enough.. Ground it in this case: A large fluid field has local regions whose behavior depends on distant regions.. End carefully: attention is a routing rule for information, not proof that the selected route is physically complete. Stop or narrow the claim when when attention picks the wrong patches to look at, the model misses real physical effects traveling across the field.</p>
 <h3>Handoff Pass Test</h3>
 <p>The handoff passes only if another person can repeat the problem, evidence, missing answer, shape issue, field use, careful ending, and stop condition without needing the topic name first.</p>
 
@@ -867,19 +867,19 @@
 
 
 <h2>One-Page Mental Model</h2>
-<p>Attention For Scientific Fields is a route from large fields where one location may depend on other locations to which distant parts matter for the local prediction. The route exists because a local spot in a field may depend on faraway information, but scanning everywhere costs too much. The move is let the model choose which parts of the field exchange information. The shape issue is Let distant parts of a shape or field exchange information when local neighbors are not enough.. A concrete picture is A large fluid field has local regions whose behavior depends on distant regions.. The allowed claim is attention is a routing rule for information, not proof that the selected route is physically complete. The first test is change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures.</p>
+<p>Attention For Scientific Fields is a route from large fields where one location may depend on other locations to which distant parts matter for the local prediction. The route exists because predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow. The move is let the model choose which parts of the field exchange information. The shape issue is Let distant parts of a shape or field exchange information when local neighbors are not enough.. A concrete picture is A large fluid field has local regions whose behavior depends on distant regions.. The allowed claim is attention is a routing rule for information, not proof that the selected route is physically complete. The first test is change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures.</p>
 <table>
   <tbody>
-    <tr><th>Need</th><td>a local spot in a field may depend on faraway information, but scanning everywhere costs too much</td></tr>
+    <tr><th>Need</th><td>predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow</td></tr>
     <tr><th>Evidence</th><td>large fields where one location may depend on other locations</td></tr>
     <tr><th>Missing Answer</th><td>which distant parts matter for the local prediction</td></tr>
     <tr><th>Plain Move</th><td>let the model choose which parts of the field exchange information</td></tr>
     <tr><th>Shape To Keep</th><td>Let distant parts of a shape or field exchange information when local neighbors are not enough.</td></tr>
-    <tr><th>Field Reason</th><td>it lets the model move information across the field only where needed, trading speed for which distant interactions it can reach</td></tr>
+    <tr><th>Field Reason</th><td>lets the computer route information only through the connections it needs, trading speed for reach</td></tr>
     <tr><th>Concrete Picture</th><td>A large fluid field has local regions whose behavior depends on distant regions.</td></tr>
     <tr><th>Allowed Claim</th><td>attention is a routing rule for information, not proof that the selected route is physically complete</td></tr>
     <tr><th>First Test</th><td>change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures</td></tr>
-    <tr><th>Stop Point</th><td>when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted</td></tr>
+    <tr><th>Stop Point</th><td>when attention picks the wrong patches to look at, the model misses real physical effects traveling across the field</td></tr>
   </tbody>
 </table>
 <h3>Mental Model Pass Test</h3>
@@ -890,14 +890,14 @@
 <p>This check is for the next day, when the page is closed. The learner passes only if the plain chain is still available without the table.</p>
 <table>
   <tbody>
-    <tr><th>Remember The Need</th><td>a local spot in a field may depend on faraway information, but scanning everywhere costs too much</td></tr>
+    <tr><th>Remember The Need</th><td>predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow</td></tr>
     <tr><th>Remember The Evidence</th><td>large fields where one location may depend on other locations</td></tr>
     <tr><th>Remember The Missing Answer</th><td>which distant parts matter for the local prediction</td></tr>
     <tr><th>Remember The Move</th><td>let the model choose which parts of the field exchange information</td></tr>
     <tr><th>Remember The Shape Issue</th><td>Let distant parts of a shape or field exchange information when local neighbors are not enough.</td></tr>
     <tr><th>Remember One Case</th><td>A large fluid field has local regions whose behavior depends on distant regions.</td></tr>
     <tr><th>Remember The First Check</th><td>change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures</td></tr>
-    <tr><th>Remember When To Stop</th><td>when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted</td></tr>
+    <tr><th>Remember When To Stop</th><td>when attention picks the wrong patches to look at, the model misses real physical effects traveling across the field</td></tr>
   </tbody>
 </table>
 <h3>One-Minute Memory Answer</h3>
@@ -925,14 +925,14 @@
 <p>This is the final self-check before leaving the topic. Understanding means the reader can say what is known in plain words. Trust still needs tests, because a clear explanation can still be too broad.</p>
 <table>
   <tbody>
-    <tr><th>What I Know</th><td>a local spot in a field may depend on faraway information, but scanning everywhere costs too much</td></tr>
+    <tr><th>What I Know</th><td>predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow</td></tr>
     <tr><th>Evidence I Can Point To</th><td>large fields where one location may depend on other locations</td></tr>
     <tr><th>Answer I Still Need</th><td>which distant parts matter for the local prediction</td></tr>
     <tr><th>Move That Tries To Get There</th><td>let the model choose which parts of the field exchange information</td></tr>
     <tr><th>Shape Or Topology I Must Not Lose</th><td>Let distant parts of a shape or field exchange information when local neighbors are not enough.</td></tr>
     <tr><th>Claim I Can Say Carefully</th><td>attention is a routing rule for information, not proof that the selected route is physically complete</td></tr>
     <tr><th>Test Still Needed</th><td>change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures</td></tr>
-    <tr><th>Stop Or Narrow When</th><td>when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted</td></tr>
+    <tr><th>Stop Or Narrow When</th><td>when attention picks the wrong patches to look at, the model misses real physical effects traveling across the field</td></tr>
   </tbody>
 </table>
 <p>If the reader can fill this table from memory in everyday words, the topic is understandable. If they cannot name the test still needed, they may understand the story but not yet the scientific claim.</p>
@@ -942,8 +942,8 @@
 <p>A failure boundary is not a warning label at the end of the page. It explains why the first-principles chain matters in real work. If the topic is used past its evidence, the wrong answer can travel into a design choice, experiment, field forecast, or scientific claim.</p>
 <table>
   <tbody>
-    <tr><th>Missing Piece</th><td>connections the attention pattern ignores or cannot see</td></tr>
-    <tr><th>What Can Go Wrong</th><td>when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted</td></tr>
+    <tr><th>Missing Piece</th><td>connections between parts that the attention pattern skips over</td></tr>
+    <tr><th>What Can Go Wrong</th><td>when attention picks the wrong patches to look at, the model misses real physical effects traveling across the field</td></tr>
     <tr><th>Engineering Consequence</th><td>The design quantity may depend on faraway pressure, heat, load, or flow behavior. Check it by: Stress long-range cases and compare the design quantity near hard regions.</td></tr>
     <tr><th>Materials Or Biology Consequence</th><td>The method helps when the local property depends on nonlocal context. Check it by: Remove long-range context, change structure, or hold out larger objects.</td></tr>
     <tr><th>Climate Or Field Consequence</th><td>The field answer may need faraway signals without looking everywhere equally. Check it by: Change storms, fronts, boundaries, and long-range interactions and inspect the field.</td></tr>
@@ -957,20 +957,20 @@
 <p>This bridge explains why the mathematical shape is not arbitrary. Start with the everyday shortage, then ask what kind of answer would remove that shortage, what evidence can carry it, and what shape is the smallest honest carrier.</p>
 <table>
   <tbody>
-    <tr><th>Everyday Shortage</th><td>a local spot in a field may depend on faraway information, but scanning everywhere costs too much</td></tr>
+    <tr><th>Everyday Shortage</th><td>predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow</td></tr>
     <tr><th>Answer Type Needed</th><td>which distant parts matter for the local prediction</td></tr>
     <tr><th>Evidence Carrier</th><td>large fields where one location may depend on other locations</td></tr>
     <tr><th>Why A Single Number Is Not Enough</th><td>The answer must still carry the field, shape, rule, rate, property, uncertainty, or use range named by the scientific job.</td></tr>
     <tr><th>Smallest Honest Shape</th><td>field pieces -&gt; selected information exchange -&gt; updated field pieces</td></tr>
     <tr><th>Why This Shape Follows</th><td>let the model choose which parts of the field exchange information</td></tr>
-    <tr><th>What Would Make The Shape Too Weak</th><td>when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted</td></tr>
+    <tr><th>What Would Make The Shape Too Weak</th><td>when attention picks the wrong patches to look at, the model misses real physical effects traveling across the field</td></tr>
   </tbody>
 </table>
 <p>Read the shape as a sentence, not as a symbol list. It says what evidence enters, what answer leaves, and what changed case decides whether the middle step carried enough.</p>
 
 
 <h2>Plain Big Picture Essay</h2>
-<p>Start with the human problem. Someone needs to act, explain, build, test, or decide, and the answer is not sitting in front of them. For Attention For Scientific Fields, the plain problem is this: a local spot in a field may depend on faraway information, but scanning everywhere costs too much. The course idea is important only because it helps move from what is already known to what still has to be known. If that movement is not clear, the page is only naming a tool. If the movement is clear, the reader can see why the tool enters at all.</p>
+<p>Start with the human problem. Someone needs to act, explain, build, test, or decide, and the answer is not sitting in front of them. For Attention For Scientific Fields, the plain problem is this: predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow. The course idea is important only because it helps move from what is already known to what still has to be known. If that movement is not clear, the page is only naming a tool. If the movement is clear, the reader can see why the tool enters at all.</p>
 <p>The first-principles path is simple. We have evidence: large fields where one location may depend on other locations. We need something hidden: which distant parts matter for the local prediction. We make a move: let the model choose which parts of the field exchange information. The move is allowed only because it carries the right part of the evidence toward the missing answer. It is not allowed to claim more than that. The final claim is: attention is a routing rule for information, not proof that the selected route is physically complete.</p>
 <p>A plain example keeps the idea honest. One concrete case: A large fluid field has local regions whose behavior depends on distant regions. The evidence is field patches, their positions, and examples of full-field behavior. The missing answer is which distant patches matter for the local update. The useful move is to route information between selected field parts before predicting the updated field. The result is useful only if it gives an updated field that can carry nonlocal information. The first sign to stop or narrow the claim is this: changing the attention window or boundary case loses important long-range behavior.</p>
 <p>This matters across the course because the same pattern keeps returning. A scientist rarely wants a method name. They want a field, a shape, a property, a rate, a risk, a design answer, or a reason to reject a claim. The lesson is to ask the same plain questions every time: What do we know? What is missing? What carries the missing part? What did we leave out? What changed case would prove that the answer was too broad?</p>
@@ -1010,7 +1010,7 @@
 
 
 <h2>Why This Matters Slowly</h2>
-<p>Do not start by asking what Attention For Scientific Fields is called. Start by asking what would be hard without it. In plain words, the hard part is this: a local spot in a field may depend on faraway information, but scanning everywhere costs too much. A person may have measurements, solved examples, a known equation, a shape, a field, a graph, a material sample, or a past experiment. That evidence is useful, but it is not yet the answer. The missing answer is which distant parts matter for the local prediction. This topic matters because it gives a disciplined way to move from the evidence to that missing answer.</p>
+<p>Do not start by asking what Attention For Scientific Fields is called. Start by asking what would be hard without it. In plain words, the hard part is this: predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow. A person may have measurements, solved examples, a known equation, a shape, a field, a graph, a material sample, or a past experiment. That evidence is useful, but it is not yet the answer. The missing answer is which distant parts matter for the local prediction. This topic matters because it gives a disciplined way to move from the evidence to that missing answer.</p>
 <p>The move is let the model choose which parts of the field exchange information. That sentence is the center of the idea. It says what work the topic is doing before any notation appears. It also limits the claim. The topic is allowed to say this: attention is a routing rule for information, not proof that the selected route is physically complete. It is not allowed to say that every future case is handled, or that a neat curve, small error, or good-looking field is enough. A scientific claim has to carry its own stopping rule.</p>
 <p>Topology and shape matter here because scientific evidence often has form before it has numbers. Let distant parts of a shape or field exchange information when local neighbors are not enough. The reason is simple: Attention matters here when faraway structure changes the local answer. If a model loses the relation that carries the quantity, the answer can look tidy and still be wrong. The first shape check is: Change window size, long-range links, boundary regions, or point order.</p>
 <p>In engineering design, the same idea becomes a decision about a part, device, load, safety limit, or operating condition. Route information across a part, surface, or field where distant regions interact. Why it matters: The design quantity may depend on faraway pressure, heat, load, or flow behavior. The first engineering check is: Stress long-range cases and compare the design quantity near hard regions.</p>
@@ -1021,11 +1021,11 @@
 
 <h2>Long Everyday Importance Essay</h2>
 <h3>Why The Topic Has To Exist</h3>
-<p>Begin with a person who has a real question and no method name yet. The person is facing this shortage: a local spot in a field may depend on faraway information, but scanning everywhere costs too much. That shortage is the reason Attention For Scientific Fields belongs in the course. The topic is not here so the reader can memorize a label. It is here because the reader needs a plain route from evidence to a missing answer, and the route has to say where it can fail.</p>
+<p>Begin with a person who has a real question and no method name yet. The person is facing this shortage: predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow. That shortage is the reason Attention For Scientific Fields belongs in the course. The topic is not here so the reader can memorize a label. It is here because the reader needs a plain route from evidence to a missing answer, and the route has to say where it can fail.</p>
 <p>In the concrete case, the setting is this: A large fluid field has local regions whose behavior depends on distant regions. The person can see field patches, their positions, and examples of full-field behavior. That is useful evidence, but it does not by itself give which distant patches matter for the local update. The real job is to move from the seen part to the missing part without pretending that the answer is stronger than the evidence allows.</p>
 <h3>First-Principles Reason In Plain Words</h3>
 <p>The first-principles reason is the shortest honest chain: what is known, what is missing, what move can carry information between them, and what changed case can reject the result. For this topic, the known evidence is large fields where one location may depend on other locations. The missing answer is which distant parts matter for the local prediction. The move is to let the model choose which parts of the field exchange information. The claim is allowed to mean this: attention is a routing rule for information, not proof that the selected route is physically complete.</p>
-<p>This is why the mathematical shape appears. The shape is field pieces -&gt; selected information exchange -&gt; updated field pieces. Read it as a carrier of information, not as decoration. It keeps the paths between distant parts that matter for the prediction. It leaves out connections the attention pattern ignores or cannot see. The left-out part is important because it marks the edge of the claim. Past that edge, the topic needs a new test.</p>
+<p>This is why the mathematical shape appears. The shape is field pieces -&gt; selected information exchange -&gt; updated field pieces. Read it as a carrier of information, not as decoration. It keeps which distant patches matter for the prediction at each spot. It leaves out connections between parts that the attention pattern skips over. The left-out part is important because it marks the edge of the claim. Past that edge, the topic needs a new test.</p>
 <h3>Topology And Shape In Real Work</h3>
 <p>Topology and shape enter whenever the answer depends on connection, boundary, hole, distance, mesh, molecule form, surface, or how information moves across a field. For this topic, the plain shape use is: Let distant parts of a shape or field exchange information when local neighbors are not enough. The reason it matters is: Attention matters here when faraway structure changes the local answer. The first shape test is: Change window size, long-range links, boundary regions, or point order.</p>
 <p>This matters because a scientific object is often more than a row of numbers. A wing has a boundary and a surface. A molecule has atoms and bonds. A material has grains, defects, and directions. A climate field has regions that touch and regions that influence one another over distance. If the method erases the relation that carries the answer, it may look good on familiar cases and still fail when the shape changes.</p>
@@ -1035,11 +1035,11 @@
 <p>In climate, fluids, and field problems, the everyday use is: Route information across fields where one region can affect another. This matters because the field answer may need faraway signals without looking everywhere equally. The first field test is: Change storms, fronts, boundaries, and long-range interactions and inspect the field.</p>
 <h3>Why This Is Important</h3>
 <p>The importance of Attention For Scientific Fields is not that it sounds technical. Its importance is that it gives a reader one careful way to say what can be known from the evidence at hand. A good explanation should let the reader point to the evidence, name the hidden answer, explain the move, protect the shape or topology that matters, name the field decision, and end with the first changed case.</p>
-<p>For this page, the final everyday sentence is: Attention For Scientific Fields matters because it lets the model move information across the field only where needed, trading speed for which distant interactions it can reach. It should be trusted only as far as this test survives: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures. If that test fails, the honest answer is to narrow the claim, gather better evidence, or choose a different route.</p>
+<p>For this page, the final everyday sentence is: Attention For Scientific Fields matters because lets the computer route information only through the connections it needs, trading speed for reach. It should be trusted only as far as this test survives: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures. If that test fails, the honest answer is to narrow the claim, gather better evidence, or choose a different route.</p>
 
 
 <h2>Across Fields Long Walk</h2>
-<p>Use this section to slow down and ask why the same idea matters after the example changes. The starting shortage is still this: a local spot in a field may depend on faraway information, but scanning everywhere costs too much. The evidence in hand is still large fields where one location may depend on other locations. The missing answer is still which distant parts matter for the local prediction. Attention For Scientific Fields matters only if the move, let the model choose which parts of the field exchange information, still carries the part of the evidence that the new field needs.</p>
+<p>Use this section to slow down and ask why the same idea matters after the example changes. The starting shortage is still this: predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow. The evidence in hand is still large fields where one location may depend on other locations. The missing answer is still which distant parts matter for the local prediction. Attention For Scientific Fields matters only if the move, let the model choose which parts of the field exchange information, still carries the part of the evidence that the new field needs.</p>
 <h3>One Plain Need Across Fields</h3>
 <p>The plain need is not a method name. It is a person needing an answer they cannot see directly. In shape work, the person asks whether the answer changes when connection, boundary, hole, distance, mesh, or surface changes. In engineering, the person asks whether a design choice is still safe or useful. In materials, chemistry, or biology, the person asks whether a property, sample, molecule, tissue, or reaction still behaves the same way. In climate, fluids, or field work, the person asks whether the answer still holds across space, time, sources, and boundaries.</p>
 <h3>Topology And Shape Walk</h3>
@@ -1055,7 +1055,7 @@
 
 
 <h2>Why It Matters In Daily Work</h2>
-<p>Picture a normal workday, not a lecture. Someone has to make a choice before the whole truth is easy to see. The shortage is this: a local spot in a field may depend on faraway information, but scanning everywhere costs too much. The person may be trying to compare designs, read a field, choose a test, explain a shape, check a sample, or decide whether a result is ready to trust. The name Attention For Scientific Fields matters only after that need is clear.</p>
+<p>Picture a normal workday, not a lecture. Someone has to make a choice before the whole truth is easy to see. The shortage is this: predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow. The person may be trying to compare designs, read a field, choose a test, explain a shape, check a sample, or decide whether a result is ready to trust. The name Attention For Scientific Fields matters only after that need is clear.</p>
 <h3>Daily Work Starting Point</h3>
 <p>The starting point is evidence, not confidence. In the small case, the setting is: A large fluid field has local regions whose behavior depends on distant regions. The visible part is large fields where one location may depend on other locations. The missing part is which distant parts matter for the local prediction. The daily job is to move from the visible part toward the missing part without hiding the weak spot.</p>
 <h3>Daily Work Move</h3>
@@ -1065,7 +1065,7 @@
 <h3>Daily Field Stakes</h3>
 <p>In engineering, the work stake is: The design quantity may depend on faraway pressure, heat, load, or flow behavior. In materials, chemistry, or biology, the work stake is: The method helps when the local property depends on nonlocal context. In climate, fluids, or fields, the work stake is: The field answer may need faraway signals without looking everywhere equally. These are different jobs, but the same question controls all of them: did the move carry the right evidence toward the missing answer?</p>
 <h3>Daily Failure Cost</h3>
-<p>The cost of getting this wrong is not only a lower score on an example. The method can support the wrong design choice, the wrong lab conclusion, the wrong field reading, or the wrong explanation of a shape. The first place the claim can break is: when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted</p>
+<p>The cost of getting this wrong is not only a lower score on an example. The method can support the wrong design choice, the wrong lab conclusion, the wrong field reading, or the wrong explanation of a shape. The first place the claim can break is: when attention picks the wrong patches to look at, the model misses real physical effects traveling across the field</p>
 <h3>Daily Work Pass Test</h3>
 <p>The daily-work story passes only if the learner can say why Attention For Scientific Fields matters without starting from the topic name: name the work choice, name the evidence, name the missing answer, name the move, name the shape or field stake, name the failure cost, and name this first changed case: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures</p>
 
@@ -1093,7 +1093,7 @@
   <tbody>
 <tr>
   <td>I only named the topic</td>
-  <td>Start with the shortage: a local spot in a field may depend on faraway information, but scanning everywhere costs too much</td>
+  <td>Start with the shortage: predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow</td>
 </tr>
 
 <tr>
@@ -1156,7 +1156,7 @@
 
 
 <h2>Course Role In Plain Words</h2>
-<p>This topic appears in the course because it handles a specific job in the route from evidence to scientific claim. For Attention For Scientific Fields, the job is to move from large fields where one location may depend on other locations toward which distant parts matter for the local prediction without hiding this failure case: when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted.</p>
+<p>This topic appears in the course because it handles a specific job in the route from evidence to scientific claim. For Attention For Scientific Fields, the job is to move from large fields where one location may depend on other locations toward which distant parts matter for the local prediction without hiding this failure case: when attention picks the wrong patches to look at, the model misses real physical effects traveling across the field.</p>
 <table>
   <tbody>
     <tr><th>Why It Appears Here</th><td>Attention is a way to move selected information across large fields or connected objects.</td></tr>
@@ -1173,8 +1173,8 @@
 <table>
   <tbody>
     <tr><th>What The Reader Should Already Have</th><td>Operator Learning, Graphs And Geometric Learning. Before this topic, the reader should be able to name the evidence, hidden answer, and first rejection test.</td></tr>
-    <tr><th>What This Topic Adds To The Course</th><td>Attention For Scientific Fields adds this move: let the model choose which parts of the field exchange information. It matters because it lets the model move information across the field only where needed, trading speed for which distant interactions it can reach.</td></tr>
-    <tr><th>What Later Pages Can Now Use</th><td>careful judgment about later claims can use this idea only if the claim stays inside this boundary: when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted.</td></tr>
+    <tr><th>What This Topic Adds To The Course</th><td>Attention For Scientific Fields adds this move: let the model choose which parts of the field exchange information. It matters because lets the computer route information only through the connections it needs, trading speed for reach.</td></tr>
+    <tr><th>What Later Pages Can Now Use</th><td>careful judgment about later claims can use this idea only if the claim stays inside this boundary: when attention picks the wrong patches to look at, the model misses real physical effects traveling across the field.</td></tr>
     <tr><th>Why This Link Matters</th><td>Attention is a way to move selected information across large fields or connected objects.</td></tr>
     <tr><th>Confusion This Bridge Prevents</th><td>Without fields and connections, attention can be misread as proof that all important interactions were captured.</td></tr>
   </tbody>
@@ -1262,7 +1262,7 @@
     <tr><th>Carry Step</th><td>let the model choose which parts of the field exchange information</td></tr>
     <tr><th>Formula Path In Plain Words</th><td>field pieces -&gt; selected information exchange -&gt; updated field pieces</td></tr>
     <tr><th>What The Shape Allows</th><td>attention is a routing rule for information, not proof that the selected route is physically complete</td></tr>
-    <tr><th>What The Shape Must Not Hide</th><td>when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted</td></tr>
+    <tr><th>What The Shape Must Not Hide</th><td>when attention picks the wrong patches to look at, the model misses real physical effects traveling across the field</td></tr>
     <tr><th>Check The Shape</th><td>change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures</td></tr>
   </tbody>
 </table>
@@ -1377,7 +1377,7 @@
     <tr><th>Course Evidence Can Support</th><td>The course can support the plain chain from large fields where one location may depend on other locations to which distant parts matter for the local prediction using this move: let the model choose which parts of the field exchange information.</td></tr>
     <tr><th>Course Evidence Cannot Prove</th><td>It cannot prove that Attention For Scientific Fields works on every new case, field, shape, boundary, material, or measurement setting.</td></tr>
     <tr><th>Claim Allowed On This Page</th><td>attention is a routing rule for information, not proof that the selected route is physically complete</td></tr>
-    <tr><th>Stronger Field Evidence Needed</th><td>A real use needs held-out or newly measured cases in large scientific fields where distant parts may interact, especially near this boundary: when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted.</td></tr>
+    <tr><th>Stronger Field Evidence Needed</th><td>A real use needs held-out or newly measured cases in large scientific fields where distant parts may interact, especially near this boundary: when attention picks the wrong patches to look at, the model misses real physical effects traveling across the field.</td></tr>
     <tr><th>First Overclaim To Reject</th><td>Reject any claim that says the idea works in the field before naming the evidence, hidden answer, changed case, and failure boundary.</td></tr>
     <tr><th>Reviewer Action</th><td>Ask for the changed-case test first: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures.</td></tr>
   </tbody>
@@ -1397,7 +1397,7 @@
   <td>The concept fits this scientific job.</td>
   <td>The observed evidence is named as large fields where one location may depend on other locations, the hidden target is named as which distant parts matter for the local prediction, and the domain is large scientific fields where distant parts may interact.</td>
   <td>Only the method name is given, or the page never says what scientific quantity is being answered.</td>
-  <td>The job changes into this failure boundary: when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted.</td>
+  <td>The job changes into this failure boundary: when attention picks the wrong patches to look at, the model misses real physical effects traveling across the field.</td>
 </tr>
 
 <tr>
@@ -1420,11 +1420,11 @@
 <h2>Claim Boundary Review</h2>
 <table>
   <tbody>
-    <tr><th>Supported Claim</th><td>This page can claim that Attention For Scientific Fields is a route for this problem: a local spot in a field may depend on faraway information, but scanning everywhere costs too much</td></tr>
+    <tr><th>Supported Claim</th><td>This page can claim that Attention For Scientific Fields is a route for this problem: predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow</td></tr>
     <tr><th>Source Limit</th><td>The transcript anchors support the concept&#x27;s role in the course family; they do not prove broad success on new scientific cases.</td></tr>
     <tr><th>Overclaim To Avoid</th><td>Do not claim that Attention For Scientific Fields works across large scientific fields where distant parts may interact without a changed-case test tied to the target quantity.</td></tr>
     <tr><th>Stronger Evidence Needed</th><td>Use held-out measurements, trusted solves, changed boundaries, changed geometry, or changed regimes to test: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures</td></tr>
-    <tr><th>First Rejection Test</th><td>when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted</td></tr>
+    <tr><th>First Rejection Test</th><td>when attention picks the wrong patches to look at, the model misses real physical effects traveling across the field</td></tr>
   </tbody>
 </table>
 
@@ -1454,18 +1454,18 @@
 </tbody>
 </table>
 <h3>When To Avoid This In A Domain</h3>
-<p>Do not use this concept in a domain where connections the attention pattern ignores or cannot see is exactly the part needed for the decision.</p>
+<p>Do not use this concept in a domain where connections between parts that the attention pattern skips over is exactly the part needed for the decision.</p>
 
 
 <h2>Say It Back Check</h2>
 <p>Use this table as the final no-jargon recap. If a reader cannot fill these rows in plain words, the topic has not yet landed.</p>
 <table>
   <tbody>
-    <tr><th>Real Problem</th><td>a local spot in a field may depend on faraway information, but scanning everywhere costs too much</td></tr>
+    <tr><th>Real Problem</th><td>predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow</td></tr>
     <tr><th>Evidence I Have</th><td>large fields where one location may depend on other locations</td></tr>
     <tr><th>Answer I Need</th><td>which distant parts matter for the local prediction</td></tr>
     <tr><th>Move I Am Making</th><td>let the model choose which parts of the field exchange information</td></tr>
-    <tr><th>Why It Matters In A Field</th><td>it lets the model move information across the field only where needed, trading speed for which distant interactions it can reach</td></tr>
+    <tr><th>Why It Matters In A Field</th><td>lets the computer route information only through the connections it needs, trading speed for reach</td></tr>
     <tr><th>Shape Or Topology Issue</th><td>Let distant parts of a shape or field exchange information when local neighbors are not enough. Check: Change window size, long-range links, boundary regions, or point order.</td></tr>
     <tr><th>Claim I Am Allowed To Make</th><td>attention is a routing rule for information, not proof that the selected route is physically complete</td></tr>
     <tr><th>Changed Case That Can Reject It</th><td>change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures</td></tr>
@@ -1483,7 +1483,7 @@
 <tr>
   <th>Name-First Mistake</th>
   <td>The answer starts with the topic name instead of the everyday problem.</td>
-  <td>a local spot in a field may depend on faraway information, but scanning everywhere costs too much</td>
+  <td>predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow</td>
 </tr>
 
 <tr>
@@ -1513,7 +1513,7 @@
 <tr>
   <th>Overclaim Gap</th>
   <td>The answer sounds true for a wider set of cases than the evidence supports.</td>
-  <td>when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted</td>
+  <td>when attention picks the wrong patches to look at, the model misses real physical effects traveling across the field</td>
 </tr>
 
 <tr>
@@ -1552,19 +1552,19 @@
 <table>
   <tbody>
     <tr><th>Do Not Say</th><td>A method is good, broad, or modern without naming the scientific job.</td></tr>
-    <tr><th>Say Instead</th><td>Attention For Scientific Fields is used here because a local spot in a field may depend on faraway information, but scanning everywhere costs too much.</td></tr>
+    <tr><th>Say Instead</th><td>Attention For Scientific Fields is used here because predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow.</td></tr>
     <tr><th>Evidence Words Required</th><td>large fields where one location may depend on other locations</td></tr>
     <tr><th>Hidden Answer Words Required</th><td>which distant parts matter for the local prediction</td></tr>
-    <tr><th>Field Words Required</th><td>large scientific fields where distant parts may interact; it lets the model move information across the field only where needed, trading speed for which distant interactions it can reach</td></tr>
+    <tr><th>Field Words Required</th><td>large scientific fields where distant parts may interact; lets the computer route information only through the connections it needs, trading speed for reach</td></tr>
     <tr><th>Shape Words Required</th><td>Name shape, boundary, mesh, molecule, graph, surface, field, or say why none of those carries the claim.</td></tr>
-    <tr><th>Failure Words Required</th><td>when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted</td></tr>
+    <tr><th>Failure Words Required</th><td>when attention picks the wrong patches to look at, the model misses real physical effects traveling across the field</td></tr>
     <tr><th>Rewrite Test</th><td>Rewrite the claim as: because we observe ___ and need ___, we let the model choose which parts of the field exchange information. Trust it only after this check: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures.</td></tr>
   </tbody>
 </table>
 
 
 <h2>Acceptance Sentence Filled</h2>
-<p>This concept exists because scientists need an answer in a case where a local spot in a field may depend on faraway information, but scanning everywhere costs too much. The available evidence is large fields where one location may depend on other locations. The hidden thing is which distant parts matter for the local prediction. The math does let the model choose which parts of the field exchange information because attention is a routing rule for information, not proof that the selected route is physically complete. It matters in large scientific fields where distant parts may interact because it lets the model move information across the field only where needed, trading speed for which distant interactions it can reach. It fails when when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted. I would test it by changing the case this way: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures.</p>
+<p>This concept exists because scientists need an answer in a case where predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow. The available evidence is large fields where one location may depend on other locations. The hidden thing is which distant parts matter for the local prediction. The math does let the model choose which parts of the field exchange information because attention is a routing rule for information, not proof that the selected route is physically complete. It matters in large scientific fields where distant parts may interact because lets the computer route information only through the connections it needs, trading speed for reach. It fails when when attention picks the wrong patches to look at, the model misses real physical effects traveling across the field. I would test it by changing the case this way: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures.</p>
 
 
 <h2>What Breaks Without This Idea</h2>
@@ -1573,7 +1573,7 @@
   <tbody>
     <tr><th>Without Attention For Scientific Fields</th><td>The reader is left with large fields where one location may depend on other locations, but no disciplined way to carry that evidence to which distant parts matter for the local prediction.</td></tr>
     <tr><th>What Goes Wrong</th><td>The chosen attention pattern can miss long-range effects, boundary behavior, sharp structures, or conservation needs.</td></tr>
-    <tr><th>Why The Problem Matters</th><td>it lets the model move information across the field only where needed, trading speed for which distant interactions it can reach</td></tr>
+    <tr><th>Why The Problem Matters</th><td>lets the computer route information only through the connections it needs, trading speed for reach</td></tr>
     <tr><th>Minimum Proof Needed</th><td>change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures</td></tr>
     <tr><th>Reader Must Be Able To Say</th><td>This idea is needed here to let the model choose which parts of the field exchange information; otherwise the answer can fail this way: The chosen attention pattern can miss long-range effects, boundary behavior, sharp structures, or conservation needs.</td></tr>
   </tbody>
@@ -1637,7 +1637,7 @@
 <h2>Reader Test</h2>
 <p>A reader understands this concept only if they can say what is observed, what is hidden, what is kept, what is ignored, and why this changed-case test matters: change the window size, inspect long-range effects, and compare behavior near boundaries or sharp structures.</p>
 <h2>Failure Boundary</h2>
-<p>when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted</p>
+<p>when attention picks the wrong patches to look at, the model misses real physical effects traveling across the field</p>
 <h2>What The Transcript Does Not Prove</h2>
 <p>The transcript evidence shows where the course introduces or uses this concept. It does not prove the concept works for every equation, data set, solver, material, geometry, or scientific task. That wider claim needs explicit validation evidence.</p>
 <h2>Selected Source Anchors</h2><p>These anchors identify the lecture pages that should be checked first when reviewing the core claim. They are source links with claim boundaries, not proof by themselves.</p><div class="grid">

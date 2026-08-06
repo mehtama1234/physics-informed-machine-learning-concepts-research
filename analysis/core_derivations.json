@@ -4,7 +4,7 @@
     "title": "Physics-Informed Neural Networks",
     "one_sentence": "A PINN is a fitted field that must answer to both measured values and a known physical rule.",
     "domain_story": "Imagine estimating temperature inside a wall from a few sensors. The sensor readings anchor the answer, while the heat equation checks the empty places between sensors.",
-    "common_problem": "sparse measurements from experiments, but the answer must obey known physical laws like gravity or heat flow",
+    "common_problem": "sparse measurements, but the answer must follow known physical laws",
     "observed": "some measured values, boundary values, starting values, and a known differential equation",
     "hidden": "the full field value at every point in space and time",
     "math_shape": [
@@ -59,7 +59,7 @@
     "title": "Partial Differential Equations",
     "one_sentence": "A PDE is a rule for how a whole field changes across space and time.",
     "domain_story": "Weather, temperature, pressure, and fluid velocity are fields. A value at one location matters partly because of the values around it.",
-    "common_problem": "a quantity changes over space and time, so one number is not enough to describe what's happening",
+    "common_problem": "something changes everywhere at once\u2014how do you describe that with math?",
     "observed": "a field such as temperature, pressure, concentration, velocity, or displacement",
     "hidden": "how every point in the field affects nearby points over time",
     "math_shape": [
@@ -114,7 +114,7 @@
     "title": "Operator Learning",
     "one_sentence": "Operator learning tries to learn the machine that turns one field into another field.",
     "domain_story": "Instead of solving heat flow for one wall, learn the map from many wall materials and heat sources to their resulting temperature fields.",
-    "common_problem": "engineers need to predict all the fields (temperature, pressure, flow) across a space and time for many input cases, not just one",
+    "common_problem": "predict all values (temperature, pressure, flow) across a whole space at all times, for several starting conditions",
     "observed": "many example inputs and their full solution fields",
     "hidden": "the rule that maps a new input field to its new solution field",
     "math_shape": [
@@ -169,7 +169,7 @@
     "title": "Surrogate Modeling",
     "one_sentence": "A surrogate is a faster stand-in for a slower trusted process.",
     "domain_story": "If every wing-shape test takes hours, a checked stand-in can screen many shapes before the expensive solver is used again.",
-    "common_problem": "running a full simulation is too expensive to do for every design choice or question",
+    "common_problem": "running the real simulator costs too much money or time to do hundreds of times",
     "observed": "expensive solver inputs and outputs for a limited set of cases",
     "hidden": "the solver answer for every new query someone wants to ask",
     "math_shape": [
@@ -224,7 +224,7 @@
     "title": "Uncertainty And Generalization",
     "one_sentence": "This topic asks when a prediction should be believed on a case the model did not learn from.",
     "domain_story": "A model trained on small clean lab samples may be asked about a large noisy field setup. The gap matters as much as the prediction.",
-    "common_problem": "a prediction from a model is only useful if you know under which conditions you should actually trust it",
+    "common_problem": "how do you know when a prediction is trustworthy instead of a blind guess?",
     "observed": "training cases, validation cases, prediction errors, and known shifts between cases",
     "hidden": "how wrong the model may be on a case unlike the ones it learned from",
     "math_shape": [
@@ -334,7 +334,7 @@
     "title": "Symbolic Regression And Model Discovery",
     "one_sentence": "Symbolic regression searches for a short formula that explains measured behavior.",
     "domain_story": "A lab may have measurements of motion and want a small law, not only a predictor that returns the next number.",
-    "common_problem": "a scientist may need a readable equation, not a numerical model that predicts but cannot be understood",
+    "common_problem": "you need an equation humans can read, not a that guesses numbers",
     "observed": "measured variables and candidate mathematical ingredients",
     "hidden": "which short formula, if any, actually explains the measured change",
     "math_shape": [
@@ -389,7 +389,7 @@
     "title": "Foundation Models For PDEs",
     "one_sentence": "A PDE foundation model tries to reuse structure across many related field-prediction tasks.",
     "domain_story": "A model trained across many simulated fields may help on a new field task, but only if the new task shares the structure it learned.",
-    "common_problem": "scientists train separate models for each PDE, each grid size, each parameter\u2014expensive duplication",
+    "common_problem": "scientists retrain from scratch for each equation, grid size, and number\u2014duplicating work unnecessarily",
     "observed": "many PDE problem instances across equations, grids, parameters, or physical settings",
     "hidden": "which shared structure carries from one scientific task to another",
     "math_shape": [
@@ -444,7 +444,7 @@
     "title": "Deep Learning",
     "one_sentence": "Deep learning fits a flexible rule from examples when the useful pattern is hard to write by hand.",
     "domain_story": "Suppose many solved flow snapshots are available. A deep model can learn repeated shapes in those snapshots, but it still needs a changed-case test before it can be used as scientific evidence.",
-    "common_problem": "scientists have many measured examples but no formula that predicts the next case",
+    "common_problem": "lots of real examples but no equation to predict what comes next",
     "observed": "many input-output examples from experiments, simulations, or measurements",
     "hidden": "the exact rule that connects the input to the output",
     "math_shape": [
@@ -499,7 +499,7 @@
     "title": "Scientific Machine Learning",
     "one_sentence": "Scientific machine learning uses data and scientific rules together so the answer is useful for a named scientific question.",
     "domain_story": "A material test may have sparse measurements and a partial stress law. Scientific machine learning asks how the measurements and the law should correct each other.",
-    "common_problem": "predictions must obey the physical laws that define the problem, not just fit the data",
+    "common_problem": "teach a program both the data and the physics rules so it predicts correctly on cases it never saw",
     "observed": "data, equations, units, simulation outputs, and domain limits",
     "hidden": "which parts of the scientific system are missing, noisy, or too costly to compute directly",
     "math_shape": [
@@ -554,7 +554,7 @@
     "title": "Optimization For Learning",
     "one_sentence": "Optimization is the process of changing a model until a written error score gets smaller.",
     "domain_story": "Training a PINN is not only choosing a network. It is deciding how strongly sensor error, equation error, and boundary error should push during fitting.",
-    "common_problem": "models need a way to measure progress so they know which settings are better or worse",
+    "common_problem": "the program has millions of dials to turn and needs a way to know which turns make it better or worse",
     "observed": "a written score that says which model behavior is better or worse",
     "hidden": "whether that score matches the scientific behavior the user actually cares about",
     "math_shape": [
@@ -609,7 +609,7 @@
     "title": "Generative Modeling",
     "one_sentence": "Generative modeling learns how to make possible examples, rather than only score one existing example.",
     "domain_story": "For uncertain weather or material fields, one answer may hide the range of possible outcomes. A generative model can propose many candidates, but those candidates still need physical checks.",
-    "common_problem": "some tasks need many plausible examples, not a single best prediction, to explore what's possible",
+    "common_problem": "need several possible solutions, not just one best guess, to explore what could work",
     "observed": "examples of fields, molecules, flows, shapes, or other scientific objects",
     "hidden": "the spread of possible valid objects beyond the examples",
     "math_shape": [
@@ -719,7 +719,7 @@
     "title": "Attention For Scientific Fields",
     "one_sentence": "Attention lets a model decide which other parts of a field matter for the point or region being predicted.",
     "domain_story": "A fluid point near one region may depend on a boundary, a forcing pattern, or a large coherent structure far away. Attention gives the model a way to look beyond immediate neighbors.",
-    "common_problem": "a local spot in a field may depend on faraway information, but scanning everywhere costs too much",
+    "common_problem": "predicting what happens at one spot requires knowing what's happening far away, but checking everywhere is too slow",
     "observed": "large fields where one location may depend on other locations",
     "hidden": "which distant parts matter for the local prediction",
     "math_shape": [
