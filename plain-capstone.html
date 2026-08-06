@@ -76,7 +76,7 @@
   <tbody>
 <tr>
   <td><a href="topics/deep-learning.html">Deep Learning</a></td>
-  <td>scientists have many measured examples but no formula that predicts the next case</td>
+  <td>lots of real examples but no equation to predict what comes next</td>
   <td>many input-output examples from experiments, simulations, or measurements</td>
   <td>the exact rule that connects the input to the output</td>
   <td>adjust many weights until the model maps familiar inputs to the right outputs</td>
@@ -86,7 +86,7 @@
 
 <tr>
   <td><a href="topics/physics-informed-neural-networks.html">Physics-Informed Neural Networks</a></td>
-  <td>sparse measurements from experiments, but the answer must obey known physical laws like gravity or heat flow</td>
+  <td>sparse measurements, but the answer must follow known physical laws</td>
   <td>some measured values, boundary values, starting values, and a known differential equation</td>
   <td>the full field value at every point in space and time</td>
   <td>fit a neural network while also measuring how badly its output violates the known equation</td>
@@ -96,7 +96,7 @@
 
 <tr>
   <td><a href="topics/partial-differential-equations.html">Partial Differential Equations</a></td>
-  <td>a quantity changes over space and time, so one number is not enough to describe what&#x27;s happening</td>
+  <td>something changes everywhere at once—how do you describe that with math?</td>
   <td>a field such as temperature, pressure, concentration, velocity, or displacement</td>
   <td>how every point in the field affects nearby points over time</td>
   <td>write a local change rule that uses rates across space and time</td>
@@ -106,7 +106,7 @@
 
 <tr>
   <td><a href="topics/operator-learning.html">Operator Learning</a></td>
-  <td>engineers need to predict all the fields (temperature, pressure, flow) across a space and time for many input cases, not just one</td>
+  <td>predict all values (temperature, pressure, flow) across a whole space at all times, for several starting conditions</td>
   <td>many example inputs and their full solution fields</td>
   <td>the rule that maps a new input field to its new solution field</td>
   <td>learn the map from problem input to solution, not only one solution at a time</td>
@@ -116,7 +116,7 @@
 
 <tr>
   <td><a href="topics/scientific-machine-learning.html">Scientific Machine Learning</a></td>
-  <td>predictions must obey the physical laws that define the problem, not just fit the data</td>
+  <td>teach a program both the data and the physics rules so it predicts correctly on cases it never saw</td>
   <td>data, equations, units, simulation outputs, and domain limits</td>
   <td>which parts of the scientific system are missing, noisy, or too costly to compute directly</td>
   <td>combine learned prediction with scientific checks that name what the claim is allowed to mean</td>
@@ -126,7 +126,7 @@
 
 <tr>
   <td><a href="topics/surrogate-modeling.html">Surrogate Modeling</a></td>
-  <td>running a full simulation is too expensive to do for every design choice or question</td>
+  <td>running the real simulator costs too much money or time to do hundreds of times</td>
   <td>expensive solver inputs and outputs for a limited set of cases</td>
   <td>the solver answer for every new query someone wants to ask</td>
   <td>train a cheaper stand-in for the expensive input-output behavior</td>
@@ -136,7 +136,7 @@
 
 <tr>
   <td><a href="topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></td>
-  <td>a prediction from a model is only useful if you know under which conditions you should actually trust it</td>
+  <td>how do you know when a prediction is trustworthy instead of a blind guess?</td>
   <td>training cases, validation cases, prediction errors, and known shifts between cases</td>
   <td>how wrong the model may be on a case unlike the ones it learned from</td>
   <td>separate fit on familiar examples from evidence on changed examples</td>
@@ -146,7 +146,7 @@
 
 <tr>
   <td><a href="topics/optimization-for-learning.html">Optimization For Learning</a></td>
-  <td>models need a way to measure progress so they know which settings are better or worse</td>
+  <td>the program has millions of dials to turn and needs a way to know which turns make it better or worse</td>
   <td>a written score that says which model behavior is better or worse</td>
   <td>whether that score matches the scientific behavior the user actually cares about</td>
   <td>change model settings to lower the written score</td>
@@ -156,7 +156,7 @@
 
 <tr>
   <td><a href="topics/generative-modeling.html">Generative Modeling</a></td>
-  <td>some tasks need many plausible examples, not a single best prediction, to explore what&#x27;s possible</td>
+  <td>need several possible solutions, not just one best guess, to explore what could work</td>
   <td>examples of fields, molecules, flows, shapes, or other scientific objects</td>
   <td>the spread of possible valid objects beyond the examples</td>
   <td>learn how to sample new candidates that resemble the training family</td>
@@ -186,7 +186,7 @@
 
 <tr>
   <td><a href="topics/symbolic-regression.html">Symbolic Regression And Model Discovery</a></td>
-  <td>a scientist may need a readable equation, not a numerical model that predicts but cannot be understood</td>
+  <td>you need an equation humans can read, not a that guesses numbers</td>
   <td>measured variables and candidate mathematical ingredients</td>
   <td>which short formula, if any, actually explains the measured change</td>
   <td>search for a readable equation that fits the data and survives a changed case</td>
@@ -196,7 +196,7 @@
 
 <tr>
   <td><a href="topics/foundation-models-for-pdes.html">Foundation Models For PDEs</a></td>
-  <td>scientists train separate models for each PDE, each grid size, each parameter—expensive duplication</td>
+  <td>scientists retrain from scratch for each equation, grid size, and number—duplicating work unnecessarily</td>
   <td>many PDE problem instances across equations, grids, parameters, or physical settings</td>
   <td>which shared structure carries from one scientific task to another</td>
   <td>train one broad model to reuse structure across many related field-prediction tasks</td>
@@ -206,7 +206,7 @@
 
 <tr>
   <td><a href="topics/attention-for-scientific-fields.html">Attention For Scientific Fields</a></td>
-  <td>a local spot in a field may depend on faraway information, but scanning everywhere costs too much</td>
+  <td>predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow</td>
   <td>large fields where one location may depend on other locations</td>
   <td>which distant parts matter for the local prediction</td>
   <td>let the model choose which parts of the field exchange information</td>
@@ -221,7 +221,7 @@
   <h2>Deep Learning</h2>
   <p><strong>Final Answer Prompt:</strong> Explain why this topic matters without starting from its name.</p>
   <ol>
-    <li>Start with the everyday need: scientists have many measured examples but no formula that predicts the next case.</li>
+    <li>Start with the everyday need: lots of real examples but no equation to predict what comes next.</li>
     <li>Name the evidence: many input-output examples from experiments, simulations, or measurements.</li>
     <li>Name the missing answer: the exact rule that connects the input to the output.</li>
     <li>Name the first-principles move: adjust many weights until the model maps familiar inputs to the right outputs.</li>
@@ -237,7 +237,7 @@
   <h2>Physics-Informed Neural Networks</h2>
   <p><strong>Final Answer Prompt:</strong> Explain why this topic matters without starting from its name.</p>
   <ol>
-    <li>Start with the everyday need: sparse measurements from experiments, but the answer must obey known physical laws like gravity or heat flow.</li>
+    <li>Start with the everyday need: sparse measurements, but the answer must follow known physical laws.</li>
     <li>Name the evidence: some measured values, boundary values, starting values, and a known differential equation.</li>
     <li>Name the missing answer: the full field value at every point in space and time.</li>
     <li>Name the first-principles move: fit a neural network while also measuring how badly its output violates the known equation.</li>
@@ -253,7 +253,7 @@
   <h2>Partial Differential Equations</h2>
   <p><strong>Final Answer Prompt:</strong> Explain why this topic matters without starting from its name.</p>
   <ol>
-    <li>Start with the everyday need: a quantity changes over space and time, so one number is not enough to describe what&#x27;s happening.</li>
+    <li>Start with the everyday need: something changes everywhere at once—how do you describe that with math?.</li>
     <li>Name the evidence: a field such as temperature, pressure, concentration, velocity, or displacement.</li>
     <li>Name the missing answer: how every point in the field affects nearby points over time.</li>
     <li>Name the first-principles move: write a local change rule that uses rates across space and time.</li>
@@ -269,7 +269,7 @@
   <h2>Operator Learning</h2>
   <p><strong>Final Answer Prompt:</strong> Explain why this topic matters without starting from its name.</p>
   <ol>
-    <li>Start with the everyday need: engineers need to predict all the fields (temperature, pressure, flow) across a space and time for many input cases, not just one.</li>
+    <li>Start with the everyday need: predict all values (temperature, pressure, flow) across a whole space at all times, for several starting conditions.</li>
     <li>Name the evidence: many example inputs and their full solution fields.</li>
     <li>Name the missing answer: the rule that maps a new input field to its new solution field.</li>
     <li>Name the first-principles move: learn the map from problem input to solution, not only one solution at a time.</li>
@@ -285,7 +285,7 @@
   <h2>Scientific Machine Learning</h2>
   <p><strong>Final Answer Prompt:</strong> Explain why this topic matters without starting from its name.</p>
   <ol>
-    <li>Start with the everyday need: predictions must obey the physical laws that define the problem, not just fit the data.</li>
+    <li>Start with the everyday need: teach a program both the data and the physics rules so it predicts correctly on cases it never saw.</li>
     <li>Name the evidence: data, equations, units, simulation outputs, and domain limits.</li>
     <li>Name the missing answer: which parts of the scientific system are missing, noisy, or too costly to compute directly.</li>
     <li>Name the first-principles move: combine learned prediction with scientific checks that name what the claim is allowed to mean.</li>
@@ -301,7 +301,7 @@
   <h2>Surrogate Modeling</h2>
   <p><strong>Final Answer Prompt:</strong> Explain why this topic matters without starting from its name.</p>
   <ol>
-    <li>Start with the everyday need: running a full simulation is too expensive to do for every design choice or question.</li>
+    <li>Start with the everyday need: running the real simulator costs too much money or time to do hundreds of times.</li>
     <li>Name the evidence: expensive solver inputs and outputs for a limited set of cases.</li>
     <li>Name the missing answer: the solver answer for every new query someone wants to ask.</li>
     <li>Name the first-principles move: train a cheaper stand-in for the expensive input-output behavior.</li>
@@ -317,7 +317,7 @@
   <h2>Uncertainty And Generalization</h2>
   <p><strong>Final Answer Prompt:</strong> Explain why this topic matters without starting from its name.</p>
   <ol>
-    <li>Start with the everyday need: a prediction from a model is only useful if you know under which conditions you should actually trust it.</li>
+    <li>Start with the everyday need: how do you know when a prediction is trustworthy instead of a blind guess?.</li>
     <li>Name the evidence: training cases, validation cases, prediction errors, and known shifts between cases.</li>
     <li>Name the missing answer: how wrong the model may be on a case unlike the ones it learned from.</li>
     <li>Name the first-principles move: separate fit on familiar examples from evidence on changed examples.</li>
@@ -333,7 +333,7 @@
   <h2>Optimization For Learning</h2>
   <p><strong>Final Answer Prompt:</strong> Explain why this topic matters without starting from its name.</p>
   <ol>
-    <li>Start with the everyday need: models need a way to measure progress so they know which settings are better or worse.</li>
+    <li>Start with the everyday need: the program has millions of dials to turn and needs a way to know which turns make it better or worse.</li>
     <li>Name the evidence: a written score that says which model behavior is better or worse.</li>
     <li>Name the missing answer: whether that score matches the scientific behavior the user actually cares about.</li>
     <li>Name the first-principles move: change model settings to lower the written score.</li>
@@ -349,7 +349,7 @@
   <h2>Generative Modeling</h2>
   <p><strong>Final Answer Prompt:</strong> Explain why this topic matters without starting from its name.</p>
   <ol>
-    <li>Start with the everyday need: some tasks need many plausible examples, not a single best prediction, to explore what&#x27;s possible.</li>
+    <li>Start with the everyday need: need several possible solutions, not just one best guess, to explore what could work.</li>
     <li>Name the evidence: examples of fields, molecules, flows, shapes, or other scientific objects.</li>
     <li>Name the missing answer: the spread of possible valid objects beyond the examples.</li>
     <li>Name the first-principles move: learn how to sample new candidates that resemble the training family.</li>
@@ -397,7 +397,7 @@
   <h2>Symbolic Regression And Model Discovery</h2>
   <p><strong>Final Answer Prompt:</strong> Explain why this topic matters without starting from its name.</p>
   <ol>
-    <li>Start with the everyday need: a scientist may need a readable equation, not a numerical model that predicts but cannot be understood.</li>
+    <li>Start with the everyday need: you need an equation humans can read, not a that guesses numbers.</li>
     <li>Name the evidence: measured variables and candidate mathematical ingredients.</li>
     <li>Name the missing answer: which short formula, if any, actually explains the measured change.</li>
     <li>Name the first-principles move: search for a readable equation that fits the data and survives a changed case.</li>
@@ -413,7 +413,7 @@
   <h2>Foundation Models For PDEs</h2>
   <p><strong>Final Answer Prompt:</strong> Explain why this topic matters without starting from its name.</p>
   <ol>
-    <li>Start with the everyday need: scientists train separate models for each PDE, each grid size, each parameter—expensive duplication.</li>
+    <li>Start with the everyday need: scientists retrain from scratch for each equation, grid size, and number—duplicating work unnecessarily.</li>
     <li>Name the evidence: many PDE problem instances across equations, grids, parameters, or physical settings.</li>
     <li>Name the missing answer: which shared structure carries from one scientific task to another.</li>
     <li>Name the first-principles move: train one broad model to reuse structure across many related field-prediction tasks.</li>
@@ -429,7 +429,7 @@
   <h2>Attention For Scientific Fields</h2>
   <p><strong>Final Answer Prompt:</strong> Explain why this topic matters without starting from its name.</p>
   <ol>
-    <li>Start with the everyday need: a local spot in a field may depend on faraway information, but scanning everywhere costs too much.</li>
+    <li>Start with the everyday need: predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow.</li>
     <li>Name the evidence: large fields where one location may depend on other locations.</li>
     <li>Name the missing answer: which distant parts matter for the local prediction.</li>
     <li>Name the first-principles move: let the model choose which parts of the field exchange information.</li>

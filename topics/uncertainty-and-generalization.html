@@ -57,29 +57,29 @@
 
 <h1>Uncertainty And Generalization</h1>
 <h2>Common Problem This Solves</h2>
-<p>a prediction from a model is only useful if you know under which conditions you should actually trust it</p>
+<p>how do you know when a prediction is trustworthy instead of a blind guess?</p>
 <h2>Big Picture Plain Summary</h2>
 <p><strong>Domain:</strong> model use under new conditions</p>
-<p><strong>Why it matters:</strong> when scientific decisions cost lives or money, a model must be honest about its own edges and not guess past them—and most neural networks fail silently instead</p>
-<p><strong>What it keeps:</strong> error bounds, tests on shifted conditions, and explicit limits on training-data range</p>
-<p><strong>What it leaves out:</strong> confidence in scenarios or physical regimes the model has never encountered before</p>
+<p><strong>Why it matters:</strong> when a prediction affects real people, the program must admit I trained here, not there—most just guess silently and fail</p>
+<p><strong>What it keeps:</strong> honest reporting of where the model might break, ranges it learned from, test results on unfamiliar setups</p>
+<p><strong>What it leaves out:</strong> predicting what happens when you push way beyond the conditions the model trained on</p>
 <h2>Everyday Anchor</h2>
-<p>A map is useful only if you know where it ends. Model uncertainty marks the edge of the map instead of pretending every road is known. When you leave the mapped territory, you must tell the decision-maker: I was trained here, not there.</p>
+<p>A GPS map is only as good as its border: past that edge you are lost. Physics-informed models must do the same—mark exactly where your training data ends and admit when the computer has never seen a situation before. This keeps engineers and scientists from trusting a prediction in regions the model never actually learned.</p>
 
 <h2>Before The Math Slow Walk</h2>
-<p>Read this before any formula. Uncertainty And Generalization starts with an ordinary shortage: a prediction from a model is only useful if you know under which conditions you should actually trust it. That shortage matters because someone has to use the answer in model use under new conditions. The reader should be able to explain the need for the idea without naming the method first.</p>
-<p>The everyday picture is this: A map is useful only if you know where it ends. Model uncertainty marks the edge of the map instead of pretending every road is known. When you leave the mapped territory, you must tell the decision-maker: I was trained here, not there. The point of the picture is not to make the idea cute. It is to slow the question down. We know something, but not enough. We need a bridge from the known part to the missing part, and we need a way to tell when the bridge stops carrying the truth.</p>
+<p>Read this before any formula. Uncertainty And Generalization starts with an ordinary shortage: how do you know when a prediction is trustworthy instead of a blind guess?. That shortage matters because someone has to use the answer in model use under new conditions. The reader should be able to explain the need for the idea without naming the method first.</p>
+<p>The everyday picture is this: A GPS map is only as good as its border: past that edge you are lost. Physics-informed models must do the same—mark exactly where your training data ends and admit when the computer has never seen a situation before. This keeps engineers and scientists from trusting a prediction in regions the model never actually learned. The point of the picture is not to make the idea cute. It is to slow the question down. We know something, but not enough. We need a bridge from the known part to the missing part, and we need a way to tell when the bridge stops carrying the truth.</p>
 <p>For this topic, the known part is training cases, validation cases, prediction errors, and known shifts between cases. The missing part is how wrong the model may be on a case unlike the ones it learned from. If a reader cannot say those two pieces plainly, the later math has no job yet. The method becomes meaningful only after the shortage is visible.</p>
-<p>The first useful move is to separate fit on familiar examples from evidence on changed examples. In everyday words, that means the page is choosing what information is allowed to travel from evidence to answer. It keeps error bounds, tests on shifted conditions, and explicit limits on training-data range. It leaves out confidence in scenarios or physical regimes the model has never encountered before. The left-out part is where overconfidence usually enters.</p>
+<p>The first useful move is to separate fit on familiar examples from evidence on changed examples. In everyday words, that means the page is choosing what information is allowed to travel from evidence to answer. It keeps honest reporting of where the model might break, ranges it learned from, test results on unfamiliar setups. It leaves out predicting what happens when you push way beyond the conditions the model trained on. The left-out part is where overconfidence usually enters.</p>
 <p>A concrete setting makes the idea harder to fake. A flood-risk model trained on past storms is used for a warmer future storm pattern. The useful answer is a prediction with a use range and warning boundary. That answer should be trusted only until this kind of case breaks it: the shifted storm cases fail even though ordinary held-out cases looked accurate.</p>
 <h3>Say It Without Jargon</h3>
 <table>
   <tbody>
     <tr><th>What We Have</th><td>training cases, validation cases, prediction errors, and known shifts between cases</td></tr>
     <tr><th>What We Need</th><td>how wrong the model may be on a case unlike the ones it learned from</td></tr>
-    <tr><th>Why The Idea Enters</th><td>when scientific decisions cost lives or money, a model must be honest about its own edges and not guess past them—and most neural networks fail silently instead</td></tr>
+    <tr><th>Why The Idea Enters</th><td>when a prediction affects real people, the program must admit I trained here, not there—most just guess silently and fail</td></tr>
     <tr><th>What To Try First</th><td>move one important condition outside the training range and measure the first failure</td></tr>
-    <tr><th>Stop Trusting It When</th><td>training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime</td></tr>
+    <tr><th>Stop Trusting It When</th><td>model looks correct on familiar data while it silently gives nonsense in new terrain, new shape, new sensor, or new physical regime</td></tr>
   </tbody>
 </table>
 
@@ -88,14 +88,14 @@
 <p>Read this row by row before trusting the method name. The concept earns its place only if each link carries the next one.</p>
 <table>
   <tbody>
-    <tr><th>Everyday Problem</th><td>a prediction from a model is only useful if you know under which conditions you should actually trust it</td></tr>
+    <tr><th>Everyday Problem</th><td>how do you know when a prediction is trustworthy instead of a blind guess?</td></tr>
     <tr><th>Domain Where It Matters</th><td>model use under new conditions</td></tr>
-    <tr><th>Decision Or Quantity At Stake</th><td>when scientific decisions cost lives or money, a model must be honest about its own edges and not guess past them—and most neural networks fail silently instead</td></tr>
+    <tr><th>Decision Or Quantity At Stake</th><td>when a prediction affects real people, the program must admit I trained here, not there—most just guess silently and fail</td></tr>
     <tr><th>Evidence In Hand</th><td>training cases, validation cases, prediction errors, and known shifts between cases</td></tr>
     <tr><th>Hidden Thing Needed</th><td>how wrong the model may be on a case unlike the ones it learned from</td></tr>
     <tr><th>Mathematical Move</th><td>separate fit on familiar examples from evidence on changed examples</td></tr>
     <tr><th>What Uncertainty And Generalization Is Allowed To Claim</th><td>a prediction without a use range is not yet a scientific claim</td></tr>
-    <tr><th>First Thing That Can Break The Claim</th><td>training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime</td></tr>
+    <tr><th>First Thing That Can Break The Claim</th><td>model looks correct on familiar data while it silently gives nonsense in new terrain, new shape, new sensor, or new physical regime</td></tr>
     <tr><th>Changed Case To Try First</th><td>move one important condition outside the training range and measure the first failure</td></tr>
   </tbody>
 </table>
@@ -105,7 +105,7 @@
 <p>The order is part of the idea. If the page starts with a method name, formula, or claim, the learner can miss why the idea is needed at all.</p>
 <table>
   <tbody>
-    <tr><th>1. Start With The Problem</th><td>a prediction from a model is only useful if you know under which conditions you should actually trust it</td></tr>
+    <tr><th>1. Start With The Problem</th><td>how do you know when a prediction is trustworthy instead of a blind guess?</td></tr>
     <tr><th>Why This Must Come First</th><td>The problem gives the method a job. Without it, the name can sound important while doing no clear work.</td></tr>
     <tr><th>2. Then Name The Evidence</th><td>training cases, validation cases, prediction errors, and known shifts between cases</td></tr>
     <tr><th>Why Evidence Comes Before The Move</th><td>The move can only carry what is actually seen, measured, written, solved, or checked.</td></tr>
@@ -113,7 +113,7 @@
     <tr><th>Why The Missing Answer Comes Before Math</th><td>The math shape is chosen to reach this missing answer, not because the topic name sounds useful.</td></tr>
     <tr><th>4. Then Make The Plain Move</th><td>separate fit on familiar examples from evidence on changed examples</td></tr>
     <tr><th>Why The Move Comes Before The Claim</th><td>The claim is allowed only if the move really carries the evidence toward the missing answer.</td></tr>
-    <tr><th>5. Then Check Shape And Field Use</th><td>error bounds, tests on shifted conditions, and explicit limits on training-data range</td></tr>
+    <tr><th>5. Then Check Shape And Field Use</th><td>honest reporting of where the model might break, ranges it learned from, test results on unfamiliar setups</td></tr>
     <tr><th>Why Shape Comes Before Trust</th><td>The answer can look right while losing the relation, boundary, graph, field, or use range that carries the real claim.</td></tr>
     <tr><th>6. End With The Test</th><td>move one important condition outside the training range and measure the first failure</td></tr>
     <tr><th>Why The Test Comes Last</th><td>The final test decides whether to trust, narrow, or reject the claim.</td></tr>
@@ -124,10 +124,10 @@
 
 
 <h2>Why Care Before Any Technical Term</h2>
-<p>Before naming Uncertainty And Generalization, ask what would go wrong for a person doing real work. The person has this problem: a prediction from a model is only useful if you know under which conditions you should actually trust it The cost is not a bad quiz score. The cost is a decision made from evidence that does not yet reach the answer.</p>
+<p>Before naming Uncertainty And Generalization, ask what would go wrong for a person doing real work. The person has this problem: how do you know when a prediction is trustworthy instead of a blind guess? The cost is not a bad quiz score. The cost is a decision made from evidence that does not yet reach the answer.</p>
 <table>
   <tbody>
-    <tr><th>Real Work At Risk</th><td>when scientific decisions cost lives or money, a model must be honest about its own edges and not guess past them—and most neural networks fail silently instead</td></tr>
+    <tr><th>Real Work At Risk</th><td>when a prediction affects real people, the program must admit I trained here, not there—most just guess silently and fail</td></tr>
     <tr><th>Evidence The Person Has</th><td>training cases, validation cases, prediction errors, and known shifts between cases</td></tr>
     <tr><th>Answer The Person Still Needs</th><td>how wrong the model may be on a case unlike the ones it learned from</td></tr>
     <tr><th>Plain Move That Helps</th><td>separate fit on familiar examples from evidence on changed examples</td></tr>
@@ -135,7 +135,7 @@
     <tr><th>Engineering Reason</th><td>Attach a use range and warning boundary to a prediction before a design choice. Check: Move load, material, size, or boundary beyond training and measure the first failure.</td></tr>
     <tr><th>Materials Biology Or Chemistry Reason</th><td>Say when a measured property prediction should weaken under a new lab or sample condition. Check: Hold out a new instrument, molecule family, tissue type, or material batch.</td></tr>
     <tr><th>Climate Fluid Or Field Reason</th><td>Separate ordinary test success from success under changed climate, flow, or boundary conditions. Check: Test a shifted region, rare event, changed forcing, or new sensor pattern.</td></tr>
-    <tr><th>First Trust Limit</th><td>training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime</td></tr>
+    <tr><th>First Trust Limit</th><td>model looks correct on familiar data while it silently gives nonsense in new terrain, new shape, new sensor, or new physical regime</td></tr>
   </tbody>
 </table>
 <h3>Plain Importance Test</h3>
@@ -146,10 +146,10 @@
 <p>Use this as a slow spoken rehearsal. The learner should be able to tell the day as a chain of small choices, not as a definition of Uncertainty And Generalization.</p>
 <table>
   <tbody>
-    <tr><th>Morning Job</th><td>A person starts with this shortage: a prediction from a model is only useful if you know under which conditions you should actually trust it</td></tr>
+    <tr><th>Morning Job</th><td>A person starts with this shortage: how do you know when a prediction is trustworthy instead of a blind guess?</td></tr>
     <tr><th>First Thing They Write Down</th><td>training storms, held-out storms, errors, and the named climate shift</td></tr>
     <tr><th>Question They Cannot Answer Yet</th><td>how wrong the model may be under the shifted condition</td></tr>
-    <tr><th>Decision Waiting On The Answer</th><td>when scientific decisions cost lives or money, a model must be honest about its own edges and not guess past them—and most neural networks fail silently instead</td></tr>
+    <tr><th>Decision Waiting On The Answer</th><td>when a prediction affects real people, the program must admit I trained here, not there—most just guess silently and fail</td></tr>
     <tr><th>Shape They Must Not Flatten</th><td>State how belief changes when the shape, mesh, or connection pattern changes. Check: Hold out a new shape family, missing connection, or mesh resolution and measure the error.</td></tr>
     <tr><th>Plain Move They Try Before Lunch</th><td>separate familiar-test accuracy from evidence on the changed condition</td></tr>
     <tr><th>Engineering Version Of The Same Day</th><td>Attach a use range and warning boundary to a prediction before a design choice.</td></tr>
@@ -186,7 +186,7 @@
 <p>Before writing a formula for Uncertainty And Generalization, make a small drawing. The drawing does not need to be pretty. It only needs to show what is known, what is missing, what relation must stay visible, and what changed case could break the claim.</p>
 <table>
   <tbody>
-    <tr><th>Box One: Problem</th><td>Write the everyday shortage: a prediction from a model is only useful if you know under which conditions you should actually trust it</td></tr>
+    <tr><th>Box One: Problem</th><td>Write the everyday shortage: how do you know when a prediction is trustworthy instead of a blind guess?</td></tr>
     <tr><th>Box Two: Evidence</th><td>Draw or list what is already seen: training cases, validation cases, prediction errors, and known shifts between cases</td></tr>
     <tr><th>Box Three: Missing Answer</th><td>Leave a blank for what is needed: how wrong the model may be on a case unlike the ones it learned from</td></tr>
     <tr><th>Arrow: Plain Move</th><td>Label the arrow with the move: separate fit on familiar examples from evidence on changed examples</td></tr>
@@ -205,14 +205,14 @@
 <p>Use this gate before choosing Uncertainty And Generalization as the first topic to open. The topic is a good first stop only when the learner can name the shortage, evidence, missing answer, shape signal, and first test in ordinary words.</p>
 <table>
   <tbody>
-    <tr><th>Open This Topic When</th><td>The problem sounds like this: a prediction from a model is only useful if you know under which conditions you should actually trust it</td></tr>
+    <tr><th>Open This Topic When</th><td>The problem sounds like this: how do you know when a prediction is trustworthy instead of a blind guess?</td></tr>
     <tr><th>Evidence Signal</th><td>training cases, validation cases, prediction errors, and known shifts between cases</td></tr>
     <tr><th>Missing-Answer Signal</th><td>how wrong the model may be on a case unlike the ones it learned from</td></tr>
     <tr><th>Shape Or Topology Signal</th><td>State how belief changes when the shape, mesh, or connection pattern changes.</td></tr>
     <tr><th>Read This First If Needed</th><td>Deep Learning, Scientific Machine Learning</td></tr>
     <tr><th>Why This Page Is The Right Stop</th><td>Uncertainty and generalization ask whether fitted behavior survives a changed scientific case.</td></tr>
     <tr><th>Next Page To Open After This</th><td>Surrogate Modeling, Symbolic Regression And Model Discovery, Generative Modeling, Foundation Models For PDEs</td></tr>
-    <tr><th>Do Not Start Here When</th><td>confidence in scenarios or physical regimes the model has never encountered before is the part the learner needs most.</td></tr>
+    <tr><th>Do Not Start Here When</th><td>predicting what happens when you push way beyond the conditions the model trained on is the part the learner needs most.</td></tr>
     <tr><th>Start-Here Rejection Test</th><td>move one important condition outside the training range and measure the first failure</td></tr>
   </tbody>
 </table>
@@ -224,7 +224,7 @@
 <p>A skeptical reader does not ask whether Uncertainty And Generalization sounds useful. They ask what evidence would make the claim believable and what test would make the claim smaller.</p>
 <table>
   <tbody>
-    <tr><th>Question A Skeptic Asks</th><td>Why should this move be trusted for this problem: a prediction from a model is only useful if you know under which conditions you should actually trust it</td></tr>
+    <tr><th>Question A Skeptic Asks</th><td>Why should this move be trusted for this problem: how do you know when a prediction is trustworthy instead of a blind guess?</td></tr>
     <tr><th>Evidence A Skeptic Needs</th><td>training cases, validation cases, prediction errors, and known shifts between cases</td></tr>
     <tr><th>Missing Answer They Watch</th><td>how wrong the model may be on a case unlike the ones it learned from</td></tr>
     <tr><th>Move They Must See</th><td>separate fit on familiar examples from evidence on changed examples</td></tr>
@@ -244,7 +244,7 @@
 <p>Use this as a spoken answer for Uncertainty And Generalization. The learner should be able to say it without looking at a formula or reading the topic name as the reason.</p>
 <table>
   <tbody>
-    <tr><th>Sentence One: Everyday Need</th><td>A person needs this idea because a prediction from a model is only useful if you know under which conditions you should actually trust it</td></tr>
+    <tr><th>Sentence One: Everyday Need</th><td>A person needs this idea because how do you know when a prediction is trustworthy instead of a blind guess?</td></tr>
     <tr><th>Sentence Two: Evidence In Hand</th><td>What they can point to is training cases, validation cases, prediction errors, and known shifts between cases</td></tr>
     <tr><th>Sentence Three: Missing Answer</th><td>What they still need is how wrong the model may be on a case unlike the ones it learned from</td></tr>
     <tr><th>Sentence Four: Plain Move</th><td>The plain move is to separate fit on familiar examples from evidence on changed examples</td></tr>
@@ -264,13 +264,13 @@
   <tbody>
     <tr><th>Before Learning This</th><td>The learner may see training cases, validation cases, prediction errors, and known shifts between cases but not know how to use it for this missing answer: how wrong the model may be on a case unlike the ones it learned from.</td></tr>
     <tr><th>After Learning This</th><td>The learner should try this move: separate fit on familiar examples from evidence on changed examples</td></tr>
-    <tr><th>Decision They Can Now Make</th><td>when scientific decisions cost lives or money, a model must be honest about its own edges and not guess past them—and most neural networks fail silently instead</td></tr>
+    <tr><th>Decision They Can Now Make</th><td>when a prediction affects real people, the program must admit I trained here, not there—most just guess silently and fail</td></tr>
     <tr><th>Shape Decision That Changes</th><td>State how belief changes when the shape, mesh, or connection pattern changes. Check: Hold out a new shape family, missing connection, or mesh resolution and measure the error.</td></tr>
     <tr><th>Engineering Decision That Changes</th><td>Attach a use range and warning boundary to a prediction before a design choice. Check: Move load, material, size, or boundary beyond training and measure the first failure.</td></tr>
     <tr><th>Lab Or Biology Decision That Changes</th><td>Say when a measured property prediction should weaken under a new lab or sample condition. Check: Hold out a new instrument, molecule family, tissue type, or material batch.</td></tr>
     <tr><th>Field Decision That Changes</th><td>Separate ordinary test success from success under changed climate, flow, or boundary conditions. Check: Test a shifted region, rare event, changed forcing, or new sensor pattern.</td></tr>
     <tr><th>Claim They Can Now Say</th><td>a prediction without a use range is not yet a scientific claim</td></tr>
-    <tr><th>Decision They Must Still Refuse</th><td>training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime</td></tr>
+    <tr><th>Decision They Must Still Refuse</th><td>model looks correct on familiar data while it silently gives nonsense in new terrain, new shape, new sensor, or new physical regime</td></tr>
     <tr><th>Changed Case That Decides</th><td>move one important condition outside the training range and measure the first failure</td></tr>
   </tbody>
 </table>
@@ -282,7 +282,7 @@
 <p>This map asks where Uncertainty And Generalization matters after the course page closes. Each use must still start from evidence, name the missing answer, protect shape or field structure, and end with a test.</p>
 <table>
   <tbody>
-    <tr><th>Real-World Shortage</th><td>a prediction from a model is only useful if you know under which conditions you should actually trust it</td></tr>
+    <tr><th>Real-World Shortage</th><td>how do you know when a prediction is trustworthy instead of a blind guess?</td></tr>
     <tr><th>Evidence That Travels Outside Class</th><td>training cases, validation cases, prediction errors, and known shifts between cases</td></tr>
     <tr><th>Missing Answer Outside Class</th><td>how wrong the model may be on a case unlike the ones it learned from</td></tr>
     <tr><th>Engineering Use Outside Class</th><td>Attach a use range and warning boundary to a prediction before a design choice. Check: Move load, material, size, or boundary beyond training and measure the first failure.</td></tr>
@@ -290,7 +290,7 @@
     <tr><th>Climate Fluid Or Field Use Outside Class</th><td>Separate ordinary test success from success under changed climate, flow, or boundary conditions. Check: Test a shifted region, rare event, changed forcing, or new sensor pattern.</td></tr>
     <tr><th>Topology Shape Use Outside Class</th><td>State how belief changes when the shape, mesh, or connection pattern changes. Check: Hold out a new shape family, missing connection, or mesh resolution and measure the error.</td></tr>
     <tr><th>Claim Allowed Outside Class</th><td>a prediction without a use range is not yet a scientific claim</td></tr>
-    <tr><th>Use Must Stop Outside Class When</th><td>training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime</td></tr>
+    <tr><th>Use Must Stop Outside Class When</th><td>model looks correct on familiar data while it silently gives nonsense in new terrain, new shape, new sensor, or new physical regime</td></tr>
     <tr><th>First Outside-Classroom Test</th><td>move one important condition outside the training range and measure the first failure</td></tr>
   </tbody>
 </table>
@@ -302,7 +302,7 @@
 <p>After reading Uncertainty And Generalization, the learner should write a short note in their own words. The note should be useful the next day, when the page is closed.</p>
 <table>
   <tbody>
-    <tr><th>Notebook Line: Problem</th><td>a prediction from a model is only useful if you know under which conditions you should actually trust it</td></tr>
+    <tr><th>Notebook Line: Problem</th><td>how do you know when a prediction is trustworthy instead of a blind guess?</td></tr>
     <tr><th>Notebook Line: Evidence</th><td>training cases, validation cases, prediction errors, and known shifts between cases</td></tr>
     <tr><th>Notebook Line: Missing Answer</th><td>how wrong the model may be on a case unlike the ones it learned from</td></tr>
     <tr><th>Notebook Line: Move</th><td>separate fit on familiar examples from evidence on changed examples</td></tr>
@@ -320,7 +320,7 @@
 <p>The learner should be able to invent a tiny new case for Uncertainty And Generalization without copying the worked example. The case only has to be small enough to reveal the first-principles chain.</p>
 <table>
   <tbody>
-    <tr><th>Invent A Small Setting</th><td>Use a setting where this shortage appears: a prediction from a model is only useful if you know under which conditions you should actually trust it</td></tr>
+    <tr><th>Invent A Small Setting</th><td>Use a setting where this shortage appears: how do you know when a prediction is trustworthy instead of a blind guess?</td></tr>
     <tr><th>Name One Thing Seen</th><td>training cases, validation cases, prediction errors, and known shifts between cases</td></tr>
     <tr><th>Name One Thing Missing</th><td>how wrong the model may be on a case unlike the ones it learned from</td></tr>
     <tr><th>Name The Small Move</th><td>separate fit on familiar examples from evidence on changed examples</td></tr>
@@ -339,8 +339,8 @@
 <p>Use this as the smallest complete path from a real scientific question to a claim that can be rejected.</p>
 <table>
   <tbody>
-    <tr><th>1. State The Scientific Job</th><td>a prediction from a model is only useful if you know under which conditions you should actually trust it</td></tr>
-    <tr><th>2. Name The Decision Quantity</th><td>when scientific decisions cost lives or money, a model must be honest about its own edges and not guess past them—and most neural networks fail silently instead</td></tr>
+    <tr><th>1. State The Scientific Job</th><td>how do you know when a prediction is trustworthy instead of a blind guess?</td></tr>
+    <tr><th>2. Name The Decision Quantity</th><td>when a prediction affects real people, the program must admit I trained here, not there—most just guess silently and fail</td></tr>
     <tr><th>3. Inventory The Evidence</th><td>training cases, validation cases, prediction errors, and known shifts between cases</td></tr>
     <tr><th>4. Choose The Mathematical Carrier</th><td>separate fit on familiar examples from evidence on changed examples</td></tr>
     <tr><th>5. Build The Smallest Working Case</th><td>prediction + error check + stated use range</td></tr>
@@ -352,12 +352,12 @@
 
 
 <h2>First-Principles Essay</h2>
-<p>Start before the method name. In model use under new conditions, the real difficulty is this: a prediction from a model is only useful if you know under which conditions you should actually trust it. The concept called Uncertainty And Generalization is useful only if it helps carry the right information from the evidence already available to the answer the scientist still needs. The name of the method is secondary. The first question is what the world is asking us to recover, predict, explain, or check.</p>
+<p>Start before the method name. In model use under new conditions, the real difficulty is this: how do you know when a prediction is trustworthy instead of a blind guess?. The concept called Uncertainty And Generalization is useful only if it helps carry the right information from the evidence already available to the answer the scientist still needs. The name of the method is secondary. The first question is what the world is asking us to recover, predict, explain, or check.</p>
 <p>The observed side is training cases, validation cases, prediction errors, and known shifts between cases. That is the part the page is allowed to use as evidence. The hidden side is how wrong the model may be on a case unlike the ones it learned from. That is the part a reader should keep their eyes on, because the hidden part is where bad explanations often slip in. A weak writeup says the model learns a pattern. A stronger writeup says exactly which hidden quantity is being asked for and what would count as evidence that the answer is wrong.</p>
-<p>The mathematical move follows from that shortage. Here the move is: separate fit on familiar examples from evidence on changed examples. The shape is: prediction + error check + stated use range. Read that shape as a promise about information. It says which facts are kept, which checks are made, and which parts of the real scientific situation are not being carried. In this case, the concept keeps error bounds, tests on shifted conditions, and explicit limits on training-data range. It leaves out confidence in scenarios or physical regimes the model has never encountered before. That missing part is not a footnote; it is the boundary of the claim.</p>
-<p>The reason this matters is not the method name. It matters because when scientific decisions cost lives or money, a model must be honest about its own edges and not guess past them—and most neural networks fail silently instead. If the method works, it gives a scientist a usable answer for a named situation. If it fails, it usually fails in a concrete way: training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime. That is why the page must end with a changed-case test rather than a general statement of confidence.</p>
+<p>The mathematical move follows from that shortage. Here the move is: separate fit on familiar examples from evidence on changed examples. The shape is: prediction + error check + stated use range. Read that shape as a promise about information. It says which facts are kept, which checks are made, and which parts of the real scientific situation are not being carried. In this case, the concept keeps honest reporting of where the model might break, ranges it learned from, test results on unfamiliar setups. It leaves out predicting what happens when you push way beyond the conditions the model trained on. That missing part is not a footnote; it is the boundary of the claim.</p>
+<p>The reason this matters is not the method name. It matters because when a prediction affects real people, the program must admit I trained here, not there—most just guess silently and fail. If the method works, it gives a scientist a usable answer for a named situation. If it fails, it usually fails in a concrete way: model looks correct on familiar data while it silently gives nonsense in new terrain, new shape, new sensor, or new physical regime. That is why the page must end with a changed-case test rather than a general statement of confidence.</p>
 <h3>Tiny Concrete Version</h3>
-<p>A map is useful only if you know where it ends. Model uncertainty marks the edge of the map instead of pretending every road is known. When you leave the mapped territory, you must tell the decision-maker: I was trained here, not there. Strip away the notation and the question becomes: what do we know, what do we not know, what rule or pattern is allowed to connect them, and what changed case would make us stop trusting the answer?</p>
+<p>A GPS map is only as good as its border: past that edge you are lost. Physics-informed models must do the same—mark exactly where your training data ends and admit when the computer has never seen a situation before. This keeps engineers and scientists from trusting a prediction in regions the model never actually learned. Strip away the notation and the question becomes: what do we know, what do we not know, what rule or pattern is allowed to connect them, and what changed case would make us stop trusting the answer?</p>
 <h3>What A Strong Explanation Must Say</h3>
 <ol>
   <li>Name the real quantity, not only the method.</li>
@@ -369,7 +369,7 @@
 
 
 <h2>Teach It From Zero</h2>
-<p><strong>Start With A Person:</strong> Imagine someone who has no method name in mind yet. They have a real job: a prediction from a model is only useful if you know under which conditions you should actually trust it. In the concrete case on this page, the setting is this: A flood-risk model trained on past storms is used for a warmer future storm pattern. The person is not trying to sound technical. They are trying to decide what can be known from the evidence they already have.</p>
+<p><strong>Start With A Person:</strong> Imagine someone who has no method name in mind yet. They have a real job: how do you know when a prediction is trustworthy instead of a blind guess?. In the concrete case on this page, the setting is this: A flood-risk model trained on past storms is used for a warmer future storm pattern. The person is not trying to sound technical. They are trying to decide what can be known from the evidence they already have.</p>
 <p><strong>What They Can See:</strong> The evidence in hand is training cases, validation cases, prediction errors, and known shifts between cases. That evidence may be a measurement, a set of solved cases, a field, a shape, a graph, a molecule, a boundary value, or a time trace. It is useful because it is real. It is not enough because it does not directly give the answer the person needs.</p>
 <p><strong>What They Cannot See Yet:</strong> The hidden answer is how wrong the model may be on a case unlike the ones it learned from. This is the reason Uncertainty And Generalization enters the course. The topic is not here because its name is impressive. It is here because it gives one careful way to move from visible evidence toward a missing answer.</p>
 <p><strong>The First-Principles Move:</strong> The plain move is to separate fit on familiar examples from evidence on changed examples. Read that sentence slowly. It says what information is carried forward. It also says what is not proven. A topic is useful only when the carried information matches the scientific job. If the job changes, the claim must be checked again.</p>
@@ -424,10 +424,10 @@
 
 
 <h2>Everyday Field Decision Story</h2>
-<p>A field decision starts before the topic name. Someone needs to decide because when scientific decisions cost lives or money, a model must be honest about its own edges and not guess past them—and most neural networks fail silently instead. They can point to training cases, validation cases, prediction errors, and known shifts between cases, but still need how wrong the model may be on a case unlike the ones it learned from. Uncertainty And Generalization helps only if the move is clear: separate fit on familiar examples from evidence on changed examples. The decision should stay narrow until this changed case is checked: move one important condition outside the training range and measure the first failure.</p>
+<p>A field decision starts before the topic name. Someone needs to decide because when a prediction affects real people, the program must admit I trained here, not there—most just guess silently and fail. They can point to training cases, validation cases, prediction errors, and known shifts between cases, but still need how wrong the model may be on a case unlike the ones it learned from. Uncertainty And Generalization helps only if the move is clear: separate fit on familiar examples from evidence on changed examples. The decision should stay narrow until this changed case is checked: move one important condition outside the training range and measure the first failure.</p>
 <table>
   <tbody>
-    <tr><th>Decision Being Made</th><td>when scientific decisions cost lives or money, a model must be honest about its own edges and not guess past them—and most neural networks fail silently instead</td></tr>
+    <tr><th>Decision Being Made</th><td>when a prediction affects real people, the program must admit I trained here, not there—most just guess silently and fail</td></tr>
     <tr><th>Evidence On The Table</th><td>training cases, validation cases, prediction errors, and known shifts between cases</td></tr>
     <tr><th>Missing Answer For The Decision</th><td>how wrong the model may be on a case unlike the ones it learned from</td></tr>
     <tr><th>Plain Move That Connects Them</th><td>separate fit on familiar examples from evidence on changed examples</td></tr>
@@ -437,7 +437,7 @@
     <tr><th>Climate Or Field Decision Use</th><td>Separate ordinary test success from success under changed climate, flow, or boundary conditions.</td></tr>
     <tr><th>Concrete Decision Picture</th><td>A flood-risk model trained on past storms is used for a warmer future storm pattern.</td></tr>
     <tr><th>Decision Claim Allowed</th><td>a prediction without a use range is not yet a scientific claim</td></tr>
-    <tr><th>Decision Must Stop When</th><td>training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime</td></tr>
+    <tr><th>Decision Must Stop When</th><td>model looks correct on familiar data while it silently gives nonsense in new terrain, new shape, new sensor, or new physical regime</td></tr>
   </tbody>
 </table>
 <h3>Decision Story Pass Test</h3>
@@ -502,13 +502,13 @@
 
 
 <h2>From Scratch Story In Plain Words</h2>
-<p>Imagine a person has a real job to do and no method name yet. The job begins with this shortage: a prediction from a model is only useful if you know under which conditions you should actually trust it. That is the reason Uncertainty And Generalization enters the course. The idea does not start as a label. It starts because someone has evidence in hand, a missing answer, and a decision that cannot wait for a perfect view of the world.</p>
+<p>Imagine a person has a real job to do and no method name yet. The job begins with this shortage: how do you know when a prediction is trustworthy instead of a blind guess?. That is the reason Uncertainty And Generalization enters the course. The idea does not start as a label. It starts because someone has evidence in hand, a missing answer, and a decision that cannot wait for a perfect view of the world.</p>
 <p>The evidence in hand is training cases, validation cases, prediction errors, and known shifts between cases. This is the visible side of the problem. It might be measurements, a known rule, a simulation, a boundary, a mesh, a molecule, a graph, a field, or previous examples. The hidden side is how wrong the model may be on a case unlike the ones it learned from. That hidden side is what the learner should keep asking about. If the page cannot say what is hidden, then the method name is doing too much work.</p>
 <p>The first-principles move is this: separate fit on familiar examples from evidence on changed examples. In everyday words, the move has to do a named job. It is a way of carrying information from what can be seen to what still needs to be known. The shape of that move is prediction + error check + stated use range. That shape matters because it tells the reader what the method is allowed to keep, what it is allowed to ignore, and where the claim can become too wide.</p>
 <p>Shape and topology enter when the answer depends on connection, boundary, hole, surface, mesh, molecule form, graph link, or how a field moves across space and time. For Uncertainty And Generalization, the plain shape use is: State how belief changes when the shape, mesh, or connection pattern changes. The first shape check is: Hold out a new shape family, missing connection, or mesh resolution and measure the error. This is why topology is not a decorative topic. It decides whether the answer keeps the part of the world that carries the claim.</p>
 <p>The same idea also has to make sense away from the shape example. In engineering, the plain use is: Attach a use range and warning boundary to a prediction before a design choice. In materials, chemistry, or biology, the plain use is: Say when a measured property prediction should weaken under a new lab or sample condition. In climate, fluids, or other field problems, the plain use is: Separate ordinary test success from success under changed climate, flow, or boundary conditions. These uses are not praise for the topic. They are checks that the learner can translate the same first-principles shortage into more than one real setting.</p>
 <p>A concrete case makes the story honest. Here, the setting is A flood-risk model trained on past storms is used for a warmer future storm pattern. The observed evidence is training storms, held-out storms, errors, and the named climate shift. The hidden target is how wrong the model may be under the shifted condition. The move is separate familiar-test accuracy from evidence on the changed condition. The usable answer is a prediction with a use range and warning boundary. The first changed case is the shifted storm cases fail even though ordinary held-out cases looked accurate. If that changed case fails, the right response is not to defend the method name. The right response is to narrow the claim, gather stronger evidence, or choose a better starting point.</p>
-<p>The plain ending is this: Uncertainty And Generalization matters because when scientific decisions cost lives or money, a model must be honest about its own edges and not guess past them—and most neural networks fail silently instead. It keeps error bounds, tests on shifted conditions, and explicit limits on training-data range. It leaves out confidence in scenarios or physical regimes the model has never encountered before. It should stop being trusted, or be narrowed, when training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime. A learner understands the topic only when they can say that whole chain without hiding behind the topic name.</p>
+<p>The plain ending is this: Uncertainty And Generalization matters because when a prediction affects real people, the program must admit I trained here, not there—most just guess silently and fail. It keeps honest reporting of where the model might break, ranges it learned from, test results on unfamiliar setups. It leaves out predicting what happens when you push way beyond the conditions the model trained on. It should stop being trusted, or be narrowed, when model looks correct on familiar data while it silently gives nonsense in new terrain, new shape, new sensor, or new physical regime. A learner understands the topic only when they can say that whole chain without hiding behind the topic name.</p>
 
 
 <h2>No-Jargon Translation For This Topic</h2>
@@ -521,7 +521,7 @@
 <tr>
   <th>Topic Name</th>
   <td>Uncertainty And Generalization</td>
-  <td>A name for the move used when a prediction from a model is only useful if you know under which conditions you should actually trust it.</td>
+  <td>A name for the move used when how do you know when a prediction is trustworthy instead of a blind guess?.</td>
   <td>What real shortage made this idea necessary?</td>
 </tr>
 
@@ -555,14 +555,14 @@
 
 <tr>
   <th>Field Use</th>
-  <td>when scientific decisions cost lives or money, a model must be honest about its own edges and not guess past them—and most neural networks fail silently instead</td>
+  <td>when a prediction affects real people, the program must admit I trained here, not there—most just guess silently and fail</td>
   <td>The real-world reason a person would care about the answer.</td>
   <td>Which decision or quantity changes if the answer is right?</td>
 </tr>
 
 <tr>
   <th>Trust Boundary</th>
-  <td>training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime</td>
+  <td>model looks correct on familiar data while it silently gives nonsense in new terrain, new shape, new sensor, or new physical regime</td>
   <td>The first place the claim should shrink or stop.</td>
   <td>What changed case would make a careful reader recheck the answer?</td>
 </tr>
@@ -580,7 +580,7 @@
 <tr>
   <th>Object Word</th>
   <td>Uncertainty And Generalization</td>
-  <td>The name of the tool is less important than the shortage it answers: a prediction from a model is only useful if you know under which conditions you should actually trust it.</td>
+  <td>The name of the tool is less important than the shortage it answers: how do you know when a prediction is trustworthy instead of a blind guess?.</td>
   <td>What problem made this word necessary?</td>
 </tr>
 
@@ -614,14 +614,14 @@
 
 <tr>
   <th>Decision Word</th>
-  <td>when scientific decisions cost lives or money, a model must be honest about its own edges and not guess past them—and most neural networks fail silently instead</td>
+  <td>when a prediction affects real people, the program must admit I trained here, not there—most just guess silently and fail</td>
   <td>The reason a person in a field would act differently if the answer is right.</td>
   <td>What choice or quantity changes in the world?</td>
 </tr>
 
 <tr>
   <th>Trust Word</th>
-  <td>training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime</td>
+  <td>model looks correct on familiar data while it silently gives nonsense in new terrain, new shape, new sensor, or new physical regime</td>
   <td>The place where the claim should stop, shrink, or be checked again.</td>
   <td>What changed case would make me stop?</td>
 </tr>
@@ -637,7 +637,7 @@
   <tbody>
 <tr>
   <th>Start With The Shortage</th>
-  <td>a prediction from a model is only useful if you know under which conditions you should actually trust it</td>
+  <td>how do you know when a prediction is trustworthy instead of a blind guess?</td>
 </tr>
 
 <tr>
@@ -672,7 +672,7 @@
 
 <tr>
   <th>Name The Trust Boundary</th>
-  <td>training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime</td>
+  <td>model looks correct on familiar data while it silently gives nonsense in new terrain, new shape, new sensor, or new physical regime</td>
 </tr>
 
 <tr>
@@ -682,7 +682,7 @@
 </tbody>
 </table>
 <h3>Filled Retell Answer</h3>
-<p>Uncertainty And Generalization begins because a prediction from a model is only useful if you know under which conditions you should actually trust it. The evidence I can point to is training cases, validation cases, prediction errors, and known shifts between cases. The hidden answer is how wrong the model may be on a case unlike the ones it learned from. The first-principles move is to separate fit on familiar examples from evidence on changed examples. Shape or topology matters because state how belief changes when the shape, mesh, or connection pattern changes. In one concrete setting, a flood-risk model trained on past storms is used for a warmer future storm pattern. The useful answer is a prediction with a use range and warning boundary. I should narrow the claim when training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime. The first changed case I would try is move one important condition outside the training range and measure the first failure.</p>
+<p>Uncertainty And Generalization begins because how do you know when a prediction is trustworthy instead of a blind guess?. The evidence I can point to is training cases, validation cases, prediction errors, and known shifts between cases. The hidden answer is how wrong the model may be on a case unlike the ones it learned from. The first-principles move is to separate fit on familiar examples from evidence on changed examples. Shape or topology matters because state how belief changes when the shape, mesh, or connection pattern changes. In one concrete setting, a flood-risk model trained on past storms is used for a warmer future storm pattern. The useful answer is a prediction with a use range and warning boundary. I should narrow the claim when model looks correct on familiar data while it silently gives nonsense in new terrain, new shape, new sensor, or new physical regime. The first changed case I would try is move one important condition outside the training range and measure the first failure.</p>
 <h3>Retell Pass Test</h3>
 <p>A retell passes only if it names the shortage, evidence, hidden answer, first-principles move, shape or topology issue, one concrete case, useful answer, trust boundary, and changed case without using the topic name as the reason.</p>
 
@@ -796,7 +796,7 @@
 <table>
   <tbody>
     <tr><th>Use It When</th><td>The case starts from training cases, validation cases, prediction errors, and known shifts between cases, needs how wrong the model may be on a case unlike the ones it learned from, and the allowed move is separate fit on familiar examples from evidence on changed examples.</td></tr>
-    <tr><th>Narrow It When</th><td>The topic helps part of the job, but this boundary is close: training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime.</td></tr>
+    <tr><th>Narrow It When</th><td>The topic helps part of the job, but this boundary is close: model looks correct on familiar data while it silently gives nonsense in new terrain, new shape, new sensor, or new physical regime.</td></tr>
     <tr><th>Refuse It When</th><td>Report a confidence number without testing the changed condition the user actually cares about.</td></tr>
     <tr><th>Evidence Required Before Use</th><td>training cases, validation cases, prediction errors, and known shifts between cases</td></tr>
     <tr><th>Hidden Answer Required Before Use</th><td>how wrong the model may be on a case unlike the ones it learned from</td></tr>
@@ -812,18 +812,18 @@
 <p>This is the smallest proof that the topic has become understandable. The learner should be able to say this without looking at the page.</p>
 <table>
   <tbody>
-    <tr><th>Problem Proof</th><td>a prediction from a model is only useful if you know under which conditions you should actually trust it</td></tr>
+    <tr><th>Problem Proof</th><td>how do you know when a prediction is trustworthy instead of a blind guess?</td></tr>
     <tr><th>Evidence Proof</th><td>training cases, validation cases, prediction errors, and known shifts between cases</td></tr>
     <tr><th>Hidden-Answer Proof</th><td>how wrong the model may be on a case unlike the ones it learned from</td></tr>
     <tr><th>Move Proof</th><td>separate fit on familiar examples from evidence on changed examples</td></tr>
     <tr><th>Shape Proof</th><td>State how belief changes when the shape, mesh, or connection pattern changes.</td></tr>
     <tr><th>Case Proof</th><td>A flood-risk model trained on past storms is used for a warmer future storm pattern.</td></tr>
     <tr><th>Use Proof</th><td>a prediction with a use range and warning boundary</td></tr>
-    <tr><th>Refusal Proof</th><td>training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime</td></tr>
+    <tr><th>Refusal Proof</th><td>model looks correct on familiar data while it silently gives nonsense in new terrain, new shape, new sensor, or new physical regime</td></tr>
   </tbody>
 </table>
 <h3>Accepted Final Answer</h3>
-<p>Uncertainty And Generalization is needed because a prediction from a model is only useful if you know under which conditions you should actually trust it. I can start from training cases, validation cases, prediction errors, and known shifts between cases. I still need how wrong the model may be on a case unlike the ones it learned from. The allowed move is to separate fit on familiar examples from evidence on changed examples. The shape issue is state how belief changes when the shape, mesh, or connection pattern changes. A concrete case is a flood-risk model trained on past storms is used for a warmer future storm pattern. The useful answer is a prediction with a use range and warning boundary. I use it only when the changed-case test is named: move one important condition outside the training range and measure the first failure. I refuse or narrow it when training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime.</p>
+<p>Uncertainty And Generalization is needed because how do you know when a prediction is trustworthy instead of a blind guess?. I can start from training cases, validation cases, prediction errors, and known shifts between cases. I still need how wrong the model may be on a case unlike the ones it learned from. The allowed move is to separate fit on familiar examples from evidence on changed examples. The shape issue is state how belief changes when the shape, mesh, or connection pattern changes. A concrete case is a flood-risk model trained on past storms is used for a warmer future storm pattern. The useful answer is a prediction with a use range and warning boundary. I use it only when the changed-case test is named: move one important condition outside the training range and measure the first failure. I refuse or narrow it when model looks correct on familiar data while it silently gives nonsense in new terrain, new shape, new sensor, or new physical regime.</p>
 <h3>Final Proof Pass Test</h3>
 <p>The final proof passes only if the learner can say the problem, evidence, hidden answer, move, shape issue, concrete case, useful answer, changed-case test, and refusal boundary in one ordinary-language answer.</p>
 
@@ -832,7 +832,7 @@
 <p>This is the handoff a learner should be able to give to another person without using the topic name as a shortcut.</p>
 <table>
   <tbody>
-    <tr><th>First Sentence</th><td>Uncertainty And Generalization starts from this everyday shortage: a prediction from a model is only useful if you know under which conditions you should actually trust it</td></tr>
+    <tr><th>First Sentence</th><td>Uncertainty And Generalization starts from this everyday shortage: how do you know when a prediction is trustworthy instead of a blind guess?</td></tr>
     <tr><th>What They Can Point To</th><td>training cases, validation cases, prediction errors, and known shifts between cases</td></tr>
     <tr><th>What They Still Need</th><td>how wrong the model may be on a case unlike the ones it learned from</td></tr>
     <tr><th>Plain Move To Say Out Loud</th><td>separate fit on familiar examples from evidence on changed examples</td></tr>
@@ -840,11 +840,11 @@
     <tr><th>One Field Use</th><td>Attach a use range and warning boundary to a prediction before a design choice. Check: Move load, material, size, or boundary beyond training and measure the first failure.</td></tr>
     <tr><th>One Concrete Case</th><td>A flood-risk model trained on past storms is used for a warmer future storm pattern.</td></tr>
     <tr><th>Careful Ending</th><td>a prediction without a use range is not yet a scientific claim</td></tr>
-    <tr><th>Stop Teaching It As True When</th><td>training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime</td></tr>
+    <tr><th>Stop Teaching It As True When</th><td>model looks correct on familiar data while it silently gives nonsense in new terrain, new shape, new sensor, or new physical regime</td></tr>
   </tbody>
 </table>
 <h3>Full Handoff In Plain Words</h3>
-<p>Start with the everyday shortage: a prediction from a model is only useful if you know under which conditions you should actually trust it. Then say what is seen: training cases, validation cases, prediction errors, and known shifts between cases. Say what is still missing: how wrong the model may be on a case unlike the ones it learned from. Explain the move in one plain line: separate fit on familiar examples from evidence on changed examples. Name the shape issue: State how belief changes when the shape, mesh, or connection pattern changes.. Ground it in this case: A flood-risk model trained on past storms is used for a warmer future storm pattern.. End carefully: a prediction without a use range is not yet a scientific claim. Stop or narrow the claim when training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime.</p>
+<p>Start with the everyday shortage: how do you know when a prediction is trustworthy instead of a blind guess?. Then say what is seen: training cases, validation cases, prediction errors, and known shifts between cases. Say what is still missing: how wrong the model may be on a case unlike the ones it learned from. Explain the move in one plain line: separate fit on familiar examples from evidence on changed examples. Name the shape issue: State how belief changes when the shape, mesh, or connection pattern changes.. Ground it in this case: A flood-risk model trained on past storms is used for a warmer future storm pattern.. End carefully: a prediction without a use range is not yet a scientific claim. Stop or narrow the claim when model looks correct on familiar data while it silently gives nonsense in new terrain, new shape, new sensor, or new physical regime.</p>
 <h3>Handoff Pass Test</h3>
 <p>The handoff passes only if another person can repeat the problem, evidence, missing answer, shape issue, field use, careful ending, and stop condition without needing the topic name first.</p>
 
@@ -867,19 +867,19 @@
 
 
 <h2>One-Page Mental Model</h2>
-<p>Uncertainty And Generalization is a route from training cases, validation cases, prediction errors, and known shifts between cases to how wrong the model may be on a case unlike the ones it learned from. The route exists because a prediction from a model is only useful if you know under which conditions you should actually trust it. The move is separate fit on familiar examples from evidence on changed examples. The shape issue is State how belief changes when the shape, mesh, or connection pattern changes.. A concrete picture is A flood-risk model trained on past storms is used for a warmer future storm pattern.. The allowed claim is a prediction without a use range is not yet a scientific claim. The first test is move one important condition outside the training range and measure the first failure.</p>
+<p>Uncertainty And Generalization is a route from training cases, validation cases, prediction errors, and known shifts between cases to how wrong the model may be on a case unlike the ones it learned from. The route exists because how do you know when a prediction is trustworthy instead of a blind guess?. The move is separate fit on familiar examples from evidence on changed examples. The shape issue is State how belief changes when the shape, mesh, or connection pattern changes.. A concrete picture is A flood-risk model trained on past storms is used for a warmer future storm pattern.. The allowed claim is a prediction without a use range is not yet a scientific claim. The first test is move one important condition outside the training range and measure the first failure.</p>
 <table>
   <tbody>
-    <tr><th>Need</th><td>a prediction from a model is only useful if you know under which conditions you should actually trust it</td></tr>
+    <tr><th>Need</th><td>how do you know when a prediction is trustworthy instead of a blind guess?</td></tr>
     <tr><th>Evidence</th><td>training cases, validation cases, prediction errors, and known shifts between cases</td></tr>
     <tr><th>Missing Answer</th><td>how wrong the model may be on a case unlike the ones it learned from</td></tr>
     <tr><th>Plain Move</th><td>separate fit on familiar examples from evidence on changed examples</td></tr>
     <tr><th>Shape To Keep</th><td>State how belief changes when the shape, mesh, or connection pattern changes.</td></tr>
-    <tr><th>Field Reason</th><td>when scientific decisions cost lives or money, a model must be honest about its own edges and not guess past them—and most neural networks fail silently instead</td></tr>
+    <tr><th>Field Reason</th><td>when a prediction affects real people, the program must admit I trained here, not there—most just guess silently and fail</td></tr>
     <tr><th>Concrete Picture</th><td>A flood-risk model trained on past storms is used for a warmer future storm pattern.</td></tr>
     <tr><th>Allowed Claim</th><td>a prediction without a use range is not yet a scientific claim</td></tr>
     <tr><th>First Test</th><td>move one important condition outside the training range and measure the first failure</td></tr>
-    <tr><th>Stop Point</th><td>training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime</td></tr>
+    <tr><th>Stop Point</th><td>model looks correct on familiar data while it silently gives nonsense in new terrain, new shape, new sensor, or new physical regime</td></tr>
   </tbody>
 </table>
 <h3>Mental Model Pass Test</h3>
@@ -890,14 +890,14 @@
 <p>This check is for the next day, when the page is closed. The learner passes only if the plain chain is still available without the table.</p>
 <table>
   <tbody>
-    <tr><th>Remember The Need</th><td>a prediction from a model is only useful if you know under which conditions you should actually trust it</td></tr>
+    <tr><th>Remember The Need</th><td>how do you know when a prediction is trustworthy instead of a blind guess?</td></tr>
     <tr><th>Remember The Evidence</th><td>training cases, validation cases, prediction errors, and known shifts between cases</td></tr>
     <tr><th>Remember The Missing Answer</th><td>how wrong the model may be on a case unlike the ones it learned from</td></tr>
     <tr><th>Remember The Move</th><td>separate fit on familiar examples from evidence on changed examples</td></tr>
     <tr><th>Remember The Shape Issue</th><td>State how belief changes when the shape, mesh, or connection pattern changes.</td></tr>
     <tr><th>Remember One Case</th><td>A flood-risk model trained on past storms is used for a warmer future storm pattern.</td></tr>
     <tr><th>Remember The First Check</th><td>move one important condition outside the training range and measure the first failure</td></tr>
-    <tr><th>Remember When To Stop</th><td>training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime</td></tr>
+    <tr><th>Remember When To Stop</th><td>model looks correct on familiar data while it silently gives nonsense in new terrain, new shape, new sensor, or new physical regime</td></tr>
   </tbody>
 </table>
 <h3>One-Minute Memory Answer</h3>
@@ -925,14 +925,14 @@
 <p>This is the final self-check before leaving the topic. Understanding means the reader can say what is known in plain words. Trust still needs tests, because a clear explanation can still be too broad.</p>
 <table>
   <tbody>
-    <tr><th>What I Know</th><td>a prediction from a model is only useful if you know under which conditions you should actually trust it</td></tr>
+    <tr><th>What I Know</th><td>how do you know when a prediction is trustworthy instead of a blind guess?</td></tr>
     <tr><th>Evidence I Can Point To</th><td>training cases, validation cases, prediction errors, and known shifts between cases</td></tr>
     <tr><th>Answer I Still Need</th><td>how wrong the model may be on a case unlike the ones it learned from</td></tr>
     <tr><th>Move That Tries To Get There</th><td>separate fit on familiar examples from evidence on changed examples</td></tr>
     <tr><th>Shape Or Topology I Must Not Lose</th><td>State how belief changes when the shape, mesh, or connection pattern changes.</td></tr>
     <tr><th>Claim I Can Say Carefully</th><td>a prediction without a use range is not yet a scientific claim</td></tr>
     <tr><th>Test Still Needed</th><td>move one important condition outside the training range and measure the first failure</td></tr>
-    <tr><th>Stop Or Narrow When</th><td>training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime</td></tr>
+    <tr><th>Stop Or Narrow When</th><td>model looks correct on familiar data while it silently gives nonsense in new terrain, new shape, new sensor, or new physical regime</td></tr>
   </tbody>
 </table>
 <p>If the reader can fill this table from memory in everyday words, the topic is understandable. If they cannot name the test still needed, they may understand the story but not yet the scientific claim.</p>
@@ -942,8 +942,8 @@
 <p>A failure boundary is not a warning label at the end of the page. It explains why the first-principles chain matters in real work. If the topic is used past its evidence, the wrong answer can travel into a design choice, experiment, field forecast, or scientific claim.</p>
 <table>
   <tbody>
-    <tr><th>Missing Piece</th><td>confidence in scenarios or physical regimes the model has never encountered before</td></tr>
-    <tr><th>What Can Go Wrong</th><td>training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime</td></tr>
+    <tr><th>Missing Piece</th><td>predicting what happens when you push way beyond the conditions the model trained on</td></tr>
+    <tr><th>What Can Go Wrong</th><td>model looks correct on familiar data while it silently gives nonsense in new terrain, new shape, new sensor, or new physical regime</td></tr>
     <tr><th>Engineering Consequence</th><td>A confident answer is dangerous when the design is outside the checked range. Check it by: Move load, material, size, or boundary beyond training and measure the first failure.</td></tr>
     <tr><th>Materials Or Biology Consequence</th><td>The claim matters only if the user knows where belief should stop. Check it by: Hold out a new instrument, molecule family, tissue type, or material batch.</td></tr>
     <tr><th>Climate Or Field Consequence</th><td>The field answer must include where it may be wrong, not only what it predicts. Check it by: Test a shifted region, rare event, changed forcing, or new sensor pattern.</td></tr>
@@ -957,20 +957,20 @@
 <p>This bridge explains why the mathematical shape is not arbitrary. Start with the everyday shortage, then ask what kind of answer would remove that shortage, what evidence can carry it, and what shape is the smallest honest carrier.</p>
 <table>
   <tbody>
-    <tr><th>Everyday Shortage</th><td>a prediction from a model is only useful if you know under which conditions you should actually trust it</td></tr>
+    <tr><th>Everyday Shortage</th><td>how do you know when a prediction is trustworthy instead of a blind guess?</td></tr>
     <tr><th>Answer Type Needed</th><td>how wrong the model may be on a case unlike the ones it learned from</td></tr>
     <tr><th>Evidence Carrier</th><td>training cases, validation cases, prediction errors, and known shifts between cases</td></tr>
     <tr><th>Why A Single Number Is Not Enough</th><td>The answer must still carry the field, shape, rule, rate, property, uncertainty, or use range named by the scientific job.</td></tr>
     <tr><th>Smallest Honest Shape</th><td>prediction + error check + stated use range</td></tr>
     <tr><th>Why This Shape Follows</th><td>separate fit on familiar examples from evidence on changed examples</td></tr>
-    <tr><th>What Would Make The Shape Too Weak</th><td>training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime</td></tr>
+    <tr><th>What Would Make The Shape Too Weak</th><td>model looks correct on familiar data while it silently gives nonsense in new terrain, new shape, new sensor, or new physical regime</td></tr>
   </tbody>
 </table>
 <p>Read the shape as a sentence, not as a symbol list. It says what evidence enters, what answer leaves, and what changed case decides whether the middle step carried enough.</p>
 
 
 <h2>Plain Big Picture Essay</h2>
-<p>Start with the human problem. Someone needs to act, explain, build, test, or decide, and the answer is not sitting in front of them. For Uncertainty And Generalization, the plain problem is this: a prediction from a model is only useful if you know under which conditions you should actually trust it. The course idea is important only because it helps move from what is already known to what still has to be known. If that movement is not clear, the page is only naming a tool. If the movement is clear, the reader can see why the tool enters at all.</p>
+<p>Start with the human problem. Someone needs to act, explain, build, test, or decide, and the answer is not sitting in front of them. For Uncertainty And Generalization, the plain problem is this: how do you know when a prediction is trustworthy instead of a blind guess?. The course idea is important only because it helps move from what is already known to what still has to be known. If that movement is not clear, the page is only naming a tool. If the movement is clear, the reader can see why the tool enters at all.</p>
 <p>The first-principles path is simple. We have evidence: training cases, validation cases, prediction errors, and known shifts between cases. We need something hidden: how wrong the model may be on a case unlike the ones it learned from. We make a move: separate fit on familiar examples from evidence on changed examples. The move is allowed only because it carries the right part of the evidence toward the missing answer. It is not allowed to claim more than that. The final claim is: a prediction without a use range is not yet a scientific claim.</p>
 <p>A plain example keeps the idea honest. One concrete case: A flood-risk model trained on past storms is used for a warmer future storm pattern. The evidence is training storms, held-out storms, errors, and the named climate shift. The missing answer is how wrong the model may be under the shifted condition. The useful move is to separate familiar-test accuracy from evidence on the changed condition. The result is useful only if it gives a prediction with a use range and warning boundary. The first sign to stop or narrow the claim is this: the shifted storm cases fail even though ordinary held-out cases looked accurate.</p>
 <p>This matters across the course because the same pattern keeps returning. A scientist rarely wants a method name. They want a field, a shape, a property, a rate, a risk, a design answer, or a reason to reject a claim. The lesson is to ask the same plain questions every time: What do we know? What is missing? What carries the missing part? What did we leave out? What changed case would prove that the answer was too broad?</p>
@@ -1010,7 +1010,7 @@
 
 
 <h2>Why This Matters Slowly</h2>
-<p>Do not start by asking what Uncertainty And Generalization is called. Start by asking what would be hard without it. In plain words, the hard part is this: a prediction from a model is only useful if you know under which conditions you should actually trust it. A person may have measurements, solved examples, a known equation, a shape, a field, a graph, a material sample, or a past experiment. That evidence is useful, but it is not yet the answer. The missing answer is how wrong the model may be on a case unlike the ones it learned from. This topic matters because it gives a disciplined way to move from the evidence to that missing answer.</p>
+<p>Do not start by asking what Uncertainty And Generalization is called. Start by asking what would be hard without it. In plain words, the hard part is this: how do you know when a prediction is trustworthy instead of a blind guess?. A person may have measurements, solved examples, a known equation, a shape, a field, a graph, a material sample, or a past experiment. That evidence is useful, but it is not yet the answer. The missing answer is how wrong the model may be on a case unlike the ones it learned from. This topic matters because it gives a disciplined way to move from the evidence to that missing answer.</p>
 <p>The move is separate fit on familiar examples from evidence on changed examples. That sentence is the center of the idea. It says what work the topic is doing before any notation appears. It also limits the claim. The topic is allowed to say this: a prediction without a use range is not yet a scientific claim. It is not allowed to say that every future case is handled, or that a neat curve, small error, or good-looking field is enough. A scientific claim has to carry its own stopping rule.</p>
 <p>Topology and shape matter here because scientific evidence often has form before it has numbers. State how belief changes when the shape, mesh, or connection pattern changes. The reason is simple: Uncertainty matters here because a prediction can look good on familiar shapes and fail on a new one. If a model loses the relation that carries the quantity, the answer can look tidy and still be wrong. The first shape check is: Hold out a new shape family, missing connection, or mesh resolution and measure the error.</p>
 <p>In engineering design, the same idea becomes a decision about a part, device, load, safety limit, or operating condition. Attach a use range and warning boundary to a prediction before a design choice. Why it matters: A confident answer is dangerous when the design is outside the checked range. The first engineering check is: Move load, material, size, or boundary beyond training and measure the first failure.</p>
@@ -1021,11 +1021,11 @@
 
 <h2>Long Everyday Importance Essay</h2>
 <h3>Why The Topic Has To Exist</h3>
-<p>Begin with a person who has a real question and no method name yet. The person is facing this shortage: a prediction from a model is only useful if you know under which conditions you should actually trust it. That shortage is the reason Uncertainty And Generalization belongs in the course. The topic is not here so the reader can memorize a label. It is here because the reader needs a plain route from evidence to a missing answer, and the route has to say where it can fail.</p>
+<p>Begin with a person who has a real question and no method name yet. The person is facing this shortage: how do you know when a prediction is trustworthy instead of a blind guess?. That shortage is the reason Uncertainty And Generalization belongs in the course. The topic is not here so the reader can memorize a label. It is here because the reader needs a plain route from evidence to a missing answer, and the route has to say where it can fail.</p>
 <p>In the concrete case, the setting is this: A flood-risk model trained on past storms is used for a warmer future storm pattern. The person can see training storms, held-out storms, errors, and the named climate shift. That is useful evidence, but it does not by itself give how wrong the model may be under the shifted condition. The real job is to move from the seen part to the missing part without pretending that the answer is stronger than the evidence allows.</p>
 <h3>First-Principles Reason In Plain Words</h3>
 <p>The first-principles reason is the shortest honest chain: what is known, what is missing, what move can carry information between them, and what changed case can reject the result. For this topic, the known evidence is training cases, validation cases, prediction errors, and known shifts between cases. The missing answer is how wrong the model may be on a case unlike the ones it learned from. The move is to separate fit on familiar examples from evidence on changed examples. The claim is allowed to mean this: a prediction without a use range is not yet a scientific claim.</p>
-<p>This is why the mathematical shape appears. The shape is prediction + error check + stated use range. Read it as a carrier of information, not as decoration. It keeps error bounds, tests on shifted conditions, and explicit limits on training-data range. It leaves out confidence in scenarios or physical regimes the model has never encountered before. The left-out part is important because it marks the edge of the claim. Past that edge, the topic needs a new test.</p>
+<p>This is why the mathematical shape appears. The shape is prediction + error check + stated use range. Read it as a carrier of information, not as decoration. It keeps honest reporting of where the model might break, ranges it learned from, test results on unfamiliar setups. It leaves out predicting what happens when you push way beyond the conditions the model trained on. The left-out part is important because it marks the edge of the claim. Past that edge, the topic needs a new test.</p>
 <h3>Topology And Shape In Real Work</h3>
 <p>Topology and shape enter whenever the answer depends on connection, boundary, hole, distance, mesh, molecule form, surface, or how information moves across a field. For this topic, the plain shape use is: State how belief changes when the shape, mesh, or connection pattern changes. The reason it matters is: Uncertainty matters here because a prediction can look good on familiar shapes and fail on a new one. The first shape test is: Hold out a new shape family, missing connection, or mesh resolution and measure the error.</p>
 <p>This matters because a scientific object is often more than a row of numbers. A wing has a boundary and a surface. A molecule has atoms and bonds. A material has grains, defects, and directions. A climate field has regions that touch and regions that influence one another over distance. If the method erases the relation that carries the answer, it may look good on familiar cases and still fail when the shape changes.</p>
@@ -1035,11 +1035,11 @@
 <p>In climate, fluids, and field problems, the everyday use is: Separate ordinary test success from success under changed climate, flow, or boundary conditions. This matters because the field answer must include where it may be wrong, not only what it predicts. The first field test is: Test a shifted region, rare event, changed forcing, or new sensor pattern.</p>
 <h3>Why This Is Important</h3>
 <p>The importance of Uncertainty And Generalization is not that it sounds technical. Its importance is that it gives a reader one careful way to say what can be known from the evidence at hand. A good explanation should let the reader point to the evidence, name the hidden answer, explain the move, protect the shape or topology that matters, name the field decision, and end with the first changed case.</p>
-<p>For this page, the final everyday sentence is: Uncertainty And Generalization matters because when scientific decisions cost lives or money, a model must be honest about its own edges and not guess past them—and most neural networks fail silently instead. It should be trusted only as far as this test survives: move one important condition outside the training range and measure the first failure. If that test fails, the honest answer is to narrow the claim, gather better evidence, or choose a different route.</p>
+<p>For this page, the final everyday sentence is: Uncertainty And Generalization matters because when a prediction affects real people, the program must admit I trained here, not there—most just guess silently and fail. It should be trusted only as far as this test survives: move one important condition outside the training range and measure the first failure. If that test fails, the honest answer is to narrow the claim, gather better evidence, or choose a different route.</p>
 
 
 <h2>Across Fields Long Walk</h2>
-<p>Use this section to slow down and ask why the same idea matters after the example changes. The starting shortage is still this: a prediction from a model is only useful if you know under which conditions you should actually trust it. The evidence in hand is still training cases, validation cases, prediction errors, and known shifts between cases. The missing answer is still how wrong the model may be on a case unlike the ones it learned from. Uncertainty And Generalization matters only if the move, separate fit on familiar examples from evidence on changed examples, still carries the part of the evidence that the new field needs.</p>
+<p>Use this section to slow down and ask why the same idea matters after the example changes. The starting shortage is still this: how do you know when a prediction is trustworthy instead of a blind guess?. The evidence in hand is still training cases, validation cases, prediction errors, and known shifts between cases. The missing answer is still how wrong the model may be on a case unlike the ones it learned from. Uncertainty And Generalization matters only if the move, separate fit on familiar examples from evidence on changed examples, still carries the part of the evidence that the new field needs.</p>
 <h3>One Plain Need Across Fields</h3>
 <p>The plain need is not a method name. It is a person needing an answer they cannot see directly. In shape work, the person asks whether the answer changes when connection, boundary, hole, distance, mesh, or surface changes. In engineering, the person asks whether a design choice is still safe or useful. In materials, chemistry, or biology, the person asks whether a property, sample, molecule, tissue, or reaction still behaves the same way. In climate, fluids, or field work, the person asks whether the answer still holds across space, time, sources, and boundaries.</p>
 <h3>Topology And Shape Walk</h3>
@@ -1055,7 +1055,7 @@
 
 
 <h2>Why It Matters In Daily Work</h2>
-<p>Picture a normal workday, not a lecture. Someone has to make a choice before the whole truth is easy to see. The shortage is this: a prediction from a model is only useful if you know under which conditions you should actually trust it. The person may be trying to compare designs, read a field, choose a test, explain a shape, check a sample, or decide whether a result is ready to trust. The name Uncertainty And Generalization matters only after that need is clear.</p>
+<p>Picture a normal workday, not a lecture. Someone has to make a choice before the whole truth is easy to see. The shortage is this: how do you know when a prediction is trustworthy instead of a blind guess?. The person may be trying to compare designs, read a field, choose a test, explain a shape, check a sample, or decide whether a result is ready to trust. The name Uncertainty And Generalization matters only after that need is clear.</p>
 <h3>Daily Work Starting Point</h3>
 <p>The starting point is evidence, not confidence. In the small case, the setting is: A flood-risk model trained on past storms is used for a warmer future storm pattern. The visible part is training cases, validation cases, prediction errors, and known shifts between cases. The missing part is how wrong the model may be on a case unlike the ones it learned from. The daily job is to move from the visible part toward the missing part without hiding the weak spot.</p>
 <h3>Daily Work Move</h3>
@@ -1065,7 +1065,7 @@
 <h3>Daily Field Stakes</h3>
 <p>In engineering, the work stake is: A confident answer is dangerous when the design is outside the checked range. In materials, chemistry, or biology, the work stake is: The claim matters only if the user knows where belief should stop. In climate, fluids, or fields, the work stake is: The field answer must include where it may be wrong, not only what it predicts. These are different jobs, but the same question controls all of them: did the move carry the right evidence toward the missing answer?</p>
 <h3>Daily Failure Cost</h3>
-<p>The cost of getting this wrong is not only a lower score on an example. The method can support the wrong design choice, the wrong lab conclusion, the wrong field reading, or the wrong explanation of a shape. The first place the claim can break is: training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime</p>
+<p>The cost of getting this wrong is not only a lower score on an example. The method can support the wrong design choice, the wrong lab conclusion, the wrong field reading, or the wrong explanation of a shape. The first place the claim can break is: model looks correct on familiar data while it silently gives nonsense in new terrain, new shape, new sensor, or new physical regime</p>
 <h3>Daily Work Pass Test</h3>
 <p>The daily-work story passes only if the learner can say why Uncertainty And Generalization matters without starting from the topic name: name the work choice, name the evidence, name the missing answer, name the move, name the shape or field stake, name the failure cost, and name this first changed case: move one important condition outside the training range and measure the first failure</p>
 
@@ -1093,7 +1093,7 @@
   <tbody>
 <tr>
   <td>I only named the topic</td>
-  <td>Start with the shortage: a prediction from a model is only useful if you know under which conditions you should actually trust it</td>
+  <td>Start with the shortage: how do you know when a prediction is trustworthy instead of a blind guess?</td>
 </tr>
 
 <tr>
@@ -1156,7 +1156,7 @@
 
 
 <h2>Course Role In Plain Words</h2>
-<p>This topic appears in the course because it handles a specific job in the route from evidence to scientific claim. For Uncertainty And Generalization, the job is to move from training cases, validation cases, prediction errors, and known shifts between cases toward how wrong the model may be on a case unlike the ones it learned from without hiding this failure case: training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime.</p>
+<p>This topic appears in the course because it handles a specific job in the route from evidence to scientific claim. For Uncertainty And Generalization, the job is to move from training cases, validation cases, prediction errors, and known shifts between cases toward how wrong the model may be on a case unlike the ones it learned from without hiding this failure case: model looks correct on familiar data while it silently gives nonsense in new terrain, new shape, new sensor, or new physical regime.</p>
 <table>
   <tbody>
     <tr><th>Why It Appears Here</th><td>Uncertainty and generalization ask whether fitted behavior survives a changed scientific case.</td></tr>
@@ -1173,8 +1173,8 @@
 <table>
   <tbody>
     <tr><th>What The Reader Should Already Have</th><td>Deep Learning, Scientific Machine Learning. Before this topic, the reader should be able to name the evidence, hidden answer, and first rejection test.</td></tr>
-    <tr><th>What This Topic Adds To The Course</th><td>Uncertainty And Generalization adds this move: separate fit on familiar examples from evidence on changed examples. It matters because when scientific decisions cost lives or money, a model must be honest about its own edges and not guess past them—and most neural networks fail silently instead.</td></tr>
-    <tr><th>What Later Pages Can Now Use</th><td>Surrogate Modeling, Symbolic Regression And Model Discovery, Generative Modeling, Foundation Models For PDEs can use this idea only if the claim stays inside this boundary: training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime.</td></tr>
+    <tr><th>What This Topic Adds To The Course</th><td>Uncertainty And Generalization adds this move: separate fit on familiar examples from evidence on changed examples. It matters because when a prediction affects real people, the program must admit I trained here, not there—most just guess silently and fail.</td></tr>
+    <tr><th>What Later Pages Can Now Use</th><td>Surrogate Modeling, Symbolic Regression And Model Discovery, Generative Modeling, Foundation Models For PDEs can use this idea only if the claim stays inside this boundary: model looks correct on familiar data while it silently gives nonsense in new terrain, new shape, new sensor, or new physical regime.</td></tr>
     <tr><th>Why This Link Matters</th><td>Uncertainty and generalization ask whether fitted behavior survives a changed scientific case.</td></tr>
     <tr><th>Confusion This Bridge Prevents</th><td>Without the scientific job, uncertainty can look like a decorative confidence number.</td></tr>
   </tbody>
@@ -1262,7 +1262,7 @@
     <tr><th>Carry Step</th><td>separate fit on familiar examples from evidence on changed examples</td></tr>
     <tr><th>Formula Path In Plain Words</th><td>prediction -&gt; error check -&gt; stated use range</td></tr>
     <tr><th>What The Shape Allows</th><td>a prediction without a use range is not yet a scientific claim</td></tr>
-    <tr><th>What The Shape Must Not Hide</th><td>training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime</td></tr>
+    <tr><th>What The Shape Must Not Hide</th><td>model looks correct on familiar data while it silently gives nonsense in new terrain, new shape, new sensor, or new physical regime</td></tr>
     <tr><th>Check The Shape</th><td>move one important condition outside the training range and measure the first failure</td></tr>
   </tbody>
 </table>
@@ -1403,7 +1403,7 @@
     <tr><th>Course Evidence Can Support</th><td>The course can support the plain chain from training cases, validation cases, prediction errors, and known shifts between cases to how wrong the model may be on a case unlike the ones it learned from using this move: separate fit on familiar examples from evidence on changed examples.</td></tr>
     <tr><th>Course Evidence Cannot Prove</th><td>It cannot prove that Uncertainty And Generalization works on every new case, field, shape, boundary, material, or measurement setting.</td></tr>
     <tr><th>Claim Allowed On This Page</th><td>a prediction without a use range is not yet a scientific claim</td></tr>
-    <tr><th>Stronger Field Evidence Needed</th><td>A real use needs held-out or newly measured cases in model use under new conditions, especially near this boundary: training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime.</td></tr>
+    <tr><th>Stronger Field Evidence Needed</th><td>A real use needs held-out or newly measured cases in model use under new conditions, especially near this boundary: model looks correct on familiar data while it silently gives nonsense in new terrain, new shape, new sensor, or new physical regime.</td></tr>
     <tr><th>First Overclaim To Reject</th><td>Reject any claim that says the idea works in the field before naming the evidence, hidden answer, changed case, and failure boundary.</td></tr>
     <tr><th>Reviewer Action</th><td>Ask for the changed-case test first: move one important condition outside the training range and measure the first failure.</td></tr>
   </tbody>
@@ -1423,7 +1423,7 @@
   <td>The concept fits this scientific job.</td>
   <td>The observed evidence is named as training cases, validation cases, prediction errors, and known shifts between cases, the hidden target is named as how wrong the model may be on a case unlike the ones it learned from, and the domain is model use under new conditions.</td>
   <td>Only the method name is given, or the page never says what scientific quantity is being answered.</td>
-  <td>The job changes into this failure boundary: training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime.</td>
+  <td>The job changes into this failure boundary: model looks correct on familiar data while it silently gives nonsense in new terrain, new shape, new sensor, or new physical regime.</td>
 </tr>
 
 <tr>
@@ -1446,11 +1446,11 @@
 <h2>Claim Boundary Review</h2>
 <table>
   <tbody>
-    <tr><th>Supported Claim</th><td>This page can claim that Uncertainty And Generalization is a route for this problem: a prediction from a model is only useful if you know under which conditions you should actually trust it</td></tr>
+    <tr><th>Supported Claim</th><td>This page can claim that Uncertainty And Generalization is a route for this problem: how do you know when a prediction is trustworthy instead of a blind guess?</td></tr>
     <tr><th>Source Limit</th><td>The transcript anchors support the concept&#x27;s role in the course family; they do not prove broad success on new scientific cases.</td></tr>
     <tr><th>Overclaim To Avoid</th><td>Do not claim that Uncertainty And Generalization works across model use under new conditions without a changed-case test tied to the target quantity.</td></tr>
     <tr><th>Stronger Evidence Needed</th><td>Use held-out measurements, trusted solves, changed boundaries, changed geometry, or changed regimes to test: move one important condition outside the training range and measure the first failure</td></tr>
-    <tr><th>First Rejection Test</th><td>training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime</td></tr>
+    <tr><th>First Rejection Test</th><td>model looks correct on familiar data while it silently gives nonsense in new terrain, new shape, new sensor, or new physical regime</td></tr>
   </tbody>
 </table>
 
@@ -1528,18 +1528,18 @@
 </tbody>
 </table>
 <h3>When To Avoid This In A Domain</h3>
-<p>Do not use this concept in a domain where confidence in scenarios or physical regimes the model has never encountered before is exactly the part needed for the decision.</p>
+<p>Do not use this concept in a domain where predicting what happens when you push way beyond the conditions the model trained on is exactly the part needed for the decision.</p>
 
 
 <h2>Say It Back Check</h2>
 <p>Use this table as the final no-jargon recap. If a reader cannot fill these rows in plain words, the topic has not yet landed.</p>
 <table>
   <tbody>
-    <tr><th>Real Problem</th><td>a prediction from a model is only useful if you know under which conditions you should actually trust it</td></tr>
+    <tr><th>Real Problem</th><td>how do you know when a prediction is trustworthy instead of a blind guess?</td></tr>
     <tr><th>Evidence I Have</th><td>training cases, validation cases, prediction errors, and known shifts between cases</td></tr>
     <tr><th>Answer I Need</th><td>how wrong the model may be on a case unlike the ones it learned from</td></tr>
     <tr><th>Move I Am Making</th><td>separate fit on familiar examples from evidence on changed examples</td></tr>
-    <tr><th>Why It Matters In A Field</th><td>when scientific decisions cost lives or money, a model must be honest about its own edges and not guess past them—and most neural networks fail silently instead</td></tr>
+    <tr><th>Why It Matters In A Field</th><td>when a prediction affects real people, the program must admit I trained here, not there—most just guess silently and fail</td></tr>
     <tr><th>Shape Or Topology Issue</th><td>State how belief changes when the shape, mesh, or connection pattern changes. Check: Hold out a new shape family, missing connection, or mesh resolution and measure the error.</td></tr>
     <tr><th>Claim I Am Allowed To Make</th><td>a prediction without a use range is not yet a scientific claim</td></tr>
     <tr><th>Changed Case That Can Reject It</th><td>move one important condition outside the training range and measure the first failure</td></tr>
@@ -1557,7 +1557,7 @@
 <tr>
   <th>Name-First Mistake</th>
   <td>The answer starts with the topic name instead of the everyday problem.</td>
-  <td>a prediction from a model is only useful if you know under which conditions you should actually trust it</td>
+  <td>how do you know when a prediction is trustworthy instead of a blind guess?</td>
 </tr>
 
 <tr>
@@ -1587,7 +1587,7 @@
 <tr>
   <th>Overclaim Gap</th>
   <td>The answer sounds true for a wider set of cases than the evidence supports.</td>
-  <td>training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime</td>
+  <td>model looks correct on familiar data while it silently gives nonsense in new terrain, new shape, new sensor, or new physical regime</td>
 </tr>
 
 <tr>
@@ -1626,19 +1626,19 @@
 <table>
   <tbody>
     <tr><th>Do Not Say</th><td>A method is good, broad, or modern without naming the scientific job.</td></tr>
-    <tr><th>Say Instead</th><td>Uncertainty And Generalization is used here because a prediction from a model is only useful if you know under which conditions you should actually trust it.</td></tr>
+    <tr><th>Say Instead</th><td>Uncertainty And Generalization is used here because how do you know when a prediction is trustworthy instead of a blind guess?.</td></tr>
     <tr><th>Evidence Words Required</th><td>training cases, validation cases, prediction errors, and known shifts between cases</td></tr>
     <tr><th>Hidden Answer Words Required</th><td>how wrong the model may be on a case unlike the ones it learned from</td></tr>
-    <tr><th>Field Words Required</th><td>model use under new conditions; when scientific decisions cost lives or money, a model must be honest about its own edges and not guess past them—and most neural networks fail silently instead</td></tr>
+    <tr><th>Field Words Required</th><td>model use under new conditions; when a prediction affects real people, the program must admit I trained here, not there—most just guess silently and fail</td></tr>
     <tr><th>Shape Words Required</th><td>Name shape, boundary, mesh, molecule, graph, surface, field, or say why none of those carries the claim.</td></tr>
-    <tr><th>Failure Words Required</th><td>training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime</td></tr>
+    <tr><th>Failure Words Required</th><td>model looks correct on familiar data while it silently gives nonsense in new terrain, new shape, new sensor, or new physical regime</td></tr>
     <tr><th>Rewrite Test</th><td>Rewrite the claim as: because we observe ___ and need ___, we separate fit on familiar examples from evidence on changed examples. Trust it only after this check: move one important condition outside the training range and measure the first failure.</td></tr>
   </tbody>
 </table>
 
 
 <h2>Acceptance Sentence Filled</h2>
-<p>This concept exists because scientists need an answer in a case where a prediction from a model is only useful if you know under which conditions you should actually trust it. The available evidence is training cases, validation cases, prediction errors, and known shifts between cases. The hidden thing is how wrong the model may be on a case unlike the ones it learned from. The math does separate fit on familiar examples from evidence on changed examples because a prediction without a use range is not yet a scientific claim. It matters in model use under new conditions because when scientific decisions cost lives or money, a model must be honest about its own edges and not guess past them—and most neural networks fail silently instead. It fails when training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime. I would test it by changing the case this way: move one important condition outside the training range and measure the first failure.</p>
+<p>This concept exists because scientists need an answer in a case where how do you know when a prediction is trustworthy instead of a blind guess?. The available evidence is training cases, validation cases, prediction errors, and known shifts between cases. The hidden thing is how wrong the model may be on a case unlike the ones it learned from. The math does separate fit on familiar examples from evidence on changed examples because a prediction without a use range is not yet a scientific claim. It matters in model use under new conditions because when a prediction affects real people, the program must admit I trained here, not there—most just guess silently and fail. It fails when model looks correct on familiar data while it silently gives nonsense in new terrain, new shape, new sensor, or new physical regime. I would test it by changing the case this way: move one important condition outside the training range and measure the first failure.</p>
 
 
 <h2>What Breaks Without This Idea</h2>
@@ -1647,7 +1647,7 @@
   <tbody>
     <tr><th>Without Uncertainty And Generalization</th><td>The reader is left with training cases, validation cases, prediction errors, and known shifts between cases, but no disciplined way to carry that evidence to how wrong the model may be on a case unlike the ones it learned from.</td></tr>
     <tr><th>What Goes Wrong</th><td>Confidence can remain high exactly where the model has the least evidence.</td></tr>
-    <tr><th>Why The Problem Matters</th><td>when scientific decisions cost lives or money, a model must be honest about its own edges and not guess past them—and most neural networks fail silently instead</td></tr>
+    <tr><th>Why The Problem Matters</th><td>when a prediction affects real people, the program must admit I trained here, not there—most just guess silently and fail</td></tr>
     <tr><th>Minimum Proof Needed</th><td>move one important condition outside the training range and measure the first failure</td></tr>
     <tr><th>Reader Must Be Able To Say</th><td>This idea is needed here to separate fit on familiar examples from evidence on changed examples; otherwise the answer can fail this way: Confidence can remain high exactly where the model has the least evidence.</td></tr>
   </tbody>
@@ -1711,7 +1711,7 @@
 <h2>Reader Test</h2>
 <p>A reader understands this concept only if they can say what is observed, what is hidden, what is kept, what is ignored, and why this changed-case test matters: move one important condition outside the training range and measure the first failure.</p>
 <h2>Failure Boundary</h2>
-<p>training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime</p>
+<p>model looks correct on familiar data while it silently gives nonsense in new terrain, new shape, new sensor, or new physical regime</p>
 <h2>What The Transcript Does Not Prove</h2>
 <p>The transcript evidence shows where the course introduces or uses this concept. It does not prove the concept works for every equation, data set, solver, material, geometry, or scientific task. That wider claim needs explicit validation evidence.</p>
 <h2>Selected Source Anchors</h2><p>These anchors identify the lecture pages that should be checked first when reviewing the core claim. They are source links with claim boundaries, not proof by themselves.</p><div class="grid">

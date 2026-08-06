@@ -66,7 +66,7 @@
   <tbody>
 <tr>
   <td><a href="topics/deep-learning.html">Deep Learning</a></td>
-  <td>scientists have many measured examples but no formula that predicts the next case</td>
+  <td>lots of real examples but no equation to predict what comes next</td>
   <td>many input-output examples from experiments, simulations, or measurements -> the exact rule that connects the input to the output</td>
   <td>Use examples of shapes, images, or surfaces when the rule is hard to write by hand.</td>
   <td>Sort old test runs so a designer can screen the next part before a costly build. Read images, spectra, molecules, or cell measurements when hand rules are incomplete. Learn repeated field patterns from stored simulations or measurements.</td>
@@ -75,7 +75,7 @@
 
 <tr>
   <td><a href="topics/physics-informed-neural-networks.html">Physics-Informed Neural Networks</a></td>
-  <td>sparse measurements from experiments, but the answer must obey known physical laws like gravity or heat flow</td>
+  <td>sparse measurements, but the answer must follow known physical laws</td>
   <td>some measured values, boundary values, starting values, and a known differential equation -> the full field value at every point in space and time</td>
   <td>Fit a field on a shape while also asking it to obey the rule that should hold inside the shape.</td>
   <td>Estimate heat, stress, flow, or pressure when tests are sparse but the physical law is known. Fill in missing concentration, strain, or reaction fields while keeping known balance rules visible. Recover a full field from sparse measurements without ignoring the governing equation.</td>
@@ -84,7 +84,7 @@
 
 <tr>
   <td><a href="topics/partial-differential-equations.html">Partial Differential Equations</a></td>
-  <td>a quantity changes over space and time, so one number is not enough to describe what&#x27;s happening</td>
+  <td>something changes everywhere at once—how do you describe that with math?</td>
   <td>a field such as temperature, pressure, concentration, velocity, or displacement -> how every point in the field affects nearby points over time</td>
   <td>Describe how a field moves across a shape, surface, mesh, or region with boundaries.</td>
   <td>Write the rule for heat, stress, flow, pressure, or waves before choosing a learning method. Track diffusion, reaction, strain, growth, or transport through a material or tissue. Describe wind, heat, concentration, pressure, and water over space and time.</td>
@@ -93,7 +93,7 @@
 
 <tr>
   <td><a href="topics/operator-learning.html">Operator Learning</a></td>
-  <td>engineers need to predict all the fields (temperature, pressure, flow) across a space and time for many input cases, not just one</td>
+  <td>predict all values (temperature, pressure, flow) across a whole space at all times, for several starting conditions</td>
   <td>many example inputs and their full solution fields -> the rule that maps a new input field to its new solution field</td>
   <td>Learn how one whole shape, boundary, or input field maps to a whole output field.</td>
   <td>Give fast field estimates for repeated wing, device, part, or load queries. Map a material setting, molecular field, or tissue condition to a response field. Map forcing, boundary, or initial fields to future solution fields.</td>
@@ -102,7 +102,7 @@
 
 <tr>
   <td><a href="topics/scientific-machine-learning.html">Scientific Machine Learning</a></td>
-  <td>predictions must obey the physical laws that define the problem, not just fit the data</td>
+  <td>teach a program both the data and the physics rules so it predicts correctly on cases it never saw</td>
   <td>data, equations, units, simulation outputs, and domain limits -> which parts of the scientific system are missing, noisy, or too costly to compute directly</td>
   <td>Combine data with shape, boundary, and connection checks before trusting a prediction.</td>
   <td>Use data and scientific checks together when a design decision has a cost. Tie learned predictions to units, mechanisms, measurements, and domain limits. Use learned models only with clear field checks, physical checks, and use ranges.</td>
@@ -111,7 +111,7 @@
 
 <tr>
   <td><a href="topics/surrogate-modeling.html">Surrogate Modeling</a></td>
-  <td>running a full simulation is too expensive to do for every design choice or question</td>
+  <td>running the real simulator costs too much money or time to do hundreds of times</td>
   <td>expensive solver inputs and outputs for a limited set of cases -> the solver answer for every new query someone wants to ask</td>
   <td>Replace slow solves for repeated shape queries inside a named family.</td>
   <td>Screen many candidate parts, wings, devices, or loads before running the costly solve. Use a cheaper stand-in for repeated material, molecule, or tissue simulations. Answer repeated field queries faster than running a full model each time.</td>
@@ -120,7 +120,7 @@
 
 <tr>
   <td><a href="topics/uncertainty-and-generalization.html">Uncertainty And Generalization</a></td>
-  <td>a prediction from a model is only useful if you know under which conditions you should actually trust it</td>
+  <td>how do you know when a prediction is trustworthy instead of a blind guess?</td>
   <td>training cases, validation cases, prediction errors, and known shifts between cases -> how wrong the model may be on a case unlike the ones it learned from</td>
   <td>State how belief changes when the shape, mesh, or connection pattern changes.</td>
   <td>Attach a use range and warning boundary to a prediction before a design choice. Say when a measured property prediction should weaken under a new lab or sample condition. Separate ordinary test success from success under changed climate, flow, or boundary conditions.</td>
@@ -129,7 +129,7 @@
 
 <tr>
   <td><a href="topics/optimization-for-learning.html">Optimization For Learning</a></td>
-  <td>models need a way to measure progress so they know which settings are better or worse</td>
+  <td>the program has millions of dials to turn and needs a way to know which turns make it better or worse</td>
   <td>a written score that says which model behavior is better or worse -> whether that score matches the scientific behavior the user actually cares about</td>
   <td>Choose a score that rewards the right shape, connection, boundary, or field behavior.</td>
   <td>Train toward the quantity that drives the design, not only average error. Set the training score so it respects measured properties, units, and known checks. Balance field error, physical checks, and decision costs during training.</td>
@@ -138,7 +138,7 @@
 
 <tr>
   <td><a href="topics/generative-modeling.html">Generative Modeling</a></td>
-  <td>some tasks need many plausible examples, not a single best prediction, to explore what&#x27;s possible</td>
+  <td>need several possible solutions, not just one best guess, to explore what could work</td>
   <td>examples of fields, molecules, flows, shapes, or other scientific objects -> the spread of possible valid objects beyond the examples</td>
   <td>Create candidate shapes or fields while checking holes, connections, and boundaries.</td>
   <td>Propose candidate parts, layouts, fields, or operating cases for later testing. Suggest molecules, structures, images, or samples that should still obey known rules. Sample possible fields for stress tests, rare cases, or downstream solvers.</td>
@@ -165,7 +165,7 @@
 
 <tr>
   <td><a href="topics/symbolic-regression.html">Symbolic Regression And Model Discovery</a></td>
-  <td>a scientist may need a readable equation, not a numerical model that predicts but cannot be understood</td>
+  <td>you need an equation humans can read, not a that guesses numbers</td>
   <td>measured variables and candidate mathematical ingredients -> which short formula, if any, actually explains the measured change</td>
   <td>Search for a short relation that includes the right shape or connection measurements.</td>
   <td>Find a readable equation that links design variables to the decision quantity. Search for compact laws from measured variables, ingredients, and properties. Look for a readable relation inside measured or simulated field behavior.</td>
@@ -174,7 +174,7 @@
 
 <tr>
   <td><a href="topics/foundation-models-for-pdes.html">Foundation Models For PDEs</a></td>
-  <td>scientists train separate models for each PDE, each grid size, each parameter—expensive duplication</td>
+  <td>scientists retrain from scratch for each equation, grid size, and number—duplicating work unnecessarily</td>
   <td>many PDE problem instances across equations, grids, parameters, or physical settings -> which shared structure carries from one scientific task to another</td>
   <td>Reuse field knowledge across PDE tasks while checking new shapes, grids, and boundaries.</td>
   <td>Start from a broad PDE model for a new device or part, then verify the design quantity. Transfer learned field behavior across related materials, tissues, or reaction settings. Use one broad field model across related equation settings.</td>
@@ -183,7 +183,7 @@
 
 <tr>
   <td><a href="topics/attention-for-scientific-fields.html">Attention For Scientific Fields</a></td>
-  <td>a local spot in a field may depend on faraway information, but scanning everywhere costs too much</td>
+  <td>predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow</td>
   <td>large fields where one location may depend on other locations -> which distant parts matter for the local prediction</td>
   <td>Let distant parts of a shape or field exchange information when local neighbors are not enough.</td>
   <td>Route information across a part, surface, or field where distant regions interact. Let distant atoms, cells, residues, or regions influence a local prediction. Route information across fields where one region can affect another.</td>
@@ -206,12 +206,12 @@
   <h2>Deep Learning</h2>
   <table>
     <tbody>
-      <tr><th>Everyday Opening To Find</th><td>scientists have many measured examples but no formula that predicts the next case</td></tr>
+      <tr><th>Everyday Opening To Find</th><td>lots of real examples but no equation to predict what comes next</td></tr>
       <tr><th>First-Principles Chain To Find</th><td>Evidence: many input-output examples from experiments, simulations, or measurements. Missing answer: the exact rule that connects the input to the output. Move: adjust many weights until the model maps familiar inputs to the right outputs.</td></tr>
       <tr><th>Shape Or Topology To Find</th><td>Deep learning matters here only if changed shapes still get the right answer for the named task. Check: Hold out a new shape family, camera view, mesh order, or scale and measure the target error.</td></tr>
       <tr><th>Field Uses To Find</th><td>Engineering: The learned pattern saves time only inside the kind of cases it has actually survived. Materials, chemistry, and biology: The answer matters when it flags a property or risk that a person must inspect. Climate, fluids, and fields: The model is useful only when the learned pattern still answers the field question people care about.</td></tr>
-      <tr><th>Final Importance Claim To Find</th><td>networks can fit patterns in data when hand-written rules fail, but the fit only works on examples similar to the training set</td></tr>
-      <tr><th>Weak Spot To Inspect First</th><td>trained model passes on familiar data but crashes on new material, boundary condition, or scale it never saw before</td></tr>
+      <tr><th>Final Importance Claim To Find</th><td>learns patterns in data when we don&#x27;t have an equation, but only on examples like the training set</td></tr>
+      <tr><th>Weak Spot To Inspect First</th><td>works on data it saw during training but breaks on new situations, new boundary, or bigger scale</td></tr>
     </tbody>
   </table>
 </section>
@@ -220,12 +220,12 @@
   <h2>Physics-Informed Neural Networks</h2>
   <table>
     <tbody>
-      <tr><th>Everyday Opening To Find</th><td>sparse measurements from experiments, but the answer must obey known physical laws like gravity or heat flow</td></tr>
+      <tr><th>Everyday Opening To Find</th><td>sparse measurements, but the answer must follow known physical laws</td></tr>
       <tr><th>First-Principles Chain To Find</th><td>Evidence: some measured values, boundary values, starting values, and a known differential equation. Missing answer: the full field value at every point in space and time. Move: fit a neural network while also measuring how badly its output violates the known equation.</td></tr>
       <tr><th>Shape Or Topology To Find</th><td>A PINN matters here when sparse points are not enough but an equation can still guide the missing field. Check: Move sensors, change the boundary, or bend the domain and compare the hidden field with trusted values.</td></tr>
       <tr><th>Field Uses To Find</th><td>Engineering: The design answer is useful only if the fitted field respects the law between measured points. Materials, chemistry, and biology: The method helps when measurements are expensive and the known rule should constrain the answer. Climate, fluids, and fields: The important claim is not a smooth picture; it is whether the field follows the physical rule.</td></tr>
-      <tr><th>Final Importance Claim To Find</th><td>the equation penalty steers the fit toward answers that obey physics, filling gaps where measurements are missing without pretending data alone tells the whole story</td></tr>
-      <tr><th>Weak Spot To Inspect First</th><td>the penalty term hides small errors near boundaries, in thin layers, or where the real solution changes suddenly</td></tr>
+      <tr><th>Final Importance Claim To Find</th><td>the penalty steers the fit toward physics-obeying answers, filling gaps without pretending data alone tells the story</td></tr>
+      <tr><th>Weak Spot To Inspect First</th><td>penalty hides small errors near boundaries or sudden changes</td></tr>
     </tbody>
   </table>
 </section>
@@ -234,12 +234,12 @@
   <h2>Partial Differential Equations</h2>
   <table>
     <tbody>
-      <tr><th>Everyday Opening To Find</th><td>a quantity changes over space and time, so one number is not enough to describe what&#x27;s happening</td></tr>
+      <tr><th>Everyday Opening To Find</th><td>something changes everywhere at once—how do you describe that with math?</td></tr>
       <tr><th>First-Principles Chain To Find</th><td>Evidence: a field such as temperature, pressure, concentration, velocity, or displacement. Missing answer: how every point in the field affects nearby points over time. Move: write a local change rule that uses rates across space and time.</td></tr>
       <tr><th>Shape Or Topology To Find</th><td>PDEs matter here because shape and boundary decide how local changes spread. Check: Change the boundary, cut a hole, refine the mesh, or bend the region and check conservation.</td></tr>
       <tr><th>Field Uses To Find</th><td>Engineering: The equation states what must be true for the design quantity to be believable. Materials, chemistry, and biology: The field answer matters because local change can create a global effect. Climate, fluids, and fields: A single number cannot carry the decision when the whole field changes.</td></tr>
-      <tr><th>Final Importance Claim To Find</th><td>scientists use PDEs to write down laws of nature before machine learning enters, and they force you to be explicit about what you assume and what you skip</td></tr>
-      <tr><th>Weak Spot To Inspect First</th><td>when data or learning skips the actual PDE constraints, it can ignore boundary conditions or conservation laws that the PDE was always enforcing</td></tr>
+      <tr><th>Final Importance Claim To Find</th><td>it forces you to write down exactly what you believe before letting data fill in the gaps</td></tr>
+      <tr><th>Weak Spot To Inspect First</th><td>if you ignore the constraints—like how fast something spreads or that nothing vanishes—your prediction breaks down far from the training data</td></tr>
     </tbody>
   </table>
 </section>
@@ -248,12 +248,12 @@
   <h2>Operator Learning</h2>
   <table>
     <tbody>
-      <tr><th>Everyday Opening To Find</th><td>engineers need to predict all the fields (temperature, pressure, flow) across a space and time for many input cases, not just one</td></tr>
+      <tr><th>Everyday Opening To Find</th><td>predict all values (temperature, pressure, flow) across a whole space at all times, for several starting conditions</td></tr>
       <tr><th>First-Principles Chain To Find</th><td>Evidence: many example inputs and their full solution fields. Missing answer: the rule that maps a new input field to its new solution field. Move: learn the map from problem input to solution, not only one solution at a time.</td></tr>
       <tr><th>Shape Or Topology To Find</th><td>Operator learning matters when the question is about a family of field problems, not one solve. Check: Hold out a new geometry class, mesh resolution, boundary type, or coefficient range.</td></tr>
       <tr><th>Field Uses To Find</th><td>Engineering: The shortcut is useful only if it keeps the design quantity accurate across the tested family. Materials, chemistry, and biology: The method helps when each new query would otherwise need a slow solve. Climate, fluids, and fields: The value is speed across a named family, not proof across all possible fields.</td></tr>
-      <tr><th>Final Importance Claim To Find</th><td>it trades solving expensive equations many times for one fast learned map, but only when new cases stay inside the training family</td></tr>
-      <tr><th>Weak Spot To Inspect First</th><td>the learned map produces plausible-looking fields that actually violate the physics or break when you shift the geometry</td></tr>
+      <tr><th>Final Importance Claim To Find</th><td>trades running expensive equations thousands of times for one fast learned map, but only if new situations match the training data</td></tr>
+      <tr><th>Weak Spot To Inspect First</th><td>the learned map looks reasonable but breaks physics underneath, or crashes when you try a different-shaped container</td></tr>
     </tbody>
   </table>
 </section>
@@ -262,12 +262,12 @@
   <h2>Scientific Machine Learning</h2>
   <table>
     <tbody>
-      <tr><th>Everyday Opening To Find</th><td>predictions must obey the physical laws that define the problem, not just fit the data</td></tr>
+      <tr><th>Everyday Opening To Find</th><td>teach a program both the data and the physics rules so it predicts correctly on cases it never saw</td></tr>
       <tr><th>First-Principles Chain To Find</th><td>Evidence: data, equations, units, simulation outputs, and domain limits. Missing answer: which parts of the scientific system are missing, noisy, or too costly to compute directly. Move: combine learned prediction with scientific checks that name what the claim is allowed to mean.</td></tr>
       <tr><th>Shape Or Topology To Find</th><td>Scientific machine learning matters when the target is a real quantity, not only a fitted score. Check: Change shape, mesh, boundary, or sensor layout and inspect the scientific quantity.</td></tr>
       <tr><th>Field Uses To Find</th><td>Engineering: The method is useful only if it names the decision and the failure condition. Materials, chemistry, and biology: The answer matters when it changes an experiment, a screening choice, or a safety claim. Climate, fluids, and fields: A field prediction is useful when it survives the changed case that matters to the user.</td></tr>
-      <tr><th>Final Importance Claim To Find</th><td>the neural network feels both the data AND the physics equations, so it learns the true rule and works on new cases the data never saw before</td></tr>
-      <tr><th>Weak Spot To Inspect First</th><td>if no clear equation or boundary condition exists, the network learns the data shape but not the underlying rule</td></tr>
+      <tr><th>Final Importance Claim To Find</th><td>when the program learns from both data and equations, it finds the real pattern instead of just memorizing; that real pattern works on new situations</td></tr>
+      <tr><th>Weak Spot To Inspect First</th><td>if the equation is wrong or doesn&#x27;t exist, the program learns the data pattern but not the truth that works everywhere</td></tr>
     </tbody>
   </table>
 </section>
@@ -276,12 +276,12 @@
   <h2>Surrogate Modeling</h2>
   <table>
     <tbody>
-      <tr><th>Everyday Opening To Find</th><td>running a full simulation is too expensive to do for every design choice or question</td></tr>
+      <tr><th>Everyday Opening To Find</th><td>running the real simulator costs too much money or time to do hundreds of times</td></tr>
       <tr><th>First-Principles Chain To Find</th><td>Evidence: expensive solver inputs and outputs for a limited set of cases. Missing answer: the solver answer for every new query someone wants to ask. Move: train a cheaper stand-in for the expensive input-output behavior.</td></tr>
       <tr><th>Shape Or Topology To Find</th><td>A surrogate matters here when shape changes are common and full solves are too slow. Check: Change holes, edges, mesh detail, or shape class and compare with the full solver.</td></tr>
       <tr><th>Field Uses To Find</th><td>Engineering: Speed matters only when the shortcut preserves the quantity that drives the design choice. Materials, chemistry, and biology: The stand-in helps when it stays inside the checked query range. Climate, fluids, and fields: The shortcut is useful only where the field behavior was checked against trusted runs.</td></tr>
-      <tr><th>Final Importance Claim To Find</th><td>it speeds up repeated decisions in design or control when the cost of the real simulator would stop progress, but can hide missing physics if pushed past its training regime</td></tr>
-      <tr><th>Weak Spot To Inspect First</th><td>gives plausible-looking answers for inputs it never saw during training, with no warning that they are wrong</td></tr>
+      <tr><th>Final Importance Claim To Find</th><td>answers questions 1000x faster, but only inside the range it saw during training</td></tr>
+      <tr><th>Weak Spot To Inspect First</th><td>confidently guesses wrong answers for situations outside its training set, with no warning it is guessing</td></tr>
     </tbody>
   </table>
 </section>
@@ -290,12 +290,12 @@
   <h2>Uncertainty And Generalization</h2>
   <table>
     <tbody>
-      <tr><th>Everyday Opening To Find</th><td>a prediction from a model is only useful if you know under which conditions you should actually trust it</td></tr>
+      <tr><th>Everyday Opening To Find</th><td>how do you know when a prediction is trustworthy instead of a blind guess?</td></tr>
       <tr><th>First-Principles Chain To Find</th><td>Evidence: training cases, validation cases, prediction errors, and known shifts between cases. Missing answer: how wrong the model may be on a case unlike the ones it learned from. Move: separate fit on familiar examples from evidence on changed examples.</td></tr>
       <tr><th>Shape Or Topology To Find</th><td>Uncertainty matters here because a prediction can look good on familiar shapes and fail on a new one. Check: Hold out a new shape family, missing connection, or mesh resolution and measure the error.</td></tr>
       <tr><th>Field Uses To Find</th><td>Engineering: A confident answer is dangerous when the design is outside the checked range. Materials, chemistry, and biology: The claim matters only if the user knows where belief should stop. Climate, fluids, and fields: The field answer must include where it may be wrong, not only what it predicts.</td></tr>
-      <tr><th>Final Importance Claim To Find</th><td>when scientific decisions cost lives or money, a model must be honest about its own edges and not guess past them—and most neural networks fail silently instead</td></tr>
-      <tr><th>Weak Spot To Inspect First</th><td>training error looks good while the model silently fails under new geometry, parameter range, sensor, or physical regime</td></tr>
+      <tr><th>Final Importance Claim To Find</th><td>when a prediction affects real people, the program must admit I trained here, not there—most just guess silently and fail</td></tr>
+      <tr><th>Weak Spot To Inspect First</th><td>model looks correct on familiar data while it silently gives nonsense in new terrain, new shape, new sensor, or new physical regime</td></tr>
     </tbody>
   </table>
 </section>
@@ -304,12 +304,12 @@
   <h2>Optimization For Learning</h2>
   <table>
     <tbody>
-      <tr><th>Everyday Opening To Find</th><td>models need a way to measure progress so they know which settings are better or worse</td></tr>
+      <tr><th>Everyday Opening To Find</th><td>the program has millions of dials to turn and needs a way to know which turns make it better or worse</td></tr>
       <tr><th>First-Principles Chain To Find</th><td>Evidence: a written score that says which model behavior is better or worse. Missing answer: whether that score matches the scientific behavior the user actually cares about. Move: change model settings to lower the written score.</td></tr>
       <tr><th>Shape Or Topology To Find</th><td>Optimization matters here because the model will chase the score even when the score misses the real shape question. Check: Inspect whether the trained answer breaks after relabeling, mesh change, or boundary change.</td></tr>
       <tr><th>Field Uses To Find</th><td>Engineering: The score decides what the model learns to care about. Materials, chemistry, and biology: A low score is useful only if it includes the scientific burden. Climate, fluids, and fields: The field can look good on average while failing where the decision is made.</td></tr>
-      <tr><th>Final Importance Claim To Find</th><td>adjusting weights downhill on the score works, but only for goals the score actually names; miss a goal and the model learns it wrong</td></tr>
-      <tr><th>Weak Spot To Inspect First</th><td>the score goes down while the model learns wrong physics, if the score missed the real constraint</td></tr>
+      <tr><th>Final Importance Claim To Find</th><td>turning dials to make the number smaller works, but only for things the number measures; if the number ignores heat conservation, the program learns the wrong physics</td></tr>
+      <tr><th>Weak Spot To Inspect First</th><td>the number gets smaller while the program breaks the real physics, because the number never checked that rule</td></tr>
     </tbody>
   </table>
 </section>
@@ -318,12 +318,12 @@
   <h2>Generative Modeling</h2>
   <table>
     <tbody>
-      <tr><th>Everyday Opening To Find</th><td>some tasks need many plausible examples, not a single best prediction, to explore what&#x27;s possible</td></tr>
+      <tr><th>Everyday Opening To Find</th><td>need several possible solutions, not just one best guess, to explore what could work</td></tr>
       <tr><th>First-Principles Chain To Find</th><td>Evidence: examples of fields, molecules, flows, shapes, or other scientific objects. Missing answer: the spread of possible valid objects beyond the examples. Move: learn how to sample new candidates that resemble the training family.</td></tr>
       <tr><th>Shape Or Topology To Find</th><td>Generative modeling matters here only if the samples are valid objects rather than plausible pictures. Check: Test connected parts, forbidden holes, mesh validity, and downstream use.</td></tr>
       <tr><th>Field Uses To Find</th><td>Engineering: The generated candidate is useful only if it can pass the design checks. Materials, chemistry, and biology: A sample matters when it can be measured, built, or screened for a real property. Climate, fluids, and fields: The samples are useful only if they carry the field behavior needed by the next task.</td></tr>
-      <tr><th>Final Importance Claim To Find</th><td>it can explore a range of candidate fields or shapes when listing all possibilities is impossible; the catch is samples can look real yet violate the problem&#x27;s rules</td></tr>
-      <tr><th>Weak Spot To Inspect First</th><td>a generated fluid flow looks smooth and realistic but conserves no mass; a design candidate is manufacturable in appearance but physically infeasible</td></tr>
+      <tr><th>Final Importance Claim To Find</th><td>when you can&#x27;t list every possible answer, having a program generate many plausible tries helps you explore; but a plausible-looking answer might actually break the physics</td></tr>
+      <tr><th>Weak Spot To Inspect First</th><td>a generated shape looks buildable but would collapse under load; a predicted fluid flow looks smooth and correct but loses mass where it shouldn&#x27;t</td></tr>
     </tbody>
   </table>
 </section>
@@ -350,8 +350,8 @@
       <tr><th>First-Principles Chain To Find</th><td>Evidence: measurements of a system changing over time. Missing answer: the rate rule that moves the present value into the future. Move: learn the missing rate rule and place it inside a time-evolution calculation.</td></tr>
       <tr><th>Shape Or Topology To Find</th><td>Neural differential equations matter here when the missing part is the rule of change. Check: Change the starting state, shape, or connection pattern and run longer than the training window.</td></tr>
       <tr><th>Field Uses To Find</th><td>Engineering: The rate rule matters because small errors can grow over time. Materials, chemistry, and biology: The model is useful when it explains how the next state follows from the present state. Climate, fluids, and fields: The field forecast depends on repeated updates, so small rate errors matter.</td></tr>
-      <tr><th>Final Importance Claim To Find</th><td>the time-stepping structure anchors learning in continuous evolution, keeping the idea that change is smooth, but mistakes in the learned rate compound over many steps and long predictions drift away</td></tr>
-      <tr><th>Weak Spot To Inspect First</th><td>a small error in the learned rate, repeated over hundreds of time steps, pushes predictions into wildly wrong territory</td></tr>
+      <tr><th>Final Importance Claim To Find</th><td>time-stepping pins learning to continuous change, so tiny errors in the guessed rate repeat at every step and predictions drift wildly over many steps</td></tr>
+      <tr><th>Weak Spot To Inspect First</th><td>a 1% error in the learned rate, multiplied across hundreds of steps, sends predictions into completely wrong territory</td></tr>
     </tbody>
   </table>
 </section>
@@ -360,12 +360,12 @@
   <h2>Symbolic Regression And Model Discovery</h2>
   <table>
     <tbody>
-      <tr><th>Everyday Opening To Find</th><td>a scientist may need a readable equation, not a numerical model that predicts but cannot be understood</td></tr>
+      <tr><th>Everyday Opening To Find</th><td>you need an equation humans can read, not a that guesses numbers</td></tr>
       <tr><th>First-Principles Chain To Find</th><td>Evidence: measured variables and candidate mathematical ingredients. Missing answer: which short formula, if any, actually explains the measured change. Move: search for a readable equation that fits the data and survives a changed case.</td></tr>
       <tr><th>Shape Or Topology To Find</th><td>Symbolic regression matters here only if the readable formula keeps the real cause visible. Check: Remove a shape measure, change the mesh, or add a missing variable and test the formula.</td></tr>
       <tr><th>Field Uses To Find</th><td>Engineering: The equation is useful when people can inspect, test, and reject it. Materials, chemistry, and biology: A short equation matters only if it survives new measurements. Climate, fluids, and fields: The formula helps when it explains a quantity, not when it only draws a curve through old points.</td></tr>
-      <tr><th>Final Importance Claim To Find</th><td>a short equation lets you test new cases, argue about whether it makes sense, and reuse it in different settings—much harder with a large fitted model you cannot read</td></tr>
-      <tr><th>Weak Spot To Inspect First</th><td>a neat formula fits your lab&#x27;s data perfectly but uses the wrong variables or breaks when conditions shift</td></tr>
+      <tr><th>Final Importance Claim To Find</th><td>short equations let you spot if the logic is real or just fluky, test edge cases, use them in new situations</td></tr>
+      <tr><th>Weak Spot To Inspect First</th><td>formula fits your lab data perfectly but breaks in the real world or uses nonsense variables</td></tr>
     </tbody>
   </table>
 </section>
@@ -374,12 +374,12 @@
   <h2>Foundation Models For PDEs</h2>
   <table>
     <tbody>
-      <tr><th>Everyday Opening To Find</th><td>scientists train separate models for each PDE, each grid size, each parameter—expensive duplication</td></tr>
+      <tr><th>Everyday Opening To Find</th><td>scientists retrain from scratch for each equation, grid size, and number—duplicating work unnecessarily</td></tr>
       <tr><th>First-Principles Chain To Find</th><td>Evidence: many PDE problem instances across equations, grids, parameters, or physical settings. Missing answer: which shared structure carries from one scientific task to another. Move: train one broad model to reuse structure across many related field-prediction tasks.</td></tr>
       <tr><th>Shape Or Topology To Find</th><td>Foundation PDE models matter here only if shared structure carries to the new shape family. Check: Hold out whole geometry families, boundary types, scales, or rare regimes.</td></tr>
       <tr><th>Field Uses To Find</th><td>Engineering: Breadth helps only when it reduces work without hiding a failed design case. Materials, chemistry, and biology: The model matters when the new task shares the structure it actually learned. Climate, fluids, and fields: The useful claim is coverage over named tasks, not coverage over every possible PDE.</td></tr>
-      <tr><th>Final Importance Claim To Find</th><td>one shared model reduces training cost if it captures features that matter across tasks, but only if those features actually transfer</td></tr>
-      <tr><th>Weak Spot To Inspect First</th><td>the model trains on common cases and misses rare physical regimes, different boundary shapes, or unseen initial conditions</td></tr>
+      <tr><th>Final Importance Claim To Find</th><td>one shared model costs less to train if it picks up features that matter across many problems, but only if those features actually switch to new situations</td></tr>
+      <tr><th>Weak Spot To Inspect First</th><td>model learns the common cases it trained on and breaks when facing rare physics events, unexpected shapes, or starting conditions it never encountered</td></tr>
     </tbody>
   </table>
 </section>
@@ -388,12 +388,12 @@
   <h2>Attention For Scientific Fields</h2>
   <table>
     <tbody>
-      <tr><th>Everyday Opening To Find</th><td>a local spot in a field may depend on faraway information, but scanning everywhere costs too much</td></tr>
+      <tr><th>Everyday Opening To Find</th><td>predicting what happens at one spot requires knowing what&#x27;s happening far away, but checking everywhere is too slow</td></tr>
       <tr><th>First-Principles Chain To Find</th><td>Evidence: large fields where one location may depend on other locations. Missing answer: which distant parts matter for the local prediction. Move: let the model choose which parts of the field exchange information.</td></tr>
       <tr><th>Shape Or Topology To Find</th><td>Attention matters here when faraway structure changes the local answer. Check: Change window size, long-range links, boundary regions, or point order.</td></tr>
       <tr><th>Field Uses To Find</th><td>Engineering: The design quantity may depend on faraway pressure, heat, load, or flow behavior. Materials, chemistry, and biology: The method helps when the local property depends on nonlocal context. Climate, fluids, and fields: The field answer may need faraway signals without looking everywhere equally.</td></tr>
-      <tr><th>Final Importance Claim To Find</th><td>it lets the model move information across the field only where needed, trading speed for which distant interactions it can reach</td></tr>
-      <tr><th>Weak Spot To Inspect First</th><td>when attention weight patterns are wrong, the model skips over long-range effects that are essential to the physical quantity being predicted</td></tr>
+      <tr><th>Final Importance Claim To Find</th><td>lets the computer route information only through the connections it needs, trading speed for reach</td></tr>
+      <tr><th>Weak Spot To Inspect First</th><td>when attention picks the wrong patches to look at, the model misses real physical effects traveling across the field</td></tr>
     </tbody>
   </table>
 </section>
