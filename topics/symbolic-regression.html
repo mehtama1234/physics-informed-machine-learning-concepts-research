@@ -1252,6 +1252,15 @@
 <p><strong>Smallest useful formula:</strong> The smallest useful formula must start from measured variables and candidate mathematical ingredients, carry the answer toward which short formula, if any, actually explains the measured change, and include a check that can fail: remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts.</p>
 <p><strong>First wrong simplification:</strong> The first wrong shortcut is to keep the part that gives an answer while dropping the part that checks it. That would hide this failure: remove a needed variable, add noise, or test a new experiment and see whether the formula still predicts.</p>
 
+<section class="detail actual-math">
+  <h2>The Actual Math, One Level Deeper</h2>
+  <p class="quiet">For readers ready for symbols. The plain path above stands on its own; this is the same idea written in notation.</p>
+  <p class="equation"><code>f* = argmin_{f ∈ F} Σ_i |y_i - f(x_i)|² + α · complexity(f)</code></p><p class="equation"><code>complexity(f) = |tokens(f)|  (number of operations)</code></p><p class="equation"><code>F = {f | f built from {x, y, z, +, -, ×, /, sin, exp, ...}}</code></p>
+  <table><thead><tr><th>Symbol</th><th>What it stands for</th></tr></thead><tbody><tr><td><code>f</code></td><td>symbolic formula (human-readable equation)</td></tr><tr><td><code>F</code></td><td>space of all allowed formula structures</td></tr><tr><td><code>complexity(f)</code></td><td>penalty term favoring short formulas over long ones</td></tr><tr><td><code>α</code></td><td>weight on complexity—controls how much to prefer simplicity</td></tr><tr><td><code>tokens(f)</code></td><td>count of operations and variables in f</td></tr></tbody></table>
+  <p>Symbolic regression searches for interpretable equations by trading fit quality against formula length. This assumes the true relationship can be expressed concisely using the allowed operations and that simpler formulas are more likely to transfer to new data.</p>
+</section>
+
+
 
 <h2>Everyday Math Shape Rehearsal</h2>
 <p>Read the mathematical shape before reading symbols. For Symbolic Regression And Model Discovery, the shape is a path from what is visible to what must be checked.</p>

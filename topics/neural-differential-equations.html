@@ -1252,6 +1252,15 @@
 <p><strong>Smallest useful formula:</strong> The smallest useful formula must start from measurements of a system changing over time, carry the answer toward the rate rule that moves the present value into the future, and include a check that can fail: run longer than the training window and check whether small rate errors accumulate into drift.</p>
 <p><strong>First wrong simplification:</strong> The first wrong shortcut is to keep the part that gives an answer while dropping the part that checks it. That would hide this failure: run longer than the training window and check whether small rate errors accumulate into drift.</p>
 
+<section class="detail actual-math">
+  <h2>The Actual Math, One Level Deeper</h2>
+  <p class="quiet">For readers ready for symbols. The plain path above stands on its own; this is the same idea written in notation.</p>
+  <p class="equation"><code>du/dt = f_θ(u(t), t)</code></p><p class="equation"><code>u(t) = u(t₀) + ∫_{t₀}^t f_θ(u(s), s) ds</code></p><p class="equation"><code>dℓ/dθ = -∫_{t₀}^T a(t)^T ∂f_θ/∂θ dt  (adjoint method)</code></p>
+  <table><thead><tr><th>Symbol</th><th>What it stands for</th></tr></thead><tbody><tr><td><code>u(t)</code></td><td>state vector at time t</td></tr><tr><td><code>f_θ(u,t)</code></td><td>learned neural network defining the rate of change</td></tr><tr><td><code>a(t)</code></td><td>adjoint variable for backprop through time</td></tr><tr><td><code>∫ f_θ dt</code></td><td>time integration (ODE solver like RK45)</td></tr></tbody></table>
+  <p>A neural ODE replaces the derivative with a learned function and integrates forward in time. This assumes the state vector is complete (contains all information needed to predict future evolution) and that integration errors remain small over the prediction horizon.</p>
+</section>
+
+
 
 <h2>Everyday Math Shape Rehearsal</h2>
 <p>Read the mathematical shape before reading symbols. For Neural Differential Equations, the shape is a path from what is visible to what must be checked.</p>

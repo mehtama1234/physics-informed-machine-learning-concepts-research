@@ -1252,6 +1252,15 @@
 <p><strong>Smallest useful formula:</strong> The smallest useful formula must start from many example inputs and their full solution fields, carry the answer toward the rule that maps a new input field to its new solution field, and include a check that can fail: change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed.</p>
 <p><strong>First wrong simplification:</strong> The first wrong shortcut is to keep the part that gives an answer while dropping the part that checks it. That would hide this failure: change resolution, coefficients, boundary conditions, or forcing and check whether the predicted field still satisfies the scientific quantity being claimed.</p>
 
+<section class="detail actual-math">
+  <h2>The Actual Math, One Level Deeper</h2>
+  <p class="quiet">For readers ready for symbols. The plain path above stands on its own; this is the same idea written in notation.</p>
+  <p class="equation"><code>G_θ: a(x) ↦ u(x)  (learn mapping from input function to output function)</code></p><p class="equation"><code>(K v)(x) = F^{-1}( R_φ · (F v) )(x)  (Fourier neural operator layer)</code></p><p class="equation"><code>L = (1/N) Σ_i ||G_θ(a_i) - u_i||²_{L²(Ω)}</code></p>
+  <table><thead><tr><th>Symbol</th><th>What it stands for</th></tr></thead><tbody><tr><td><code>G_θ</code></td><td>learned operator—a function-to-function map with parameters θ</td></tr><tr><td><code>a(x), u(x)</code></td><td>input and output function fields</td></tr><tr><td><code>A → U</code></td><td>operator maps from space of input functions to output functions</td></tr><tr><td><code>F, F^{-1}</code></td><td>Fourier transform and inverse (spectral representation)</td></tr><tr><td><code>R_φ</code></td><td>learnable weights in Fourier space</td></tr></tbody></table>
+  <p>Operator learning treats the unknown as a map between entire functions rather than a single solution. This assumes the operator is well-defined on the function spaces and that test cases cover the domain where the learned operator must work.</p>
+</section>
+
+
 
 <h2>Everyday Math Shape Rehearsal</h2>
 <p>Read the mathematical shape before reading symbols. For Operator Learning, the shape is a path from what is visible to what must be checked.</p>

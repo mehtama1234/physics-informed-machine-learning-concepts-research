@@ -1252,6 +1252,15 @@
 <p><strong>Smallest useful formula:</strong> The smallest useful formula must start from a field such as temperature, pressure, concentration, velocity, or displacement, carry the answer toward how every point in the field affects nearby points over time, and include a check that can fail: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error.</p>
 <p><strong>First wrong simplification:</strong> The first wrong shortcut is to keep the part that gives an answer while dropping the part that checks it. That would hide this failure: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error.</p>
 
+<section class="detail actual-math">
+  <h2>The Actual Math, One Level Deeper</h2>
+  <p class="quiet">For readers ready for symbols. The plain path above stands on its own; this is the same idea written in notation.</p>
+  <p class="equation"><code>∂u/∂t = N[u] = -c ∂u/∂x + ν ∂²u/∂x² + f(x,t)</code></p><p class="equation"><code>B[u] = g  on  ∂Ω</code></p><p class="equation"><code>u(x,0) = u₀(x)</code></p>
+  <table><thead><tr><th>Symbol</th><th>What it stands for</th></tr></thead><tbody><tr><td><code>u(x,t)</code></td><td>field value (temperature, pressure, concentration) at position x and time t</td></tr><tr><td><code>∂u/∂t</code></td><td>how fast the field changes in time</td></tr><tr><td><code>∂u/∂x, ∂²u/∂x²</code></td><td>how the field changes across space (first and second derivatives)</td></tr><tr><td><code>N[u]</code></td><td>differential operator capturing all physics rules (advection, diffusion, sources)</td></tr><tr><td><code>B[u]=g</code></td><td>boundary operator and boundary value—what must happen at the edge</td></tr><tr><td><code>f(x,t)</code></td><td>source or forcing term—external inputs like heat or material added</td></tr></tbody></table>
+  <p>A PDE compactly states that the field u and its local changes (spatial and temporal derivatives) must obey a physical law N everywhere it exists, with boundary conditions fixing behavior at domain edges. This assumes the physics is local (neighbors affect each other) and smoothly varying.</p>
+</section>
+
+
 
 <h2>Everyday Math Shape Rehearsal</h2>
 <p>Read the mathematical shape before reading symbols. For Partial Differential Equations, the shape is a path from what is visible to what must be checked.</p>

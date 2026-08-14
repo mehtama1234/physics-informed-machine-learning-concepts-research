@@ -1252,6 +1252,15 @@
 <p><strong>Smallest useful formula:</strong> The smallest useful formula must start from many input-output examples from experiments, simulations, or measurements, carry the answer toward the exact rule that connects the input to the output, and include a check that can fail: hold out a changed material, geometry, parameter range, or sensor condition.</p>
 <p><strong>First wrong simplification:</strong> The first wrong shortcut is to keep the part that gives an answer while dropping the part that checks it. That would hide this failure: hold out a changed material, geometry, parameter range, or sensor condition.</p>
 
+<section class="detail actual-math">
+  <h2>The Actual Math, One Level Deeper</h2>
+  <p class="quiet">For readers ready for symbols. The plain path above stands on its own; this is the same idea written in notation.</p>
+  <p class="equation"><code>y_θ = h_L( h_{L-1}( ... h_1(x) ... ) )  where  h_i(z) = σ( W_i z + b_i )</code></p><p class="equation"><code>L(θ) = (1/N) Σ_i |y_θ(x_i) - y_i|²  +  λ R(θ)</code></p><p class="equation"><code>θ* = argmin_θ L(θ)</code></p>
+  <table><thead><tr><th>Symbol</th><th>What it stands for</th></tr></thead><tbody><tr><td><code>y_θ</code></td><td>prediction from the neural network with parameters θ</td></tr><tr><td><code>θ = {W_i, b_i}</code></td><td>millions of adjustable weights and biases in the network</td></tr><tr><td><code>σ(·)</code></td><td>activation function (ReLU, tanh, etc.) that introduces nonlinearity</td></tr><tr><td><code>L(θ)</code></td><td>loss: average error on training data plus a regularization term</td></tr><tr><td><code>R(θ)</code></td><td>regularization penalty (L1, L2, or dropout) to prevent overfitting</td></tr><tr><td><code>λ</code></td><td>regularization strength—how much to penalize model complexity</td></tr></tbody></table>
+  <p>Deep learning stacks many layers to learn complex functions from examples. The loss function only measures error on training data, so it assumes training examples are representative and that small training error transfers to unseen cases.</p>
+</section>
+
+
 
 <h2>Everyday Math Shape Rehearsal</h2>
 <p>Read the mathematical shape before reading symbols. For Deep Learning, the shape is a path from what is visible to what must be checked.</p>

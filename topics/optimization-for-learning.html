@@ -1252,6 +1252,15 @@
 <p><strong>Smallest useful formula:</strong> The smallest useful formula must start from a written score that says which model behavior is better or worse, carry the answer toward whether that score matches the scientific behavior the user actually cares about, and include a check that can fail: inspect what the score ignores, then check whether the ignored behavior fails after training.</p>
 <p><strong>First wrong simplification:</strong> The first wrong shortcut is to keep the part that gives an answer while dropping the part that checks it. That would hide this failure: inspect what the score ignores, then check whether the ignored behavior fails after training.</p>
 
+<section class="detail actual-math">
+  <h2>The Actual Math, One Level Deeper</h2>
+  <p class="quiet">For readers ready for symbols. The plain path above stands on its own; this is the same idea written in notation.</p>
+  <p class="equation"><code>θ_{k+1} = θ_k - η ∇_θ L(θ_k)</code></p><p class="equation"><code>∇_θ L = ∂L/∂θ = (1/N) Σ_i ∂ℓ(y_θ(x_i), y_i) / ∂θ</code></p><p class="equation"><code>θ_k → θ* as k → ∞</code></p>
+  <table><thead><tr><th>Symbol</th><th>What it stands for</th></tr></thead><tbody><tr><td><code>θ_k</code></td><td>model parameters at iteration k</td></tr><tr><td><code>η</code></td><td>learning rate—step size for each update</td></tr><tr><td><code>∇_θ L</code></td><td>gradient of loss with respect to all parameters</td></tr><tr><td><code>ℓ(·,·)</code></td><td>loss on one example (squared error, cross-entropy, etc.)</td></tr><tr><td><code>N</code></td><td>number of training examples</td></tr></tbody></table>
+  <p>Gradient descent repeatedly moves parameters in the direction that reduces the loss. It assumes the loss function accurately captures the scientific goal and that small local changes in parameters lead to predictable changes in model behavior.</p>
+</section>
+
+
 
 <h2>Everyday Math Shape Rehearsal</h2>
 <p>Read the mathematical shape before reading symbols. For Optimization For Learning, the shape is a path from what is visible to what must be checked.</p>

@@ -1252,6 +1252,15 @@
 <p><strong>Smallest useful formula:</strong> The smallest useful formula must start from many PDE problem instances across equations, grids, parameters, or physical settings, carry the answer toward which shared structure carries from one scientific task to another, and include a check that can fail: hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver.</p>
 <p><strong>First wrong simplification:</strong> The first wrong shortcut is to keep the part that gives an answer while dropping the part that checks it. That would hide this failure: hold out a new equation family, boundary type, scale, or rare regime and compare against a trusted solver.</p>
 
+<section class="detail actual-math">
+  <h2>The Actual Math, One Level Deeper</h2>
+  <p class="quiet">For readers ready for symbols. The plain path above stands on its own; this is the same idea written in notation.</p>
+  <p class="equation"><code>p_θ(u_new | a_new, {(a_k, u_k)}_{k=1}^K)  (conditional generation from K prior PDE tasks)</code></p><p class="equation"><code>L_pretrain = (1/K) Σ_k Σ_i ||u_θ(a_k; x_i) - u_k(x_i)||²</code></p><p class="equation"><code>transfer: θ_new = fine-tune(θ_pretrained, {(a_new, u_new)}, small_lr)</code></p>
+  <table><thead><tr><th>Symbol</th><th>What it stands for</th></tr></thead><tbody><tr><td><code>θ</code></td><td>shared foundation model parameters trained on many PDE tasks</td></tr><tr><td><code>a_k</code></td><td>input condition k (initial condition, boundary, coefficient field)</td></tr><tr><td><code>u_k</code></td><td>true solution k to PDE task k</td></tr><tr><td><code>{(a_k, u_k)}_k</code></td><td>training corpus of K solved PDE problems</td></tr><tr><td><code>a_new</code></td><td>input to a new held-out PDE task</td></tr></tbody></table>
+  <p>Foundation models pre-train on many PDE tasks to learn shared patterns, then fine-tune on new tasks. This assumes the PDE families are related enough that patterns transfer and that the new task is similar enough to the pre-training distribution.</p>
+</section>
+
+
 
 <h2>Everyday Math Shape Rehearsal</h2>
 <p>Read the mathematical shape before reading symbols. For Foundation Models For PDEs, the shape is a path from what is visible to what must be checked.</p>

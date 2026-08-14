@@ -1252,6 +1252,15 @@
 <p><strong>Smallest useful formula:</strong> The smallest useful formula must start from data, equations, units, simulation outputs, and domain limits, carry the answer toward which parts of the scientific system are missing, noisy, or too costly to compute directly, and include a check that can fail: state the scientific quantity first, then test it under a changed case that matters in that domain.</p>
 <p><strong>First wrong simplification:</strong> The first wrong shortcut is to keep the part that gives an answer while dropping the part that checks it. That would hide this failure: state the scientific quantity first, then test it under a changed case that matters in that domain.</p>
 
+<section class="detail actual-math">
+  <h2>The Actual Math, One Level Deeper</h2>
+  <p class="quiet">For readers ready for symbols. The plain path above stands on its own; this is the same idea written in notation.</p>
+  <p class="equation"><code>L_total(θ) = L_data(θ) + λ_physics L_physics(θ)</code></p><p class="equation"><code>where  L_data = (1/N_d) Σ_i |u_θ(x_i,t_i) - u_i|²</code></p><p class="equation"><code>and  L_physics = (1/N_p) Σ_j |∂u_θ/∂t + c ∂u_θ/∂x - ν ∂²u_θ/∂x²|²</code></p>
+  <table><thead><tr><th>Symbol</th><th>What it stands for</th></tr></thead><tbody><tr><td><code>L_data</code></td><td>mismatch between prediction and measured values</td></tr><tr><td><code>L_physics</code></td><td>how much the prediction violates known physical laws</td></tr><tr><td><code>λ_physics</code></td><td>weight balancing data fit against physics obedience</td></tr><tr><td><code>u_θ</code></td><td>neural network approximation of the solution</td></tr><tr><td><code>(x_i,t_i), u_i</code></td><td>measured points and values in space-time</td></tr></tbody></table>
+  <p>Scientific ML combines data and equations by minimizing a joint loss. This assumes the written physics equation is correct and that measurement noise is small enough that the combined signal outweighs both fit and equation errors.</p>
+</section>
+
+
 
 <h2>Everyday Math Shape Rehearsal</h2>
 <p>Read the mathematical shape before reading symbols. For Scientific Machine Learning, the shape is a path from what is visible to what must be checked.</p>
