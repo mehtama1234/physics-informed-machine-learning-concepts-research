@@ -1252,6 +1252,15 @@
 <p><strong>Smallest useful formula:</strong> The smallest useful formula must start from some measured values, boundary values, starting values, and a known differential equation, carry the answer toward the full field value at every point in space and time, and include a check that can fail: move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements.</p>
 <p><strong>First wrong simplification:</strong> The first wrong shortcut is to keep the part that gives an answer while dropping the part that checks it. That would hide this failure: move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements.</p>
 
+<section class="detail actual-math">
+  <h2>The Actual Math, One Level Deeper</h2>
+  <p class="quiet">For readers ready for symbols. The plain path above stands on its own; this is the same idea written in notation.</p>
+  <p class="equation"><code>L_total = (1/N_d) Σ_i |u_θ(x_i,t_i) - u_i|² + λ_r (1/N_r) Σ_j |R[u_θ](x_j,t_j)|² + λ_b (1/N_b) Σ_k |B[u_θ](x_k)|²</code></p><p class="equation"><code>R[u] = ∂u/∂t - N[u]  (residual of the PDE)</code></p><p class="equation"><code>B[u] = u - g  (boundary condition error)</code></p>
+  <table><thead><tr><th>Symbol</th><th>What it stands for</th></tr></thead><tbody><tr><td><code>u_θ</code></td><td>neural network approximation of solution</td></tr><tr><td><code>L_total</code></td><td>combined loss with three terms</td></tr><tr><td><code>N_d, N_r, N_b</code></td><td>number of data points, residual collocation points, boundary points</td></tr><tr><td><code>λ_r, λ_b</code></td><td>weights balancing data fit against physics and boundary compliance</td></tr><tr><td><code>R[u]</code></td><td>residual—leftover when true u is plugged into the PDE</td></tr><tr><td><code>N[u]</code></td><td>differential operator (e.g., advection + diffusion)</td></tr></tbody></table>
+  <p>PINNs merge three loss terms: fitting sparse data, obeying the PDE at collocation points, and satisfying boundary conditions. This assumes the PDE is correct everywhere and that the neural network can represent solutions smoothly enough to take derivatives accurately.</p>
+</section>
+
+
 
 <h2>Everyday Math Shape Rehearsal</h2>
 <p>Read the mathematical shape before reading symbols. For Physics-Informed Neural Networks, the shape is a path from what is visible to what must be checked.</p>

@@ -1252,6 +1252,15 @@
 <p><strong>Smallest useful formula:</strong> The smallest useful formula must start from training cases, validation cases, prediction errors, and known shifts between cases, carry the answer toward how wrong the model may be on a case unlike the ones it learned from, and include a check that can fail: move one important condition outside the training range and measure the first failure.</p>
 <p><strong>First wrong simplification:</strong> The first wrong shortcut is to keep the part that gives an answer while dropping the part that checks it. That would hide this failure: move one important condition outside the training range and measure the first failure.</p>
 
+<section class="detail actual-math">
+  <h2>The Actual Math, One Level Deeper</h2>
+  <p class="quiet">For readers ready for symbols. The plain path above stands on its own; this is the same idea written in notation.</p>
+  <p class="equation"><code>p(y*|x*,D) = ∫ p(y*|x*,θ) p(θ|D) dθ  (predictive posterior)</code></p><p class="equation"><code>E[y*|x*,D] = (1/M) Σ_i y_θ_i(x*)  (ensemble or dropout averaging)</code></p><p class="equation"><code>epistemic_uncertainty = var_θ[ E[y|x,θ] ]</code></p><p class="equation"><code>aleatoric_uncertainty = E_θ[ var[y|x,θ] ]</code></p>
+  <table><thead><tr><th>Symbol</th><th>What it stands for</th></tr></thead><tbody><tr><td><code>p(y*|x*,D)</code></td><td>probability of output y* given new input x* and training data D</td></tr><tr><td><code>p(θ|D)</code></td><td>posterior distribution of parameters given observed data</td></tr><tr><td><code>M</code></td><td>number of ensemble members or dropout samples</td></tr><tr><td><code>epistemic</code></td><td>uncertainty from not knowing the true model (reducible with more data)</td></tr><tr><td><code>aleatoric</code></td><td>irreducible noise in the data itself</td></tr></tbody></table>
+  <p>Uncertainty quantification reports not just a prediction but a distribution or confidence interval. This assumes the model class contains the truth and that out-of-distribution inputs are recognizable as different from the training domain.</p>
+</section>
+
+
 
 <h2>Everyday Math Shape Rehearsal</h2>
 <p>Read the mathematical shape before reading symbols. For Uncertainty And Generalization, the shape is a path from what is visible to what must be checked.</p>

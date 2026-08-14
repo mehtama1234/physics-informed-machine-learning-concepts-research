@@ -1252,6 +1252,15 @@
 <p><strong>Smallest useful formula:</strong> The smallest useful formula must start from objects with parts and connections, such as meshes, molecules, or interacting components, carry the answer toward which neighboring and long-range interactions control the scientific quantity, and include a check that can fail: change the mesh, rotate or move the object, or add missing interactions and inspect what breaks.</p>
 <p><strong>First wrong simplification:</strong> The first wrong shortcut is to keep the part that gives an answer while dropping the part that checks it. That would hide this failure: change the mesh, rotate or move the object, or add missing interactions and inspect what breaks.</p>
 
+<section class="detail actual-math">
+  <h2>The Actual Math, One Level Deeper</h2>
+  <p class="quiet">For readers ready for symbols. The plain path above stands on its own; this is the same idea written in notation.</p>
+  <p class="equation"><code>h_i^{(k+1)} = σ( W_self h_i^{(k)} + Σ_{j ∈ N(i)} W_neigh h_j^{(k)} + b^{(k)} )</code></p><p class="equation"><code>message_{j→i} = W_edge(h_i^{(k)}, h_j^{(k)})</code></p><p class="equation"><code>E_inv(R(x)) = E_inv(x)  for all rotations R</code></p>
+  <table><thead><tr><th>Symbol</th><th>What it stands for</th></tr></thead><tbody><tr><td><code>h_i^{(k)}</code></td><td>feature vector for node i at layer k</td></tr><tr><td><code>N(i)</code></td><td>set of neighbors connected to node i</td></tr><tr><td><code>W_self, W_neigh, W_edge</code></td><td>learnable weight matrices for self, neighbor, and edge updates</td></tr><tr><td><code>message_{j→i}</code></td><td>information passed from node j to node i</td></tr><tr><td><code>R</code></td><td>rotation or permutation symmetry</td></tr></tbody></table>
+  <p>Graph neural networks propagate information between connected nodes. Each update combines a node&#x27;s own features with messages from neighbors. This assumes the graph structure accurately represents which parts interact and that the answer respects geometric symmetries.</p>
+</section>
+
+
 
 <h2>Everyday Math Shape Rehearsal</h2>
 <p>Read the mathematical shape before reading symbols. For Graphs And Geometric Learning, the shape is a path from what is visible to what must be checked.</p>

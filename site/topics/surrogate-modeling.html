@@ -1252,6 +1252,15 @@
 <p><strong>Smallest useful formula:</strong> The smallest useful formula must start from expensive solver inputs and outputs for a limited set of cases, carry the answer toward the solver answer for every new query someone wants to ask, and include a check that can fail: compare against the full solver on new cases near the edge of the intended use.</p>
 <p><strong>First wrong simplification:</strong> The first wrong shortcut is to keep the part that gives an answer while dropping the part that checks it. That would hide this failure: compare against the full solver on new cases near the edge of the intended use.</p>
 
+<section class="detail actual-math">
+  <h2>The Actual Math, One Level Deeper</h2>
+  <p class="quiet">For readers ready for symbols. The plain path above stands on its own; this is the same idea written in notation.</p>
+  <p class="equation"><code>ŷ_θ(x) ≈ y_simulator(x)  for x ∈ [x_min, x_max]</code></p><p class="equation"><code>error_surrogate(x) ≤ ε  with high probability</code></p><p class="equation"><code>speedup ≈ cost_simulator / cost_surrogate  (typically 100-1000x)</code></p>
+  <table><thead><tr><th>Symbol</th><th>What it stands for</th></tr></thead><tbody><tr><td><code>y_simulator</code></td><td>expensive ground-truth output (expensive CFD, FEM solver, etc.)</td></tr><tr><td><code>ŷ_θ</code></td><td>fast neural network surrogate</td></tr><tr><td><code>[x_min, x_max]</code></td><td>design space where the surrogate is trained and valid</td></tr><tr><td><code>ε</code></td><td>error tolerance for surrogate accuracy</td></tr><tr><td><code>cost</code></td><td>wall-clock time or compute budget</td></tr></tbody></table>
+  <p>A surrogate replaces an expensive simulator with a fast learned model trained on examples. This assumes the surrogate generalizes accurately within its training range and that the range covers all conditions where the surrogate will be deployed.</p>
+</section>
+
+
 
 <h2>Everyday Math Shape Rehearsal</h2>
 <p>Read the mathematical shape before reading symbols. For Surrogate Modeling, the shape is a path from what is visible to what must be checked.</p>

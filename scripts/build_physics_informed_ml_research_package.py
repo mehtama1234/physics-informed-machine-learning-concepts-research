@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import html
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -5206,6 +5207,10 @@ def topic_shape_follows_html(slug: str, derivation: dict[str, object]) -> str:
     hand = HAND_DERIVATIONS.get(slug)
     if not isinstance(hand, dict):
         return ""
+    if "symbolic" not in hand:
+        sym = _symbolic_math_index().get(slug)
+        if sym:
+            hand = {**hand, "symbolic": sym}
     rows = []
     for item in hand["line_steps"]:
         rows.append(
@@ -5229,6 +5234,68 @@ def topic_shape_follows_html(slug: str, derivation: dict[str, object]) -> str:
 <p><strong>Plain final line:</strong> {html.escape(str(hand['final_line']))}</p>
 <p><strong>Smallest useful formula:</strong> {html.escape(smallest_useful_formula_text(derivation))}</p>
 <p><strong>First wrong simplification:</strong> {html.escape(first_wrong_simplification_text(derivation))}</p>
+{render_symbolic_math(hand.get("symbolic"))}
+"""
+
+
+_SYMBOLIC_MATH_CACHE: dict | None = None
+
+
+def _symbolic_math_index() -> dict:
+    """Load the optional symbolic-math sidecar (analysis/symbolic_math.json) once.
+
+    Keeps the plain-language source untouched; symbols live in a separate data file
+    keyed by topic slug. Returns an empty dict if the sidecar is absent or unreadable.
+    """
+    global _SYMBOLIC_MATH_CACHE
+    if _SYMBOLIC_MATH_CACHE is None:
+        path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "analysis", "symbolic_math.json")
+        try:
+            with open(path, encoding="utf-8") as fh:
+                loaded = json.load(fh)
+            _SYMBOLIC_MATH_CACHE = loaded if isinstance(loaded, dict) else {}
+        except (OSError, ValueError):
+            _SYMBOLIC_MATH_CACHE = {}
+    return _SYMBOLIC_MATH_CACHE
+
+
+def render_symbolic_math(symbolic: object) -> str:
+    """Render the optional 'actual math, one level deeper' symbolic block.
+
+    Plain-language pages stay symbol-free by default; this block is separated and
+    only appears when a hand derivation supplies a ``symbolic`` record, so readers
+    who want the notation can drop one level down without cluttering the plain path.
+    Backward-compatible: missing/empty ``symbolic`` renders nothing.
+    """
+    if not isinstance(symbolic, dict):
+        return ""
+    equations = symbolic.get("equations") or []
+    symbols = symbolic.get("symbols") or []
+    note = symbolic.get("note")
+    eq_html = "".join(f"<p class=\"equation\"><code>{html.escape(str(e))}</code></p>" for e in equations)
+    sym_rows = "".join(
+        f"<tr><td><code>{html.escape(str(s.get('sym', '')))}</code></td>"
+        f"<td>{html.escape(str(s.get('meaning', '')))}</td></tr>"
+        for s in symbols
+        if isinstance(s, dict)
+    )
+    sym_table = (
+        f"<table><thead><tr><th>Symbol</th><th>What it stands for</th></tr></thead>"
+        f"<tbody>{sym_rows}</tbody></table>"
+        if sym_rows
+        else ""
+    )
+    note_html = f"<p>{html.escape(str(note))}</p>" if note else ""
+    if not (eq_html or sym_table or note_html):
+        return ""
+    return f"""
+<section class="detail actual-math">
+  <h2>The Actual Math, One Level Deeper</h2>
+  <p class="quiet">For readers ready for symbols. The plain path above stands on its own; this is the same idea written in notation.</p>
+  {eq_html}
+  {sym_table}
+  {note_html}
+</section>
 """
 
 
