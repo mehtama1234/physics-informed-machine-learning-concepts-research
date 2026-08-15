@@ -1255,7 +1255,7 @@
 <section class="detail actual-math">
   <h2>The Actual Math, One Level Deeper</h2>
   <p class="quiet">For readers ready for symbols. The plain path above stands on its own; this is the same idea written in notation.</p>
-  <p class="equation"><code>Attention(Q, K, V) = softmax( Q K^T / √d_k ) V</code></p><p class="equation"><code>output_i = Σ_j α_{ij} v_j  where  α_{ij} = exp(q_i · k_j) / Σ_l exp(q_i · k_l)</code></p><p class="equation"><code>field_pred(x) = Attention( query(x), key(field), value(field) )</code></p>
+  <p class="equation"><code>Attention(Q, K, V) = softmax( Q K^T / √d_k ) V</code></p><p class="equation"><code>output_i = Σ_j α_{ij} v_j  where  α_{ij} = exp(q_i · k_j / √d_k) / Σ_l exp(q_i · k_l / √d_k)</code></p><p class="equation"><code>field_pred(x) = Attention( query(x), key(field), value(field) )</code></p>
   <table><thead><tr><th>Symbol</th><th>What it stands for</th></tr></thead><tbody><tr><td><code>q_i</code></td><td>query at position i—&#x27;what information does this location need?&#x27;</td></tr><tr><td><code>k_j</code></td><td>key at position j—&#x27;what does this position offer?&#x27;</td></tr><tr><td><code>v_j</code></td><td>value at position j—the actual data being attended to</td></tr><tr><td><code>α_{ij}</code></td><td>attention weight: how much position i should attend to position j</td></tr><tr><td><code>d_k</code></td><td>dimension of keys, used for scaling</td></tr></tbody></table>
   <p>Attention learns which distant or nearby field locations matter for predicting each point by computing similarity between queries and keys. This assumes spatially distant information can propagate through attention patterns and that learned weights reflect real physical dependencies.</p>
 </section>

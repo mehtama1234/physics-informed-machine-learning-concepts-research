@@ -5259,6 +5259,55 @@ def _symbolic_math_index() -> dict:
     return _SYMBOLIC_MATH_CACHE
 
 
+_LECTURE_DEEP_DIVES_CACHE = None
+
+
+def _lecture_deep_dives() -> dict:
+    """Load the optional per-lecture deep-dive sidecar (analysis/lecture_deep_dives.json).
+
+    Plain-language, first-principles writeups keyed by video_id, authored from each
+    lecture's full transcript. Returns an empty dict if the sidecar is absent.
+    """
+    global _LECTURE_DEEP_DIVES_CACHE
+    if _LECTURE_DEEP_DIVES_CACHE is None:
+        path = ANALYSIS / "lecture_deep_dives.json"
+        try:
+            with open(path, encoding="utf-8") as fh:
+                loaded = json.load(fh)
+            _LECTURE_DEEP_DIVES_CACHE = loaded if isinstance(loaded, dict) else {}
+        except (OSError, ValueError):
+            _LECTURE_DEEP_DIVES_CACHE = {}
+    return _LECTURE_DEEP_DIVES_CACHE
+
+
+def render_lecture_deep_dive(video_id: str) -> str:
+    """Render the plain-words, first-principles walkthrough for one lecture, if present."""
+    d = _lecture_deep_dives().get(video_id)
+    if not d:
+        return ""
+    def esc(x: object) -> str:
+        return html.escape(str(x))
+    paras = "".join(f"<p>{esc(p)}</p>" for p in d.get("walkthrough", []) if str(p).strip())
+    ideas = "".join(f"<li>{esc(i)}</li>" for i in d.get("key_ideas", []) if str(i).strip())
+    parts = ["<h2>First-Principles Walkthrough</h2>"]
+    if d.get("plain_title"):
+        parts.append(f"<p><strong>What this lecture is really about:</strong> {esc(d['plain_title'])}</p>")
+    if d.get("big_question"):
+        parts.append(f"<p><strong>The question it answers:</strong> {esc(d['big_question'])}</p>")
+    if d.get("everyday_anchor"):
+        parts.append(f"<p><strong>Something concrete to hold onto:</strong> {esc(d['everyday_anchor'])}</p>")
+    parts.append(paras)
+    if ideas:
+        parts.append("<h3>Key ideas in plain words</h3><ul>" + ideas + "</ul>")
+    if d.get("worked_intuition"):
+        parts.append(f"<p><strong>Worked intuition:</strong> {esc(d['worked_intuition'])}</p>")
+    if d.get("where_it_breaks"):
+        parts.append(f"<p><strong>Where it breaks down:</strong> {esc(d['where_it_breaks'])}</p>")
+    if d.get("takeaway"):
+        parts.append(f"<p><strong>Takeaway:</strong> {esc(d['takeaway'])}</p>")
+    return "\n".join(parts)
+
+
 def render_symbolic_math(symbolic: object) -> str:
     """Render the optional 'actual math, one level deeper' symbolic block.
 
@@ -6763,13 +6812,19 @@ def write_site(data: dict[str, object]) -> None:
 def write_video_page(path: Path, record: TranscriptRecord) -> None:
     excerpt = record.evidence_excerpt or "No transcript excerpt was available; this page is based on metadata until captions can be added."
     study_note = video_study_note_html(record, root_prefix="../")
+    deep_dive = render_lecture_deep_dive(record.video_id)
+    core_problem_block = "" if deep_dive else (
+        "<h2>Core Problem</h2>\n<p>This lecture belongs to a course family about using AI for scientific "
+        "and engineering claims. The page should be read by asking what scientific quantity is being "
+        "predicted, what evidence is available, and what changed case would show the model is not ready.</p>"
+    )
     body = f"""
 <h1>{html.escape(record.title)}</h1>
 <p class="meta">{html.escape(record.playlist_title)} · transcript {html.escape(record.transcript_status)} · {record.word_count} words</p>
 <p><a href="{html.escape(record.url)}">Source video</a></p>
+{deep_dive}
 {study_note}
-<h2>Core Problem</h2>
-<p>This lecture belongs to a course family about using AI for scientific and engineering claims. The page should be read by asking what scientific quantity is being predicted, what evidence is available, and what changed case would show the model is not ready.</p>
+{core_problem_block}
 <h2>Key Concepts</h2>
 <ul>{''.join(f'<li>{html.escape(concept)}</li>' for concept in record.concepts)}</ul>
 <h2>Transcript-Backed Note</h2>
