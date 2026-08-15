@@ -6,12 +6,30 @@
       "u(x,0) = u₀(x)"
     ],
     "symbols": [
-      {"sym": "u(x,t)", "meaning": "field value (temperature, pressure, concentration) at position x and time t"},
-      {"sym": "∂u/∂t", "meaning": "how fast the field changes in time"},
-      {"sym": "∂u/∂x, ∂²u/∂x²", "meaning": "how the field changes across space (first and second derivatives)"},
-      {"sym": "N[u]", "meaning": "differential operator capturing all physics rules (advection, diffusion, sources)"},
-      {"sym": "B[u]=g", "meaning": "boundary operator and boundary value—what must happen at the edge"},
-      {"sym": "f(x,t)", "meaning": "source or forcing term—external inputs like heat or material added"}
+      {
+        "sym": "u(x,t)",
+        "meaning": "field value (temperature, pressure, concentration) at position x and time t"
+      },
+      {
+        "sym": "∂u/∂t",
+        "meaning": "how fast the field changes in time"
+      },
+      {
+        "sym": "∂u/∂x, ∂²u/∂x²",
+        "meaning": "how the field changes across space (first and second derivatives)"
+      },
+      {
+        "sym": "N[u]",
+        "meaning": "differential operator capturing all physics rules (advection, diffusion, sources)"
+      },
+      {
+        "sym": "B[u]=g",
+        "meaning": "boundary operator and boundary value—what must happen at the edge"
+      },
+      {
+        "sym": "f(x,t)",
+        "meaning": "source or forcing term—external inputs like heat or material added"
+      }
     ],
     "note": "A PDE compactly states that the field u and its local changes (spatial and temporal derivatives) must obey a physical law N everywhere it exists, with boundary conditions fixing behavior at domain edges. This assumes the physics is local (neighbors affect each other) and smoothly varying."
   },
@@ -22,12 +40,30 @@
       "θ* = argmin_θ L(θ)"
     ],
     "symbols": [
-      {"sym": "y_θ", "meaning": "prediction from the neural network with parameters θ"},
-      {"sym": "θ = {W_i, b_i}", "meaning": "millions of adjustable weights and biases in the network"},
-      {"sym": "σ(·)", "meaning": "activation function (ReLU, tanh, etc.) that introduces nonlinearity"},
-      {"sym": "L(θ)", "meaning": "loss: average error on training data plus a regularization term"},
-      {"sym": "R(θ)", "meaning": "regularization penalty (L1, L2, or dropout) to prevent overfitting"},
-      {"sym": "λ", "meaning": "regularization strength—how much to penalize model complexity"}
+      {
+        "sym": "y_θ",
+        "meaning": "prediction from the neural network with parameters θ"
+      },
+      {
+        "sym": "θ = {W_i, b_i}",
+        "meaning": "millions of adjustable weights and biases in the network"
+      },
+      {
+        "sym": "σ(·)",
+        "meaning": "activation function (ReLU, tanh, etc.) that introduces nonlinearity"
+      },
+      {
+        "sym": "L(θ)",
+        "meaning": "loss: average error on training data plus a regularization term"
+      },
+      {
+        "sym": "R(θ)",
+        "meaning": "regularization penalty (L1, L2, or dropout) to prevent overfitting"
+      },
+      {
+        "sym": "λ",
+        "meaning": "regularization strength—how much to penalize model complexity"
+      }
     ],
     "note": "Deep learning stacks many layers to learn complex functions from examples. The loss function only measures error on training data, so it assumes training examples are representative and that small training error transfers to unseen cases."
   },
@@ -38,11 +74,26 @@
       "and  L_physics = (1/N_p) Σ_j |∂u_θ/∂t + c ∂u_θ/∂x - ν ∂²u_θ/∂x²|²"
     ],
     "symbols": [
-      {"sym": "L_data", "meaning": "mismatch between prediction and measured values"},
-      {"sym": "L_physics", "meaning": "how much the prediction violates known physical laws"},
-      {"sym": "λ_physics", "meaning": "weight balancing data fit against physics obedience"},
-      {"sym": "u_θ", "meaning": "neural network approximation of the solution"},
-      {"sym": "(x_i,t_i), u_i", "meaning": "measured points and values in space-time"}
+      {
+        "sym": "L_data",
+        "meaning": "mismatch between prediction and measured values"
+      },
+      {
+        "sym": "L_physics",
+        "meaning": "how much the prediction violates known physical laws"
+      },
+      {
+        "sym": "λ_physics",
+        "meaning": "weight balancing data fit against physics obedience"
+      },
+      {
+        "sym": "u_θ",
+        "meaning": "neural network approximation of the solution"
+      },
+      {
+        "sym": "(x_i,t_i), u_i",
+        "meaning": "measured points and values in space-time"
+      }
     ],
     "note": "Scientific ML combines data and equations by minimizing a joint loss. This assumes the written physics equation is correct and that measurement noise is small enough that the combined signal outweighs both fit and equation errors."
   },
@@ -53,11 +104,26 @@
       "θ_k → θ* as k → ∞"
     ],
     "symbols": [
-      {"sym": "θ_k", "meaning": "model parameters at iteration k"},
-      {"sym": "η", "meaning": "learning rate—step size for each update"},
-      {"sym": "∇_θ L", "meaning": "gradient of loss with respect to all parameters"},
-      {"sym": "ℓ(·,·)", "meaning": "loss on one example (squared error, cross-entropy, etc.)"},
-      {"sym": "N", "meaning": "number of training examples"}
+      {
+        "sym": "θ_k",
+        "meaning": "model parameters at iteration k"
+      },
+      {
+        "sym": "η",
+        "meaning": "learning rate—step size for each update"
+      },
+      {
+        "sym": "∇_θ L",
+        "meaning": "gradient of loss with respect to all parameters"
+      },
+      {
+        "sym": "ℓ(·,·)",
+        "meaning": "loss on one example (squared error, cross-entropy, etc.)"
+      },
+      {
+        "sym": "N",
+        "meaning": "number of training examples"
+      }
     ],
     "note": "Gradient descent repeatedly moves parameters in the direction that reduces the loss. It assumes the loss function accurately captures the scientific goal and that small local changes in parameters lead to predictable changes in model behavior."
   },
@@ -66,15 +132,33 @@
       "p_θ(x) = ∫ p_θ(x|z) p(z) dz",
       "L_VAE = E_z[log p_θ(x|z)] - KL(q_φ(z|x) || p(z))",
       "L_diffusion = E_{t,ε} |ε - ε_θ(x_t, t)|²",
-      "x_t = √(1-β_t) x_0 + √β_t ε  for  t=1,...,T"
+      "x_t = √ᾱ_t x_0 + √(1-ᾱ_t) ε  where  ᾱ_t = ∏_{s=1}^t (1-β_s),  for  t=1,...,T"
     ],
     "symbols": [
-      {"sym": "p_θ(x)", "meaning": "learned probability distribution over generated samples"},
-      {"sym": "z", "meaning": "latent code or noise—source of variation between samples"},
-      {"sym": "p_θ(x|z)", "meaning": "decoder: map from latent code to generated sample"},
-      {"sym": "q_φ(z|x)", "meaning": "encoder: map from data to latent representation"},
-      {"sym": "β_t", "meaning": "noise schedule in diffusion—how much noise at each step"},
-      {"sym": "x_t", "meaning": "noisy version of x at diffusion step t"}
+      {
+        "sym": "p_θ(x)",
+        "meaning": "learned probability distribution over generated samples"
+      },
+      {
+        "sym": "z",
+        "meaning": "latent code or noise—source of variation between samples"
+      },
+      {
+        "sym": "p_θ(x|z)",
+        "meaning": "decoder: map from latent code to generated sample"
+      },
+      {
+        "sym": "q_φ(z|x)",
+        "meaning": "encoder: map from data to latent representation"
+      },
+      {
+        "sym": "β_t",
+        "meaning": "noise schedule in diffusion—how much noise at each step"
+      },
+      {
+        "sym": "x_t",
+        "meaning": "noisy version of x at diffusion step t"
+      }
     ],
     "note": "Generative models learn to produce many plausible samples by either learning a decoder from latent codes or by reversing a forward noise process. They assume the learned distribution captures important variation in data but do not automatically enforce that samples obey physical laws."
   },
@@ -85,11 +169,26 @@
       "E_inv(R(x)) = E_inv(x)  for all rotations R"
     ],
     "symbols": [
-      {"sym": "h_i^{(k)}", "meaning": "feature vector for node i at layer k"},
-      {"sym": "N(i)", "meaning": "set of neighbors connected to node i"},
-      {"sym": "W_self, W_neigh, W_edge", "meaning": "learnable weight matrices for self, neighbor, and edge updates"},
-      {"sym": "message_{j→i}", "meaning": "information passed from node j to node i"},
-      {"sym": "R", "meaning": "rotation or permutation symmetry"}
+      {
+        "sym": "h_i^{(k)}",
+        "meaning": "feature vector for node i at layer k"
+      },
+      {
+        "sym": "N(i)",
+        "meaning": "set of neighbors connected to node i"
+      },
+      {
+        "sym": "W_self, W_neigh, W_edge",
+        "meaning": "learnable weight matrices for self, neighbor, and edge updates"
+      },
+      {
+        "sym": "message_{j→i}",
+        "meaning": "information passed from node j to node i"
+      },
+      {
+        "sym": "R",
+        "meaning": "rotation or permutation symmetry"
+      }
     ],
     "note": "Graph neural networks propagate information between connected nodes. Each update combines a node's own features with messages from neighbors. This assumes the graph structure accurately represents which parts interact and that the answer respects geometric symmetries."
   },
@@ -100,25 +199,52 @@
       "dℓ/dθ = -∫_{t₀}^T a(t)^T ∂f_θ/∂θ dt  (adjoint method)"
     ],
     "symbols": [
-      {"sym": "u(t)", "meaning": "state vector at time t"},
-      {"sym": "f_θ(u,t)", "meaning": "learned neural network defining the rate of change"},
-      {"sym": "a(t)", "meaning": "adjoint variable for backprop through time"},
-      {"sym": "∫ f_θ dt", "meaning": "time integration (ODE solver like RK45)"}
+      {
+        "sym": "u(t)",
+        "meaning": "state vector at time t"
+      },
+      {
+        "sym": "f_θ(u,t)",
+        "meaning": "learned neural network defining the rate of change"
+      },
+      {
+        "sym": "a(t)",
+        "meaning": "adjoint variable for backprop through time"
+      },
+      {
+        "sym": "∫ f_θ dt",
+        "meaning": "time integration (ODE solver like RK45)"
+      }
     ],
     "note": "A neural ODE replaces the derivative with a learned function and integrates forward in time. This assumes the state vector is complete (contains all information needed to predict future evolution) and that integration errors remain small over the prediction horizon."
   },
   "attention-for-scientific-fields": {
     "equations": [
       "Attention(Q, K, V) = softmax( Q K^T / √d_k ) V",
-      "output_i = Σ_j α_{ij} v_j  where  α_{ij} = exp(q_i · k_j) / Σ_l exp(q_i · k_l)",
+      "output_i = Σ_j α_{ij} v_j  where  α_{ij} = exp(q_i · k_j / √d_k) / Σ_l exp(q_i · k_l / √d_k)",
       "field_pred(x) = Attention( query(x), key(field), value(field) )"
     ],
     "symbols": [
-      {"sym": "q_i", "meaning": "query at position i—'what information does this location need?'"},
-      {"sym": "k_j", "meaning": "key at position j—'what does this position offer?'"},
-      {"sym": "v_j", "meaning": "value at position j—the actual data being attended to"},
-      {"sym": "α_{ij}", "meaning": "attention weight: how much position i should attend to position j"},
-      {"sym": "d_k", "meaning": "dimension of keys, used for scaling"}
+      {
+        "sym": "q_i",
+        "meaning": "query at position i—'what information does this location need?'"
+      },
+      {
+        "sym": "k_j",
+        "meaning": "key at position j—'what does this position offer?'"
+      },
+      {
+        "sym": "v_j",
+        "meaning": "value at position j—the actual data being attended to"
+      },
+      {
+        "sym": "α_{ij}",
+        "meaning": "attention weight: how much position i should attend to position j"
+      },
+      {
+        "sym": "d_k",
+        "meaning": "dimension of keys, used for scaling"
+      }
     ],
     "note": "Attention learns which distant or nearby field locations matter for predicting each point by computing similarity between queries and keys. This assumes spatially distant information can propagate through attention patterns and that learned weights reflect real physical dependencies."
   },
@@ -129,12 +255,30 @@
       "B[u] = u - g  (boundary condition error)"
     ],
     "symbols": [
-      {"sym": "u_θ", "meaning": "neural network approximation of solution"},
-      {"sym": "L_total", "meaning": "combined loss with three terms"},
-      {"sym": "N_d, N_r, N_b", "meaning": "number of data points, residual collocation points, boundary points"},
-      {"sym": "λ_r, λ_b", "meaning": "weights balancing data fit against physics and boundary compliance"},
-      {"sym": "R[u]", "meaning": "residual—leftover when true u is plugged into the PDE"},
-      {"sym": "N[u]", "meaning": "differential operator (e.g., advection + diffusion)"}
+      {
+        "sym": "u_θ",
+        "meaning": "neural network approximation of solution"
+      },
+      {
+        "sym": "L_total",
+        "meaning": "combined loss with three terms"
+      },
+      {
+        "sym": "N_d, N_r, N_b",
+        "meaning": "number of data points, residual collocation points, boundary points"
+      },
+      {
+        "sym": "λ_r, λ_b",
+        "meaning": "weights balancing data fit against physics and boundary compliance"
+      },
+      {
+        "sym": "R[u]",
+        "meaning": "residual—leftover when true u is plugged into the PDE"
+      },
+      {
+        "sym": "N[u]",
+        "meaning": "differential operator (e.g., advection + diffusion)"
+      }
     ],
     "note": "PINNs merge three loss terms: fitting sparse data, obeying the PDE at collocation points, and satisfying boundary conditions. This assumes the PDE is correct everywhere and that the neural network can represent solutions smoothly enough to take derivatives accurately."
   },
@@ -145,11 +289,26 @@
       "L = (1/N) Σ_i ||G_θ(a_i) - u_i||²_{L²(Ω)}"
     ],
     "symbols": [
-      {"sym": "G_θ", "meaning": "learned operator—a function-to-function map with parameters θ"},
-      {"sym": "a(x), u(x)", "meaning": "input and output function fields"},
-      {"sym": "A → U", "meaning": "operator maps from space of input functions to output functions"},
-      {"sym": "F, F^{-1}", "meaning": "Fourier transform and inverse (spectral representation)"},
-      {"sym": "R_φ", "meaning": "learnable weights in Fourier space"}
+      {
+        "sym": "G_θ",
+        "meaning": "learned operator—a function-to-function map with parameters θ"
+      },
+      {
+        "sym": "a(x), u(x)",
+        "meaning": "input and output function fields"
+      },
+      {
+        "sym": "A → U",
+        "meaning": "operator maps from space of input functions to output functions"
+      },
+      {
+        "sym": "F, F^{-1}",
+        "meaning": "Fourier transform and inverse (spectral representation)"
+      },
+      {
+        "sym": "R_φ",
+        "meaning": "learnable weights in Fourier space"
+      }
     ],
     "note": "Operator learning treats the unknown as a map between entire functions rather than a single solution. This assumes the operator is well-defined on the function spaces and that test cases cover the domain where the learned operator must work."
   },
@@ -160,11 +319,26 @@
       "speedup ≈ cost_simulator / cost_surrogate  (typically 100-1000x)"
     ],
     "symbols": [
-      {"sym": "y_simulator", "meaning": "expensive ground-truth output (expensive CFD, FEM solver, etc.)"},
-      {"sym": "ŷ_θ", "meaning": "fast neural network surrogate"},
-      {"sym": "[x_min, x_max]", "meaning": "design space where the surrogate is trained and valid"},
-      {"sym": "ε", "meaning": "error tolerance for surrogate accuracy"},
-      {"sym": "cost", "meaning": "wall-clock time or compute budget"}
+      {
+        "sym": "y_simulator",
+        "meaning": "expensive ground-truth output (expensive CFD, FEM solver, etc.)"
+      },
+      {
+        "sym": "ŷ_θ",
+        "meaning": "fast neural network surrogate"
+      },
+      {
+        "sym": "[x_min, x_max]",
+        "meaning": "design space where the surrogate is trained and valid"
+      },
+      {
+        "sym": "ε",
+        "meaning": "error tolerance for surrogate accuracy"
+      },
+      {
+        "sym": "cost",
+        "meaning": "wall-clock time or compute budget"
+      }
     ],
     "note": "A surrogate replaces an expensive simulator with a fast learned model trained on examples. This assumes the surrogate generalizes accurately within its training range and that the range covers all conditions where the surrogate will be deployed."
   },
@@ -176,11 +350,26 @@
       "aleatoric_uncertainty = E_θ[ var[y|x,θ] ]"
     ],
     "symbols": [
-      {"sym": "p(y*|x*,D)", "meaning": "probability of output y* given new input x* and training data D"},
-      {"sym": "p(θ|D)", "meaning": "posterior distribution of parameters given observed data"},
-      {"sym": "M", "meaning": "number of ensemble members or dropout samples"},
-      {"sym": "epistemic", "meaning": "uncertainty from not knowing the true model (reducible with more data)"},
-      {"sym": "aleatoric", "meaning": "irreducible noise in the data itself"}
+      {
+        "sym": "p(y*|x*,D)",
+        "meaning": "probability of output y* given new input x* and training data D"
+      },
+      {
+        "sym": "p(θ|D)",
+        "meaning": "posterior distribution of parameters given observed data"
+      },
+      {
+        "sym": "M",
+        "meaning": "number of ensemble members or dropout samples"
+      },
+      {
+        "sym": "epistemic",
+        "meaning": "uncertainty from not knowing the true model (reducible with more data)"
+      },
+      {
+        "sym": "aleatoric",
+        "meaning": "irreducible noise in the data itself"
+      }
     ],
     "note": "Uncertainty quantification reports not just a prediction but a distribution or confidence interval. This assumes the model class contains the truth and that out-of-distribution inputs are recognizable as different from the training domain."
   },
@@ -191,11 +380,26 @@
       "F = {f | f built from {x, y, z, +, -, ×, /, sin, exp, ...}}"
     ],
     "symbols": [
-      {"sym": "f", "meaning": "symbolic formula (human-readable equation)"},
-      {"sym": "F", "meaning": "space of all allowed formula structures"},
-      {"sym": "complexity(f)", "meaning": "penalty term favoring short formulas over long ones"},
-      {"sym": "α", "meaning": "weight on complexity—controls how much to prefer simplicity"},
-      {"sym": "tokens(f)", "meaning": "count of operations and variables in f"}
+      {
+        "sym": "f",
+        "meaning": "symbolic formula (human-readable equation)"
+      },
+      {
+        "sym": "F",
+        "meaning": "space of all allowed formula structures"
+      },
+      {
+        "sym": "complexity(f)",
+        "meaning": "penalty term favoring short formulas over long ones"
+      },
+      {
+        "sym": "α",
+        "meaning": "weight on complexity—controls how much to prefer simplicity"
+      },
+      {
+        "sym": "tokens(f)",
+        "meaning": "count of operations and variables in f"
+      }
     ],
     "note": "Symbolic regression searches for interpretable equations by trading fit quality against formula length. This assumes the true relationship can be expressed concisely using the allowed operations and that simpler formulas are more likely to transfer to new data."
   },
@@ -206,11 +410,26 @@
       "transfer: θ_new = fine-tune(θ_pretrained, {(a_new, u_new)}, small_lr)"
     ],
     "symbols": [
-      {"sym": "θ", "meaning": "shared foundation model parameters trained on many PDE tasks"},
-      {"sym": "a_k", "meaning": "input condition k (initial condition, boundary, coefficient field)"},
-      {"sym": "u_k", "meaning": "true solution k to PDE task k"},
-      {"sym": "{(a_k, u_k)}_k", "meaning": "training corpus of K solved PDE problems"},
-      {"sym": "a_new", "meaning": "input to a new held-out PDE task"}
+      {
+        "sym": "θ",
+        "meaning": "shared foundation model parameters trained on many PDE tasks"
+      },
+      {
+        "sym": "a_k",
+        "meaning": "input condition k (initial condition, boundary, coefficient field)"
+      },
+      {
+        "sym": "u_k",
+        "meaning": "true solution k to PDE task k"
+      },
+      {
+        "sym": "{(a_k, u_k)}_k",
+        "meaning": "training corpus of K solved PDE problems"
+      },
+      {
+        "sym": "a_new",
+        "meaning": "input to a new held-out PDE task"
+      }
     ],
     "note": "Foundation models pre-train on many PDE tasks to learn shared patterns, then fine-tune on new tasks. This assumes the PDE families are related enough that patterns transfer and that the new task is similar enough to the pre-training distribution."
   }
