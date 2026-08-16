@@ -594,7 +594,7 @@
 - One sentence: A PDE is a rule for how a whole field changes across space and time.
 - Use when: Use it when one value is not enough because neighbors, boundaries, and time all matter.
 - Do not use when: Do not reduce the problem to independent points if movement, flow, stress, diffusion, or waves connect those points.
-- Plain formula: change over time = movement through space + sources + boundary effects
+- Plain formula: change over time = transport through space + diffusion (smoothing) + sources, with boundary and initial values acting as constraints (not extra added terms)
 - Why it matters: Most physics-informed machine learning borrows its scientific burden from PDEs.
 
 ### Operator Learning
@@ -776,7 +776,7 @@
 - Problem: something changes everywhere at once—how do you describe that with math?
 - Observed: a field such as temperature, pressure, concentration, velocity, or displacement
 - Hidden: how every point in the field affects nearby points over time
-- Plain formula: change over time = movement through space + sources + boundary effects
+- Plain formula: change over time = transport through space + diffusion (smoothing) + sources, with boundary and initial values acting as constraints (not extra added terms)
 - Smallest useful formula: The smallest useful formula must start from a field such as temperature, pressure, concentration, velocity, or displacement, carry the answer toward how every point in the field affects nearby points over time, and include a check that can fail: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error.
 - First wrong simplification: The first wrong shortcut is to keep the part that gives an answer while dropping the part that checks it. That would hide this failure: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error.
 - Failure test: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error
@@ -1002,8 +1002,8 @@
 - What to check: move the training points, inspect sharp regions, and compare against a numerical solve or held-out measurements
 
 ### Partial Differential Equations
-- Formula shape: change over time = movement through space + sources + boundary effects
-- Parts: change over time, movement through space, sources, boundary effects
+- Formula shape: change over time = transport through space + diffusion (smoothing) + sources, with boundary and initial values acting as constraints (not extra added terms)
+- Parts: change over time, transport through space, diffusion (smoothing), sources, with boundary and initial values acting as constraints (not extra added terms)
 - Everyday reading: Most physics-informed machine learning borrows its scientific burden from PDEs.
 - What to check: change the boundary, grid, source term, or physical scale and check conservation, stability, and measured error
 

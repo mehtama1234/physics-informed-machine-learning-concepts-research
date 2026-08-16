@@ -842,7 +842,7 @@ TOPIC_DEEP_DIVES = {
             "Use the rule to connect local change to nearby values.",
             "Check conservation, stability, and boundary behavior.",
         ],
-        "plain_formula": "change over time = movement through space + sources + boundary effects",
+        "plain_formula": "change over time = transport through space + diffusion (smoothing) + sources, with boundary and initial values acting as constraints (not extra added terms)",
         "important_because": "Most physics-informed machine learning borrows its scientific burden from PDEs.",
         "red_flags": [
             "The boundary condition is vague.",
