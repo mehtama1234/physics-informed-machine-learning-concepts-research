@@ -62,10 +62,10 @@
       },
       {
         "sym": "λ",
-        "meaning": "regularization strength—how much to penalize model complexity"
+        "meaning": "regularization strength—how much to penalize model size"
       }
     ],
-    "note": "Deep learning stacks many layers to learn complex functions from examples. The loss function only measures error on training data, so it assumes training examples are representative and that small training error transfers to unseen cases."
+    "note": "Deep learning stacks many layers to learn richly varied functions from examples. The loss function only measures error on training data, so it assumes training examples are representative and that small training error transfers to unseen cases."
   },
   "scientific-machine-learning": {
     "equations": [
@@ -375,8 +375,8 @@
   },
   "symbolic-regression": {
     "equations": [
-      "f* = argmin_{f ∈ F} Σ_i |y_i - f(x_i)|² + α · complexity(f)",
-      "complexity(f) = |tokens(f)|  (number of operations)",
+      "f* = argmin_{f ∈ F} Σ_i |y_i - f(x_i)|² + α · size(f)",
+      "size(f) = |tokens(f)|  (number of operations)",
       "F = {f | f built from {x, y, z, +, -, ×, /, sin, exp, ...}}"
     ],
     "symbols": [
@@ -389,12 +389,12 @@
         "meaning": "space of all allowed formula structures"
       },
       {
-        "sym": "complexity(f)",
+        "sym": "size(f)",
         "meaning": "penalty term favoring short formulas over long ones"
       },
       {
         "sym": "α",
-        "meaning": "weight on complexity—controls how much to prefer simplicity"
+        "meaning": "weight on size—controls how much to prefer simplicity"
       },
       {
         "sym": "tokens(f)",
