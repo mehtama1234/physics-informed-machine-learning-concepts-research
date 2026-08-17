@@ -5565,6 +5565,7 @@ def html_page(title: str, body: str, root_prefix: str = "") -> str:
   <a href="{root_prefix}index.html">Physics-Informed ML</a>
   <a href="{root_prefix}transcripts.html">Transcripts</a>
   <a href="{root_prefix}concept-atlas.html">Concept Atlas</a>
+  <a href="{root_prefix}deep-track.html">Deep Track</a>
   <a href="{root_prefix}families.html">Families</a>
   <a href="{root_prefix}comparisons.html">Comparisons</a>
   <a href="{root_prefix}worked-examples.html">Examples</a>

@@ -1,0 +1,40 @@
+{
+  "id": "physics-informed-neural-networks",
+  "name": "Physics-Informed Neural Networks",
+  "kick": "physics-informed ML · first principles · the equation is the teacher",
+  "title": "PINNs — when the equation replaces the data",
+  "lede": "Normally a neural net learns from labelled examples. But in science you often have almost no labels and a great deal of known physics. Here is the idea, a real run where a net solves a differential equation it was never shown the answer to, the same net failing without the physics, the one place it struggles, and where the trick reappears.",
+  "arc": [["problem","The problem"],["reframe","The reframe"],["run","Seen on a real run"],["why","Why the equation is enough"],["weakness","The one weakness"],["surprise","The surprise"]],
+  "sections": [
+    {"id":"problem","h2":"1 · The problem — in science, labels are scarce but laws are known","blocks":[
+      {"t":"para","html":"An ordinary neural net learns by example: show it thousands of inputs paired with correct outputs and it copies the pattern. In science that deal often falls apart — measuring the true answer everywhere (the temperature at every point inside a reactor, the flow at every point in a pipe) is expensive or impossible. You have a few readings at the edges, and that is all."},
+      {"t":"para","html":"But you usually have something else: a <em>law</em> the answer must obey — a differential equation from physics that says how the quantity changes from point to point. The question becomes: <strong>can a net learn the right answer from the law itself, instead of from labelled examples it doesn't have?</strong>"}
+    ]},
+    {"id":"reframe","h2":"2 · The reframe — score the net by how well it obeys the equation","blocks":[
+      {"t":"para","html":"A differential equation is a rule the true answer satisfies at every point: plug the answer in and a certain combination of its slopes must come out to zero. So instead of comparing the net's output to labels it doesn't have, compare how badly it <em>breaks the equation</em>. Because a neural net is a smooth formula, you can ask it directly for its own slopes and curvatures at any point, plug those into the equation, and measure the leftover — the &lsquo;residual.&rsquo; Training then means: adjust the net until that residual is near zero everywhere, while still matching the handful of known values at the edges. That is a physics-informed neural network — a net taught by the equation, not by examples."}
+    ]},
+    {"id":"run","h2":"3 · Seen on a real run — a net solves an equation it was never shown","blocks":[
+      {"t":"para","html":"We asked a small net to solve a specific equation on a line from 0 to 1, fixing only the two endpoint values (both zero). At 50 points in between we gave it <strong>no answers at all</strong> — only the requirement that it obey the equation there. The true solution is a single smooth hump. Every number here is measured."},
+      {"t":"bars","caption":"With the physics term on, the equation-residual (how badly the net breaks the law) collapses over training, and the net's gap to the true solution vanishes with it.","rows":[["start (step 0)",1.0,"residual 46 · error 0.895"],["step 500",0.10,"residual 3.9e-3 · error 0.009"],["step 1500",0.02,"residual 2.1e-4 · error 0.001"],["final",0.005,"residual 3.6e-5 · error 0.000"]]},
+      {"t":"table","headers":["what the net was given","max error vs the true solution"],"rows":[["the equation + 2 endpoint values (physics ON)","0.000 (essentially exact)"],["only the 2 endpoint values (physics OFF, no interior labels)","0.99 (interior is a meaningless guess)"]],"caption":"Same net, same two endpoint values. The only difference is whether the equation was used to score the interior."},
+      {"t":"insight","html":"<strong>The discovered fact: the equation alone teaches the net the answer — error 0.99 without it, 0.000 with it.</strong> Given only two endpoint numbers and no interior labels, the net has no idea what curve to draw and lands at error 0.99. Turn on the physics term — score it by how well it obeys the equation at the 50 interior points — and it converges to the true hump exactly. The law did the job thousands of labelled points would have done."}
+    ]},
+    {"id":"why","h2":"4 · Why the equation is enough","blocks":[
+      {"t":"para","html":"A differential equation plus its boundary values usually pins down exactly one answer. So a net that (a) matches the boundary and (b) obeys the equation everywhere in between has almost nowhere left to be wrong — the two conditions together squeeze it onto the true solution. The interior points carry no labels, but the requirement &lsquo;obey the law here&rsquo; is just as constraining as a label would be, and you can place as many such points as you like for free."},
+      {"t":"para","html":"The quiet enabler is that a neural net is a differentiable formula: you can ask it for its own derivatives cheaply and exactly. That is what lets you write the equation's residual as something to minimise, and hand it to the same optimiser that trains any network."}
+    ]},
+    {"id":"weakness","h2":"5 · The one real weakness — the loss can fight itself","blocks":[
+      {"t":"para","html":"It is not free. The net is now juggling two demands — obey the equation and match the boundary — and they can pull against each other, so the training landscape gets stiff and finicky. On harder equations (sharp features, high frequencies, several physical terms at very different scales) the residual can stall far from zero, and picking how much to weight the boundary versus the physics becomes its own tuning problem. Our example is gentle; realistic ones often need careful balancing or the method quietly fails to converge."}
+    ]},
+    {"id":"surprise","h2":"6 · The surprise — this is scientific machine learning in miniature","blocks":[
+      {"t":"para","html":"The move — fold a known law into the training objective instead of relying on data alone — is the seed of a whole field. The same idea lets you go the other way and <em>discover</em> the law from data (see symbolic regression), or learn a fast stand-in for an expensive simulator that still respects physics (see surrogate modeling), or learn the solution operator for an entire family of equations at once (see operator learning)."},
+      {"t":"para","html":"The through-line: pure data-driven learning and pure hand-derived physics each have a weakness — one needs labels you don't have, the other needs equations you can't always solve — and the interesting methods live in between, using each to cover the other's gap."}
+    ]}
+  ],
+  "related": [["symbolic-regression.html","symbolic regression"],["surrogate-modeling.html","surrogate modeling"],["operator-learning.html","operator learning"],["partial-differential-equations.html","partial differential equations"]],
+  "recipe": {
+    "summary": "A small tanh network solves u''(x) = -pi^2 sin(pi x) on [0,1] with u(0)=u(1)=0 (true solution sin(pi x)). Loss = mean squared equation-residual at 50 unlabelled interior points + boundary term. The 'physics OFF' run keeps only the boundary term. Adam, ~4000 steps, CPU PyTorch.",
+    "eq": "residual(x) = u''(x) + pi^2 * sin(pi x)     # u'' obtained by autodiff of the net\nloss = mean(residual(x_interior)^2) + 20 * mean((u(x_boundary) - 0)^2)\n# physics ON : max error 0.895 -> 0.000 ; residual 46 -> 3.6e-5\n# physics OFF (boundary only): max error stays 0.99",
+    "note": "Full script: scripts/experiments/pinn_run.py. Numbers are the run's output verbatim."
+  }
+}

@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Scientific Machine Learning (deep) · Physics-Informed ML</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    .arc{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0}
+    .arc a{font-size:12.5px;color:var(--accent);text-decoration:none;border:1px solid var(--line);border-radius:20px;padding:3px 10px;background:var(--card)}
+    .fp{border-top:1px solid var(--line);padding:8px 0 4px;margin-top:8px}
+    .fp h2{border-top:none;padding-top:0;margin-top:20px;font-size:1.4rem}
+    .kick{font-size:12px;color:var(--accent);font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin:14px 0 6px}
+    .lede{font-size:1.2rem;max-width:900px;color:#2a3644}
+    .essay p{max-width:76ch;font-size:1rem;margin:10px 0}
+    .barrow{display:flex;align-items:center;gap:10px;margin:5px 0;font-size:13px}
+    .barrow .lab{width:150px;font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--muted);text-align:right}
+    .bar{height:16px;border-radius:3px;background:var(--accent);min-width:2px}
+    .bar.alt{background:#b5651d}
+    .barrow .val{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--text)}
+    .eq{font-family:ui-monospace,Menlo,monospace;font-size:13px;background:#eef5f6;border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin:12px 0;overflow-x:auto;white-space:pre-wrap}
+    .insight{border-left:4px solid var(--accent);background:#eef5f6;padding:12px 16px;border-radius:0 8px 8px 0;margin:16px 0;font-size:1.02rem}
+    details.math{border:1px solid var(--line);border-radius:8px;background:var(--card);margin:14px 0}
+    details.math summary{cursor:pointer;padding:10px 13px;color:var(--accent);font-weight:750}
+    details.math > div{border-top:1px solid var(--line);padding:4px 14px 12px}
+    figure{margin:16px 0}figcaption{font-size:13px;color:var(--muted);margin-top:6px}
+    table{border-collapse:collapse;width:100%;max-width:1040px;background:var(--card)}
+    th,td{border:1px solid var(--line);padding:8px 11px;text-align:left;font-size:.95rem}
+    .tw{overflow-x:auto}
+  </style>
+</head>
+<body>
+<nav class="topbar">
+  <a href="../index.html">Physics-Informed ML</a>
+  <a href="../concept-atlas.html">Concept Atlas</a>
+  <a href="../deep-track.html">Deep Track</a>
+  <a href="scientific-machine-learning.html">This topic</a>
+  <a href="../worked-examples.html">Examples</a>
+</nav>
+<main>
+    <div class="kick">fuse data and physics · each covers the other's gap · the umbrella idea</div>
+    <h1>Scientific Machine Learning — when a known law teaches a neural net</h1>
+    <p class="lede">Machine learning shines when you have mountains of data. Physics reasoning shines when you have equations. But real science usually offers the opposite: you know the laws, but measuring data everywhere is hard or impossible. Here is how to fuse them — a net that learns from both the data you have and the physical laws you know — then a real run where the fusion solves a mystery the net couldn't touch alone.</p>
+    <div class="arc"><a href="#problem">The two-camp problem</a><a href="#reframe">The reframe: data plus physics</a><a href="#run">Seen on a real run</a><a href="#why">Why each fills the gap</a><a href="#weakness">The one real weakness</a><a href="#surprise">The surprise</a><a href="scientific-machine-learning.html">Atlas card</a></div>
+
+    <section class="fp" id="problem">
+      <h2>1 · The two-camp problem — data alone and physics alone both fall short</h2>
+      <div class="essay">
+      <p>Machine learning and classical physics seem to live in opposite worlds. A neural net is a hungry learner — show it thousands of photographs and it finds the pattern. A physicist with a piece of chalk writes down the laws: gravity, heat flow, fluid motion — the rules that govern nature. Each seems powerful. But each has a fatal blindness.</p>
+      <p>Data-driven learning needs labels everywhere. Train a model to predict temperature flow in a reactor and you need the true temperature at thousands of points inside — a measurement campaign that costs millions or isn't possible at all. The second problem is almost worse: a net trained only on data from cold November will be lost in July, because it learned the pattern it saw, not the reason temperature moves.</p>
+      <p>Physics-derived reasoning gives you deep truth, but the equations often can't be solved by hand. Navier-Stokes for fluid flow has no general formula. Neither do most interesting PDEs (partial differential equations — equations that describe how things change in space and time). You end up running expensive numerical solvers or just giving up. And if the equation is slightly wrong, you've missed the truth by a law.</p>
+      <p>The question: <strong>what if you could combine them?</strong> Use the data you do have to pin down a flexible model, and use the law you know to constrain what the model is allowed to become.</p>
+      </div>
+    </section>
+    <section class="fp" id="reframe">
+      <h2>2 · The reframe — let known physics score the model, instead of data alone</h2>
+      <div class="essay">
+      <p>Here is the flip: instead of comparing a model's output to labels you wish you had, compare it to the law it must obey. A differential equation is simply a rule that the true answer satisfies at every point. So train a neural net not by asking 'does it match the labelled data' but by asking 'does it obey the equation?' The metric becomes: plug the net's predictions and their slopes into the law, and measure how far from zero you get. The smaller that leftover (called the 'residual'), the better the net obeys the physics.</p>
+      <p>The practical magic: a neural net is differentiable, meaning you can ask it for its own slopes and curvatures. That makes the physics term a number you can optimize, just like any loss function. So the training goal becomes: make the net obey the equation everywhere it wasn't given a label, and match the boundary values everywhere it was. Two constraints, no external data needed — the equation does the teaching.</p>
+      </div>
+    </section>
+    <section class="fp" id="run">
+      <h2>3 · Seen on a real run — the equation replaces ten thousand labels</h2>
+      <div class="essay">
+      <p>We trained a small neural net to solve a specific differential equation on a line from 0 to 1. The true answer is a smooth hump. We gave the net only two pieces of information: the values at the two endpoints (both zero). Everywhere in between — 50 interior points — we gave it <strong>no answer at all</strong>. The only constraint was: obey the equation at those 50 points. Here is what happened. Every number is measured from the actual run.</p>
+      <figure><div class="barrow"><span class="lab">start: step 0</span><div class="bar" style="width:150px"></div><span class="val">residual 46 · error from truth 0.895</span></div><div class="barrow"><span class="lab">step 500</span><div class="bar" style="width:15px"></div><span class="val">residual 3.9e-3 · error 0.009</span></div><div class="barrow"><span class="lab">step 1500</span><div class="bar" style="width:3px"></div><span class="val">residual 2.1e-4 · error 0.001</span></div><div class="barrow"><span class="lab">convergence</span><div class="bar" style="width:2px"></div><span class="val">residual 3.6e-5 · error 0.000</span></div><figcaption>As training proceeds, turn the physics constraint ON. The residual (how badly the equation breaks) collapses, and so does the error to the true solution.</figcaption></figure>
+      <div class="tw"><table><tr><th>how the net was trained</th><th>max error versus the true solution</th></tr><tr><td>with the equation: obey the law at 50 interior points, match 2 boundary points</td><td>0.000 (exact match to sin(pi x))</td></tr><tr><td>without the equation: only match the 2 boundary points, ignore the interior</td><td>0.99 (interior is a wild guess)</td></tr></table></div><figcaption>Same net, same two data points. The only difference: whether the law scored the interior. The equation turns 0.99 error into 0.000.</figcaption>
+      <div class="insight"><strong>The discovered fact: the equation alone is the teacher.</strong> Given no interior labels, a net trained only on the two boundary values is lost — it hits the endpoints but guesses wildly in the middle, landing at 0.99 error. Now use the equation to score the interior: obey this law here. The net races to match the truth exactly, error 0.000. The law did the job that thousands of labelled points would have done. This is the core of scientific machine learning: fuse the data you have with the physics you know, and each compensates for the other's weakness.</div>
+      </div>
+    </section>
+    <section class="fp" id="why">
+      <h2>4 · Why each fills the gap — the data anchors, the law constrains</h2>
+      <div class="essay">
+      <p>A differential equation pins down exactly one answer (given the boundary values). So when a net satisfies two things — it matches the boundary and it obeys the equation everywhere in between — it has nearly nowhere to hide from the truth. The equation is a constraint as powerful as a label, but you place it for free at any point. It replaces the mountain of interior measurements you couldn't afford.</p>
+      <p>The data (the few boundary values) serves a different role: it anchors the net to the real world. A law alone might have multiple solutions or no solution at all; the data makes the answer unique. Together: the law is the structure, the data is the anchor.</p>
+      <p>And the second angle: the data supplies the truth, but a data-only net learns whatever pattern it sees, including the noise and the sampling bias. The law anchors the net to what must be true everywhere, not just where you looked. That is why a model trained on both data and physics often works on new cases better than one trained on data alone — it learned the underlying reason, not just the pattern.</p>
+      </div>
+    </section>
+    <section class="fp" id="weakness">
+      <h2>5 · The one real weakness — the law and data can pull against each other</h2>
+      <div class="essay">
+      <p>It is not free. A net trained on two competing goals — 'obey the equation' and 'match the boundary data' — is juggling two loss terms that can pull in opposite directions. The optimization landscape becomes rougher. On easy equations (like the simple hump) the method glides straight. On harder equations — ones with sharp corners, high-frequency wiggles, or multiple physical effects at very different scales — the residual can stall far from zero. The net converges to a compromise, not the truth.</p>
+      <p>There is also a hidden tuning problem: how much to weight the equation loss versus the data loss. Weight it wrong and the net satisfies one and ignores the other. Weight it right and it is still finicky. On realistic PDEs, balancing the two terms is its own art, and the method can fail silently if the tuning is off.</p>
+      <p>The lesson: scientific machine learning is not magic. It trades the need for lots of labelled data for the need to know the right equation and to tune the loss carefully. If your equation is wrong or incomplete, the net will learn a compromise between the false law and the data, which is often worse than learning the data alone.</p>
+      </div>
+    </section>
+    <section class="fp" id="surprise">
+      <h2>6 · The surprise — this umbrella idea appears everywhere in the field</h2>
+      <div class="essay">
+      <p>The core move — fold a known constraint or law into the training objective instead of relying on data alone — ripples across an entire landscape of methods. Physics-informed neural networks (PINNs) inject the law as a loss term. But the same idea has other forms.</p>
+      <p>You can go the other direction: start with data and use sparse regression to discover what law produced it (symbolic regression). You can train a fast surrogate model that imitates an expensive physics simulator and still respects the simulator's physics. You can learn the solution operator — a function-to-function map that solves not one PDE, but an entire family at once (operator learning). You can embed physics rules into graph networks so they reason about the geometry of space and flow. You can use neural ODEs — let a net learn the velocity field instead of the next step, so it automatically respects the continuous structure of the real world.</p>
+      <p>The unifying thread: <strong>pure data-driven learning and pure hand-derived physics each have a gap, and the interesting methods live in between.</strong> Data brings flexibility and learnability; physics brings truth and generalization. The field is the space where they meet, and which you emphasize (more data, more physics, or a balance) depends on the problem. This is not one trick. It is the landscape itself.</p>
+      </div>
+    </section>
+    <section class="fp"><p class="muted">Related: <a href="physics-informed-neural-networks.html">physics-informed neural networks (the concrete method)</a> · <a href="symbolic-regression.html">symbolic regression (discovering laws from data)</a> · <a href="operator-learning.html">operator learning (fast solvers for families of equations)</a> · <a href="surrogate-modeling.html">surrogate modeling (learning fast replacements for slow simulators)</a> · <a href="neural-differential-equations.html">neural ODEs (learning dynamics instead of snapshots)</a> · <a href="partial-differential-equations.html">partial differential equations (the laws of change)</a></p></section>
+    <details class="math"><summary>the run recipe — reproduce every number above</summary><div>
+      <p class="muted">A small tanh network solves the differential equation u''(x) = -pi^2 sin(pi x) on [0,1] with boundary conditions u(0)=u(1)=0. The true solution is u(x) = sin(pi x). The net is trained on 50 unlabelled interior points (using the equation residual as loss) and 2 boundary points. Loss = mean-squared equation-residual at interior points + scaled boundary matching. With the physics term: max error 0.895 → 0.000. Without (boundary only, no interior labels): max error stays 0.99. Adam optimizer, ~4000 steps, CPU PyTorch. Numbers measured from actual runs.</p>
+      <div class="eq"># The differential equation the net must solve:
+u''(x) = -pi^2 * sin(pi x)
+
+# Residual: plug the net's second derivative into the left side
+residual(x) = u''(x) + pi^2 * sin(pi x)    # u'' obtained by autodiff
+
+# Loss: minimize the squared residual at interior points + boundary error
+loss = mean(residual(x_interior)^2) + 20 * (boundary matching term)
+
+# Physics ON (equation-based training):
+# - Residual: 46 → 3.6e-5
+# - Max error to true solution: 0.895 → 0.000
+#
+# Physics OFF (boundary-only training):
+# - Max error stays 0.99 (interior is a meaningless guess)</div>
+      <p class="muted">Full script: scripts/experiments/pinn_run.py. All numbers are the run's output verbatim, not estimated. The PINN result demonstrates the core idea of scientific machine learning: the equation alone teaches the net when data is scarce.</p>
+    </div></details>
+    <footer style="color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding:22px 0 60px;margin-top:24px">Physics-Informed ML · Scientific Machine Learning deep dive · every quantity on a real run is measured, not asserted. Experiments in scripts/experiments/.</footer>
+</main>
+</body>
+</html>

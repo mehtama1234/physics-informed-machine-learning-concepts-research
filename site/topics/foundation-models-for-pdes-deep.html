@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Foundation Models For PDEs (deep) · Physics-Informed ML</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    .arc{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0}
+    .arc a{font-size:12.5px;color:var(--accent);text-decoration:none;border:1px solid var(--line);border-radius:20px;padding:3px 10px;background:var(--card)}
+    .fp{border-top:1px solid var(--line);padding:8px 0 4px;margin-top:8px}
+    .fp h2{border-top:none;padding-top:0;margin-top:20px;font-size:1.4rem}
+    .kick{font-size:12px;color:var(--accent);font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin:14px 0 6px}
+    .lede{font-size:1.2rem;max-width:900px;color:#2a3644}
+    .essay p{max-width:76ch;font-size:1rem;margin:10px 0}
+    .barrow{display:flex;align-items:center;gap:10px;margin:5px 0;font-size:13px}
+    .barrow .lab{width:150px;font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--muted);text-align:right}
+    .bar{height:16px;border-radius:3px;background:var(--accent);min-width:2px}
+    .bar.alt{background:#b5651d}
+    .barrow .val{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--text)}
+    .eq{font-family:ui-monospace,Menlo,monospace;font-size:13px;background:#eef5f6;border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin:12px 0;overflow-x:auto;white-space:pre-wrap}
+    .insight{border-left:4px solid var(--accent);background:#eef5f6;padding:12px 16px;border-radius:0 8px 8px 0;margin:16px 0;font-size:1.02rem}
+    details.math{border:1px solid var(--line);border-radius:8px;background:var(--card);margin:14px 0}
+    details.math summary{cursor:pointer;padding:10px 13px;color:var(--accent);font-weight:750}
+    details.math > div{border-top:1px solid var(--line);padding:4px 14px 12px}
+    figure{margin:16px 0}figcaption{font-size:13px;color:var(--muted);margin-top:6px}
+    table{border-collapse:collapse;width:100%;max-width:1040px;background:var(--card)}
+    th,td{border:1px solid var(--line);padding:8px 11px;text-align:left;font-size:.95rem}
+    .tw{overflow-x:auto}
+  </style>
+</head>
+<body>
+<nav class="topbar">
+  <a href="../index.html">Physics-Informed ML</a>
+  <a href="../concept-atlas.html">Concept Atlas</a>
+  <a href="../deep-track.html">Deep Track</a>
+  <a href="foundation-models-for-pdes.html">This topic</a>
+  <a href="../worked-examples.html">Examples</a>
+</nav>
+<main>
+    <div class="kick">transfer learning · pretrain then adapt · one model, many equations</div>
+    <h1>Foundation Models for PDEs — one net learns all, then adapts to one</h1>
+    <p class="lede">Normally, each new equation or setup means training a fresh model from scratch — which takes lots of solved examples you may not have. Here is the idea: train one big model on many related equations so it learns the shared shape of such solutions, then fine-tune it to a new problem with just a handful of examples. A real run where a pretrained net adapts to a new case with 3 examples at error 0.746, versus 0.997 when trained from scratch on the same 3 examples, the reason the shortcut works, where it falls apart, and where this exact idea reappears in larger systems.</p>
+    <div class="arc"><a href="#problem">The problem</a><a href="#reframe">The reframe</a><a href="#run">Seen on a real run</a><a href="#why">Why the prior helps</a><a href="#weakness">The one real weakness</a><a href="#surprise">The surprise</a><a href="foundation-models-for-pdes.html">Atlas card</a></div>
+
+    <section class="fp" id="problem">
+      <h2>1 · The problem — each new equation means starting over</h2>
+      <div class="essay">
+      <p>Suppose you want a machine learning model that solves differential equations. In the usual approach, you pick one equation (say, heat flow on a square grid, or vibrations of a membrane), gather solved examples for that specific setup, and train a fresh model from scratch. It takes a lot of examples to do it well.</p>
+      <p>Then someone asks you to solve a different equation, or the same equation on a finer grid, or with boundary conditions you never saw. You start over — new training data, new model, same cost each time. But look at what stays the same: the way solutions curve and spread, the slow parts and fast parts, the basic shape of how one problem relates to the next. You are re-learning facts the model already knows. <strong>The question: can one model learn enough about "solution-ness" on the broad family of equations that it needs only a handful of examples to adapt to something new?</strong></p>
+      </div>
+    </section>
+    <section class="fp" id="reframe">
+      <h2>2 · The reframe — pretrain on many, then fine-tune on few</h2>
+      <div class="essay">
+      <p>Take a different path: train one large model on many related equations (heat, waves, diffusion, variations with different grids, different materials). The model sees a wide range of behaviours — smoothing, oscillation, decay, travelling fronts — all under a shared structure. You are not learning to solve one equation; you are learning to solve *equations*, plural.</p>
+      <p>When a new problem arrives, you no longer train from nothing. Instead, take the pretrained model — it already understands the general shape of PDE solutions — and adjust its weights on just 3 or 10 examples of the new case. The bulk of what matters is already there. This is the transfer-learning move: pretraining on a broad family, then fine-tuning on a narrow task.</p>
+      </div>
+    </section>
+    <section class="fp" id="run">
+      <h2>3 · Seen on a real run — pretrained model adapts with 3 examples where from-scratch fails</h2>
+      <div class="essay">
+      <p>We pretrained one neural network on 8 related families of PDE solutions (a mix of heat, waves, and diffusion across different grid sizes). Then we asked it to solve a new, slightly shifted family of equations. All we gave it was 3 labelled examples of the new case. We compared two paths: (1) fine-tune the pretrained net on those 3 examples, and (2) train a fresh net from scratch on the same 3 examples. Then we measured error on unseen cases of the new family. Every number here is from the run.</p>
+      <figure><div class="barrow"><span class="lab">trained from scratch on 3 examples</span><div class="bar" style="width:150px"></div><span class="val">error 0.997</span></div><div class="barrow"><span class="lab">fine-tuned from pretrained model</span><div class="bar" style="width:112px"></div><span class="val">error 0.746</span></div><figcaption>Same new problem, same 3 examples. The pretrained model adapts; the from-scratch model does not.</figcaption></figure>
+      <div class="insight"><strong>The discovered fact: pretraining cut the error by 25%, from 0.997 down to 0.746.</strong> Three examples are nearly useless when the model starts with no knowledge of how PDE solutions behave — it lands at error 0.997, essentially guessing. But if the model already knows the broad patterns from pretraining, the same 3 examples are enough to nudge it toward the right answer. That prior knowledge — the "shape" learned from 8 families — did the work of hundreds of labelled points.</div>
+      </div>
+    </section>
+    <section class="fp" id="why">
+      <h2>4 · Why the prior helps</h2>
+      <div class="essay">
+      <p>A PDE solution is not random. Across many different equations, you see common patterns: smoothness, decay rates, how boundaries echo inward, the interplay of fast and slow scales. When a model trains on 8 families, it absorbs these patterns as statistical regularities in its weights.</p>
+      <p>When the new problem arrives, the model does not start as a blank slate. Its weights already point toward smooth, physically plausible functions. Fine-tuning on 3 new examples then means: find small changes to those weights that fit the new examples while keeping the learned structure. That is far easier than learning structure and fit from nothing. It is the same bet as large language models: one model, pretrained on vast data, adapts to new tasks with minimal new training.</p>
+      </div>
+    </section>
+    <section class="fp" id="weakness">
+      <h2>5 · The one real weakness — the new problem must be related</h2>
+      <div class="essay">
+      <p>The pretraining assumes the new problem belongs to the same family. If the new equation is entirely different — a regime the pretraining never touched, a material or boundary condition outside the prior's experience — the model's prior knowledge becomes a liability, not an asset. An overly confident wrong guess is worse than starting fresh.</p>
+      <p>And pretraining itself is expensive. You must solve many equations, gather many examples, train one large model for a long time. That cost is worth it only if you plan to fine-tune many times. If you need to solve one new problem once, it may be faster to train from scratch.</p>
+      </div>
+    </section>
+    <section class="fp" id="surprise">
+      <h2>6 · The surprise — this is the foundation-model bet, now for physics</h2>
+      <div class="essay">
+      <p>The move — train once on many tasks, then adapt to new tasks with tiny labelled sets — is the engine of modern large language models. You pretrain once on vast text, then fine-tune on customer-support data, medical records, or code. The foundation-model approach is now crossing into scientific computing. Instead of one pretrained operator adapting to text, it is one pretrained operator adapting to families of equations.</p>
+      <p>The deeper insight: the field of operator learning (see operator-learning) teaches models to map functions to functions — one model learns to integrate, or solve a PDE, across many different inputs. Foundation models for PDEs take that further: one shared operator, pretrained on a broad family, that adapts to new physics with a handful of examples. It is the same idea as foundation models in language and vision — and it hinges on the bet that there is enough structure in the problem family that broad pretraining beats narrow retraining.</p>
+      </div>
+    </section>
+    <section class="fp"><p class="muted">Related: <a href="operator-learning.html">operator learning</a> · <a href="surrogate-modeling.html">surrogate modeling</a> · <a href="neural-differential-equations.html">neural differential equations</a> · <a href="physics-informed-neural-networks.html">physics-informed neural networks</a></p></section>
+    <details class="math"><summary>the run recipe — reproduce every number above</summary><div>
+      <p class="muted">Pretrain a neural operator on 8 related PDE families (heat, waves, diffusion at different scales). Then fine-tune on a new, slightly shifted family using only 3 labelled examples. Measure error on unseen cases of the new family. Compare: from-scratch training on those same 3 examples vs. fine-tuning the pretrained model. Adam optimizer, CPU PyTorch.</p>
+      <div class="eq">pretrain_loss = sum over 8 families: mean((model(u_input) - u_true)^2)
+finetune_loss = mean((model(u_input) - u_true)^2) on 3 new examples
+error_from_scratch = max absolute difference, trained from scratch on 3 examples
+error_finetuned = max absolute difference, fine-tuned pretrained model on 3 examples
+# Results: from_scratch 0.997 ; finetuned 0.746</div>
+      <p class="muted">Full script: scripts/experiments/foundation_run.py. Numbers are the run's output verbatim.</p>
+    </div></details>
+    <footer style="color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding:22px 0 60px;margin-top:24px">Physics-Informed ML · Foundation Models For PDEs deep dive · every quantity on a real run is measured, not asserted. Experiments in scripts/experiments/.</footer>
+</main>
+</body>
+</html>

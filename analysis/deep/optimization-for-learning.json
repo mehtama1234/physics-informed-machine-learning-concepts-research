@@ -1,0 +1,188 @@
+{
+  "id": "optimization-for-learning",
+  "name": "Optimization For Learning",
+  "kick": "training is rolling downhill · the shape of the loss surface · momentum beats gradient descent",
+  "title": "Optimization for Learning — when the bowl is stretched, momentum matters",
+  "lede": "Training a model means finding the dials (called weights) that make a number called the loss as small as possible. But the loss landscape — the bowl-shaped surface you are rolling down — is rarely a nice symmetric bowl. Sometimes it is stretched and warped, making plain gradient descent zigzag slowly. Here is what a real stretched bowl looks like, why momentum works there, the one thing momentum still cannot do, and why normalizing your data or layers is actually solving an optimization problem in disguise.",
+  "arc": [
+    [
+      "problem",
+      "The problem"
+    ],
+    [
+      "reframe",
+      "The reframe"
+    ],
+    [
+      "run",
+      "Seen on a real run"
+    ],
+    [
+      "why",
+      "Why momentum wins on stretched ground"
+    ],
+    [
+      "weakness",
+      "The one real weakness"
+    ],
+    [
+      "surprise",
+      "The surprise"
+    ]
+  ],
+  "sections": [
+    {
+      "id": "problem",
+      "h2": "1 · The problem — you can only see downhill from where you stand",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "When you train a model, you want to find the best setting of all its dials. You have one tool: the slope in front of you — the gradient, which points downhill. At each step, you take a small step in that direction. Call this gradient descent. It is simple, and it works."
+        },
+        {
+          "t": "para",
+          "html": "But here is the catch: the shape of the valley you are rolling down changes everything. If the loss surface is a perfect bowl, you roll straight to the bottom. If it is a narrow ravine — steep on two sides, flat on two others — you zigzag slowly, zig on one slope, zag on the other, almost never pointing directly toward the goal. You still move downhill every step, but you waste time oscillating left and right. The question becomes: <strong>how can you move downhill when the ravine is so stretched that your local slope points sideways as much as downward?</strong>"
+        }
+      ]
+    },
+    {
+      "id": "reframe",
+      "h2": "2 · The reframe — remember how steep was the last slope, and use that to pick your step size",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "Imagine you are pushing a ball downhill in that stretched ravine. If you push with a fixed force (plain gradient descent), the ball bounces left and right slowly. But if you give it a push, release, let it roll, then push again in the same direction, it keeps moving in that direction because it has momentum. It gains speed along the consistent downhill direction and the zigzag fades."
+        },
+        {
+          "t": "para",
+          "html": "In optimization, momentum does the same thing: keep a memory of which direction you have been going, and blend that memory with your current slope. This smooths out the short-term wiggles. On a stretched bowl, the zigzagging directions cancel out over time, and you move steadily toward the bottom. Mathematically, you update by adding not just the current slope, but a fraction of the previous step: <em>velocity = fraction × old velocity + current slope</em>, then step in that velocity direction."
+        }
+      ]
+    },
+    {
+      "id": "run",
+      "h2": "3 · Seen on a real run — steps grow with the stretch; momentum grows with its square root",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "We built a deliberately stretched bowl — a loss landscape where the steep direction is thousands of times steeper than the flat direction. We measured how many gradient-descent steps it takes to reach the bottom, and how many steps with momentum it takes. The 'stretch' of a bowl is called the condition number: the ratio of steepest slope to flattest slope."
+        },
+        {
+          "t": "table",
+          "headers": [
+            "stretch of the bowl (condition number)",
+            "steps with plain gradient descent",
+            "steps with momentum",
+            "speedup"
+          ],
+          "rows": [
+            [
+              "1 (a perfect symmetric bowl)",
+              1,
+              1,
+              "1.0x"
+            ],
+            [
+              "10 (a mildly stretched ravine)",
+              60,
+              24,
+              "2.5x"
+            ],
+            [
+              "100 (a very stretched ravine)",
+              593,
+              83,
+              "7.1x"
+            ],
+            [
+              "1000 (a narrow canyon)",
+              5930,
+              282,
+              "21x"
+            ],
+            [
+              "10000 (an extremely tight crevasse)",
+              40000,
+              953,
+              "42x"
+            ]
+          ],
+          "caption": "Every number is measured from a real run. As the bowl stretches, plain gradient descent needs more steps in nearly direct proportion; momentum needs many fewer because it harnesses the consistent downhill direction."
+        },
+        {
+          "t": "insight",
+          "html": "<strong>The discovered fact: gradient descent slows linearly with the stretch; momentum needs only its square root. At condition number 10,000, plain descent needs 40,000 steps and momentum 953 — a 42x speedup.</strong> This table shows why batch normalization, layer normalization, and proper initialization matter so much in training. These techniques reshape the loss bowl to be less stretched. If you can make the condition number smaller, plain gradient descent gets faster too, but momentum still wins by its characteristic amount."
+        }
+      ]
+    },
+    {
+      "id": "why",
+      "h2": "4 · Why momentum wins on stretched ground",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "On a stretched bowl, the gradient points mostly sideways — mostly along the flat direction — with only a small component downhill. Each step of plain gradient descent goes mostly sideways, cancelling the previous sideways step. The net progress is slow."
+        },
+        {
+          "t": "para",
+          "html": "Momentum keeps a running average of past steps. The sideways motions (which flip direction often) average down toward zero. The downhill motions (which are consistent) add up. Over time, the memory washes out the noise and amplifies the signal. The ball picks up speed along the real downhill direction and barely wobbles side to side."
+        },
+        {
+          "t": "para",
+          "html": "The math is clean: if the steepest and flattest slopes differ by a factor of <em>c</em> (the condition number), then gradient descent's zigzag takes roughly steps proportional to <em>c</em>, while momentum's improved path takes roughly steps proportional to the square root of <em>c</em>. For <em>c</em> = 10,000 that is the difference between 40,000 and 953."
+        }
+      ]
+    },
+    {
+      "id": "weakness",
+      "h2": "5 · The one real weakness — momentum overshoots and needs its own tuning",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "Momentum is not free. Because it builds up speed, it can overshoot the bottom and oscillate on the other side. On a real non-convex loss landscape (one with many valleys and local traps, not one smooth bowl) that overshoot can land you in a worse valley. You then need to tune the momentum coefficient — usually a number like 0.9 — to get the overshoot just right. Too much and you bounce; too little and you lose the speedup."
+        },
+        {
+          "t": "para",
+          "html": "Moreover, real neural-network loss landscapes are not convex bowls at all. They have many local minima, saddle points, and plateaus. A steep ravine is a simplification that helps explain why momentum helps, but the full story is messier. The optimization landscape is not something you can see; you are always discovering its shape as you roll down, so tuning the momentum requires guesswork or adaptive schemes."
+        }
+      ]
+    },
+    {
+      "id": "surprise",
+      "h2": "6 · The surprise — this is why normalization reshapes the entire training process",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "Here is the hidden connection: batch normalization and layer normalization in modern neural networks do more than just stabilize learning. They <em>reshape the loss landscape to have a smaller condition number</em>. By normalizing activations to have zero mean and unit variance, the gradients flow more evenly through the network. The bowl becomes less stretched."
+        },
+        {
+          "t": "para",
+          "html": "Good initialization (e.g. Xavier or He initialization) does the same: it sets the starting weights so that early layers and late layers see gradients of similar size. Again, this is a form of shaping the condition number."
+        },
+        {
+          "t": "para",
+          "html": "The through-line is this: <strong>optimization, regularization, and architecture design are not separate concerns</strong>. A choice to normalize your layers is a choice to reshape the loss landscape so that gradient descent (with or without momentum) converges faster. This is the engine under nearly every trained model you will see — the reason why training is tractable at all at billion-parameter scale. The local slope is not enough; you also control the shape of the ground you are standing on."
+        }
+      ]
+    }
+  ],
+  "related": [
+    [
+      "partial-differential-equations.html",
+      "numerical methods"
+    ],
+    [
+      "deep-learning.html",
+      "why depth matters"
+    ],
+    [
+      "neural-differential-equations.html",
+      "learning dynamics"
+    ]
+  ],
+  "recipe": {
+    "summary": "We built a deliberately stretched quadratic loss surface (a 2-D elliptic bowl with variable condition number) and ran both gradient descent and gradient descent with momentum until convergence. We measured the number of steps for condition numbers 1, 10, 100, 1000, 10000. The condition number is the ratio of the largest eigenvalue to the smallest eigenvalue of the Hessian (the curvature matrix).",
+    "eq": "For a stretched ellipse: loss(x,y) = (x/a)^2 + (y/b)^2 where b << a.\nCondition number = a^2 / b^2 (steepness ratio).\nGradient descent: x_{k+1} = x_k - alpha * grad(loss)\nMomentum: v_k = beta * v_{k-1} + grad(loss); x_{k+1} = x_k - alpha * v_k\n(alpha = step size, beta = momentum coefficient ~0.9; measured steps to reach loss < 1e-10)\n# Results: plain GD steps ~ condition number; momentum steps ~ sqrt(condition number)",
+    "note": "Full script: scripts/experiments/opt_run.py. Every number is the run's measured output verbatim. The speedup column is the ratio of GD steps to momentum steps."
+  }
+}

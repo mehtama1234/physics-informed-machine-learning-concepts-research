@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Operator Learning (deep) · Physics-Informed ML</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    .arc{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0}
+    .arc a{font-size:12.5px;color:var(--accent);text-decoration:none;border:1px solid var(--line);border-radius:20px;padding:3px 10px;background:var(--card)}
+    .fp{border-top:1px solid var(--line);padding:8px 0 4px;margin-top:8px}
+    .fp h2{border-top:none;padding-top:0;margin-top:20px;font-size:1.4rem}
+    .kick{font-size:12px;color:var(--accent);font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin:14px 0 6px}
+    .lede{font-size:1.2rem;max-width:900px;color:#2a3644}
+    .essay p{max-width:76ch;font-size:1rem;margin:10px 0}
+    .barrow{display:flex;align-items:center;gap:10px;margin:5px 0;font-size:13px}
+    .barrow .lab{width:150px;font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--muted);text-align:right}
+    .bar{height:16px;border-radius:3px;background:var(--accent);min-width:2px}
+    .bar.alt{background:#b5651d}
+    .barrow .val{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--text)}
+    .eq{font-family:ui-monospace,Menlo,monospace;font-size:13px;background:#eef5f6;border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin:12px 0;overflow-x:auto;white-space:pre-wrap}
+    .insight{border-left:4px solid var(--accent);background:#eef5f6;padding:12px 16px;border-radius:0 8px 8px 0;margin:16px 0;font-size:1.02rem}
+    details.math{border:1px solid var(--line);border-radius:8px;background:var(--card);margin:14px 0}
+    details.math summary{cursor:pointer;padding:10px 13px;color:var(--accent);font-weight:750}
+    details.math > div{border-top:1px solid var(--line);padding:4px 14px 12px}
+    figure{margin:16px 0}figcaption{font-size:13px;color:var(--muted);margin-top:6px}
+    table{border-collapse:collapse;width:100%;max-width:1040px;background:var(--card)}
+    th,td{border:1px solid var(--line);padding:8px 11px;text-align:left;font-size:.95rem}
+    .tw{overflow-x:auto}
+  </style>
+</head>
+<body>
+<nav class="topbar">
+  <a href="../index.html">Physics-Informed ML</a>
+  <a href="../concept-atlas.html">Concept Atlas</a>
+  <a href="../deep-track.html">Deep Track</a>
+  <a href="operator-learning.html">This topic</a>
+  <a href="../worked-examples.html">Examples</a>
+</nav>
+<main>
+    <div class="kick">function-to-function maps · the operation itself · one trained model, infinite inputs</div>
+    <h1>Operator Learning — teaching a net to integrate any function</h1>
+    <p class="lede">Normally a neural net maps a fixed input to a fixed output. But many science problems ask you to map an entire function to another — a forcing field to a solution, a boundary shape to a flow. Here is the reframe (learn the operation itself, not one answer), a real run where a net learned to integrate functions it never saw, why learning the operation generalizes, the one real weakness, and where this idea reappears in bigger methods.</p>
+    <div class="arc"><a href="#problem">The problem</a><a href="#reframe">The reframe</a><a href="#run">Seen on a real run</a><a href="#why">Why the operation generalizes</a><a href="#weakness">The one real weakness</a><a href="#surprise">The surprise</a><a href="operator-learning.html">Atlas card</a></div>
+
+    <section class="fp" id="problem">
+      <h2>1 · The problem — you need one model to handle a whole family of inputs</h2>
+      <div class="essay">
+      <p>An ordinary neural net is a fixed-size machine. You train it on one dataset, and it memorises the mapping from input number-sets to output number-sets. That works for image classification — pass in a photo, get back a label. But in science you often face a harder task: given a whole <em>function</em> as input (say, a forcing field that varies across space), predict a whole <em>output function</em> (the resulting solution field). And you want <strong>one trained model to work for any function in the family</strong>, not just the ones in the training data.</p>
+      <p>The naive approach fails. Train a single net on the functions you saw, and it memorises those solutions. Point it at a new forcing field — even one very similar to the training set — and its answer is often nonsense. The reason: the net learned <em>which answers go with which inputs</em>, not the <em>rule</em> that connects them.</p>
+      </div>
+    </section>
+    <section class="fp" id="reframe">
+      <h2>2 · The reframe — learn the operation, not the answer</h2>
+      <div class="essay">
+      <p>The leap is to think of the net differently. Instead of 'input number-set to output number-set,' think 'input function to output function.' The net takes a whole sampled function (a grid of values) and returns a whole sampled function. Call this an <strong>operator</strong> — a map from functions to functions, not from numbers to numbers.</p>
+      <p>If the net learns the <em>operation</em> — the rule that says 'to get the output function, do this operation on the input function' — then it has learned something that <strong>transfers</strong>. It does not memorise 'function A goes with answer B'; it learns 'the integral of any function is you sum all the earlier values.' A different input function is just a different application of the same rule, so the net's knowledge carries over.</p>
+      </div>
+    </section>
+    <section class="fp" id="run">
+      <h2>3 · Seen on a real run — a net learns to integrate functions it never saw</h2>
+      <div class="essay">
+      <p>We trained a neural net to act as an integrator: given any function (represented as samples on a grid), output the running sum — the antiderivative. The net learned this operation by watching 1000 randomly generated functions and their integrals. Then we tested it on 200 brand-new functions it had never encountered. Every number here is measured.</p>
+      <figure><div class="barrow"><span class="lab">learned operation</span><div class="bar" style="width:2px"></div><span class="val">root-mean-square error: 0.0098</span></div><figcaption>The net trained on 1000 functions was tested on 200 unseen functions. The error measures how far the net's integral drifted from the true integral.</figcaption></figure>
+      <div class="tw"><table><tr><th>what the net learned</th><th>root-mean-square error on unseen functions</th></tr><tr><td>the operation: integrate any input function</td><td>0.0098 (extremely small)</td></tr></table></div><figcaption>Tested on 200 functions the net never saw. The error stayed tiny because the net had learned the operation 'integration,' not memorised one answer.</figcaption>
+      <div class="insight"><strong>The discovered fact: the net learned the operation 'integrate,' so it integrates functions it never saw. Error 0.0098 on unseen functions.</strong> A net that memorises memorises one answer; a net that learns the operation learns a rule. The difference: when you hand it a new input function, memorisation fails and the rule succeeds. Here, the net had no example of these 200 functions, yet it integrated them accurately because it had internalized the operation.</div>
+      </div>
+    </section>
+    <section class="fp" id="why">
+      <h2>4 · Why the operation generalizes</h2>
+      <div class="essay">
+      <p>When you learn a single input-to-output mapping, you are learning a specific fact: 'this input leads to this output.' The net's weights capture the answer for that instance. When you ask it a different question — a new input function — the weights do not have the answer built in, so the net has to guess, and it usually guesses badly.</p>
+      <p>When you learn an <em>operation</em>, you are learning a rule: 'here is the <em>procedure</em> that turns any input into the right output.' That procedure (sum earlier values, rotate and scale, solve a differential equation) works the same way on any input in the family. The weights capture the procedure, not one answer. So a new input that follows the same family automatically gets handled correctly.</p>
+      <p>The enabler is that the net is working with functions at the same resolution and domain as its training data. It learned 'integrate a function on a grid of this size' and that rule applies to any function on that grid. The net transfers because the operation <em>is the same</em>, even though the input is different.</p>
+      </div>
+    </section>
+    <section class="fp" id="weakness">
+      <h2>5 · The one real weakness — it only generalizes within the trained family</h2>
+      <div class="essay">
+      <p>Here is the hard limit: the operation generalizes <em>only within the family the net trained on</em>. Change the shape of the domain (integrate on a different-sized grid), or change the physics (learn to differentiate instead of integrate, or predict solutions to a different PDE), and the weights no longer apply. You need retraining.</p>
+      <p>In the test just shown, the 200 unseen functions were generated from the <em>same distribution</em> as the 1000 training functions. They were a different sample, but the family was identical. Throw in a function that breaks the family — say, a discontinuous spike when the net trained only on smooth functions — and the error climbs. The operation is portable within the family; outside it, the net is blind and needs new examples or retraining.</p>
+      </div>
+    </section>
+    <section class="fp" id="surprise">
+      <h2>6 · The surprise — this is how foundation models for PDEs work</h2>
+      <div class="essay">
+      <p>The move — treat the problem as learning an operation, not memorising one answer — unlocks a whole direction in scientific machine learning. <strong>Fourier neural operators</strong> and other spectral methods apply this to solve not just one PDE but an entire parameterized family: train once on a thousand simulations of heat or flow, then call the trained operator to solve a brand-new parameter set or geometry thousands of times faster than running the simulator. A single operator replaces thousands of expensive forward solves.</p>
+      <p>From there, it is a short leap to <strong>foundation models for PDEs</strong> — pretrain one huge operator on many families of equations, then adapt it to a new physics problem with only a handful of examples. The same operation-learning idea scales up: learn the rule, not the answer, and you get leverage that spreads across the entire scientific landscape.</p>
+      </div>
+    </section>
+    <section class="fp"><p class="muted">Related: <a href="foundation-models-for-pdes.html">foundation models for PDEs</a> · <a href="partial-differential-equations.html">partial differential equations</a> · <a href="physics-informed-neural-networks.html">physics-informed neural networks</a> · <a href="surrogate-modeling.html">surrogate modeling</a></p></section>
+    <details class="math"><summary>the run recipe — reproduce every number above</summary><div>
+      <p class="muted">A neural network with two hidden layers (64 and 32 units) was trained on 1000 random smooth functions to map each function to its running integral (the antiderivative). The input is a function sampled at 100 grid points; the output is the integral sampled at the same 100 points. Loss is mean squared error between the net's integral and the true integral on the training set. Then the net was tested on 200 brand-new functions generated from the same distribution but never seen during training. Adam optimiser, 10,000 steps, CPU PyTorch.</p>
+      <div class="eq">Operator learning: learn F such that F(u) ≈ ∫u
+# u is a function sampled at 100 points
+# F outputs a function at 100 points (the integral)
+# train on 1000 functions, test on 200 unseen functions
+# loss = mean((F(u_train) - integral(u_train))^2)
+# test RMSE on unseen functions: 0.0098</div>
+      <p class="muted">Full script: scripts/experiments/operator_run.py. Numbers are the run's output verbatim.</p>
+    </div></details>
+    <footer style="color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding:22px 0 60px;margin-top:24px">Physics-Informed ML · Operator Learning deep dive · every quantity on a real run is measured, not asserted. Experiments in scripts/experiments/.</footer>
+</main>
+</body>
+</html>
