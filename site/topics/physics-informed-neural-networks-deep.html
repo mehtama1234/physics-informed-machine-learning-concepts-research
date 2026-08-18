@@ -41,7 +41,7 @@
     <div class="kick">physics-informed ML · first principles · the equation is the teacher</div>
     <h1>PINNs — when the equation replaces the data</h1>
     <p class="lede">Normally a neural net learns from labelled examples. But in science you often have almost no labels and a great deal of known physics. Here is the idea, a real run where a net solves a differential equation it was never shown the answer to, the same net failing without the physics, the one place it struggles, and where the trick reappears.</p>
-    <div class="arc"><a href="#problem">The problem</a><a href="#reframe">The reframe</a><a href="#run">Seen on a real run</a><a href="#why">Why the equation is enough</a><a href="#weakness">The one weakness</a><a href="#surprise">The surprise</a><a href="physics-informed-neural-networks.html">Atlas card</a></div>
+    <div class="arc"><a href="#problem">The problem</a><a href="#reframe">The reframe</a><a href="#run">Seen on a real run</a><a href="#why">Why the equation is enough</a><a href="#weakness">The one weakness</a><a href="#surprise">The surprise</a><a href="#practice">In practice</a><a href="physics-informed-neural-networks.html">Atlas card</a></div>
 
     <section class="fp" id="problem">
       <h2>1 · The problem — in science, labels are scarce but laws are known</h2>
@@ -54,6 +54,7 @@
       <h2>2 · The reframe — score the net by how well it obeys the equation</h2>
       <div class="essay">
       <p>A differential equation is a rule the true answer satisfies at every point: plug the answer in and a certain combination of its slopes must come out to zero. So instead of comparing the net's output to labels it doesn't have, compare how badly it <em>breaks the equation</em>. Because a neural net is a smooth formula, you can ask it directly for its own slopes and curvatures at any point, plug those into the equation, and measure the leftover — the &lsquo;residual.&rsquo; Training then means: adjust the net until that residual is near zero everywhere, while still matching the handful of known values at the edges. That is a physics-informed neural network — a net taught by the equation, not by examples.</p>
+      <p>The hidden quantity the network is really driving down is the <em>residual</em> — what is left over when you put the network's own output, and its rates of change, back into the governing equation. Where the residual is near zero the network is obeying the physics; training makes it small everywhere inside the region of interest, even where nothing was measured.</p>
       </div>
     </section>
     <section class="fp" id="run">
@@ -85,6 +86,15 @@
       <p>The through-line: pure data-driven learning and pure hand-derived physics each have a weakness — one needs labels you don't have, the other needs equations you can't always solve — and the interesting methods live in between, using each to cover the other's gap.</p>
       </div>
     </section>
+    <section class="fp" id="practice">
+      <h2>7 · Where it is used in practice — learning physics where data is scarce</h2>
+      <div class="essay">
+      <p>PINNs are used to solve differential equations in aerodynamics and aeroacoustics (predicting pressure and sound around aircraft without running expensive solvers), in climate and weather systems (infilling missing data or learning fast approximations of expensive ensemble runs), in materials simulation (predicting phase evolution and stress in composites), and in seismic inversion (recovering subsurface properties from surface measurements).</p>
+      <p>A materials scientist has a few measurements from inside a sample during heat treatment — temperature at three sensors, stress at the boundary — but cannot measure the full field. She trains a neural net using the known physics (heat diffusion, stress equilibrium) as the training objective. The net learns to predict temperature and stress everywhere, even in unmeasured regions, by respecting the governing equations. A weather forecaster has sparse satellite data and model forecasts, and uses a PINN to fill in the gaps while enforcing conservation of energy and momentum.</p>
+      <div class="insight">The key leverage is that knowing the equation replaces needing thousands of labelled measurements everywhere.</div>
+      </div>
+    </section>
+    <section class="fp" id="connects"><h2>Where this connects — across the machine</h2><p class="muted">Physics-informed ML sits between discovering a model from data and using it for control. These links open the concept it mirrors or feeds &mdash; the wider data&rarr;model&rarr;control pipeline.</p><ul style="list-style:none;padding:14px 16px;margin:12px 0;border:1px solid var(--line,#d7ddd9);border-radius:10px;background:#fff"><li style="margin:9px 0;padding-left:14px;border-left:3px solid #8b3f18"><a href="http://localhost:8012/sindy-deep.html" style="font-weight:700">SINDy</a> <span class="muted" style="font-size:13px">· Brunton · data-driven</span><div style="font-size:14.5px;margin-top:3px">SINDy discovers a governing equation from data; a PINN instead assumes the equation is known and forces a network to satisfy it. Two routes to the same object — the law that governs the system.</div></li><li style="margin:9px 0;padding-left:14px;border-left:3px solid #8b3f18"><a href="http://localhost:8011/concepts/dynamics-deep.html" style="font-weight:700">dynamics</a> <span class="muted" style="font-size:13px">· AA203 · control</span><div style="font-size:14.5px;margin-top:3px">The equation a PINN solves is exactly the kind of model AA203's controllers assume they are handed.</div></li></ul></section>
     <section class="fp"><p class="muted">Related: <a href="symbolic-regression.html">symbolic regression</a> · <a href="surrogate-modeling.html">surrogate modeling</a> · <a href="operator-learning.html">operator learning</a> · <a href="partial-differential-equations.html">partial differential equations</a></p></section>
     <details class="math"><summary>the run recipe — reproduce every number above</summary><div>
       <p class="muted">A small tanh network solves u''(x) = -pi^2 sin(pi x) on [0,1] with u(0)=u(1)=0 (true solution sin(pi x)). Loss = mean squared equation-residual at 50 unlabelled interior points + boundary term. The 'physics OFF' run keeps only the boundary term. Adam, ~4000 steps, CPU PyTorch.</p>

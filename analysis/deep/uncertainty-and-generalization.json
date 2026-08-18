@@ -4,39 +4,210 @@
   "kick": "honest confidence · ensemble disagreement · where the data ends, you must know it",
   "title": "Uncertainty and Generalization — when to trust an ML model's guess outside the training zone",
   "lede": "A single trained model gives a confident number at every point, even places it has never seen. Here is the problem, the fix (train several nets and watch them disagree), a real run where 8 nets trained on the same data spread by 20 times farther off-data than on-data, why disagreement tracks ignorance, the one limitation, and where this idea reappears in modern uncertainty methods.",
-  "arc": [["problem","The problem"],["reframe","The reframe"],["run","Seen on a real run"],["why","Why disagreement tracks ignorance"],["weakness","The one real weakness"],["surprise","The surprise"]],
-  "sections": [
-    {"id":"problem","h2":"1 · The problem — a net confidently guesses outside its training zone","blocks":[
-      {"t":"para","html":"A single trained neural net outputs a number at every point you feed it, and it sounds equally confident everywhere. Inside the region where it learned, that number is often reliable. But far outside that region — in terrain the training data never touched — the net has no real knowledge. It guesses anyway, smoothly and confidently, as if it knew. That confidence is a lie. For science and engineering, where a wrong extrapolation can break an experiment or send a rover off a cliff, you need a way to say: <strong>I trained here, not there — trust the first region, question the second.</strong>"},
-      {"t":"para","html":"The usual answer is to add error bars by some statistical method. But nets trained from scratch on the same data give slightly different answers depending on random weight initialisation — why not use that natural variation as your signal?"}
-    ]},
-    {"id":"reframe","h2":"2 · The reframe — train many nets and watch them disagree","blocks":[
-      {"t":"para","html":"Instead of training one net, train several (typically five to ten) starting from different random seeds, all on the same data. In regions where the data strongly pins down the answer, all the nets will converge to nearly the same number — they agree because the data forces them to. In regions where no data lives, each net is free to wander differently. Their predictions will spread apart. That spread — the range or standard deviation across the ensemble — is your uncertainty signal. Where data is scarce or absent, the nets disagree; where it is plentiful, they settle on the same answer. The disagreement is an honest confession: <strong>I am uncertain.</strong>"},
-      {"t":"para","html":"This is a deep ensemble: multiple nets, different random starts, same training recipe. It is simple enough to run on a laptop and requires no changes to the model or loss function."}
-    ]},
-    {"id":"run","h2":"3 · Seen on a real run — ensemble spread is 20 times larger off-data","blocks":[
-      {"t":"para","html":"We trained 8 identical small nets on the same dataset. The data consisted of measurements in two narrow bands (a lower band and an upper band) with a gap between them and nothing beyond the edges. All 8 nets learned the same bands perfectly."},
-      {"t":"table","headers":["region","ensemble disagreement (std)","ratio vs in-data"],"rows":[["inside the lower band","0.0038","1.0x (baseline)"],["inside the upper band","0.0036","1.0x (baseline)"],["in the empty gap between bands","0.069","~19x higher"],["far outside the data range (beyond ±2)","0.109","~30x higher"]],"caption":"Standard deviation of predictions across 8 independently trained nets at four locations."},
-      {"t":"insight","html":"<strong>The discovered fact: in regions the nets never saw, they disagree by 20 to 30 times more than in regions where data pinned them down.</strong> Inside the two data bands, the 8 nets had learned the pattern so well they stayed within 0.004 of each other. In the empty gap between the bands where no data existed, they spread to 0.069 — more than 18 times wider. Beyond the edge of the training range, the spread hit 0.109. Uncertainty literally grows away from data."}
-    ]},
-    {"id":"why","h2":"4 · Why disagreement tracks ignorance","blocks":[
-      {"t":"para","html":"A neural net is a vast nonlinear function with many paths to fit a given dataset. When data is present, most of those paths lead to the same answer because the data constrains them — if you fit the data with a steep curve, you overfit and pay a cost in your loss function. All eight nets make this same trade-off and converge to a similar solution."},
-      {"t":"para","html":"When data is absent, there is no constraint. Each net can curve differently and still satisfy its training objective — the loss only cares about the regions where data lives. Off-data, each net is free to take its own path, and different random initializations push them in different directions. With no data to vote, there is no consensus."},
-      {"t":"para","html":"This is the core insight: <strong>disagreement is the fingerprint of regions where the data ran out.</strong>"}
-    ]},
-    {"id":"weakness","h2":"5 · The one real weakness — blind spots are contagious","blocks":[
-      {"t":"para","html":"An ensemble protects you against the randomness of training, but not against a shared blind spot. If all eight nets learned the same wrong pattern because the data was misleading or incomplete in the same way, they will all agree confidently on the wrong answer. The ensemble will show low disagreement in a zone where it should not be trusted. You can train 100 nets on the same corrupted dataset and they will disagree very little, lulling you into false confidence."},
-      {"t":"para","html":"Disagreement detects model uncertainty — places where the model does not have enough information. It does not detect data problems, shared misconceptions, or physics you did not encode into the network. For safety-critical use, an ensemble is necessary but not sufficient; you also need to think hard about what your training data actually covers and what it might be hiding."}
-    ]},
-    {"id":"surprise","h2":"6 · The surprise — this simple trick is a leading modern method","blocks":[
-      {"t":"para","html":"Deep ensembles (train multiple nets, average predictions or measure spread) sound primitive — just train the model multiple times. But empirically, this simple approach matches or beats much fancier uncertainty methods: Bayesian neural networks that reweight parameters by posterior probability, variational inference with complex divergence penalties, or methods that distill uncertainty into a single net using tricks like dropout. Ensembles work because they directly exploit the thing that matters: different paths through training space that fit the data equally well."},
-      {"t":"para","html":"The deeper connection: many powerful methods — Bayesian approaches, dropout-based uncertainty, normalizing flows, diffusion models — are all trying to capture one core idea: what does the model know versus guess? An ensemble does this honestly by showing you the scatter in actual trained nets. That scatter is why ensembles remain a gold standard for uncertainty in deployed systems, especially where you must know not just the prediction but how far outside your training zone you have wandered."}
-    ]}
+  "arc": [
+    [
+      "problem",
+      "The problem"
+    ],
+    [
+      "reframe",
+      "The reframe"
+    ],
+    [
+      "run",
+      "Seen on a real run"
+    ],
+    [
+      "why",
+      "Why disagreement tracks ignorance"
+    ],
+    [
+      "weakness",
+      "The one real weakness"
+    ],
+    [
+      "surprise",
+      "The surprise"
+    ],
+    [
+      "practice",
+      "In practice"
+    ]
   ],
-  "related": [["surrogate-modeling.html","surrogate modeling"],["operator-learning.html","operator learning"],["partial-differential-equations.html","partial differential equations"],["foundation-models-for-pdes.html","foundation models for PDEs"]],
+  "sections": [
+    {
+      "id": "problem",
+      "h2": "1 · The problem — a net confidently guesses outside its training zone",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "A single trained neural net outputs a number at every point you feed it, and it sounds equally confident everywhere. Inside the region where it learned, that number is often reliable. But far outside that region — in terrain the training data never touched — the net has no real knowledge. It guesses anyway, smoothly and confidently, as if it knew. That confidence is a lie. For science and engineering, where a wrong extrapolation can break an experiment or send a rover off a cliff, you need a way to say: <strong>I trained here, not there — trust the first region, question the second.</strong>"
+        },
+        {
+          "t": "para",
+          "html": "The usual answer is to add error bars by some statistical method. But nets trained from scratch on the same data give slightly different answers depending on random weight initialisation — why not use that natural variation as your signal?"
+        }
+      ]
+    },
+    {
+      "id": "reframe",
+      "h2": "2 · The reframe — train many nets and watch them disagree",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "Instead of training one net, train several (typically five to ten) starting from different random seeds, all on the same data. In regions where the data strongly pins down the answer, all the nets will converge to nearly the same number — they agree because the data forces them to. In regions where no data lives, each net is free to wander differently. Their predictions will spread apart. That spread — the range or standard deviation across the ensemble — is your uncertainty signal. Where data is scarce or absent, the nets disagree; where it is plentiful, they settle on the same answer. The disagreement is an honest confession: <strong>I am uncertain.</strong>"
+        },
+        {
+          "t": "para",
+          "html": "This is a deep ensemble: multiple nets, different random starts, same training recipe. It is simple enough to run on a laptop and requires no changes to the model or loss function."
+        }
+      ]
+    },
+    {
+      "id": "run",
+      "h2": "3 · Seen on a real run — ensemble spread is 20 times larger off-data",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "We trained 8 identical small nets on the same dataset. The data consisted of measurements in two narrow bands (a lower band and an upper band) with a gap between them and nothing beyond the edges. All 8 nets learned the same bands perfectly."
+        },
+        {
+          "t": "table",
+          "headers": [
+            "region",
+            "ensemble disagreement (std)",
+            "ratio vs in-data"
+          ],
+          "rows": [
+            [
+              "inside the lower band",
+              "0.0038",
+              "1.0x (baseline)"
+            ],
+            [
+              "inside the upper band",
+              "0.0036",
+              "1.0x (baseline)"
+            ],
+            [
+              "in the empty gap between bands",
+              "0.069",
+              "~19x higher"
+            ],
+            [
+              "far outside the data range (beyond ±2)",
+              "0.109",
+              "~30x higher"
+            ]
+          ],
+          "caption": "Standard deviation of predictions across 8 independently trained nets at four locations."
+        },
+        {
+          "t": "insight",
+          "html": "<strong>The discovered fact: in regions the nets never saw, they disagree by 20 to 30 times more than in regions where data pinned them down.</strong> Inside the two data bands, the 8 nets had learned the pattern so well they stayed within 0.004 of each other. In the empty gap between the bands where no data existed, they spread to 0.069 — more than 18 times wider. Beyond the edge of the training range, the spread hit 0.109. Uncertainty literally grows away from data."
+        }
+      ]
+    },
+    {
+      "id": "why",
+      "h2": "4 · Why disagreement tracks ignorance",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "A neural net is a vast nonlinear function with many paths to fit a given dataset. When data is present, most of those paths lead to the same answer because the data constrains them — if you fit the data with a steep curve, you overfit and pay a cost in your loss function. All eight nets make this same trade-off and converge to a similar solution."
+        },
+        {
+          "t": "para",
+          "html": "When data is absent, there is no constraint. Each net can curve differently and still satisfy its training objective — the loss only cares about the regions where data lives. Off-data, each net is free to take its own path, and different random initializations push them in different directions. With no data to vote, there is no consensus."
+        },
+        {
+          "t": "para",
+          "html": "This is the core insight: <strong>disagreement is the fingerprint of regions where the data ran out.</strong>"
+        }
+      ]
+    },
+    {
+      "id": "weakness",
+      "h2": "5 · The one real weakness — blind spots are contagious",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "An ensemble protects you against the randomness of training, but not against a shared blind spot. If all eight nets learned the same wrong pattern because the data was misleading or incomplete in the same way, they will all agree confidently on the wrong answer. The ensemble will show low disagreement in a zone where it should not be trusted. You can train 100 nets on the same corrupted dataset and they will disagree very little, lulling you into false confidence."
+        },
+        {
+          "t": "para",
+          "html": "Disagreement detects model uncertainty — places where the model does not have enough information. It does not detect data problems, shared misconceptions, or physics you did not encode into the network. For safety-critical use, an ensemble is necessary but not sufficient; you also need to think hard about what your training data actually covers and what it might be hiding."
+        }
+      ]
+    },
+    {
+      "id": "surprise",
+      "h2": "6 · The surprise — this simple trick is a leading modern method",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "Deep ensembles (train multiple nets, average predictions or measure spread) sound primitive — just train the model multiple times. But empirically, this simple approach matches or beats much fancier uncertainty methods: Bayesian neural networks that reweight parameters by posterior probability, variational inference with complex divergence penalties, or methods that distill uncertainty into a single net using tricks like dropout. Ensembles work because they directly exploit the thing that matters: different paths through training space that fit the data equally well."
+        },
+        {
+          "t": "para",
+          "html": "The deeper connection: many powerful methods — Bayesian approaches, dropout-based uncertainty, normalizing flows, diffusion models — are all trying to capture one core idea: what does the model know versus guess? An ensemble does this honestly by showing you the scatter in actual trained nets. That scatter is why ensembles remain a gold standard for uncertainty in deployed systems, especially where you must know not just the prediction but how far outside your training zone you have wandered."
+        }
+      ]
+    },
+    {
+      "id": "practice",
+      "h2": "7 · Where it is used in practice — knowing when to trust a model's guess",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "Uncertainty quantification is essential in weather and climate forecasting (knowing prediction confidence for decision-making), in drug discovery (knowing which molecular properties are reliably predicted), in aerodynamic design (validating surrogate predictions before building prototypes), in seismic inversion (identifying regions where subsurface models are ambiguous), and in autonomous systems (knowing when to defer to a human because the model is outside its training zone)."
+        },
+        {
+          "t": "para",
+          "html": "A meteorologist trains an ensemble of weather models (each with slightly different initialization) and measures the spread in predicted temperature. Where all models agree, the forecast is trustworthy; where they scatter widely, uncertainty is high and the forecast is tentative. An autonomous aircraft queries a surrogate model for lift at a new wing shape, but also measures disagreement across an ensemble of surrogates trained on the same data. If disagreement is high, it runs the expensive simulator to confirm. A seismic interpreter trains a neural net on velocity data from a survey region; when predicting below that region where data ends, the ensemble spread reveals which depths are guessed versus constrained by data."
+        },
+        {
+          "t": "insight",
+          "html": "Ensemble disagreement directly measures model ignorance — where uncertainty is high, you need either more data or a physics constraint."
+        }
+      ]
+    }
+  ],
+  "related": [
+    [
+      "surrogate-modeling.html",
+      "surrogate modeling"
+    ],
+    [
+      "operator-learning.html",
+      "operator learning"
+    ],
+    [
+      "partial-differential-equations.html",
+      "partial differential equations"
+    ],
+    [
+      "foundation-models-for-pdes.html",
+      "foundation models for PDEs"
+    ]
+  ],
   "recipe": {
     "summary": "Train 8 small tanh networks on synthetic 1D data present only in two bands (y = sin(2πx) + noise in x ∈ [0.1, 0.3] and [0.7, 0.9]; gap in [0.4, 0.6]; nothing beyond [−0.2, 1.2]). Each net trained independently with Adam and MSE loss. Measure standard deviation of predictions across the 8 nets at interior and exterior test points. CPU PyTorch, ~2000 steps per net.",
     "eq": "disagreement(x) = std( [net_1(x), net_2(x), ..., net_8(x)] )\n# Measured values:\n# x in [0.1, 0.3] or [0.7, 0.9] (data present): disagreement ≈ 0.0036–0.0038\n# x in [0.4, 0.6] (gap, no data): disagreement ≈ 0.069 (≈19x larger)\n# x > 1.0 or x < −0.2 (far outside): disagreement ≈ 0.109 (≈30x larger)",
     "note": "Full script: scripts/experiments/uq_run.py. Numbers are the run's output verbatim."
-  }
+  },
+  "connects": [
+    {
+      "course": "aa203",
+      "id": "exploration",
+      "label": "exploration",
+      "note": "Knowing where the model is uncertain is what tells a learner where it is worth exploring."
+    },
+    {
+      "course": "brunton",
+      "id": "sensitivity-and-robustness",
+      "label": "sensitivity & robustness",
+      "note": "Model uncertainty is exactly what robust control has to be designed against."
+    }
+  ]
 }

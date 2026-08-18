@@ -4,37 +4,201 @@
   "kick": "model discovery · sparse fitting · recover the equation, not just the prediction",
   "title": "Symbolic Regression — find the governing law hiding in data",
   "lede": "A neural net can predict the next data point, but it will never tell you the law behind it. Symbolic regression asks the opposite question: given messy measurements, can we find a short readable equation that governs them? Here is the idea, a real run where we recovered all the Lorenz equations from a single clean trajectory without knowing them, why sparsity finds the true law, the one place it falls apart, and where this mirrors the opposite move in physics-informed nets.",
-  "arc": [["problem","The problem"],["reframe","The reframe"],["run","Seen on a real run"],["why","Why sparsity finds the law"],["weakness","The one real weakness"],["surprise","The surprise"]],
-  "sections": [
-    {"id":"problem","h2":"1 · The problem — a net fits data but hides the law","blocks":[
-      {"t":"para","html":"A neural network can learn from data: show it many measurements paired with answers and it finds weights that predict correctly on new examples. But the weights stay locked inside millions of numbers — you cannot read them or understand what rule they learned. In science you often want the opposite: not a black-box prediction, but a <em>law</em> you can write down, test in new settings, explain to someone else, and scrutinize for whether it makes physical sense."},
-      {"t":"para","html":"The dream is simple: given noisy data from an experiment, <strong>find the short equation that generated it</strong>. Something you could sketch on a napkin: 'x changes at rate minus 10 times x plus 10 times y.' Not weights in a black box, but an algebra problem you can solve by hand if you had to."}
-    ]},
-    {"id":"reframe","h2":"2 · The reframe — write a library and let sparsity find the equation","blocks":[
-      {"t":"para","html":"Instead of searching the space of all possible functions, write down a candidate library: the pool of terms you suspect might appear. For the Lorenz system, that might be: plain x, plain y, x times z, x squared, and a dozen others. Then fit the data with a huge sum of all these terms, but add a penalty that <em>hates</em> terms in the equation. The penalty says 'use as few terms as possible.' What emerges is a sparse fit — most candidate terms get weight zero, and only the true ones survive."},
-      {"t":"para","html":"This is called sparse regression or <strong>SINDy</strong> (Sparse Identification of Nonlinear Dynamics). It works because real laws of physics use few terms; the penalty prefers the short true equation over a dense fit that overfits noise."}
-    ]},
-    {"id":"run","h2":"3 · Seen on a real run — the Lorenz equations recovered exactly","blocks":[
-      {"t":"para","html":"We fed SINDy a single clean trajectory from the famous Lorenz system — no equations told to it, only 200 time steps of three variables x, y, z bouncing around a butterfly shape. We built a library of candidate terms (x, y, z, x times y, x times z, and others) and ran sparse regression. Every number here is measured."},
-      {"t":"table","headers":["recovered equation","expected coefficient","error vs true"],"rows":[["dx/dt = -10 x + 10 y","-10 (x coeff); +10 (y coeff)","0.000"],["dy/dt = 28 x - y - x z","+28 (x coeff); -1 (y coeff); -1 (x*z coeff)","0.000"],["dz/dt = -2.667 z + x y","-2.667 (z coeff); +1 (x*y coeff)","0.000"]],"caption":"SINDy recovered all three Lorenz equations exactly from data: the correct coefficients (sigma=10, rho=28, beta≈2.667) and the correct term structure. Every spurious library term was driven to zero."},
-      {"t":"insight","html":"<strong>The discovered fact: from a single clean trajectory, sparse regression recovered all three Lorenz equations exactly, with zero error on every coefficient.</strong> The method found the right terms (x, y, z, their products) and zeroed every spurious candidate. No neural network can output an equation like that. It stayed locked inside hundreds of weights. SINDy spins the whole thing backward — instead of net-to-prediction, data-to-equation."}
-    ]},
-    {"id":"why","h2":"4 · Why sparsity finds the law","blocks":[
-      {"t":"para","html":"Physical laws almost always use very few terms. The Lorenz system needs only six terms across three equations. Noise and accidental correlations in data can invent spurious patterns, but they almost never conspire to build a compact formula. So a regression that says 'minimize error and also prefer few terms' is biased toward truth. The sparse penalty is like Occam's razor automated — it cuts away the noise and leaves the signal."},
-      {"t":"para","html":"The method is only possible because the search space is small: we choose the candidate library (and if we are clever, that library is short and includes the true terms). Then linear algebra finds the sparsest fit in that space. The hard problem is building a good library — but given a reasonable one, sparsity is a powerful truth-finder."}
-    ]},
-    {"id":"weakness","h2":"5 · The one real weakness — you must guess a library that contains the truth","blocks":[
-      {"t":"para","html":"The method works only if the true terms live in your candidate library. If you guessed wrong — forgot to include, say, exponential decay or a delayed-feedback term — the fit will miss it, no matter how clean the data. And in the real world, data is noisy. Noise drowns out weak terms and can make the penalty choose the wrong set. A missing term or too much noise can send the method in the wrong direction, and you only notice when the recovered equation fails on new data or predicts something unphysical."}
-    ]},
-    {"id":"surprise","h2":"6 · The surprise — this is the mirror image of physics-informed nets","blocks":[
-      {"t":"para","html":"Physics-informed neural networks push a known law INTO training (score the net by how well it obeys the equation, not by labelled data). Symbolic regression pulls an unknown law OUT of data (fit the data with sparse terms and let the penalty choose which equation hides inside). The two are mirrors: one starts with a law, the other ends with one. Both marry data and physics."},
-      {"t":"para","html":"The through-line is deeper: pure machine learning alone gives you a black box that predicts but doesn't explain. Pure hand-derived equations give you insight but not data-grounded answers. The interesting methods live at the boundary, using each strength to cover the other's blind spot. In physics-informed nets it is 'data alone would need thousands of labels, but we have the equation.' In symbolic regression it is 'we have data but no equation — so we search the space of plausible compact ones.'"}
-    ]}
+  "arc": [
+    [
+      "problem",
+      "The problem"
+    ],
+    [
+      "reframe",
+      "The reframe"
+    ],
+    [
+      "run",
+      "Seen on a real run"
+    ],
+    [
+      "why",
+      "Why sparsity finds the law"
+    ],
+    [
+      "weakness",
+      "The one real weakness"
+    ],
+    [
+      "surprise",
+      "The surprise"
+    ],
+    [
+      "practice",
+      "In practice"
+    ]
   ],
-  "related": [["physics-informed-neural-networks.html","physics-informed neural networks"],["neural-differential-equations.html","neural differential equations"],["surrogate-modeling.html","surrogate modeling"],["operator-learning.html","operator learning"]],
+  "sections": [
+    {
+      "id": "problem",
+      "h2": "1 · The problem — a net fits data but hides the law",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "A neural network can learn from data: show it many measurements paired with answers and it finds weights that predict correctly on new examples. But the weights stay locked inside millions of numbers — you cannot read them or understand what rule they learned. In science you often want the opposite: not a black-box prediction, but a <em>law</em> you can write down, test in new settings, explain to someone else, and scrutinize for whether it makes physical sense."
+        },
+        {
+          "t": "para",
+          "html": "The goal is simple: given noisy data from an experiment, <strong>find the short equation that generated it</strong>. Something you could sketch on a napkin: 'x changes at rate minus 10 times x plus 10 times y.' Not weights in a predictor you cannot read, but an algebra problem you can solve by hand if you had to."
+        }
+      ]
+    },
+    {
+      "id": "reframe",
+      "h2": "2 · The reframe — write a library and let sparsity find the equation",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "Instead of searching the space of all possible functions, write down a candidate library: the pool of terms you suspect might appear. For the Lorenz system, that might be: plain x, plain y, x times z, x squared, and a dozen others. Then fit the data with a huge sum of all these terms, but add a penalty that <em>hates</em> terms in the equation. The penalty says 'use as few terms as possible.' What emerges is a sparse fit — most candidate terms get weight zero, and only the true ones survive."
+        },
+        {
+          "t": "para",
+          "html": "This is called sparse regression or <strong>SINDy</strong> (Sparse Identification of Nonlinear Dynamics). It works because real laws of physics use few terms; the penalty prefers the short true equation over a dense fit that overfits noise."
+        },
+        {
+          "t": "para",
+          "html": "The hidden quantity the method exploits is the <em>sparsity</em> of real laws — that out of a long list of candidate terms, only a few actually belong in the equation. Charging for every term used pushes the fit toward the short true equation and away from a long one that merely traces the noise."
+        }
+      ]
+    },
+    {
+      "id": "run",
+      "h2": "3 · Seen on a real run — the Lorenz equations recovered exactly",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "We fed SINDy a single clean trajectory from the famous Lorenz system — no equations told to it, only 200 time steps of three variables x, y, z bouncing around a butterfly shape. We built a library of candidate terms (x, y, z, x times y, x times z, and others) and ran sparse regression. Every number here is measured."
+        },
+        {
+          "t": "table",
+          "headers": [
+            "recovered equation",
+            "expected coefficient",
+            "error vs true"
+          ],
+          "rows": [
+            [
+              "dx/dt = -10 x + 10 y",
+              "-10 (x coeff); +10 (y coeff)",
+              "0.000"
+            ],
+            [
+              "dy/dt = 28 x - y - x z",
+              "+28 (x coeff); -1 (y coeff); -1 (x*z coeff)",
+              "0.000"
+            ],
+            [
+              "dz/dt = -2.667 z + x y",
+              "-2.667 (z coeff); +1 (x*y coeff)",
+              "0.000"
+            ]
+          ],
+          "caption": "SINDy recovered all three Lorenz equations exactly from data: the correct coefficients (sigma=10, rho=28, beta≈2.667) and the correct term structure. Every spurious library term was driven to zero."
+        },
+        {
+          "t": "insight",
+          "html": "<strong>The discovered fact: from a single clean trajectory, sparse regression recovered all three Lorenz equations exactly, with zero error on every coefficient.</strong> The method found the right terms (x, y, z, their products) and zeroed every spurious candidate. No neural network can output an equation like that. It stayed locked inside hundreds of weights. SINDy spins the whole thing backward — instead of net-to-prediction, data-to-equation."
+        }
+      ]
+    },
+    {
+      "id": "why",
+      "h2": "4 · Why sparsity finds the law",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "Physical laws almost always use very few terms. The Lorenz system needs only six terms across three equations. Noise and accidental correlations in data can invent spurious patterns, but they almost never conspire to build a compact formula. So a regression that says 'minimize error and also prefer few terms' is biased toward truth. The sparse penalty is like Occam's razor automated — it cuts away the noise and leaves the signal."
+        },
+        {
+          "t": "para",
+          "html": "The method is only possible because the search space is small: we choose the candidate library (and if we are clever, that library is short and includes the true terms). Then linear algebra finds the sparsest fit in that space. The hard problem is building a good library — but given a reasonable one, sparsity is a powerful truth-finder."
+        }
+      ]
+    },
+    {
+      "id": "weakness",
+      "h2": "5 · The one real weakness — you must guess a library that contains the truth",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "The method works only if the true terms live in your candidate library. If you guessed wrong — forgot to include, say, exponential decay or a delayed-feedback term — the fit will miss it, no matter how clean the data. And in the real world, data is noisy. Noise drowns out weak terms and can make the penalty choose the wrong set. A missing term or too much noise can send the method in the wrong direction, and you only notice when the recovered equation fails on new data or predicts something unphysical."
+        }
+      ]
+    },
+    {
+      "id": "surprise",
+      "h2": "6 · The surprise — this is the mirror image of physics-informed nets",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "Physics-informed neural networks push a known law INTO training (score the net by how well it obeys the equation, not by labelled data). Symbolic regression pulls an unknown law OUT of data (fit the data with sparse terms and let the penalty choose which equation hides inside). The two are mirrors: one starts with a law, the other ends with one. Both marry data and physics."
+        },
+        {
+          "t": "para",
+          "html": "The through-line is deeper: pure machine learning alone gives you a predictor you cannot read that predicts but doesn't explain. Pure hand-derived equations give you insight but not data-grounded answers. The interesting methods live at the boundary, using each strength to cover the other's blind spot. In physics-informed nets it is 'data alone would need thousands of labels, but we have the equation.' In symbolic regression it is 'we have data but no equation — so we search the space of plausible compact ones.'"
+        }
+      ]
+    },
+    {
+      "id": "practice",
+      "h2": "7 · Where it is used in practice — recovering the governing law from data",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "Symbolic regression is used to discover governing equations in plasma physics (recovering Lorentz force laws from particle trajectories), in chemical kinetics (finding rate laws from reactor concentration measurements), in ecology and epidemiology (recovering population dynamics from time-series field data), and in geophysics (discovering empirical relationships between seismic properties and rock composition)."
+        },
+        {
+          "t": "para",
+          "html": "A plasma physicist measures particle positions and velocities in a fusion reactor and feeds them to a sparse regression algorithm with a library of candidate terms: velocity gradients, electromagnetic interactions, pressure terms. The algorithm recovers the Lorentz force law from the data. A chemical engineer records concentrations over time in a reactor and lets symbolic regression discover which rate law (first-order, second-order, Michaelis-Menten) fits the data best and makes physical sense. An ecologist records predator and prey populations across years and recovers a Lotka-Volterra equation describing their interaction."
+        },
+        {
+          "t": "insight",
+          "html": "The insight is that real physical laws are sparse — they use few terms — so penalizing model complexity automatically drives regression toward physical truth."
+        }
+      ]
+    }
+  ],
+  "related": [
+    [
+      "physics-informed-neural-networks.html",
+      "physics-informed neural networks"
+    ],
+    [
+      "neural-differential-equations.html",
+      "neural differential equations"
+    ],
+    [
+      "surrogate-modeling.html",
+      "surrogate modeling"
+    ],
+    [
+      "operator-learning.html",
+      "operator learning"
+    ]
+  ],
   "recipe": {
     "summary": "SINDy (Sparse Identification of Nonlinear Dynamics) run on the Lorenz system: given one clean trajectory (x, y, z over 200 time steps), build a library of candidate terms (monomials up to degree 3) and solve a sparse linear regression. The penalty drives spurious terms to zero and recovers the true equations exactly. SciPy least-squares with L1 regularization, CPU only.",
     "eq": "dx/dt = -10 x + 10 y\ndy/dt = 28 x - y - x z\ndz/dt = -2.667 z + x y\n\n# True parameters: sigma=10, rho=28, beta=2.667\n# Sparse regression result: all three equations and coefficients recovered with zero error.\n# Every spurious library term driven to zero.",
     "note": "Full script: scripts/experiments/sindy_run.py. Numbers are the run's output verbatim from piml.md."
-  }
+  },
+  "connects": [
+    {
+      "course": "brunton",
+      "id": "sindy",
+      "label": "SINDy",
+      "note": "These are the same method under two names: pick out the few terms that make up the governing law and discard the rest."
+    },
+    {
+      "course": "aa203",
+      "id": "dynamics",
+      "label": "dynamics",
+      "note": "Recovers the equation of motion that AA203 takes as given input to control."
+    }
+  ]
 }

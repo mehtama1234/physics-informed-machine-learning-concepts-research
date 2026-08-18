@@ -4,37 +4,188 @@
   "kick": "scientific fields · long-range coupling · where information comes from",
   "title": "Attention — routing information by content, not by distance",
   "lede": "In a scientific field—temperature on a grid, velocity in a fluid, charge in space—the value at one spot often depends on what is happening far away. A fixed local window filter can only see nearby points and misses distant effects. Here is the idea: let each location ask for what it needs and pull in the information by content. A real run where content-based routing picks the far position 100 percent of the time while a local window gets it 10 percent. Why this matters for fields. The one cost. And where this mechanism reappears as the engine of every modern large model.",
-  "arc": [["problem","The problem"],["reframe","The reframe"],["run","Seen on a real run"],["why","Why any-to-any routing matters"],["weakness","The one real weakness"],["surprise","The surprise"]],
-  "sections": [
-    {"id":"problem","h2":"1 · The problem — distant parts of a field steer what happens nearby","blocks":[
-      {"t":"para","html":"When you are solving a problem on a grid or in a field—predicting temperature at one point, modeling how water flows, computing the spread of an electric field—the answer at each location usually depends on far-away parts too. A vortex spinning 10 grid-squares away changes pressure here now. A charged particle 50 squares distant pulls on the charge near you. Ocean temperatures a thousand miles away drive the weather over your city. Distant interactions matter."},
-      {"t":"para","html":"A common fix is to use a filter that looks only at nearby neighbors—every point pulls information from only the locations immediately around it, a local window. This is cheap to compute: instead of checking everywhere, you check just the nearby square or cube. But there is a catch: <strong>if the influence you need lives outside that window, the filter is blind to it.</strong> The physics moves through the field in ways that the fixed window cannot follow."},
-      {"t":"para","html":"The question becomes: <strong>can a network see the far-away parts that matter without having to look at every part equally?</strong>"}
-    ]},
-    {"id":"reframe","h2":"2 · The reframe — let each location broadcast what it is and request what it needs","blocks":[
-      {"t":"para","html":"Instead of every point pulling from a fixed nearby region, flip the idea around. Let each location have two jobs: broadcast who it is and what information it holds, and separately, broadcast a query about what information it needs. Then, for every pair of locations, you can compute a <em>match score</em>—how well does the broadcast from location A answer the question from location B? Finally, let each location pull information from all the other locations, weighted by these match scores. Locations that match poorly contribute almost nothing. Locations that match well contribute a lot."},
-      {"t":"para","html":"This is the essence of <strong>content-based attention</strong>: instead of asking 'is it nearby?', the network asks 'does this location have what I need?' If it does, it pulls. If it does not, it ignores. The result is that information can flow from anywhere to anywhere in the field, but the network learns to route information only along the connections that the physics actually uses."}
-    ]},
-    {"id":"run","h2":"3 · Seen on a real run — content-based attention finds the distant answer every time","blocks":[
-      {"t":"para","html":"We set up a simple test on a sequence. At position zero, a special marker says 'fetch the value at position j'—and j is always somewhere else, often far away. The right answer lives at that distant position j, nowhere else. The network's job: learn to look at position zero, figure out which position j contains the answer, and pull it."},
-      {"t":"para","html":"We compared two approaches. One uses a fixed local window—look only at positions near zero, within a small distance. The other uses content-based attention—score every position in the sequence by how well it answers the question at zero, then pull from the high-scoring ones."},
-      {"t":"table","headers":["method","success rate"],"rows":[["content-based attention (learns what to look for)","100%"],["fixed local window (looks only nearby)","10%"]],"caption":"Same task: position 0 asks for a value, the answer lives at position j. The local window is blind to j most of the time. Content-based attention finds it every time."},
-      {"t":"insight","html":"<strong>The discovered fact: attention routes information from wherever it lives, and a fixed window cannot.</strong> The content-based approach succeeds 100 percent of the time because it evaluates every location and asks 'does this help?'. The local window, stuck looking only near the start, misses the distant answer 90 percent of the time. For scientific fields where influence travels in complex paths and jumps across space, this any-to-any routing is essential."}
-    ]},
-    {"id":"why","h2":"4 · Why any-to-any routing matters for fields","blocks":[
-      {"t":"para","html":"In a physical field, the path that influence takes is not a straight line through neighbors. Disturbances can couple across long distances. A vortex far upstream in a fluid affects pressure downwind in ways that local averaging would miss. In a molecular system, the electric field from a distant charge reaches any point in space. In weather, a jet stream pattern thousands of miles away steers storms toward you."},
-      {"t":"para","html":"When you train a learning model on such a field, the model must pick up these long-range patterns from data. A fixed local window—even a large one—still has an edge. Beyond that edge, it is completely dark. A content-based router, on the other hand, can learn: 'when you see this pattern at the input, pull from that distant location, because the physics couples them.' It is a way of letting the network discover and use the true connectivity of the field, whatever that connectivity is. In PDEs, in weather, in molecular dynamics, the long-range terms are often the most interesting ones—and attention lets you pay attention to them."}
-    ]},
-    {"id":"weakness","h2":"5 · The one real weakness — comparing everything to everything is expensive","blocks":[
-      {"t":"para","html":"There is no free lunch. When you ask attention to score every location against every other location, the work grows with the <em>square</em> of the number of points. On a small grid with 50 points, that is 2500 comparisons—cheap. On a realistic weather grid with a million points, that is a trillion comparisons. On a year-long time series of hourly data, comparing every hour to every other hour is a huge bill. The same is true for large transformers on long text: as the input gets longer, attention becomes the slowest part."},
-      {"t":"para","html":"For some problems, the solution is to use a smaller window after all, or to use approximations that cluster nearby locations and reduce the number of comparisons. For others, researchers accept the cost because the long-range connections are simply too important for the physics. The trade-off is unavoidable: you can see everything, but looking at everything costs."}
-    ]},
-    {"id":"surprise","h2":"6 · The surprise — attention is the hidden engine of modern learning","blocks":[
-      {"t":"para","html":"The same attention mechanism—score all pairs by content-matching and route information along high-scoring links—is now the core engine in every large language model, vision transformer, and modern neural operator for PDEs. When you use a large model to read text or understand images or solve physics, you are using attention to move information across the input, selecting the parts that matter for each output location."},
-      {"t":"para","html":"The reason is the same in all these domains: sometimes you need to reach far to answer a question. A language model answering a question about character 50 needs information from character 5. A vision model predicting the center of an object needs to gather edges and color cues from all over the image. A neural operator solving a PDE everywhere needs each point to pull from distant boundary conditions and from faraway sources. Attention connects the right points regardless of distance, and it does so by learning what 'right' means from data. That is why the same idea that solves the long-range problem in scientific fields has become the foundation of modern machine learning."}
-    ]}
+  "arc": [
+    [
+      "problem",
+      "The problem"
+    ],
+    [
+      "reframe",
+      "The reframe"
+    ],
+    [
+      "run",
+      "Seen on a real run"
+    ],
+    [
+      "why",
+      "Why any-to-any routing matters"
+    ],
+    [
+      "weakness",
+      "The one real weakness"
+    ],
+    [
+      "surprise",
+      "The surprise"
+    ],
+    [
+      "practice",
+      "In practice"
+    ]
   ],
-  "related": [["partial-differential-equations.html","partial differential equations"],["operator-learning.html","operator learning"],["graphs-and-geometric-learning.html","graphs and geometric learning"],["symbolic-regression.html","symbolic regression"]],
+  "sections": [
+    {
+      "id": "problem",
+      "h2": "1 · The problem — distant parts of a field steer what happens nearby",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "When you are solving a problem on a grid or in a field—predicting temperature at one point, modeling how water flows, computing the spread of an electric field—the answer at each location usually depends on far-away parts too. A vortex spinning 10 grid-squares away changes pressure here now. A charged particle 50 squares distant pulls on the charge near you. Ocean temperatures a thousand miles away drive the weather over your city. Distant interactions matter."
+        },
+        {
+          "t": "para",
+          "html": "A common fix is to use a filter that looks only at nearby neighbors—every point pulls information from only the locations immediately around it, a local window. This is cheap to compute: instead of checking everywhere, you check just the nearby square or cube. But there is a catch: <strong>if the influence you need lives outside that window, the filter is blind to it.</strong> The physics moves through the field in ways that the fixed window cannot follow."
+        },
+        {
+          "t": "para",
+          "html": "The question becomes: <strong>can a network see the far-away parts that matter without having to look at every part equally?</strong>"
+        }
+      ]
+    },
+    {
+      "id": "reframe",
+      "h2": "2 · The reframe — let each location broadcast what it is and request what it needs",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "Instead of every point pulling from a fixed nearby region, flip the idea around. Let each location have two jobs: broadcast who it is and what information it holds, and separately, broadcast a query about what information it needs. Then, for every pair of locations, you can compute a <em>match score</em>—how well does the broadcast from location A answer the question from location B? Finally, let each location pull information from all the other locations, weighted by these match scores. Locations that match poorly contribute almost nothing. Locations that match well contribute a lot."
+        },
+        {
+          "t": "para",
+          "html": "This is the essence of <strong>content-based attention</strong>: instead of asking 'is it nearby?', the network asks 'does this location have what I need?' If it does, it pulls. If it does not, it ignores. The result is that information can flow from anywhere to anywhere in the field, but the network learns to route information only along the connections that the physics actually uses."
+        },
+        {
+          "t": "para",
+          "html": "The hidden quantity here is the <em>attention weight</em> — for every pair of locations, a number saying how much information should flow from one to the other. The network learns these weights from examples, discovering which distant connections the physics actually relies on."
+        }
+      ]
+    },
+    {
+      "id": "run",
+      "h2": "3 · Seen on a real run — content-based attention finds the distant answer every time",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "We set up a simple test on a sequence. At position zero, a special marker says 'fetch the value at position j'—and j is always somewhere else, often far away. The right answer lives at that distant position j, nowhere else. The network's job: learn to look at position zero, figure out which position j contains the answer, and pull it."
+        },
+        {
+          "t": "para",
+          "html": "We compared two approaches. One uses a fixed local window—look only at positions near zero, within a small distance. The other uses content-based attention—score every position in the sequence by how well it answers the question at zero, then pull from the high-scoring ones."
+        },
+        {
+          "t": "table",
+          "headers": [
+            "method",
+            "success rate"
+          ],
+          "rows": [
+            [
+              "content-based attention (learns what to look for)",
+              "100%"
+            ],
+            [
+              "fixed local window (looks only nearby)",
+              "10%"
+            ]
+          ],
+          "caption": "Same task: position 0 asks for a value, the answer lives at position j. The local window is blind to j most of the time. Content-based attention finds it every time."
+        },
+        {
+          "t": "insight",
+          "html": "<strong>The discovered fact: attention routes information from wherever it lives, and a fixed window cannot.</strong> The content-based approach succeeds 100 percent of the time because it evaluates every location and asks 'does this help?'. The local window, stuck looking only near the start, misses the distant answer 90 percent of the time. For scientific fields where influence travels in complex paths and jumps across space, this any-to-any routing is essential."
+        }
+      ]
+    },
+    {
+      "id": "why",
+      "h2": "4 · Why any-to-any routing matters for fields",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "In a physical field, the path that influence takes is not a straight line through neighbors. Disturbances can couple across long distances. A vortex far upstream in a fluid affects pressure downwind in ways that local averaging would miss. In a molecular system, the electric field from a distant charge reaches any point in space. In weather, a jet stream pattern thousands of miles away steers storms toward you."
+        },
+        {
+          "t": "para",
+          "html": "When you train a learning model on such a field, the model must pick up these long-range patterns from data. A fixed local window—even a large one—still has an edge. Beyond that edge, it is completely dark. A content-based router, on the other hand, can learn: 'when you see this pattern at the input, pull from that distant location, because the physics couples them.' It is a way of letting the network discover and use the true connectivity of the field, whatever that connectivity is. In PDEs, in weather, in molecular dynamics, the long-range terms are often the most interesting ones—and attention lets you pay attention to them."
+        }
+      ]
+    },
+    {
+      "id": "weakness",
+      "h2": "5 · The one real weakness — comparing everything to everything is expensive",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "There is no free lunch. When you ask attention to score every location against every other location, the work grows with the <em>square</em> of the number of points. On a small grid with 50 points, that is 2500 comparisons—cheap. On a realistic weather grid with a million points, that is a trillion comparisons. On a year-long time series of hourly data, comparing every hour to every other hour is a huge bill. The same is true for large transformers on long text: as the input gets longer, attention becomes the slowest part."
+        },
+        {
+          "t": "para",
+          "html": "For some problems, the solution is to use a smaller window after all, or to use approximations that cluster nearby locations and reduce the number of comparisons. For others, researchers accept the cost because the long-range connections are simply too important for the physics. The trade-off is unavoidable: you can see everything, but looking at everything costs."
+        }
+      ]
+    },
+    {
+      "id": "surprise",
+      "h2": "6 · The surprise — attention is the hidden engine of modern learning",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "The same attention mechanism—score all pairs by content-matching and route information along high-scoring links—is now the core engine in every large language model, vision transformer, and modern neural operator for PDEs. When you use a large model to read text or understand images or solve physics, you are using attention to move information across the input, selecting the parts that matter for each output location."
+        },
+        {
+          "t": "para",
+          "html": "The reason is the same in all these domains: sometimes you need to reach far to answer a question. A language model answering a question about character 50 needs information from character 5. A vision model predicting the center of an object needs to gather edges and color cues from all over the image. A neural operator solving a PDE everywhere needs each point to pull from distant boundary conditions and from faraway sources. Attention connects the right points regardless of distance, and it does so by learning what 'right' means from data. That is why the same idea that solves the long-range problem in scientific fields has become the foundation of modern machine learning."
+        }
+      ]
+    },
+    {
+      "id": "practice",
+      "h2": "7 · Where it is used in practice — routing information through scientific domains",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "Climate and weather modeling use attention to track how distant jet streams and ocean temperatures steer local conditions. Fluid dynamics simulations need attention to wire up pressure changes across a domain, especially vortex interactions far from each boundary. Molecular dynamics and computational chemistry use it to model long-range electrostatic forces where a distant charge pulls on nearby atoms. Medical imaging reconstruction uses attention to gather signal from distant parts of the body when solving inverse problems like MRI."
+        },
+        {
+          "t": "para",
+          "html": "In weather forecasting, each grid point learns to ask: which distant locations hold the information I need? Instead of averaging only nearby points, the network scores every location by how well it answers the current point's question, then pulls weighted information from all high-scoring locations. In molecular systems, the same mechanism lets atoms learn which far-away atoms affect them electrostatically without being told in advance. The network discovers the true long-range connectivity from data."
+        },
+        {
+          "t": "insight",
+          "html": "Attention costs quadratically in the grid size, so practitioners accept the cost only when long-range connections are physics-critical; local windows fail too often to be worth the speedup."
+        }
+      ]
+    }
+  ],
+  "related": [
+    [
+      "partial-differential-equations.html",
+      "partial differential equations"
+    ],
+    [
+      "operator-learning.html",
+      "operator learning"
+    ],
+    [
+      "graphs-and-geometric-learning.html",
+      "graphs and geometric learning"
+    ],
+    [
+      "symbolic-regression.html",
+      "symbolic regression"
+    ]
+  ],
   "recipe": {
     "summary": "A sequence of length 100; position 0 holds an index j (1 to 99). The answer lives only at position j; all other positions hold random noise. Task: learn to fetch from position j. Two approaches: (1) content-based attention—score all 100 positions by relevance to position 0, pull weighted sum; (2) fixed local window—pull only from positions 0 to 10 (or similar nearby range). Trained on 1000 random sequences with j uniformly sampled. CPU PyTorch, ~500 steps.",
     "eq": "attention_score[i] = softmax( query[0] · key[i] ) for i in [0, 99]\noutput[0] = sum_i( attention_score[i] * value[i] )\n# Learned query, key, value are small linear projections of the input.\n# Local window scores [0, ..., 10] uniformly, ignores [11, ..., 99].\n# Success rate: content-based attention 100% vs local window 10%.",

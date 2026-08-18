@@ -28,6 +28,10 @@
     [
       "surprise",
       "The surprise"
+    ],
+    [
+      "practice",
+      "In practice"
     ]
   ],
   "sections": [
@@ -41,7 +45,7 @@
         },
         {
           "t": "para",
-          "html": "But here is the catch: the shape of the valley you are rolling down changes everything. If the loss surface is a perfect bowl, you roll straight to the bottom. If it is a narrow ravine — steep on two sides, flat on two others — you zigzag slowly, zig on one slope, zag on the other, almost never pointing directly toward the goal. You still move downhill every step, but you waste time oscillating left and right. The question becomes: <strong>how can you move downhill when the ravine is so stretched that your local slope points sideways as much as downward?</strong>"
+          "html": "But there is a catch: the shape of the valley you are rolling down changes everything. If the loss surface is a perfect bowl, you roll straight to the bottom. If it is a narrow ravine — steep on two sides, flat on two others — you zigzag slowly, zig on one slope, zag on the other, almost never pointing directly toward the goal. You still move downhill every step, but you waste time oscillating left and right. The question becomes: <strong>how can you move downhill when the ravine is so stretched that your local slope points sideways as much as downward?</strong>"
         }
       ]
     },
@@ -51,7 +55,7 @@
       "blocks": [
         {
           "t": "para",
-          "html": "Imagine you are pushing a ball downhill in that stretched ravine. If you push with a fixed force (plain gradient descent), the ball bounces left and right slowly. But if you give it a push, release, let it roll, then push again in the same direction, it keeps moving in that direction because it has momentum. It gains speed along the consistent downhill direction and the zigzag fades."
+          "html": "On that stretched surface, each step moves in the steepest downhill direction. If you push with a fixed force (plain gradient descent), the ball bounces left and right slowly. But if you give it a push, release, let it roll, then push again in the same direction, it keeps moving in that direction because it has momentum. It gains speed along the consistent downhill direction and the zigzag fades."
         },
         {
           "t": "para",
@@ -130,6 +134,10 @@
         {
           "t": "para",
           "html": "The math is clean: if the steepest and flattest slopes differ by a factor of <em>c</em> (the condition number), then gradient descent's zigzag takes roughly steps proportional to <em>c</em>, while momentum's improved path takes roughly steps proportional to the square root of <em>c</em>. For <em>c</em> = 10,000 that is the difference between 40,000 and 953."
+        },
+        {
+          "t": "para",
+          "html": "The hidden quantity that decides how hard the training is, is the <em>conditioning</em> of the loss surface — how stretched it is, the gap between its steepest and its flattest direction. When that gap is large the surface is a long narrow valley, and every simple step either crawls or bounces; the whole art of optimisation is coping with it."
         }
       ]
     },
@@ -153,7 +161,7 @@
       "blocks": [
         {
           "t": "para",
-          "html": "Here is the hidden connection: batch normalization and layer normalization in modern neural networks do more than just stabilize learning. They <em>reshape the loss landscape to have a smaller condition number</em>. By normalizing activations to have zero mean and unit variance, the gradients flow more evenly through the network. The bowl becomes less stretched."
+          "html": "The hidden connection: batch normalization and layer normalization in modern neural networks do more than just stabilize learning. They <em>reshape the loss landscape to have a smaller condition number</em>. By normalizing activations to have zero mean and unit variance, the gradients flow more evenly through the network. The bowl becomes less stretched."
         },
         {
           "t": "para",
@@ -162,6 +170,24 @@
         {
           "t": "para",
           "html": "The through-line is this: <strong>optimization, regularization, and architecture design are not separate concerns</strong>. A choice to normalize your layers is a choice to reshape the loss landscape so that gradient descent (with or without momentum) converges faster. This is the engine under nearly every trained model you will see — the reason why training is tractable at all at billion-parameter scale. The local slope is not enough; you also control the shape of the ground you are standing on."
+        }
+      ]
+    },
+    {
+      "id": "practice",
+      "h2": "7 · Where it is used in practice — speeding up model training",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "Every large model trained today — language models, vision systems, diffusion models for image generation — relies on choosing the right optimization method. The stretched landscape problem appears in aerodynamic simulations, climate modeling, and seismic inversion, where the loss surface is extremely elongated in some directions and flat in others. Physics-based systems like reactor design and weather forecasting push the condition number sky-high because different variables change at vastly different rates."
+        },
+        {
+          "t": "para",
+          "html": "Engineers and physicists tune the optimization by reshaping the loss landscape itself. They normalize layer activations or initialize weights carefully so that gradients flow evenly. In fluid dynamics simulations, they rescale the pressure and velocity variables to have similar magnitudes, shrinking the condition number. In battery modeling, normalizing ionic concentrations and voltage makes momentum more effective. A practitioner measures convergence time and chooses momentum or adaptive step sizes — techniques like Adam — based on whether the landscape is stretched."
+        },
+        {
+          "t": "insight",
+          "html": "The real deployment win is that architecture choices (batch norm, layer norm, residual connections) are not just regularization tricks but landscape engineers that make any optimizer faster."
         }
       ]
     }
@@ -184,5 +210,19 @@
     "summary": "We built a deliberately stretched quadratic loss surface (a 2-D elliptic bowl with variable condition number) and ran both gradient descent and gradient descent with momentum until convergence. We measured the number of steps for condition numbers 1, 10, 100, 1000, 10000. The condition number is the ratio of the largest eigenvalue to the smallest eigenvalue of the Hessian (the curvature matrix).",
     "eq": "For a stretched ellipse: loss(x,y) = (x/a)^2 + (y/b)^2 where b << a.\nCondition number = a^2 / b^2 (steepness ratio).\nGradient descent: x_{k+1} = x_k - alpha * grad(loss)\nMomentum: v_k = beta * v_{k-1} + grad(loss); x_{k+1} = x_k - alpha * v_k\n(alpha = step size, beta = momentum coefficient ~0.9; measured steps to reach loss < 1e-10)\n# Results: plain GD steps ~ condition number; momentum steps ~ sqrt(condition number)",
     "note": "Full script: scripts/experiments/opt_run.py. Every number is the run's measured output verbatim. The speedup column is the ratio of GD steps to momentum steps."
-  }
+  },
+  "connects": [
+    {
+      "course": "aa203",
+      "id": "gradient-first-order-condition",
+      "label": "gradient & first-order condition",
+      "note": "The same descent-on-a-surface machinery AA203 uses to solve control problems, seen from the training side."
+    },
+    {
+      "course": "aa203",
+      "id": "local-quadratic-approximation",
+      "label": "local quadratic approximation",
+      "note": "Conditioning — how stretched the surface is — is exactly what a local quadratic model measures and corrects."
+    }
+  ]
 }

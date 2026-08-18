@@ -4,32 +4,176 @@
   "kick": "stacked nonlinear units · the foundation of everything · layers bend to curves",
   "title": "Deep Learning — why nonlinear layers matter",
   "lede": "Most real relationships in the world are curved and tangled. A straight-line model can only draw one line, no matter how hard you tune it. Here is the idea that unlocks curvature: chain simple nonlinear units so they bend the signal a little at a time, then stack more layers to bend it more. A real run where a straight model misses a curved target, one hidden layer nails it, two layers go exact. The one weakness, and where this foundation idea reappears.",
-  "arc": [["problem","The problem — straight lines aren't enough"],["reframe","The reframe — chain small bends into big ones"],["run","Seen on a real run"],["why","Why the nonlinear kink matters"],["weakness","The one real weakness"],["surprise","The surprise"]],
-  "sections": [
-    {"id":"problem","h2":"1 · The problem — straight lines aren't enough","blocks":[
-      {"t":"para","html":"A straight-line model is a rigid tool. No matter how you scale or shift the line, it can only draw one line. Feed it a curved relationship — a spiral, a hump, a wave — and the line misses the shape entirely. The model is honest about how it fails, but it fails all the same. In science and engineering, real systems are almost never straight: rivers curve, temperatures rise and fall, forces ramp up and plateau. The question is: <strong>how can a model learn to bend?</strong>"}
-    ]},
-    {"id":"reframe","h2":"2 · The reframe — chain small bends into big ones","blocks":[
-      {"t":"para","html":"A single nonlinear unit is still simple: it takes an input, applies a kinked curve (like tanh or ReLU) that bends the signal, and outputs the bent version. One kink alone can't capture most real curves — but chain several units, each one bending the signal differently based on what it sees, and now the stacked bends can trace almost any shape."},
-      {"t":"para","html":"Stack a second layer of bent units on top of the first, and the second layer bends what the first layer bent. Each layer adds another layer of curvature. This is deep learning in one sentence: <strong>layers of simple nonlinear units, stacked so their bends compound</strong>. The word 'deep' just means 'many layers.' Each layer makes the model a bit more flexible, able to fit shapes a shallow model can't reach."}
-    ]},
-    {"id":"run","h2":"3 · Seen on a real run — stacking layers chases a curved target","blocks":[
-      {"t":"para","html":"We asked three models to fit a curved target: y = sin(1.5x) + 0.3x (a wave plus a tilt). The target is a real curve; the models are trying to learn it from examples sampled along it. Every number here is measured."},
-      {"t":"table","headers":["Model","Max error on unseen points"],"rows":[["Straight-line model (linear)","0.692"],["One hidden layer (64 nonlinear units)","0.008"],["Two hidden layers (64 units each)","0.002"]],"caption":"Same training setup, same data. The only difference is the depth and nonlinearity."},
-      {"t":"insight","html":"<strong>The discovered fact: a straight line misses a curved shape; one nonlinear layer nails it almost exactly, two layers go even tighter.</strong> The linear model is stuck at error 0.692 — it can only draw a line and the curve defeats it. One layer of nonlinear units drops the error 86-fold to 0.008. Two layers drop it another 4-fold to 0.002. The nonlinear kink — that curve-bending — is what splits the difference between rigid and flexible."}
-    ]},
-    {"id":"why","h2":"4 · Why the nonlinear kink matters","blocks":[
-      {"t":"para","html":"Without the kink, stacking more layers does nothing. If every unit is just a multiplication and an add — a linear operation — then ten layers of linear operations still amount to one larger linear operation. You're still drawing a line. The kink (tanh, ReLU, sigmoid, any nonlinear function) breaks that deadlock. It says: 'take what you received, bend it, then pass it on.' A bent signal fed to the next layer can't collapse back to a straight line. Each layer bends and re-bends, and the bent outputs of one layer become the bent inputs to the next."},
-      {"t":"para","html":"This is why 'deep' networks with nonlinearity can fit curves but wide linear networks cannot. It is the kink that buys flexibility."}
-    ]},
-    {"id":"weakness","h2":"5 · The one real weakness — flexibility can memorize noise","blocks":[
-      {"t":"para","html":"A stack of nonlinear layers is very flexible — so flexible that it can memorize noise in the data and overfit on small datasets. If the data is noisy or sparse, the model might learn the noise as if it were signal, then fail miserably on new data. The curved-fitting power that works beautifully on clean data can also memorize spurious wiggles. This is why regularization (penalties that push weights toward zero) and careful train-test splits matter: the flexibility is real, but it requires discipline to use it right. Raw flexibility is not understanding — it is just a capacity waiting for structure to guide it."}
-    ]},
-    {"id":"surprise","h2":"6 · The surprise — this is the foundation under everything else here","blocks":[
-      {"t":"para","html":"This one move — chain nonlinear units into layers — is not a clever trick for one problem. It is the bed of rock that every other method on this site is built on. Physics-informed neural networks are neural networks with a physics term in the loss. Neural operators are neural networks that learn mappings between function spaces. Diffusion models are neural networks trained to denoise. Graph neural networks spread information along edges using neural networks. Transformers route signals with attention, also neural networks. When you peel back the layers, they are all stacks of simple nonlinear units, bent and bent and bent again."}
-    ]}
+  "arc": [
+    [
+      "problem",
+      "The problem — straight lines aren't enough"
+    ],
+    [
+      "reframe",
+      "The reframe — chain small bends into big ones"
+    ],
+    [
+      "run",
+      "Seen on a real run"
+    ],
+    [
+      "why",
+      "Why the nonlinear kink matters"
+    ],
+    [
+      "weakness",
+      "The one real weakness"
+    ],
+    [
+      "surprise",
+      "The surprise"
+    ],
+    [
+      "practice",
+      "In practice"
+    ]
   ],
-  "related": [["physics-informed-neural-networks.html","physics-informed neural networks"],["neural-differential-equations.html","neural differential equations"],["operator-learning.html","operator learning"],["generative-modeling.html","generative modeling"],["graphs-and-geometric-learning.html","graph neural networks"]],
+  "sections": [
+    {
+      "id": "problem",
+      "h2": "1 · The problem — straight lines aren't enough",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "A straight-line model is a rigid tool. No matter how you scale or shift the line, it can only draw one line. Feed it a curved relationship — a spiral, a hump, a wave — and the line misses the shape entirely. The model is honest about how it fails, but it fails all the same. In science and engineering, real systems are almost never straight: rivers curve, temperatures rise and fall, forces ramp up and plateau. The question is: <strong>how can a model learn to bend?</strong>"
+        }
+      ]
+    },
+    {
+      "id": "reframe",
+      "h2": "2 · The reframe — chain small bends into big ones",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "A single nonlinear unit is still simple: it takes an input, applies a kinked curve (like tanh or ReLU) that bends the signal, and outputs the bent version. One kink alone can't capture most real curves — but chain several units, each one bending the signal differently based on what it sees, and now the stacked bends can trace almost any shape."
+        },
+        {
+          "t": "para",
+          "html": "Stack a second layer of bent units on top of the first, and the second layer bends what the first layer bent. Each layer adds another layer of curvature. This is deep learning in one sentence: <strong>layers of simple nonlinear units, stacked so their bends compound</strong>. The word 'deep' just means 'many layers.' Each layer makes the model a bit more flexible, able to fit shapes a shallow model can't reach."
+        }
+      ]
+    },
+    {
+      "id": "run",
+      "h2": "3 · Seen on a real run — stacking layers chases a curved target",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "We asked three models to fit a curved target: y = sin(1.5x) + 0.3x (a wave plus a tilt). The target is a real curve; the models are trying to learn it from examples sampled along it. Every number here is measured."
+        },
+        {
+          "t": "table",
+          "headers": [
+            "Model",
+            "Max error on unseen points"
+          ],
+          "rows": [
+            [
+              "Straight-line model (linear)",
+              "0.692"
+            ],
+            [
+              "One hidden layer (64 nonlinear units)",
+              "0.008"
+            ],
+            [
+              "Two hidden layers (64 units each)",
+              "0.002"
+            ]
+          ],
+          "caption": "Same training setup, same data. The only difference is the depth and nonlinearity."
+        },
+        {
+          "t": "insight",
+          "html": "<strong>The discovered fact: a straight line misses a curved shape; one nonlinear layer nails it almost exactly, two layers go even tighter.</strong> The linear model is stuck at error 0.692 — it can only draw a line and the curve defeats it. One layer of nonlinear units drops the error 86-fold to 0.008. Two layers drop it another 4-fold to 0.002. The nonlinear kink — that curve-bending — is what splits the difference between rigid and flexible."
+        }
+      ]
+    },
+    {
+      "id": "why",
+      "h2": "4 · Why the nonlinear kink matters",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "Without the kink, stacking more layers does nothing. If every unit is just a multiplication and an add — a linear operation — then ten layers of linear operations still amount to one larger linear operation. You're still drawing a line. The kink (tanh, ReLU, sigmoid, any nonlinear function) breaks that deadlock. It says: 'take what you received, bend it, then pass it on.' A bent signal fed to the next layer can't collapse back to a straight line. Each layer bends and re-bends, and the bent outputs of one layer become the bent inputs to the next."
+        },
+        {
+          "t": "para",
+          "html": "This is why 'deep' networks with nonlinearity can fit curves but wide linear networks cannot. It is the kink that buys flexibility."
+        },
+        {
+          "t": "para",
+          "html": "The hidden quantity is the <em>learned representation</em> each layer produces — the reshaped version of the input that a layer passes to the next. Every layer bends and re-mixes the signal into new coordinates that make the following layer's job easier, and stacking these is what lets the network fit complicated relationships."
+        }
+      ]
+    },
+    {
+      "id": "weakness",
+      "h2": "5 · The one real weakness — flexibility can memorize noise",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "A stack of nonlinear layers is very flexible — so flexible that it can memorize noise in the data and overfit on small datasets. If the data is noisy or sparse, the model might learn the noise as if it were signal, then fail miserably on new data. The curved-fitting power that works beautifully on clean data can also memorize spurious wiggles. This is why regularization (penalties that push weights toward zero) and careful train-test splits matter: the flexibility is real, but it requires discipline to use it right. Raw flexibility is not understanding — it is just a capacity waiting for structure to guide it."
+        }
+      ]
+    },
+    {
+      "id": "surprise",
+      "h2": "6 · The surprise — this is the foundation under everything else here",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "This one move — chain nonlinear units into layers — is not a clever trick for one problem. It is the bed of rock that every other method on this site is built on. Physics-informed neural networks are neural networks with a physics term in the loss. Neural operators are neural networks that learn mappings between function spaces. Diffusion models are neural networks trained to denoise. Graph neural networks spread information along edges using neural networks. Transformers route signals with attention, also neural networks. When you peel back the layers, they are all stacks of simple nonlinear units, bent and bent and bent again."
+        }
+      ]
+    },
+    {
+      "id": "practice",
+      "h2": "7 · Where it is used in practice — modeling curved relationships in physical systems",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "Aerodynamics simulations use deep networks to learn how airflow curves around wings and fuselages, capturing nonlinear vortex formation that a linear model cannot see. Materials and crystal simulations need deep models to fit the curved energy surfaces where atomic arrangements live. Weather and climate modeling stacks layers to capture how temperature, pressure, and humidity couple in nonlinear feedback loops. Seismic wave propagation through rock layers exhibits curved, energy-dependent propagation that shallow models miss."
+        },
+        {
+          "t": "para",
+          "html": "In aerodynamics, a linear surrogate model of how a wing shape affects lift fails because the relationship is curved and depends on subtle interactions between geometry and flow. A deep network with many nonlinear layers can learn to bend its output to match the curved physics. Each layer adds curvature, and stacking many layers lets the model fit complex surfaces where forces plateau, accelerate, or reverse. The network trains on examples of known wing shapes and their aerodynamic properties, then predicts lift for new designs the simulator never saw."
+        },
+        {
+          "t": "insight",
+          "html": "Stacking layers without nonlinearity adds no power—the deepness only matters because kinks in the activation functions break linearity and enable curvature."
+        }
+      ]
+    }
+  ],
+  "related": [
+    [
+      "physics-informed-neural-networks.html",
+      "physics-informed neural networks"
+    ],
+    [
+      "neural-differential-equations.html",
+      "neural differential equations"
+    ],
+    [
+      "operator-learning.html",
+      "operator learning"
+    ],
+    [
+      "generative-modeling.html",
+      "generative modeling"
+    ],
+    [
+      "graphs-and-geometric-learning.html",
+      "graph neural networks"
+    ]
+  ],
   "recipe": {
     "summary": "A three-model fit on the curved target y = sin(1.5x) + 0.3x. (1) Linear regression. (2) One-hidden-layer tanh network with 64 units. (3) Two-hidden-layer tanh network with 64 units per layer. All trained with Adam on the same 100 sampled points, tested on 500 held-out points. CPU PyTorch.",
     "eq": "target: y = sin(1.5*x) + 0.3*x\nLinear:   y_pred = w*x + b\nOne-layer: y_pred = layer2(tanh(layer1(x)))\nTwo-layer: y_pred = layer3(tanh(layer2(tanh(layer1(x)))))\nloss = mean((y_true - y_pred)^2)\n# Results: linear MSE 0.692 | one-layer 0.008 | two-layer 0.002",

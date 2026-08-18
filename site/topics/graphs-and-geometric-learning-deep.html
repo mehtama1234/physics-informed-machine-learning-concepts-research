@@ -41,7 +41,7 @@
     <div class="kick">graph neural networks · message passing · neighbors encode the answer</div>
     <h1>When the answer lives in how things are connected</h1>
     <p class="lede">Many systems — molecules, proteins, meshes, social networks — are really webs of connected parts. A neural net trained to look only at each part in isolation will miss everything encoded in the connections. Here is why connections matter, a real run where a classifier on a node's own features got 0.537 (near chance) but after mixing in its neighbors' information it hit 0.965, why message passing does that, where it falls short, and where it reappears in heavier methods.</p>
-    <div class="arc"><a href="#problem">The problem</a><a href="#reframe">The reframe</a><a href="#run">Seen on a real run</a><a href="#why">Why neighbors matter</a><a href="#weakness">The one real weakness</a><a href="#surprise">The surprise</a><a href="graphs-and-geometric-learning.html">Atlas card</a></div>
+    <div class="arc"><a href="#problem">The problem</a><a href="#reframe">The reframe</a><a href="#run">Seen on a real run</a><a href="#why">Why neighbors matter</a><a href="#weakness">The one real weakness</a><a href="#surprise">The surprise</a><a href="#practice">In practice</a><a href="graphs-and-geometric-learning.html">Atlas card</a></div>
 
     <section class="fp" id="problem">
       <h2>1 · The problem — connections have no natural order or count</h2>
@@ -55,6 +55,7 @@
       <div class="essay">
       <p>Instead of asking the network to understand the whole graph at once, break the problem into rounds. In each round, every node collects a summary (a "message") from the nodes it is connected to — averaging their features or some learned combination of them. Then it updates its own summary by blending this neighborhood signal with what it knew before. Repeat this for a few rounds, and information flows from distant parts of the graph inward, each node gradually learning what its far neighbors look like.</p>
       <p>This is message passing: a graph neural network does not need to know the number of neighbors in advance, or their order. It just says "for each node, combine what you know with what your neighbors just sent you." That is symmetric in all neighbors and scales to any neighborhood size.</p>
+      <p>The hidden quantity each node carries is its <em>gathered summary</em> — the combined message from its neighbours. Every round a node passes on what it gathered, and its neighbours' summaries are combined in turn, so information spreads across the graph one step at a time and each node slowly senses the wider structure.</p>
       </div>
     </section>
     <section class="fp" id="run">
@@ -85,6 +86,14 @@
       <div class="essay">
       <p>The same idea reappears everywhere science needs to predict how structure shapes behavior. <strong>Molecular properties:</strong> teach a graph net to predict drug efficacy by running message passing on the atoms and bonds of a molecule — it beats older methods because it sees the real chemistry, not a flattened fingerprint. <strong>Particle simulations:</strong> each particle sends a message to nearby particles about its momentum and force; stack these into a learned interaction graph and the network predicts what happens next more accurately than hand-coded physics. <strong>Mesh deformation:</strong> in computer graphics, vertices communicate across edges and the network learns how cloth folds or metal dents without an explicit simulator.</p>
       <p>The through-line: whenever the answer depends on connectivity and symmetry (a flipped graph or rotated mesh should give the same answer shifted the same way), message passing respects that. It is one case of a broader idea called <em>geometric deep learning</em> — neural networks that understand that data lives on a structure, not a flat grid, and learn by moving along the structure's own symmetries.</p>
+      </div>
+    </section>
+    <section class="fp" id="practice">
+      <h2>7 · Where it is used in practice — learning from connectivity and symmetry</h2>
+      <div class="essay">
+      <p>Molecular property prediction requires graph neural networks to encode atom connectivity, bond types, and three-dimensional geometry—a flattened fingerprint of the molecule misses the real structure. Particle-based simulations of fluids and soft matter use graph networks to learn interactions between neighboring particles where forces propagate through contacts. Mesh deformation in computer graphics and finite-element simulation uses graph networks on mesh vertices to predict how cloth folds or materials bend under load. Protein folding and structure prediction encode amino acid connectivity and spatial constraints as a graph.</p>
+      <p>A drug-discovery team represents a molecule as a graph where each atom is a node and bonds are edges. A graph neural network runs message passing in rounds: each atom collects summaries from its bonded neighbors, updates its own summary, and repeats. After a few rounds, distant atoms' information has propagated to each atom through the bond network. The network learns which molecular features—ring structures, charge distributions, specific atom types bonded in specific ways—predict binding affinity. The same message-passing structure respects the molecule's actual connectivity without requiring the atoms to be ordered or counted in advance.</p>
+      <div class="insight">Message passing blurs node distinctions after many rounds, so practitioners often use shallow graph networks—a few rounds—and accept that very distant atoms stay faint.</div>
       </div>
     </section>
     <section class="fp"><p class="muted">Related: <a href="operator-learning.html">operator learning</a> · <a href="foundation-models-for-pdes.html">foundation models for PDEs</a> · <a href="attention-for-scientific-fields.html">attention on fields</a> · <a href="deep-learning.html">deep learning</a></p></section>

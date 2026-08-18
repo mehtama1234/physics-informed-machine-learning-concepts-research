@@ -41,7 +41,7 @@
     <div class="kick">transfer learning · pretrain then adapt · one model, many equations</div>
     <h1>Foundation Models for PDEs — one net learns all, then adapts to one</h1>
     <p class="lede">Normally, each new equation or setup means training a fresh model from scratch — which takes lots of solved examples you may not have. Here is the idea: train one big model on many related equations so it learns the shared shape of such solutions, then fine-tune it to a new problem with just a handful of examples. A real run where a pretrained net adapts to a new case with 3 examples at error 0.746, versus 0.997 when trained from scratch on the same 3 examples, the reason the shortcut works, where it falls apart, and where this exact idea reappears in larger systems.</p>
-    <div class="arc"><a href="#problem">The problem</a><a href="#reframe">The reframe</a><a href="#run">Seen on a real run</a><a href="#why">Why the prior helps</a><a href="#weakness">The one real weakness</a><a href="#surprise">The surprise</a><a href="foundation-models-for-pdes.html">Atlas card</a></div>
+    <div class="arc"><a href="#problem">The problem</a><a href="#reframe">The reframe</a><a href="#run">Seen on a real run</a><a href="#why">Why the prior helps</a><a href="#weakness">The one real weakness</a><a href="#surprise">The surprise</a><a href="#practice">In practice</a><a href="foundation-models-for-pdes.html">Atlas card</a></div>
 
     <section class="fp" id="problem">
       <h2>1 · The problem — each new equation means starting over</h2>
@@ -70,6 +70,7 @@
       <div class="essay">
       <p>A PDE solution is not random. Across many different equations, you see common patterns: smoothness, decay rates, how boundaries echo inward, the interplay of fast and slow scales. When a model trains on 8 families, it absorbs these patterns as statistical regularities in its weights.</p>
       <p>When the new problem arrives, the model does not start as a blank slate. Its weights already point toward smooth, physically plausible functions. Fine-tuning on 3 new examples then means: find small changes to those weights that fit the new examples while keeping the learned structure. That is far easier than learning structure and fit from nothing. It is the same bet as large language models: one model, pretrained on vast data, adapts to new tasks with minimal new training.</p>
+      <p>The hidden quantity is the <em>shared structure</em> the model has stored — the patterns common to how the solutions of many different equations behave. Adapting to a new equation only nudges that stored structure rather than learning from nothing, which is why little new data is needed.</p>
       </div>
     </section>
     <section class="fp" id="weakness">
@@ -84,6 +85,14 @@
       <div class="essay">
       <p>The move — train once on many tasks, then adapt to new tasks with tiny labelled sets — is the engine of modern large language models. You pretrain once on vast text, then fine-tune on customer-support data, medical records, or code. The foundation-model approach is now crossing into scientific computing. Instead of one pretrained operator adapting to text, it is one pretrained operator adapting to families of equations.</p>
       <p>The deeper insight: the field of operator learning (see operator-learning) teaches models to map functions to functions — one model learns to integrate, or solve a PDE, across many different inputs. Foundation models for PDEs take that further: one shared operator, pretrained on a broad family, that adapts to new physics with a handful of examples. It is the same idea as foundation models in language and vision — and it hinges on the bet that there is enough structure in the problem family that broad pretraining beats narrow retraining.</p>
+      </div>
+    </section>
+    <section class="fp" id="practice">
+      <h2>7 · Where it is used in practice — learning shared structure across equation families</h2>
+      <div class="essay">
+      <p>Heat and diffusion problems across different materials, grids, and geometries share common solution behaviors—smooth diffusion, decay rates, boundary effects—that a foundation model can absorb during pretraining. Fluid dynamics simulations of flow in pipes, channels, and complex geometries all exhibit similar flow patterns that transfer across different Reynolds numbers and shapes. Structural mechanics problems like vibrations on beams and plates show recurring modal patterns and resonances. Electromagnetic field problems on different domains share the way fields decay and couple.</p>
+      <p>A practitioner pretrains one large neural operator by solving a broad family of PDEs—heat equations at different scales, wave equations with various damping, diffusion with different material properties—all at once. The model absorbs the statistical structure of how solutions behave: how quickly they smooth, where energy concentrates, how boundaries echo. When a new problem arrives (a heat equation on a new material, or a flow at a new parameter), the model no longer needs hundreds of solved examples. Fine-tuning on just a handful of cases nudges the pretrained weights toward the new problem while keeping the learned structure.</p>
+      <div class="insight">Pretraining only pays if you plan to adapt many times; a single new problem might train faster from scratch than pretraining a massive operator.</div>
       </div>
     </section>
     <section class="fp"><p class="muted">Related: <a href="operator-learning.html">operator learning</a> · <a href="surrogate-modeling.html">surrogate modeling</a> · <a href="neural-differential-equations.html">neural differential equations</a> · <a href="physics-informed-neural-networks.html">physics-informed neural networks</a></p></section>

@@ -4,39 +4,217 @@
   "kick": "learned simulators · physics by proxy · expensive becomes free",
   "title": "Surrogates — when a fast network does the slow simulator's job",
   "lede": "Many physics simulations are accurate but glacially slow — run them once and you have one answer, run them a thousand times and you wait for weeks. Here is the idea: train a fast neural network to imitate the expensive simulator on real runs, then call the cheap copy whenever a small error is acceptable. One real run where the surrogate is 42,000 times faster, what makes it trustworthy, the boundary where it fails, and why the trick scales to weather forecasting and robot design.",
-  "arc": [["problem","The problem"],["reframe","The reframe"],["run","Seen on a real run"],["trust","What makes a surrogate trustworthy"],["weakness","The one real weakness"],["surprise","The surprise"]],
-  "sections": [
-    {"id":"problem","h2":"1 · The problem — expensive simulators choke design loops","blocks":[
-      {"t":"para","html":"In engineering and science you often have a detailed simulator that answers specific questions accurately. The catch: each answer takes hours or days of computation. You might want to run a thousand simulations to optimize a shape, or ten thousand to understand uncertainty, or explore a huge design space. Multiply hours per run by thousands and the timeline becomes impossible."},
-      {"t":"para","html":"The constraint is brutal: the simulator is accurate but slow, and you need it to be both accurate <em>and</em> fast. You cannot build the thing a thousand times experimentally. You cannot wait a year for simulation results. The question becomes: <strong>can you train a fast network to copy what the simulator does, so you can use the copy instead?</strong>"}
-    ]},
-    {"id":"reframe","h2":"2 · The reframe — learn the pattern once, query it forever","blocks":[
-      {"t":"para","html":"The reframe is simple in words but powerful in practice: run the expensive simulator on a few hundred or thousand inputs (the range you care about), save all the outputs, then train a neural network to map inputs to outputs on that data. Once trained, the network is just a mathematical formula. Asking it a question takes milliseconds. You have spent the slow simulator's time <em>once</em>, on making training data, and then amortized that cost over thousands of queries."},
-      {"t":"para","html":"The network learns the <em>pattern</em> the simulator follows: if you nudge this input a little, how does the output shift? It does not re-derive the physics from scratch — it memorises the input-output relationship. That is why it is fast. And as long as you only ask it questions in the range it trained on, the speed-accuracy trade-off is real: you get most of the accuracy at a fraction of the cost."}
-    ]},
-    {"id":"run","h2":"3 · Seen on a real run — 42,000 times faster at 0.018 error","blocks":[
-      {"t":"para","html":"We trained a small network to imitate an expensive test function. The network saw 200 random inputs and their correct outputs from the simulator. We then asked both the original simulator and the trained surrogate to evaluate the same 200 unseen inputs and measured both the error and the time."},
-      {"t":"bars","caption":"Expensive function vs the trained surrogate, both on 200 unseen inputs. Speed measured in milliseconds; accuracy is root-mean-square error (how far off predictions are, on average).","rows":[["expensive simulator",1.0,"4971 ms for 200 queries"],["trained surrogate",0.000024,"0.12 ms for 200 queries"],["speed ratio","42,000x","about 4 hours of compute vs 100 milliseconds"]]},
-      {"t":"table","headers":["method","accuracy (RMSE)","time per query"],"rows":[["expensive function","perfect (by definition)","~24.8 ms"],["surrogate network","0.018","~0.0006 ms"]],"caption":"Same 200 unseen test cases. The surrogate achieves 0.018 error — small enough for many design problems — while shrinking latency from 25 ms to 0.0006 ms."},
-      {"t":"insight","html":"<strong>The discovered fact: a surrogate trained on 200 examples runs the expensive simulator's job 42,000 times faster, at error 0.018.</strong> You spend 5 seconds training the network once; after that, every query is instant. You can now afford to ask 'what if' ten thousand times — scan the whole design space, optimize a shape, run uncertainty studies — in the time that ten simulator runs would have taken."}
-    ]},
-    {"id":"trust","h2":"4 · What makes a surrogate trustworthy — it must stay in-distribution","blocks":[
-      {"t":"para","html":"A surrogate only knows what it saw. If your training data covers inputs from 0 to 100, and the surrogate's learned pattern is valid everywhere in that range, asking it what happens at input 500 is a leap of faith. The network will not refuse — it will confidently guess. But the guess is often wrong because the simulator's behaviour outside the training envelope may have changed: new physics might kick in, a different regime might apply, or the simulator might have saturated. The surrogate has no idea."},
-      {"t":"para","html":"The strength of surrogates is exactly the strength of interpolation: inside the data range, a smooth network can capture the pattern reliably. Outside that range, extrapolation is a guess and sounds like truth. That is why practical surrogate workflows <em>always</em> wrap the surrogate in a bounds check or an uncertainty estimate — you need to know when the surrogate is on shaky ground."}
-    ]},
-    {"id":"weakness","h2":"5 · The one real weakness — the error compounds with every link in the chain","blocks":[
-      {"t":"para","html":"If you use a surrogate to predict <em>one</em> output, the error stays local. But many design loops chain predictions: you optimise using the surrogate, follow the gradient, and ask for the next value. A tiny error in each step compounds. Over a long optimisation run or a long trajectory, the small errors can push you off course. An optimiser trained on a surrogate may converge to a shape that looks good to the surrogate but fails on the real simulator. A forecast initialised with a surrogate's guess can drift."},
-      {"t":"para","html":"The fix is to re-query the expensive simulator occasionally — at key decision points, or to validate final designs before building them. But that adds cost back into the loop. In practice surrogates work best for high-dimensional design sweeps or Monte Carlo studies (where you can tolerate a little noise in each sample) and less well for long single-trajectory predictions (where errors accumulate)."}
-    ]},
-    {"id":"surprise","h2":"6 · The surprise — surrogates power real-time control and climate models","blocks":[
-      {"t":"para","html":"Because surrogates run at millisecond latencies, they enable problems that the expensive simulator cannot. A robot that steers by querying a fluid-dynamics simulation would be frozen; a robot that calls a surrogate 1000 times per second can react in real time. An aircraft designer that ran a full aerodynamic solver for every shape in a million-candidate optimisation would never finish; a designer using a surrogate can scan the space in hours."},
-      {"t":"para","html":"The same trick scales to weather and climate. A billion-node climate model takes weeks to forecast one month. A surrogate trained on ensemble model runs can predict anomalies in seconds. Physics-informed surrogates — networks taught to respect conservation laws while mimicking the expensive model — go further: they keep accuracy high while needing far fewer expensive training runs. The through-line is always the same: you can afford to do the hard thing once to make training data, and then the easy thing a million times."}
-    ]}
+  "arc": [
+    [
+      "problem",
+      "The problem"
+    ],
+    [
+      "reframe",
+      "The reframe"
+    ],
+    [
+      "run",
+      "Seen on a real run"
+    ],
+    [
+      "trust",
+      "What makes a surrogate trustworthy"
+    ],
+    [
+      "weakness",
+      "The one real weakness"
+    ],
+    [
+      "surprise",
+      "The surprise"
+    ],
+    [
+      "practice",
+      "In practice"
+    ]
   ],
-  "related": [["physics-informed-neural-networks.html","physics-informed neural networks"],["uncertainty-and-generalization.html","uncertainty and generalization"],["operator-learning.html","operator learning"],["neural-differential-equations.html","neural differential equations"]],
+  "sections": [
+    {
+      "id": "problem",
+      "h2": "1 · The problem — expensive simulators choke design loops",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "In engineering and science you often have a detailed simulator that answers specific questions accurately. The catch: each answer takes hours or days of computation. You might want to run a thousand simulations to optimize a shape, or ten thousand to understand uncertainty, or explore a huge design space. Multiply hours per run by thousands and the timeline becomes impossible."
+        },
+        {
+          "t": "para",
+          "html": "The constraint is brutal: the simulator is accurate but slow, and you need it to be both accurate <em>and</em> fast. You cannot build the thing a thousand times experimentally. You cannot wait a year for simulation results. The question becomes: <strong>can you train a fast network to copy what the simulator does, so you can use the copy instead?</strong>"
+        }
+      ]
+    },
+    {
+      "id": "reframe",
+      "h2": "2 · The reframe — learn the pattern once, query it forever",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "The reframe is simple in words but powerful in practice: run the expensive simulator on a few hundred or thousand inputs (the range you care about), save all the outputs, then train a neural network to map inputs to outputs on that data. Once trained, the network is just a mathematical formula. Asking it a question takes milliseconds. You have spent the slow simulator's time <em>once</em>, on making training data, and then amortized that cost over thousands of queries."
+        },
+        {
+          "t": "para",
+          "html": "The network learns the <em>pattern</em> the simulator follows: if you nudge this input a little, how does the output shift? It does not re-derive the physics from scratch — it memorises the input-output relationship. That is why it is fast. And as long as you only ask it questions in the range it trained on, the speed-accuracy trade-off is real: you get most of the accuracy at a fraction of the cost."
+        }
+      ]
+    },
+    {
+      "id": "run",
+      "h2": "3 · Seen on a real run — 42,000 times faster at 0.018 error",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "We trained a small network to imitate an expensive test function. The network saw 200 random inputs and their correct outputs from the simulator. We then asked both the original simulator and the trained surrogate to evaluate the same 200 unseen inputs and measured both the error and the time."
+        },
+        {
+          "t": "bars",
+          "caption": "Expensive function vs the trained surrogate, both on 200 unseen inputs. Speed measured in milliseconds; accuracy is root-mean-square error (how far off predictions are, on average).",
+          "rows": [
+            [
+              "expensive simulator",
+              1.0,
+              "4971 ms for 200 queries"
+            ],
+            [
+              "trained surrogate",
+              2.4e-05,
+              "0.12 ms for 200 queries"
+            ],
+            [
+              "speed ratio",
+              "42,000x",
+              "about 4 hours of compute vs 100 milliseconds"
+            ]
+          ]
+        },
+        {
+          "t": "table",
+          "headers": [
+            "method",
+            "accuracy (RMSE)",
+            "time per query"
+          ],
+          "rows": [
+            [
+              "expensive function",
+              "perfect (by definition)",
+              "~24.8 ms"
+            ],
+            [
+              "surrogate network",
+              "0.018",
+              "~0.0006 ms"
+            ]
+          ],
+          "caption": "Same 200 unseen test cases. The surrogate achieves 0.018 error — small enough for many design problems — while shrinking latency from 25 ms to 0.0006 ms."
+        },
+        {
+          "t": "insight",
+          "html": "<strong>The discovered fact: a surrogate trained on 200 examples runs the expensive simulator's job 42,000 times faster, at error 0.018.</strong> You spend 5 seconds training the network once; after that, every query is instant. You can now afford to ask 'what if' ten thousand times — scan the whole design space, optimize a shape, run uncertainty studies — in the time that ten simulator runs would have taken."
+        }
+      ]
+    },
+    {
+      "id": "trust",
+      "h2": "4 · What makes a surrogate trustworthy — it must stay in-distribution",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "A surrogate only knows what it saw. If your training data covers inputs from 0 to 100, and the surrogate's learned pattern is valid everywhere in that range, asking it what happens at input 500 is a leap of faith. The network will not refuse — it will confidently guess. But the guess is often wrong because the simulator's behaviour outside the training envelope may have changed: new physics might kick in, a different regime might apply, or the simulator might have saturated. The surrogate has no idea."
+        },
+        {
+          "t": "para",
+          "html": "The strength of surrogates is exactly the strength of interpolation: inside the data range, a smooth network can capture the pattern reliably. Outside that range, extrapolation is a guess and sounds like truth. That is why practical surrogate workflows <em>always</em> wrap the surrogate in a bounds check or an uncertainty estimate — you need to know when the surrogate is on shaky ground."
+        }
+      ]
+    },
+    {
+      "id": "weakness",
+      "h2": "5 · The one real weakness — the error compounds with every link in the chain",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "If you use a surrogate to predict <em>one</em> output, the error stays local. But many design loops chain predictions: you optimise using the surrogate, follow the gradient, and ask for the next value. A tiny error in each step compounds. Over a long optimisation run or a long trajectory, the small errors can push you off course. An optimiser trained on a surrogate may converge to a shape that looks good to the surrogate but fails on the real simulator. A forecast initialised with a surrogate's guess can drift."
+        },
+        {
+          "t": "para",
+          "html": "The fix is to re-query the expensive simulator occasionally — at key decision points, or to validate final designs before building them. But that adds cost back into the loop. In practice surrogates work best for high-dimensional design sweeps or Monte Carlo studies (where you can tolerate a little noise in each sample) and less well for long single-trajectory predictions (where errors accumulate)."
+        }
+      ]
+    },
+    {
+      "id": "surprise",
+      "h2": "6 · The surprise — surrogates power real-time control and climate models",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "Because surrogates run at millisecond latencies, they enable problems that the expensive simulator cannot. A robot that steers by querying a fluid-dynamics simulation would be frozen; a robot that calls a surrogate 1000 times per second can react in real time. An aircraft designer that ran a full aerodynamic solver for every shape in a million-candidate optimisation would never finish; a designer using a surrogate can scan the space in hours."
+        },
+        {
+          "t": "para",
+          "html": "The same trick scales to weather and climate. A billion-node climate model takes weeks to forecast one month. A surrogate trained on ensemble model runs can predict anomalies in seconds. Physics-informed surrogates — networks taught to respect conservation laws while mimicking the expensive model — go further: they keep accuracy high while needing far fewer expensive training runs. The through-line is always the same: you can afford to do the hard thing once to make training data, and then the easy thing a million times."
+        }
+      ]
+    },
+    {
+      "id": "practice",
+      "h2": "7 · Where it is used in practice — making expensive physics fast enough for real-time use",
+      "blocks": [
+        {
+          "t": "para",
+          "html": "Surrogate models accelerate design in aeronautics (replacing expensive computational fluid dynamics solvers), robotics (enabling real-time control by replacing dynamics simulators), materials discovery (running optimizations over millions of candidates instead of a handful), climate modeling (fast anomaly prediction for early warning), and battery design (Monte Carlo studies for optimization and uncertainty quantification)."
+        },
+        {
+          "t": "para",
+          "html": "An aircraft designer runs a detailed aerodynamic solver on a hundred candidate wing shapes to build training data, then trains a neural network surrogate that predicts lift and drag in milliseconds. The optimization loop now runs thousands of shapes instead of a handful. A roboticist controlling a gripper trains a surrogate of the physics simulator so the controller can query it at kilohertz rates instead of waiting for full simulation. A battery engineer building a million-sample Monte Carlo study of pack safety can afford to if each scenario runs through a fast surrogate trained once on the expensive electrochemical solver."
+        },
+        {
+          "t": "insight",
+          "html": "The central trade-off is that surrogates are accurate only within the training region; you must check them against the real simulator on critical designs."
+        }
+      ]
+    }
+  ],
+  "related": [
+    [
+      "physics-informed-neural-networks.html",
+      "physics-informed neural networks"
+    ],
+    [
+      "uncertainty-and-generalization.html",
+      "uncertainty and generalization"
+    ],
+    [
+      "operator-learning.html",
+      "operator learning"
+    ],
+    [
+      "neural-differential-equations.html",
+      "neural differential equations"
+    ]
+  ],
   "recipe": {
     "summary": "A small tanh network trained to map 200 random inputs to 200 outputs from an expensive test function. Test set: 200 different unseen inputs. Measured root-mean-square error on test set: 0.018. Time to evaluate 200 inputs: expensive function ~4971 ms, surrogate ~0.12 ms (42,000x faster). Adam, 2000 steps, CPU PyTorch.",
     "eq": "# Define expensive simulator (or load its outputs)\nsimulator_output = expensive_function(x)\n\n# Train surrogate network\nloss = mean_squared_error(surrogate_net(x_train), y_train)\n\n# Evaluate on unseen test set\ntest_error = sqrt(mean_squared_error(surrogate_net(x_test), y_test))  # 0.018\ntest_time_expensive = 4971 ms  # 200 queries\ntest_time_surrogate = 0.12 ms  # 200 queries\nspeedup = 4971 / 0.12 ≈ 42,000x",
     "note": "Full script: scripts/experiments/surrogate_run.py. Numbers are the run's output verbatim."
-  }
+  },
+  "connects": [
+    {
+      "course": "aa203",
+      "id": "model-predictive-control",
+      "label": "MPC",
+      "note": "MPC must re-solve fast; a surrogate is the cheap stand-in for an expensive simulator that makes real-time re-solve possible."
+    },
+    {
+      "course": "aa203",
+      "id": "dynamic-programming",
+      "label": "dynamic programming",
+      "note": "A fast surrogate shrinks the cost of each evaluation, so value iteration becomes affordable."
+    }
+  ]
 }

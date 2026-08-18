@@ -41,7 +41,7 @@
     <div class="kick">scientific fields · long-range coupling · where information comes from</div>
     <h1>Attention — routing information by content, not by distance</h1>
     <p class="lede">In a scientific field—temperature on a grid, velocity in a fluid, charge in space—the value at one spot often depends on what is happening far away. A fixed local window filter can only see nearby points and misses distant effects. Here is the idea: let each location ask for what it needs and pull in the information by content. A real run where content-based routing picks the far position 100 percent of the time while a local window gets it 10 percent. Why this matters for fields. The one cost. And where this mechanism reappears as the engine of every modern large model.</p>
-    <div class="arc"><a href="#problem">The problem</a><a href="#reframe">The reframe</a><a href="#run">Seen on a real run</a><a href="#why">Why any-to-any routing matters</a><a href="#weakness">The one real weakness</a><a href="#surprise">The surprise</a><a href="attention-for-scientific-fields.html">Atlas card</a></div>
+    <div class="arc"><a href="#problem">The problem</a><a href="#reframe">The reframe</a><a href="#run">Seen on a real run</a><a href="#why">Why any-to-any routing matters</a><a href="#weakness">The one real weakness</a><a href="#surprise">The surprise</a><a href="#practice">In practice</a><a href="attention-for-scientific-fields.html">Atlas card</a></div>
 
     <section class="fp" id="problem">
       <h2>1 · The problem — distant parts of a field steer what happens nearby</h2>
@@ -56,6 +56,7 @@
       <div class="essay">
       <p>Instead of every point pulling from a fixed nearby region, flip the idea around. Let each location have two jobs: broadcast who it is and what information it holds, and separately, broadcast a query about what information it needs. Then, for every pair of locations, you can compute a <em>match score</em>—how well does the broadcast from location A answer the question from location B? Finally, let each location pull information from all the other locations, weighted by these match scores. Locations that match poorly contribute almost nothing. Locations that match well contribute a lot.</p>
       <p>This is the essence of <strong>content-based attention</strong>: instead of asking 'is it nearby?', the network asks 'does this location have what I need?' If it does, it pulls. If it does not, it ignores. The result is that information can flow from anywhere to anywhere in the field, but the network learns to route information only along the connections that the physics actually uses.</p>
+      <p>The hidden quantity here is the <em>attention weight</em> — for every pair of locations, a number saying how much information should flow from one to the other. The network learns these weights from examples, discovering which distant connections the physics actually relies on.</p>
       </div>
     </section>
     <section class="fp" id="run">
@@ -86,6 +87,14 @@
       <div class="essay">
       <p>The same attention mechanism—score all pairs by content-matching and route information along high-scoring links—is now the core engine in every large language model, vision transformer, and modern neural operator for PDEs. When you use a large model to read text or understand images or solve physics, you are using attention to move information across the input, selecting the parts that matter for each output location.</p>
       <p>The reason is the same in all these domains: sometimes you need to reach far to answer a question. A language model answering a question about character 50 needs information from character 5. A vision model predicting the center of an object needs to gather edges and color cues from all over the image. A neural operator solving a PDE everywhere needs each point to pull from distant boundary conditions and from faraway sources. Attention connects the right points regardless of distance, and it does so by learning what 'right' means from data. That is why the same idea that solves the long-range problem in scientific fields has become the foundation of modern machine learning.</p>
+      </div>
+    </section>
+    <section class="fp" id="practice">
+      <h2>7 · Where it is used in practice — routing information through scientific domains</h2>
+      <div class="essay">
+      <p>Climate and weather modeling use attention to track how distant jet streams and ocean temperatures steer local conditions. Fluid dynamics simulations need attention to wire up pressure changes across a domain, especially vortex interactions far from each boundary. Molecular dynamics and computational chemistry use it to model long-range electrostatic forces where a distant charge pulls on nearby atoms. Medical imaging reconstruction uses attention to gather signal from distant parts of the body when solving inverse problems like MRI.</p>
+      <p>In weather forecasting, each grid point learns to ask: which distant locations hold the information I need? Instead of averaging only nearby points, the network scores every location by how well it answers the current point's question, then pulls weighted information from all high-scoring locations. In molecular systems, the same mechanism lets atoms learn which far-away atoms affect them electrostatically without being told in advance. The network discovers the true long-range connectivity from data.</p>
+      <div class="insight">Attention costs quadratically in the grid size, so practitioners accept the cost only when long-range connections are physics-critical; local windows fail too often to be worth the speedup.</div>
       </div>
     </section>
     <section class="fp"><p class="muted">Related: <a href="partial-differential-equations.html">partial differential equations</a> · <a href="operator-learning.html">operator learning</a> · <a href="graphs-and-geometric-learning.html">graphs and geometric learning</a> · <a href="symbolic-regression.html">symbolic regression</a></p></section>
