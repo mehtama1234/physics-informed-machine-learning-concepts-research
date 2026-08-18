@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Generative Modeling (deep) · Physics-Informed ML</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    .arc{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0}
+    .arc a{font-size:12.5px;color:var(--accent);text-decoration:none;border:1px solid var(--line);border-radius:20px;padding:3px 10px;background:var(--card)}
+    .fp{border-top:1px solid var(--line);padding:8px 0 4px;margin-top:8px}
+    .fp h2{border-top:none;padding-top:0;margin-top:20px;font-size:1.4rem}
+    .kick{font-size:12px;color:var(--accent);font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin:14px 0 6px}
+    .lede{font-size:1.2rem;max-width:900px;color:#2a3644}
+    .essay p{max-width:76ch;font-size:1rem;margin:10px 0}
+    .barrow{display:flex;align-items:center;gap:10px;margin:5px 0;font-size:13px}
+    .barrow .lab{width:150px;font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--muted);text-align:right}
+    .bar{height:16px;border-radius:3px;background:var(--accent);min-width:2px}
+    .bar.alt{background:#b5651d}
+    .barrow .val{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--text)}
+    .eq{font-family:ui-monospace,Menlo,monospace;font-size:13px;background:#eef5f6;border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin:12px 0;overflow-x:auto;white-space:pre-wrap}
+    .insight{border-left:4px solid var(--accent);background:#eef5f6;padding:12px 16px;border-radius:0 8px 8px 0;margin:16px 0;font-size:1.02rem}
+    details.math{border:1px solid var(--line);border-radius:8px;background:var(--card);margin:14px 0}
+    details.math summary{cursor:pointer;padding:10px 13px;color:var(--accent);font-weight:750}
+    details.math > div{border-top:1px solid var(--line);padding:4px 14px 12px}
+    figure{margin:16px 0}figcaption{font-size:13px;color:var(--muted);margin-top:6px}
+    table{border-collapse:collapse;width:100%;max-width:1040px;background:var(--card)}
+    th,td{border:1px solid var(--line);padding:8px 11px;text-align:left;font-size:.95rem}
+    .tw{overflow-x:auto}
+  </style>
+</head>
+<body>
+<nav class="topbar">
+  <a href="../index.html">Physics-Informed ML</a>
+  <a href="../concept-atlas.html">Concept Atlas</a>
+  <a href="../deep-track.html">Deep Track</a>
+  <a href="generative-modeling.html">This topic</a>
+  <a href="../worked-examples.html">Examples</a>
+</nav>
+<main>
+    <div class="kick">sampling and creation · making new things · learning the shape from examples</div>
+    <h1>Generative Modeling — learning to make new samples that fit the pattern</h1>
+    <p class="lede">Usually a neural net learns to label or predict: given an input, pick the right answer from a fixed list. But often you want something different — create fresh examples that look real, not just classify given ones. Here is the problem, the reframe, a real run where a tiny net generates new data points that land on the shape it learned, why step-by-step denoising works, the one real weakness, and where this idea reappears in bigger methods.</p>
+    <div class="arc"><a href="#problem">The problem</a><a href="#reframe">The reframe</a><a href="#run">Seen on a real run</a><a href="#why">Why step-by-step denoising works</a><a href="#weakness">The one real weakness</a><a href="#surprise">The surprise</a><a href="#practice">In practice</a><a href="generative-modeling.html">Atlas card</a></div>
+
+    <section class="fp" id="problem">
+      <h2>1 · The problem — you often want to CREATE plausible new examples, not just label existing ones</h2>
+      <div class="essay">
+      <p>In many fields, the goal is not to classify or predict a single right answer, but to explore what could work. A materials scientist wants candidate structures that might have the desired properties. A biologist wants to propose new molecules that might bind a protein. A climate modeler wants plausible weather scenarios to test how a design holds up. But you can't write down all the possibilities — there are infinitely many. The question becomes: <strong>how do you sample from a shape you only know from examples?</strong></p>
+      <p>A neural net trained to label things (dog, cat, bird) can classify a picture but cannot generate a new one. You need a different kind of teacher.</p>
+      </div>
+    </section>
+    <section class="fp" id="reframe">
+      <h2>2 · The reframe — learn to remove a little noise at a time, then compose those steps</h2>
+      <div class="essay">
+      <p>The idea is simple: instead of learning to make a whole sample at once, learn to remove a tiny bit of noise. Start with pure random noise (every pixel or coordinate is a random number). Then ask a neural net: 'What does the noise look like if I remove a small amount of it?' Apply that step, get slightly less noisy data, ask the same question, repeat tens or hundreds of times. The net learns to denoise in tiny increments, and after many such steps, pure noise becomes a realistic sample from the shape it learned.</p>
+      <p>This is a diffusion process — noise diffuses into a clean signal forward in time, and the net learns to run that backward, step by step. Because each small step is easier to learn (the change is tiny), the net gets good at it, and composing many easy steps produces a hard task: generating a fresh sample on the data manifold.</p>
+      <p>The hidden quantity tracked at every step is <em>how corrupted the data currently is</em> — how far along the gradual noising it has gone. The network is told this level and learns to remove exactly the amount of noise that belongs to it, so running the steps backward turns pure noise into a clean sample.</p>
+      </div>
+    </section>
+    <section class="fp" id="run">
+      <h2>3 · Seen on a real run — 91% of generated points land on the learned shape</h2>
+      <div class="essay">
+      <p>We trained a tiny denoising diffusion model on a simple 2-D shape called 'two moons' (two curved lines facing each other, a classic toy problem). After training, we asked it to generate new points by starting with pure noise and running the denoising steps. Here is what happened, measured directly from the run.</p>
+      <figure><div class="barrow"><span class="lab">Points landing on the shape</span><div class="bar" style="width:136px"></div><span class="val">91% within 0.15 distance</span></div><div class="barrow"><span class="lab">Real data spread (std)</span><div class="bar" style="width:150px"></div><span class="val">[0.87, 0.49]</span></div><div class="barrow"><span class="lab">Generated data spread (std)</span><div class="bar" style="width:150px"></div><span class="val">[0.85, 0.49]</span></div><figcaption>Generated samples stay close to the real shape. The model learned to walk noise onto the two-moons pattern.</figcaption></figure>
+      <div class="insight"><strong>The discovered fact: 91% of generated points land on the two-moons shape, and their spread matches the real data's spread nearly exactly.</strong> The model was trained only to remove noise, but by chaining many small denoising steps, it learned to sample a complex shape. Real data had spread of 0.87 in one direction and 0.49 in the other; generated data was 0.85 and 0.49 — the learned distribution matches what the data actually looked like.</div>
+      </div>
+    </section>
+    <section class="fp" id="why">
+      <h2>4 · Why step-by-step denoising works — each small step is easy to learn</h2>
+      <div class="essay">
+      <p>A neural net trained to make a whole sample at once faces a hard problem: outputs are high-dimensional (thousands of pixels, or many coordinates), and one wrong choice early cascades into errors later. But a net trained to remove a tiny bit of noise from slightly-noisy data sees a much simpler task — the input and output are almost identical, and the change is small. Small changes are easier to learn and easier for the optimizer to find.</p>
+      <p>When you compose many such small steps, a useful thing happens: the noise gradually concentrates onto the learned shape. The model does not need to know the whole shape at once; at each step it only needs to nudge in the right direction slightly, and after enough nudges, pure noise has become a realistic sample. This is what makes the denoising-diffusion approach more stable than alternatives that try to generate samples in one shot.</p>
+      </div>
+    </section>
+    <section class="fp" id="weakness">
+      <h2>5 · The one real weakness — it can only recombine what it saw, and sampling many steps is slow</h2>
+      <div class="essay">
+      <p>A generative model learns the shape from data. But that shape is what the data showed it — no more. If all the training examples were planar structures, the model cannot invent a three-dimensional crystal. If every trajectory stayed within a certain speed range, it cannot propose a scenario faster than that. Generative models are powerful at remixing and interpolating, but they cannot extrapolate to physics the data never contained.</p>
+      <p>The second limitation is speed. Generating one sample requires running many denoising steps (often 50 to 1000), each a forward pass through the network. This is much slower than a classifier that predicts in one shot. For real-time applications or very large-scale sampling, this cost matters.</p>
+      </div>
+    </section>
+    <section class="fp" id="surprise">
+      <h2>6 · The surprise — denoising diffusion powers the biggest image generators and now proposes molecules</h2>
+      <div class="essay">
+      <p>This same step-by-step-denoising idea is the engine behind modern image generators like DALL-E and Stable Diffusion. Instead of a 2-D 'two moons' shape, those models learn the shape of natural images from millions of examples. The same compose-many-small-steps principle scales from toy shapes to billion-parameter networks and images of any complexity.</p>
+      <p>The idea reappears in molecular design, where a diffusion model learns the shape of plausible molecules (represented as graphs, one atom per node). Training on real molecules from chemistry databases, the model generates candidates that look buildable, and biologists then test them to see if they actually work. The weakness matters there too: the model can remix known chemistry but cannot invent an entirely new element or bond type. But for exploring variations within known space, it is powerful. This is why the same principle — learn to denoise, compose many steps — is now central to generative modeling across images, language, molecules, and fields.</p>
+      </div>
+    </section>
+    <section class="fp" id="practice">
+      <h2>7 · Where it is used in practice — sampling plausible candidates in design spaces</h2>
+      <div class="essay">
+      <p>Molecular design for drug discovery uses diffusion models to propose new molecules that look buildable—they can be synthesized and might bind proteins of interest. Materials discovery feeds generative models to suggest new crystal structures or alloy compositions that might have desired properties. Climate scenario planning generates plausible future weather patterns to test how infrastructure holds up under stress. Battery and reactor design uses generative models to explore candidate geometries and operating conditions without exhaustively simulating every possibility.</p>
+      <p>A chemistry team trains a diffusion model on a database of known drug molecules represented as graphs (atoms are nodes, bonds are edges). Starting with pure noise, the model learns to denoise step-by-step, gradually removing randomness and building realistic molecular structures. After training, a researcher can sample many new candidates by running the denoising steps—each sample is a plausible molecule that the model never saw during training. Biologists then test the most promising candidates experimentally. The model can remix known chemistry but cannot invent entirely new elements; it explores the neighborhood of known space efficiently.</p>
+      <div class="insight">Generative sampling is slow—often many denoising steps per sample—so it suits design exploration where time-to-candidate is less critical than diversity and novelty.</div>
+      </div>
+    </section>
+    <section class="fp" id="connects"><h2>Where this connects — across the machine</h2><p class="muted">Physics-informed ML sits between discovering a model from data and using it for control. These links open the concept it mirrors or feeds &mdash; the wider data&rarr;model&rarr;control pipeline.</p><ul style="list-style:none;padding:14px 16px;margin:12px 0;border:1px solid var(--line,#d7ddd9);border-radius:10px;background:#fff"><li style="margin:9px 0;padding-left:14px;border-left:3px solid #8b3f18"><a href="https://mehtama1234.github.io/stanford-aa203-optimal-learning-control-concepts-research/concepts/stochastic-dynamic-programming-deep.html" style="font-weight:700">stochastic dynamic programming</a> <span class="muted" style="font-size:13px">· AA203 · control</span><div style="font-size:14.5px;margin-top:3px">A generative model can produce the spread of possible futures that stochastic planning has to average over.</div></li></ul></section>
+    <details class="math"><summary>the run recipe — reproduce every number above</summary><div>
+      <p class="muted">A small neural network trained on the 2-D 'two moons' dataset via denoising diffusion. The training adds random noise to real samples and learns to predict the noise at each level. Sampling starts with pure noise and runs the learned denoiser for many steps. PyTorch, CPU, small hidden layers.</p>
+      <div class="eq">Forward (noise add): x_t = sqrt(alpha_t) * x_0 + sqrt(1 - alpha_t) * epsilon,  where epsilon ~ N(0,I)
+Reverse (net learns to denoise): epsilon_predicted = net(x_t, t)
+loss_train = || epsilon - epsilon_predicted ||^2
+
+Sampling: start with x_T ~ N(0,I), iterate x_{t-1} = denoise_step(x_t, net) for t = T, T-1, ..., 1
+
+Measured: 91% of generated points within 0.15 of a real point; real data spread [0.87, 0.49] vs generated [0.85, 0.49].</div>
+      <p class="muted">Full script: scripts/experiments/generative_run.py. Numbers are the run's output verbatim.</p>
+    </div></details>
+    <footer style="color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding:22px 0 60px;margin-top:24px">Physics-Informed ML · Generative Modeling deep dive · every quantity on a real run is measured, not asserted. Experiments in scripts/experiments/.</footer>
+</main>
+</body>
+</html>

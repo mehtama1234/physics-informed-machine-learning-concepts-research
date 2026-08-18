@@ -11,6 +11,7 @@
   <a href="../index.html">Physics-Informed ML</a>
   <a href="../transcripts.html">Transcripts</a>
   <a href="../concept-atlas.html">Concept Atlas</a>
+  <a href="../deep-track.html">Deep Track</a>
   <a href="../families.html">Families</a>
   <a href="../comparisons.html">Comparisons</a>
   <a href="../worked-examples.html">Examples</a>
@@ -56,6 +57,7 @@
 <main>
 
 <h1>Deep Learning</h1>
+<p><a href="deep-learning-deep.html" style="display:inline-block;background:var(--accent);color:#fff;border-radius:8px;padding:9px 14px;font-weight:700;text-decoration:none">Read the deep dive — seen on a real run &rarr;</a></p>
 <h2>Common Problem This Solves</h2>
 <p>lots of real examples but no equation to predict what comes next</p>
 <h2>Big Picture Plain Summary</h2>
@@ -1256,8 +1258,8 @@
   <h2>The Actual Math, One Level Deeper</h2>
   <p class="quiet">For readers ready for symbols. The plain path above stands on its own; this is the same idea written in notation.</p>
   <p class="equation"><code>y_θ = h_L( h_{L-1}( ... h_1(x) ... ) )  where  h_i(z) = σ( W_i z + b_i )</code></p><p class="equation"><code>L(θ) = (1/N) Σ_i |y_θ(x_i) - y_i|²  +  λ R(θ)</code></p><p class="equation"><code>θ* = argmin_θ L(θ)</code></p>
-  <table><thead><tr><th>Symbol</th><th>What it stands for</th></tr></thead><tbody><tr><td><code>y_θ</code></td><td>prediction from the neural network with parameters θ</td></tr><tr><td><code>θ = {W_i, b_i}</code></td><td>millions of adjustable weights and biases in the network</td></tr><tr><td><code>σ(·)</code></td><td>activation function (ReLU, tanh, etc.) that introduces nonlinearity</td></tr><tr><td><code>L(θ)</code></td><td>loss: average error on training data plus a regularization term</td></tr><tr><td><code>R(θ)</code></td><td>regularization penalty (L1, L2, or dropout) to prevent overfitting</td></tr><tr><td><code>λ</code></td><td>regularization strength—how much to penalize model complexity</td></tr></tbody></table>
-  <p>Deep learning stacks many layers to learn complex functions from examples. The loss function only measures error on training data, so it assumes training examples are representative and that small training error transfers to unseen cases.</p>
+  <table><thead><tr><th>Symbol</th><th>What it stands for</th></tr></thead><tbody><tr><td><code>y_θ</code></td><td>prediction from the neural network with parameters θ</td></tr><tr><td><code>θ = {W_i, b_i}</code></td><td>millions of adjustable weights and biases in the network</td></tr><tr><td><code>σ(·)</code></td><td>activation function (ReLU, tanh, etc.) that introduces nonlinearity</td></tr><tr><td><code>L(θ)</code></td><td>loss: average error on training data plus a regularization term</td></tr><tr><td><code>R(θ)</code></td><td>regularization penalty (L1, L2, or dropout) to prevent overfitting</td></tr><tr><td><code>λ</code></td><td>regularization strength—how much to penalize model size</td></tr></tbody></table>
+  <p>Deep learning stacks many layers to learn richly varied functions from examples. The loss function only measures error on training data, so it assumes training examples are representative and that small training error transfers to unseen cases.</p>
 </section>
 
 

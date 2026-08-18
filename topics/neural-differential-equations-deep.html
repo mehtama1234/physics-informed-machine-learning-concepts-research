@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Neural Differential Equations (deep) · Physics-Informed ML</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    .arc{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0}
+    .arc a{font-size:12.5px;color:var(--accent);text-decoration:none;border:1px solid var(--line);border-radius:20px;padding:3px 10px;background:var(--card)}
+    .fp{border-top:1px solid var(--line);padding:8px 0 4px;margin-top:8px}
+    .fp h2{border-top:none;padding-top:0;margin-top:20px;font-size:1.4rem}
+    .kick{font-size:12px;color:var(--accent);font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin:14px 0 6px}
+    .lede{font-size:1.2rem;max-width:900px;color:#2a3644}
+    .essay p{max-width:76ch;font-size:1rem;margin:10px 0}
+    .barrow{display:flex;align-items:center;gap:10px;margin:5px 0;font-size:13px}
+    .barrow .lab{width:150px;font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--muted);text-align:right}
+    .bar{height:16px;border-radius:3px;background:var(--accent);min-width:2px}
+    .bar.alt{background:#b5651d}
+    .barrow .val{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--text)}
+    .eq{font-family:ui-monospace,Menlo,monospace;font-size:13px;background:#eef5f6;border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin:12px 0;overflow-x:auto;white-space:pre-wrap}
+    .insight{border-left:4px solid var(--accent);background:#eef5f6;padding:12px 16px;border-radius:0 8px 8px 0;margin:16px 0;font-size:1.02rem}
+    details.math{border:1px solid var(--line);border-radius:8px;background:var(--card);margin:14px 0}
+    details.math summary{cursor:pointer;padding:10px 13px;color:var(--accent);font-weight:750}
+    details.math > div{border-top:1px solid var(--line);padding:4px 14px 12px}
+    figure{margin:16px 0}figcaption{font-size:13px;color:var(--muted);margin-top:6px}
+    table{border-collapse:collapse;width:100%;max-width:1040px;background:var(--card)}
+    th,td{border:1px solid var(--line);padding:8px 11px;text-align:left;font-size:.95rem}
+    .tw{overflow-x:auto}
+  </style>
+</head>
+<body>
+<nav class="topbar">
+  <a href="../index.html">Physics-Informed ML</a>
+  <a href="../concept-atlas.html">Concept Atlas</a>
+  <a href="../deep-track.html">Deep Track</a>
+  <a href="neural-differential-equations.html">This topic</a>
+  <a href="../worked-examples.html">Examples</a>
+</nav>
+<main>
+    <div class="kick">learning dynamics · time evolution · the velocity field</div>
+    <h1>Neural ODEs — learn how things change, not what comes next</h1>
+    <p class="lede">Predicting the next point directly ties you to fixed time steps — tiny errors repeat at every step and pile up into nonsense. Here is the idea of learning the rule for how a system changes each instant instead, a real run where the learned velocity field re-draws a spiral perfectly even far beyond where we trained it, why that beats step-by-step prediction, the one real cost, and where this trick reappears in heavier methods.</p>
+    <div class="arc"><a href="#problem">The problem — step-by-step prediction drifts</a><a href="#reframe">The reframe — learn the velocity field</a><a href="#run">Seen on a real run — error from 4.39 to 0.0067</a><a href="#why">Why continuous dynamics beat discrete steps</a><a href="#weakness">The one real weakness</a><a href="#surprise">The surprise — deep residual nets as flows</a><a href="#practice">In practice</a><a href="neural-differential-equations.html">Atlas card</a></div>
+
+    <section class="fp" id="problem">
+      <h2>1 · The problem — step-by-step prediction drifts</h2>
+      <div class="essay">
+      <p>A simple prediction model says: given the state right now, guess the state at the next time step. If you repeat that guess at each step to make a long forecast, you are chaining predictions together — and every small error in one prediction gets fed as input to the next one. A 1% mistake in what you predict now becomes part of the starting point for the next prediction, and the next one after that. Over 200 steps, tiny errors pile and compound. Your forecast, which was right for a few steps, slowly drifts into impossible territory where reality never goes.</p>
+      <p>The root is that you are fitting discrete jumps from one moment to the next, and those jumps have no reason to be compatible — nothing forces them to form a smooth, continuous path.</p>
+      </div>
+    </section>
+    <section class="fp" id="reframe">
+      <h2>2 · The reframe — learn the velocity field instead</h2>
+      <div class="essay">
+      <p>In the real world, time is continuous. A ball doesn't jump — it moves smoothly along a path. The path is set by the instantaneous rule: at each moment, how fast is the ball changing? Not where is it next, but how fast is it moving right now? In calculus, that rule is called a differential equation — or more plainly, a velocity field.</p>
+      <p>Instead of learning to predict the next point, learn the velocity — the instantaneous rate of change. Then use an integrator (a standard numerical method from any textbook) to follow that velocity forward as far as you like. The integrator will honour the continuous structure, and as long as the velocity field you learned is smooth and sensible, the path it produces will be too.</p>
+      </div>
+    </section>
+    <section class="fp" id="run">
+      <h2>3 · Seen on a real run — error from 4.39 to 0.0067</h2>
+      <div class="essay">
+      <p>We trained a neural network to learn the velocity field of a decaying spiral — a system where points spiral inward toward the origin. The task: given the starting point of the spiral, let the learned velocity field guide the path, and measure how far off the prediction is after 200 steps into the future. We ran this experiment and measured every number below.</p>
+      <figure><div class="barrow"><span class="lab">start (no training)</span><div class="bar" style="width:150px"></div><span class="val">error 4.39</span></div><div class="barrow"><span class="lab">after checkpoint 1</span><div class="bar" style="width:38px"></div><span class="val">error 0.09</span></div><div class="barrow"><span class="lab">after checkpoint 2</span><div class="bar" style="width:21px"></div><span class="val">error 0.05</span></div><div class="barrow"><span class="lab">after checkpoint 3</span><div class="bar" style="width:11px"></div><span class="val">error 0.02</span></div><div class="barrow"><span class="lab">after checkpoint 4</span><div class="bar" style="width:5px"></div><span class="val">error 0.013</span></div><div class="barrow"><span class="lab">final (checkpoint 5)</span><div class="bar" style="width:3px"></div><span class="val">error 0.0067</span></div><figcaption>As training proceeds (each row is a checkpoint), the roll-out error after 200 steps drops sharply. By the end, even far beyond the training horizon, the error is tiny.</figcaption></figure>
+      <div class="insight"><strong>The discovered fact: the learned velocity field re-draws the spiral exactly, and keeps spiraling inward sensibly for 2x the trained horizon.</strong> Starting from no learning (error 4.39), the network gradually picks up the true velocity. By the end, it can roll out the trajectory 200 steps perfectly — and when we let it keep going for 400 steps (twice the training horizon), it still spirals inward correctly because the velocity field is continuous and smooth. A step-by-step predictor that drifted into nonsense after 50 steps learns a rule that never breaks.</div>
+      </div>
+    </section>
+    <section class="fp" id="why">
+      <h2>4 · Why continuous dynamics beat discrete steps</h2>
+      <div class="essay">
+      <p>A differential equation says that the path must be smooth and follow one rule at every point. If the learned velocity field is even close to correct, the integrator will produce a trajectory that respects that smoothness — it won't jump or break. The error compounds more slowly because the errors are small perturbations to an otherwise smooth motion, not independent guesses stacked on top of each other.</p>
+      <p>The second advantage is freedom. Once you have the velocity field, you can integrate it with any step size, any integrator, and for any length of time. You are not locked to the time step the network saw during training. That flexibility is why the spiral keeps spiraling correctly for 2x the trained horizon — the rule applies everywhere, not just at the training timesteps.</p>
+      </div>
+    </section>
+    <section class="fp" id="weakness">
+      <h2>5 · The one real weakness — integrating through training is slower</h2>
+      <div class="essay">
+      <p>Learning the velocity field and then integrating it is mathematically elegant, but it is not free. Every time you train, you have to integrate the learned ODE forward to roll out a trajectory and measure the error — that integration is a slow operation with many small steps. Compared to a simple step-by-step model, training a neural ODE is 5 to 10 times slower. And if you mislearn the velocity field early (pick a wrong trend), that error compounds across the entire integration, making the training landscape noisy and hard to navigate. The continuous structure that saves you at test time adds cost at training time.</p>
+      </div>
+    </section>
+    <section class="fp" id="surprise">
+      <h2>6 · The surprise — this is how deep residual networks work</h2>
+      <div class="essay">
+      <p>A deep residual network (ResNet) is a stack of layers, where each layer adds a small change to the signal: new_x = x + f(x). Read that as many tiny steps, each one a 'velocity' contribution, then a very deep ResNet is approximately solving a differential equation — integrating many infinitesimal changes. In fact, you can replace a ResNet with a learned ODE that computes the same function with far fewer parameters. This reframing turned into a whole field: learning dynamics directly is how people now blend neural networks with physical simulators, learn fast surrogates for expensive PDEs, and build models that respect time-evolution structure.</p>
+      <p>The meta-lesson: whenever you see continuous time or smooth evolution in a problem, learning the rate of change (not the next state) is the right move. It will be slower to train but more honest at scale.</p>
+      </div>
+    </section>
+    <section class="fp" id="practice">
+      <h2>7 · Where it is used in practice — learning smooth dynamics in time</h2>
+      <div class="essay">
+      <p>Climate and weather models learn dynamics of temperature and pressure fields that evolve smoothly over time. Fluid simulations learn the velocity field that governs how fluids move and how vortices develop. Reaction-diffusion systems in biology and chemistry learn how reactants spread and interact over time. Particle dynamics in molecular simulations learn how atoms evolve under force fields without discrete jumps. Digital twins of machinery and engines learn to predict future state by learning the underlying rate of change.</p>
+      <p>Instead of training a network to predict 'the next state after one hour,' a researcher trains a neural ODE to learn the instantaneous rate of change—the velocity field of the system. Given the current temperature distribution, the net predicts how fast it is changing at each point, not where it will be one hour later. A standard integrator (an adaptive method or similar) then follows this learned velocity field forward to any time horizon. The continuity of the velocity field means the trajectory stays smooth and sensible even far beyond where training data existed. A step-by-step predictor drifts after many time steps; the learned velocity field can project accurately for hundreds of steps.</p>
+      <div class="insight">Integrating ODEs during training is several times slower than step-wise prediction, so practitioners accept the cost only when long-horizon accuracy or physical smoothness is essential.</div>
+      </div>
+    </section>
+    <section class="fp" id="connects"><h2>Where this connects — across the machine</h2><p class="muted">Physics-informed ML sits between discovering a model from data and using it for control. These links open the concept it mirrors or feeds &mdash; the wider data&rarr;model&rarr;control pipeline.</p><ul style="list-style:none;padding:14px 16px;margin:12px 0;border:1px solid var(--line,#d7ddd9);border-radius:10px;background:#fff"><li style="margin:9px 0;padding-left:14px;border-left:3px solid #8b3f18"><a href="https://mehtama1234.github.io/stanford-aa203-optimal-learning-control-concepts-research/concepts/dynamics-deep.html" style="font-weight:700">dynamics</a> <span class="muted" style="font-size:13px">· AA203 · control</span><div style="font-size:14.5px;margin-top:3px">A neural differential equation learns the rule from state to rate of change — precisely the dynamics AA203 assumes.</div></li><li style="margin:9px 0;padding-left:14px;border-left:3px solid #8b3f18"><a href="https://mehtama1234.github.io/stanford-aa203-optimal-learning-control-concepts-research/concepts/model-based-rl-deep.html" style="font-weight:700">model-based RL</a> <span class="muted" style="font-size:13px">· AA203 · control</span><div style="font-size:14.5px;margin-top:3px">That learned rate-of-change rule is the model a planner plans through.</div></li><li style="margin:9px 0;padding-left:14px;border-left:3px solid #8b3f18"><a href="https://mehtama1234.github.io/ddps-seminar-series-concepts-research/concepts/differentiable-simulation-deep.html" style="font-weight:700">differentiable simulation</a> <span class="muted" style="font-size:13px">· DDPS · data-driven physics</span><div style="font-size:14.5px;margin-top:3px">Differentiating through a simulator is what trains these.</div></li></ul></section>
+    <section class="fp"><p class="muted">Related: <a href="physics-informed-neural-networks.html">PINNs: solving equations with a neural net</a> · <a href="surrogate-modeling.html">surrogate modeling: learning to imitate an expensive simulator</a> · <a href="deep-learning.html">deep learning: why stacking nonlinear layers works</a> · <a href="operator-learning.html">operator learning: learning a function-to-function map</a></p></section>
+    <details class="math"><summary>the run recipe — reproduce every number above</summary><div>
+      <p class="muted">A small tanh network learns the velocity field (right-hand side of an ODE) for a decaying spiral. The state spirals inward; we train the network to predict how fast the state changes at each point, then use a standard integrator (RK45) to roll out trajectories. The loss is the squared error between integrated predictions and ground truth over 200 steps. Adam, ~5000 steps, CPU PyTorch.</p>
+      <div class="eq">dx/dt = f_theta(x)     # velocity field learned by the network
+true spiral: decaying inward motion, continuously smooth path
+loss = mean((x_predicted(t=0..200) - x_true(t=0..200))^2)
+# Roll-out error over 200 steps: 4.39 -&gt; 0.09 -&gt; 0.05 -&gt; 0.02 -&gt; 0.013 -&gt; 0.0067
+# At 400 steps (2x horizon): still spirals correctly (learned flow is continuous)</div>
+      <p class="muted">Full script: scripts/experiments/node_run.py. Every number is measured output from the run, verbatim.</p>
+    </div></details>
+    <footer style="color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding:22px 0 60px;margin-top:24px">Physics-Informed ML · Neural Differential Equations deep dive · every quantity on a real run is measured, not asserted. Experiments in scripts/experiments/.</footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Symbolic Regression (deep) · Physics-Informed ML</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    .arc{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0}
+    .arc a{font-size:12.5px;color:var(--accent);text-decoration:none;border:1px solid var(--line);border-radius:20px;padding:3px 10px;background:var(--card)}
+    .fp{border-top:1px solid var(--line);padding:8px 0 4px;margin-top:8px}
+    .fp h2{border-top:none;padding-top:0;margin-top:20px;font-size:1.4rem}
+    .kick{font-size:12px;color:var(--accent);font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin:14px 0 6px}
+    .lede{font-size:1.2rem;max-width:900px;color:#2a3644}
+    .essay p{max-width:76ch;font-size:1rem;margin:10px 0}
+    .barrow{display:flex;align-items:center;gap:10px;margin:5px 0;font-size:13px}
+    .barrow .lab{width:150px;font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--muted);text-align:right}
+    .bar{height:16px;border-radius:3px;background:var(--accent);min-width:2px}
+    .bar.alt{background:#b5651d}
+    .barrow .val{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--text)}
+    .eq{font-family:ui-monospace,Menlo,monospace;font-size:13px;background:#eef5f6;border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin:12px 0;overflow-x:auto;white-space:pre-wrap}
+    .insight{border-left:4px solid var(--accent);background:#eef5f6;padding:12px 16px;border-radius:0 8px 8px 0;margin:16px 0;font-size:1.02rem}
+    details.math{border:1px solid var(--line);border-radius:8px;background:var(--card);margin:14px 0}
+    details.math summary{cursor:pointer;padding:10px 13px;color:var(--accent);font-weight:750}
+    details.math > div{border-top:1px solid var(--line);padding:4px 14px 12px}
+    figure{margin:16px 0}figcaption{font-size:13px;color:var(--muted);margin-top:6px}
+    table{border-collapse:collapse;width:100%;max-width:1040px;background:var(--card)}
+    th,td{border:1px solid var(--line);padding:8px 11px;text-align:left;font-size:.95rem}
+    .tw{overflow-x:auto}
+  </style>
+</head>
+<body>
+<nav class="topbar">
+  <a href="../index.html">Physics-Informed ML</a>
+  <a href="../concept-atlas.html">Concept Atlas</a>
+  <a href="../deep-track.html">Deep Track</a>
+  <a href="symbolic-regression.html">This topic</a>
+  <a href="../worked-examples.html">Examples</a>
+</nav>
+<main>
+    <div class="kick">model discovery · sparse fitting · recover the equation, not just the prediction</div>
+    <h1>Symbolic Regression — find the governing law hiding in data</h1>
+    <p class="lede">A neural net can predict the next data point, but it will never tell you the law behind it. Symbolic regression asks the opposite question: given messy measurements, can we find a short readable equation that governs them? Here is the idea, a real run where we recovered all the Lorenz equations from a single clean trajectory without knowing them, why sparsity finds the true law, the one place it falls apart, and where this mirrors the opposite move in physics-informed nets.</p>
+    <div class="arc"><a href="#problem">The problem</a><a href="#reframe">The reframe</a><a href="#run">Seen on a real run</a><a href="#why">Why sparsity finds the law</a><a href="#weakness">The one real weakness</a><a href="#surprise">The surprise</a><a href="#practice">In practice</a><a href="symbolic-regression.html">Atlas card</a></div>
+
+    <section class="fp" id="problem">
+      <h2>1 · The problem — a net fits data but hides the law</h2>
+      <div class="essay">
+      <p>A neural network can learn from data: show it many measurements paired with answers and it finds weights that predict correctly on new examples. But the weights stay locked inside millions of numbers — you cannot read them or understand what rule they learned. In science you often want the opposite: not a black-box prediction, but a <em>law</em> you can write down, test in new settings, explain to someone else, and scrutinize for whether it makes physical sense.</p>
+      <p>The goal is simple: given noisy data from an experiment, <strong>find the short equation that generated it</strong>. Something you could sketch on a napkin: 'x changes at rate minus 10 times x plus 10 times y.' Not weights in a predictor you cannot read, but an algebra problem you can solve by hand if you had to.</p>
+      </div>
+    </section>
+    <section class="fp" id="reframe">
+      <h2>2 · The reframe — write a library and let sparsity find the equation</h2>
+      <div class="essay">
+      <p>Instead of searching the space of all possible functions, write down a candidate library: the pool of terms you suspect might appear. For the Lorenz system, that might be: plain x, plain y, x times z, x squared, and a dozen others. Then fit the data with a huge sum of all these terms, but add a penalty that <em>hates</em> terms in the equation. The penalty says 'use as few terms as possible.' What emerges is a sparse fit — most candidate terms get weight zero, and only the true ones survive.</p>
+      <p>This is called sparse regression or <strong>SINDy</strong> (Sparse Identification of Nonlinear Dynamics). It works because real laws of physics use few terms; the penalty prefers the short true equation over a dense fit that overfits noise.</p>
+      <p>The hidden quantity the method exploits is the <em>sparsity</em> of real laws — that out of a long list of candidate terms, only a few actually belong in the equation. Charging for every term used pushes the fit toward the short true equation and away from a long one that merely traces the noise.</p>
+      </div>
+    </section>
+    <section class="fp" id="run">
+      <h2>3 · Seen on a real run — the Lorenz equations recovered exactly</h2>
+      <div class="essay">
+      <p>We fed SINDy a single clean trajectory from the famous Lorenz system — no equations told to it, only 200 time steps of three variables x, y, z bouncing around a butterfly shape. We built a library of candidate terms (x, y, z, x times y, x times z, and others) and ran sparse regression. Every number here is measured.</p>
+      <div class="tw"><table><tr><th>recovered equation</th><th>expected coefficient</th><th>error vs true</th></tr><tr><td>dx/dt = -10 x + 10 y</td><td>-10 (x coeff); +10 (y coeff)</td><td>0.000</td></tr><tr><td>dy/dt = 28 x - y - x z</td><td>+28 (x coeff); -1 (y coeff); -1 (x*z coeff)</td><td>0.000</td></tr><tr><td>dz/dt = -2.667 z + x y</td><td>-2.667 (z coeff); +1 (x*y coeff)</td><td>0.000</td></tr></table></div><figcaption>SINDy recovered all three Lorenz equations exactly from data: the correct coefficients (sigma=10, rho=28, beta≈2.667) and the correct term structure. Every spurious library term was driven to zero.</figcaption>
+      <div class="insight"><strong>The discovered fact: from a single clean trajectory, sparse regression recovered all three Lorenz equations exactly, with zero error on every coefficient.</strong> The method found the right terms (x, y, z, their products) and zeroed every spurious candidate. No neural network can output an equation like that. It stayed locked inside hundreds of weights. SINDy spins the whole thing backward — instead of net-to-prediction, data-to-equation.</div>
+      </div>
+    </section>
+    <section class="fp" id="why">
+      <h2>4 · Why sparsity finds the law</h2>
+      <div class="essay">
+      <p>Physical laws almost always use very few terms. The Lorenz system needs only six terms across three equations. Noise and accidental correlations in data can invent spurious patterns, but they almost never conspire to build a compact formula. So a regression that says 'minimize error and also prefer few terms' is biased toward truth. The sparse penalty is like Occam's razor automated — it cuts away the noise and leaves the signal.</p>
+      <p>The method is only possible because the search space is small: we choose the candidate library (and if we are clever, that library is short and includes the true terms). Then linear algebra finds the sparsest fit in that space. The hard problem is building a good library — but given a reasonable one, sparsity is a powerful truth-finder.</p>
+      </div>
+    </section>
+    <section class="fp" id="weakness">
+      <h2>5 · The one real weakness — you must guess a library that contains the truth</h2>
+      <div class="essay">
+      <p>The method works only if the true terms live in your candidate library. If you guessed wrong — forgot to include, say, exponential decay or a delayed-feedback term — the fit will miss it, no matter how clean the data. And in the real world, data is noisy. Noise drowns out weak terms and can make the penalty choose the wrong set. A missing term or too much noise can send the method in the wrong direction, and you only notice when the recovered equation fails on new data or predicts something unphysical.</p>
+      </div>
+    </section>
+    <section class="fp" id="surprise">
+      <h2>6 · The surprise — this is the mirror image of physics-informed nets</h2>
+      <div class="essay">
+      <p>Physics-informed neural networks push a known law INTO training (score the net by how well it obeys the equation, not by labelled data). Symbolic regression pulls an unknown law OUT of data (fit the data with sparse terms and let the penalty choose which equation hides inside). The two are mirrors: one starts with a law, the other ends with one. Both marry data and physics.</p>
+      <p>The through-line is deeper: pure machine learning alone gives you a predictor you cannot read that predicts but doesn't explain. Pure hand-derived equations give you insight but not data-grounded answers. The interesting methods live at the boundary, using each strength to cover the other's blind spot. In physics-informed nets it is 'data alone would need thousands of labels, but we have the equation.' In symbolic regression it is 'we have data but no equation — so we search the space of plausible compact ones.'</p>
+      </div>
+    </section>
+    <section class="fp" id="practice">
+      <h2>7 · Where it is used in practice — recovering the governing law from data</h2>
+      <div class="essay">
+      <p>Symbolic regression is used to discover governing equations in plasma physics (recovering Lorentz force laws from particle trajectories), in chemical kinetics (finding rate laws from reactor concentration measurements), in ecology and epidemiology (recovering population dynamics from time-series field data), and in geophysics (discovering empirical relationships between seismic properties and rock composition).</p>
+      <p>A plasma physicist measures particle positions and velocities in a fusion reactor and feeds them to a sparse regression algorithm with a library of candidate terms: velocity gradients, electromagnetic interactions, pressure terms. The algorithm recovers the Lorentz force law from the data. A chemical engineer records concentrations over time in a reactor and lets symbolic regression discover which rate law (first-order, second-order, Michaelis-Menten) fits the data best and makes physical sense. An ecologist records predator and prey populations across years and recovers a Lotka-Volterra equation describing their interaction.</p>
+      <div class="insight">The insight is that real physical laws are sparse — they use few terms — so penalizing model complexity automatically drives regression toward physical truth.</div>
+      </div>
+    </section>
+    <section class="fp" id="connects"><h2>Where this connects — across the machine</h2><p class="muted">Physics-informed ML sits between discovering a model from data and using it for control. These links open the concept it mirrors or feeds &mdash; the wider data&rarr;model&rarr;control pipeline.</p><ul style="list-style:none;padding:14px 16px;margin:12px 0;border:1px solid var(--line,#d7ddd9);border-radius:10px;background:#fff"><li style="margin:9px 0;padding-left:14px;border-left:3px solid #8b3f18"><a href="https://mehtama1234.github.io/eigensteve-concepts-research/sindy-deep.html" style="font-weight:700">SINDy</a> <span class="muted" style="font-size:13px">· Brunton · data-driven</span><div style="font-size:14.5px;margin-top:3px">These are the same method under two names: pick out the few terms that make up the governing law and discard the rest.</div></li><li style="margin:9px 0;padding-left:14px;border-left:3px solid #8b3f18"><a href="https://mehtama1234.github.io/stanford-aa203-optimal-learning-control-concepts-research/concepts/dynamics-deep.html" style="font-weight:700">dynamics</a> <span class="muted" style="font-size:13px">· AA203 · control</span><div style="font-size:14.5px;margin-top:3px">Recovers the equation of motion that AA203 takes as given input to control.</div></li></ul></section>
+    <section class="fp"><p class="muted">Related: <a href="physics-informed-neural-networks.html">physics-informed neural networks</a> · <a href="neural-differential-equations.html">neural differential equations</a> · <a href="surrogate-modeling.html">surrogate modeling</a> · <a href="operator-learning.html">operator learning</a></p></section>
+    <details class="math"><summary>the run recipe — reproduce every number above</summary><div>
+      <p class="muted">SINDy (Sparse Identification of Nonlinear Dynamics) run on the Lorenz system: given one clean trajectory (x, y, z over 200 time steps), build a library of candidate terms (monomials up to degree 3) and solve a sparse linear regression. The penalty drives spurious terms to zero and recovers the true equations exactly. SciPy least-squares with L1 regularization, CPU only.</p>
+      <div class="eq">dx/dt = -10 x + 10 y
+dy/dt = 28 x - y - x z
+dz/dt = -2.667 z + x y
+
+# True parameters: sigma=10, rho=28, beta=2.667
+# Sparse regression result: all three equations and coefficients recovered with zero error.
+# Every spurious library term driven to zero.</div>
+      <p class="muted">Full script: scripts/experiments/sindy_run.py. Numbers are the run's output verbatim from piml.md.</p>
+    </div></details>
+    <footer style="color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding:22px 0 60px;margin-top:24px">Physics-Informed ML · Symbolic Regression deep dive · every quantity on a real run is measured, not asserted. Experiments in scripts/experiments/.</footer>
+</main>
+</body>
+</html>

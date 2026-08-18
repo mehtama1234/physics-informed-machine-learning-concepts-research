@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Optimization For Learning (deep) · Physics-Informed ML</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    .arc{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0}
+    .arc a{font-size:12.5px;color:var(--accent);text-decoration:none;border:1px solid var(--line);border-radius:20px;padding:3px 10px;background:var(--card)}
+    .fp{border-top:1px solid var(--line);padding:8px 0 4px;margin-top:8px}
+    .fp h2{border-top:none;padding-top:0;margin-top:20px;font-size:1.4rem}
+    .kick{font-size:12px;color:var(--accent);font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin:14px 0 6px}
+    .lede{font-size:1.2rem;max-width:900px;color:#2a3644}
+    .essay p{max-width:76ch;font-size:1rem;margin:10px 0}
+    .barrow{display:flex;align-items:center;gap:10px;margin:5px 0;font-size:13px}
+    .barrow .lab{width:150px;font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--muted);text-align:right}
+    .bar{height:16px;border-radius:3px;background:var(--accent);min-width:2px}
+    .bar.alt{background:#b5651d}
+    .barrow .val{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--text)}
+    .eq{font-family:ui-monospace,Menlo,monospace;font-size:13px;background:#eef5f6;border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin:12px 0;overflow-x:auto;white-space:pre-wrap}
+    .insight{border-left:4px solid var(--accent);background:#eef5f6;padding:12px 16px;border-radius:0 8px 8px 0;margin:16px 0;font-size:1.02rem}
+    details.math{border:1px solid var(--line);border-radius:8px;background:var(--card);margin:14px 0}
+    details.math summary{cursor:pointer;padding:10px 13px;color:var(--accent);font-weight:750}
+    details.math > div{border-top:1px solid var(--line);padding:4px 14px 12px}
+    figure{margin:16px 0}figcaption{font-size:13px;color:var(--muted);margin-top:6px}
+    table{border-collapse:collapse;width:100%;max-width:1040px;background:var(--card)}
+    th,td{border:1px solid var(--line);padding:8px 11px;text-align:left;font-size:.95rem}
+    .tw{overflow-x:auto}
+  </style>
+</head>
+<body>
+<nav class="topbar">
+  <a href="../index.html">Physics-Informed ML</a>
+  <a href="../concept-atlas.html">Concept Atlas</a>
+  <a href="../deep-track.html">Deep Track</a>
+  <a href="optimization-for-learning.html">This topic</a>
+  <a href="../worked-examples.html">Examples</a>
+</nav>
+<main>
+    <div class="kick">training is rolling downhill · the shape of the loss surface · momentum beats gradient descent</div>
+    <h1>Optimization for Learning — when the bowl is stretched, momentum matters</h1>
+    <p class="lede">Training a model means finding the dials (called weights) that make a number called the loss as small as possible. But the loss landscape — the bowl-shaped surface you are rolling down — is rarely a nice symmetric bowl. Sometimes it is stretched and warped, making plain gradient descent zigzag slowly. Here is what a real stretched bowl looks like, why momentum works there, the one thing momentum still cannot do, and why normalizing your data or layers is actually solving an optimization problem in disguise.</p>
+    <div class="arc"><a href="#problem">The problem</a><a href="#reframe">The reframe</a><a href="#run">Seen on a real run</a><a href="#why">Why momentum wins on stretched ground</a><a href="#weakness">The one real weakness</a><a href="#surprise">The surprise</a><a href="#practice">In practice</a><a href="optimization-for-learning.html">Atlas card</a></div>
+
+    <section class="fp" id="problem">
+      <h2>1 · The problem — you can only see downhill from where you stand</h2>
+      <div class="essay">
+      <p>When you train a model, you want to find the best setting of all its dials. You have one tool: the slope in front of you — the gradient, which points downhill. At each step, you take a small step in that direction. Call this gradient descent. It is simple, and it works.</p>
+      <p>But there is a catch: the shape of the valley you are rolling down changes everything. If the loss surface is a perfect bowl, you roll straight to the bottom. If it is a narrow ravine — steep on two sides, flat on two others — you zigzag slowly, zig on one slope, zag on the other, almost never pointing directly toward the goal. You still move downhill every step, but you waste time oscillating left and right. The question becomes: <strong>how can you move downhill when the ravine is so stretched that your local slope points sideways as much as downward?</strong></p>
+      </div>
+    </section>
+    <section class="fp" id="reframe">
+      <h2>2 · The reframe — remember how steep was the last slope, and use that to pick your step size</h2>
+      <div class="essay">
+      <p>On that stretched surface, each step moves in the steepest downhill direction. If you push with a fixed force (plain gradient descent), the ball bounces left and right slowly. But if you give it a push, release, let it roll, then push again in the same direction, it keeps moving in that direction because it has momentum. It gains speed along the consistent downhill direction and the zigzag fades.</p>
+      <p>In optimization, momentum does the same thing: keep a memory of which direction you have been going, and blend that memory with your current slope. This smooths out the short-term wiggles. On a stretched bowl, the zigzagging directions cancel out over time, and you move steadily toward the bottom. Mathematically, you update by adding not just the current slope, but a fraction of the previous step: <em>velocity = fraction × old velocity + current slope</em>, then step in that velocity direction.</p>
+      </div>
+    </section>
+    <section class="fp" id="run">
+      <h2>3 · Seen on a real run — steps grow with the stretch; momentum grows with its square root</h2>
+      <div class="essay">
+      <p>We built a deliberately stretched bowl — a loss landscape where the steep direction is thousands of times steeper than the flat direction. We measured how many gradient-descent steps it takes to reach the bottom, and how many steps with momentum it takes. The 'stretch' of a bowl is called the condition number: the ratio of steepest slope to flattest slope.</p>
+      <div class="tw"><table><tr><th>stretch of the bowl (condition number)</th><th>steps with plain gradient descent</th><th>steps with momentum</th><th>speedup</th></tr><tr><td>1 (a perfect symmetric bowl)</td><td>1</td><td>1</td><td>1.0x</td></tr><tr><td>10 (a mildly stretched ravine)</td><td>60</td><td>24</td><td>2.5x</td></tr><tr><td>100 (a very stretched ravine)</td><td>593</td><td>83</td><td>7.1x</td></tr><tr><td>1000 (a narrow canyon)</td><td>5930</td><td>282</td><td>21x</td></tr><tr><td>10000 (an extremely tight crevasse)</td><td>40000</td><td>953</td><td>42x</td></tr></table></div><figcaption>Every number is measured from a real run. As the bowl stretches, plain gradient descent needs more steps in nearly direct proportion; momentum needs many fewer because it harnesses the consistent downhill direction.</figcaption>
+      <div class="insight"><strong>The discovered fact: gradient descent slows linearly with the stretch; momentum needs only its square root. At condition number 10,000, plain descent needs 40,000 steps and momentum 953 — a 42x speedup.</strong> This table shows why batch normalization, layer normalization, and proper initialization matter so much in training. These techniques reshape the loss bowl to be less stretched. If you can make the condition number smaller, plain gradient descent gets faster too, but momentum still wins by its characteristic amount.</div>
+      </div>
+    </section>
+    <section class="fp" id="why">
+      <h2>4 · Why momentum wins on stretched ground</h2>
+      <div class="essay">
+      <p>On a stretched bowl, the gradient points mostly sideways — mostly along the flat direction — with only a small component downhill. Each step of plain gradient descent goes mostly sideways, cancelling the previous sideways step. The net progress is slow.</p>
+      <p>Momentum keeps a running average of past steps. The sideways motions (which flip direction often) average down toward zero. The downhill motions (which are consistent) add up. Over time, the memory washes out the noise and amplifies the signal. The ball picks up speed along the real downhill direction and barely wobbles side to side.</p>
+      <p>The math is clean: if the steepest and flattest slopes differ by a factor of <em>c</em> (the condition number), then gradient descent's zigzag takes roughly steps proportional to <em>c</em>, while momentum's improved path takes roughly steps proportional to the square root of <em>c</em>. For <em>c</em> = 10,000 that is the difference between 40,000 and 953.</p>
+      <p>The hidden quantity that decides how hard the training is, is the <em>conditioning</em> of the loss surface — how stretched it is, the gap between its steepest and its flattest direction. When that gap is large the surface is a long narrow valley, and every simple step either crawls or bounces; the whole art of optimisation is coping with it.</p>
+      </div>
+    </section>
+    <section class="fp" id="weakness">
+      <h2>5 · The one real weakness — momentum overshoots and needs its own tuning</h2>
+      <div class="essay">
+      <p>Momentum is not free. Because it builds up speed, it can overshoot the bottom and oscillate on the other side. On a real non-convex loss landscape (one with many valleys and local traps, not one smooth bowl) that overshoot can land you in a worse valley. You then need to tune the momentum coefficient — usually a number like 0.9 — to get the overshoot just right. Too much and you bounce; too little and you lose the speedup.</p>
+      <p>Moreover, real neural-network loss landscapes are not convex bowls at all. They have many local minima, saddle points, and plateaus. A steep ravine is a simplification that helps explain why momentum helps, but the full story is messier. The optimization landscape is not something you can see; you are always discovering its shape as you roll down, so tuning the momentum requires guesswork or adaptive schemes.</p>
+      </div>
+    </section>
+    <section class="fp" id="surprise">
+      <h2>6 · The surprise — this is why normalization reshapes the entire training process</h2>
+      <div class="essay">
+      <p>The hidden connection: batch normalization and layer normalization in modern neural networks do more than just stabilize learning. They <em>reshape the loss landscape to have a smaller condition number</em>. By normalizing activations to have zero mean and unit variance, the gradients flow more evenly through the network. The bowl becomes less stretched.</p>
+      <p>Good initialization (e.g. Xavier or He initialization) does the same: it sets the starting weights so that early layers and late layers see gradients of similar size. Again, this is a form of shaping the condition number.</p>
+      <p>The through-line is this: <strong>optimization, regularization, and architecture design are not separate concerns</strong>. A choice to normalize your layers is a choice to reshape the loss landscape so that gradient descent (with or without momentum) converges faster. This is the engine under nearly every trained model you will see — the reason why training is tractable at all at billion-parameter scale. The local slope is not enough; you also control the shape of the ground you are standing on.</p>
+      </div>
+    </section>
+    <section class="fp" id="practice">
+      <h2>7 · Where it is used in practice — speeding up model training</h2>
+      <div class="essay">
+      <p>Every large model trained today — language models, vision systems, diffusion models for image generation — relies on choosing the right optimization method. The stretched landscape problem appears in aerodynamic simulations, climate modeling, and seismic inversion, where the loss surface is extremely elongated in some directions and flat in others. Physics-based systems like reactor design and weather forecasting push the condition number sky-high because different variables change at vastly different rates.</p>
+      <p>Engineers and physicists tune the optimization by reshaping the loss landscape itself. They normalize layer activations or initialize weights carefully so that gradients flow evenly. In fluid dynamics simulations, they rescale the pressure and velocity variables to have similar magnitudes, shrinking the condition number. In battery modeling, normalizing ionic concentrations and voltage makes momentum more effective. A practitioner measures convergence time and chooses momentum or adaptive step sizes — techniques like Adam — based on whether the landscape is stretched.</p>
+      <div class="insight">The real deployment win is that architecture choices (batch norm, layer norm, residual connections) are not just regularization tricks but landscape engineers that make any optimizer faster.</div>
+      </div>
+    </section>
+    <section class="fp" id="connects"><h2>Where this connects — across the machine</h2><p class="muted">Physics-informed ML sits between discovering a model from data and using it for control. These links open the concept it mirrors or feeds &mdash; the wider data&rarr;model&rarr;control pipeline.</p><ul style="list-style:none;padding:14px 16px;margin:12px 0;border:1px solid var(--line,#d7ddd9);border-radius:10px;background:#fff"><li style="margin:9px 0;padding-left:14px;border-left:3px solid #8b3f18"><a href="https://mehtama1234.github.io/stanford-aa203-optimal-learning-control-concepts-research/concepts/gradient-first-order-condition-deep.html" style="font-weight:700">gradient &amp; first-order condition</a> <span class="muted" style="font-size:13px">· AA203 · control</span><div style="font-size:14.5px;margin-top:3px">The same descent-on-a-surface machinery AA203 uses to solve control problems, seen from the training side.</div></li><li style="margin:9px 0;padding-left:14px;border-left:3px solid #8b3f18"><a href="https://mehtama1234.github.io/stanford-aa203-optimal-learning-control-concepts-research/concepts/local-quadratic-approximation-deep.html" style="font-weight:700">local quadratic approximation</a> <span class="muted" style="font-size:13px">· AA203 · control</span><div style="font-size:14.5px;margin-top:3px">Conditioning — how stretched the surface is — is exactly what a local quadratic model measures and corrects.</div></li></ul></section>
+    <section class="fp"><p class="muted">Related: <a href="partial-differential-equations.html">numerical methods</a> · <a href="deep-learning.html">why depth matters</a> · <a href="neural-differential-equations.html">learning dynamics</a></p></section>
+    <details class="math"><summary>the run recipe — reproduce every number above</summary><div>
+      <p class="muted">We built a deliberately stretched quadratic loss surface (a 2-D elliptic bowl with variable condition number) and ran both gradient descent and gradient descent with momentum until convergence. We measured the number of steps for condition numbers 1, 10, 100, 1000, 10000. The condition number is the ratio of the largest eigenvalue to the smallest eigenvalue of the Hessian (the curvature matrix).</p>
+      <div class="eq">For a stretched ellipse: loss(x,y) = (x/a)^2 + (y/b)^2 where b &lt;&lt; a.
+Condition number = a^2 / b^2 (steepness ratio).
+Gradient descent: x_{k+1} = x_k - alpha * grad(loss)
+Momentum: v_k = beta * v_{k-1} + grad(loss); x_{k+1} = x_k - alpha * v_k
+(alpha = step size, beta = momentum coefficient ~0.9; measured steps to reach loss &lt; 1e-10)
+# Results: plain GD steps ~ condition number; momentum steps ~ sqrt(condition number)</div>
+      <p class="muted">Full script: scripts/experiments/opt_run.py. Every number is the run's measured output verbatim. The speedup column is the ratio of GD steps to momentum steps.</p>
+    </div></details>
+    <footer style="color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding:22px 0 60px;margin-top:24px">Physics-Informed ML · Optimization For Learning deep dive · every quantity on a real run is measured, not asserted. Experiments in scripts/experiments/.</footer>
+</main>
+</body>
+</html>

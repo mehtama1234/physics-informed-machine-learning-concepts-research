@@ -11,6 +11,7 @@
   <a href="../index.html">Physics-Informed ML</a>
   <a href="../transcripts.html">Transcripts</a>
   <a href="../concept-atlas.html">Concept Atlas</a>
+  <a href="../deep-track.html">Deep Track</a>
   <a href="../families.html">Families</a>
   <a href="../comparisons.html">Comparisons</a>
   <a href="../worked-examples.html">Examples</a>
@@ -56,6 +57,7 @@
 <main>
 
 <h1>Symbolic Regression And Model Discovery</h1>
+<p><a href="symbolic-regression-deep.html" style="display:inline-block;background:var(--accent);color:#fff;border-radius:8px;padding:9px 14px;font-weight:700;text-decoration:none">Read the deep dive — seen on a real run &rarr;</a></p>
 <h2>Common Problem This Solves</h2>
 <p>you need an equation humans can read, not a that guesses numbers</p>
 <h2>Big Picture Plain Summary</h2>
@@ -1255,8 +1257,8 @@
 <section class="detail actual-math">
   <h2>The Actual Math, One Level Deeper</h2>
   <p class="quiet">For readers ready for symbols. The plain path above stands on its own; this is the same idea written in notation.</p>
-  <p class="equation"><code>f* = argmin_{f ∈ F} Σ_i |y_i - f(x_i)|² + α · complexity(f)</code></p><p class="equation"><code>complexity(f) = |tokens(f)|  (number of operations)</code></p><p class="equation"><code>F = {f | f built from {x, y, z, +, -, ×, /, sin, exp, ...}}</code></p>
-  <table><thead><tr><th>Symbol</th><th>What it stands for</th></tr></thead><tbody><tr><td><code>f</code></td><td>symbolic formula (human-readable equation)</td></tr><tr><td><code>F</code></td><td>space of all allowed formula structures</td></tr><tr><td><code>complexity(f)</code></td><td>penalty term favoring short formulas over long ones</td></tr><tr><td><code>α</code></td><td>weight on complexity—controls how much to prefer simplicity</td></tr><tr><td><code>tokens(f)</code></td><td>count of operations and variables in f</td></tr></tbody></table>
+  <p class="equation"><code>f* = argmin_{f ∈ F} Σ_i |y_i - f(x_i)|² + α · size(f)</code></p><p class="equation"><code>size(f) = |tokens(f)|  (number of operations)</code></p><p class="equation"><code>F = {f | f built from {x, y, z, +, -, ×, /, sin, exp, ...}}</code></p>
+  <table><thead><tr><th>Symbol</th><th>What it stands for</th></tr></thead><tbody><tr><td><code>f</code></td><td>symbolic formula (human-readable equation)</td></tr><tr><td><code>F</code></td><td>space of all allowed formula structures</td></tr><tr><td><code>size(f)</code></td><td>penalty term favoring short formulas over long ones</td></tr><tr><td><code>α</code></td><td>weight on size—controls how much to prefer simplicity</td></tr><tr><td><code>tokens(f)</code></td><td>count of operations and variables in f</td></tr></tbody></table>
   <p>Symbolic regression searches for interpretable equations by trading fit quality against formula length. This assumes the true relationship can be expressed concisely using the allowed operations and that simpler formulas are more likely to transfer to new data.</p>
 </section>
 

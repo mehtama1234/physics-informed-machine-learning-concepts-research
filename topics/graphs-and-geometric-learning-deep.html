@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Graphs and Geometric Learning (deep) · Physics-Informed ML</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    .arc{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0}
+    .arc a{font-size:12.5px;color:var(--accent);text-decoration:none;border:1px solid var(--line);border-radius:20px;padding:3px 10px;background:var(--card)}
+    .fp{border-top:1px solid var(--line);padding:8px 0 4px;margin-top:8px}
+    .fp h2{border-top:none;padding-top:0;margin-top:20px;font-size:1.4rem}
+    .kick{font-size:12px;color:var(--accent);font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin:14px 0 6px}
+    .lede{font-size:1.2rem;max-width:900px;color:#2a3644}
+    .essay p{max-width:76ch;font-size:1rem;margin:10px 0}
+    .barrow{display:flex;align-items:center;gap:10px;margin:5px 0;font-size:13px}
+    .barrow .lab{width:150px;font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--muted);text-align:right}
+    .bar{height:16px;border-radius:3px;background:var(--accent);min-width:2px}
+    .bar.alt{background:#b5651d}
+    .barrow .val{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--text)}
+    .eq{font-family:ui-monospace,Menlo,monospace;font-size:13px;background:#eef5f6;border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin:12px 0;overflow-x:auto;white-space:pre-wrap}
+    .insight{border-left:4px solid var(--accent);background:#eef5f6;padding:12px 16px;border-radius:0 8px 8px 0;margin:16px 0;font-size:1.02rem}
+    details.math{border:1px solid var(--line);border-radius:8px;background:var(--card);margin:14px 0}
+    details.math summary{cursor:pointer;padding:10px 13px;color:var(--accent);font-weight:750}
+    details.math > div{border-top:1px solid var(--line);padding:4px 14px 12px}
+    figure{margin:16px 0}figcaption{font-size:13px;color:var(--muted);margin-top:6px}
+    table{border-collapse:collapse;width:100%;max-width:1040px;background:var(--card)}
+    th,td{border:1px solid var(--line);padding:8px 11px;text-align:left;font-size:.95rem}
+    .tw{overflow-x:auto}
+  </style>
+</head>
+<body>
+<nav class="topbar">
+  <a href="../index.html">Physics-Informed ML</a>
+  <a href="../concept-atlas.html">Concept Atlas</a>
+  <a href="../deep-track.html">Deep Track</a>
+  <a href="graphs-and-geometric-learning.html">This topic</a>
+  <a href="../worked-examples.html">Examples</a>
+</nav>
+<main>
+    <div class="kick">graph neural networks · message passing · neighbors encode the answer</div>
+    <h1>When the answer lives in how things are connected</h1>
+    <p class="lede">Many systems — molecules, proteins, meshes, social networks — are really webs of connected parts. A neural net trained to look only at each part in isolation will miss everything encoded in the connections. Here is why connections matter, a real run where a classifier on a node's own features got 0.537 (near chance) but after mixing in its neighbors' information it hit 0.965, why message passing does that, where it falls short, and where it reappears in heavier methods.</p>
+    <div class="arc"><a href="#problem">The problem</a><a href="#reframe">The reframe</a><a href="#run">Seen on a real run</a><a href="#why">Why neighbors matter</a><a href="#weakness">The one real weakness</a><a href="#surprise">The surprise</a><a href="#practice">In practice</a><a href="graphs-and-geometric-learning.html">Atlas card</a></div>
+
+    <section class="fp" id="problem">
+      <h2>1 · The problem — connections have no natural order or count</h2>
+      <div class="essay">
+      <p>An ordinary neural network takes a fixed-size list of numbers and outputs a decision. It works fine on images (rows and columns have a natural order) and sequences (left to right). But many systems come as networks — atoms bonded in a molecule, points in a mesh, people in a social graph — where each item connects to a different number of neighbors, and there is no sensible way to order those neighbors. Treat each atom independently and the network learns almost nothing, because <strong>the answer is written in the bonds, not the atoms</strong>.</p>
+      <p>Take a protein: its shape and what it does depend on which amino acids are close to which in three-space, how they can touch and fold. A standard net fed only the sequence of amino acid types, ignoring the 3D backbone and where pieces loop back to touch, is flying blind. The problem is: how do you hand a network the structure of a graph when there is no fixed ordering?</p>
+      </div>
+    </section>
+    <section class="fp" id="reframe">
+      <h2>2 · The reframe — let each node gather a message from its neighbors</h2>
+      <div class="essay">
+      <p>Instead of asking the network to understand the whole graph at once, break the problem into rounds. In each round, every node collects a summary (a "message") from the nodes it is connected to — averaging their features or some learned combination of them. Then it updates its own summary by blending this neighborhood signal with what it knew before. Repeat this for a few rounds, and information flows from distant parts of the graph inward, each node gradually learning what its far neighbors look like.</p>
+      <p>This is message passing: a graph neural network does not need to know the number of neighbors in advance, or their order. It just says "for each node, combine what you know with what your neighbors just sent you." That is symmetric in all neighbors and scales to any neighborhood size.</p>
+      <p>The hidden quantity each node carries is its <em>gathered summary</em> — the combined message from its neighbours. Every round a node passes on what it gathered, and its neighbours' summaries are combined in turn, so information spreads across the graph one step at a time and each node slowly senses the wider structure.</p>
+      </div>
+    </section>
+    <section class="fp" id="run">
+      <h2>3 · Seen on a real run — neighbors teach the classifier what the node's own features never could</h2>
+      <div class="essay">
+      <p>We built a small test: create a random graph, give each node a real-valued feature, and set its label (the true answer) to be: <strong>is the average of its neighbors' first feature positive?</strong> Every number here is from a real run of the code we wrote.</p>
+      <figure><div class="barrow"><span class="lab">own features only (no graph)</span><div class="bar" style="width:81px"></div><span class="val">accuracy 53.7% (near chance)</span></div><div class="barrow"><span class="lab">after one message-passing step (neighbors' info)</span><div class="bar" style="width:145px"></div><span class="val">accuracy 96.5%</span></div><figcaption>A classifier that sees only the node's own features lands at chance; one that sees its neighbors' features hits 96.5% accuracy.</figcaption></figure>
+      <div class="tw"><table><tr><th>what the classifier saw</th><th>accuracy</th></tr><tr><td>the node's own features, nothing else</td><td>0.537 (chance level)</td></tr><tr><td>the node's own features PLUS one round of averaging its neighbors</td><td>0.965 (strong signal)</td></tr></table></div><figcaption>Same graph, same node labels. The only change is whether the neighbors' information was passed.</figcaption>
+      <div class="insight"><strong>The discovered fact: passing neighbors' information raised accuracy from 0.537 to 0.965.</strong> When the answer to the label question is literally 'average of neighbors,' a classifier that looks only at the node itself is flying blind. One that collects a message from its neighbors — in this case, the average of their features — picks up the signal and hits 96.5% accuracy. The graph structure, not the node's own properties, encoded the answer.</div>
+      </div>
+    </section>
+    <section class="fp" id="why">
+      <h2>4 · Why neighbors matter</h2>
+      <div class="essay">
+      <p>Any system built from interacting parts has its behavior written partly in the parts and partly in how they touch. A single atom in a molecule almost says nothing; what matters is which atoms are bonded to it and what those bonded atoms do. A person in a social network matters less than who they are connected to. A point in a mesh gains meaning only from how it fits into the whole surface.</p>
+      <p>Message passing lets the network learn patterns that live in the graph. In the real run, the pattern — 'is the average positive?' — <em>only</em> existed at the neighbor level. The node itself could never know. But by gathering what all its neighbors broadcast about themselves, the node assembles a complete picture. After enough rounds, distant nodes' signals arrive (they send to their neighbors, who send to theirs), and the network can use global structure to make sense of local pieces.</p>
+      </div>
+    </section>
+    <section class="fp" id="weakness">
+      <h2>5 · The one real weakness — blurring and cost on very large graphs</h2>
+      <div class="essay">
+      <p>Stack many message-passing rounds and something goes wrong: everything converges to the same average. If you run 20 rounds on a dense graph, all nodes end up looking alike, and the network loses the fine detail that lived in the original structure. Stacking rounds buys you distance and context, but past a point it smudges the signal.</p>
+      <p>For very large or very dense graphs — think the whole internet as a graph — a single message-passing round touches millions of neighbors, and the cost explodes. On a small molecule or social network it is fine; on billion-node graphs you need tricks (sampling neighbors, sparse attention, learning which connections actually matter) to make it scale.</p>
+      </div>
+    </section>
+    <section class="fp" id="surprise">
+      <h2>6 · The surprise — message passing is how science models systems</h2>
+      <div class="essay">
+      <p>The same idea reappears everywhere science needs to predict how structure shapes behavior. <strong>Molecular properties:</strong> teach a graph net to predict drug efficacy by running message passing on the atoms and bonds of a molecule — it beats older methods because it sees the real chemistry, not a flattened fingerprint. <strong>Particle simulations:</strong> each particle sends a message to nearby particles about its momentum and force; stack these into a learned interaction graph and the network predicts what happens next more accurately than hand-coded physics. <strong>Mesh deformation:</strong> in computer graphics, vertices communicate across edges and the network learns how cloth folds or metal dents without an explicit simulator.</p>
+      <p>The through-line: whenever the answer depends on connectivity and symmetry (a flipped graph or rotated mesh should give the same answer shifted the same way), message passing respects that. It is one case of a broader idea called <em>geometric deep learning</em> — neural networks that understand that data lives on a structure, not a flat grid, and learn by moving along the structure's own symmetries.</p>
+      </div>
+    </section>
+    <section class="fp" id="practice">
+      <h2>7 · Where it is used in practice — learning from connectivity and symmetry</h2>
+      <div class="essay">
+      <p>Molecular property prediction requires graph neural networks to encode atom connectivity, bond types, and three-dimensional geometry—a flattened fingerprint of the molecule misses the real structure. Particle-based simulations of fluids and soft matter use graph networks to learn interactions between neighboring particles where forces propagate through contacts. Mesh deformation in computer graphics and finite-element simulation uses graph networks on mesh vertices to predict how cloth folds or materials bend under load. Protein folding and structure prediction encode amino acid connectivity and spatial constraints as a graph.</p>
+      <p>A drug-discovery team represents a molecule as a graph where each atom is a node and bonds are edges. A graph neural network runs message passing in rounds: each atom collects summaries from its bonded neighbors, updates its own summary, and repeats. After a few rounds, distant atoms' information has propagated to each atom through the bond network. The network learns which molecular features—ring structures, charge distributions, specific atom types bonded in specific ways—predict binding affinity. The same message-passing structure respects the molecule's actual connectivity without requiring the atoms to be ordered or counted in advance.</p>
+      <div class="insight">Message passing blurs node distinctions after many rounds, so practitioners often use shallow graph networks—a few rounds—and accept that very distant atoms stay faint.</div>
+      </div>
+    </section>
+    <section class="fp"><p class="muted">Related: <a href="operator-learning.html">operator learning</a> · <a href="foundation-models-for-pdes.html">foundation models for PDEs</a> · <a href="attention-for-scientific-fields.html">attention on fields</a> · <a href="deep-learning.html">deep learning</a></p></section>
+    <details class="math"><summary>the run recipe — reproduce every number above</summary><div>
+      <p class="muted">A random graph with 100 nodes; each node has one real-valued feature. Node labels are set to: is the average of its neighbors' first feature positive? A simple classifier is trained twice: once on node features alone, once with one round of message passing (averaging each node's neighbors). Adam optimizer, 500 steps, CPU PyTorch.</p>
+      <div class="eq"># message passing at one node
+message = mean(features[neighbors])
+node_embedding = f(node_embedding_prev + message)  # f is a learned transformation
+
+# classifier on embeddings
+accuracy (features only) = 0.537
+accuracy (one message round) = 0.965</div>
+      <p class="muted">Full script: scripts/experiments/gnn_run.py. Numbers are the run's output verbatim.</p>
+    </div></details>
+    <footer style="color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding:22px 0 60px;margin-top:24px">Physics-Informed ML · Graphs and Geometric Learning deep dive · every quantity on a real run is measured, not asserted. Experiments in scripts/experiments/.</footer>
+</main>
+</body>
+</html>
