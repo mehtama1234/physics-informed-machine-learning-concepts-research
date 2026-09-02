@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Editorial Transfer Samples · Physics-Informed ML</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<nav class="topbar">
+  <a href="index.html">Physics-Informed ML</a>
+  <a href="concept-atlas.html">Concept Atlas</a>
+  <a href="deep-track.html">Deep Track</a>
+  <a href="decision-guide.html">Decide</a>
+  <a href="hand-polish.html">Hand Polish</a>
+  <a href="editorial-transfer-samples.html">Editorial Samples</a>
+</nav>
+<main>
+  <h1>Editorial Transfer Samples</h1>
+  <p>This page is a review target for the concepts that carry the whole site. Each sample asks whether the page teaches the physical or scientific need before the method name.</p>
+
+  <h2>The Transfer Test</h2>
+  <p>A concept is strong only if it survives a change of scientific setting. The learner should be able to move from a fluid flow to a heated wall, a battery material, a protein system, or a climate field without changing the meaning of the concept. The words may change, but the burden stays the same: name the quantity, name the evidence, name the rule, name the approximation, and name the case that would reject the answer.</p>
+
+  <div class="grid">
+    <article class="card"><h3>Partial Differential Equations</h3><p><strong>Ordinary pressure:</strong> a field changes from place to place and time to time, but not arbitrarily.</p><p><strong>Hidden object:</strong> the local rule that says how nearby values constrain each other.</p><p><strong>Invariant:</strong> nearby values must satisfy the same balance law at every point where the equation is supposed to hold.</p><p><strong>What changes by domain:</strong> fluids conserve mass and momentum, heat follows temperature flow, materials balance load and deformation, and chemistry tracks species and reaction rates.</p><p><strong>Failure test:</strong> predict a field that fits sample points but violates the rule between them.</p><p><a href="derivations/partial-differential-equations.html">Review derivation</a></p></article>
+    <article class="card"><h3>Physics-Informed Neural Networks</h3><p><strong>Ordinary pressure:</strong> measurements are sparse, but the governing rule is partly known.</p><p><strong>Hidden object:</strong> a training score that punishes both data error and rule violation.</p><p><strong>Invariant:</strong> the model must answer to two judges at once: the observed data and the equation residual.</p><p><strong>What changes by domain:</strong> the residual may measure flow conservation, heat balance, stress equilibrium, reaction kinetics, or a climate coupling constraint.</p><p><strong>Failure test:</strong> improve data fit while making the residual physically impossible.</p><p><a href="derivations/physics-informed-neural-networks.html">Review derivation</a></p></article>
+    <article class="card"><h3>Operator Learning</h3><p><strong>Ordinary pressure:</strong> scientists need a reusable map from one whole field to another.</p><p><strong>Hidden object:</strong> the transformation between functions, not a single output number.</p><p><strong>Invariant:</strong> the learned object is a rule from input function to output function, so it must keep meaning when the grid or forcing changes.</p><p><strong>What changes by domain:</strong> the input can be an initial flow field, a boundary temperature, a material layout, a molecular state, or a regional climate condition.</p><p><strong>Failure test:</strong> train on one grid or boundary family and fail when the field shape changes.</p><p><a href="derivations/operator-learning.html">Review derivation</a></p></article>
+    <article class="card"><h3>Surrogate Modeling</h3><p><strong>Ordinary pressure:</strong> a trusted simulator is too slow to run for every design or control choice.</p><p><strong>Hidden object:</strong> a cheaper stand-in with a named domain where it remains faithful.</p><p><strong>Invariant:</strong> speed is useful only inside the region where the cheap model preserves the simulator's decision ranking or physical answer.</p><p><strong>What changes by domain:</strong> the valid region may be a Reynolds-number range, a temperature window, a tested material family, a molecular class, or a design space.</p><p><strong>Failure test:</strong> use it outside that domain and hide the error behind average accuracy.</p><p><a href="derivations/surrogate-modeling.html">Review derivation</a></p></article>
+    <article class="card"><h3>Symbolic Regression</h3><p><strong>Ordinary pressure:</strong> a fitted predictor may work but not reveal the law a scientist can inspect.</p><p><strong>Hidden object:</strong> a readable expression that trades accuracy against simplicity.</p><p><strong>Invariant:</strong> the expression must stay checkable against units, limits, signs, and known behavior, not just against sample error.</p><p><strong>What changes by domain:</strong> the allowable expression changes with conservation terms, constitutive laws, kinetic forms, scaling laws, or empirical climate relations.</p><p><strong>Failure test:</strong> discover a formula that matches data but breaks units, limits, or known behavior.</p><p><a href="derivations/symbolic-regression.html">Review derivation</a></p></article>
+    <article class="card"><h3>Uncertainty And Generalization</h3><p><strong>Ordinary pressure:</strong> a scientific answer must say when it should not be trusted.</p><p><strong>Hidden object:</strong> the distance between the new case and the evidence that trained the method.</p><p><strong>Invariant:</strong> confidence must be tied to evidence coverage, regime shift, and physical plausibility.</p><p><strong>What changes by domain:</strong> the warning signal may come from geometry, boundary condition, material regime, molecular environment, forcing pattern, or decision loop.</p><p><strong>Failure test:</strong> report confidence on a case whose geometry, boundary, scale, or regime has changed.</p><p><a href="derivations/uncertainty-and-generalization.html">Review derivation</a></p></article>
+  </div>
+
+  <h2>Cross-Domain Transfer Matrix</h2>
+  <div class="grid">
+    <article class="card"><h3>Fluids And Flow</h3><p><strong>Quantity:</strong> velocity, pressure, density, vorticity, or transported concentration.</p><p><strong>Known rule:</strong> local conservation and boundary behavior.</p><p><strong>Failure:</strong> a learned field looks smooth but creates or destroys mass between measurements.</p><p><a href="domains/fluids-and-flow.html">Open domain</a></p></article>
+    <article class="card"><h3>Heat And Diffusion</h3><p><strong>Quantity:</strong> temperature, concentration, or another field that spreads from high to low.</p><p><strong>Known rule:</strong> nearby values constrain the rate and direction of change.</p><p><strong>Failure:</strong> the model fits sensors while violating boundary heat flow or time direction.</p><p><a href="domains/heat-and-diffusion.html">Open domain</a></p></article>
+    <article class="card"><h3>Materials And Mechanics</h3><p><strong>Quantity:</strong> stress, strain, stiffness, fracture risk, or microstructure property.</p><p><strong>Known rule:</strong> shape and load must agree with material response.</p><p><strong>Failure:</strong> a surrogate predicts a strong design outside the tested material regime.</p><p><a href="domains/materials-and-mechanics.html">Open domain</a></p></article>
+    <article class="card"><h3>Chemistry And Biology</h3><p><strong>Quantity:</strong> concentration, binding, reaction rate, molecular state, or biological response.</p><p><strong>Known rule:</strong> conservation, kinetics, geometry, or mechanistic constraints.</p><p><strong>Failure:</strong> a fitted rule works on known cases but breaks when scale, species, or environment changes.</p><p><a href="domains/chemistry-and-biology.html">Open domain</a></p></article>
+    <article class="card"><h3>Climate And Earth Fields</h3><p><strong>Quantity:</strong> temperature, humidity, pressure, flow, radiation, or regional risk.</p><p><strong>Known rule:</strong> coupled fields move through space and time with physical limits.</p><p><strong>Failure:</strong> the model interpolates well locally but loses far-field coupling or extreme-event behavior.</p><p><a href="domains/scientific-model-building.html">Open domain</a></p></article>
+    <article class="card"><h3>Design And Control Loops</h3><p><strong>Quantity:</strong> the next design choice, experiment, control input, or candidate field.</p><p><strong>Known rule:</strong> a cheap learned model must stay faithful where decisions depend on it.</p><p><strong>Failure:</strong> optimization exploits surrogate error and selects a design the real simulator or experiment rejects.</p><p><a href="domains/training-score-design.html">Open domain</a></p></article>
+  </div>
+
+  <h2>Concept-To-Domain Checks</h2>
+  <div class="grid">
+    <article class="card"><h3>PDE</h3><p>If the page cannot say what must be conserved, balanced, diffused, transported, or bounded in each domain, it has taught symbols instead of a field rule.</p></article>
+    <article class="card"><h3>PINN</h3><p>If the page says "add physics to the loss" but does not name the residual and the data term separately, it hides the tradeoff the learner needs.</p></article>
+    <article class="card"><h3>Operator</h3><p>If the page only predicts one output, it has missed the object. Operator learning is about a reusable map from one whole input function to another whole output function.</p></article>
+    <article class="card"><h3>Surrogate</h3><p>If the page does not name the valid region of the cheap substitute, it invites the learner to trust it exactly where it is most likely to fail.</p></article>
+    <article class="card"><h3>Symbolic Regression</h3><p>If the discovered expression cannot be checked against units, limits, and known behavior, readability has replaced science instead of serving it.</p></article>
+    <article class="card"><h3>Uncertainty</h3><p>If the page reports confidence without saying what changed from the training evidence, the confidence is not a scientific warning signal.</p></article>
+  </div>
+
+  <h2>Use This As The Final Editorial Lens</h2>
+  <p>The site is already complete by artifacts. The remaining high-value review is transfer: can a learner use the idea on a new fluid, material, climate, biology, or field problem without repeating the page wording?</p>
+  <h2>Invariant-Domain-Failure Rule</h2>
+  <p>A concept page is deep enough only when it names the thing that must stay true, the physical quantity that changes from one domain to another, and the failure that proves the method has learned the examples without respecting the science.</p>
+</main>
+</body>
+</html>
